@@ -2,6 +2,12 @@
 title: Main Page
 ---
 
+Welcome to BioJava
+------------------
+
+See the [News page](http://biojava.open-bio.org/news) too for posting
+Blog news.
+
 Wiki software successfully installed.
 
 Please see [documentation on customizing the
