@@ -1,3 +1,7 @@
+==Welcome to BioJava==
+See the [http://biojava.open-bio.org/news News page] too for posting Blog news.
+
+
 Wiki software successfully installed.
 
 Please see [http://meta.wikipedia.org/wiki/MediaWiki_i18n documentation on customizing the interface]
