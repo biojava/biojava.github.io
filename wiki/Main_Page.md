@@ -11,14 +11,14 @@ BioJava news.
 About BioJava
 -------------
 
-BioJava is an [open-sourceproject](wp:Open Source "wikilink") dedicated
-to providing a [Java](http://www.java.sun.com) framework for processing
-biological data. It include objects for manipulating biological
-sequences, file parsers, [DAS](http://biodas.org/) client and server
-suport, access to [BioSQL](http://www.biosql.org/) and
-[Ensembl](http://www.ensembl.org) databases, tools for making sequence
-analysis GUIs and powerful analysis and statistical routines including a
-dynamic programming toolkit.
+BioJava is an [open-source](http://en.wikipedia.org/wiki/Open_source)
+project dedicated to providing a [Java](http://www.java.sun.com)
+framework for processing biological data. It include objects for
+manipulating biological sequences, file parsers,
+[DAS](http://biodas.org/) client and server suport, access to
+[BioSQL](http://www.biosql.org/) and [Ensembl](http://www.ensembl.org)
+databases, tools for making sequence analysis GUIs and powerful analysis
+and statistical routines including a dynamic programming toolkit.
 
 Getting BioJava
 ---------------
@@ -34,10 +34,11 @@ on the Getting started page.
 
 You can also maintain an up-to-date view of BioJava with
 [CVS](http://www.cvs.org/). We provide anonymous
-[CVS](wp:Concurrent_Versions_System "wikilink") server. If you wish to
-contribute your existing code or help maintain part of the BioJava
-code-base, then we can supply you with a read/write account. Sign up for
-the biojava-dev mailing list and post a request for an account.
+[CVS](http://en.wikipedia.org/wiki/Concurrent_Versions_System) server.
+If you wish to contribute your existing code or help maintain part of
+the BioJava code-base, then we can supply you with a read/write account.
+Sign up for the biojava-dev mailing list and post a request for an
+account.
 
 Thanks
 ------
