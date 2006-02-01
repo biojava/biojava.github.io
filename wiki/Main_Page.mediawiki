@@ -1,8 +1,13 @@
 ==Welcome to BioJava==
-See the [http://biojava.open-bio.org/news News page] too for posting Blog news.
+See the [http://biojava.open-bio.org/news BioJava news page] too for BioJava news.
 
 
-Wiki software successfully installed.
+== About BioJava ==
+
+
+BioJava is an open-source project dedicated to providing a Java framework for processing biological data. It include objects for manipulating sequences, file parsers, DAS client and server suport, access to BioSQL and Ensembl databases, and powerful analysis and statistical routines including a dynamic programming toolkit. 
+
+
 
 Please see [http://meta.wikipedia.org/wiki/MediaWiki_i18n documentation on customizing the interface]
 and the [http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide User's Guide] for usage and configuration help.
