@@ -12,8 +12,7 @@ BioJava is distributed under the terms of the GNU [http://www.gnu.org/licenses/l
 
 BioJava releases can be obtained from our download area. Instructions for installing the library, and building source releases, can be found on the Getting started page. 
 
-You can also maintain an up-to-date view of BioJava with [http://www.cvs.org/ CVS]. We provide anonymous [http://en.wikipedia.org/wiki/Concurrent_Versions_System CVS] server. If you wish to contribute your existing code or help maintain part of the BioJava code-base, then we can supply you with a read/write account. Sign up for the biojava-dev mailing list and post a request for an account.
-
+You can also maintain an up-to-date view of BioJava with [http://www.cvs.org/ CVS]. We provide anonymous [[wp:Concurrent Versions System|CVS]] server. If you wish to contribute your existing code or help maintain part of the BioJava code-base, then we can supply you with a read/write account. Sign up for the biojava-dev mailing list and post a request for an account.
 
 == Thanks ==
  
