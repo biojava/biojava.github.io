@@ -17,6 +17,22 @@ manipulating sequences, file parsers, DAS client and server suport,
 access to BioSQL and Ensembl databases, and powerful analysis and
 statistical routines including a dynamic programming toolkit.
 
+Getting BioJava
+---------------
+
+BioJava is distributed under the terms of the GNU Lesser GPL. This means
+that you can use the libraries without your software being forced under
+either the LGPL or GPL. LGPL is not GPL.
+
+BioJava releases can be obtained from our download area. Instructions
+for installing the library, and building source releases, can be found
+on the Getting started page.
+
+You can also maintain an up-to-date view of BioJava with CVS. We provide
+anonymous CVS server. If you wish to contribute your existing code or
+help maintain part of the BioJava code-base, then we can supply you with
+a read/write account.
+
 Please see [documentation on customizing the
 interface](http://meta.wikipedia.org/wiki/MediaWiki_i18n) and the
 [User's Guide](http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide)
