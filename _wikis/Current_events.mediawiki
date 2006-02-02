@@ -1,0 +1,15 @@
+== BioJava News ==
+
+The BioJava News / Blog site is [http://biojava.open-bio.org/news/ here].
+
+== Related News Sites ==
+
+[http://obda.open-bio.org/news OBDA news]
+
+[http://biosql.org/news/ BioSQL news]
+
+[http://biopython.open-bio.org/news BioPython news]
+
+[http://news.open-bio.org/ O|B|F news]
+
+[http://bioperl.org/news/ BioPerl news]
