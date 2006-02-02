@@ -13,7 +13,7 @@ yourself an entry here (this is Wiki after all).
 
 [Thomas Down](User:Thomas "wikilink")
 
-[Michael Heuer](User:Michael "wikilink")
+[Michael Heuer](User:Heuermh "wikilink")
 
 [David Huen](User:David "wikilink")
 
