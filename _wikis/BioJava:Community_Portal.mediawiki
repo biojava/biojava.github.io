@@ -1,0 +1,15 @@
+== Contributors ==
+
+The following people have contributed to BioJava in some way. If you've contributed to BioJava in any form -- code, documentation, suggestions, or helping people out on the mailing lists -- and want to be listed here, please e-mail a short bio to the biojava mailing list or make yourself an entry here (this is Wiki after all).
+
+[[User:Thomas|Thomas Down]]
+
+[[User:Michael|Michael Heuer]]
+
+[[User:David|David Huen]]
+
+[[User:Matthew|Matthew Pocock]]
+
+[[User:Mark|Mark Schreiber]]
+
+[[User:Rholland|Richard Holland]]
