@@ -28,9 +28,11 @@ GPL](http://www.gnu.org/licenses/lgpl.html). This means that you can use
 the libraries without your software being forced under either the LGPL
 or [GPL](http://www.gnu.org/licenses/gpl.html). LGPL is not GPL.
 
-BioJava releases can be obtained from our download area. Instructions
-for installing the library, and building source releases, can be found
-on the Getting started page.
+BioJava releases can be obtained from our [Project:download
+download](Project:download download "wikilink") area. Instructions for
+installing the library, and building source releases, can be found on
+the [Project:GetStarted Getting
+started](Project:GetStarted Getting started "wikilink") page.
 
 You can also maintain an up-to-date view of BioJava with
 [CVS](http://www.cvs.org/). We provide anonymous
@@ -38,6 +40,17 @@ You can also maintain an up-to-date view of BioJava with
 contribute your existing code or help maintain part of the BioJava
 code-base, then we can supply you with a read/write account. Sign up for
 the biojava-dev mailing list and post a request for an account.
+
+New Logo Needed!
+----------------
+
+The BioJava project needs a new Logo. The sunflower in the top left
+corner of this page doesn't really do it justice. If you have artistic
+flair then upload you logo to this [Project:logo
+page](Project:logo page "wikilink"). Everyone feel free to make your
+comments about which ones you like. At some as yet undecided point one
+will become the official logo. --[Mark](User:Mark "wikilink") 21:21, 1
+February 2006 (EST)
 
 Thanks
 ------
