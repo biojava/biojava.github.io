@@ -11,14 +11,25 @@ or helping people out on the mailing lists -- and want to be listed
 here, please e-mail a short bio to the biojava mailing list or make
 yourself an entry here (this is Wiki after all).
 
-[Thomas Down](User:Thomas "wikilink")
+-   [Thomas Down](User:Thomas "wikilink")
 
-[Michael Heuer](User:Heuermh "wikilink")
+<!-- -->
 
-[David Huen](User:David "wikilink")
+-   [Michael Heuer](User:Heuermh "wikilink")
 
-[Matthew Pocock](User:Matthew "wikilink")
+<!-- -->
 
-[Mark Schreiber](User:Mark "wikilink")
+-   [David Huen](User:David "wikilink")
 
-[Richard Holland](User:Rholland "wikilink")
+<!-- -->
+
+-   [Matthew Pocock](User:Matthew "wikilink")
+
+<!-- -->
+
+-   [Mark Schreiber](User:Mark "wikilink")
+
+<!-- -->
+
+-   [Richard Holland](User:Rholland "wikilink")
+
