@@ -14,7 +14,8 @@ What needs doing?
     updating and/or are no longer relevant
 -   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
     of it, very laborious indeed (lots of copy and paste). (By start
-    I´ll work here. Dickson Guedes ) (French version: working on
+    I´ll work here. --[Guedes](User:Guedes "wikilink") 15:50, 6 February
+    2006 (EST)) (French version: working on
     it - --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
     (EST))
 -   JavaDoc 1.3 - how? link back to old? Links to old
