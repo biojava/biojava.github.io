@@ -8,7 +8,7 @@ Contrast this with the definition of a [http://www.biojava.org/docs/api14/org/bi
 
 
 
-<pre><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> biojava_in_anger;
+<FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> biojava_in_anger;
 <FONT COLOR="#000000">
 <FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.util.*;
 <FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> org.biojava.bio.seq.*;
@@ -41,7 +41,6 @@ Contrast this with the definition of a [http://www.biojava.org/docs/api14/org/bi
 
 <FONT COLOR="#000000">}
 </FONT>
-</pre>
 
 == Teste ==
 
