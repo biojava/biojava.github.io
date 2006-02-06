@@ -64,39 +64,42 @@ due to limited space. The actual commands should be on a single line:
 
 It is also possible to "install" JAR files onto your system by copying
 them into your Java installation's extensions directory. On most Unix
-systems, this is named ${JAVA\_HOME}/jre/lib/ext. On Mac OS X there is a
-per-user extensions directory called ~/Library/Java/Extensions (you may
-have to create this directory yourself). For other platforms, consult
-your Java vendor.
+systems, this is named *${JAVA\_HOME}/jre/lib/ext*. On Mac OS X there is
+a per-user extensions directory called *~/Library/Java/Extensions* (you
+may have to create this directory yourself). For other platforms,
+consult your Java vendor.
 
-You can now compile and run BioJava programs using the javac and java
-commands. You might like to look at the tutorial and API documentation,
-and try the demo programs included in the source distribution (see
-below).
+You can now compile and run BioJava programs using the *javac* and
+*java* commands. You might like to look at the tutorial and [API
+documentation](http://www.biojava.org/docs/api/index.html), and try the
+demo programs included in the source distribution (see below).
 
 Building your own
 -----------------
 
 If you want to modify BioJava, you can obtain a copy of the source code
-from the Source directory of the download area. Source releases are
-distributed in .tar.gz format. You can also obtain up-to-the-minute
-source code from the Nightly build site or from anonymous CVS.
+from the [Source directory](http://www.biojava.org/download/source) of
+the download area. Source releases are distributed in .tar.gz format.
+You can also obtain up-to-the-minute source code from the [Nightly build
+site](http://www.derkholm.net) or from [anonymous
+CVS](http://cvs.biojava.org).
 
-BioJava is built using the ANT build tool, a Java-specific equivalent of
-the common Make utilities. Please download and install the latest
-version of ANT (currently 1.6.1). It is available here.
+BioJava is built using the *ant* build tool, a Java-specific equivalent
+of the common Make utilities. Please download and install the latest
+version of *ant* (currently 1.6.1). It is available
+[here](http://ant.apache.org).
 
 To build the library, just change into the biojava-live directory and
-type ant. The final JAR file will be placed in the ant-build directory.
-You can also use the command ant javadocs-biojava to build the API
-documentation.
+type *ant*. The final JAR file will be placed in the *ant-build*
+directory. You can also use the command *ant javadocs-biojava* to build
+the API documentation.
 
 Building the demo programs
 --------------------------
 
 The source distribution contains a number of small demo programs. Once
-you have a working biojava.jar on your classpath, these can be compiled
-directly using javac from the demos directory.
+you have a working *biojava.jar* on your classpath, these can be
+compiled directly using *javac* from the demos directory.
 
 ` (unix)`  
 ` cd demos`  
