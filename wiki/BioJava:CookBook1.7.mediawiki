@@ -23,6 +23,9 @@ This is a powerpoint presentation on the BioJava core API that I have given a fe
 == Publications ==
 
 Click here to search Google Scholar for papers using BioJava.
+Why dont we give a list of publications ? 
+I think we should give pdf link of the publications from personal pages of the authours -- 
+--[[User:S Khadar|S Khadar]] 15:13, 6 February 2006 (EST)
 
 == How Do I....? ==
 
