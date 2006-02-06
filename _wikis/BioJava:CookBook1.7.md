@@ -186,5 +186,5 @@ list](mailto:biojava-l@biojava.org).
 
 The code is [open-source](wp:Open source "wikilink"). A good definition
 of open-source can be found
-[phere](http://www.opensource.org/docs/definition_plain.ph). If you
+[here](http://www.opensource.org/docs/definition_plain.php). If you
 agree with that definition then you can use it.
