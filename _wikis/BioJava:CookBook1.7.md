@@ -181,8 +181,10 @@ Copyright
 
 The documentation on this site is the property of the people who
 contributed it. If you wish to use it in a publication please make a
-request through the biojava mailing list.
+request through the [biojava mailing
+list](mailto:biojava-l@biojava.org).
 
 The code is [open-source](wp:Open source "wikilink"). A good definition
-of open-source can be found here. If you agree with that definition then
-you can use it.
+of open-source can be found
+[phere](http://www.opensource.org/docs/definition_plain.ph). If you
+agree with that definition then you can use it.
