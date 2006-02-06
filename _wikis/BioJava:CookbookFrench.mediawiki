@@ -6,9 +6,9 @@ BioJava peut être à la fois imposant et intimidant. Pour ceux parmi nous qui s
 
 Cet site est inspiré de tous ces livres de recettes en programmation et suit la même approche du "Comment faire pour...". Chacun de ces Comment faire contient également des codes de démonstration qui font ce que vous voulez et parfois plus. En bref, si vous trouvez le code que vous recherchez et faites un simple copier-coller dans votre programme, vous devriez être en mesure de réussir rapidement. J'ai tenté (enfin, Mark tente et je traduit!) de sur-documenter le code pour rendre plus évident ce qui est tenté, ce qui fait que le code à l'air un peu obèse.
 
-'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des suggestions, questions ou commentaire, contacter la liste de courriel de BioJava. Pour s'y abonner, cliquer ici.
+'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des suggestions, questions ou commentaire, contacter la [mailto://biojava-l@biojava.org liste de courriel] de BioJava. Pour s'y abonner, cliquer ici.
 
-Traduction française: Sylvain Foisy. Donc toute erreur est mienne; contactez-moi pour correction.
+Traduction française: [mailto://sylvain.foisyCHEZbioneq.qc.ca Sylvain Foisy]. Donc toute erreur est mienne; contactez-moi pour correction.
 
 '''Présentation'''
 
