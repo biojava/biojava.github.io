@@ -1,9 +1,11 @@
 == How do I make a CrossProductAlphabet such as a codon Alphabet ==
 
-CrossProductAlphabets result from the multiplication of other Alphabets. CrossProductAlphabets are used to wrap up 2 or more Symbols into a single "cross product" Symbol. For example using a 3 way cross of the DNA alphabet you could wrap a codon as a Symbol. You could then count those codon Symbols in a Count or you could used them in a Distribution.
+CrossProductAlphabets result from the multiplication of other [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets]. CrossProductAlphabets are used to wrap up 2 or more [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols]into a single "cross product" [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbol]. For example using a 3 way cross of the [[wp:DNA|DNA]] alphabet you could wrap a [[wp:codon|codon]] as a [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbol]. You could then count those [[wp:codon|codon]] [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] in a [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] or you could used them in a http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.
+.html Distribution].
 
 CrossProductAlphabets can be created by name (if the component Alphabets are registered in the AlphabetManager) or by making a list of the desired Alphabets and creating the Alphabet from the List. Both approaches are shown in the example below.
 
+<pre>
 import java.util.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -23,3 +25,4 @@ public class CrossProduct {
     System.out.println(codon == codon2);
   }
 }
+</pre>
