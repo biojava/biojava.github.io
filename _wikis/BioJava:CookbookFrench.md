@@ -165,9 +165,12 @@ Copyright
 
 La documentation retrouvée sur ce site demeure la propriété des
 personnes qui y ont contribué. Si vous désirez l'utiliser dans une
-publication, prière d'en faire la demande via la liste de distribution
-de BioJava. Les codes contenus dans ce site sont à licence libre (open
-source). Une bonne définition de la licence libre se trouve ici. Si vous
+publication, prière d'en faire la demande via la [liste de
+distribution](mailto://biojava-l@biojava.org) de BioJava. Les codes
+contenus dans ce site sont [à licence
+libre](http://fr.wikipedia.org/wiki/Open_Source) (open source). Une
+bonne définition de la licence libre se trouve
+[ici](http://www.opensource.org/docs/definition_plain.php). Si vous
 acceptez ces conditions, vous pouvez utiliser les codes de ce site.
 
 --[Foisys](User:Foisys "wikilink") 12:06, 6 February 2006 (EST)
