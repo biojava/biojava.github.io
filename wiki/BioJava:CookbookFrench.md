@@ -60,7 +60,7 @@ Comment faire pour ...?
 `   * Comment dire si deux Alphabets ou Symbols sont identiques?`  
 `   * Comment faire pour créer un Symbol ambigüe comme Y ou R?`
 
-h== Manipulation simples des séquences ===
+### Manipulation simples des séquences
 
 `   * Comment créer une Sequence à partir d'une chaîne de caractères ou transformer un objet Sequence en chaîne de caractères?`  
 `   * Comment obtenir une portion d'une Sequence?`  
