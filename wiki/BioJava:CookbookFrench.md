@@ -28,7 +28,8 @@ cliquer [ici](http://www.biojava.org/mailman/listinfo/biojava-l).
 
 Traduction française: [Sylvain
 Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
-mienne; contactez-moi pour correction.
+mienne; contactez-moi pour correction. Encore mieux: particper au
+concept Wiki et faites-les vous-mêmes!!
 
 Présentation
 ------------
@@ -48,9 +49,10 @@ Comment faire pour ...?
 
 ### Installation
 
-`   * Comment obtenir Java? N.B.: Le fichier ne contient que le plus récent JRE, pas le JDK`  
+`   * `[`Comment` `obtenir`
+`Java?`](http://java.sun.com)` N.B.: Cette page est exclusivement en anglais.`  
 `   * `[`Comment` `obtenir` `et` `installer`
-`BioJava?`](http://biojava.open-bio.org/wiki/BioJava:GetStarted)` N. B.: cette page est exclusivement en anglais`
+`BioJava?`](http://biojava.open-bio.org/wiki/BioJava:GetStarted)` N.B.: cette page est exclusivement en anglais.`
 
 ### Alphabets et Symbols
 
