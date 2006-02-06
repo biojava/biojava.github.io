@@ -1,6 +1,8 @@
 ==Welcome to BioJava==
 See the [http://biojava.open-bio.org/news BioJava news page] for BioJava news.
 
+This site is built by the biojava community. We are currently in the process of moving the old biojava site to this site. Click [[Project:ToDo|here]] for a todo list.
+
 
 == About BioJava ==
 
