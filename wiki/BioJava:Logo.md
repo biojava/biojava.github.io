@@ -10,10 +10,11 @@ new logo then upload your ideas here. As this will be a community
 process feel free to make comments on this page about which logos you
 prefer. --[Mark](User:Mark "wikilink") 21:28, 1 February 2006 (EST)
 
-![](Dilbert_logo.png "fig:Dilbert_logo.png") Dear All, I thought this
-evening I should un-plug / plug-in my own creativity !!! Here is the
-result few BioJava Logos I have designed - suggestions and more welcome
-!!!
+![](Dilbert_logo.png "Dilbert_logo.png")
+
+Dear All, I thought this evening I should un-plug / plug-in my own
+creativity !!! Here is the result few BioJava Logos I have designed -
+suggestions and more welcome !!!
 
 BioJava Logo 1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") BioJava
 Logo 2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") BioJava Logo 3
