@@ -22,10 +22,15 @@ or you could used them in a
 <http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html>
 Distribution].
 
-CrossProductAlphabets can be created by name (if the component Alphabets
-are registered in the AlphabetManager) or by making a list of the
-desired Alphabets and creating the Alphabet from the List. Both
-approaches are shown in the example below.
+CrossProductAlphabets can be created by name (if the component
+[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+are registered in the
+[AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html))
+or by making a list of the desired
+[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+and creating the
+[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+from the List. Both approaches are shown in the example below.
 
     import java.util.*;
     import org.biojava.bio.seq.*;
