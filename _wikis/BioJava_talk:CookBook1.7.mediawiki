@@ -4,8 +4,9 @@ I think we should give pdf link of the publications from personal pages of the a
 
 Hi - I moved your entry in the Discussion section since it might generate comments that are outside the scope of the CookBook. Actually your idea is quite interesting. Why not make a page with some of the papers that were created using BioJava and come back to the Cookbook page and add the link? --[[User:Foisys|Foisys]] 15:19, 6 February 2006 (EST)
 
+
 Hi - I've searched for anything about this and found the followings:
 
 http://www.google.com.br/search?as_q=using+Biojava&num=10&hl=pt-BR&btnG=Pesquisa+Google&as_epq=&as_oq=&as_eq=&lr=&as_ft=i&as_filetype=pdf&as_qdr=all&as_occt=any&as_dt=i&as_sitesearch=&as_rights=&safe=images
 
-:[[User:Guedes|Guedes]] 15:43, 6 February 2006 (EST)
+--[[User:Guedes|Guedes]] 15:43, 6 February 2006 (EST)
