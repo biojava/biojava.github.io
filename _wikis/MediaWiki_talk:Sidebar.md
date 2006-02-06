@@ -13,4 +13,5 @@ permissions
 
 Sylvain - I made you a sysop/Bureaucrat (just what you've always
 wanted!) so you can edit the sidebar and generally wreak havoc in french
-and english.
+and english. --[Jason](User:Jason "wikilink") 14:15, 6 February 2006
+(EST)
