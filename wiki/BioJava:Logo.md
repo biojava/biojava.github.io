@@ -32,3 +32,10 @@ I am a total waste with a pencil but here is an idea: how about
 stylizing the Sun's Java cup (with 0's anbd 1's?) and have the steam
 coming out as a double helix? Anyone with some talent could prototype
 this? [Foisys](User:Foisys "wikilink") 10:55, 6 February 2006 (EST)
+
+Hey Foisys, Thanks for the comments - here it is more new versions -
+
+BioJava Logo 5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") BioJava Logo 6
+![](bj-log4.gif "fig:bj-log4.gif") BioJava Logo 7
+![](bj-cup1.gif "fig:bj-cup1.gif") Happy BJ - --[S
+Khadar](User:S Khadar "wikilink") 15:07, 6 February 2006 (EST)
