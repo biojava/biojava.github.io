@@ -14,8 +14,12 @@ What needs doing?
 -   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
     of it, very laborious indeed (lots of copy and paste). (By start
     I´ll work here. Dickson Guedes )
--   JavaDoc 1.3 - how? link back to old?
--   JavaDoc 1.4 - how? link back to old?
+-   JavaDoc 1.3 - how? link back to old? Links to old
+    established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
+    (EST)
+-   JavaDoc 1.4 - how? link back to old? Links to old
+    established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
+    (EST)
 -   Hackers Guide - easy
 -   Participants - Mostly links to user pages. eg User:Mark. This is not
     ideal. Jason is going to set up a People domain then we can set
