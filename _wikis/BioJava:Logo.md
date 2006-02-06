@@ -31,3 +31,4 @@ Happy BJ --[S Khadar](User:S Khadar "wikilink") 10:03, 6 February 2006
 I am a total waste with a pencil but he is an idea: how about stylizing
 the Sun's Java cup (with 0's anbd 1's?) and have the steam coming out as
 a double helix? Anyone with some talent could prototype this?
+[Foisys](User:Foisys "wikilink") 10:03, 6 February 2006 (EST)
