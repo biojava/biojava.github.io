@@ -46,13 +46,14 @@ citant BioJava, cliquer
 [ici](http://scholar.google.com/scholar?q=biojava&ie=UTF-8&oe=UTF-8&hl=en).
 
 Comment faire pour ...?
+-----------------------
 
-**Installation**
+### Installation
 
 `   * Comment obtenir Java? N.B.: Le fichier ne contient que le plus récent JRE, pas le JDK`  
 `   * Comment obtenir et installer BioJava? N. B.: cette page est exclusivement en anglais`
 
-**Alphabets et Symbols**
+### Alphabets et Symbols
 
 `   * Comment obtenir un Alphabet d'ADN, d'ARN ou de protéine?`  
 `   * Comment faire un Alphabet sur mesure à partir de Symbols sur mesure?`  
@@ -61,7 +62,7 @@ Comment faire pour ...?
 `   * Comment dire si deux Alphabets ou Symbols sont identiques?`  
 `   * Comment faire pour créer un Symbol ambigüe comme Y ou R?`
 
-**Manipulation simples des sÉquences**
+h== Manipulation simples des séquences ===
 
 `   * Comment créer une Sequence à partir d'une chaîne de caractères ou transformer un objet Sequence en chaîne de caractères?`  
 `   * Comment obtenir une portion d'une Sequence?`  
@@ -71,18 +72,18 @@ Comment faire pour ...?
 `   * Comment éditer une Sequence ou un SymbolList?`  
 `   * Comment utiliser une sequence comme expression régulière pour chercher des motifs?`
 
-**Protéomique**
+### Protéomique
 
 `   * Comment calculer la masse et le pI d'un peptide?`
 
-**Traduction**
+### Traduction
 
 `   * Comment traduire une Sequence ou une SymbolList d'ADN ou d'ARN en proteine?`  
 `   * Comment traduire une seul codon en son acide aminé correspondant?`  
 `   * Comment utiliser un code génétique non-standard?`  
 `   * Comment traduire une Sequence dans ses 6 cadres de lectures?`
 
-**Entrée/Sortie des objets Sequence**
+### Entrée/Sortie des objets Sequence
 
 `   * Comment écrire des Sequences en format Fasta?`  
 `   * Comment lire un fichier en format Fasta?`  
@@ -91,12 +92,12 @@ Comment faire pour ...?
 `   * Comment transformer un fichier ABI en Sequence BioJava?`  
 `   * Comment fonctionne les entrées / sorties de fichiers de séquence avec Biojava?`
 
-**Annotations**
+### Annotations
 
 `   * Comment faire la liste des Annotations d'une Sequence?`  
 `   * Comment filtrer une Sequence en se basant sur l'espèce (ou tout autre propriété d'une Annotation)?`
 
-**Positions et caractéristiques (*Features*)**
+### Positions et caractéristiques (*Features*)
 
 `   * Comment faire pour spécifier une PointLocation?`  
 `   * Comment faire pour spécifier une RangeLocation?`  
@@ -105,7 +106,7 @@ Comment faire pour ...?
 `   * Comment filtrer les Features par type?`  
 `   * Comment supprimer un Feature?`
 
-**BLAST et FASTA**
+### BLAST et FASTA
 
 `   * Comment lire un fichier de résultats BLAST?`  
 `   * Comment lire un fichier de résultats FASTA?`  
@@ -114,7 +115,7 @@ Comment faire pour ...?
 `     SearchContentHandler?`  
 `   * Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de Biojava?`
 
-**Comptes et Distributions**
+### Comptes et Distributions
 
 `   * Comment compter les résidus d'une Sequence?`  
 `   * Comment faire pour calculer la fréquence d'un Symbol dans une Sequence?`  
@@ -125,31 +126,32 @@ Comment faire pour ...?
 `   * Comment créer une OrderNDistribution avec un Alphabet sur mesure?`  
 `   * Comment écrire une Distribution en format XML?`
 
-**Matrices et Programmation Dynamique**
+### Matrices et Programmation Dynamique
 
 `   * Comment utiliser une WeightMatrix pour trouver un motif?`  
 `   * Comment créer un HMM semblable à un profile HMMER?`  
 `   * Comment créer un HMM sur mesure? (N. B.: en anglais seulement)`  
 `   * Comment faire un alignement de deux séquences?`
 
-**Interfaces Usagers Graphiques**
+### Interfaces Usagers Graphiques
 
 `   * Comment écrire un algorithme génétique avec BioJava?`
 
-**Interfaces Usagers Graphiques**
+### Interfaces Usagers Graphiques
 
 `   * Comment visualiser Annotations et Features sous la forme d'un arbre?`  
 `   * Comment afficher une Sequence dans un interface graphique?`  
 `   * Comment afficher les coordonnées d'une séquence?`  
 `   * Comment afficher les caractéristiques d'une séquence?`
 
-**Intégration avec des bases de données externes: OBDC**
+### Intégration avec des bases de données externes: OBDC
 
 `   * Comment créer une base de données avec BioSQL et PostgreSQL (N. B.: en anglais seulement. Contribution de D. Huen)`  
 `   * Comment créer une base de données avec BioSQL et Oracle (N. B.: en anglais seulement. Contribution de R. Holland)`  
 `   * Comment ajouter, voir et ôter des objets Séquences d'une base de données BioSQL?`
 
-*Désaveu de responsabilité*
+Désaveu de responsabilité
+-------------------------
 
 Ces codes sont généreusement offerts par des gens qui ont probablement
 mieux à faire. Lorsque c'est possible, nous les avons testés mais des
@@ -160,7 +162,8 @@ responsables si quelque chose tourne mal. Soyez un bon programmeur et
 testez vous-même vos codes avant de les insérer dans votre banque de
 données.
 
-*Copyright*
+Copyright
+---------
 
 La documentation retrouvée sur ce site demeure la propriété des
 personnes qui y ont contribué. Si vous désirez l'utiliser dans une
@@ -168,3 +171,5 @@ publication, prière d'en faire la demande via la liste de distribution
 de BioJava. Les codes contenus dans ce site sont à licence libre (open
 source). Une bonne définition de la licence libre se trouve ici. Si vous
 acceptez ces conditions, vous pouvez utiliser les codes de ce site.
+
+--[Foisys](User:Foisys "wikilink") 12:06, 6 February 2006 (EST)
