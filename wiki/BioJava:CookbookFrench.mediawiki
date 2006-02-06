@@ -16,7 +16,7 @@ Une présentation en format Powerpoint de Mark décrivant Biojava se trouve ici.
 
 '''Publications utilisant BioJava'''
 
-Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJava, cliquer ici.
+Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJava, cliquer [http://scholar.google.com/scholar?q=biojava&ie=UTF-8&oe=UTF-8&hl=en ici].
 
 Comment faire pour ...?
 
