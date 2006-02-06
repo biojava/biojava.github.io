@@ -10,7 +10,7 @@ In BioJava
 are collections of
 [Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
 Common biological alphabets ([DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink") etc) are
+[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) are
 registered with the BioJava
 [AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
 at startup and can be accessed by name. The [DNA](wp:DNA "wikilink"),
