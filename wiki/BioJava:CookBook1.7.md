@@ -191,3 +191,5 @@ The code is [open-source](wp:Open source "wikilink"). A good definition
 of open-source can be found
 [here](http://www.opensource.org/docs/definition_plain.php). If you
 agree with that definition then you can use it.
+
+--[Dickson Guedes](User:Guedes "wikilink") 16:00, 6 February 2006 (EST)
