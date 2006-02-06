@@ -6,7 +6,9 @@ What needs doing?
 -----------------
 
 -   About BioJava
--   Getting BioJava - easy
+-   Getting BioJava - easy (started work - still some missing
+    parts --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
+    (EST))
 -   Thanks - already done
 -   Getting Started
 -   Tutorial - laborious but straightforward, some parts are in need of
