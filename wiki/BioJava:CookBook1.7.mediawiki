@@ -28,8 +28,8 @@ Click here to search Google Scholar for papers using BioJava.
 
 === Setup ===
 
-* [http://java.sun.com/downloads/ Where do I get a Java installation]?
-* [[BioJava:GetStarted|How do I get and install BioJava]]?
+    * [http://java.sun.com/downloads/ Where do I get a Java installation]?
+    * [[BioJava:GetStarted|How do I get and install BioJava]]?
 
 === Alphabets and Symbols ===
 
