@@ -7,7 +7,7 @@ Dear BJ Buddies,
 I am Shameer Khadar (SK), I have Physics (BSc) and Computational Biology
 (MSc) background, presently playing around with protein sequence,
 structure, genome analysis, OpenSource programming for Web-based
-database and server development in Prof. Dr. R.Sowdhamini's Lab
+database and server development in Prof. R.Sowdhamini's Lab
 [CAPS](http://caps.ncbs.res.in), The Computational Biology Group - NCBS
 [National Centre for Biological Sciences](http://www.ncbs.res.in) -
 TIFR - B'Lore - India. I extensively used BioJava for teaching purpose
