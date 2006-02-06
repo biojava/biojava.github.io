@@ -73,16 +73,16 @@ Comment faire pour ...?
 `   * Comment éditer une Sequence ou un SymbolList?`  
 `   * Comment utiliser une sequence comme expression régulière pour chercher des motifs?`
 
-### Protéomique
-
-`   * Comment calculer la masse et le pI d'un peptide?`
-
 ### Traduction
 
 `   * Comment traduire une Sequence ou une SymbolList d'ADN ou d'ARN en proteine?`  
 `   * Comment traduire une seul codon en son acide aminé correspondant?`  
 `   * Comment utiliser un code génétique non-standard?`  
 `   * Comment traduire une Sequence dans ses 6 cadres de lectures?`
+
+### Protéomique
+
+`   * Comment calculer la masse et le pI d'un peptide?`
 
 ### Entrée/Sortie des objets Sequence
 
@@ -125,7 +125,8 @@ Comment faire pour ...?
 `   * Comment trouver la quantité d'information ou d'entropie d'une Distribution?`  
 `   * Comment savoir facilement si deux Distributions sont identiques?`  
 `   * Comment créer une OrderNDistribution avec un Alphabet sur mesure?`  
-`   * Comment écrire une Distribution en format XML?`
+`   * Comment écrire une Distribution en format XML?`  
+`   * Comment construire un échantilloneur de Gibbs à l'aide de Distribution?`
 
 ### Matrices et Programmation Dynamique
 
@@ -136,20 +137,27 @@ Comment faire pour ...?
 
 ### Interfaces Usagers Graphiques
 
-`   * Comment écrire un algorithme génétique avec BioJava?`
-
-### Interfaces Usagers Graphiques
-
 `   * Comment visualiser Annotations et Features sous la forme d'un arbre?`  
 `   * Comment afficher une Sequence dans un interface graphique?`  
 `   * Comment afficher les coordonnées d'une séquence?`  
 `   * Comment afficher les caractéristiques d'une séquence?`
 
-### Intégration avec des bases de données externes: OBDC
+### Intégration avec des bases de données externes: OBDC / JDBC / BioSQL
 
 `   * Comment créer une base de données avec BioSQL et PostgreSQL (N. B.: en anglais seulement. Contribution de D. Huen)`  
 `   * Comment créer une base de données avec BioSQL et Oracle (N. B.: en anglais seulement. Contribution de R. Holland)`  
 `   * Comment ajouter, voir et ôter des objets Séquences d'une base de données BioSQL?`
+
+### Algorithmes génétiques
+
+`   * Comment écrire un algorithme génétique avec BioJava?`
+
+### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
+
+`   * Introduction à l'API de STRAP`  
+`   * Interactions STRAP / BioJava`  
+`   * Comment faire un alignement multiple de séquences?`  
+`   * Comment prédire la structure secondaire d'une protéine?`
 
 Désaveu de responsabilité
 -------------------------
