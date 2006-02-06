@@ -34,11 +34,11 @@ Click here to search Google Scholar for papers using BioJava.
 === Alphabets and Symbols ===
 
     * [[Biojava:Cookbook:Alphabets|How do I get a DNA, RNA or Protein Alphabet]]?
-    * How do I make a custom Alphabet from custom Symbols?
-    * How do I make a CrossProductAlphabet such as a codon Alphabet ?
-    * How do I break Symbols from CrossProduct Alphabets into their component Symbols?
-    * How can I tell if two Alphabets or Symbols are equal?
-    * How can I make an ambiguous Symbol like Y or R?
+    * [[Biojava:Cookbook:Alphabets:Custom|How do I make a custom Alphabet from custom Symbols]]?
+    * [[Biojava:Cookbook:Alphabets:CrossProduct|How do I make a CrossProductAlphabet such as a codon Alphabet]]?
+    * [[Biojava:Cookbook:Alphabets:Component|How do I break Symbols from CrossProduct Alphabets into their component Symbols]]?
+    * [[Biojava:Cookbook:Alphabets:Cononical|How can I tell if two Alphabets or Symbols are equal]]?
+    * [[Biojava:Cookbook:Alphabets:Ambiguous|How can I make an ambiguous Symbol like Y or R]]?
 
 === Basic Sequence Manipulation ===
 
