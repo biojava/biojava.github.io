@@ -68,11 +68,18 @@ How Do I....?
 
 `   * `[`How` `do` `I` `get` `a` `DNA,` `RNA` `or` `Protein`
 `Alphabet`](Biojava:Cookbook:Alphabets "wikilink")`?`  
-`   * How do I make a custom Alphabet from custom Symbols?`  
-`   * How do I make a CrossProductAlphabet such as a codon Alphabet ?`  
-`   * How do I break Symbols from CrossProduct Alphabets into their component Symbols?`  
-`   * How can I tell if two Alphabets or Symbols are equal?`  
-`   * How can I make an ambiguous Symbol like Y or R?`
+`   * `[`How` `do` `I` `make` `a` `custom` `Alphabet` `from` `custom`
+`Symbols`](Biojava:Cookbook:Alphabets:Custom "wikilink")`?`  
+`   * `[`How` `do` `I` `make` `a` `CrossProductAlphabet` `such` `as` `a`
+`codon`
+`Alphabet`](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")`?`  
+`   * `[`How` `do` `I` `break` `Symbols` `from` `CrossProduct`
+`Alphabets` `into` `their` `component`
+`Symbols`](Biojava:Cookbook:Alphabets:Component "wikilink")`?`  
+`   * `[`How` `can` `I` `tell` `if` `two` `Alphabets` `or` `Symbols`
+`are` `equal`](Biojava:Cookbook:Alphabets:Cononical "wikilink")`?`  
+`   * `[`How` `can` `I` `make` `an` `ambiguous` `Symbol` `like` `Y` `or`
+`R`](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")`?`
 
 ### Basic Sequence Manipulation
 
