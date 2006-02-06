@@ -49,7 +49,8 @@ Comment faire pour ...?
 ### Installation
 
 `   * Comment obtenir Java? N.B.: Le fichier ne contient que le plus récent JRE, pas le JDK`  
-`   * Comment obtenir et installer BioJava? N. B.: cette page est exclusivement en anglais`
+`   * `[`Comment` `obtenir` `et` `installer`
+`BioJava?`](http://biojava.open-bio.org/wiki/BioJava:GettingStarted)` N. B.: cette page est exclusivement en anglais`
 
 ### Alphabets et Symbols
 
