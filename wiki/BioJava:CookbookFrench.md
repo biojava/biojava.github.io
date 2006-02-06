@@ -5,7 +5,8 @@ title: BioJava:CookbookFrench
 BioJava quand il y a le feu - Un tutoriel et un manuel pour les gens pressés
 ----------------------------------------------------------------------------
 
-**Introduction**
+Introduction
+------------
 
 BioJava peut être à la fois imposant et intimidant. Pour ceux parmi nous
 qui sommes pressés, il y a vraiment assez de matériel pour faire tourner
@@ -31,12 +32,14 @@ Traduction française: [Sylvain
 Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
 mienne; contactez-moi pour correction.
 
-**Présentation**
+Présentation
+------------
 
 Une présentation en format Powerpoint de Mark décrivant Biojava se
 trouve ici.
 
-**Publications utilisant BioJava**
+Publications utilisant BioJava
+------------------------------
 
 Pour obtenir la liste des articles contenus dans Google Scholar et
 citant BioJava, cliquer
