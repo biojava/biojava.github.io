@@ -27,7 +27,8 @@ list](mailto:biojava-l@biojava.org). To subscribe to this list go
 
 These demos are tested with BioJava 1.3 and Java 1.4
 
-### Announcing
+Announcing
+----------
 
 You can now read BioJava in Anger in
 [French](http://www3.sympatico.ca/foisys/bj_in_anger) (Translated by
@@ -42,12 +43,14 @@ How about simplified
 [Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
-### Presentations
+Presentations
+-------------
 
 This is a powerpoint presentation on the BioJava core API that I have
 given a few times.
 
-### Publications
+Publications
+------------
 
 Click here to search Google Scholar for papers using BioJava.
 
