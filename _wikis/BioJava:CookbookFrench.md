@@ -9,13 +9,13 @@ La librairie BioJava peut être à la fois imposante et intimidante. Pour
 ceux parmi nous qui sommes pressés, il y a vraiment assez de matériel
 pour faire tourner la tête. Ce document est conçu pour vous aider à
 développer des applications utilisant BioJava, applications capables
-d'accomplir 99% des tâches les plus courantes sans avoir à comprendre
+d'accomplir 99% des tâches les plus courantes, sans avoir à comprendre
 99% de l'API de BioJava.
 
 Cet site est inspiré de tous ces livres de recettes en programmation et
-suit la même approche du "Comment faire pour...". Chacun de ces Comment
-faire contient également des codes de démonstration qui font ce que vous
-voulez et parfois plus. En bref, si vous trouvez le code que vous
+suit la même approche du "Comment faire pour...". Chacune de ces
+recettes contient également des codes de démonstration qui font ce que
+vous voulez et parfois plus. En bref, si vous trouvez le code que vous
 recherchez et faites un simple copier-coller dans votre programme, vous
 devriez être en mesure de réussir rapidement. J'ai tenté (enfin, Mark
 tente et je traduit!) de sur-documenter le code pour rendre plus évident
