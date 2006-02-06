@@ -19,8 +19,7 @@ code that does what you want and sometimes more. Basically if you find
 the code you want and copy and paste it into your program you should be
 up and running quickly. I have endeavoured to over document the code to
 make it more obvious what I am doing so some of the code might look a
-bit bloated. Go [here](Biojava:Cookbook "wikilink") to view the
-cookbook.
+bit bloated.
 
 'BioJava in Anger' is maintained by [Mark
 Schreiber](User:Mark "wikilink"). If you have any suggestions, questions
