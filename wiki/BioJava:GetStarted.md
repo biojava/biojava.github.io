@@ -8,9 +8,10 @@ Introduction
 BioJava will run on any computer with a Java virtual machine complying
 to the Java 2 Standard Edition (J2SE) 1.4 (or later) specifications.
 Java implementations for Linux, Windows, and Solaris are available to
-download from Sun's java website. Recent versions of MacOS X include a
-suitable Java implementation as standard. Java is also available on many
-other platforms: if in doubt, contact your vendor.
+download from [Sun's java website](http://java.sun.com). Recent versions
+of MacOS X include a suitable Java implementation as standard. Java is
+also available on many other platforms: if in doubt, contact your
+vendor.
 
 BioJava binaries are distributed in .jar (Java ARchive) format. You can
 always get the latest release version in the binaries directory of the
