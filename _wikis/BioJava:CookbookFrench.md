@@ -5,11 +5,12 @@ title: BioJava:CookbookFrench
 BioJava quand il y a le feu - Un tutoriel et un manuel pour les gens pressés
 ----------------------------------------------------------------------------
 
-BioJava peut être à la fois imposant et intimidant. Pour ceux parmi nous
-qui sommes pressés, il y a vraiment assez de matériel pour faire tourner
-la tête. Ce document est conçu pour vous aider à développer des
-applications utilisant BioJava capables d'accomplir 99% des tâches les
-plus communes sans avoir à comprendre 99% de l'API de BioJava.
+La librairie BioJava peut être à la fois imposante et intimidante. Pour
+ceux parmi nous qui sommes pressés, il y a vraiment assez de matériel
+pour faire tourner la tête. Ce document est conçu pour vous aider à
+développer des applications utilisant BioJava, applications capables
+d'accomplir 99% des tâches les plus courantes sans avoir à comprendre
+99% de l'API de BioJava.
 
 Cet site est inspiré de tous ces livres de recettes en programmation et
 suit la même approche du "Comment faire pour...". Chacun de ces Comment
