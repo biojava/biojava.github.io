@@ -56,7 +56,8 @@ logo. --[Mark](User:Mark "wikilink") 21:21, 1 February 2006 (EST)
 
 '''4 New Logos available for evaluation [here](Project:logo "wikilink")
 '''--[S Khadar](User:S Khadar "wikilink") 10:16, 6 February 2006 (EST)
-SK '''3 more new logo added with input from a BJ buddy ''' --[S
+
+'''3 more new logo added with input from a BJ buddy ''' --[S
 Khadar](User:S Khadar "wikilink") 15:27, 6 February 2006 (EST)
 
 Documentation
