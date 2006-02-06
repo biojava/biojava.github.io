@@ -12,7 +12,8 @@ What needs doing?
 -   Tutorial - laborious but straightforward, some parts are in need of
     updating and/or are no longer relevant
 -   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
-    of it, very laborious indeed (lots of copy and paste).
+    of it, very laborious indeed (lots of copy and paste). (By start
+    I´ll work here. **Guedes** )
 -   JavaDoc 1.3 - how? link back to old?
 -   JavaDoc 1.4 - how? link back to old?
 -   Hackers Guide - easy
