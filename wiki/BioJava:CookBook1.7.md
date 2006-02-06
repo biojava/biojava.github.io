@@ -30,19 +30,16 @@ These demos are tested with BioJava 1.3 and Java 1.4
 ### Announcing
 
 You can now read BioJava in Anger in
-[http://www3.sympatico.ca/foisys/bj\_in\_anger
-French](http://www3.sympatico.ca/foisys/bj_in_anger French "wikilink")
-(Translated by Sylvain Foisy).
+[French](http://www3.sympatico.ca/foisys/bj_in_anger) (Translated by
+Sylvain Foisy).
 
 You can also read BioJava in Anger in
-[http://www.geocities.jp/bio\_portal/bj\_in\_anger\_ja/
-Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Japanese "wikilink")
+[Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
 (Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
 2004).
 
 How about simplified
-[http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html
-Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese "wikilink")?
+[Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
 ### Presentations
