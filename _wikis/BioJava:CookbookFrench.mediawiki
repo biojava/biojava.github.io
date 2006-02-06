@@ -127,6 +127,6 @@ Ces codes sont généreusement offerts par des gens qui ont probablement mieux �
 
 == Copyright ==
 
-La documentation retrouvée sur ce site demeure la propriété des personnes qui y ont contribué. Si vous désirez l'utiliser dans une publication, prière d'en faire la demande via la liste de distribution de BioJava. Les codes contenus dans ce site sont à licence libre (open source). Une bonne définition de la licence libre se trouve ici. Si vous acceptez ces conditions, vous pouvez utiliser les codes de ce site.
+La documentation retrouvée sur ce site demeure la propriété des personnes qui y ont contribué. Si vous désirez l'utiliser dans une publication, prière d'en faire la demande via la [mailto://biojava-l@biojava.org liste de distribution] de BioJava. Les codes contenus dans ce site sont [http://fr.wikipedia.org/wiki/Open_Source à licence libre] (open source). Une bonne définition de la licence libre se trouve [http://www.opensource.org/docs/definition_plain.php ici]. Si vous acceptez ces conditions, vous pouvez utiliser les codes de ce site.
 
 --[[User:Foisys|Foisys]] 12:06, 6 February 2006 (EST)
