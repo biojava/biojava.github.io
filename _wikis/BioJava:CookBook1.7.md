@@ -66,7 +66,8 @@ How Do I....?
 
 ### Alphabets and Symbols
 
-`   * How do I get a DNA, RNA or Protein Alphabet?`  
+`   * `[`How` `do` `I` `get` `a` `DNA,` `RNA` `or` `Protein`
+`Alphabet`](Biojava:Cookbook:Alphabets "wikilink")`?`  
 `   * How do I make a custom Alphabet from custom Symbols?`  
 `   * How do I make a CrossProductAlphabet such as a codon Alphabet ?`  
 `   * How do I break Symbols from CrossProduct Alphabets into their component Symbols?`  
