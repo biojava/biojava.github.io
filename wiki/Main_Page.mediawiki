@@ -29,7 +29,7 @@ The BioJava project needs a new Logo. The sunflower in the top left corner of th
 
 === Cookbook ===
 
-The biojava project maintains a cookbook of examples that help you perform common tasks and get you started using biojava. The cookbook is affectionately known as [[BioJava:Cookbook|Biojava in Anger]].
+The biojava project maintains a cookbook of examples that help you perform common tasks and get you started using biojava. The cookbook is affectionately known as [[BioJava:Cookbook|Biojava in Anger]]. A [[BioJava:CookbookFrench|French version]] is also available.
 
 === API Documentation (JavaDocs) ===
 
