@@ -20,7 +20,10 @@ BioJava Logo 1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") BioJava
 Logo 2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") BioJava Logo 3
 ![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif")
 
-BioJava Logo 4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif") Any of
-you can help me to put this logo to set wgLogo - I tried it but am not
-able to !! Happy BJ --[S Khadar](User:S Khadar "wikilink") 10:03, 6
-February 2006 (EST)
+BioJava Logo 4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif")
+
+My BJ Buddies can help me to put any of this logo to set wgLogo - I
+tried it but am not able to !!
+
+Happy BJ --[S Khadar](User:S Khadar "wikilink") 10:03, 6 February 2006
+(EST)
