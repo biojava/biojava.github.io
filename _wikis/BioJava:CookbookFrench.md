@@ -23,11 +23,13 @@ tente et je traduit!) de sur-documenter le code pour rendre plus évident
 ce qui est tenté, ce qui fait que le code à l'air un peu obèse.
 
 'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des
-suggestions, questions ou commentaire, contacter la liste de courriel de
-BioJava. Pour s'y abonner, cliquer ici.
+suggestions, questions ou commentaire, contacter la [liste de
+courriel](mailto://biojava-l@biojava.org) de BioJava. Pour s'y abonner,
+cliquer ici.
 
-Traduction française: Sylvain Foisy. Donc toute erreur est mienne;
-contactez-moi pour correction.
+Traduction française: [Sylvain
+Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
+mienne; contactez-moi pour correction.
 
 **Présentation**
 
