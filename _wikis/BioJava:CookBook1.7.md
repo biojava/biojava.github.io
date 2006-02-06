@@ -166,7 +166,8 @@ How Do I....?
 `   * How do I make a multiple sequence alignment?`  
 `   * How can predict protein secondary structure?`
 
-### Disclaimer
+Disclaimer
+----------
 
 This code is generously donated by people who probably have better
 things to do. Where possible we test it but errors may have crept in. As
