@@ -58,8 +58,10 @@ logo. --[Mark](User:Mark "wikilink") 21:21, 1 February 2006 (EST)
 [page](Project:logo "wikilink") '''--[S
 Khadar](User:S Khadar "wikilink") 10:16, 6 February 2006 (EST) SK
 
-Cookbook
---------
+Documentation
+-------------
+
+### Cookbook
 
 BioJava can be both big and intimidating. For those of us who are in a
 hurry there really is a whole lot there to get your head around. This
