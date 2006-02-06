@@ -19,8 +19,8 @@ You could then count those [codon](wp:codon "wikilink")
 in a
 [Count](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html)
 or you could used them in a
-<http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution>.
-.html Distribution].
+<http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html>
+Distribution].
 
 CrossProductAlphabets can be created by name (if the component Alphabets
 are registered in the AlphabetManager) or by making a list of the
