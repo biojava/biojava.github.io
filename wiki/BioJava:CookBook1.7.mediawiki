@@ -8,7 +8,7 @@ The page was inspired by various programming cookbooks and follows a "How do I..
 
 These demos are tested with BioJava 1.3 and Java 1.4
 
-=== Announcing ===
+== Announcing ==
 
 You can now read BioJava in Anger in [http://www3.sympatico.ca/foisys/bj_in_anger French] (Translated by Sylvain Foisy).
 
@@ -16,11 +16,11 @@ You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_
 
 How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
 
-=== Presentations ===
+== Presentations ==
 
 This is a powerpoint presentation on the BioJava core API that I have given a few times.
 
-=== Publications ===
+== Publications ==
 
 Click here to search Google Scholar for papers using BioJava.
 
