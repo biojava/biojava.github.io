@@ -5,9 +5,6 @@ title: BioJava:CookbookFrench
 BioJava quand il y a le feu - Un tutoriel et un manuel pour les gens pressés
 ----------------------------------------------------------------------------
 
-Introduction
-------------
-
 BioJava peut être à la fois imposant et intimidant. Pour ceux parmi nous
 qui sommes pressés, il y a vraiment assez de matériel pour faire tourner
 la tête. Ce document est conçu pour vous aider à développer des
