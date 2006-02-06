@@ -59,9 +59,10 @@ How Do I....?
 
 ### Setup
 
--   [Where do I get a Java
-    installation](http://java.sun.com/downloads/)?
--   [How do I get and install BioJava](BioJava:GetStarted "wikilink")?
+`   * `[`Where` `do` `I` `get` `a` `Java`
+`installation`](http://java.sun.com/downloads/)`?`  
+`   * `[`How` `do` `I` `get` `and` `install`
+`BioJava`](BioJava:GetStarted "wikilink")`?`
 
 ### Alphabets and Symbols
 
