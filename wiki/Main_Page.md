@@ -54,9 +54,9 @@ Everyone feel free to make your comments about which ones you like. At
 some as yet undecided point one will become the official
 logo. --[Mark](User:Mark "wikilink") 21:21, 1 February 2006 (EST)
 
-'''4 New Logos available for evaluation here
-[page](Project:logo "wikilink") '''--[S
-Khadar](User:S Khadar "wikilink") 10:16, 6 February 2006 (EST) SK
+'''4 New Logos available for evaluation [here](Project:logo "wikilink")
+'''--[S Khadar](User:S Khadar "wikilink") 10:16, 6 February 2006 (EST)
+SK
 
 Documentation
 -------------
