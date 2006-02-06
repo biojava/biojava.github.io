@@ -18,3 +18,8 @@ Hi - I've searched for anything about this and found the followings:
 <http://www.google.com.br/search?as_q=using+Biojava&num=10&hl=pt-BR&btnG=Pesquisa+Google&as_epq>=&as\_oq=&as\_eq=&lr=&as\_ft=i&as\_filetype=pdf&as\_qdr=all&as\_occt=any&as\_dt=i&as\_sitesearch=&as\_rights=&safe=images
 
 --[Guedes](User:Guedes "wikilink") 15:43, 6 February 2006 (EST)
+
+Hi- That's the link the have put in the french version:
+<http://scholar.google.com/scholar?q=biojava&ie=UTF-8&oe=UTF-8&hl=en>.
+It is using sholar.google.com --[Foisys](User:Foisys "wikilink") 15:47,
+6 February 2006 (EST)
