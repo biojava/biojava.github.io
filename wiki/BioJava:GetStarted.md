@@ -14,8 +14,9 @@ also available on many other platforms: if in doubt, contact your
 vendor.
 
 BioJava binaries are distributed in .jar (Java ARchive) format. You can
-always get the latest release version in the binaries directory of the
-download area. You will also need:
+always get the latest release version in the [binaries
+directory](http://www.biojava.org/download/binaries) of the [download
+area](http://www.biojava.org/download). You will also need:
 
 `   * bytecode-0.92.jar`  
 `   * commons-cli.jar`  
