@@ -24,7 +24,8 @@ What needs doing?
 -   JavaDoc 1.4 - how? link back to old? Links to old
     established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
     (EST)
--   Hackers Guide - easy
+-   Hackers Guide - Done --[Foisys](User:Foisys "wikilink") 16:37, 6
+    February 2006 (EST)
 -   Participants - Mostly links to user pages. eg User:Mark. This is not
     ideal. Jason is going to set up a People domain then we can set
     User:Mark to redirect to People:Mark Schreiber
