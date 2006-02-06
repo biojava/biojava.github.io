@@ -37,5 +37,7 @@ Hey Foisys, Thanks for the comments - here it is more new versions -
 
 BioJava Logo 5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") BioJava Logo 6
 ![](bj-log4.gif "fig:bj-log4.gif") BioJava Logo 7
-![](bj-cup1.gif "fig:bj-cup1.gif") Happy BJ - --[S
-Khadar](User:S Khadar "wikilink") 15:07, 6 February 2006 (EST)
+![](bj-cup1.gif "fig:bj-cup1.gif")
+
+Happy BJ - --[S Khadar](User:S Khadar "wikilink") 15:07, 6 February 2006
+(EST)
