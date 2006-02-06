@@ -6,10 +6,10 @@ What needs doing?
 -----------------
 
 -   About BioJava
--   Getting BioJava - easy (Done --[Foisys](User:Foisys "wikilink")
-    12:49, 6 February 2006 (EST))
+-   Getting BioJava - easy
 -   Thanks - already done
--   Getting Started
+-   Getting Started (Done --[Foisys](User:Foisys "wikilink") 12:49, 6
+    February 2006 (EST))
 -   Tutorial - laborious but straightforward, some parts are in need of
     updating and/or are no longer relevant
 -   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
