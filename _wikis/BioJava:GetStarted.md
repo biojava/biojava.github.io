@@ -70,9 +70,12 @@ may have to create this directory yourself). For other platforms,
 consult your Java vendor.
 
 You can now compile and run BioJava programs using the *javac* and
-*java* commands. You might like to look at the tutorial and [API
-documentation](http://www.biojava.org/docs/api/index.html), and try the
-demo programs included in the source distribution (see below).
+*java* commands. You might like to look at the
+[tutorial](http://biojava.open-bio.org/wiki/BioJava:Tutorial), [API
+documentation](http://www.biojava.org/docs/api/index.html) and the
+[BioJava in anger](http://biojava.open-bio.org/wiki/BioJava:Cookbook)
+section . Finally, you can learn a lot about BioJava by trying the demo
+programs included in the source distribution (see below).
 
 Building your own
 -----------------
