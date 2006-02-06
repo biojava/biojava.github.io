@@ -71,3 +71,37 @@ You can now compile and run BioJava programs using the javac and java
 commands. You might like to look at the tutorial and API documentation,
 and try the demo programs included in the source distribution (see
 below).
+
+Building your own
+-----------------
+
+If you want to modify BioJava, you can obtain a copy of the source code
+from the Source directory of the download area. Source releases are
+distributed in .tar.gz format. You can also obtain up-to-the-minute
+source code from the Nightly build site or from anonymous CVS.
+
+BioJava is built using the ANT build tool, a Java-specific equivalent of
+the common Make utilities. Please download and install the latest
+version of ANT (currently 1.6.1). It is available here.
+
+To build the library, just change into the biojava-live directory and
+type ant. The final JAR file will be placed in the ant-build directory.
+You can also use the command ant javadocs-biojava to build the API
+documentation.
+
+Building the demo programs
+--------------------------
+
+The source distribution contains a number of small demo programs. Once
+you have a working biojava.jar on your classpath, these can be compiled
+directly using javac from the demos directory.
+
+` (unix)`  
+` cd demos`  
+` javac seq/TestEmbl.java`  
+` java seq.TestEmbl seq/AL121903.embl`  
+` `  
+` (windows)`  
+` cd demos`  
+` javac seq\TestEmbl.java`  
+` java seq.TestEmbl seq\AL121903.embl`
