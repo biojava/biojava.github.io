@@ -12,3 +12,12 @@ your idea is quite interesting. Why not make a page with some of the
 papers that were created using BioJava and come back to the Cookbook
 page and add the link? --[Foisys](User:Foisys "wikilink") 15:19, 6
 February 2006 (EST)
+
+Hi - I've searched for anything about this and found the followings:
+
+<http://www.google.com.br/search?as_q=using+Biojava&num=10&hl=pt-BR&btnG=Pesquisa+Google&as_epq>=&as\_oq=&as\_eq=&lr=&as\_ft=i&as\_filetype=pdf&as\_qdr=all&as\_occt=any&as\_dt=i&as\_sitesearch=&as\_rights=&safe=images
+
+  
+[Guedes](User:Guedes "wikilink") 15:43, 6 February 2006 (EST)
+
+
