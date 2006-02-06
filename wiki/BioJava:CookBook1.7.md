@@ -31,8 +31,8 @@ Announcing
 ----------
 
 You can now read BioJava in Anger in
-[French](http://www3.sympatico.ca/foisys/bj_in_anger) (Translated by
-Sylvain Foisy).
+[French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
+Foisy).
 
 You can also read BioJava in Anger in
 [Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
