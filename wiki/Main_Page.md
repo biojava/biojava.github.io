@@ -66,6 +66,7 @@ Documentation
 The biojava project maintains a cookbook of examples that help you
 perform common tasks and get you started using biojava. The cookbook is
 affectionately known as [Biojava in Anger](BioJava:Cookbook "wikilink").
+A [French version](BioJava:CookbookFrench "wikilink") is also available.
 
 ### API Documentation (JavaDocs)
 
