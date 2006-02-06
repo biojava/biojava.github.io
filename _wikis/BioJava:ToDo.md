@@ -13,7 +13,7 @@ What needs doing?
     updating and/or are no longer relevant
 -   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
     of it, very laborious indeed (lots of copy and paste). (By start
-    I´ll work here. **Guedes** )
+    I´ll work here. Dickson Guedes )
 -   JavaDoc 1.3 - how? link back to old?
 -   JavaDoc 1.4 - how? link back to old?
 -   Hackers Guide - easy
