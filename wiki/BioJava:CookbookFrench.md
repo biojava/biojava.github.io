@@ -39,7 +39,8 @@ trouve ici.
 **Publications utilisant BioJava**
 
 Pour obtenir la liste des articles contenus dans Google Scholar et
-citant BioJava, cliquer ici.
+citant BioJava, cliquer
+[ici](http://scholar.google.com/scholar?q=biojava&ie=UTF-8&oe=UTF-8&hl=en).
 
 Comment faire pour ...?
 
