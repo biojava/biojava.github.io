@@ -52,7 +52,10 @@ given a few times.
 Publications
 ------------
 
-Click here to search Google Scholar for papers using BioJava.
+Click here to search Google Scholar for papers using BioJava. Why dont
+we give a list of publications ? I think we should give pdf link of the
+publications from personal pages of the authours -- --[S
+Khadar](User:S Khadar "wikilink") 15:13, 6 February 2006 (EST)
 
 How Do I....?
 -------------
