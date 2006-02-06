@@ -25,7 +25,7 @@ ce qui est tenté, ce qui fait que le code à l'air un peu obèse.
 'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des
 suggestions, questions ou commentaire, contacter la [liste de
 courriel](mailto://biojava-l@biojava.org) de BioJava. Pour s'y abonner,
-cliquer ici.
+cliquer [ici](http://www.biojava.org/mailman/listinfo/biojava-l).
 
 Traduction française: [Sylvain
 Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
