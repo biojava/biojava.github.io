@@ -59,8 +59,9 @@ How Do I....?
 
 ### Setup
 
-`   * Where do I get a Java installation?`  
-`   * How do I get and install BioJava?`
+-   [Where do I get a Java
+    installation](http://java.sun.com/downloads/)?
+-   [[BioJava:GetStarted|How do I get and install BioJava]?
 
 ### Alphabets and Symbols
 
