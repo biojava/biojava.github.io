@@ -55,6 +55,43 @@ can be ambiguous. For further discussion of
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 follow this link.
 
+    <FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> biojava_in_anger;
+    <FONT COLOR="#000000">
+    <FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.util.*;
+    <FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> org.biojava.bio.seq.*;
+
+    <FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> org.biojava.bio.symbol.*;
+    <FONT COLOR="#000000">
+    <FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> BreakingComponents {
+    <FONT COLOR="#000000">  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> main(String[] args) {
+
+    <FONT COLOR="#000000">    </FONT><FONT COLOR="#008000">//make the 'codon' alphabet</FONT><FONT COLOR="#000000">
+    <FONT COLOR="#000000">    List l = Collections.nCopies(</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, DNATools.getDNA());
+    <FONT COLOR="#000000">    Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);
+    <FONT COLOR="#000000">
+    <FONT COLOR="#000000">    </FONT><FONT COLOR="#008000">//get the first symbol in the alphabet</FONT><FONT COLOR="#000000">
+    <FONT COLOR="#000000">    Iterator iter = ((FiniteAlphabet)alpha).iterator();
+    <FONT COLOR="#000000">    AtomicSymbol codon = (AtomicSymbol)iter.next();
+
+    <FONT COLOR="#000000">    System.out.print(codon.getName()+</FONT><FONT COLOR="#0000ff">" is made of: "</FONT><FONT COLOR="#000000">);
+    <FONT COLOR="#000000">
+    <FONT COLOR="#000000">    </FONT><FONT COLOR="#008000">//break it into a list its components</FONT><FONT COLOR="#000000">
+    <FONT COLOR="#000000">    List symbols = codon.getSymbols();
+    <FONT COLOR="#000000">    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000">(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; symbols.size(); i++){
+
+    <FONT COLOR="#000000">      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000">(i != </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">)
+    <FONT COLOR="#000000">        System.out.print(</FONT><FONT COLOR="#0000ff">", "</FONT><FONT COLOR="#000000">);
+    <FONT COLOR="#000000">      Symbol sym = (Symbol)symbols.get(i);
+    <FONT COLOR="#000000">      System.out.print(sym.getName());
+    <FONT COLOR="#000000">    }
+    <FONT COLOR="#000000">  }
+
+    <FONT COLOR="#000000">}
+    </FONT>
+
+Teste
+-----
+
     package biojava_in_anger;
 
     import java.util.*;
