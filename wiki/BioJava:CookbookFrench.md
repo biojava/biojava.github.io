@@ -50,7 +50,7 @@ Comment faire pour ...?
 ### Installation
 
 `   * `[`Comment` `obtenir`
-`Java?`](http://java.sun.com)` N.B.: Cette page est exclusivement en anglais.`  
+`Java?`](http://java.sun.com/downloads)` N.B.: Cette page est exclusivement en anglais.`  
 `   * `[`Comment` `obtenir` `et` `installer`
 `BioJava?`](http://biojava.open-bio.org/wiki/BioJava:GetStarted)` N.B.: cette page est exclusivement en anglais.`
 

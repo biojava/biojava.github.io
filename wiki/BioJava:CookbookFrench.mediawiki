@@ -20,7 +20,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Installation ===
 
-    * [http://java.sun.com Comment obtenir Java?] N.B.: Cette page est exclusivement en anglais.
+    * [http://java.sun.com/downloads Comment obtenir Java?] N.B.: Cette page est exclusivement en anglais.
     * [http://biojava.open-bio.org/wiki/BioJava:GetStarted Comment obtenir et installer BioJava?] N.B.: cette page est exclusivement en anglais.
 
 === Alphabets et Symbols ===
