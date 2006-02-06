@@ -29,7 +29,9 @@ or by making a list of the desired
 [Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
 and creating the
 [Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-from the List. Both approaches are shown in the example below.
+from the
+[List](http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html).
+Both approaches are shown in the example below.
 
     import java.util.*;
     import org.biojava.bio.seq.*;
