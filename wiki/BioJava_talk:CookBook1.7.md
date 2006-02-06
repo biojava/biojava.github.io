@@ -19,7 +19,8 @@ Hi - I've searched for anything about this and found the followings:
 
 --[Guedes](User:Guedes "wikilink") 15:43, 6 February 2006 (EST)
 
-Hi- That's the link the have put in the french version:
+Hi- That's the link that I have put in the french version:
 <http://scholar.google.com/scholar?q=biojava&ie=UTF-8&oe=UTF-8&hl=en>.
-It is using sholar.google.com --[Foisys](User:Foisys "wikilink") 15:47,
-6 February 2006 (EST)
+My suggestion is to create a page where some representative apps created
+using BioJava could be showcased. --[Foisys](User:Foisys "wikilink")
+15:58, 6 February 2006 (EST)
