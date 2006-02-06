@@ -176,7 +176,8 @@ sort. You didn't pay for it and if you use it we are not responsible for
 anything that goes wrong. Be a good programmer and test it yourself
 before unleashing it on your corporate database.
 
-### Copyright
+Copyright
+---------
 
 The documentation on this site is the property of the people who
 contributed it. If you wish to use it in a publication please make a
