@@ -91,7 +91,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:Fasta:Parser|How do I set up a FASTA parser]]?
 * [[BioJava:CookBook:Blast:Extract|How do I extract information from parsed results]]?
 * [[BioJava:CookBook:Blast:Echo|How do I parse a large file; Or, How do I make a custom SearchContentHandler]]?
-* Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now.
+* Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now. (to be continued --[[User:Guedes|Guedes]] 16:30, 7 February 2006 (EST))
 
 === Counts and Distributions ===
 
