@@ -33,3 +33,10 @@ Sun Java logo.
 BioJava Logo 6 ![](bj-log4.gif "fig:bj-log4.gif")
 
 BioJava Logo 7 ![](bj-cup1.gif "fig:bj-cup1.gif")
+
+Hi Mark and all. I would tend to go with the Zen look of the BioPerl
+logo. You are right about the cup as it is right now (deigns 5 to 7), it
+looks to much like Sun's. My original idea was to have a DNA helix swirl
+out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0
+and 1, a,c,g,t ? --[Foisys](User:Foisys "wikilink") 09:48, 7 February
+2006 (EST)
