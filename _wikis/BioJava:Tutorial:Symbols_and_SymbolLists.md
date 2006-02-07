@@ -1,5 +1,7 @@
 ---
 title: BioJava:Tutorial:Symbols and SymbolLists
+tags:
+ - Tutorial
 ---
 
 **By [Thomas Down](mailto:td2@sanger.ac.uk)**
