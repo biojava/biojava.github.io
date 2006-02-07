@@ -19,9 +19,13 @@ the PROTEIN-TERM alphabets are canonical as are Symbols from the
 and the
 [SubIntegerAlphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.SubIntegerAlphabet.html).
 
-This is even true of Alphabets and Symbols on different virtual machines
-(thanks to some Serialization magic) which means BioJava works across
-RMI.
+This is even true of
+[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+and
+[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+on different virtual machines (thanks to some
+[Serialization](http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html)
+magic) which means BioJava works across RMI.
 
     import org.biojava.bio.symbol.*;
     import org.biojava.bio.seq.*;
