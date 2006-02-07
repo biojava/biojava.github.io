@@ -42,13 +42,13 @@ Click here to search Google Scholar for papers using BioJava.
 
 === Basic Sequence Manipulation ===
 
-    * How do I make a Sequence from a String or make a Sequence Object back into a String?
-    * How do I get a subsection of a Sequence?
-    * How do I transcribe a DNA Sequence to a RNA Sequence?
-    * How do I reverse complement a DNA or RNA Sequence?
-    * Sequences are immutable so how can I change it's name?
-    * How can I edit a Sequence or SymbolList?
-    * How can I make a sequence motif into a regular expression?
+    * [[Biojava:Cookbook:Sequence|How do I make a Sequence from a String or make a Sequence Object back into a String]]?
+    * [[Biojava:Cookbook:Sequence:SubSequence|How do I get a subsection of a Sequence]]?
+    * [[Biojava:Cookbook:Sequence:Transcribe|How do I transcribe a DNA Sequence to a RNA Sequence]]?
+    * [[Biojava:Cookbook:Sequence:Reverse|How do I reverse complement a DNA or RNA Sequence]]?
+    * [[Biojava:Cookbook:Sequence:ChangeName|Sequences are immutable so how can I change it's name]]?
+    * [[Biojava:Cookbook:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
+    * [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
 
 === Translation ===
 
