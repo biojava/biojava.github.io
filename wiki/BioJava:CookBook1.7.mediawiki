@@ -87,10 +87,10 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === BLAST and FASTA ===
 
-* How do I set up a BLAST parser?
-* How do I set up a FASTA parser?
-* How do I extract information from parsed results?
-* How do I parse a large file; Or, How do I make a custom SearchContentHandler?
+* [[BioJava:CookBook:Blast:Parser|How do I set up a BLAST parser]]?
+* [[BioJava:CookBook:Fasta:Parser|How do I set up a FASTA parser]]?
+* [[BioJava:CookBook:Blast:Extract|How do I extract information from parsed results]]?
+* [[BioJava:CookBook:Blast:Echo|How do I parse a large file; Or, How do I make a custom SearchContentHandler]]?
 * Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now.
 
 === Counts and Distributions ===
