@@ -33,7 +33,7 @@ l'ADN, de l'ARN ou d'une protéine, il est possible de le faire avec un
 simple appel d'une seule méthode. L'appel utilise une méthode statique
 des classes *DNATools*, *RNATools* ou *ProteinTools*.
 
-### D'une chaîne à une SymbolList
+### D'une chaîne à une *SymbolList*
 
     import org.biojava.bio.seq.*;
     import org.biojava.bio.symbol.*;
@@ -60,7 +60,7 @@ des classes *DNATools*, *RNATools* ou *ProteinTools*.
       }
     }
 
-### D'une chaîne à une Sequence
+### D'une chaîne à une *Sequence*
 
     import org.biojava.bio.seq.*;
     import org.biojava.bio.symbol.*;
@@ -85,7 +85,7 @@ des classes *DNATools*, *RNATools* ou *ProteinTools*.
       }
     }
 
-### D'une SymbolList à une chaîne de caractères
+### D'une *SymbolList* à une chaîne de caractères
 
 Vous pouvez appeller la méthode seqString() sur une SymbolList ou une
 Sequence pour obtenir la chaîne de caractères contenant la séquence.
