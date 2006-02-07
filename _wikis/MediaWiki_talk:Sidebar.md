@@ -18,3 +18,8 @@ and english. --[Jason](User:Jason "wikilink") 14:15, 6 February 2006
 
 Hi Jason - Thanks! --[Foisys](User:Foisys "wikilink") 14:36, 6 February
 2006 (EST)
+
+Download link
+-------------
+
+I suggest an entry linking to the page BioJava:Download.
