@@ -17,7 +17,7 @@ both the .equals() and == functions. Also Symbols from the PROTEIN and
 the PROTEIN-TERM alphabets are canonical as are Symbols from the
 [IntegerAlphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.html)
 and the
-[SubIntegerAlphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SubIntegerAlphabet.html).
+[SubIntegerAlphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.SubIntegerAlphabet.html).
 
 This is even true of Alphabets and Symbols on different virtual machines
 (thanks to some Serialization magic) which means BioJava works across
