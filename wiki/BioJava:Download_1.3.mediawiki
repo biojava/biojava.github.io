@@ -1,5 +1,3 @@
-== Download BioJava 1.3 ==
-
 This page offers downloads for the legacy release version, BioJava 1.30 
 
 == BioJava code == 
