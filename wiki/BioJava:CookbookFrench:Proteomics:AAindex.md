@@ -2,8 +2,9 @@
 title: BioJava:CookbookFrench:Proteomics:AAindex
 ---
 
-Note: The classes mentioned in this article are not integrated in the
-BioJava 1.4 library, yet. However, they are avaiable via
+**Note:** Les classes contenues dans cet article ne font pas partie de
+la version 1.4 de BioJava. Elles sont disponibles dans la version de
+développement qui se trouve sur le serveur
 [CVS](http://cvs.biojava.org).
 
 Comment analyser les propriétés d'une séquence protéique en utilisant la base de données *Amino Acid Index*?
