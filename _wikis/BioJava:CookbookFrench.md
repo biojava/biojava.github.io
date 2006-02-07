@@ -78,7 +78,8 @@ Comment faire pour ...?
     caractères?](BioJava:CookbookFrench:Sequence "wikilink")
 -   [Comment obtenir une portion d'une
     Sequence?](BioJava:CookbookFrench:Sequence:SubSequence "wikilink")
--   Comment transcrire une Sequence d'ADN en Sequence d'ARN?
+-   [Comment transcrire une Sequence d'ADN en Sequence
+    d'ARN?](BioJava:CookbookFrench:Sequence:Transcribe "wikilink")
 -   Comment obtenir la séquence complémentaire à une Sequence d'ADN ou
     d'ARN?
 -   Les Sequences sont immuables alors comment faire pour en changer le
