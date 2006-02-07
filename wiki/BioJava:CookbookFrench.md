@@ -64,9 +64,13 @@ Comment faire pour ...?
 `   * `[`Comment` `faire` `un` `CrossProductAlphabet,` `par` `exemple,`
 `un` `Alphabet` `de`
 `codons?`](BioJava:CookbookFrench:Alphabets:CrossProduct "wikilink")  
-`   * Comment décomposer les Symbols d'Alphabets CrossProductAlphabet en leurs Symbols constituants?`  
-`   * Comment dire si deux Alphabets ou Symbols sont identiques?`  
-`   * Comment faire pour créer un Symbol ambigüe comme Y ou R?`
+`   * `[`Comment` `décomposer` `les` `Symbols` `d'Alphabets`
+`CrossProductAlphabet` `en` `leurs` `Symbols`
+`constituants?`](BioJava:CookbookFrench:Alphabets:Component "wikilink")  
+`   * `[`Comment` `dire` `si` `deux` `Alphabets` `ou` `Symbols` `sont`
+`identiques?`](BioJava:CookbookFrench:Alphabets:Canonical "wikilink")  
+`   * `[`Comment` `faire` `pour` `créer` `un` `Symbol` `ambigüe` `comme`
+`Y` `ou` `R?`](BioJava:CookbookFrench:Alphabets:Ambiguity "wikilink")
 
 ### Manipulation simples des séquences
 
