@@ -113,13 +113,18 @@ How Do I....?
 
 ### Sequence I/O
 
--   How do I write Sequences in Fasta format?
--   How do I read in a Fasta file?
--   How do I read a GenBank/EMBL/SwissProt file?
--   How do I extract GenBank/EMBL/Swissprot sequences and write them as
-    Fasta?
--   How do I turn an ABI sequence trace into a BioJava Sequence?
--   How does sequence I/O work in BioJava?
+-   [How do I write Sequences in Fasta
+    format](Biojava:Cookbook:SeqIO:WriteInFasta "wikilink")?
+-   [How do I read in a Fasta
+    file](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
+-   [How do I read a GenBank/EMBL/SwissProt
+    file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?
+-   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
+    Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
+-   [How do I turn an ABI sequence trace into a BioJava
+    Sequence](Biojava:Cookbook:SeqIO:ABItoSequence "wikilink")?
+-   [How does sequence I/O work in
+    BioJava](Biojava:Cookbook:SeqIO:Echo "wikilink")?
 
 ### Annotations
 
