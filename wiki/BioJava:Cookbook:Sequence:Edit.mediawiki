@@ -5,10 +5,7 @@ Sometimes you will want to modify the order of Symbols in a SymbolList or Sequen
 It is worth noting that many BioJava implementations of Sequence and SymbolList do not allow edit operations as this may invalidate underlying Features or Annotations. The best strategy is to make a copy of the Symbols in the Sequence or SymbolList and operate on those. 
 
 
-<font color=red>This is demonstrated in the code sample below.</font>
-
-
-<pre>
+<font face=Courier>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -61,4 +58,4 @@ public class EditExamples {
     System.out.println(syms.seqString());
   }
 }
-</pre>
+</font>
