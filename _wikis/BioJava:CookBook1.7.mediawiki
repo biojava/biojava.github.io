@@ -22,7 +22,7 @@ This is a powerpoint presentation on the BioJava core API that I have given a fe
 
 == Publications ==
 
-Click here to search Google Scholar for papers using BioJava.
+Click here to search [http://www.example.com Google Scholar] for papers using BioJava.
 
 == How Do I....? ==
 
