@@ -4,7 +4,7 @@ To perform this task we are going to extend the general reader from the previous
 
 (Using Biojava 1.3 pre 1)
 
-
+<pre>
 import org.biojava.bio.seq.io.*;
 import org.biojava.bio.seq.*;
 import java.io.*;
@@ -55,9 +55,11 @@ public class WriteToFasta {
     }
   }
 }
+</pre>
 
 (Using Biojava 1.3)
 
+<pre>
 import java.io.*;
 
 
@@ -126,3 +128,4 @@ public class GeneralReader {
        }
    }
 }
+</pre>
