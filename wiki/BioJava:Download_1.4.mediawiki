@@ -20,4 +20,5 @@ The Jakarta-commons APIs are covered by the [http://www.biojava.org/download/bin
 
 == Getting older versions ==
 
-The legacy release 1.3 can be found [[BioJava:Download 1.3|here]].
+* The legacy release 1.3 can be found [[BioJava:Download 1.3|here]].
+* Other releases of BioJava can be found in the [http://www.biojava.org/download/ download area].
