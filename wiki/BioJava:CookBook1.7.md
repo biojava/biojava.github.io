@@ -156,11 +156,14 @@ How Do I....?
 
 ### BLAST and FASTA
 
--   How do I set up a BLAST parser?
--   How do I set up a FASTA parser?
--   How do I extract information from parsed results?
--   How do I parse a large file; Or, How do I make a custom
-    SearchContentHandler?
+-   [How do I set up a BLAST
+    parser](BioJava:CookBook:Blast:Parser "wikilink")?
+-   [How do I set up a FASTA
+    parser](BioJava:CookBook:Fasta:Parser "wikilink")?
+-   [How do I extract information from parsed
+    results](BioJava:CookBook:Blast:Extract "wikilink")?
+-   [How do I parse a large file; Or, How do I make a custom
+    SearchContentHandler](BioJava:CookBook:Blast:Echo "wikilink")?
 -   Expert information on the BioJava SAX2 event based parsing framework
     by Cambridge Antibody Technology. Contains a UML diagram. Warning,
     this information may be a little dated now.
