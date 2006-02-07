@@ -97,10 +97,14 @@ How Do I....?
 
 ### Translation
 
--   How do I translate a DNA or RNA Sequence or SymbolList to Protein?
--   How do I translate a single codon to a single amino acid?
--   How do I use a non standard translation table?
--   How do I translate a nucleotide sequence in all six frames
+-   [How do I translate a DNA or RNA Sequence or SymbolList to
+    Protein](Biojava:Cookbook:Translation "wikilink")?
+-   [How do I translate a single codon to a single amino
+    acid](Biojava:Cookbook:Translation:Single "wikilink")?
+-   [How do I use a non standard translation
+    table](Biojava:Cookbook:Translation:NonStandart "wikilink")?
+-   [How do I translate a nucleotide sequence in all six
+    frames](Biojava:Cookbook:Translation:SixFrames "wikilink")?
 
 ### Proteomics
 
