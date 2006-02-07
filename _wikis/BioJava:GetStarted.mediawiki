@@ -44,7 +44,7 @@ To use BioJava, add the required JAR files to your CLASSPATH environment variabl
 
 It is also possible to "install" JAR files onto your system by copying them into your Java installation's extensions directory. On most Unix systems, this is named ''${JAVA_HOME}/jre/lib/ext''. On Mac OS X there is a per-user extensions directory called ''~/Library/Java/Extensions'' (you may have to create this directory yourself). For other platforms, consult your Java vendor.
 
-You can now compile and run BioJava programs using the ''javac'' and ''java'' commands. You might like to look at the [http://biojava.open-bio.org/wiki/BioJava:Tutorial tutorial], [http://www.biojava.org/docs/api/index.html API documentation] and the [http://biojava.open-bio.org/wiki/BioJava:Cookbook BioJava in anger] section . Finally, you can learn a lot about BioJava by trying the demo programs included in the source distribution (see below).
+You can now compile and run BioJava programs using the ''javac'' and ''java'' commands. You might like to look at the [[BioJava:Tutorial|tutorial]], [http://www.biojava.org/docs/api/index.html API documentation] and the [[BioJava:Cookbook |BioJava in anger]] section . Finally, you can learn a lot about BioJava by trying the demo programs included in the source distribution (see below).
 
 ==  Building your own ==
 
