@@ -2,9 +2,6 @@
 title: BioJava:Download 1.4
 ---
 
-Download BioJava 1.4
---------------------
-
 This page offers downloads for the BioJava 1.4 release. BioJava 1.4 runs
 only on Java 2 Standard Edition 1.4 (or later) platforms.
 
