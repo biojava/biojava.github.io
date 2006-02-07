@@ -172,16 +172,24 @@ How Do I....?
 
 ### Counts and Distributions
 
--   How do I count the residues in a Sequence?
--   How do I calculate the frequency of a Symbol in a Sequence?
--   How can I turn a Count into a Distribution?
--   How can I generate a random sequence from a Distribution?
--   How can I find the amount of information or entropy in a
-    Distribution?
--   What is an easy way to tell if two Distributions have equal weights?
--   How can I make an OrderNDistribution over a custom Alphabet?
--   How can I write a Distribution as XML?
--   Using Distributions to make a Gibbs sampler
+-   [How do I count the residues in a
+    Sequence](BioJava:CookBook:Count:Residues "wikilink")?
+-   [How do I calculate the frequency of a Symbol in a
+    Sequence](BioJava:CookBook:Count:Frequency "wikilink")?
+-   [How can I turn a Count into a
+    Distribution](BioJava:CookBook:Count:ToDistrib "wikilink")?
+-   [How can I generate a random sequence from a
+    Distribution](BioJava:CookBook:Distribution:RandomSeqs "wikilink")?
+-   [How can I find the amount of information or entropy in a
+    Distribution](BioJava:CookBook:Distribution:Entropy "wikilink")?
+-   [What is an easy way to tell if two Distributions have equal
+    weights](BioJava:CookBook:Distribution:Emission "wikilink")?
+-   [How can I make an OrderNDistribution over a custom
+    Alphabet](BioJava:CookBook:Distribution:Custom "wikilink")?
+-   [How can I write a Distribution as
+    XML](BioJava:CookBook:Distribution:XML "wikilink")?
+-   [Using Distributions to make a Gibbs
+    sampler](BioJava:CookBook:Distribution:Gibbs "wikilink")
 
 ### Weight Matrices and Dynamic Programming
 
