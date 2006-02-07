@@ -21,7 +21,7 @@ BioJava uses a biological coordinate system for identifying bases. The first bas
     SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
 </pre>
 
-=== Printing a Sub - Sequence ==
+=== Printing a Sub - Sequence ===
 
 <pre>
     //print the last three bases of a SymbolList or Sequence
