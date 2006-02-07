@@ -20,9 +20,14 @@ Required libraries
 
 -   [bytecode-0.92.jar](http://www.biojava.org/download/binaries/bytecode-0.92.jar)
 -   [commons-cli.jar](http://www.biojava.org/download/binaries/commons-cli.jar)
+    Only required to compile and use some of the demos
 -   [commons-collections-2.1.jar](http://www.biojava.org/download/binaries/commons-collections-2.1.jar)
+    only required for some demos and BioSQL access (and building
+    biojava.jar)
 -   [commons-dbcp-1.1.jar](http://www.biojava.org/download/binaries/commons-dbcp-1.1.jar)
+    Only required for BioSQL access (and building biojava.jar)
 -   [commons-pool-1.1.jar](http://www.biojava.org/download/binaries/commons-pool-1.1.jar)
+    Only required for BioSQL access (and building biojava.jar)
 
 The Jakarta-commons APIs are covered by the [Apache
 license](http://www.biojava.org/download/binaries/LICENSE.COMMONS).
