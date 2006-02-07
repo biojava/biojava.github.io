@@ -83,13 +83,21 @@ How Do I....?
 
 ### Basic Sequence Manipulation
 
-`   * How do I make a Sequence from a String or make a Sequence Object back into a String?`  
-`   * How do I get a subsection of a Sequence?`  
-`   * How do I transcribe a DNA Sequence to a RNA Sequence?`  
-`   * How do I reverse complement a DNA or RNA Sequence?`  
-`   * Sequences are immutable so how can I change it's name?`  
-`   * How can I edit a Sequence or SymbolList?`  
-`   * How can I make a sequence motif into a regular expression?`
+`   * `[`How` `do` `I` `make` `a` `Sequence` `from` `a` `String` `or`
+`make` `a` `Sequence` `Object` `back` `into` `a`
+`String`](Biojava:Cookbook:Sequence "wikilink")`?`  
+`   * `[`How` `do` `I` `get` `a` `subsection` `of` `a`
+`Sequence`](Biojava:Cookbook:Sequence:SubSequence "wikilink")`?`  
+`   * `[`How` `do` `I` `transcribe` `a` `DNA` `Sequence` `to` `a` `RNA`
+`Sequence`](Biojava:Cookbook:Sequence:Transcribe "wikilink")`?`  
+`   * `[`How` `do` `I` `reverse` `complement` `a` `DNA` `or` `RNA`
+`Sequence`](Biojava:Cookbook:Sequence:Reverse "wikilink")`?`  
+`   * `[`Sequences` `are` `immutable` `so` `how` `can` `I` `change`
+`it's` `name`](Biojava:Cookbook:Sequence:ChangeName "wikilink")`?`  
+`   * `[`How` `can` `I` `edit` `a` `Sequence` `or`
+`SymbolList`](Biojava:Cookbook:Sequence:Edit "wikilink")`?`  
+`   * `[`How` `can` `I` `make` `a` `sequence` `motif` `into` `a`
+`regular` `expression`](Biojava:Cookbook:Sequence:Regex "wikilink")`?`
 
 ### Translation
 
