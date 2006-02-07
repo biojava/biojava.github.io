@@ -28,7 +28,7 @@ cliquer [ici](http://www.biojava.org/mailman/listinfo/biojava-l).
 
 Traduction française: [Sylvain
 Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
-mienne; contactez-moi pour correction. Encore mieux: particper au
+mienne; contactez-moi pour correction. Encore mieux: participer au
 concept Wiki et faites-les vous-mêmes!!
 
 Présentation
