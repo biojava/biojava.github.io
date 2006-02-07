@@ -65,123 +65,126 @@ How Do I....?
 
 ### Alphabets and Symbols
 
-`   * `[`How` `do` `I` `get` `a` `DNA,` `RNA` `or` `Protein`
-`Alphabet`](Biojava:Cookbook:Alphabets "wikilink")`?`  
-`   * `[`How` `do` `I` `make` `a` `custom` `Alphabet` `from` `custom`
-`Symbols`](Biojava:Cookbook:Alphabets:Custom "wikilink")`?`  
-`   * `[`How` `do` `I` `make` `a` `CrossProductAlphabet` `such` `as` `a`
-`codon`
-`Alphabet`](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")`?`  
-`   * `[`How` `do` `I` `break` `Symbols` `from` `CrossProduct`
-`Alphabets` `into` `their` `component`
-`Symbols`](Biojava:Cookbook:Alphabets:Component "wikilink")`?`  
-`   * `[`How` `can` `I` `tell` `if` `two` `Alphabets` `or` `Symbols`
-`are` `equal`](Biojava:Cookbook:Alphabets:Cononical "wikilink")`?`  
-`   * `[`How` `can` `I` `make` `an` `ambiguous` `Symbol` `like` `Y` `or`
-`R`](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")`?`
+-   [How do I get a DNA, RNA or Protein
+    Alphabet](Biojava:Cookbook:Alphabets "wikilink")?
+-   [How do I make a custom Alphabet from custom
+    Symbols](Biojava:Cookbook:Alphabets:Custom "wikilink")?
+-   [How do I make a CrossProductAlphabet such as a codon
+    Alphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")?
+-   [How do I break Symbols from CrossProduct Alphabets into their
+    component Symbols](Biojava:Cookbook:Alphabets:Component "wikilink")?
+-   [How can I tell if two Alphabets or Symbols are
+    equal](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
+-   [How can I make an ambiguous Symbol like Y or
+    R](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")?
 
 ### Basic Sequence Manipulation
 
-`   * `[`How` `do` `I` `make` `a` `Sequence` `from` `a` `String` `or`
-`make` `a` `Sequence` `Object` `back` `into` `a`
-`String`](Biojava:Cookbook:Sequence "wikilink")`?`  
-`   * `[`How` `do` `I` `get` `a` `subsection` `of` `a`
-`Sequence`](Biojava:Cookbook:Sequence:SubSequence "wikilink")`?`  
-`   * `[`How` `do` `I` `transcribe` `a` `DNA` `Sequence` `to` `a` `RNA`
-`Sequence`](Biojava:Cookbook:Sequence:Transcribe "wikilink")`?`  
-`   * `[`How` `do` `I` `reverse` `complement` `a` `DNA` `or` `RNA`
-`Sequence`](Biojava:Cookbook:Sequence:Reverse "wikilink")`?`  
-`   * `[`Sequences` `are` `immutable` `so` `how` `can` `I` `change`
-`it's` `name`](Biojava:Cookbook:Sequence:ChangeName "wikilink")`?`  
-`   * `[`How` `can` `I` `edit` `a` `Sequence` `or`
-`SymbolList`](Biojava:Cookbook:Sequence:Edit "wikilink")`?`  
-`   * `[`How` `can` `I` `make` `a` `sequence` `motif` `into` `a`
-`regular` `expression`](Biojava:Cookbook:Sequence:Regex "wikilink")`?`
+-   [How do I make a Sequence from a String or make a Sequence Object
+    back into a String](Biojava:Cookbook:Sequence "wikilink")?
+-   [How do I get a subsection of a
+    Sequence](Biojava:Cookbook:Sequence:SubSequence "wikilink")?
+-   [How do I transcribe a DNA Sequence to a RNA
+    Sequence](Biojava:Cookbook:Sequence:Transcribe "wikilink")?
+-   [How do I reverse complement a DNA or RNA
+    Sequence](Biojava:Cookbook:Sequence:Reverse "wikilink")?
+-   [Sequences are immutable so how can I change it's
+    name](Biojava:Cookbook:Sequence:ChangeName "wikilink")?
+-   [How can I edit a Sequence or
+    SymbolList](Biojava:Cookbook:Sequence:Edit "wikilink")?
+-   [How can I make a sequence motif into a regular
+    expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
 
 ### Translation
 
-`   * How do I translate a DNA or RNA Sequence or SymbolList to Protein?`  
-`   * How do I translate a single codon to a single amino acid?`  
-`   * How do I use a non standard translation table?`  
-`   * How do I translate a nucleotide sequence in all six frames`
+-   How do I translate a DNA or RNA Sequence or SymbolList to Protein?
+-   How do I translate a single codon to a single amino acid?
+-   How do I use a non standard translation table?
+-   How do I translate a nucleotide sequence in all six frames
 
 ### Proteomics
 
-`   * How do I calculate the mass and pI of a peptide?`
+-   How do I calculate the mass and pI of a peptide?
 
 ### Sequence I/O
 
-`   * How do I write Sequences in Fasta format?`  
-`   * How do I read in a Fasta file?`  
-`   * How do I read a GenBank/EMBL/SwissProt file?`  
-`   * How do I extract GenBank/EMBL/Swissprot sequences and write them as Fasta?`  
-`   * How do I turn an ABI sequence trace into a BioJava Sequence?`  
-`   * How does sequence I/O work in BioJava?`
+-   How do I write Sequences in Fasta format?
+-   How do I read in a Fasta file?
+-   How do I read a GenBank/EMBL/SwissProt file?
+-   How do I extract GenBank/EMBL/Swissprot sequences and write them as
+    Fasta?
+-   How do I turn an ABI sequence trace into a BioJava Sequence?
+-   How does sequence I/O work in BioJava?
 
 ### Annotations
 
-`   * How do I list the Annotations in a Sequence?`  
-`   * How do I filter a Sequences based on their species (or another Annotation property)?`
+-   How do I list the Annotations in a Sequence?
+-   How do I filter a Sequences based on their species (or another
+    Annotation property)?
 
 ### Locations and Features
 
-`   * How do I specify a PointLocation?`  
-`   * How do I specify a RangeLocation?`  
-`   * How do CircularLocations work?`  
-`   * How can I make a Feature?`  
-`   * How can I filter Features by type?`  
-`   * How can I remove features?`
+-   How do I specify a PointLocation?
+-   How do I specify a RangeLocation?
+-   How do CircularLocations work?
+-   How can I make a Feature?
+-   How can I filter Features by type?
+-   How can I remove features?
 
 ### BLAST and FASTA
 
-`   * How do I set up a BLAST parser?`  
-`   * How do I set up a FASTA parser?`  
-`   * How do I extract information from parsed results?`  
-`   * How do I parse a large file; Or, How do I make a custom SearchContentHandler?`  
-`   * Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now.`
+-   How do I set up a BLAST parser?
+-   How do I set up a FASTA parser?
+-   How do I extract information from parsed results?
+-   How do I parse a large file; Or, How do I make a custom
+    SearchContentHandler?
+-   Expert information on the BioJava SAX2 event based parsing framework
+    by Cambridge Antibody Technology. Contains a UML diagram. Warning,
+    this information may be a little dated now.
 
 ### Counts and Distributions
 
-`   * How do I count the residues in a Sequence?`  
-`   * How do I calculate the frequency of a Symbol in a Sequence?`  
-`   * How can I turn a Count into a Distribution?`  
-`   * How can I generate a random sequence from a Distribution?`  
-`   * How can I find the amount of information or entropy in a Distribution?`  
-`   * What is an easy way to tell if two Distributions have equal weights?`  
-`   * How can I make an OrderNDistribution over a custom Alphabet?`  
-`   * How can I write a Distribution as XML?`  
-`   * Using Distributions to make a Gibbs sampler `
+-   How do I count the residues in a Sequence?
+-   How do I calculate the frequency of a Symbol in a Sequence?
+-   How can I turn a Count into a Distribution?
+-   How can I generate a random sequence from a Distribution?
+-   How can I find the amount of information or entropy in a
+    Distribution?
+-   What is an easy way to tell if two Distributions have equal weights?
+-   How can I make an OrderNDistribution over a custom Alphabet?
+-   How can I write a Distribution as XML?
+-   Using Distributions to make a Gibbs sampler
 
 ### Weight Matrices and Dynamic Programming
 
-`   * How do I use a WeightMatrix to find a motif?`  
-`   * How do I make a HMMER like profile HMM?`  
-`   * How do I set up a custom HMM?`  
-`   * How do I generate a pair-wise alignment?`
+-   How do I use a WeightMatrix to find a motif?
+-   How do I make a HMMER like profile HMM?
+-   How do I set up a custom HMM?
+-   How do I generate a pair-wise alignment?
 
 ### User Interfaces
 
-`   * How can I visualize Annotations and Features as a tree?`  
-`   * How can I display a Sequence in a GUI?`  
-`   * How do I display Sequence coordinates?`  
-`   * How can I display features?`
+-   How can I visualize Annotations and Features as a tree?
+-   How can I display a Sequence in a GUI?
+-   How do I display Sequence coordinates?
+-   How can I display features?
 
 ### BioSQL and Sequence Databases
 
-`   * How do I set up BioSQL with PostgreSQL? (by David Huen)`  
-`   * How do I set up BioSQL with Oracle? (by Richard Holland)`  
-`   * How do I add, view and remove Sequence Objects from a BioSQL DB?`
+-   How do I set up BioSQL with PostgreSQL? (by David Huen)
+-   How do I set up BioSQL with Oracle? (by Richard Holland)
+-   How do I add, view and remove Sequence Objects from a BioSQL DB?
 
 ### Genetic Algorithms
 
-`   * How can I make a Genetic Algorithm with BioJava?`
+-   How can I make a Genetic Algorithm with BioJava?
 
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
-`   * Introduction to the STRAP API`  
-`   * STRAP / BioJava interoperability`  
-`   * How do I make a multiple sequence alignment?`  
-`   * How can predict protein secondary structure?`
+-   Introduction to the STRAP API
+-   STRAP / BioJava interoperability
+-   How do I make a multiple sequence alignment?
+-   How can predict protein secondary structure?
 
 Disclaimer
 ----------
@@ -206,4 +209,4 @@ of open-source can be found
 [here](http://www.opensource.org/docs/definition_plain.php). If you
 agree with that definition then you can use it.
 
---[Dickson Guedes](User:Guedes "wikilink") 16:00, 6 February 2006 (EST)
+--[Guedes](User:Guedes "wikilink") 20:59, 6 February 2006 (EST)
