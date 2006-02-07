@@ -141,12 +141,18 @@ How Do I....?
 
 ### Locations and Features
 
--   How do I specify a PointLocation?
--   How do I specify a RangeLocation?
--   How do CircularLocations work?
--   How can I make a Feature?
--   How can I filter Features by type?
--   How can I remove features?
+-   [How do I specify a
+    PointLocation](BioJava:Cookbook:Locations:Point "wikilink")?
+-   [How do I specify a
+    RangeLocation](BioJava:Cookbook:Locations:Range "wikilink")?
+-   [How do CircularLocations
+    work](BioJava:Cookbook:Locations:Circular "wikilink")?
+-   [How can I make a
+    Feature](BioJava:Cookbook:Locations:Feature "wikilink")?
+-   [How can I filter Features by
+    type](BioJava:Cookbook:Locations:Filter "wikilink")?
+-   [How can I remove
+    features](BioJava:Cookbook:Locations:Remove "wikilink")?
 
 ### BLAST and FASTA
 
