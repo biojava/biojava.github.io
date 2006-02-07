@@ -58,7 +58,9 @@ Comment faire pour ...?
 
 `   * `[`Comment` `obtenir` `un` `Alphabet` `d'ADN,` `d'ARN` `ou` `de`
 `protéine?`](BioJava:CookbookFrench:Alphabets "wikilink")  
-`   * Comment faire un Alphabet sur mesure à partir de Symbols sur mesure?`  
+`   * `[`Comment` `faire` `un` `Alphabet` `sur` `mesure` `à` `partir`
+`de` `Symbols` `sur`
+`mesure?`](BioJava:CookbookFrench:Alphabets:CustomAlphabets "wikilink")  
 `   * Comment faire unCrossProductAlphabet, par exemple, un Alphabet de codons?`  
 `   * Comment décomposer les Symbols d'Alphabets CrossProductAlphabet en leurs Symbols constituants?`  
 `   * Comment dire si deux Alphabets ou Symbols sont identiques?`  
