@@ -68,32 +68,34 @@ through convenience methods.
 SymbolList: the simple sequence
 -------------------------------
 
-The basic interface for sequence data in biojava is SymbolList. Every
+The basic interface for sequence data in biojava is `SymbolList`. Every
 SymbolList has an associated Alphabet, and may only contain Symbols from
 that alphabet. SymbolLists can be seen as strings which are made up of
 Symbol objects rather than characters. The interface specifies methods
 for querying the alphabet and length, and accessing the Symbols:
 
-SymbolList seq = getSomeSequence(); System.out.println("Alphabet = " +
-seq.getAlphabet().getName()); System.out.println("Length = " +
-seq.length()); System.out.println("First symbol = " +
-seq.symbolAt(1).getName()); Note that numbering of Symbols within the
-SymbolList runs from 1 to length, not from 0 to length-1 as is the case
-with Java strings. This is consistent with the coordinate system found
-in files of annotated biological sequences.
+    SymbolList seq = getSomeSequence();
+    System.out.println("Alphabet = " + seq.getAlphabet().getName());
+    System.out.println("Length = " + seq.length());
+    System.out.println("First symbol = " + seq.symbolAt(1).getName());
+
+Note that numbering of Symbols within the SymbolList runs from 1 to
+length, *not* from 0 to length-1 as is the case with Java strings. This
+is consistent with the coordinate system found in files of annotated
+biological sequences.
 
 There are several other standard methods in the SymbolList interface.
-subList returns a new SymbolList representing part of the sequence, just
-like the substring method of the String class. seqString returns a
-normal string representation of the sequence. This latter method will
-only work if the SymbolList uses an alphabet where all symbols have
-their token property defined. However, since this is true of the
-commonly used DNA and protein alphabets, this method is useful if you
-need interaction between BioJava and legacy sequence analysis code.
+`subList` returns a new SymbolList representing part of the sequence,
+just like the `substring` method of the `String` class. `seqString`
+returns a normal string representation of the sequence. This latter
+method will only work if the SymbolList uses an alphabet where all
+symbols have their `token` property defined. However, since this is true
+of the commonly used DNA and protein alphabets, this method is useful if
+you need interaction between BioJava and legacy sequence analysis code.
 
-The SymbolList interface does not define any methods for modifying the
+The `SymbolList` interface does not define any methods for modifying the
 underlying sequence data. Future versions of BioJava may also include a
-MutableSymbolList interface.
+`MutableSymbolList` interface.
 
 Doesn't this all waste memory?
 ------------------------------
