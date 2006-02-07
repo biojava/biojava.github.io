@@ -76,7 +76,8 @@ Comment faire pour ...?
 -   [Comment créer une Sequence à partir d'une chaîne de caractères ou
     transformer un objet Sequence en chaîne de
     caractères?](BioJava:CookbookFrench:Sequence "wikilink")
--   Comment obtenir une portion d'une Sequence?
+-   [Comment obtenir une portion d'une
+    Sequence?](BioJava:CookbookFrench:Sequence:SubSequence "wikilink")
 -   Comment transcrire une Sequence d'ADN en Sequence d'ARN?
 -   Comment obtenir la séquence complémentaire à une Sequence d'ADN ou
     d'ARN?
