@@ -78,9 +78,9 @@ This low-level parsing mechanism is supplemented by a more sophisticated sequenc
 
 == What about the Sequence interface? ==
  
-Until this point, we have concentrated on the SymbolList interface which, as its name suggests, is a raw list of Symbol references. Real entries in sequence databases are more complicated than this: sequences almost always have some kind of ID code or description associated, and many are also accompanied by tables of annotations. In BioJava, Sequence is a subinterface of SymbolList which adds a name property, plus a mechanism for querying tables of features. 
+Until this point, we have concentrated on the <code>SymbolList</code> interface which, as its name suggests, is a raw list of <code>Symbol</code> references. Real entries in sequence databases are more complicated than this: sequences almost always have some kind of ID code or description associated, and many are also accompanied by tables of annotations. In BioJava, <code>Sequence</code> is a subinterface of <code>SymbolList</code> which adds a <code>name</code> property, plus a mechanism for querying tables of features. 
 
-The general rule is that the Sequence interface is normally used for sequences which have been loaded into a program from files or databases. SymbolList may be a more appropriate type for sequences generated internally by an analysis program. 
+The general rule is that the <code>Sequence</code> interface is normally used for sequences which have been loaded into a program from files or databases. <code>SymbolList</code> may be a more appropriate type for sequences generated internally by an analysis program.
 
 == A simple example ==
 The following program is a very simple example, which reads one or more DNA sequences from a FASTA format data file and reports the GC content of each. This example is a (very) simple application of the BioJava Sequence I/O framework, described in later chapters. Used as below, it allows you to iterate over all the sequences in a multiple-entry file, rather than holding all of them in memory at once. 
