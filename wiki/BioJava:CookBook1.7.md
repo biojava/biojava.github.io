@@ -217,7 +217,9 @@ How Do I....?
 
 ### Protein Structure
 
--   [How do I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
+-   [How can I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
+-   [How can I mutate a
+    residue?](BioJava:CookBook:PDB:mutate "wikilink")
 
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
