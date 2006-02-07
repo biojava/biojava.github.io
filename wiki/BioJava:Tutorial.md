@@ -31,3 +31,8 @@ cookbook-style tutorials about performing many common tasks in BioJava.
 
 Additionally, a number of small demo programs can be found in the
 `demos` directory of the BioJava source distribution.
+
+For the German audience: The [Java Magazin](http://www.java-magazin.de/)
+published in the issue 2.2005 an article about BioJava which is also
+available
+[online](http://www.biojava.org/presentations/JM_2.05_20-23.pdf).
