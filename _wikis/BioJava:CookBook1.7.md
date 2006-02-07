@@ -108,7 +108,8 @@ How Do I....?
 
 ### Proteomics
 
--   How do I calculate the mass and pI of a peptide?
+-   [How do I calculate the mass and pI of a
+    peptide](Biojava:Cookbook:Proteomics "wikilink")?
 
 ### Sequence I/O
 
