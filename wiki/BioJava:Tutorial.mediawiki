@@ -13,3 +13,5 @@ The following tutorials are currently available - more are always welcome! While
 The [[BioJava:Cookbook|BioJava in Anger]] page offers cookbook-style tutorials about performing many common tasks in BioJava. 
 
 Additionally, a number of small demo programs can be found in the <code>demos</code> directory of the BioJava source distribution.
+
+For the German audience: The [http://www.java-magazin.de/ Java Magazin] published in the issue 2.2005 an article about BioJava which is also available [http://www.biojava.org/presentations/JM_2.05_20-23.pdf online].
