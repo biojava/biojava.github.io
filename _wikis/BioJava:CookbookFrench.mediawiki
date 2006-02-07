@@ -40,7 +40,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:Sequence:Reverse|Comment obtenir la séquence complémentaire à une Sequence d'ADN ou d'ARN?]]
 * [[BioJava:CookbookFrench:Sequence:ChangeName|Les Sequences sont immuables alors comment faire pour en changer le nom?]]
 * [[BioJava:CookbookFrench:Sequence:Edit|Comment éditer une Sequence ou un SymbolList?]]
-* Comment utiliser une sequence comme expression régulière pour chercher des motifs?
+* [[BioJava:CookbookFrench:Sequence:Regex|Comment utiliser une sequence comme expression régulière pour chercher des motifs?]]
 
 === Traduction ===
 
