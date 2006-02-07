@@ -38,7 +38,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:Sequence:SubSequence|Comment obtenir une portion d'une Sequence?]]
 * [[BioJava:CookbookFrench:Sequence:Transcribe|Comment transcrire une Sequence d'ADN en Sequence d'ARN?]]
 * [[BioJava:CookbookFrench:Sequence:Reverse|Comment obtenir la séquence complémentaire à une Sequence d'ADN ou d'ARN?]]
-* Les Sequences sont immuables alors comment faire pour en changer le nom?
+* [[BioJava:CookbookFrench:Sequence:ChangeName|Les Sequences sont immuables alors comment faire pour en changer le nom?]]
 * Comment éditer une Sequence ou un SymbolList?
 * Comment utiliser une sequence comme expression régulière pour chercher des motifs?
 
