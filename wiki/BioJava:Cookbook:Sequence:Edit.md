@@ -16,8 +16,9 @@ and a SymbolList that will replace the residues.
 It is worth noting that many BioJava implementations of Sequence and
 SymbolList do not allow edit operations as this may invalidate
 underlying Features or Annotations. The best strategy is to make a copy
-of the Symbols in the Sequence or SymbolList and operate on those. This
-is demonstrated in the code sample below.
+of the Symbols in the Sequence or SymbolList and operate on those.
+
+This is demonstrated in the code sample below.
 
     import org.biojava.bio.seq.*;
     import org.biojava.bio.symbol.*;
