@@ -6,8 +6,8 @@ How do I Reverse Complement a Sequence or SymbolList?
 -----------------------------------------------------
 
 To reverse complement a DNA SymbolList or Sequence simply use the
-DNATool.reverseComplement(SymbolList sl) method. An equivalent method is
-found in RNATools for performing the same operation on RNA based
+DNATools.reverseComplement(SymbolList sl) method. An equivalent method
+is found in RNATools for performing the same operation on RNA based
 Sequences and SymbolLists.
 
     import org.biojava.bio.symbol.*;
