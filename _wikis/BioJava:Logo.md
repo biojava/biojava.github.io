@@ -12,32 +12,24 @@ prefer. --[Mark](User:Mark "wikilink") 21:28, 1 February 2006 (EST)
 
 ![](Dilbert_logo.png "Dilbert_logo.png")
 
-Dear All, I thought this evening I should un-plug / plug-in my own
-creativity !!! Here is the result few BioJava Logos I have designed -
-suggestions and more welcome !!!
+Logo Suggestions
+----------------
 
-BioJava Logo 1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") BioJava
-Logo 2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") BioJava Logo 3
-![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif")
+BioJava Logo 1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") Nice but
+we cannot incorporate the Sun Java logo, that would need to change.
+
+BioJava Logo 2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") I like
+this one.
+
+BioJava Logo 3 ![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif") This
+is good.
 
 BioJava Logo 4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif")
 
-My BJ Buddies can help me to put any of this logo to set wgLogo - I
-tried it but am not able to !!
+BioJava Logo 5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") 5, 6 and 7 are
+good but we would need to modify the cup so that we are not using the
+Sun Java logo.
 
-Happy BJ --[S Khadar](User:S Khadar "wikilink") 10:03, 6 February 2006
-(EST)
+BioJava Logo 6 ![](bj-log4.gif "fig:bj-log4.gif")
 
-I am a total waste with a pencil but here is an idea: how about
-stylizing the Sun's Java cup (with 0's anbd 1's?) and have the steam
-coming out as a double helix? Anyone with some talent could prototype
-this? [Foisys](User:Foisys "wikilink") 10:55, 6 February 2006 (EST)
-
-Hey Foisys, Thanks for the comments - here it is more new versions -
-
-BioJava Logo 5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") BioJava Logo 6
-![](bj-log4.gif "fig:bj-log4.gif") BioJava Logo 7
-![](bj-cup1.gif "fig:bj-cup1.gif")
-
-Happy BJ - --[S Khadar](User:S Khadar "wikilink") 15:07, 6 February 2006
-(EST)
+BioJava Logo 7 ![](bj-cup1.gif "fig:bj-cup1.gif")
