@@ -112,6 +112,9 @@ How Do I....?
 
 -   [How do I calculate the mass and pI of a
     peptide](Biojava:Cookbook:Proteomics "wikilink")?
+-   [How do I analyze the symbol properties of an amino acid sequence
+    using the Amino Acid Index
+    database](Biojava:Cookbook:Proteomics:AAindex "wikilink")?
 
 ### Sequence I/O
 

@@ -60,6 +60,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 === Proteomics ===
 
 * [[Biojava:Cookbook:Proteomics|How do I calculate the mass and pI of a peptide]]?
+* [[Biojava:Cookbook:Proteomics:AAindex|How do I analyze the symbol properties of an amino acid sequence using the Amino Acid Index database]]?
 
 === Sequence I/O ===
 
