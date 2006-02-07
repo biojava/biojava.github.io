@@ -100,22 +100,24 @@ underlying sequence data. Future versions of BioJava may also include a
 Doesn't this all waste memory?
 ------------------------------
 
+![A SymbolList can be stored as a list of references to singleton
+objects](Symbol_Singleton.png "A SymbolList can be stored as a list of references to singleton objects")
+
 A common concern with BioJava's Symbol/SymbolList model is that it must
 use much more memory than a simple string-based approach to sequence
-storage. It should be stressed that BioJava does not use a separate
+storage. It should be stressed that BioJava does *not* use a separate
 object to represent each nucleotide in a long DNA sequence. In fact,
-there are just four \`singleton' Symbol objects which represent the
+there are just four 'singleton' `Symbol` objects which represent the
 symbols found in the DNA alphabet. These can be accessed at any time
-using static methods of the DNATools class. Whenever a thymidine residue
-is stored in a sequence, all that is really stored is a reference to the
-singleton thymidine object. Typically, this takes up four bytes of
-memory: more than the two bytes used by a Java char, but still
-manageable.
+using static methods of the `DNATools` class. Whenever a thymidine
+residue is stored in a sequence, all that is really stored is a
+*reference* to the singleton thymidine object. Typically, this takes up
+four bytes of memory: more than the two bytes used by a Java `char`, but
+still manageable.
 
-A SymbolList can be stored as a list of references to singleton objects
 Actually, it is possible in principle to store a DNA sequence (without
-gaps or ambiguous residues) using only two bits per residue. Since the
-BioJava SymbolList is an interface, it only defines how the sequence
+gaps or ambiguous residues) using only two *bits* per residue. Since the
+BioJava `SymbolList` is an interface, it only defines how the sequence
 should be accessed -- not how data is stored. If space is important, it
 is possible to implement a \`packed' implementation of SymbolList.
 Client code need never worry about the underlying data model.
@@ -125,20 +127,18 @@ Many programs which analyse DNA sequences need to have simultaneous
 access to the original sequence and that of its complementary strand. In
 BioJava this is easy.
 
-SymbolList forward = getSequence(); SymbolList backward =
-DNATools.reverseComplement(forward); System.out.println("First base: " +
-forward.symbolAt(1).getName()); System.out.println("Complement: " +
-backward.symbolAt(backward.length()).
-
-`                                      getName());`
+    SymbolList forward = getSequence();
+    SymbolList backward = DNATools.reverseComplement(forward);
+    System.out.println("First base: " + forward.symbolAt(1).getName());
+    System.out.println("Complement: " + backward.symbolAt(backward.length()).getName());
 
 Since the reverse complement of a DNA sequence is a simple programmatic
 transformation, BioJava doesn't need to physically store the sequence in
 memory at all. Instead, it just creates a special implementation of the
-SymbolList interface, which computes the reverse strand sequence on the
-fly. This will typically cost just a few bytes of memory regardless of
-the sequence length, compared to megabytes for a string representation
-of a typical genome sequence.
+`SymbolList` interface, which computes the reverse strand sequence on
+the fly. This will typically cost just a few bytes of memory regardless
+of the sequence length, compared to megabytes for a string
+representation of a typical genome sequence.
 
 How do I access my sequence data?
 ---------------------------------
