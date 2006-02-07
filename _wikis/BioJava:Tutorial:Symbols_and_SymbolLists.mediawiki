@@ -65,15 +65,16 @@ Since the reverse complement of a DNA sequence is a simple programmatic transfor
 
 == How do I access my sequence data? ==
 
-Each Alphabet object can have one or more SymbolTokenization implementations associated. These are two-way mappings between Symbol objects and textual representations of the data. They are the primary mechanism for creating new SymbolLists from existing (character-encoded) sequence data. By convention, any Alphabet which has a commonly accepted textual representation has a SymbolTokenization called `token' associated: 
+Each <code>Alphabet</code> object can have one or more <code>SymbolTokenization</code> implementations associated. These are two-way mappings between <code>Symbol</code> objects and textual representations of the data. They are the primary mechanism for creating new SymbolLists from existing (character-encoded) sequence data. By convention, any Alphabet which has a commonly accepted textual representation has a SymbolTokenization called `token' associated: 
 
-String seqString = "GATTACA";
+<pre>String seqString = "GATTACA";
 Alphabet dna = DNATools.getDNA();
 SymbolTokenization dnaToke = dna.getTokenization("token");
 SymbolList seq = new SimpleSymbolList(dnaToke, seqString);
 String seqString2 = dnaToke.tokenizeSymbolList(seq);
-System.out.println("Strings match: " + seqString2.equalsIgnoreCase(seqString));
-This low-level parsing mechanism is supplemented by a more sophisticated sequence Input/Output framework, defined in the package org.biojava.bio.seq.io. This uses pluggable file format converters, and can currently read and write in Fasta, EMBL, and Genbank formats. BioJava can also fetch data from services such as DAS, and BioCorba, and access databases such as those used by the Ensembl project (additional packages are required to BioCorba and Ensembl support). 
+System.out.println("Strings match: " + seqString2.equalsIgnoreCase(seqString));</pre>
+
+This low-level parsing mechanism is supplemented by a more sophisticated sequence Input/Output framework, defined in the package <code>org.biojava.bio.seq.io</code>. This uses pluggable file format converters, and can currently read and write in Fasta, EMBL, and Genbank formats. BioJava can also fetch data from services such as [http://biodas.org/ DAS], and [http://www.biocorba.org/ BioCorba], and access databases such as those used by the [http://www.ensembl.org/ Ensembl] project (additional packages are required to BioCorba and Ensembl support).
 
 == What about the Sequence interface? ==
  

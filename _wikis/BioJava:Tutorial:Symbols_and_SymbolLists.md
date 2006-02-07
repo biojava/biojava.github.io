@@ -143,26 +143,30 @@ representation of a typical genome sequence.
 How do I access my sequence data?
 ---------------------------------
 
-Each Alphabet object can have one or more SymbolTokenization
-implementations associated. These are two-way mappings between Symbol
+Each `Alphabet` object can have one or more `SymbolTokenization`
+implementations associated. These are two-way mappings between `Symbol`
 objects and textual representations of the data. They are the primary
 mechanism for creating new SymbolLists from existing (character-encoded)
 sequence data. By convention, any Alphabet which has a commonly accepted
 textual representation has a SymbolTokenization called \`token'
 associated:
 
-String seqString = "GATTACA"; Alphabet dna = DNATools.getDNA();
-SymbolTokenization dnaToke = dna.getTokenization("token"); SymbolList
-seq = new SimpleSymbolList(dnaToke, seqString); String seqString2 =
-dnaToke.tokenizeSymbolList(seq); System.out.println("Strings match: " +
-seqString2.equalsIgnoreCase(seqString)); This low-level parsing
-mechanism is supplemented by a more sophisticated sequence Input/Output
-framework, defined in the package org.biojava.bio.seq.io. This uses
-pluggable file format converters, and can currently read and write in
-Fasta, EMBL, and Genbank formats. BioJava can also fetch data from
-services such as DAS, and BioCorba, and access databases such as those
-used by the Ensembl project (additional packages are required to
-BioCorba and Ensembl support).
+    String seqString = "GATTACA";
+    Alphabet dna = DNATools.getDNA();
+    SymbolTokenization dnaToke = dna.getTokenization("token");
+    SymbolList seq = new SimpleSymbolList(dnaToke, seqString);
+    String seqString2 = dnaToke.tokenizeSymbolList(seq);
+    System.out.println("Strings match: " + seqString2.equalsIgnoreCase(seqString));
+
+This low-level parsing mechanism is supplemented by a more sophisticated
+sequence Input/Output framework, defined in the package
+`org.biojava.bio.seq.io`. This uses pluggable file format converters,
+and can currently read and write in Fasta, EMBL, and Genbank formats.
+BioJava can also fetch data from services such as
+[DAS](http://biodas.org/), and [BioCorba](http://www.biocorba.org/), and
+access databases such as those used by the
+[Ensembl](http://www.ensembl.org/) project (additional packages are
+required to BioCorba and Ensembl support).
 
 What about the Sequence interface?
 ----------------------------------
