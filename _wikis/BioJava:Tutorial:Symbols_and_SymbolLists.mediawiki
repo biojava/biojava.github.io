@@ -130,3 +130,4 @@ Within the BioJava object model, it is possible to inspect any ambiguous symbol 
 You might want to modify the GCContent program, above, so as to ignore any ambiguous symbols in the input sequence. 
 
 {{Tutorial:Footer}}
+[[Category:Tutorial]]
