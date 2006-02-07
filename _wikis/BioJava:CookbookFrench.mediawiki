@@ -6,7 +6,7 @@ Cet site est inspiré de tous ces livres de recettes en programmation et suit la
 
 'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des suggestions, questions ou commentaire, contacter la [mailto://biojava-l@biojava.org liste de courriel] de BioJava. Pour s'y abonner, cliquer [http://www.biojava.org/mailman/listinfo/biojava-l ici].
 
-Traduction française: [mailto://sylvain.foisyCHEZbioneq.qc.ca Sylvain Foisy]. Donc toute erreur est mienne; contactez-moi pour correction. Encore mieux: particper au concept Wiki et faites-les vous-m&ecirc;mes!!
+Traduction française: [mailto://sylvain.foisyCHEZbioneq.qc.ca Sylvain Foisy]. Donc toute erreur est mienne; contactez-moi pour correction. Encore mieux: participer au concept Wiki et faites-les vous-m&ecirc;mes!!
 
 == Présentation ==
 
