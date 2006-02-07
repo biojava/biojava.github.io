@@ -96,8 +96,9 @@ Comment faire pour ...?
 ### Protéomique
 
 -   Comment calculer la masse et le pI d'un peptide?
--   Comment analyser les propriétés d'une séquence protéique en
-    utilisant la base de données *Amino Acid Index*?
+-   [Comment analyser les propriétés d'une séquence protéique en
+    utilisant la base de données *Amino Acid
+    Index*?](BioJava:CookbookFrench:Proteomics:AAindex "wikilink")
 
 ### Entrée/Sortie des objets Sequence
 
