@@ -33,5 +33,8 @@ license](http://www.biojava.org/download/binaries/LICENSE.COMMONS).
 Getting older versions
 ----------------------
 
-The legacy release 1.3 can be found
-[here](BioJava:Download 1.3 "wikilink").
+-   The legacy release 1.3 can be found
+    [here](BioJava:Download 1.3 "wikilink").
+-   Other releases of BioJava can be found in the [download
+    area](http://www.biojava.org/download/).
+
