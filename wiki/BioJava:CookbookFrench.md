@@ -86,8 +86,9 @@ Comment faire pour ...?
     nom?](BioJava:CookbookFrench:Sequence:ChangeName "wikilink")
 -   [Comment éditer une Sequence ou un
     SymbolList?](BioJava:CookbookFrench:Sequence:Edit "wikilink")
--   Comment utiliser une sequence comme expression régulière pour
-    chercher des motifs?
+-   [Comment utiliser une sequence comme expression régulière pour
+    chercher des
+    motifs?](BioJava:CookbookFrench:Sequence:Regex "wikilink")
 
 ### Traduction
 
