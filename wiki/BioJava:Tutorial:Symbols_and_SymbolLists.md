@@ -234,19 +234,19 @@ Ambiguous symbols
 -----------------
 
 Sometimes, it is useful to represent sequences which are not perfectly
-defined. In such cases, it is common to use ambiguous symbols. A common
-example is the 'N' character in DNA sequences, which is used to indicate
-parts of a sequence where the sequencing traces were difficult to
-interpret. Sometimes, runs of Ns are also used to indicate gaps in
+defined. In such cases, it is common to use *ambiguous* symbols. A
+common example is the 'N' character in DNA sequences, which is used to
+indicate parts of a sequence where the sequencing traces were difficult
+to interpret. Sometimes, runs of Ns are also used to indicate gaps in
 assemblies. In the case of DNA, additional ambiguity symbols have been
 defined, covering all possible combinations of the four bases. For
 instance, the symbol 'W' realy means (A or T).
 
 Within the BioJava object model, it is possible to inspect any ambiguous
 symbol to determine the set of atomic symbols which it matches, using
-the getMatches method. Atomic symbols can be considered to be the
-special case where getMatches returns a set whose size is exactly one.
-As a conveniece, atomic symbols also implement the AtomicSymbol
+the `getMatches` method. Atomic symbols can be considered to be the
+special case where `getMatches` returns a set whose size is exactly one.
+As a conveniece, atomic symbols also implement the `AtomicSymbol`
 interfaces.
 
 You might want to modify the GCContent program, above, so as to ignore
