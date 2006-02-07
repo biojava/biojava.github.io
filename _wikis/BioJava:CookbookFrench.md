@@ -82,8 +82,8 @@ Comment faire pour ...?
     d'ARN?](BioJava:CookbookFrench:Sequence:Transcribe "wikilink")
 -   [Comment obtenir la séquence complémentaire à une Sequence d'ADN ou
     d'ARN?](BioJava:CookbookFrench:Sequence:Reverse "wikilink")
--   Les Sequences sont immuables alors comment faire pour en changer le
-    nom?
+-   [Les Sequences sont immuables alors comment faire pour en changer le
+    nom?](BioJava:CookbookFrench:Sequence:ChangeName "wikilink")
 -   Comment éditer une Sequence ou un SymbolList?
 -   Comment utiliser une sequence comme expression régulière pour
     chercher des motifs?
