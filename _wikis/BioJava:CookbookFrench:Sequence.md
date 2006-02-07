@@ -87,8 +87,9 @@ des classes *DNATools*, *RNATools* ou *ProteinTools*.
 
 ### D'une *SymbolList* à une chaîne de caractères
 
-Vous pouvez appeller la méthode seqString() sur une SymbolList ou une
-Sequence pour obtenir la chaîne de caractères contenant la séquence.
+Vous pouvez appeller la méthode **seqString()** sur une *SymbolList* ou
+une *Sequence* pour obtenir la chaîne de caractères contenant la
+séquence.
 
     import org.biojava.bio.symbol.*;
 
