@@ -85,7 +85,7 @@ The general rule is that the <code>Sequence</code> interface is normally used fo
 == A simple example ==
 The following program is a very simple example, which reads one or more DNA sequences from a FASTA format data file and reports the GC content of each. This example is a (very) simple application of the BioJava Sequence I/O framework, described in later chapters. Used as below, it allows you to iterate over all the sequences in a multiple-entry file, rather than holding all of them in memory at once. 
 
-import java.io.*;
+<pre>import java.io.*;
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.seq.io.*;
@@ -119,7 +119,7 @@ public class GCContent {
 			       "%");
 	}
     }			       
-}
+}</pre>
 
 == Ambiguous symbols ==
 
