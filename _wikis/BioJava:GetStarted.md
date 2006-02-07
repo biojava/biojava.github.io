@@ -11,18 +11,13 @@ Java implementations for Linux, Windows, and Solaris are available to
 download from [Sun's java website](http://java.sun.com). Recent versions
 of MacOS X include a suitable Java implementation as standard. Java is
 also available on many other platforms: if in doubt, contact your
-vendor.
+vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-BioJava binaries are distributed in .jar (Java ARchive) format. You can
-always get the latest release version in the [binaries
-directory](http://www.biojava.org/download/binaries) of the [download
-area](http://www.biojava.org/download). You will also need:
+You can get the legacy release version of BioJava 1.30
+[here](Biojava:Download 1.3 "wikilink"); or
 
-`   * bytecode-0.92.jar`  
-`   * commons-cli.jar`  
-`   * commons-collections-2.1.jar`  
-`   * commons-dbcp-1.1.jar`  
-`   * commons-pool-1.1.jar`
+You can always get the latest release version in the [download
+area](Biojava:Download 1.4 "wikilink").
 
 Installation
 ------------
