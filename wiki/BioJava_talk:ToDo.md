@@ -11,3 +11,15 @@ also think it would be a quite difficult job to do so. So my proposal is
 to change nothing, instead just to link to it from the Wiki.
 
 [Martin](User:Martin "wikilink") 15:48, 7 February 2006 (EST)
+
+First tutorial online
+---------------------
+
+I've formatted the [first
+tutorial](BioJava:Tutorial:Symbols_and_SymbolLists "wikilink"). Any
+feedback, suggestions, etc.? The usage of \<code\>...\</code\> is not
+consistent in the original
+[page](http://www.biojava.org/tutorials/chap1.html). Any guidelines when
+to format the namens of classes, interfaces, methods, etc.?
+
+[Martin](User:Martin "wikilink") 16:22, 7 February 2006 (EST)
