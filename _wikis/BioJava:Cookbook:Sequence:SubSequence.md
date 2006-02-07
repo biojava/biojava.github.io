@@ -31,7 +31,7 @@ region outside of 1...length an IndexOutOfBoundsException will occur.
         //get the last three bases
         SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
 
-=== Printing a Sub - Sequence ==
+### Printing a Sub - Sequence
 
         //print the last three bases of a SymbolList or Sequence
         String s = symL.subStr(symL.length() - 3, symL.length());
