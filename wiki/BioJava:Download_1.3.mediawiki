@@ -1,0 +1,22 @@
+== Download BioJava 1.3 ==
+
+This page offers downloads for the legacy release version, BioJava 1.30 
+
+== BioJava code == 
+
+* [http://www.biojava.org/download/binaries/biojava-1.30-jdk14.jar Binary for J2SE 1.4 or later] 
+* [http://www.biojava.org/download/binaries/biojava-1.30-jdk13.jar Binary for J2SE 1.3] 
+* [http://www.biojava.org/download/docs/biojava-docs-1.30.tar.gz API documentation]
+* [http://www.biojava.org/download/source/biojava-1.30.tar.gz Source code]
+
+== Required libraries ==
+
+* [http://www.biojava.org/download/binaries/bytecode-0.91.jar bytecode.jar]
+* [http://www.biojava.org/download/binaries/jakarta-regexp.jar jakarta-regexp.jar]
+* [http://www.biojava.org/download/binaries/xerces.jar xerces.jar]
+
+Xerces and Jakarta-regexp are covered by the [http://www.biojava.org/download/binaries/LICENCE.XERCES Apache license]. 
+
+== Getting older versions ==
+
+Older releases of BioJava can be found in the [http://www.biojava.org/download/ download area].
