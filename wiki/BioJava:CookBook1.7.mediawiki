@@ -131,8 +131,8 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === Protein Structure ===
 
-* [[BioJava:CookBook:PDB:read|How do I read a PDB file?]]
-
+* [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
+* [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
 
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
