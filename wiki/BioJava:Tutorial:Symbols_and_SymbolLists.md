@@ -171,17 +171,17 @@ required to BioCorba and Ensembl support).
 What about the Sequence interface?
 ----------------------------------
 
-Until this point, we have concentrated on the SymbolList interface
-which, as its name suggests, is a raw list of Symbol references. Real
+Until this point, we have concentrated on the `SymbolList` interface
+which, as its name suggests, is a raw list of `Symbol` references. Real
 entries in sequence databases are more complicated than this: sequences
 almost always have some kind of ID code or description associated, and
-many are also accompanied by tables of annotations. In BioJava, Sequence
-is a subinterface of SymbolList which adds a name property, plus a
-mechanism for querying tables of features.
+many are also accompanied by tables of annotations. In BioJava,
+`Sequence` is a subinterface of `SymbolList` which adds a `name`
+property, plus a mechanism for querying tables of features.
 
-The general rule is that the Sequence interface is normally used for
+The general rule is that the `Sequence` interface is normally used for
 sequences which have been loaded into a program from files or databases.
-SymbolList may be a more appropriate type for sequences generated
+`SymbolList` may be a more appropriate type for sequences generated
 internally by an analysis program.
 
 A simple example
