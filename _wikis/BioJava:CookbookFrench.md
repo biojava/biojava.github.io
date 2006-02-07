@@ -96,6 +96,8 @@ Comment faire pour ...?
 ### Protéomique
 
 -   Comment calculer la masse et le pI d'un peptide?
+-   Comment analyzer les propriétés d'une séquence protéique en
+    utilisant la base de données *Amino Acid Index*?
 
 ### Entrée/Sortie des objets Sequence
 
