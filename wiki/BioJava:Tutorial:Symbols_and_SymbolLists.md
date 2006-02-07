@@ -251,3 +251,5 @@ interfaces.
 
 You might want to modify the GCContent program, above, so as to ignore
 any ambiguous symbols in the input sequence.
+
+<Category:Tutorial>
