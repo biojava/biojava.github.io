@@ -27,46 +27,43 @@ handling APIs. While the notion of a sequence as a string of ASCII
 characters has served us well to date, there are several issues which
 can present problems to the programmer:
 
-Validation: It is possible to pass any string to a routine which is expecting a biological sequence. Any validation has to be performed on an ad hoc basis.  
-Ambiguity: The meaning of each symbol is not necessarily clear. The \`T' which means thymidine in DNA is the same \`T' which is a threonine residue in a protein sequence  
+Validation: It is possible to pass *any* string to a routine which is expecting a biological sequence. Any validation has to be performed on an *ad hoc* basis.  
+Ambiguity: The meaning of each symbol is not necessarily clear. The 'T' which means thymidine in DNA is the same 'T' which is a threonine residue in a protein sequence  
+Limited alphabet: While there are obvious encodings for nucleic acid and sequence data as strings, the same approach does not always work well for other kinds of data generated in biological sequence analysis software  
 
-Limited alphabet While there are obvious encodings for nucleic acid and
-sequence data as strings, the same approach does not always work well
-for other kinds of data generated in biological sequence analysis
-software BioJava takes a rather different approach to sequence data.
-Instead of using a string of ASCII characters, a sequence is modelled as
-a list of Java objects implementing the Symbol interface. This class,
-and the others described here, are part of the Java package
-org.biojava.bio.symbol.
+BioJava takes a rather different approach to sequence data. Instead of
+using a string of ASCII characters, a sequence is modelled as a list of
+Java objects implementing the `Symbol` interface. This class, and the
+others described here, are part of the Java package
+`org.biojava.bio.symbol`.
 
-public interface Symbol {
+    public interface Symbol {
+        public String getName();
+        public Annotation getAnnotation();
+        public Alphabet getMatches();
+    }
 
-`   public String getName();`  
-`   public Annotation getAnnotation();`  
-`   public Alphabet getMatches();`
-
-} All Symbol instances have a name property (for instance, Thymidine).
+All Symbol instances have a `name` property (for instance, Thymidine).
 They may optionally have extra information associated with them (for
 instance, information about the chemical properties of a DNA base)
-stored in a standard BioJava data structure called an Annotation.
+stored in a standard BioJava data structure called an `Annotation`.
 Annotations are just set of key-value data. The final method,
-getMatches, is only important for ambiguous symbols, which are covered
+`getMatches`, is only important for ambiguous symbols, which are covered
 at the end of this chapter.
 
-The set of Symbol objects which may be found in a particular type of
-sequence data are defined in an Alphabet. It it always possible to
+The set of `Symbol` objects which may be found in a particular type of
+sequence data are defined in an `Alphabet`. It it always possible to
 define custom Symbols and Alphabets, but BioJava supplies a set of
 predefined alphabets for representing biological molecules. These are
-accessible through a central registry called the AlphabetManager, and
+accessible through a central registry called the `AlphabetManager`, and
 through convenience methods.
 
-FiniteAlphabet dna = DNATools.getDNA(); Iterator dnaSymbols =
-dna.iterator(); while (dnaSymbols.hasNext()) {
-
-`   Symbol s = (Symbol) dnaSymbols.next();`  
-`   System.out.println(s.getName());`
-
-}
+    FiniteAlphabet dna = DNATools.getDNA();
+    Iterator dnaSymbols = dna.iterator();
+    while (dnaSymbols.hasNext()) {
+        Symbol s = (Symbol) dnaSymbols.next();
+        System.out.println(s.getName());
+    }
 
 SymbolList: the simple sequence
 -------------------------------
