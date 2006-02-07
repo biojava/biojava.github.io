@@ -129,6 +129,11 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 * How can I make a Genetic Algorithm with BioJava?
 
+=== Protein Structure ===
+
+* [[BioJava:CookBook:PDB:read|How do I read a PDB file?]]
+
+
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
 * Introduction to the STRAP API
