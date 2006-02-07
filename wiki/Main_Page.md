@@ -42,7 +42,9 @@ You can also maintain an up-to-date view of BioJava with
 [CVS](wp:Concurrent Versions System "wikilink") server. If you wish to
 contribute your existing code or help maintain part of the BioJava
 code-base, then we can supply you with a read/write account. Sign up for
-the biojava-dev mailing list and post a request for an account.
+the [biojava-dev mailing
+list](http://www.biojava.org/mailman/listinfo/biojava-dev) and post a
+request for an account.
 
 New Logo Needed!
 ----------------
