@@ -505,7 +505,7 @@ All of these methods are just stubs. Notice that they throw ChangeVetoExceptions
     }
     return nullModel;
   }
-}<pre>
+}</pre>
 
 == What you should see ==
 
@@ -514,4 +514,3 @@ If you type this in and compile, or run the applet [http://www.biojava.org/tutor
 By the end of this, you should feel comefortable with listening for events and writing custom ChangeListener implementations. You should be able to prevent a property from altering by adding an ALWAYS_VETO listener. You should have an understanding of how when one object changes, it may cause the state of another object to change, and off how to write a ChangeAdapter instance that will wire this together. I hope it was fun. 
 
 {{Tutorial:Footer}}
-</pre>
