@@ -29,7 +29,9 @@ What needs doing?
 -   Participants - Mostly links to user pages. eg User:Mark. This is not
     ideal. Jason is going to set up a People domain then we can set
     User:Mark to redirect to People:Mark Schreiber
--   Download 1.3 - easy (best to link back to old download?)
+-   Download 1.3 - easy (best to link back to old download?) -- in
+    progress [Martin](User:Martin "wikilink") 12:01, 7 February 2006
+    (EST)
 -   Download 1.4 - easy (FTP location?)
 -   CVS access - easy
 -   WebCVS - easy
