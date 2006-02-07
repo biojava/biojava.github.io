@@ -61,7 +61,9 @@ Comment faire pour ...?
 `   * `[`Comment` `faire` `un` `Alphabet` `sur` `mesure` `à` `partir`
 `de` `Symbols` `sur`
 `mesure?`](BioJava:CookbookFrench:Alphabets:CustomAlphabets "wikilink")  
-`   * Comment faire unCrossProductAlphabet, par exemple, un Alphabet de codons?`  
+`   * `[`Comment` `faire` `un` `CrossProductAlphabet,` `par` `exemple,`
+`un` `Alphabet` `de`
+`codons?`](BioJava:CookbookFrench:Alphabets:CrossProduct "wikilink")  
 `   * Comment décomposer les Symbols d'Alphabets CrossProductAlphabet en leurs Symbols constituants?`  
 `   * Comment dire si deux Alphabets ou Symbols sont identiques?`  
 `   * Comment faire pour créer un Symbol ambigüe comme Y ou R?`
