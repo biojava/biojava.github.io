@@ -52,10 +52,10 @@ Click here to search Google Scholar for papers using BioJava.
 
 === Translation ===
 
-* How do I translate a DNA or RNA Sequence or SymbolList to Protein?
-* How do I translate a single codon to a single amino acid?
-* How do I use a non standard translation table?
-* How do I translate a nucleotide sequence in all six frames
+* [[Biojava:Cookbook:Translation|How do I translate a DNA or RNA Sequence or SymbolList to Protein]]?
+* [[Biojava:Cookbook:Translation:Single|How do I translate a single codon to a single amino acid]]?
+* [[Biojava:Cookbook:Translation:NonStandart|How do I use a non standard translation table]]?
+* [[Biojava:Cookbook:Translation:SixFrames|How do I translate a nucleotide sequence in all six frames]]?
 
 === Proteomics ===
 
