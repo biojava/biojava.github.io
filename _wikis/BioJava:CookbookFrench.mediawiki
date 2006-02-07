@@ -52,7 +52,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 === Protéomique ===
 
 * Comment calculer la masse et le pI d'un peptide?
-* Comment analyzer les propri&eacute;t&eacute;s d'une s&eacute;quence prot&eacute;ique en utilisant la base de donn&eacute;es ''Amino Acid Index''?
+* Comment analyser les propri&eacute;t&eacute;s d'une s&eacute;quence prot&eacute;ique en utilisant la base de donn&eacute;es ''Amino Acid Index''?
 
 === Entrée/Sortie des objets Sequence ===
 
