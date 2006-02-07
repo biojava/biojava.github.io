@@ -56,7 +56,8 @@ Comment faire pour ...?
 
 ### Alphabets et Symbols
 
-`   * Comment obtenir un Alphabet d'ADN, d'ARN ou de protéine?`  
+`   * `[`Comment` `obtenir` `un` `Alphabet` `d'ADN,` `d'ARN` `ou` `de`
+`protéine?`](BioJava:CookbookFrench:Alphabets "wikilink")  
 `   * Comment faire un Alphabet sur mesure à partir de Symbols sur mesure?`  
 `   * Comment faire unCrossProductAlphabet, par exemple, un Alphabet de codons?`  
 `   * Comment décomposer les Symbols d'Alphabets CrossProductAlphabet en leurs Symbols constituants?`  
