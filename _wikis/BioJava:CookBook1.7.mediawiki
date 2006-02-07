@@ -78,12 +78,12 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === Locations and Features ===
 
-* How do I specify a PointLocation?
-* How do I specify a RangeLocation?
-* How do CircularLocations work?
-* How can I make a Feature?
-* How can I filter Features by type?
-* How can I remove features?
+* [[BioJava:Cookbook:Locations:Point|How do I specify a PointLocation]]?
+* [[BioJava:Cookbook:Locations:Range|How do I specify a RangeLocation]]?
+* [[BioJava:Cookbook:Locations:Circular|How do CircularLocations work]]?
+* [[BioJava:Cookbook:Locations:Feature|How can I make a Feature]]?
+* [[BioJava:Cookbook:Locations:Filter|How can I filter Features by type]]?
+* [[BioJava:Cookbook:Locations:Remove|How can I remove features]]?
 
 === BLAST and FASTA ===
 
