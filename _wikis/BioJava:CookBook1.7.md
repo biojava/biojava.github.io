@@ -130,9 +130,11 @@ How Do I....?
 
 ### Annotations
 
--   How do I list the Annotations in a Sequence?
--   How do I filter a Sequences based on their species (or another
-    Annotation property)?
+-   [How do I list the Annotations in a
+    Sequence](BioJava:Cookbook:Annotations:List "wikilink")?
+-   [How do I filter a Sequences based on their species (or another
+    Annotation
+    property)](BioJava:Cookbook:Annotations:Filter "wikilink")?
 
 ### Locations and Features
 
