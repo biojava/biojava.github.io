@@ -11,9 +11,8 @@ enregistrés avec le *AlphabetManager* de BioJava au démarrage et sont
 accessibles par leur nom (DNA, RNA et PROTEIN respectivement). Les
 alphabets d'ADN, d'ARN et de protéines peuvent aussi être obtenus en
 utilisant des méthodes statiques retrouvées dans les classes *DNATools*,
-*RNATools* et *ProteinTools* respectivement.
-
-Ces deux approches sont utilisées dans l'exemple ci-dessous.
+*RNATools* et *ProteinTools* respectivement. Ces deux approches sont
+utilisées dans l'exemple ci-dessous.
 
     import org.biojava.bio.symbol.*;
     import java.util.*;
