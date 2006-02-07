@@ -52,7 +52,8 @@ given a few times.
 Publications
 ------------
 
-Click here to search Google Scholar for papers using BioJava.
+Click here to search [Google Scholar](http://www.example.com) for papers
+using BioJava.
 
 How Do I....?
 -------------
