@@ -15,33 +15,33 @@ utilisant des méthodes statiques retrouvées dans les classes *DNATools*,
 
 Ces deux approches sont utilisées dans l'exemple ci-dessous.
 
-     import org.biojava.bio.symbol.*;
-     import java.util.*;
-     import org.biojava.bio.seq.*;
+    import org.biojava.bio.symbol.*;
+    import java.util.*;
+    import org.biojava.bio.seq.*;
      
-     public class AlphabetExample{
-       public static void main(String[] args){
-          Alphabet dna, rna, prot;
+    public class AlphabetExample{
+      public static void main(String[] args){
+         Alphabet dna, rna, prot;
+           
+         // obtenir l'alphabet d'ADN par son nom
+         dna = AlphabetManager.alphabetForName("DNA");
+           
+         // obtenir l'alphabet d'ARN par son nom
+         rna = AlphabetManager.alphabetForName("RNA");
+           
+         // obtenir l'alphabet des acides aminés par son nom
+         prot = AlphabetManager.alphabetForName("PROTEIN");
             
-          // obtenir l'alphabet d'ADN par son nom
-          dna = AlphabetManager.alphabetForName("DNA");
+         //obtenir l'alphabet des acides aminés par nom, en incluant
+         // le Symbol * de terminaison
+         prot = AlphabetManager.alphabetForName("PROTEIN-TERM");
             
-          // obtenir l'alphabet d'ARN par son nom
-          rna = AlphabetManager.alphabetForName("RNA");
+         //obtenir les mêmes alphabets à partir des classes Tools correspondantes
+         dna = DNATools.getDNA();
+         rna = RNATools.getRNA();
+         prot = ProteinTools.getAlphabet();
             
-          // obtenir l'alphabet des acides aminés par son nom
-          prot = AlphabetManager.alphabetForName("PROTEIN");
-            
-          //obtenir l'alphabet des acides aminés par nom, en incluant
-          // le Symbol * de terminaison
-          prot = AlphabetManager.alphabetForName("PROTEIN-TERM");
-            
-          //obtenir les mêmes alphabets à partir des classes Tools correspondantes
-          dna = DNATools.getDNA();
-          rna = RNATools.getRNA();
-          prot = ProteinTools.getAlphabet();
-            
-          //en incluant le Symbol *
-          prot = ProteinTools.getTAlphabet();
-        }
-     }
+         //en incluant le Symbol *
+         prot = ProteinTools.getTAlphabet();
+       }
+    }
