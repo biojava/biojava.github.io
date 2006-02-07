@@ -59,7 +59,7 @@ Click here to search Google Scholar for papers using BioJava.
 
 === Proteomics ===
 
-* How do I calculate the mass and pI of a peptide?
+* [[Biojava:Cookbook:Proteomics|How do I calculate the mass and pI of a peptide]]?
 
 === Sequence I/O ===
 
