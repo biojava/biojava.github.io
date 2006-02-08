@@ -27,10 +27,7 @@ Whats in progress?
     I've not enough experiences with the classes, but I'll take on the
     formatting --[Martin](User:Martin "wikilink") 15:52, 7 February 2006
     (EST))
--   Cookbook (BioJava in Anger) - as per Tutorial but there's much more
-    of it, very laborious indeed (lots of copy and paste). (By start
-    I´ll work here. --[Guedes](User:Guedes "wikilink") 15:50, 6 February
-    2006 (EST)) (French version: working on
+-   Cookbook (BioJava in Anger French version: working on
     it - --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
     (EST))
 -   Participants - Mostly links to user pages. eg User:Mark. This is not
@@ -45,6 +42,8 @@ Whats done already?
 -   Thanks
 -   Getting Started (Done --[Foisys](User:Foisys "wikilink") 12:49, 6
     February 2006 (EST))
+-   CookBook (BioJava in Anger English version) -
+    Done --[Guedes](User:Guedes "wikilink") 14:34, 8 February 2006 (EST)
 -   JavaDoc 1.3 - how? link back to old? Links to old
     established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
     (EST)
