@@ -199,5 +199,5 @@ Any BioJava script should work fine.
 
 THE END!
 
-Richard Holland, hollandr at gis dot a-star dot edu dot sg, December
-2004, updated May 2005
+[Richard Holland](USer:Richard "wikilink"), December 2004, updated May
+2005
