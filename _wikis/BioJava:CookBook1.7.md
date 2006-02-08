@@ -205,10 +205,14 @@ How Do I....?
 
 ### User Interfaces
 
--   How can I visualize Annotations and Features as a tree?
--   How can I display a Sequence in a GUI?
--   How do I display Sequence coordinates?
--   How can I display features?
+-   [How can I visualize Annotations and Features as a
+    tree](BioJava:CookBook:Interfaces:ViewAsTree "wikilink")?
+-   [How can I display a Sequence in a
+    GUI](BioJava:CookBook:Interfaces:ViewInGUI "wikilink")?
+-   [How do I display Sequence
+    coordinates](BioJava:CookBook:Interfaces:Coordinates "wikilink")?
+-   [How can I display
+    features](BioJava:CookBook:Interfaces:Features "wikilink")?
 
 ### BioSQL and Sequence Databases
 

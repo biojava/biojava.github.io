@@ -114,10 +114,10 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === User Interfaces ===
 
-* How can I visualize Annotations and Features as a tree?
-* How can I display a Sequence in a GUI?
-* How do I display Sequence coordinates?
-* How can I display features?
+* [[BioJava:CookBook:Interfaces:ViewAsTree|How can I visualize Annotations and Features as a tree]]?
+* [[BioJava:CookBook:Interfaces:ViewInGUI|How can I display a Sequence in a GUI]]?
+* [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
+* [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
 
 === BioSQL and Sequence Databases ===
 
