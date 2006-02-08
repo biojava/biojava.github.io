@@ -197,8 +197,9 @@ How Do I....?
     motif](BioJava:CookBook:DP:WeightMatrix "wikilink")?
 -   [How do I make a HMMER like profile
     HMM](BioJava:CookBook:DP:HMM "wikilink")?
--   [How do I set up a custom
-    HMM](BioJava:CookBook:DP:HMMCustom "wikilink")?
+-   |How do I set up a custom HMM? (Link to
+    Tutorial?? --[Guedes](User:Guedes "wikilink") 11:43, 8 February 2006
+    (EST) )
 -   [How do I generate a pair-wise
     alignment](BioJava:CookBook:DP:PairWise "wikilink")?
 
