@@ -2,14 +2,14 @@
 title: BioJava:CookbookFrench:Annotations:List
 ---
 
-Comment obtenir la liste des Annotations d'une Sequence?
+Comment obtenir la liste des annotations d'une sequence?
 --------------------------------------------------------
 
 Lorsque vous lisez un fichier de séquences annotées, comme GenBank or
 EMBL, celui-ci contient bien plus d'informations que la simple séquence.
-Si cette information est à une position précise, elle devient un
-Feature. Si elle est plus générique, comme le nom de l"espèce, cette
-information devient une Annotation.
+Si cette information est à une position précise, elle devient un objet
+*Feature*. Si elle est plus générique, comme le nom de l'espèce, cette
+information devient un objet de type *Annotation*.
 
 Les objets Annotations de BioJava sont semblables à des objets de type
 Map et contiennent des clés et leur valeurs associées.
