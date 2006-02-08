@@ -187,6 +187,11 @@ Comment faire pour ...?
 
 -   Comment écrire un algorithme génétique avec BioJava?
 
+### Analyse structurale des protéines
+
+-   Comment faire pour lire un fichier en format PDB?
+-   Comment puis-je modifié un résidu?
+
 ### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
 
 -   Introduction à l'API de STRAP
