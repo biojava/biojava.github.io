@@ -75,3 +75,5 @@ public class SeqView extends JFrame {
 </pre>
 
 Below the program is a screen shot of the GUI.
+
+[[image:Seqview.jpg]]

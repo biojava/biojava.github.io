@@ -86,3 +86,5 @@ and a SequenceRenderer to display the symbols in a Sequence.
     }
 
 Below the program is a screen shot of the GUI.
+
+<image:Seqview.jpg>
