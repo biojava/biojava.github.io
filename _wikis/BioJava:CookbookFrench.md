@@ -135,12 +135,18 @@ Comment faire pour ...?
 
 ### Positions et caractéristiques (*Features*)
 
--   Comment faire pour spécifier une PointLocation?
--   Comment faire pour spécifier une RangeLocation?
--   Comment fonctionne les CircularLocations?
--   Comment créer une caractéristique (Feature)?
--   Comment filtrer les Features par type?
--   Comment supprimer un Feature?
+-   [Comment faire pour spécifier une position ponctuelle
+    (*PointLocation*)?](BioJava:CookbookFrench:Locations:Point "wikilink")
+-   [Comment faire pour spécifier une position par intervalle
+    (*RangeLocation*)?](BioJava:CookbookFrench:Locations:Range "wikilink")
+-   [Comment fonctionne les
+    CircularLocations?](BioJava:CookbookFrench:Locations:Circular "wikilink")
+-   [Comment créer une caractéristique
+    (*Feature*)?](BioJava:CookbookFrench:Locations:Feature "wikilink")
+-   [Comment filtrer les *Features* par
+    type?](BioJava:CookbookFrench:Locations:Filter "wikilink")
+-   [Comment supprimer un
+    *Feature*?](BioJava:CookbookFrench:Locations:Remove "wikilink")
 
 ### BLAST et FASTA
 
