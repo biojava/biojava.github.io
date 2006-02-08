@@ -70,12 +70,12 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Positions et caract&eacute;ristiques (''Features'') ===
 
-* Comment faire pour spécifier une PointLocation?
-* Comment faire pour spécifier une RangeLocation?
-* Comment fonctionne les CircularLocations?
-* Comment créer une caractéristique (Feature)?
-* Comment filtrer les Features par type?
-* Comment supprimer un Feature?
+* [[BioJava:CookbookFrench:Locations:Point|Comment faire pour spécifier une position ponctuelle (''PointLocation'')?]]
+* [[BioJava:CookbookFrench:Locations:Range|Comment faire pour spécifier une position par intervalle (''RangeLocation'')?]]
+* [[BioJava:CookbookFrench:Locations:Circular|Comment fonctionne les CircularLocations?]]
+* [[BioJava:CookbookFrench:Locations:Feature|Comment créer une caractéristique (''Feature'')?]]
+* [[BioJava:CookbookFrench:Locations:Filter|Comment filtrer les ''Features'' par type?]]
+* [[BioJava:CookbookFrench:Locations:Remove|Comment supprimer un ''Feature''?]]
 
 === BLAST et FASTA ===
 
