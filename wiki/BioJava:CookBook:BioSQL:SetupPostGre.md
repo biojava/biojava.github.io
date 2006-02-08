@@ -7,10 +7,11 @@ Installing and using BioSQL
 
 by [David Huen](User:David "wikilink"), Last modified: 18th June 2003.
 
-This document describes how to install and use Biosql. BioSQL is a part
-of the OBDA standard and was developed as a common sequence database
-schema for the different language projects within the Open
-Bioinformatics Foundation.
+This document describes how to install and use Biosql.
+[BioSQL](http://www.biojava.org/download/biosql/) is a part of the
+[OBDA](http://obda.open-bio.org/) standard and was developed as a common
+sequence database schema for the different language projects within the
+[Open Bioinformatics Foundation](http://www.open-bio.org/).
 
 While BioSQL is fairly vendor-neutral in its design, this tutorial is
 based on the case that I know best, that is, the installation of BioSQL
@@ -53,12 +54,14 @@ experimentation but not so convenient if you want to set up a BioSQL
 database for several local users or possibly even remote users.
 
 PostgresQL has other mechanisms which are described in their
-documentation. Authentication is specifically described here. You might
-consider password authentication but do use md5 encryption with this
-option, especially if you intend to authenticate remote users. In the
-Redhat 7.2 installation, the file you will need to edit to set these
-options is /var/lib/pgsql/data/pg\_hba.conf. The location of this file
-varies with other distributions.
+[documentation](http://www.postgresql.org/idocs/index.php).
+Authentication is specifically described
+[here](http://www.postgresql.org/idocs/index.php?client-authentication.html).
+You might consider password authentication but do use md5 encryption
+with this option, especially if you intend to authenticate remote users.
+In the Redhat 7.2 installation, the file you will need to edit to set
+these options is /var/lib/pgsql/data/pg\_hba.conf. The location of this
+file varies with other distributions.
 
 As initially installed in RH7.2, PostgreSQL will require root privileges
 to set up further. The postgres superuser cannot be logged into but you
@@ -124,7 +127,8 @@ are:-
 `biosqldb-assembly-pg.sql`  
 `biosqldb-pg.sql`
 
-They may be obtained from here.
+They may be obtained from
+[here](http://www.biojava.org/download/biosql/).
 
 We now need to load the schema into the database we have created. We do
 so as follows (user entries in bold):
@@ -176,6 +180,8 @@ for like so:-
 *NOTE: If you are using the 1.3 version of Biojava with the Singapore
 schema, do not install biosqldb-assembly-pg.sql or
 biosql-accelerators-pg.sql as described above. All you will need is the
-the new biosqldb-pg.sql. There appear to be performance issues in some
-cases when the other stuff is installed also. This note will be updated
-eventually to reflect this advice.*
+the new
+[biosqldb-pg.sql](http://cvs.open-bio.org/cgi-bin/viewcvs/viewcvs.cgi/biosql-schema/sql/?cvsroot=biosql).
+There appear to be performance issues in some cases when the other stuff
+is installed also. This note will be updated eventually to reflect this
+advice.*
