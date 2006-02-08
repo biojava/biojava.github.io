@@ -23,3 +23,11 @@ Download link
 -------------
 
 I suggest an entry linking to the page BioJava:Download.
+
+Editing the Sidebar
+-------------------
+
+I have found that after editing the sidebar you sometimes need to log
+out to actually see the changes you made when you return to the main
+page. This might be an Internet Explorer specific
+thing. --[Mark](User:Mark "wikilink") 21:55, 7 February 2006 (EST)
