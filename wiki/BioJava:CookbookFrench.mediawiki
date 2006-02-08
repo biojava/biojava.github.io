@@ -56,12 +56,12 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Entrée/Sortie des objets Sequence ===
 
-* Comment écrire des Sequences en format Fasta?
-* Comment lire un fichier en format Fasta?
-* Comment lire un fichier en format GenBank/EMBL/SwissProt?
-* Comment extraire les séquence en format GenBank/EMBL/Swissprot et les écrire en format Fasta?
-* Comment transformer un fichier ABI en Sequence BioJava?
-* Comment fonctionne les entrées / sorties de fichiers de séquence avec Biojava?
+* [[BioJava:CookbookFrench:SeqIO:WriteInFasta|Comment écrire des Sequences en format Fasta (ou tout autre format)?]]
+* [[BioJava:CookbookFrench:SeqIO:ReadFasta|Comment lire un fichier en format Fasta?]]
+* [[BioJava:CookbookFrench:SeqIO:ReadGES|Comment lire un fichier en format GenBank/EMBL/SwissProt?]]
+* [[BioJava:CookbookFrench:SeqIO:GBToFasta|Comment extraire les séquence en format GenBank/EMBL/Swissprot et les écrire en format Fasta?]]
+* [[BioJava:CookbookFrench:SeqIO:ABItoSequence|Comment transformer un fichier ABI en Sequence BioJava?]]
+* [[BioJava:CookbookFrench:SeqIO:Echo|Comment fonctionne les entrées / sorties de fichiers de séquence avec Biojava?]]
 
 === Annotations ===
 
