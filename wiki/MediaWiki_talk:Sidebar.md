@@ -31,3 +31,11 @@ I have found that after editing the sidebar you sometimes need to log
 out to actually see the changes you made when you return to the main
 page. This might be an Internet Explorer specific
 thing. --[Mark](User:Mark "wikilink") 21:55, 7 February 2006 (EST)
+
+  
+I think it is a problem of the MediaWiki, e.g. if you edit a page (e.g.
+just make a dummy edit, insert a whitespace) the sidebar gets updated on
+this page. I had the same experiences with Firefox --
+[Martin](User:Martin "wikilink") 05:20, 8 February 2006 (EST)
+
+
