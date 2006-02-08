@@ -216,9 +216,14 @@ How Do I....?
 
 ### BioSQL and Sequence Databases
 
--   How do I set up BioSQL with PostgreSQL? (by David Huen)
--   How do I set up BioSQL with Oracle? (by Richard Holland)
--   How do I add, view and remove Sequence Objects from a BioSQL DB?
+-   [How do I set up BioSQL with
+    PostgreSQL](BioJava:CookBook:BioSQL:SetupPostGre "wikilink")? (by
+    [David Huen](User:David "wikilink"))
+-   [How do I set up BioSQL with
+    Oracle](BioJava:CookBook:BioSQL:SetupOracle "wikilink")? (by
+    [Richard Holland](User:Richard "wikilink"))
+-   [How do I add, view and remove Sequence Objects from a BioSQL
+    DB](BioJava:CookBook:BioSQL:Manage "wikilink")?
 
 ### Genetic Algorithms
 
