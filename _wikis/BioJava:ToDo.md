@@ -2,14 +2,26 @@
 title: BioJava:ToDo
 ---
 
-What needs doing?
------------------
+What needs starting?
+--------------------
 
--   About BioJava
--   Getting BioJava - easy
--   Thanks - already done
--   Getting Started (Done --[Foisys](User:Foisys "wikilink") 12:49, 6
-    February 2006 (EST))
+-   BioJavaX docbook need converting to Wiki - quite hard
+-   Conversion of cookbook and tutorials to reflect 1.4 (and/or
+    BioJavax) conventions - requires someone with in-depth knowledge of
+    the complete workings of BioJava
+-   Consolidate cookbook, tutorials and BJX docbook into a single
+    HowTo - time-consuming, might as well just write a book!
+-   User mailing list - easy
+-   Susbcribe to mailing list - easy
+-   Mailing list archive - not sure how to transfer this? Probably link
+    to old archive
+-   Dev mailing list stuff - as per user mailing list
+-   Related sites eg bioperl, biopython etc - easy, could use interwiki
+
+Whats in progress?
+------------------
+
+-   Choosing a logo!
 -   Tutorial - laborious but straightforward, some parts are in need of
     updating and/or are no longer relevant (I can't update it, because
     I've not enough experiences with the classes, but I'll take on the
@@ -21,6 +33,18 @@ What needs doing?
     2006 (EST)) (French version: working on
     it - --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
     (EST))
+-   Participants - Mostly links to user pages. eg User:Mark. This is not
+    ideal. Jason is going to set up a People domain then we can set
+    User:Mark to redirect to People:Mark Schreiber
+
+Whats done already?
+-------------------
+
+-   About BioJava
+-   Getting BioJava
+-   Thanks
+-   Getting Started (Done --[Foisys](User:Foisys "wikilink") 12:49, 6
+    February 2006 (EST))
 -   JavaDoc 1.3 - how? link back to old? Links to old
     established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
     (EST)
@@ -29,21 +53,16 @@ What needs doing?
     (EST)
 -   Hackers Guide - Done --[Foisys](User:Foisys "wikilink") 16:37, 6
     February 2006 (EST)
--   Participants - Mostly links to user pages. eg User:Mark. This is not
-    ideal. Jason is going to set up a People domain then we can set
-    User:Mark to redirect to People:Mark Schreiber
 -   Download 1.3 - Done -- [Martin](User:Martin "wikilink") 12:18, 7
     February 2006 (EST)
 -   Download 1.4 - Done -- [Martin](User:Martin "wikilink") 12:18, 7
     February 2006 (EST)
--   CVS access - easy
--   WebCVS - easy
--   User mailing list - easy
--   Susbcribe to mailing list - easy
--   Mailing list archive - not sure how to transfer this? Probably link
-    to old archive
--   Dev mailing list stuff - as per user mailing list
--   Related sites eg bioperl, biopython etc - easy, could use interwiki
+-   CVS access - Unnecessary -- links to CVS and WebCVS are already in
+    <BioJava::GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51,
+    8 February 2006 (SGT)
+-   WebCVS - Unnecessary -- links to CVS and WebCVS are already in
+    <BioJava::GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51,
+    8 February 2006 (SGT)
 
 Inspiration
 -----------
