@@ -127,7 +127,8 @@ Comment faire pour ...?
 
 ### Annotations
 
--   Comment faire la liste des Annotations d'une Sequence?
+-   [Comment faire la liste des Annotations d'une
+    Sequence?](BioJava:CookbookFrench:Annotations:List "wikilink")
 -   Comment filtrer une Sequence en se basant sur l'espèce (ou tout
     autre propriété d'une Annotation)?
 
