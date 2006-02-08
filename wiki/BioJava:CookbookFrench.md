@@ -129,8 +129,9 @@ Comment faire pour ...?
 
 -   [Comment faire la liste des Annotations d'une
     Sequence?](BioJava:CookbookFrench:Annotations:List "wikilink")
--   Comment filtrer une Sequence en se basant sur l'espèce (ou tout
-    autre propriété d'une Annotation)?
+-   [Comment filtrer une Sequence en se basant sur l'espèce (ou tout
+    autre propriété d'une
+    Annotation)?](BioJava:CookbookFrench:Annotations:Filter "wikilink")
 
 ### Positions et caractéristiques (*Features*)
 
