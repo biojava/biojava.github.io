@@ -38,4 +38,11 @@ just make a dummy edit, insert a whitespace) the sidebar gets updated on
 this page. I had the same experiences with Firefox --
 [Martin](User:Martin "wikilink") 05:20, 8 February 2006 (EST)
 
+<!-- -->
+
+  
+Usually a forced reload will work or if you add ?action=purge to the end
+of the URL it should re-generate it for
+you. --[Jason](User:Jason "wikilink") 07:56, 8 February 2006 (EST)
+
 
