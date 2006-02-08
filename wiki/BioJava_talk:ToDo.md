@@ -23,3 +23,17 @@ consistent in the original
 to format the namens of classes, interfaces, methods, etc.?
 
 [Martin](User:Martin "wikilink") 16:22, 7 February 2006 (EST)
+
+DocBook to MediaWiki
+--------------------
+
+I've found a
+[Python/Perl](http://mediawiki.blender.org/index.php/Meta/DocBook_to_Wiki)
+script to convert DocBook to MediaWiki. However, the Perl script does
+nothing and the Python script throws an exception on my machine. Has
+anyone experiences with Python to get this script working?
+
+How should the conversion look like? One DocBook file to one MediaWiki
+page or to many MediaWiki pages?
+
+[Martin](User:Martin "wikilink") 06:08, 8 February 2006 (EST)
