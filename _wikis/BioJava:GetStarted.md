@@ -81,8 +81,7 @@ Building your own
 If you want to modify BioJava, you can obtain a copy of the source code
 from the [Source directory](http://www.biojava.org/download/source) of
 the download area. Source releases are distributed in .tar.gz format.
-You can also obtain up-to-the-minute source code from the [Nightly build
-site](http://www.derkholm.net) or from [anonymous
+You can also obtain up-to-the-minute source code from [anonymous
 CVS](http://cvs.biojava.org).
 
 BioJava is built using the *ant* build tool, a Java-specific equivalent
