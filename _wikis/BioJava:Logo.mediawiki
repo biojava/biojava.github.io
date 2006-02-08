@@ -49,3 +49,11 @@ BioJava Logo 7
 
 
 Hi Mark and all. I would tend to go with the Zen look of the BioPerl logo. You are right about the cup as it is right now (deigns 5 to 7), it looks to much like Sun's. My original idea was to have a DNA helix swirl out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0 and 1, a,c,g,t ? --[[User:Foisys|Foisys]] 09:48, 7 February 2006 (EST)
+
+
+Hey all, here's another one:
+
+[[Image:Biojava-logo-rh1.png]]
+
+It's a caffeine molecule!
+--[[User::Rholland|Rholland]] 17:45, 8 February 2006 (SGT)

@@ -40,3 +40,10 @@ looks to much like Sun's. My original idea was to have a DNA helix swirl
 out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0
 and 1, a,c,g,t ? --[Foisys](User:Foisys "wikilink") 09:48, 7 February
 2006 (EST)
+
+Hey all, here's another one:
+
+![](Biojava-logo-rh1.png "Biojava-logo-rh1.png")
+
+It's a caffeine molecule! --[Rholland](User::Rholland "wikilink") 17:45,
+8 February 2006 (SGT)
