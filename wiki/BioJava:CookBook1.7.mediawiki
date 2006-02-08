@@ -127,7 +127,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === Genetic Algorithms ===
 
-* How can I make a Genetic Algorithm with BioJava?
+* [[BioJava:CookBook:GA|How can I make a Genetic Algorithm with BioJava]]?
 
 === Protein Structure ===
 
