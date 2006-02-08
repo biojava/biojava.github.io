@@ -111,14 +111,19 @@ Comment faire pour ...?
 
 ### Entrée/Sortie des objets Sequence
 
--   Comment écrire des Sequences en format Fasta?
--   Comment lire un fichier en format Fasta?
--   Comment lire un fichier en format GenBank/EMBL/SwissProt?
--   Comment extraire les séquence en format GenBank/EMBL/Swissprot et
-    les écrire en format Fasta?
--   Comment transformer un fichier ABI en Sequence BioJava?
--   Comment fonctionne les entrées / sorties de fichiers de séquence
-    avec Biojava?
+-   [Comment écrire des Sequences en format Fasta (ou tout autre
+    format)?](BioJava:CookbookFrench:SeqIO:WriteInFasta "wikilink")
+-   [Comment lire un fichier en format
+    Fasta?](BioJava:CookbookFrench:SeqIO:ReadFasta "wikilink")
+-   [Comment lire un fichier en format
+    GenBank/EMBL/SwissProt?](BioJava:CookbookFrench:SeqIO:ReadGES "wikilink")
+-   [Comment extraire les séquence en format GenBank/EMBL/Swissprot et
+    les écrire en format
+    Fasta?](BioJava:CookbookFrench:SeqIO:GBToFasta "wikilink")
+-   [Comment transformer un fichier ABI en Sequence
+    BioJava?](BioJava:CookbookFrench:SeqIO:ABItoSequence "wikilink")
+-   [Comment fonctionne les entrées / sorties de fichiers de séquence
+    avec Biojava?](BioJava:CookbookFrench:SeqIO:Echo "wikilink")
 
 ### Annotations
 
