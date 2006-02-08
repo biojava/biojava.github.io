@@ -193,10 +193,14 @@ How Do I....?
 
 ### Weight Matrices and Dynamic Programming
 
--   How do I use a WeightMatrix to find a motif?
--   How do I make a HMMER like profile HMM?
--   How do I set up a custom HMM?
--   How do I generate a pair-wise alignment?
+-   [How do I use a WeightMatrix to find a
+    motif](BioJava:CookBook:DP:WeightMatrix "wikilink")?
+-   [How do I make a HMMER like profile
+    HMM](BioJava:CookBook:DP:HMM "wikilink")?
+-   [How do I set up a custom
+    HMM](BioJava:CookBook:DP:HMMCustom "wikilink")?
+-   [How do I generate a pair-wise
+    alignment](BioJava:CookBook:DP:PairWise "wikilink")?
 
 ### User Interfaces
 

@@ -107,10 +107,10 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 === Weight Matrices and Dynamic Programming ===
 
-* How do I use a WeightMatrix to find a motif?
-* How do I make a HMMER like profile HMM?
-* How do I set up a custom HMM?
-* How do I generate a pair-wise alignment?
+* [[BioJava:CookBook:DP:WeightMatrix|How do I use a WeightMatrix to find a motif]]?
+* [[BioJava:CookBook:DP:HMM|How do I make a HMMER like profile HMM]]?
+* [[BioJava:CookBook:DP:HMMCustom|How do I set up a custom HMM]]?
+* [[BioJava:CookBook:DP:PairWise|How do I generate a pair-wise alignment]]?
 
 === User Interfaces ===
 
