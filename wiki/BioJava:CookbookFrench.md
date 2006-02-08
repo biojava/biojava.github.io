@@ -92,15 +92,19 @@ Comment faire pour ...?
 
 ### Traduction
 
--   Comment traduire une Sequence ou une SymbolList d'ADN ou d'ARN en
-    proteine?
--   Comment traduire une seul codon en son acide aminé correspondant?
--   Comment utiliser un code génétique non-standard?
--   Comment traduire une Sequence dans ses 6 cadres de lectures?
+-   [Comment traduire une Sequence ou une SymbolList d'ADN ou d'ARN en
+    proteine?](BioJava:CookbookFrench:Translation "wikilink")
+-   [Comment traduire une seul codon en son acide aminé
+    correspondant?](BioJava:CookbookFrench:Translation:Single "wikilink")
+-   [Comment utiliser un code génétique
+    non-standard?](BioJava:CookbookFrench:Translation:NonStandard "wikilink")
+-   [Comment traduire une Sequence dans ses 6 cadres de
+    lectures?](BioJava:CookbookFrench:Translation:SixFrame "wikilink")
 
 ### Protéomique
 
--   Comment calculer la masse et le pI d'un peptide?
+-   [Comment calculer la masse et le pI d'un
+    peptide?](BioJava:CookbookFrench:Proteomics "wikilink")
 -   [Comment analyser les propriétés d'une séquence protéique en
     utilisant la base de données *Amino Acid
     Index*?](BioJava:CookbookFrench:Proteomics:AAindex "wikilink")
