@@ -66,7 +66,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 === Annotations ===
 
 * [[BioJava:CookbookFrench:Annotations:List|Comment faire la liste des Annotations d'une Sequence?]]
-* Comment filtrer une Sequence en se basant sur l'espèce (ou tout autre propriété d'une Annotation)?
+* [[BioJava:CookbookFrench:Annotations:Filter|Comment filtrer une Sequence en se basant sur l'espèce (ou tout autre propriété d'une Annotation)?]]
 
 === Positions et caract&eacute;ristiques (''Features'') ===
 
