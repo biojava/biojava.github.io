@@ -227,7 +227,8 @@ How Do I....?
 
 ### Genetic Algorithms
 
--   How can I make a Genetic Algorithm with BioJava?
+-   [How can I make a Genetic Algorithm with
+    BioJava](BioJava:CookBook:GA "wikilink")?
 
 ### Protein Structure
 
