@@ -173,13 +173,16 @@ Comment faire pour ...?
     Distribution?](BioJava:CookbookFrench:Count:ToDistrib "wikilink")
 -   [Comment générer une séquence aléatoire à partir d'une
     Distribution?](BioJava:CookbookFrench:Distribution:RandomSeqs "wikilink")
--   Comment trouver la quantité d'information ou d'entropie d'une
-    Distribution?
--   Comment savoir facilement si deux Distributions sont identiques?
--   Comment créer une OrderNDistribution avec un Alphabet sur mesure?
--   Comment écrire une Distribution en format XML?
--   Comment construire un échantilloneur de Gibbs à l'aide de
-    Distributions?
+-   [Comment trouver la quantité d'information ou d'entropie d'une
+    Distribution?](BioJava:CookbookFrench:Distirbution:Entropy "wikilink")
+-   [Comment savoir facilement si deux Distributions sont
+    identiques?](BioJava:CookbookFrench:Distirbution:Emission "wikilink")
+-   [Comment créer une OrderNDistribution avec un Alphabet sur
+    mesure?](BioJava:CookbookFrench:Distirbution:Custom "wikilink")
+-   [Comment écrire une Distribution en format
+    XML?](BioJava:CookbookFrench:Distribution:XML "wikilink")
+-   [Comment construire un échantilloneur de Gibbs à l'aide de
+    Distributions?](BioJava:CookbookFrench:Distribution:Gibbs "wikilink")
 
 ### Matrices et Programmation Dynamique
 
