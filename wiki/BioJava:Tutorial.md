@@ -20,8 +20,11 @@ the JavaDoc API documentation
     objects](BioJava:Tutorial:ChangeEvent example using Distribution objects "wikilink")
 -   [Implementing
     Changeable](BioJava:Tutorial:Implementing Changeable "wikilink")
--   [ Blast-like parsing (NCBI Blast, WU-Blast,
-    HMMER)](BioJava:Tutorial:Blast-like parsing "wikilink")
+-   Blast-like parsing (NCBI Blast, WU-Blast, HMMER)
+    -   [Blast-like Parsing Cook
+        Book](BioJava:Tutorial:Blast-like Parsing Cook Book "wikilink")
+    -   [Blast2HTML Example
+        Application](BioJava:Tutorial:Blast2HTML Example Application "wikilink")
 -   [Walkthrough of one of the dynamic programming
     examples](BioJava:Tutorial:Dynamic programming examples "wikilink")
 -   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
