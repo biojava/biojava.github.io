@@ -150,13 +150,18 @@ Comment faire pour ...?
 
 ### BLAST et FASTA
 
--   Comment lire un fichier de résultats BLAST?
--   Comment lire un fichier de résultats FASTA?
--   Comment extraire les informations à partir des résultats lus?
--   Comment extraire les infos d'un gros fichier ou comment créer son
-    propre SearchContentHandler?
+-   [Comment lire un fichier de résultats
+    BLAST?](BioJava:CookbookFrench:Blast:Parser "wikilink")
+-   [Comment lire un fichier de résultats
+    FASTA?](BioJava:CookbookFrench:Fasta:Parser "wikilink")
+-   [Comment extraire les informations à partir des résultats
+    lus?](BioJava:CookbookFrench:Blast:Extract "wikilink")
+-   [Comment extraire les infos d'un gros fichier ou comment créer son
+    propre
+    SearchContentHandler?](BioJava:CookbookFrench:Blast:Echo "wikilink")
 -   Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de
-    Biojava?
+    Biojava? -- À venir --[Foisys](User:Foisys "wikilink") 21:19, 8
+    February 2006 (EST)
 
 ### Comptes et Distributions
 
