@@ -51,3 +51,5 @@ It's a caffeine molecule! --[Rholland](User::Rholland "wikilink") 17:45,
 Hi, here's my proposal:
 
 ![](blue_spot_logo.jpg "blue_spot_logo.jpg")
+
+--[Jordi](User::Jordi "wikilink") 20:31, 9 February 2006 (SGT)
