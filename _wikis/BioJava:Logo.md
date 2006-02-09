@@ -47,3 +47,7 @@ Hey all, here's another one:
 
 It's a caffeine molecule! --[Rholland](User::Rholland "wikilink") 17:45,
 8 February 2006 (SGT)
+
+Hi, here's my proposal:
+
+![](blue_spot_logo.jpg "blue_spot_logo.jpg")
