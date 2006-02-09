@@ -36,7 +36,7 @@ d'échantillonner une Distribution sur n'importe quel Alphabet pouvant
 simplement 'bio' mais peut être utilisé afi nde représenter et de
 manipuler n'importe quelle donnée symbolique.
 
-La première classe se nomme *SimpleGibbsAligner*. C'eest le moteur de
+La première classe se nomme *SimpleGibbsAligner*. C'est le moteur de
 base, faisant tout le travail d'échantillonnage et d'évaluation des
 motifs. Elle utilise une interface, *GibbsStoppingCriteria*, qui qui
 l'assiste en figurant quand arrêter l'itération. L'interface présenté
