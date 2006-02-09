@@ -186,8 +186,10 @@ Comment faire pour ...?
 
 ### Matrices et Programmation Dynamique
 
--   Comment utiliser une WeightMatrix pour trouver un motif?
--   Comment créer un HMM semblable à un profile HMMER?
+-   [Comment utiliser une WeightMatrix pour trouver un
+    motif?](BioJava:CookbookFrench:DP:WeightMatrix "wikilink")
+-   [Comment créer un HMM semblable à un profile
+    HMMER?](BioJava:CookbookFrench:DP:HMM "wikilink")
 -   Comment créer un HMM sur mesure? (N. B.: en anglais seulement)
 -   Comment faire un alignement de deux séquences?
 
