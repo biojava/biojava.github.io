@@ -165,18 +165,21 @@ Comment faire pour ...?
 
 ### Comptes et Distributions
 
--   Comment compter les résidus d'une Sequence?
--   Comment faire pour calculer la fréquence d'un Symbol dans une
-    Sequence?
--   Comment transformer un Count en Distribution?
--   Comment générer une séquence aléatoire à partir d'une Distribution?
+-   [Comment compter les résidus d'une
+    Sequence?](BioJava:CookbookFrench:Count:Residues "wikilink")
+-   [Comment faire pour calculer la fréquence d'un Symbol dans une
+    Sequence?](BioJava:CookbookFrench:Count:Frequency "wikilink")
+-   [Comment transformer un Count en
+    Distribution?](BioJava:CookbookFrench:Count:ToDistrib "wikilink")
+-   [Comment générer une séquence aléatoire à partir d'une
+    Distribution?](BioJava:CookbookFrench:Distribution:RandomSeqs "wikilink")
 -   Comment trouver la quantité d'information ou d'entropie d'une
     Distribution?
 -   Comment savoir facilement si deux Distributions sont identiques?
 -   Comment créer une OrderNDistribution avec un Alphabet sur mesure?
 -   Comment écrire une Distribution en format XML?
 -   Comment construire un échantilloneur de Gibbs à l'aide de
-    Distribution?
+    Distributions?
 
 ### Matrices et Programmation Dynamique
 
