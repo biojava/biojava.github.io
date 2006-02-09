@@ -6,7 +6,9 @@ The following tutorials are currently available - more are always welcome! While
 * [[BioJava:Tutorial:ChangeEvent overview|ChangeEvent overview]] 
 * [[BioJava:Tutorial:ChangeEvent example using Distribution objects|ChangeEvent example using Distribution objects]] 
 * [[BioJava:Tutorial:Implementing Changeable|Implementing Changeable]]
-* [[BioJava:Tutorial:Blast-like parsing| Blast-like parsing (NCBI Blast, WU-Blast, HMMER)]]
+* Blast-like parsing (NCBI Blast, WU-Blast, HMMER)
+** [[BioJava:Tutorial:Blast-like Parsing Cook Book|Blast-like Parsing Cook Book]]
+** [[BioJava:Tutorial:Blast2HTML Example Application|Blast2HTML Example Application]]
 * [[BioJava:Tutorial:Dynamic programming examples|Walkthrough of one of the dynamic programming examples]] 
 * [[BioJava:Tutorial:Installing BioSQL|Installing BioSQL]] 
 
