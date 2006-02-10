@@ -21,9 +21,9 @@ BioJava takes a rather different approach to sequence data. Instead of using a s
     public Alphabet getMatches();
 }</pre>
 
-All Symbol instances have a <code>name</code> property (for instance, Thymidine). They may optionally have extra information associated with them (for instance, information about the chemical properties of a DNA base) stored in a standard BioJava data structure called an <code>Annotation</code>. Annotations are just set of key-value data. The final method, <code>getMatches</code>, is only important for ambiguous symbols, which are covered at the end of this chapter. 
+All <code>Symbol</code> instances have a <code>name</code> property (for instance, Thymidine). They may optionally have extra information associated with them (for instance, information about the chemical properties of a DNA base) stored in a standard BioJava data structure called an <code>Annotation</code>. Annotations are just set of key-value data. The final method, <code>getMatches</code>, is only important for ambiguous symbols, which are covered at the end of this chapter. 
 
-The set of <code>Symbol</code> objects which may be found in a particular type of sequence data are defined in an <code>Alphabet</code>. It it always possible to define custom Symbols and Alphabets, but BioJava supplies a set of predefined alphabets for representing biological molecules. These are accessible through a central registry called the <code>AlphabetManager</code>, and through convenience methods. 
+The set of <code>Symbol</code> objects which may be found in a particular type of sequence data are defined in an <code>Alphabet</code>. It it always possible to define custom symbols and alphabets, but BioJava supplies a set of predefined alphabets for representing biological molecules. These are accessible through a central registry called the <code>AlphabetManager</code>, and through convenience methods. 
 
 <pre>FiniteAlphabet dna = DNATools.getDNA();
 Iterator dnaSymbols = dna.iterator();
