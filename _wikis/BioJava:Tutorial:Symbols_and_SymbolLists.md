@@ -11,7 +11,7 @@ data from BioJava, and explains how BioJava's treatment of sequences
 differs from other libraries. This chapter refers to Java API defined in
 the packages `org.biojava.bio.symbol` and `org.biojava.bio.seq`. For a
 complete overview of the APIs provided by these packages, please consult
-the [](http://www.biojava.org/docs/api).
+the .
 
 **NOTE:** this chapter has been updated for BioJava release 1.2.
 
