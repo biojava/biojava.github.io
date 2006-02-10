@@ -33,16 +33,17 @@ while (dnaSymbols.hasNext()) {
 }</pre>
 
 == SymbolList: the simple sequence ==
-The basic interface for sequence data in biojava is <code>SymbolList</code>. Every SymbolList has an associated Alphabet, and may only contain Symbols from that alphabet. SymbolLists can be seen as strings which are made up of Symbol objects rather than characters. The interface specifies methods for querying the alphabet and length, and accessing the Symbols: 
+
+The basic interface for sequence data in BioJava is <code>SymbolList</code>. Every symbol list has an associated alphabet, and may only contain symbols from that alphabet. Symbol lists can be seen as strings which are made up of <code>Symbol</code> objects rather than characters. The interface specifies methods for querying the alphabet and length, and accessing the symbols: 
 
 <pre>SymbolList seq = getSomeSequence();
 System.out.println("Alphabet = " + seq.getAlphabet().getName());
 System.out.println("Length = " + seq.length());
 System.out.println("First symbol = " + seq.symbolAt(1).getName());</pre>
 
-Note that numbering of Symbols within the SymbolList runs from 1 to length, ''not'' from 0 to length-1 as is the case with Java strings. This is consistent with the coordinate system found in files of annotated biological sequences. 
+Note that numbering of symbols within the symbol list runs from 1 to <code>length</code>, ''not'' from 0 to <code>length - 1</code> as is the case with Java strings. This is consistent with the coordinate system found in files of annotated biological sequences. 
 
-There are several other standard methods in the SymbolList interface. <code>subList</code> returns a new SymbolList representing part of the sequence, just like the <code>substring</code> method of the <code>String</code> class. <code>seqString</code> returns a normal string representation of the sequence. This latter method will only work if the SymbolList uses an alphabet where all symbols have their <code>token</code> property defined. However, since this is true of the commonly used DNA and protein alphabets, this method is useful if you need interaction between BioJava and legacy sequence analysis code. 
+There are several other standard methods in the <code>SymbolList</code> interface. <code>subList</code> returns a new symbol list representing part of the sequence, just like the <code>substring</code> method of the <code>String</code> class. <code>seqString</code> returns a normal string representation of the sequence. This latter method will only work if the symbol list uses an alphabet where all symbols have their <code>token</code> property defined. However, since this is true of the commonly used DNA and protein alphabets, this method is useful if you need interaction between BioJava and legacy sequence analysis code. 
 
 The <code>SymbolList</code> interface does not define any methods for modifying the underlying sequence data. Future versions of BioJava may also include a <code>MutableSymbolList</code> interface.
 
