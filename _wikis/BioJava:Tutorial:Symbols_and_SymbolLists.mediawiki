@@ -1,6 +1,6 @@
 '''By [mailto:td2@sanger.ac.uk Thomas Down]'''
 
-This chapter covers the fundamentals of accessing biological sequence data from BioJava, and explains how BioJava's treatment of sequences differs from other libraries. This chapter refers to Java API defined in the packages <code>org.biojava.bio.symbol</code> and <code>org.biojava.bio.seq</code>. For a complete overview of the APIs provided by these packages, please consult the [http://www.biojava.org/docs/api JavaDoc documentation]. 
+This chapter covers the fundamentals of accessing biological sequence data from BioJava, and explains how BioJava's treatment of sequences differs from other libraries. This chapter refers to Java API defined in the packages <code>org.biojava.bio.symbol</code> and <code>org.biojava.bio.seq</code>. For a complete overview of the APIs provided by these packages, please consult the [http://www.biojava.org/docs/api {{DocLink}}]. 
 
 
 '''NOTE:''' this chapter has been updated for BioJava release 1.2. 
