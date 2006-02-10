@@ -45,7 +45,7 @@ others described here, are part of the Java package
         public Alphabet getMatches();
     }
 
-All Symbol instances have a `name` property (for instance, Thymidine).
+All `Symbol` instances have a `name` property (for instance, Thymidine).
 They may optionally have extra information associated with them (for
 instance, information about the chemical properties of a DNA base)
 stored in a standard BioJava data structure called an `Annotation`.
@@ -55,7 +55,7 @@ at the end of this chapter.
 
 The set of `Symbol` objects which may be found in a particular type of
 sequence data are defined in an `Alphabet`. It it always possible to
-define custom Symbols and Alphabets, but BioJava supplies a set of
+define custom symbols and alphabets, but BioJava supplies a set of
 predefined alphabets for representing biological molecules. These are
 accessible through a central registry called the `AlphabetManager`, and
 through convenience methods.
