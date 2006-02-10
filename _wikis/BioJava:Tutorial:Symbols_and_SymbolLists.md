@@ -105,12 +105,12 @@ Doesn't this all waste memory?
 ![A SymbolList can be stored as a list of references to singleton
 objects](Symbol_Singleton.png "A SymbolList can be stored as a list of references to singleton objects")
 
-A common concern with BioJava's Symbol/SymbolList model is that it must
-use much more memory than a simple string-based approach to sequence
-storage. It should be stressed that BioJava does *not* use a separate
-object to represent each nucleotide in a long DNA sequence. In fact,
-there are just four 'singleton' `Symbol` objects which represent the
-symbols found in the DNA alphabet. These can be accessed at any time
+A common concern with BioJava's `Symbol`/`SymbolList` model is that it
+must use much more memory than a simple string-based approach to
+sequence storage. It should be stressed that BioJava does *not* use a
+separate object to represent each nucleotide in a long DNA sequence. In
+fact, there are just four 'singleton' `Symbol` objects which represent
+the symbols found in the DNA alphabet. These can be accessed at any time
 using static methods of the `DNATools` class. Whenever a thymidine
 residue is stored in a sequence, all that is really stored is a
 *reference* to the singleton thymidine object. Typically, this takes up
@@ -120,8 +120,8 @@ still manageable.
 Actually, it is possible in principle to store a DNA sequence (without
 gaps or ambiguous residues) using only two *bits* per residue. Since the
 BioJava `SymbolList` is an interface, it only defines how the sequence
-should be accessed -- not how data is stored. If space is important, it
-is possible to implement a \`packed' implementation of SymbolList.
+should be accessed - not how data is stored. If space is important, it
+is possible to implement a 'packed' implementation of `SymbolList`.
 Client code need never worry about the underlying data model.
 
 BioJava's object oriented view of sequences brings other advantages.
