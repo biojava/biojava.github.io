@@ -53,3 +53,23 @@ Hi, here's my proposal:
 ![](blue_spot_logo.jpg "blue_spot_logo.jpg")
 
 --[Jordi](User::Jordi "wikilink") 20:31, 9 February 2006 (SGT)
+
+Here are some proposals by Ong Swee Hoe from
+[http://www.gis.a-star.edu.sg
+GIS](http://www.gis.a-star.edu.sg GIS "wikilink") in
+[Singapore](wp:Singapore "wikilink")
+
+-   ![](OSHBiojava1.jpg "fig:OSHBiojava1.jpg")
+
+<!-- -->
+
+-   ![](OSHBiojava2.jpg "fig:OSHBiojava2.jpg")
+
+<!-- -->
+
+-   ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
+
+<!-- -->
+
+-   ![](Biojava4.jpg "fig:Biojava4.jpg")
+
