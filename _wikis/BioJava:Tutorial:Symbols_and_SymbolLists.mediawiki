@@ -3,7 +3,7 @@
 This chapter covers the fundamentals of accessing biological sequence data from BioJava, and explains how BioJava's treatment of sequences differs from other libraries. This chapter refers to Java API defined in the packages <code>org.biojava.bio.symbol</code> and <code>org.biojava.bio.seq</code>. For a complete overview of the APIs provided by these packages, please consult the {{JavaDoc:Documentation}}. 
 
 
-'''NOTE:''' this chapter has been updated for BioJava release 1.2. 
+'''NOTE:''' this chapter refers to the BioJava release 1.2. 
 
 == Symbols and Alphabets ==
 

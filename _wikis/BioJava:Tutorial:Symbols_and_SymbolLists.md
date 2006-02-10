@@ -13,7 +13,7 @@ the packages `org.biojava.bio.symbol` and `org.biojava.bio.seq`. For a
 complete overview of the APIs provided by these packages, please consult
 the .
 
-**NOTE:** this chapter has been updated for BioJava release 1.2.
+**NOTE:** this chapter refers to the BioJava release 1.2.
 
 Symbols and Alphabets
 ---------------------
