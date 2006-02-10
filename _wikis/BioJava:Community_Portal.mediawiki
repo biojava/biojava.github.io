@@ -13,3 +13,5 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[User:Mark|Mark Schreiber]]
 
 * [[User:Rholland|Richard Holland]]
+
+* [[User:Martin|Martin Szugat]]
