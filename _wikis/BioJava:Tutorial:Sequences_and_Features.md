@@ -54,10 +54,10 @@ common use, more formal definitions of these properties will emerge.
 Other annotations
 -----------------
 
-In additions to the two \`identifier' properties of the Sequence, it may
+In additions to the two 'identifier' properties of the sequence, it may
 have other annotation data associated with it. BioJava contains an
-Annotation interface, which represents a set of key-value pairs, a
-little like a Java Map (indeed, Annotation has an asMap method).
+`Annotation` interface, which represents a set of key-value pairs, a
+little like a Java `Map` (indeed, Annotation has an `asMap` method).
 
     Sequence seq = getSequence();
     Annotation seqAn = seq.getAnnotation();
@@ -67,14 +67,14 @@ little like a Java Map (indeed, Annotation has an asMap method).
         System.out.println(key.toString() + ": " + value.toString());
     }
 
-Annotation objects aren't just used in Sequences -- many other BioJava
-objects, including Features, can also have annotations associated with
+`Annotation` objects aren't just used in sequences - many other BioJava
+objects, including `Features`, can also have annotations associated with
 them.
 
 Currently, there are no specific conventions for the kind of data which
-might be found in an Annotation. In general, the keys should be strings
+might be found in an annotation. In general, the keys should be strings
 (although there is no requirement that this be the case). But the values
-may be any Java object. More guidelines for the contents of Annotation
+may be any Java object. More guidelines for the contents of `Annotation`
 objects may be introduced as BioJava develops.
 
 Features and FeatureHolders
