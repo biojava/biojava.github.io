@@ -42,22 +42,22 @@ Something more flexible is needed, and the *Changeability API* is it.
 What is a ChangeEvent?
 ----------------------
 
-ChangeEvent extends java.util.EventObject and adds the methods:
+`ChangeEvent` extends `java.util.EventObject` and adds the methods:
 
--   getChange - the new value
--   getPrevious - the old value
--   getType - the 'type' of event
--   getChained - an event that caused this event to be fired
+-   `getChange` - the new value
+-   `getPrevious` - the old value
+-   `getType` - the 'type' of event
+-   `getChained` - an event that caused this event to be fired
 
 In constrast to the classical Java events model, one event class is
 shared among all types of BioJava events. The 'type' of the event is
-signaled by the value of the type property. ChangeType is a final class.
-Each interface that will fire ChangeEvents will have public static final
-ChangeType fields with descriptive names. ChangeEvent objects store a
-descriptive name but are always compared with the == operator. This
-scheme is a type-safe extention of the Swing PropertyChangeEvent system
-but BioJava interfaces explicitly publish what types of event they may
-fire.
+signaled by the value of the `type` property. `ChangeType` is a final
+class. Each interface that will fire `ChangeEvents` will have
+`public static final ChangeType` fields with descriptive names.
+ChangeEvent objects store a descriptive name but are always compared
+with the `==` operator. This scheme is a type-safe extention of the
+Swing `PropertyChangeEvent` system but BioJava interfaces explicitly
+publish what types of event they may fire.
 
 ChangeListener: The contract for handeling events
 -------------------------------------------------
