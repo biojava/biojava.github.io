@@ -7,14 +7,13 @@ tags:
 **By [Thomas Down](mailto:td2@sanger.ac.uk)**
 
 [Chapter 1](BioJava:Tutorial:Symbols and SymbolLists "wikilink") of this
-tutorial covered the SymbolList interface, BioJava's basic
+tutorial covered the `SymbolList` interface, BioJava's basic
 representation of biological sequence data. This chapter examines the
-Sequence interface. This adds extra functionality to SymbolList,
+`Sequence` interface. This adds extra functionality to `SymbolList`,
 providing a convenient way to handle annotated sequences from biological
 database. This chapter concentrates on classes and interfaces defined in
-the package org.biojava.bio.seq. For full descriptions of all the API
-used here, please consult the [JavaDoc
-documentation](http://www.biojava.org/docs/api).
+the package `org.biojava.bio.seq`. For full descriptions of all the API
+used here, please consult the .
 
 A tour of a Sequence
 --------------------
