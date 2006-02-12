@@ -83,9 +83,9 @@ The <code>StreamReader</code> class implements the <code>SequenceIterator</code>
 
 == Another application: IndexedSequenceDB ==
 
-As biology enters the post-genomic era, it is common to need to work with databases of sequence data far too large to fit in available memory. One way to handle large amounts of sequence is to use a dedicated database system: either a specialized solution such as [http://www.acedb.org/ ACeDB] or a set of tables in a standard database application, as used by the [http://www.ensembl.org/ Ensembl] project. If, however, you don't wish to use one of these solutions, BioJava offers a simple and efficient sequence database implementation backed by one or more sequence files on disk. These files can be in any format, so long as a suitable SequenceFormat class exists. 
+As biology enters the post-genomic era, it is common to need to work with databases of sequence data far too large to fit in available memory. One way to handle large amounts of sequence is to use a dedicated database system: either a specialized solution such as [http://www.acedb.org/ ACeDB] or a set of tables in a standard database application, as used by the [http://www.ensembl.org/ Ensembl] project. If, however, you don't wish to use one of these solutions, BioJava offers a simple and efficient sequence database implementation backed by one or more sequence files on disk. These files can be in any format, so long as a suitable <code>SequenceFormat</code> class exists. 
 
-As a simple example of an IndexedSequenceDB in use, the following servlet retrieves sequences from a large database, and sends them on to the client in FASTA format. The database could be created using the CreateIndex and AddFiles programs included in the BioJava demos directory. 
+As a simple example of an <code>IndexedSequenceDB</code> in use, the following servlet retrieves sequences from a large database, and sends them on to the client in FASTA format. The database could be created using the ''CreateIndex'' and ''AddFiles'' programs included in the BioJava demos directory.
 
 <pre>import java.io.*;
 
