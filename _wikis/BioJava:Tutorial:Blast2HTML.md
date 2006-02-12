@@ -28,15 +28,15 @@ Running the demos
 
 To generate for yourself the above example HTML files, change directory
 to the demos directory of biojava. The following commands will generate
-the HTML to standard out.
+the HTML to standard out:
 
-       java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
-       java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out
+    java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
+    java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out
 
 You can choose an output file ( instead of redirecting standard out ) by
-adding a third argument to the command -
+adding a third argument to the command:
 
-       java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html
+    java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html
 
 Customising the Output
 ----------------------
