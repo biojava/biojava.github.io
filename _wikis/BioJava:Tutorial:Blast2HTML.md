@@ -33,7 +33,7 @@ the HTML to standard out:
     java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
     java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out
 
-You can choose an output file ( instead of redirecting standard out ) by
+You can choose an output file (instead of redirecting standard out) by
 adding a third argument to the command:
 
     java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html
