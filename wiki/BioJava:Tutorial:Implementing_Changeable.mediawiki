@@ -64,13 +64,15 @@ implements Nameable {
 
   public SimpleChangeable(String name) {
     this.name = name;
-  }
+  }</pre>
+
 The getName method can also be written in the obvious way. 
-  public String getName() {
+
+<pre>  public String getName() {
     return name;
   }</pre>
 
-The process of informing listeners requires some bagage to be present - in particular, the list of listeners. This would impose overhead on all instances of <code>Changeable</code>, regardless of whether listeners exist or not. The solution to this is to lazily instantiate the supporting objects. Fortunately, <code>AbstractChangeable</code> handles all of this for you. The two methods you need to use are hasListeners(), which will return true if there are any listeners at all and false otherwise. If there are no listeners, then the name can be set directly. 
+The process of informing listeners requires some bagage to be present - in particular, the list of listeners. This would impose overhead on all instances of <code>Changeable</code>, regardless of whether listeners exist or not. The solution to this is to lazily instantiate the supporting objects. Fortunately, <code>AbstractChangeable</code> handles all of this for you. The two methods you need to use are <code>hasListeners()</code>, which will return <code>true</code> if there are any listeners at all and false otherwise. If there are no listeners, then the name can be set directly. 
 
 <pre>  public void setName(String name)
   throws ChangeVetoException {
@@ -78,13 +80,16 @@ The process of informing listeners requires some bagage to be present - in parti
       this.name = name;
     } else {</pre>
 
-If there are listeners, then the method getChangeSupport() is used to retrieve the ChangeSupport instance that maintains the listeners list. You should then synchronize on this to ensure that no listeners are added or removed while the name is being set. 
+If there are listeners, then the method <code>getChangeSupport</code> is used to retrieve the <code>ChangeSupport</code> instance that maintains the listeners list. You should then synchronize on this to ensure that no listeners are added or removed while the name is being set. 
 
 <pre>
       ChangeSupport cs = getChangeSupport(Nameable.NAME);
-      synchronized(cs) {
+      synchronized(cs) {</pre>
+
 Next, we make a new ChangeEvent to describe how the object wishes to alter, we fire a preChange notification to the listeners so that they have a chance to veto the change, we make the change and lastly we inform the listeners that the change has been made. 
-        ChangeEvent ce = new ChangeEvent(this, Nameable.NAME, name, this.name);
+
+
+<pre>        ChangeEvent ce = new ChangeEvent(this, Nameable.NAME, name, this.name);
         cs.firePreChange(ce);
         this.name = name;
         cs.firePostChange(ce);
@@ -93,7 +98,7 @@ Next, we make a new ChangeEvent to describe how the object wishes to alter, we f
   }
 }</pre>
 
-That is the end of the implementation. 
+That is the end of the implementation.
 
 == Using ChangeSupport directly ==
 
