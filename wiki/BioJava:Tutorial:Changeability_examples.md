@@ -32,7 +32,7 @@ distributions.
 Setting up the roulet data
 --------------------------
 
-Firstly, we need to declare the class as extending JApplet so that we
+Firstly, we need to declare the class as extending `JApplet` so that we
 can use it inside a web-page and also rely on Swing working properly.
 
     public class Roulet extends JApplet {
@@ -61,7 +61,7 @@ initialization block.
         allRolls = new Symbol[numRolls];
 
 Having made the rolls alphabet, we now must populate it with each
-possible roulet wheel outcome - 1..40 - as a symbol instance.
+possible roulet wheel outcome - *1..40* - as a symbol instance.
 
         for(int i = 1; i <= numRolls; i++) {
           Symbol s = allRolls[i-1] = AlphabetManager.createSymbol(
@@ -93,10 +93,10 @@ them and done something more sensible to handle the error.
 
         rolls.addChangeListener(ChangeListener.ALWAYS_VETO, Alphabet.SYMBOLS);
 
-This is an example of using ALWAYS\_VETO to prevent things from
-changing. Here we lock the SYMBOLS property of rolls so that no more
+This is an example of using `ALWAYS_VETO` to prevent things from
+changing. Here we lock the `SYMBOLS` property of rolls so that no more
 symbol instances can be added or removed from the alphabet. This ensures
-data-integrity and makes it harder to write syntaciticaly correct buggs.
+data-integrity and makes it harder to write syntacticaly correct bugs.
 
 We must now make the red/black alphabet.
 
@@ -144,19 +144,21 @@ distribution ourselves - cassinoes should have un-biassed wheels.
 And there we close the static block. Everything is set up for a game of
 chance.
 
-Applet for playing the game Let us start by setting up the state of the
-applet that will be used for estimating how the game is played, and for
-rendering the current best-guess for the outcomes of multiple roles of
-the wheel.
+Applet for playing the game
+---------------------------
+
+Let us start by setting up the state of the applet that will be used for
+estimating how the game is played, and for rendering the current
+best-guess for the outcomes of multiple roles of the wheel.
 
       private Distribution rollDist;
       private Distribution redBlackDist;
       private boolean running = false;
       private Thread countAdder;
 
-rollDist will be our estimate of the probability of any one of the
-roles. redBlackDist is our estimate of getting one of red or black
-(even/odd). We will use the thread in countAdder to repeatedly sample
+`rollDist` will be our estimate of the probability of any one of the
+roles. `redBlackDist` is our estimate of getting one of red or black
+(even/odd). We will use the thread in `countAdder` to repeatedly sample
 the game, and when running is set to false, we will temporarily suspend
 sampling.
 
@@ -166,7 +168,7 @@ GUI.
       public void init() {
         super.init(); // can't hurt...
 
-Firstly, lets create the rollDist and redBlackDist objects.
+Firstly, lets create the `rollDist` and `redBlackDist` objects.
 
         try {
           rollDist = DistributionFactory.DEFAULT.createDistribution(rolls);
@@ -176,10 +178,11 @@ Firstly, lets create the rollDist and redBlackDist objects.
 
         redBlackDist = new RedBlackDist(rollDist);
 
-Now we must make an object to estimate the rollDist probabilities. This
-is done using a DistributionTrainerContext instance called dtc. dtc will
-colate counts for each of the forty outcomes so that rollDist can then
-represent these frequencies as a probability distribution.
+Now we must make an object to estimate the `rollDist` probabilities.
+This is done using a `DistributionTrainerContext` instance called `dtc`.
+`dtc` will colate counts for each of the forty outcomes so that
+`rollDist` can then represent these frequencies as a probability
+distribution.
 
         final DistributionTrainerContext dtc =
           new SimpleDistributionTrainerContext();
@@ -202,8 +205,8 @@ should be sampling the wheel.
               if(running == true) {
 
 Here we perform the sampling and inform the trainer of the role. To
-force rollDist to reflect the new counts, we also call tdc.train, and
-catch all the resulting exceptions (which should be imposible if
+force `rollDist` to reflect the new counts, we also call `tdc.train`,
+and catch all the resulting exceptions (which should be imposible if
 everything is set up coorectly).
 
                 Symbol s = Roulet.wheelRoler.sampleSymbol();
