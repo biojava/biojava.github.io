@@ -43,11 +43,11 @@ For all the hits from a search as detailed in the summary section of the output,
 
 ==== Step A - Create an application that sets up the parser and does the parsing ====
 
-The full source is in eventbasedparsing.TutorialEx1. Because there is no difference between what you do here, and what you would do to parse XML files there isn't much to do. First create a SAX Parser that deals with Blast-like output.
+The full source is in <code>eventbasedparsing.TutorialEx1</code>. Because there is no difference between what you do here, and what you would do to parse XML files there isn't much to do. First create a SAX Parser that deals with Blast-like output.
 
 <pre>XMLReader oParser = (XMLReader) new BlastLikeSAXParser(); </pre>
 
-Next choose the Content Handler. In this case, we will be using the class TutorialEx1Handler, which takes a reference to an ArrayList in the constructor. When the SAX Parser parses the file, the ContentHandler will populate the ArrayList with Hit Ids from the summary section of the output.
+Next choose the Content Handler. In this case, we will be using the class <code>TutorialEx1Handler</code>, which takes a reference to an <code>ArrayList</code> in the constructor. When the SAX Parser parses the file, the Content Handler will populate the <code>ArrayList</code> with Hit Ids from the summary section of the output.
 
 <pre>ContentHandler oHandler =
    (ContentHandler) new TutorialEx1Handler(oDatabaseIdList);  </pre>
@@ -56,12 +56,12 @@ The final step in the set-up is to connect the Content Handler to the SAX Parser
 
 <pre>oParser.setContentHandler(oHandler); </pre>
 
-For the purposes of the tutorial applications, we will simply be reading output from files on disk. Create a FileInputStream, and parse it by calling the parse method on the SAX Parser.
+For the purposes of the tutorial applications, we will simply be reading output from files on disk. Create a <code>FileInputStream</code>, and parse it by calling the parse method on the SAX Parser.
 
 <pre>oInputFileStream = new FileInputStream(oInput);
 oParser.parse(new InputSource(oInputFileStream));</pre>
 
-Finally, having populated the ArrayList with HitIds, we simply print them out.
+Finally, having populated the <code>ArrayList</code> with HitIds, we simply print them out.
 
 <pre>System.out.println("Results of parsing");
 System.out.println("==================");
