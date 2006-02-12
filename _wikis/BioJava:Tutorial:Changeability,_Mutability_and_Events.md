@@ -93,35 +93,39 @@ you want to log to a different stream, construct a new instance of
 Using ChangeSupport to implement Changeable
 -------------------------------------------
 
-To flag that an object is a source of ChangeEvents, it should implement
-Changeable. This interface has the following methods:
+To flag that an object is a source of change events, it should implement
+`Changeable`. This interface has the following methods:
 
--   addChangeListener(ChangeListener cl)
--   addChangeListener(ChangeListener cl, ChangeType ct)
--   removeChangeListener(ChangeListener cl)
--   removeChangeListener(ChangeListener cl, ChangeType ct)
+-   `addChangeListener(ChangeListener cl)`
+-   `addChangeListener(ChangeListener cl, ChangeType ct)`
+-   `removeChangeListener(ChangeListener cl)`
+-   `removeChangeListener(ChangeListener cl, ChangeType ct)`
 
-The methods with ChangeType arguments register the listener for that
+The methods with `ChangeType` arguments register the listener for that
 type of event only. The methods without register the listener for all
 events. Wherever possible, the type of event should be specified. This
 potentialy allows for lazy instantiation of various resources and will
-result in fewer events actualy being fired. ChangeSupport is a utility
-class that handles 99% of the cases where you wish to implement the
-Changeable interface. Idealy, you should instantiate one of these
-objects and then delegate the listener methods to this. In addition to
-the methods in Changeable , ChangeSupport supplys the methods:
+result in fewer events actualy being fired.
 
--   firePreChangeEvent(ChangeEvent ce)
--   firePostChangeEvent(ChangeEvent ce)
+`ChangeSupport` is a utility class that handles 99% of the cases where
+you wish to implement the `Changeable` interface. Idealy, you should
+instantiate one of these objects and then delegate the listener methods
+to this. In addition to the methods in `Changeable`, `ChangeSupport`
+supplys the methods:
 
-These methods invoke the preChange and postChange methods of the
-apropreate listeners. firePreChangeEvent will pass on any
-ChangeVetoExceptions that the listeners throw. AbstractChangeable is an
-abstract implementation of Changeable that delegates to a ChangeSupport.
-In the cases where your class does not have to inherit from any class
-but must implement Changeable, this is a perfect base class. It will
-lazily instantiate the delegate only when listeners need to be
-registered.
+-   `firePreChangeEvent(ChangeEvent ce)`
+-   `firePostChangeEvent(ChangeEvent ce)`
 
-In the next tutorial, we will implement an event source and add some
-listeners to it.
+These methods invoke the `preChange` and `postChange` methods of the
+apropreate listeners. `firePreChangeEvent` will pass on any
+`ChangeVetoExceptions` that the listeners throw.
+
+`AbstractChangeable` is an abstract implementation of `Changeable` that
+delegates to a `ChangeSupport`. In the cases where your class does not
+have to inherit from any class but must implement `Changeable`, this is
+a perfect base class. It will lazily instantiate the delegate only when
+listeners need to be registered.
+
+In the [next
+tutorial](BioJava:Tutorial:ChangeEvent_example_using_Distribution_objects "wikilink"),
+we will implement an event source and add some listeners to it.
