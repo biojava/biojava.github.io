@@ -146,12 +146,12 @@ application, as used by the [Ensembl](http://www.ensembl.org/) project.
 If, however, you don't wish to use one of these solutions, BioJava
 offers a simple and efficient sequence database implementation backed by
 one or more sequence files on disk. These files can be in any format, so
-long as a suitable SequenceFormat class exists.
+long as a suitable `SequenceFormat` class exists.
 
-As a simple example of an IndexedSequenceDB in use, the following
+As a simple example of an `IndexedSequenceDB` in use, the following
 servlet retrieves sequences from a large database, and sends them on to
 the client in FASTA format. The database could be created using the
-CreateIndex and AddFiles programs included in the BioJava demos
+*CreateIndex* and *AddFiles* programs included in the BioJava demos
 directory.
 
     import java.io.*;
