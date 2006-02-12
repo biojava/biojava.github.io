@@ -41,30 +41,31 @@ adding a third argument to the command:
 Customising the Output
 ----------------------
 
-The HTMLRenderer constructor takes several parameters which allow
+The `HTMLRenderer` constructor takes several parameters which allow
 customisation of the HTML.
 
 -   **Style sheet**: You can change the definition of the styles in the
     style sheet.
 -   **Alignment width**: The alignment width simply specifies the number
     of bases/residues per alignment block.
--   **URLGeneratorFactory**: Returns a List of DatabaseURLGenerators.
-    These are used to convert database ID's to URL's and links. You can
-    create your own. See NcbiDatabaseURLGenerator for an example.
+-   **URLGeneratorFactory**: Returns a `List` of
+    `DatabaseURLGenerators`. These are used to convert database ID's to
+    URL's and links. You can create your own. See
+    NcbiDatabaseURLGenerator for an example.
 -   **AlignmentMarker**: Delegates most of it's operations to the
-    ColourCommand and AlignmentStyler.
-    -   ColourCommand: Controls whether a pair of characters in the
+    `ColourCommand` and `AlignmentStyler`.
+    -   `ColourCommand`: Controls whether a pair of characters in the
         alignment are styled or not.
-    -   AlignmentStyler: Decides what style to apply to any given pair
+    -   `AlignmentStyler`: Decides what style to apply to any given pair
         of characters.
 
-E.g. To markup mismatches in red you would have a ColourCommand that
-decides only mismatches are coloured, and then an AlignmentStyler that
+E.g. To markup mismatches in red you would have a `ColourCommand` that
+decides only mismatches are coloured, and then an `AlignmentStyler` that
 colours any characters passed to it as red.
 
-There are a couple of implementations of AlignmentStyler:
-SimpleAlignmentStyler and BlastMatrixAlignmentStyler - see the Javadocs
-for details.
+There are a couple of implementations of `AlignmentStyler`:
+`SimpleAlignmentStyler` and `BlastMatrixAlignmentStyler` - see the
+Javadocs for details.
 
 Of course you can also use custom handlers to only pass on a subset of
 the output.
