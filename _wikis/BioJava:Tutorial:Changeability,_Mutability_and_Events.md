@@ -19,25 +19,25 @@ What is the difference between Changeability and Mutability?
 
 Many Java objects are mutable. That is, you can invoke methods that
 change their state. The Collections API supplys mutable implementations
-of the List interface. There is also a method
-Collections.immutableList(List l) that returns a view of the underlying
-list where the mutators throw exceptions. Through this view object there
-is no way to edit the list. However, if the underlying list is modified
-then the 'imutable' view will reflect this. That is, although it is
-immutable, it is still changeable.
+of the `List` interface. There is also a method
+`Collections.immutableList(List l)` that returns a view of the
+underlying list where the mutators throw exceptions. Through this view
+object there is no way to edit the list. However, if the underlying list
+is modified then the 'immutable' view will reflect this. That is,
+although it is immutable, it is still changeable.
 
-Things get even more complicated in the world of Bioinformatics. Many
+Things get even more complicated in the world of bioinformatics. Many
 instances need to be mutable with respect to some clients and immutable
 for others. Also, some processes rely on objects remaining constant
 throughout. You can't perform a database search reliably if the database
 is being modified. However, once the search is complete there is no
 reason not to change the database. This transient immutability can't be
-modeled using the design pattern used for the Collections. The situation
+modeled using the design pattern used for the collections. The situation
 above is complicated even further because while a search is going on,
 every single sequence must be maintained in an uneditable state.
 However, a search object realy doesn't want to go through the process of
 modifying every single sequence object. This would be very ineficient.
-Something more flexible is needed, and the Changeability API is it.
+Something more flexible is needed, and the *Changeability API* is it.
 
 What is a ChangeEvent?
 ----------------------
