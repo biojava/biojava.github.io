@@ -136,17 +136,17 @@ That is the end of the implementation.
 Using ChangeSupport directly
 ----------------------------
 
-The previous example used ChangeSupport to store a list of listeners but
-via the AbstractChangeable class. Java only allows classes to inherit
-from one other class. This means that if you have a class that must
-implement Changeability but already is derived from another class, you
-can't use AbstractChangeable. You can, however, still use ChangeSupport.
-To illustrate this, we will look at the code in AbstractChangeable that
-wires in the ChangeSupport object.
+The previous example used `ChangeSupport` to store a list of listeners
+but via the `AbstractChangeable` class. Java only allows classes to
+inherit from one other class. This means that if you have a class that
+must implement `Changeability` but already is derived from another
+class, you can't use `AbstractChangeable`. You can, however, still use
+`ChangeSupport`. To illustrate this, we will look at the code in
+`AbstractChangeable` that wires in the `ChangeSupport` object.
 
-AbstractChangeable is in the package org.biojava.utils, and implements
-Changeable. It is abstract as you must sub-class to provide code to
-actualy fire events.
+`AbstractChangeable` is in the package `org.biojava.utils`, and
+implements `Changeable`. It is abstract as you must sub-class to provide
+code to actualy fire events.
 
     package org.biojava.utils;
 
@@ -158,12 +158,16 @@ and partly because listeners can be safely added in custom
 serialization/deserialization code.
 
       private transient ChangeSupport changeSupport = null;
-    The hasListeners method is implemented in the obvious way. It is protected, because it is realy a memory optimization method, and not part of the external interface of extending classes. 
+
+The hasListeners method is implemented in the obvious way. It is
+protected, because it is realy a memory optimization method, and not
+part of the external interface of extending classes.
+
       protected boolean hasListeners() {
         return changeSupport != null;
       }
 
-To retrieve the ChangeSupport delegate, we need to provide an access
+To retrieve the `ChangeSupport` delegate, we need to provide an access
 method. Again, this is protected and implemented in the obvious way.
 
       protected ChangeSupport getChangeSupport(ChangeType ct) {
@@ -175,12 +179,12 @@ method. Again, this is protected and implemented in the obvious way.
       }
 
 Some subclasses may wish to override this method and lazily instantiate
-resoruces when the first listener for a particular ChangeType is added.
-In this case, the overriden method should first call
-super.getChangeSupport and then perform any checkes it wishes.
+resoruces when the first listener for a particular `ChangeType` is
+added. In this case, the overriden method should first call
+`super.getChangeSupport` and then perform any checkes it wishes.
 
 Now that the protected methods are in place, we can provide the bodies
-of the listener management methods. These firstly use getChangeSupport
+of the listener management methods. These firstly use `getChangeSupport`
 to retrieve the delegate, and then ask it to add or remove a listener.
 We must synchronize on the delegate to make sure that it maintains in a
 consistent state.
@@ -215,7 +219,7 @@ consistent state.
     }
 
 And that is the end of the class. You should be able to cut-and-paste
-this code into your own Changeable objects to implement the basic
+this code into your own `Changeable` objects to implement the basic
 delegate-management.
 
 Using an abstract class to provide the event handeling
