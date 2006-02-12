@@ -11,44 +11,43 @@ If not already installed, PostgreSQL can be installed from RPMs with:
 
 <pre>rpm -ivh postgresql-7.2.1-5.i386.rpm postgresql-libs-7.2.1-5.i386.rpm postgresql-server-7.2.1-5.i386.rpm</pre>
 
-Root privileges will almost certainly be required (if not your machine is seriously insecure!!!). You will also need a JDBC to permit Java to connect to your PostgreSQL database and that can be installed with postgresql-jdbc-7.1.3-2.i386.rpm. However, I would recommend downloading the latest from [http://jdbc.postgresql.org/download.html here]. You will end up with a jar file containing the JDBC implementation which you will need to place in your CLASSPATH. 
+Root privileges will almost certainly be required (if not your machine is seriously insecure!!!). You will also need a JDBC to permit Java to connect to your PostgreSQL database and that can be installed with <code>postgresql-jdbc-7.1.3-2.i386.rpm</code>. However, I would recommend downloading the latest from [http://jdbc.postgresql.org/download.html here]. You will end up with a jar file containing the JDBC implementation which you will need to place in your <code>CLASSPATH</code>. 
 
+The installs will place a control script within <code>/etc/init.d<code> named <code>postgresql</code>. When this script runs for the first time, it will create a ''database cluster'' and initialise it. This cluster is the set of files used by the database for storage purposes. 
 
-The installs will place a control script within /etc/init.d named postgresql. When this script runs for the first time, it will create a database cluster and initialise it. This cluster is the set of files used by the database for storage purposes. 
+On RH7.2 the default location for the cluster in at <code>/var/lib/pgsql/</code>. This is a bit of a disadvantage as <code>/var</code> is usually a pretty small partition. It is possible at this stage to symlink <code>/var/lib/pgsql</code> to a directory within another partition altogether to circumvent this problem. I would suggest doing this immediately. 
 
-On RH7.2 the default location for the cluster in at /var/lib/pgsql/. This is a bit of a disadvantage as /var is usually a pretty small partition. It is possible at this stage to symlink /var/lib/pgsql to a directory within another partition altogether to circumvent this problem. I would suggest doing this immediately. 
+At this stage, you will need to create the database you intend using and a user to use it. I would suggest '''not''' using the superuser named <code>postgres</code> for anything other than occasional essential administration. 
 
-At this stage, you will need to create the database you intend using and a user to use it. I would suggest NOT using the superuser named postgres for anything other than occasional essential administration. 
+At this point, I will digress briefly into PostgreSQL authentication as choices you make will affect what you can do. PostgreSQL has a variety of routes to achieve this. The default at installation permits connection only from local users and permits access to a database '''only''' by a user of the same username. This may be quite adequate for experimentation but not so convenient if you want to set up a BioSQL database for several local users or possibly even remote users. 
 
-At this point, I will digress briefly into PostgreSQL authentication as choices you make will affect what you can do. PostgreSQL has a variety of routes to achieve this. The default at installation permits connection only from local users and permits access to a database ONLY by a user of the same username. This may be quite adequate for experimentation but not so convenient if you want to set up a BioSQL database for several local users or possibly even remote users. 
+PostgresQL has other mechanisms which are described in their [http://www.postgresql.org/idocs/index.php documentation]. Authentication is specifically described [http://www.postgresql.org/idocs/index.php?client-authentication.html here]. You might consider password authentication but do use md5 encryption with this option, especially if you intend to authenticate remote users. In the Redhat 7.2 installation, the file you will need to edit to set these options is <code>/var/lib/pgsql/data/pg_hba.conf</code>. The location of this file varies with other distributions. 
 
-PostgresQL has other mechanisms which are described in their [http://www.postgresql.org/idocs/index.php documentation]. Authentication is specifically described [http://www.postgresql.org/idocs/index.php?client-authentication.html here]. You might consider password authentication but do use md5 encryption with this option, especially if you intend to authenticate remote users. In the Redhat 7.2 installation, the file you will need to edit to set these options is /var/lib/pgsql/data/pg_hba.conf. The location of this file varies with other distributions. 
-
-As initially installed in RH7.2, PostgreSQL will require root privileges to set up further. The postgres superuser cannot be logged into but you can invoke the necessary commands from root to execute:- 
+As initially installed in RH7.2, PostgreSQL will require root privileges to set up further. The postgres superuser cannot be logged into but you can invoke the necessary commands from root to execute:
 
 <pre>$ su postgres -c 'createdb <insert db name here>'</pre>
 
-and a user created with:- 
+and a user created with:
 
 <pre>$ su postgres -c 'createuser <insert user name here>'</pre>
 
-For the purposes of this tutorial, I will not change the default authentication so the database name should be chosen to correspond to your user name. The user name used in this exercise is gadfly and this will be reflected in the choice of database name and user name. One additional change that will be necessary is to enable TCP/IP connections as the Unix domain socket restriction of the default installation is incompatible with the PostgreSQL JDBC implementation. 
+For the purposes of this tutorial, I will not change the default authentication so the database name should be chosen to correspond to your user name. The user name used in this exercise is ''gadfly'' and this will be reflected in the choice of database name and user name. One additional change that will be necessary is to enable TCP/IP connections as the Unix domain socket restriction of the default installation is incompatible with the PostgreSQL JDBC implementation. 
 
-To do so, you need to add the "-i" flag to the startup script. Edit /etc/init.d/postgresql and change the line:- 
+To do so, you need to add the <code>-i</code> flag to the startup script. Edit <code>/etc/init.d/postgresql</code> and change the line
 
 <pre>su -l postgres -s /bin/sh -c "/usr/bin/pg_ctl -D $PGDATA -p /usr/bin/postmaster start  > /dev/null 2>&1" < /dev/null</pre>
 
-to:- 
+to
 
 <pre>su -l postgres -s /bin/sh -c "/usr/bin/pg_ctl -o "-i" -D $PGDATA -p /usr/bin/postmaster start  > /dev/null 2>&1" < /dev/null</pre>
 
-The /var/lib/pgsql/data/pg_hba.conf file will also need to be edited to permit access via TCP/IP. This can be achieved by uncommenting:- 
+The <code>/var/lib/pgsql/data/pg_hba.conf</code> file will also need to be edited to permit access via TCP/IP. This can be achieved by uncommenting: 
 
 <pre>#host       all         127.0.0.1     255.255.255.255    trust</pre>
 
 Both these operations require root access: seek advice as to the best option given your local security circumstances. 
 
-One additional change is that postgresql in RH7.3 does not come with the pgsql language enabled. As BioSQL uses that for acceleration, you will need to enable it. This can be done within root with:- 
+One additional change is that postgresql in RH7.3 does not come with the pgsql language enabled. As BioSQL uses that for acceleration, you will need to enable it. This can be done within root with: 
 
 <pre>su postgres -c 'createlang plpgsql template1'</pre>
 
