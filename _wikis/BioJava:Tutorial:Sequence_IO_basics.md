@@ -50,13 +50,13 @@ files are simply a list of features, with no sequence data in the file.
 A BioJava Sequence object contains the same kinds of information as a
 sequence file. The primary aim of the input architecture is obviously to
 take a stream containing sequence file data, and return one or more
-Sequence objects. In addition, we there are two other goals:
+`Sequence` objects. In addition, there are two other goals:
 
-Decoupled Sequence creation: BioJava represents sequence data using the Sequence interface. We allow multiple implementations of this interface, which might be optimized for quite specific purposes. Some implementations will be purely in-memory objects, while others might be persistant objects reflecting data in some kind of database. We want to allow you to create any kind of Sequence object from a given data stream.  
+Decoupled `Sequence` creation: BioJava represents sequence data using the `Sequence` interface. We allow multiple implementations of this interface, which might be optimized for quite specific purposes. Some implementations will be purely in-memory objects, while others might be persistant objects reflecting data in some kind of database. We want to allow you to create any kind of `Sequence` object from a given data stream.  
 
 <!-- -->
 
-Pluggable filters: Not all users will wish to exactly reflect the contents of a sequence file as a Sequence object. Sometimes it is useful to select specific pieces of data from a file, or to change it into some other format. For instance, BioJava has a hierarchical model for features attached to a sequence, whereas many file formats (for instance, EMBL) do not. You might wish to rebuild some kind of feature hierarchy from an EMBL flatfile during the parsing process.  
+Pluggable filters: Not all users will wish to exactly reflect the contents of a sequence file as a `Sequence` object. Sometimes it is useful to select specific pieces of data from a file, or to change it into some other format. For instance, BioJava has a hierarchical model for features attached to a sequence, whereas many file formats (for instance, EMBL) do not. You might wish to rebuild some kind of feature hierarchy from an EMBL flatfile during the parsing process.  
 
 SequenceBuilders
 ----------------
