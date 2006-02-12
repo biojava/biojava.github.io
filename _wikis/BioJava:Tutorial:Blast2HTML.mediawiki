@@ -21,7 +21,7 @@ To generate for yourself the above example HTML files, change directory to the d
 <pre>java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
 java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out</pre>
 
-You can choose an output file ( instead of redirecting standard out ) by adding a third argument to the command:
+You can choose an output file (instead of redirecting standard out) by adding a third argument to the command:
 
 <pre>java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html</pre>
 
