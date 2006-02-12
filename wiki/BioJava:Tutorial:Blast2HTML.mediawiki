@@ -16,14 +16,14 @@ Prerequisites are:
 
 == Running the demos ==
 
-To generate for yourself the above example HTML files, change directory to the demos directory of biojava. The following commands will generate the HTML to standard out.
+To generate for yourself the above example HTML files, change directory to the demos directory of biojava. The following commands will generate the HTML to standard out:
 
-<pre>   java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
-   java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out</pre>
+<pre>java eventbasedparsing.Blast2HTML nucleic files/ncbiblast/blastn.out
+java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out</pre>
 
-You can choose an output file ( instead of redirecting standard out ) by adding a third argument to the command - 
+You can choose an output file ( instead of redirecting standard out ) by adding a third argument to the command:
 
-<pre>   java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html</pre>
+<pre>java eventbasedparsing.Blast2HTML protein files/ncbiblast/blastp.out blastp.html</pre>
 
 == Customising the Output ==
 
