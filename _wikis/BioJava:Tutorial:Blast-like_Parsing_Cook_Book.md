@@ -7,7 +7,7 @@ tags:
 by **[Cambridge Antibody
 Technology](mailto:bioinformatics@CambridgeAntibody.com)**
 
-This section of the biojava tutorial covers making use of the output
+This section of the BioJava tutorial covers making use of the output
 from software used for sequence similarity/homology based searches of
 biological databases. The material is presented in a Cook Book fashion
 giving practical examples that should be enough to get you going. If you
