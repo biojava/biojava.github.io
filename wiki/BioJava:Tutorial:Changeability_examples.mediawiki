@@ -20,7 +20,7 @@ import org.biojava.bio.dist.*;</pre>
 
 == Setting up the roulet data == 
 
-Firstly, we need to declare the class as extending JApplet so that we can use it inside a web-page and also rely on Swing working properly. 
+Firstly, we need to declare the class as extending <code>JApplet</code> so that we can use it inside a web-page and also rely on Swing working properly. 
 
 <pre>public class Roulet extends JApplet {</pre>
 
@@ -46,7 +46,7 @@ Of course, all of these items must be initialized. We will use a static initiali
     rolls = new SimpleAlphabet("Rolls");
     allRolls = new Symbol[numRolls];</pre>
 
-Having made the rolls alphabet, we now must populate it with each possible roulet wheel outcome - 1..40 - as a symbol instance. 
+Having made the rolls alphabet, we now must populate it with each possible roulet wheel outcome - ''1..40'' - as a symbol instance. 
 
 <pre>    for(int i = 1; i <= numRolls; i++) {
       Symbol s = allRolls[i-1] = AlphabetManager.createSymbol(
@@ -75,7 +75,7 @@ Notice that we have to catch exceptions that should be imposible to generate, bu
 
 <pre>    rolls.addChangeListener(ChangeListener.ALWAYS_VETO, Alphabet.SYMBOLS);</pre>
 
-This is an example of using ALWAYS_VETO to prevent things from changing. Here we lock the SYMBOLS property of rolls so that no more symbol instances can be added or removed from the alphabet. This ensures data-integrity and makes it harder to write syntaciticaly correct buggs. 
+This is an example of using <code>ALWAYS_VETO</code> to prevent things from changing. Here we lock the <code>SYMBOLS</code> property of rolls so that no more symbol instances can be added or removed from the alphabet. This ensures data-integrity and makes it harder to write syntacticaly correct bugs. 
 
 We must now make the red/black alphabet. 
 
@@ -117,7 +117,8 @@ Now we will set up a probability distribution that can be sampled from to simula
 
 And there we close the static block. Everything is set up for a game of chance. 
 
-Applet for playing the game
+== Applet for playing the game ==
+
 Let us start by setting up the state of the applet that will be used for estimating how the game is played, and for rendering the current best-guess for the outcomes of multiple roles of the wheel. 
 
 <pre>  private Distribution rollDist;
@@ -125,14 +126,14 @@ Let us start by setting up the state of the applet that will be used for estimat
   private boolean running = false;
   private Thread countAdder;</pre>
 
-rollDist will be our estimate of the probability of any one of the roles. redBlackDist is our estimate of getting one of red or black (even/odd). We will use the thread in countAdder to repeatedly sample the game, and when running is set to false, we will temporarily suspend sampling. 
+<code>rollDist</code> will be our estimate of the probability of any one of the roles. <code>redBlackDist</code> is our estimate of getting one of red or black (even/odd). We will use the thread in <code>countAdder</code> to repeatedly sample the game, and when running is set to false, we will temporarily suspend sampling. 
 
 In the applet's init method we will set up all the state and build the GUI. 
 
 <pre>  public void init() {
     super.init(); // can't hurt...</pre>
 
-Firstly, lets create the rollDist and redBlackDist objects. 
+Firstly, lets create the <code>rollDist</code> and <code>redBlackDist</code> objects. 
 
 <pre>    try {
       rollDist = DistributionFactory.DEFAULT.createDistribution(rolls);
@@ -142,7 +143,7 @@ Firstly, lets create the rollDist and redBlackDist objects.
 
     redBlackDist = new RedBlackDist(rollDist);</pre>
 
-Now we must make an object to estimate the rollDist probabilities. This is done using a DistributionTrainerContext instance called dtc. dtc will colate counts for each of the forty outcomes so that rollDist can then represent these frequencies as a probability distribution. 
+Now we must make an object to estimate the <code>rollDist</code> probabilities. This is done using a <code>DistributionTrainerContext</code> instance called <code>dtc</code>. <code>dtc</code> will colate counts for each of the forty outcomes so that <code>rollDist</code> can then represent these frequencies as a probability distribution. 
 
 <pre>    final DistributionTrainerContext dtc =
       new SimpleDistributionTrainerContext();
@@ -162,7 +163,7 @@ We will check the value of the running member variable to check if we should be 
           }
           if(running == true) {</pre>
 
-Here we perform the sampling and inform the trainer of the role. To force rollDist to reflect the new counts, we also call tdc.train, and catch all the resulting exceptions (which should be imposible if everything is set up coorectly). 
+Here we perform the sampling and inform the trainer of the role. To force <code>rollDist</code> to reflect the new counts, we also call <code>tdc.train</code>, and catch all the resulting exceptions (which should be imposible if everything is set up coorectly). 
 
 <pre>            Symbol s = Roulet.wheelRoler.sampleSymbol();
             try {
@@ -284,7 +285,7 @@ Now, we add all of these components to the applet.
     getContentPane().add(center, BorderLayout.CENTER);
   }</pre>
 
-This is the end of init. It has set up the state of the object, ready for it to render estimated probabilities of each wheel outcome being observed by repeatedly sampling the roulet wheel. 
+This is the end of init. It has set up the state of the object, ready for it to render estimated probabilities of each wheel outcome being observed by repeatedly sampling the roulet wheel.
 
 == Starting the game off ==
 
