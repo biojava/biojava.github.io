@@ -228,10 +228,10 @@ Using an abstract class to provide the event handeling
 Often there are a number of implementatoins of an interface that are
 almost exactly the same except for the particulars of how data is
 stored. It is a shame to write the event code multiple times. A useful
-design pattern for this is to provide an Abstract class that takes care
+design pattern for this is to provide an abstract class that takes care
 of all the synchronization issues and calles stub methods to perform the
 actual access to object state. Here is an example of that for the
-Nameable class.
+`Nameable` class.
 
 The abstract class will look like this.
 
@@ -273,7 +273,7 @@ The implementation would look something like this.
 This split between the abstract implementation that handles all of the
 event guts and a realy light-weight implementation that controls access
 to data-storage is very useful in practice, and is used extensively in
-BioJava, particularly in the org.biojava.bio.dist package.
+BioJava, particularly in the `org.biojava.bio.dist` package.
 
 What next?
 ----------
