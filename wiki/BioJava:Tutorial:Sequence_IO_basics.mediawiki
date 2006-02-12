@@ -57,28 +57,24 @@ Authors of new <code>SequenceBuilder</code> implementations are encouraged to co
 
 == Putting it together: StreamReader ==
 
-The simplest way to use the BioJava sequence input code is to construct a StreamReader. The constructor takes four paramters: 
+The simplest way to use the BioJava sequence input code is to construct a <code>StreamReader</code>. The constructor takes four paramters: 
 
-* A normal Java BufferedReader, encapsulating the stream of data to parse. 
-* A SequenceFormat object, which is responsible for actually parsing sequence data from the stream. 
-* A SymbolTokenization, which represents a mapping from textual characters to BioJava Symbol objects. 
-* A SequenceBuilderFactory to support construction of Sequence objects. 
+* A normal Java <code>BufferedReader</code> object, encapsulating the stream of data to parse. 
+* A <code>SequenceFormat</code> object, which is responsible for actually parsing sequence data from the stream. 
+* A <code>SymbolTokenization</code> object, which represents a mapping from textual characters to BioJava <code>Symbol</code> objects. 
+* A <code>SequenceBuilderFactory</code> object to support construction of <code>Sequence</code> objects. 
 
-A StreamReader might be constructed as follows: 
+A <code>StreamReader</code> object might be constructed as follows: 
 
 <pre>Alphabet dna = DNATools.getDNA();
 SymbolTokenization dnaParser = dna.getTokenization("token");
-BufferedReader br = new BufferedReader(
-		        new FileReader(fileName));
-SequenceBuilderFactory sbf = new FastaDescriptionLineParser.Factory(
-                                     SimpleSequenceBuilder.FACTORY);
-StreamReader stream = new StreamReader(br,
-				       new FastaFormat(),
-				       dnaParser,
-				       fact);</pre>
+BufferedReader br = new BufferedReader(new FileReader(fileName));
+SequenceBuilderFactory sbf = new FastaDescriptionLineParser.Factory(SimpleSequenceBuilder.FACTORY);
+StreamReader stream = new StreamReader(br, new FastaFormat(), dnaParser, fact);</pre>
 
-(this is just a snippet from the example program in [[BioJava:Tutorial:Symbols and SymbolLists|chapter 1]], and you may like to refer back for more information). 
-The StreamReader class implements the SequenceIterator interface, so you can easily iterate over all sequences in a stream: 
+(This is just a snippet from the example program in [[BioJava:Tutorial:Symbols and SymbolLists|chapter 1]], and you may like to refer back for more information.)
+
+The <code>StreamReader</code> class implements the <code>SequenceIterator</code> interface, so you can easily iterate over all sequences in a stream: 
 
 <pre>while (stream.hasNext()) {
     Sequence seq = stream.nextSequence();
