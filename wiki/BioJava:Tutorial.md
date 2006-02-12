@@ -8,18 +8,20 @@ the JavaDoc API documentation
 ([1.3](http://www.biojava.org/docs/api/index.html),
 [1.4](http://www.biojava.org/docs/api14/index.html)).
 
--   [Symbols and
-    SymbolLists](BioJava:Tutorial:Symbols and SymbolLists "wikilink")
--   [Sequences and
-    Features](BioJava:Tutorial:Sequences and Features "wikilink")
--   [Sequence I/O
-    basics](BioJava:Tutorial:Sequence IO basics "wikilink")
--   [ChangeEvent
-    overview](BioJava:Tutorial:ChangeEvent overview "wikilink")
--   [ChangeEvent example using Distribution
-    objects](BioJava:Tutorial:ChangeEvent example using Distribution objects "wikilink")
--   [Implementing
-    Changeable](BioJava:Tutorial:Implementing Changeable "wikilink")
+-   Sequence basics
+    -   [Symbols and
+        SymbolLists](BioJava:Tutorial:Symbols and SymbolLists "wikilink")
+    -   [Sequences and
+        Features](BioJava:Tutorial:Sequences and Features "wikilink")
+    -   [Sequence I/O
+        basics](BioJava:Tutorial:Sequence IO basics "wikilink")
+-   Changeability basics
+    -   [ChangeEvent
+        overview](BioJava:Tutorial:ChangeEvent overview "wikilink")
+    -   [ChangeEvent example using Distribution
+        objects](BioJava:Tutorial:ChangeEvent example using Distribution objects "wikilink")
+    -   [Implementing
+        Changeable](BioJava:Tutorial:Implementing Changeable "wikilink")
 -   Blast-like parsing (NCBI Blast, WU-Blast, HMMER)
     -   [Blast-like Parsing Cook
         Book](BioJava:Tutorial:Blast-like Parsing Cook Book "wikilink")
