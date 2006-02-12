@@ -410,7 +410,7 @@ That is the end of the pie-chart class.
 
 == RedBlackDist as a view onto the rollDist distribution == 
 
-The RedBlackDist class will implement Distribution, but will need to map the 40-symbol alphabet of the entire roulet wheel into the 2-symbol alphabet of red/black. It must remain synchronized with the main wheel, updating its state whenever its parent does. 
+The <code>RedBlackDist</code> class will implement <code>Distribution</code>, but will need to map the 40-symbol alphabet of the entire roulet wheel into the 2-symbol alphabet of red/black. It must remain synchronized with the main wheel, updating its state whenever its parent does. 
 
 <pre>class RedBlackDist extends AbstractDistribution {
   private Distribution parent;
@@ -421,7 +421,7 @@ The RedBlackDist class will implement Distribution, but will need to map the 40-
   private ChangeListener parentL;
   private ChangeListener propUpdater;</pre>
 
-parent is the distribution being viewed. nullModel represents a view of the parent's null model. red and black will store the probabilities of comming up red or black in the parent. parentL will listen to the parent for when it changes and notify all interested parties that this distribution is changing in response. propUpdater will do the job of actualy calculating red and black from the parent. 
+<code>parent</code> is the distribution being viewed. <code>nullModel</code> represents a view of the parent's null model. <code>red</code> and <code>black</code> will store the probabilities of comming up red or black in the parent. <code>parentL</code> will listen to the parent for when it changes and notify all interested parties that this distribution is changing in response. <code>propUpdater</code> will do the job of actualy calculating red and black from the parent. 
 
 Let's set up our distribution. 
 
@@ -433,7 +433,7 @@ Let's set up our distribution.
       this, changeSupport
     ) {</pre>
 
-This listener will forward changes to the parent weights as changes to this distribution. It extends ChangeForwarder that is a special instance that passes on changes to one object as knock-on events to another. By using the ChangeEvent constructor that includes a ChangeEvent, we can pass on the complete chain-of-evidence that allows listeners to work out why we are claiming to alter. 
+This listener will forward changes to the parent weights as changes to this distribution. It extends <code>ChangeForwarder</code> that is a special instance that passes on changes to one object as knock-on events to another. By using the <code>ChangeEvent</code> constructor that includes a <code>ChangeEvent</code>, we can pass on the complete chain-of-evidence that allows listeners to work out why we are claiming to alter. 
 
 <pre>      protected ChangeEvent generateEvent(ChangeEvent ce) {
         return new ChangeEvent(
@@ -471,7 +471,7 @@ We must also add a listener to ourselves to trap successful attempts to change (
 
 And that is the end of the constructor. 
 
-Now we must provide the missing methods in AbstractDistribution. These are fairly booring. Our alphabet is the same as the roulet redBlack object, and getWeightImpl will return the value of red for the red symbol and the value of black for the black symbol. 
+Now we must provide the missing methods in <code>AbstractDistribution</code>. These are fairly booring. Our alphabet is the same as the roulet <code>redBlack</code> object, and <code>getWeightImpl</code> will return the value of red for the red symbol and the value of black for the black symbol. 
 
 <pre>  public Alphabet getAlphabet() {
     return Roulet.redBlack;
@@ -488,7 +488,7 @@ Now we must provide the missing methods in AbstractDistribution. These are fairl
     }
   }</pre>
 
-All of these methods are just stubs. Notice that they throw ChangeVetoExceptions to indicate that they are not implemented. ChangeVetoException can either mean that the change is dissalowed because some listener explicitly stops it, or that the method is not supported. Either way, the state of the object will not be updated. 
+All of these methods are just stubs. Notice that they throw <code>ChangeVetoExceptions</code> to indicate that they are not implemented. <code>ChangeVetoException</code> can either mean that the change is dissalowed because some listener explicitly stops it, or that the method is not supported. Either way, the state of the object will not be updated. 
 
 <pre>  protected void setWeightImpl(AtomicSymbol as, double weight)
   throws ChangeVetoException, IllegalSymbolException {

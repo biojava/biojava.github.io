@@ -480,8 +480,8 @@ That is the end of the pie-chart class.
 RedBlackDist as a view onto the rollDist distribution
 -----------------------------------------------------
 
-The RedBlackDist class will implement Distribution, but will need to map
-the 40-symbol alphabet of the entire roulet wheel into the 2-symbol
+The `RedBlackDist` class will implement `Distribution`, but will need to
+map the 40-symbol alphabet of the entire roulet wheel into the 2-symbol
 alphabet of red/black. It must remain synchronized with the main wheel,
 updating its state whenever its parent does.
 
@@ -494,12 +494,12 @@ updating its state whenever its parent does.
       private ChangeListener parentL;
       private ChangeListener propUpdater;
 
-parent is the distribution being viewed. nullModel represents a view of
-the parent's null model. red and black will store the probabilities of
-comming up red or black in the parent. parentL will listen to the parent
-for when it changes and notify all interested parties that this
-distribution is changing in response. propUpdater will do the job of
-actualy calculating red and black from the parent.
+`parent` is the distribution being viewed. `nullModel` represents a view
+of the parent's null model. `red` and `black` will store the
+probabilities of comming up red or black in the parent. `parentL` will
+listen to the parent for when it changes and notify all interested
+parties that this distribution is changing in response. `propUpdater`
+will do the job of actualy calculating red and black from the parent.
 
 Let's set up our distribution.
 
@@ -512,11 +512,11 @@ Let's set up our distribution.
         ) {
 
 This listener will forward changes to the parent weights as changes to
-this distribution. It extends ChangeForwarder that is a special instance
-that passes on changes to one object as knock-on events to another. By
-using the ChangeEvent constructor that includes a ChangeEvent, we can
-pass on the complete chain-of-evidence that allows listeners to work out
-why we are claiming to alter.
+this distribution. It extends `ChangeForwarder` that is a special
+instance that passes on changes to one object as knock-on events to
+another. By using the `ChangeEvent` constructor that includes a
+`ChangeEvent`, we can pass on the complete chain-of-evidence that allows
+listeners to work out why we are claiming to alter.
 
           protected ChangeEvent generateEvent(ChangeEvent ce) {
             return new ChangeEvent(
@@ -556,9 +556,9 @@ black.
 
 And that is the end of the constructor.
 
-Now we must provide the missing methods in AbstractDistribution. These
-are fairly booring. Our alphabet is the same as the roulet redBlack
-object, and getWeightImpl will return the value of red for the red
+Now we must provide the missing methods in `AbstractDistribution`. These
+are fairly booring. Our alphabet is the same as the roulet `redBlack`
+object, and `getWeightImpl` will return the value of red for the red
 symbol and the value of black for the black symbol.
 
       public Alphabet getAlphabet() {
@@ -577,8 +577,8 @@ symbol and the value of black for the black symbol.
       }
 
 All of these methods are just stubs. Notice that they throw
-ChangeVetoExceptions to indicate that they are not implemented.
-ChangeVetoException can either mean that the change is dissalowed
+`ChangeVetoExceptions` to indicate that they are not implemented.
+`ChangeVetoException` can either mean that the change is dissalowed
 because some listener explicitly stops it, or that the method is not
 supported. Either way, the state of the object will not be updated.
 
