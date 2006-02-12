@@ -136,30 +136,30 @@ Creating new features
 ---------------------
 
 It is expected that there will never be any publicly visible
-implementations of Feature or its sub-interfaces. Instead, features
-should be produced using the createFeature method of a FeatureHolder.
-This ensures that there are no \`orphan' features, not properly attached
-to a parent Sequence. It also gives Sequence implemetors the chance to
-control the attachment of features to their sequence class. Some
-sequences may only accept certain kinds of feature. Other
+implementations of `Feature` or its sub-interfaces. Instead, features
+should be produced using the `createFeature` method of a `FeatureHolder`
+object. This ensures that there are no 'orphan' features, not properly
+attached to a parent sequence. It also gives `Sequence` implementors the
+chance to control the attachment of features to their sequence class.
+Some sequences may only accept certain kinds of features. Other
 implementations, especially those intimately coupled with database
 storage mechanisms, may wish to use their own special implementations of
-the Feature interface.
+the `Feature` interface.
 
-The createFeature method has the following signature:
+The `createFeature` method has the following signature:
 
     public Feature createFeature(Feature.Template template);
 
-there is no requirement that a particular FeatureHolder should include a
-working implementation of this method. If it is not possible to create a
-new child feature, UnsupportedOperationException will be thrown. In
-particular, this method is only implemented by Sequence and Feature
-objects. When FeatureHolder instances are used to return arbitrary
-\`bags' of features, they will never support this method.
+there is no requirement that a particular `FeatureHolder` object should
+include a working implementation of this method. If it is not possible
+to create a new child feature, `UnsupportedOperationException` will be
+thrown. In particular, this method is only implemented by `Sequence` and
+`Feature` objects. When `FeatureHolder` instances are used to return
+arbitrary 'bags' of features, they will never support this method.
 
-Feature.Template is a concrete nested class of the Feature interface. It
-just contains public fields corresponding to each property of Feature. A
-feature could be attached to a Sequence as follows:
+`Feature.Template` is a concrete nested class of the `Feature`
+interface. It just contains public fields corresponding to each property
+of `Feature`. A feature could be attached to a sequence as follows:
 
     Feature.Template template = new Feature.Template();
     template.type = "TestFeature";
@@ -168,6 +168,6 @@ feature could be attached to a Sequence as follows:
     template.annotation = Annotation.EMPTY_ANNOTATION;
     mySequence.createFeature(template);
 
-Every sub-interface of Feature should have a nested class, also named
-Template, which extends Feature.Template and adds any extra fields
+Every sub-interface of `Feature` should have a nested class, also named
+`Template`, which extends `Feature.Template` and adds any extra fields
 needed to construct that specialized kind of feature.
