@@ -345,7 +345,7 @@ Starting the game off
 ---------------------
 
 The last bit of the applet is the command to set the sampler thread into
-motion. This realy fits into the applet's start method naturaly.
+motion. This realy fits into the applet's `start` method naturaly.
 
       public void start() {
         super.start();
@@ -354,7 +354,7 @@ motion. This realy fits into the applet's start method naturaly.
       }
     }
 
-And that is the end of the Roulet class.
+And that is the end of the `Roulet` class.
 
 The pie-chart rendering component
 ---------------------------------
