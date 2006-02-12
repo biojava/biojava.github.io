@@ -1,6 +1,6 @@
 by '''[mailto:bioinformatics@CambridgeAntibody.com Cambridge Antibody Technology]'''
 
-This section of the biojava tutorial covers making use of the output from software used for sequence similarity/homology based searches of biological databases. The material is presented in a Cook Book fashion giving practical examples that should be enough to get you going. If you want to make use of the output from the following programs by using BioJava, this is a useful tutorial to work through:
+This section of the BioJava tutorial covers making use of the output from software used for sequence similarity/homology based searches of biological databases. The material is presented in a Cook Book fashion giving practical examples that should be enough to get you going. If you want to make use of the output from the following programs by using BioJava, this is a useful tutorial to work through:
 
 * NCBI Blast (blastn, blastx, blastp, tblastn, tblastx) 
 * WU-Blast (blastn, blastx, blastp, tblastn, tblastx) 
