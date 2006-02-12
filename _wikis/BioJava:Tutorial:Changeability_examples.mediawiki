@@ -5,7 +5,7 @@ We are going to play with the <code>Changeability</code> code using the example 
 
 == The imports ==
 
-We will need to import some standard graphical packages to make the GUI, and java.util as it gives us stuff like iterators. From biojava, we will need all of the Changeability api. The other biojava packages give us things like symbol objects, alphabets, annotations and probability distributions. 
+We will need to import some standard graphical packages to make the GUI, and <code>java.util</code> as it gives us stuff like iterators. From BioJava, we will need all of the Changeability API. The other BioJava packages give us things like <code>Symbol</code> objects, alphabets, annotations and probability distributions. 
 
 <pre>import java.awt.*;
 import java.awt.event.*;

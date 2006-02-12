@@ -15,9 +15,9 @@ The imports
 -----------
 
 We will need to import some standard graphical packages to make the GUI,
-and java.util as it gives us stuff like iterators. From biojava, we will
-need all of the Changeability api. The other biojava packages give us
-things like symbol objects, alphabets, annotations and probability
+and `java.util` as it gives us stuff like iterators. From BioJava, we
+will need all of the Changeability API. The other BioJava packages give
+us things like `Symbol` objects, alphabets, annotations and probability
 distributions.
 
     import java.awt.*;
