@@ -110,11 +110,11 @@ Installing BioSQL
 -----------------
 
 The PostgreSQL server must be running to complete the BioSQL
-installation. You can check that it is with:-
+installation. You can check that it is with:
 
     $ /etc/rc.d/postgresql status
 
-and doing:-
+and doing:
 
     $ /etc/rc.d/postgresql start
 
@@ -123,8 +123,7 @@ should have PostgreSQL started up during system startup with the SysV
 init system that comes with most Unixen.
 
 You will need three scripts that serve to initialise the new database
-with the BioSQL schema and load accelerators for this schema. These
-are:-
+with the BioSQL schema and load accelerators for this schema. These are:
 
     biosql-accelerators-pg.sql
     biosqldb-assembly-pg.sql
@@ -134,7 +133,7 @@ They may be obtained from
 [here](http://www.biojava.org/download/biosql/).
 
 We now need to load the schema into the database we have created. We do
-so as follows (user entries in bold):-
+so as follows (user entries are prefixed by `$` or `gadfly==>`):
 
     $ psql gadfly
     Welcome to psql, the PostgreSQL interactive terminal.
@@ -144,7 +143,6 @@ so as follows (user entries in bold):-
            \? for help on internal slash commands
            \g or terminate with semicolon to execute query
            \q to quit
-
     gadfly=> \i biosqldb-pg.sql
     CREATE
     psql:biosqldb-pg.sql:13: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'biodatabase_pkey' for table 'biodatabase'
@@ -161,22 +159,22 @@ so as follows (user entries in bold):-
 
     $
 
-Let's walk through the session above. psql is the name of the PostgreSQL
-interactive shell. We invoke it to connect to the PostgreSQL server and
-accept commands for a database named gadfly that we had created earlier.
-psql starts and displays its user prompt. All psql commands begin with a
-backslash (\\). The \\i instructs psql to take input from a file. I
-instruct psql to take input from the biosqldb-pg.sql,
-biosqldb-assembly-pg.sql and biosql-accelerators-pg.sql successively.
-psql reads the SQL statements within each of the files and proceeds to
-construct the BioSQL database schema, printing out a summary of its
-actions as it proceeds. Finally, I quit the psql interactive shell with
-\\q. At this point you have a BioSQL schema installed and ready to
-run!!!
+Let's walk through the session above. `psql` is the name of the
+PostgreSQL interactive shell. We invoke it to connect to the PostgreSQL
+server and accept commands for a database named `gadfly` that we had
+created earlier. `psql` starts and displays its user prompt. All psql
+commands begin with a backslash (\\). The `\i` instructs psql to take
+input from a file. I instruct psql to take input from the
+`biosqldb-pg.sql`, `biosqldb-assembly-pg.sql` and
+`biosql-accelerators-pg.sql` successively. psql reads the SQL statements
+within each of the files and proceeds to construct the BioSQL database
+schema, printing out a summary of its actions as it proceeds. Finally, I
+quit the psql interactive shell with `\q`. At this point you have a
+BioSQL schema installed and ready to run!!!
 
 Do remember that if you do not explicitly load the JDBC drivers in your
 code, you should set a Java environment variable to tell it what to look
-for like so:-
+for like so:
 
     java -Djdbc.drivers=org.postgresql.Driver <whatever your java code is>
 
