@@ -6,7 +6,7 @@ tags:
 
 **by David Huen**
 
-This document describes how to install and use Biosql. BioSQL is a part
+This document describes how to install and use BioSQL. BioSQL is a part
 of the [OBDA](http://obda.open-bio.org/) standard and was developed as a
 common sequence database schema for the different language projects
 within the [Open Bioinformatics Foundation](http://www.open-bio.org/).
@@ -18,7 +18,7 @@ on an x86 machine running RedHat 7.2.
 Installing Postgresql
 ---------------------
 
-If not already installed, PostgreSQL can be installed from RPMs with:-
+If not already installed, PostgreSQL can be installed from RPMs with:
 
     rpm -ivh postgresql-7.2.1-5.i386.rpm postgresql-libs-7.2.1-5.i386.rpm postgresql-server-7.2.1-5.i386.rpm
 
