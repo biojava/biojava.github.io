@@ -10,10 +10,9 @@ BioJava contains a powerful API for communicating when objects wish to
 change their state, and potentialy preventing them from changing if it
 would invalidate the state of another object, all without violating the
 principals of encapsulation. The main classes are in the
-org.biojava.utils package and include Changeable, ChangeEvent,
-ChangeListener, ChangeType and ChangeVetoException . For full
-descriptions of all the API used here, please consult the [JavaDoc
-documentation](http://www.biojava.org/docs/api).
+`org.biojava.utils` package and include `Changeable`, `ChangeEvent`,
+`ChangeListener`, `ChangeType` and `ChangeVetoException`. For full
+descriptions of all the API used here, please consult the .
 
 What is the difference between Changeability and Mutability?
 ------------------------------------------------------------
