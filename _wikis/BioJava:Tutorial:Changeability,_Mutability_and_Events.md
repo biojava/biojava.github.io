@@ -59,34 +59,36 @@ with the `==` operator. This scheme is a type-safe extention of the
 Swing `PropertyChangeEvent` system but BioJava interfaces explicitly
 publish what types of event they may fire.
 
-ChangeListener: The contract for handeling events
--------------------------------------------------
+ChangeListener: The contract for handling events
+------------------------------------------------
 
-Objects that wish to be informed of ChangeEvents must implement the
-ChangeListener interface. This has just two methods:
+Objects that wish to be informed of change events must implement the
+`ChangeListener` interface. This has just two methods:
 
--   preChange(ChangeEvent ce)
--   postChange(ChangeEvent ce)
+-   `preChange(ChangeEvent ce)`
+-   `postChange(ChangeEvent ce)`
 
-An object will invoke preChange to inform listeners that it wishes to
-alter its state. A ChangeListener may fire a ChangeVetoException to
+An object will invoke `preChange` to inform listeners that it wishes to
+alter its state. A `ChangeListener` may fire a `ChangeVetoException` to
 prevent this change from taking place. The event source must respect
-this. Once the event source has finnished updating its state, it will
-invoke the postChangeEvent method with an equivalent ChangeEvent (one
-with the same values for its properties). The postChange method should
-then take apropreate action to update the state of the listening object.
+this. Once the event source has finished updating its state, it will
+invoke the `postChangeEvent` method with an equivalent `ChangeEvent`
+(one with the same values for its properties). The `postChange` method
+should then take appropriate action to update the state of the listening
+object.
 
-There are two ChangeListener implementations supplied by default.
-ChangeListener.ALWAYS\_VETO always throws a ChangeException in
-preChange. This object is usefull if you wish to unconditionaly lock an
-object's property. In the exceptional circumstance when
-ChangeListener.ALWAYS\_VETO is registered and a postChange is reached,
-it throws a NestedError with an assertion failure message. This should
-only be able to happen if the event source is incorrectly implemented.
+There are two `ChangeListener` implementations supplied by default.
+`ChangeListener.ALWAYS_VETO` always throws a `ChangeException` in
+`preChange`. This object is useful if you wish to unconditionally lock
+an object's property. In the exceptional circumstance when
+`ChangeListener.ALWAYS_VETO` is registered and a `postChange` is
+reached, it throws a `NestedError` with an assertion failure message.
+This should only be able to happen if the event source is incorrectly
+implemented.
 
-ChangeException.LOG\_TO\_OUT prints all changes out to System.out. If
+`ChangeException.LOG_TO_OUT` prints all changes out to `System.out`. If
 you want to log to a different stream, construct a new instance of
-ChangeListener.LoggingListener with the stream.
+`ChangeListener.LoggingListener` with the stream.
 
 Using ChangeSupport to implement Changeable
 -------------------------------------------
