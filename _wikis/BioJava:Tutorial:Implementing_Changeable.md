@@ -87,7 +87,9 @@ Firstly we will define the class and add a couple of constructors.
       public SimpleChangeable(String name) {
         this.name = name;
       }
-    The getName method can also be written in the obvious way. 
+
+The getName method can also be written in the obvious way.
+
       public String getName() {
         return name;
       }
@@ -97,8 +99,8 @@ in particular, the list of listeners. This would impose overhead on all
 instances of `Changeable`, regardless of whether listeners exist or not.
 The solution to this is to lazily instantiate the supporting objects.
 Fortunately, `AbstractChangeable` handles all of this for you. The two
-methods you need to use are hasListeners(), which will return true if
-there are any listeners at all and false otherwise. If there are no
+methods you need to use are `hasListeners()`, which will return `true`
+if there are any listeners at all and false otherwise. If there are no
 listeners, then the name can be set directly.
 
       public void setName(String name)
@@ -107,14 +109,19 @@ listeners, then the name can be set directly.
           this.name = name;
         } else {
 
-If there are listeners, then the method getChangeSupport() is used to
-retrieve the ChangeSupport instance that maintains the listeners list.
+If there are listeners, then the method `getChangeSupport` is used to
+retrieve the `ChangeSupport` instance that maintains the listeners list.
 You should then synchronize on this to ensure that no listeners are
 added or removed while the name is being set.
 
           ChangeSupport cs = getChangeSupport(Nameable.NAME);
           synchronized(cs) {
-    Next, we make a new ChangeEvent to describe how the object wishes to alter, we fire a preChange notification to the listeners so that they have a chance to veto the change, we make the change and lastly we inform the listeners that the change has been made. 
+
+Next, we make a new ChangeEvent to describe how the object wishes to
+alter, we fire a preChange notification to the listeners so that they
+have a chance to veto the change, we make the change and lastly we
+inform the listeners that the change has been made.
+
             ChangeEvent ce = new ChangeEvent(this, Nameable.NAME, name, this.name);
             cs.firePreChange(ce);
             this.name = name;
