@@ -35,10 +35,10 @@ The framework has been designed in such a way that you don't need to
 understand the details of how it works in order to use it. This is
 achieved by providing facade classes that are simple to use. For parsing
 Blast-like output, the facade class you need to use is
-org.biojava.bio.program.sax.BlastLikeSAXParser. You pass streams of data
-to this class, and the framework will do the rest. As the name suggests,
-this class is actually a SAX parser, and implements the
-org.xml.sax.XMLReader interface. You are thus able to treat the output
+`org.biojava.bio.program.sax.BlastLikeSAXParser`. You pass streams of
+data to this class, and the framework will do the rest. As the name
+suggests, this class is actually a SAX parser, and implements the
+`org.xml.sax.XMLReader` interface. You are thus able to treat the output
 data as thought it is in an XML format.
 
 The framework performs the magic of emitting SAX2 events from non-XML

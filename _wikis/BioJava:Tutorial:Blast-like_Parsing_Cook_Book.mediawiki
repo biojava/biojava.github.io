@@ -13,11 +13,11 @@ The section of BioJava you will be making use of in the tutorial is the SAX2-com
 
 == What you need to know about the parsing framework ==
 
-The framework has been designed in such a way that you don't need to understand the details of how it works in order to use it. This is achieved by providing facade classes that are simple to use. For parsing Blast-like output, the facade class you need to use is org.biojava.bio.program.sax.BlastLikeSAXParser. You pass streams of data to this class, and the framework will do the rest. As the name suggests, this class is actually a SAX parser, and implements the org.xml.sax.XMLReader interface. You are thus able to treat the output data as thought it is in an XML format. 
+The framework has been designed in such a way that you don't need to understand the details of how it works in order to use it. This is achieved by providing facade classes that are simple to use. For parsing Blast-like output, the facade class you need to use is <code>org.biojava.bio.program.sax.BlastLikeSAXParser</code>. You pass streams of data to this class, and the framework will do the rest. As the name suggests, this class is actually a SAX parser, and implements the <code>org.xml.sax.XMLReader</code> interface. You are thus able to treat the output data as thought it is in an XML format. 
 
 The framework performs the magic of emitting SAX2 events from non-XML format data. Thus you don't have to do any parsing yourself. Rather you will simply be writing XML Content Handlers. The recipes for XML Content Handlers presented here will point you in the direction of populating your own (or BioJava) objects with bioinformatics data. 
 
-It is also worth noting, that the SAX events that the framework emits are consistent with a scenario where all the pieces of bioinformatics software above, actually produced identically formatted data. 
+It is also worth noting, that the SAX events that the framework emits are consistent with a scenario where all the pieces of bioinformatics software above, actually produced identically formatted data.
 
 == Benefits of using the framework ==
 
