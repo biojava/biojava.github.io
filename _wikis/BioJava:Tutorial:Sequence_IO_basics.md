@@ -20,8 +20,8 @@ The BioJava sequence I/O code is designed to be flexible and easy to
 adapt for a wide variety of purposes. However, if you don't need this
 flexibility, there are some convenience methods which set up the parsers
 for reading a variety of common formats. All these methods take a Java
-BufferedReader, and return an iterator which allows you to scan through
-the sequences in a file. For example:
+`BufferedReader` object, and return an iterator which allows you to scan
+through the sequences in a file. For example:
 
     BufferedReader br = new BufferedReader(new FileReader(fileName));
     SequenceIterator stream = SeqIOTools.readFastaDNA(br);
@@ -31,7 +31,7 @@ the sequences in a file. For example:
     }
 
 For a full list of formats supported in this way, check the Javadoc
-documentation for the SeqIOTools class.
+documentation for the `SeqIOTools` class.
 
 Sequence input goals
 --------------------

@@ -7,7 +7,7 @@ This chapter covers the BioJava support for handling biological sequence data av
 
 == Getting started with sequence I/O ==
 
-The BioJava sequence I/O code is designed to be flexible and easy to adapt for a wide variety of purposes. However, if you don't need this flexibility, there are some convenience methods which set up the parsers for reading a variety of common formats. All these methods take a Java BufferedReader, and return an iterator which allows you to scan through the sequences in a file. For example: 
+The BioJava sequence I/O code is designed to be flexible and easy to adapt for a wide variety of purposes. However, if you don't need this flexibility, there are some convenience methods which set up the parsers for reading a variety of common formats. All these methods take a Java <code>BufferedReader</code> object, and return an iterator which allows you to scan through the sequences in a file. For example: 
 
 <pre>BufferedReader br = new BufferedReader(new FileReader(fileName));
 SequenceIterator stream = SeqIOTools.readFastaDNA(br);
@@ -16,7 +16,7 @@ while (stream.hasNext()) {
     // do something with the sequence.
 }</pre>
 
-For a full list of formats supported in this way, check the Javadoc documentation for the SeqIOTools class. 
+For a full list of formats supported in this way, check the Javadoc documentation for the <code>SeqIOTools</code> class.
 
 == Sequence input goals ==
 
