@@ -6,9 +6,9 @@ tags:
 
 **By [Matthew Pocock](mailto:mrp@sanger.ac.uk)**
 
-We are going to play with the Changeability code using the example of a
-GUI for viewing the roles on a rulet wheel. We will try to estimate the
-probability of the ball falling on any one of the 40 slots and of it
+We are going to play with the `Changeability` code using the example of
+a GUI for viewing the roles on a rulet wheel. We will try to estimate
+the probability of the ball falling on any one of the 40 slots and of it
 falling on red or black.
 
 The imports
