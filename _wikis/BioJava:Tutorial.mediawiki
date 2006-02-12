@@ -1,11 +1,13 @@
 The following tutorials are currently available - more are always welcome! While reading these, you will probably also want to refer to the JavaDoc API documentation ([http://www.biojava.org/docs/api/index.html 1.3], [http://www.biojava.org/docs/api14/index.html 1.4]).
 
-* [[BioJava:Tutorial:Symbols and SymbolLists|Symbols and SymbolLists]]
-* [[BioJava:Tutorial:Sequences and Features|Sequences and Features]] 
-* [[BioJava:Tutorial:Sequence IO basics|Sequence I/O basics]] 
-* [[BioJava:Tutorial:ChangeEvent overview|ChangeEvent overview]] 
-* [[BioJava:Tutorial:ChangeEvent example using Distribution objects|ChangeEvent example using Distribution objects]] 
-* [[BioJava:Tutorial:Implementing Changeable|Implementing Changeable]]
+* Sequence basics
+** [[BioJava:Tutorial:Symbols and SymbolLists|Symbols and SymbolLists]]
+** [[BioJava:Tutorial:Sequences and Features|Sequences and Features]] 
+** [[BioJava:Tutorial:Sequence IO basics|Sequence I/O basics]] 
+* Changeability basics
+** [[BioJava:Tutorial:ChangeEvent overview|ChangeEvent overview]] 
+** [[BioJava:Tutorial:ChangeEvent example using Distribution objects|ChangeEvent example using Distribution objects]] 
+** [[BioJava:Tutorial:Implementing Changeable|Implementing Changeable]]
 * Blast-like parsing (NCBI Blast, WU-Blast, HMMER)
 ** [[BioJava:Tutorial:Blast-like Parsing Cook Book|Blast-like Parsing Cook Book]]
 ** [[BioJava:Tutorial:Blast2HTML Example Application|Blast2HTML Example Application]]
