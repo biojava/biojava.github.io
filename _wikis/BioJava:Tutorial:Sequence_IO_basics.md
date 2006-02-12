@@ -61,41 +61,43 @@ Pluggable filters: Not all users will wish to exactly reflect the contents of a 
 SequenceBuilders
 ----------------
 
-The sequence input framework is based around the SequenceBuilder
-interface (this is actually a sub-interface of SeqIOListener, but for
-these purposes you will usually be using SequenceBuilder). The role of a
-SequenceBuilder is to accumulate information discovered while parsing a
-sequence file, and ultimately to construct a Sequence object.
+The sequence input framework is based around the `SequenceBuilder`
+interface (this is actually a sub-interface of `SeqIOListener`, but for
+these purposes you will usually be using the `SequenceBuilder` class).
+The role of a sequence builder is to accumulate information discovered
+while parsing a sequence file, and ultimately to construct a `Sequence`
+object.
 
-There are two kinds of SequenceBuilder implementation.
+There are two kinds of `SequenceBuilder` implementations:
 
-Builders: These actually contruct new Sequence objects. Generally, there will just be one Builder implementation for each Sequence implementation. The basic BioJava library provides one Builder implementation, SimpleSequenceBuilder, which constructs simple in-memory representations for any kind of sequence data.  
+Builders: These actually contruct new `Sequence` objects. Generally, there will just be one Builder implementation for each `Sequence` implementation. The basic BioJava library provides one Builder implementation, `SimpleSequenceBuilder`, which constructs simple in-memory representations for any kind of sequence data.  
 
 <!-- -->
 
-Filters: These don't construct Sequence objects themselves, but are chained to another SequenceBuilder. When they are notified of data, they perform some processing, then pass the information on to the next SequenceBuilder in the chain.  
+Filters: These don't construct `Sequence` objects themselves, but are chained to another sequence builder. When they are notified of data, they perform some processing, then pass the information on to the next sequence builder in the chain.  
 
-Whenever a SequenceBuilder is required, you can either simply provide a
-\`Builder' implementation, or you can create a chain consisting of one
-or more \`Filters', leading ultimately to a \`Builder'. A
-SequenceBuilder object should only be used once. If multiple sequences
-are being read from a stream, a new SequenceBuilder (or chain) should be
-constructed for each one. For convenience, we provide a
-SequenceBuilderFactory interface, whose sole purpose is to encapsulate
-the construction of SequenceBuilders. Each SequenceBuilder
+Whenever a sequence builder is required, you can either simply provide a
+'Builder' implementation, or you can create a chain consisting of one or
+more 'Filters', leading ultimately to a 'Builder'.
+
+A `SequenceBuilder` object should only be used once. If multiple
+sequences are being read from a stream, a new `SequenceBuilder` (or
+chain) should be constructed for each one. For convenience, we provide a
+`SequenceBuilderFactory` interface, whose sole purpose is to encapsulate
+the construction of `SequenceBuilder` objects. Each `SequenceBuilder`
 implementation should provide a suitable factory implementation as well.
 
-For \`Builder' implementations, it is usually possible to provide a
-\`singleton' factory object. For SimpleSequenceBuilder this is the
-static field SimpleSequenceBuilder.FACTORY. For filters, the factory
-must be parameterized with another SequenceBuilderFactory so that a
+For 'Builder' implementations, it is usually possible to provide a
+'singleton' factory object. For `SimpleSequenceBuilder` this is the
+static field `SimpleSequenceBuilder.FACTORY`. For filters, the factory
+must be parameterized with another `SequenceBuilderFactory` so that a
 complete chain can be constructed. For instance:
 
     SequenceBuilderFactory mySBF = 
         new EmblProcessor.Factory(SimpleSequenceBuilder.FACTORY);
 
-Authors of new SequenceBuilder implementations are encouraged to
-consider this naming style when implementing SequenceBuilderFactory.
+Authors of new `SequenceBuilder` implementations are encouraged to
+consider this naming style when implementing `SequenceBuilderFactory`.
 
 Putting it together: StreamReader
 ---------------------------------
