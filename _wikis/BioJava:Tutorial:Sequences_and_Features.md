@@ -18,29 +18,30 @@ used here, please consult the .
 A tour of a Sequence
 --------------------
 
-Sequence is a sub-interface of SymbolList. Thus, all the standard
-methods for accessing sequence data in a SymbolList can equally be
-applied to a Sequence, and Sequences can be passed to any analysis
-methods which normally expect to receive a SymbolList. The Sequence
-interface adds two types of additional data to a SymbolList
+`Sequence` is a sub-interface of `SymbolList`. Thus, all the standard
+methods for accessing sequence data in a symbol list can equally be
+applied to a sequence, and sequences can be passed to any analysis
+methods which normally expect to receive a symbol list. The `Sequence`
+interface adds two types of additional data to a symbol list:
 
-Global annotations, such as names, database identifiers, and literature
-references Location-specific annotations (features)
+-   Global annotations, such as names, database identifiers, and
+    literature references
+-   Location-specific annotations (so called *features*)
 
 Two pieces of global annotation information are considered to be
 sufficiently important that they have dedicated accessor methods. The
-name of the Sequence is a simple string description of the Sequence:
-normally the name or accession number of the Sequence in the database
-from which it is retrieved. The getURN method, on the other hand, should
-return a more structured identifier for the sequence, represented as a
-Uniform Resource Identifier (URI) e.g.:
+`name` of the sequence is a simple string description of the sequence:
+normally the name or accession number of the sequence in the database
+from which it is retrieved. The `getURN` method, on the other hand,
+should return a more structured identifier for the sequence, represented
+as a *Uniform Resource Identifier* (URI) e.g.:
 
 -   `urn:sequence/embl:AL121903`
 -   `file:///home/thomas/genome.fasta|rpoN`
--   `http://adzel.casseiopeia.org/seqs/myseqs.fasta|seq0001`
+-   `<nowiki>http://adzel.casseiopeia.org/seqs/myseqs.fasta|seq0001</nowiki>`
 -   `acedb://humace.sanger.ac.uk/DNA/AL121903`
 
-URNs are a special class of URIs which represent global names for \`well
+URNs are a special class of URIs which represent global names for 'well
 known' resources. Note that, despite the method name, it may not be
 appropriate to give an actual URN for sequences. However, for sequences
 from databases such as EMBL, where many sites have local installations,
