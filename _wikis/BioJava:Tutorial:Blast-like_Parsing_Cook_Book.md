@@ -94,18 +94,18 @@ output from multiple flavours of NCBI Blast, WU-Blast, and HMMER.
 
 #### Step A - Create an application that sets up the parser and does the parsing
 
-The full source is in eventbasedparsing.TutorialEx1. Because there is no
-difference between what you do here, and what you would do to parse XML
-files there isn't much to do. First create a SAX Parser that deals with
-Blast-like output.
+The full source is in `eventbasedparsing.TutorialEx1`. Because there is
+no difference between what you do here, and what you would do to parse
+XML files there isn't much to do. First create a SAX Parser that deals
+with Blast-like output.
 
     XMLReader oParser = (XMLReader) new BlastLikeSAXParser(); 
 
 Next choose the Content Handler. In this case, we will be using the
-class TutorialEx1Handler, which takes a reference to an ArrayList in the
-constructor. When the SAX Parser parses the file, the ContentHandler
-will populate the ArrayList with Hit Ids from the summary section of the
-output.
+class `TutorialEx1Handler`, which takes a reference to an `ArrayList` in
+the constructor. When the SAX Parser parses the file, the Content
+Handler will populate the `ArrayList` with Hit Ids from the summary
+section of the output.
 
     ContentHandler oHandler =
        (ContentHandler) new TutorialEx1Handler(oDatabaseIdList);  
@@ -116,13 +116,13 @@ SAX Parser.
     oParser.setContentHandler(oHandler); 
 
 For the purposes of the tutorial applications, we will simply be reading
-output from files on disk. Create a FileInputStream, and parse it by
+output from files on disk. Create a `FileInputStream`, and parse it by
 calling the parse method on the SAX Parser.
 
     oInputFileStream = new FileInputStream(oInput);
     oParser.parse(new InputSource(oInputFileStream));
 
-Finally, having populated the ArrayList with HitIds, we simply print
+Finally, having populated the `ArrayList` with HitIds, we simply print
 them out.
 
     System.out.println("Results of parsing");
