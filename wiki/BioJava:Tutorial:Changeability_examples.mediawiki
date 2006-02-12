@@ -289,7 +289,7 @@ This is the end of init. It has set up the state of the object, ready for it to 
 
 == Starting the game off ==
 
-The last bit of the applet is the command to set the sampler thread into motion. This realy fits into the applet's start method naturaly. 
+The last bit of the applet is the command to set the sampler thread into motion. This realy fits into the applet's <code>start</code> method naturaly. 
 
 <pre>  public void start() {
     super.start();
@@ -298,7 +298,7 @@ The last bit of the applet is the command to set the sampler thread into motion.
   }
 }</pre>
 
-And that is the end of the Roulet class. 
+And that is the end of the <code>Roulet</code> class.
 
 == The pie-chart rendering component ==
 
