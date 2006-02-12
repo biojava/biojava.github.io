@@ -71,12 +71,12 @@ for (int i = 0; i < oDatabaseIdList.size();i++) {
 
 ==== Step B - Create the logic for parsing ====
 
-This is simply of matter of writing an XML Content Handler. The full source is in eventbasedparsing.TutorialEx1Handler. The logic here is trivial, we simply wish to identify Hit Ids that are contained within in the Summary sections of the output data, and add each Hit Id to the ArrayList.
+This is simply of matter of writing an XML Content Handler. The full source is in <code>eventbasedparsing.TutorialEx1Handler</code>. The logic here is trivial, we simply wish to identify Hit Ids that are contained within in the Summary sections of the output data, and add each Hit Id to the ArrayList.
 
 <pre>if ( (oNameStack.peek().toString().equals("HitId")) &&
      (this.findInStack("Summary") != -1) ) {
    oDatabaseIdList.add(poAtts.getValue("id"));
-}</pre> 
+}</pre>
 
 ==== Running the application ====
 
