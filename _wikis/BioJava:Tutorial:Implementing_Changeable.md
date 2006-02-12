@@ -6,18 +6,18 @@ tags:
 
 **By [Matthew Pocock](mailto:mrp@sanger.ac.uk)**
 
-We are going to implement a simple ChangeEvent source that stores a
-String name property and can inform other objects if this name changes.
-By the end of this tutorial you should be comefortable with the general
-issues surrounding implementing event sources and for ensuring that
-resources are allocated as needed.
+We are going to implement a simple `ChangeEvent` source that stores a
+string `name` property and can inform other objects if this name
+changes. By the end of this tutorial you should be comefortable with the
+general issues surrounding implementing event sources and for ensuring
+that resources are allocated as needed.
 
 The Nameable interface
 ----------------------
 
 By convention, BioJava always defines changes in an interface. This
 allows a range of implementations to provide a unified API to a change
-without mandaiting them to shair any code. We will define the Nameable
+without mandaiting them to shair any code. We will define the `Nameable`
 interface.
 
     package demos.Changeable;
@@ -26,12 +26,12 @@ interface.
 
     public interface Nameable extends Changeable {
 
-The first thing we must do is define the ChangeType that indicates that
-the name has changed. By convention, it is a public static final field
-of the interface and is named in upper-case, with word boundaries
+The first thing we must do is define the `ChangeType` that indicates
+that the name has changed. By convention, it is a public static final
+field of the interface and is named in upper-case, with word boundaries
 indicated by underscores. The constructor needs a description, and also
 the name of the current class and the name of the field. This is so that
-during serialization, the ChangeType instance will resolve correctly
+during serialization, the `ChangeType` instance will resolve correctly
 both over time and between VMs.
 
       /**
@@ -62,14 +62,14 @@ Now we have the definition of the accessor methods.
       throws ChangeVetoException;
     }
 
-and that's it for the Nameable interface.
+and that's it for the `Nameable` interface.
 
 The simplest implementation - extend AbstractChangeable
 -------------------------------------------------------
 
-The simplest way to implement the Nameable interface is to inherit from
-AbstractChangeable. This is the aproach we will take here. Firstly we
-will define the class and add a couple of constructors.
+The simplest way to implement the `Nameable` interface is to inherit
+from `AbstractChangeable`. This is the aproach we will take here.
+Firstly we will define the class and add a couple of constructors.
 
     package demos.Changeable;
 
@@ -94,9 +94,9 @@ will define the class and add a couple of constructors.
 
 The process of informing listeners requires some bagage to be present -
 in particular, the list of listeners. This would impose overhead on all
-instances of Changeable, regardless of whether listeners exist or not.
+instances of `Changeable`, regardless of whether listeners exist or not.
 The solution to this is to lazily instantiate the supporting objects.
-Fortunately, AbstractChangeable handles all of this for you. The two
+Fortunately, `AbstractChangeable` handles all of this for you. The two
 methods you need to use are hasListeners(), which will return true if
 there are any listeners at all and false otherwise. If there are no
 listeners, then the name can be set directly.
