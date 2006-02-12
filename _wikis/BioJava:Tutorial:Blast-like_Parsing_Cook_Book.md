@@ -134,7 +134,7 @@ them out.
 #### Step B - Create the logic for parsing
 
 This is simply of matter of writing an XML Content Handler. The full
-source is in eventbasedparsing.TutorialEx1Handler. The logic here is
+source is in `eventbasedparsing.TutorialEx1Handler`. The logic here is
 trivial, we simply wish to identify Hit Ids that are contained within in
 the Summary sections of the output data, and add each Hit Id to the
 ArrayList.
