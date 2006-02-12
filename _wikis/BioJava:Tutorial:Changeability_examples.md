@@ -360,7 +360,7 @@ The pie-chart rendering component
 ---------------------------------
 
 To render a distribution as a pie-chart, we need a custom sub-class of
-JComponent. It will have to respond to changes in the distribution and
+`JComponent`. It will have to respond to changes in the distribution and
 consistently paint itself on the screen. Here is the state it will need.
 
     class Pie extends JComponent {
@@ -368,18 +368,19 @@ consistently paint itself on the screen. Here is the state it will need.
       private AlphabetIndex indexer;
       private ChangeListener repainter;
 
-dist is the distribution that this pie-chart will render. indexer will
-be used to consistently order the states, and repainter is a
-ChangeListener instance that will repaint the pie whenever dist changes.
+`dist` is the distribution that this pie-chart will render. `indexer`
+will be used to consistently order the states, and `repainter` is a
+`ChangeListener` instance that will repaint the pie whenever `dist`
+changes.
 
 The first constructor just creates an alphabet indexer and chains onto
-the seccond one.
+the second one.
 
       public Pie(Distribution dist) {
         this(dist, AlphabetManager.getAlphabetIndex((FiniteAlphabet) dist.getAlphabet()));
       }
 
-The second constructor builds a couple of ChangeListener instances
+The second constructor builds a couple of `ChangeListener` instances
 
       public Pie(Distribution dist, AlphabetIndex indexer) {
         this.dist = dist;
@@ -394,8 +395,8 @@ The second constructor builds a couple of ChangeListener instances
         dist.addChangeListener(repainter, Distribution.WEIGHTS);
       }
 
-We must provide a way to render the pie-chart. JComponent likes us to
-override the paintComponent method, so this is what we shall do. The
+We must provide a way to render the pie-chart. `JComponent` likes us to
+override the `paintComponent` method, so this is what we shall do. The
 first job for the paint method is to work out some basic geometric
 points around which to render.
 
