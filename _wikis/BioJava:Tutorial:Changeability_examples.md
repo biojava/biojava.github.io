@@ -605,18 +605,18 @@ What you should see
 
 If you type this in and compile, or run the applet
 [directly](http://www.biojava.org/tutorials/Roulet.html), you should see
-a gui with a start, stop and clear button. If you click on start, the
-applet will start sampling the table every 1/2 seccond. You will notice
-that the two pie-charts reflect these roles by repainting. If you click
-stop, the sampling thread will stop getting new roles. If you click
-start again, then more counts will be collected. If you click clear,
-then the sampling will stop. Pressing start again will start the process
-off from the initial point of just one count collected.
+a GUI with a *start*, *stop* and *clear* button. If you click on
+*start*, the applet will start sampling the table every 1/2 second. You
+will notice that the two pie-charts reflect these roles by repainting.
+If you click *stop*, the sampling thread will stop getting new roles. If
+you click start again, then more counts will be collected. If you click
+*clear*, then the sampling will stop. Pressing start again will start
+the process off from the initial point of just one count collected.
 
 By the end of this, you should feel comefortable with listening for
-events and writing custom ChangeListener implementations. You should be
-able to prevent a property from altering by adding an ALWAYS\_VETO
+events and writing custom `ChangeListener` implementations. You should
+be able to prevent a property from altering by adding an `ALWAYS_VETO`
 listener. You should have an understanding of how when one object
 changes, it may cause the state of another object to change, and off how
-to write a ChangeAdapter instance that will wire this together. I hope
+to write a `ChangeAdapter` instance that will wire this together. I hope
 it was fun.
