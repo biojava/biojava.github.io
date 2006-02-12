@@ -8,9 +8,8 @@ tags:
 
 This chapter covers the BioJava support for handling biological sequence
 data available in the form of files. It covers API provided by the
-package org.biojava.bio.seq.io. For a complete overview of the API
-provided in this package, consult the [JavaDoc
-documentation](http://www.biojava.org/docs/api).
+package `org.biojava.bio.seq.io`. For a complete overview of the API
+provided in this package, consult the .
 
 **NOTE:** this chapter has been updated for BioJava release 1.2.
 
