@@ -80,38 +80,39 @@ objects may be introduced as BioJava develops.
 Features and FeatureHolders
 ---------------------------
 
-A Feature represents a region of a sequence with some defined properties
+A feature represents a region of a sequence with some defined properties
 attached. Typically, features might represent structures such as genes
 and repeat elements on chromosomes, or alpha helices in proteins. As a
-Java interface, Feature has the following basic properties:
+Java interface, `Feature` has the following basic properties:
 
-A location within the sequence, represented by a Location object. This
-has a defined start and end (equal in the case of point locations), and
-may or may not be contiguous. A type (for instance, \`\`gene'' or
-\`\`helix''). A source (often the name of the program which discovered
-the feature. An Annotation object, which can contain any other data. In
-addition, all Features have a place in a \`tree' of Features, attached
-to a Sequence. Features cannot be created independently of a Sequence.
+-   A location within the sequence, represented by a `Location` object.
+    This has a defined start and end (equal in the case of point
+    locations), and may or may not be contiguous.
+-   A type (for instance, "gene" or "helix").
+-   A source (often the name of the program which discovered the
+    feature.
+-   An `Annotation` object, which can contain any other data.
+
+In addition, all features have a place in a 'tree' of features, attached
+to a sequence. Features cannot be created independently of a sequence.
 
 If a large class of features exists which have important properties over
-and above those represented in the Feature interface, a sub-interface of
-Feature may be defined. Currently, there is only one such sub-interface
-in the BioJava core: StrandedFeature. This is used for features in
-duplex DNA which have a defined directionality. For instance, genes
-would normally be represented with StrandedFeatures, while some kinds of
-regulatory region might be plain Features.
+and above those represented in the `Feature` interface, a sub-interface
+of `Feature` may be defined. Currently, there is only one such
+sub-interface in the BioJava core: `StrandedFeature`. This is used for
+features in duplex DNA which have a defined directionality. For
+instance, genes would normally be represented with `StrandedFeature`,
+while some kinds of regulatory region might be plain features.
 
-Sets of Features are stored in objects implementing the FeatureHolder
-interface. Sequence is a sub-interface of FeatureHolder. Feature itself
-also extends FeatureHolder, giving the possibility of representing
-\`nested' features. For instance, a Feature representing a large genetic
-regulatory region might contain sub-features annotating individual
-transcription factor binding sites. The recursive method below will
-print a simple text representation of a tree of features:
+Sets of features are stored in objects implementing the `FeatureHolder`
+interface. `Sequence` is a sub-interface of `FeatureHolder`. `Feature`
+itself also extends `FeatureHolder`, giving the possibility of
+representing 'nested' features. For instance, a feature representing a
+large genetic regulatory region might contain sub-features annotating
+individual transcription factor binding sites. The recursive method
+below will print a simple text representation of a tree of features:
 
-    public void printFeatures(FeatureHolder fh, 
-                              PrintWriter pw,
-                              String prefix)
+    public void printFeatures(FeatureHolder fh, PrintWriter pw, String prefix)
     {
         for (Iterator i = fh.features(); i.hasNext(); ) {
             Feature f = (Feature) i.next();
@@ -124,12 +125,12 @@ print a simple text representation of a tree of features:
         }
     }
 
-all Feature implementations include two methods which indicate how it
-fits into a feature tree. getParent returns the FeatureHolder (Sequence
-or Feature) which is the feature's immediate parent, while getSequence
-returns the Sequence object which is the root of the tree. Feature
-objects are always associated with a specific sequence, and always have
-exactly one parent FeatureHolder.
+All `Feature` implementations include two methods which indicate how it
+fits into a feature tree. `getParent` returns the `FeatureHolder` object
+(`Sequence` or `Feature`) which is the feature's immediate parent, while
+`getSequence` returns the `Sequence` object which is the root of the
+tree. `Feature` objects are always associated with a specific sequence,
+and always have exactly one parent `FeatureHolder`.
 
 Creating new features
 ---------------------
