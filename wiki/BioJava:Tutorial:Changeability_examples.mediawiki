@@ -302,22 +302,22 @@ And that is the end of the <code>Roulet</code> class.
 
 == The pie-chart rendering component ==
 
-To render a distribution as a pie-chart, we need a custom sub-class of JComponent. It will have to respond to changes in the distribution and consistently paint itself on the screen. Here is the state it will need. 
+To render a distribution as a pie-chart, we need a custom sub-class of <code>JComponent</code>. It will have to respond to changes in the distribution and consistently paint itself on the screen. Here is the state it will need. 
 
 <pre>class Pie extends JComponent {
   private Distribution dist;
   private AlphabetIndex indexer;
   private ChangeListener repainter;</pre>
 
-dist is the distribution that this pie-chart will render. indexer will be used to consistently order the states, and repainter is a ChangeListener instance that will repaint the pie whenever dist changes. 
+<code>dist</code> is the distribution that this pie-chart will render. <code>indexer</code> will be used to consistently order the states, and <code>repainter</code> is a <code>ChangeListener</code> instance that will repaint the pie whenever <code>dist</code> changes. 
 
-The first constructor just creates an alphabet indexer and chains onto the seccond one. 
+The first constructor just creates an alphabet indexer and chains onto the second one. 
 
 <pre>  public Pie(Distribution dist) {
     this(dist, AlphabetManager.getAlphabetIndex((FiniteAlphabet) dist.getAlphabet()));
   }</pre>
 
-The second constructor builds a couple of ChangeListener instances 
+The second constructor builds a couple of <code>ChangeListener</code> instances 
 
 <pre>  public Pie(Distribution dist, AlphabetIndex indexer) {
     this.dist = dist;
@@ -332,7 +332,7 @@ The second constructor builds a couple of ChangeListener instances
     dist.addChangeListener(repainter, Distribution.WEIGHTS);
   }</pre>
 
-We must provide a way to render the pie-chart. JComponent likes us to override the paintComponent method, so this is what we shall do. The first job for the paint method is to work out some basic geometric points around which to render. 
+We must provide a way to render the pie-chart. <code>JComponent</code> likes us to override the <code>paintComponent</code> method, so this is what we shall do. The first job for the paint method is to work out some basic geometric points around which to render. 
 
 <pre>  protected void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -406,7 +406,7 @@ The last task is to render on some labels so that we know what each slice repres
   }
 }</pre>
 
-That is the end of the pie-chart class. 
+That is the end of the pie-chart class.
 
 == RedBlackDist as a view onto the rollDist distribution == 
 
