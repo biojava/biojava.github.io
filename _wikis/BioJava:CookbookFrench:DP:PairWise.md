@@ -142,11 +142,11 @@ sont presque sans fin ;-)
     public class PairAlign {
         
       /**
-       * Method two run the program. You should provide two string arguments, one
-       * is the name of the file containing query sequences. The other is the name
-       * of the file containing the sequences to be searched against. In a real program
-       * you should also provide the probability of a match and the probability of
-       * a gap extension. These are hard coded in this example.
+       * La methode deux execute le programme. Il vous faut donne deux chaines de caracteres en arguments:
+       * une est le nom du fichier contenant les sequences inconnues, l'autre, le fichier contenant les 
+       * sequences connues. Dans un programme reel, vous devriez probablement ajouter la probabilite d'un match
+       * ainsi que la probabilite pour une extension d'insertion. Dans l'exemple, ces valeurs sont écrites
+       * a meme le programme.
        */  
       public static void main(String [] args) {
         try {
@@ -162,26 +162,26 @@ sont presque sans fin ;-)
           DPFactory fact = new DPFactory.DefaultFactory(cfFactM);
           
           /*
-           * Generate a model with a pMatch of 0.7 and a pGapExtension of 0.8.
-           * From these two numbers we can derive that pMatch -> pGap 
-           * transition = 0.3 (approximately), pGap -> pMatch = 0.2 (approximately)
+           * Creer un modele avec une valeur pMatch=0.7 et pGapExtension=0.8.
+           * de ces deux valeurs, nous pouvons calculer que pMatch -> pGap 
+           * transition = 0.3 (approx.), pGap -> pMatch = 0.2 (approx.)
            * etc.
            */
           MarkovModel model = generateAligner(
                   alpha, 0.7, 0.6);
           
-          // create the DP that will align sequences to the model
+          // creer l'objet DP alignant les sequences au modele
           DP aligner = fact.createDP(model);
           
-          //read the query sequences.
+          //lire les sequences inconnues.
           SequenceIterator sourceI = SeqIOTools.readFastaDNA(
                   new BufferedReader(new FileReader(sourceSeqFile)));
           
-          //for each query sequence...
+          //pour chaque inconnue...
           while(sourceI.hasNext()) {
             Sequence sourceSeq = sourceI.nextSequence();
             
-            // ...compare it to every target sequence
+            // ...comparez la a chaque sequence connue
             SequenceIterator targetI = SeqIOTools.readFastaDNA(
                   new BufferedReader(new FileReader(targetSeqFile)));
             
@@ -194,20 +194,20 @@ sont presque sans fin ;-)
                 "Aligning " + sourceSeq.getName() + ":" + targetSeq.getName()
               );
 
-              //find the most probable path through the model for the two sequences
+              //trouver le chemin le plus probable a travers le modele pour ces deux sequences
               StatePath result = aligner.viterbi(seqs, ScoreType.PROBABILITY);
               //calculate the log odds of the alignment
               System.out.println("Log odds Viterbi probability:\t" + result.getScore());
               System.out.println("\t" + result.getScore());
               
               
-              //output the alignment
+              //ecrire l'alignement
               SymbolList alignment = result.symbolListForLabel(StatePath.SEQUENCE);
               System.out.println(alignment.getAlphabet());
               SymbolTokenization tok = alignment.getAlphabet().getTokenization("default");
               System.out.println(tok.tokenizeSymbolList(alignment));
               
-              //output the state path
+              //ecrire le chemin des etats
               alignment = result.symbolListForLabel(StatePath.STATES);
               System.out.println(alignment.getAlphabet());
               tok = alignment.getAlphabet().getTokenization("default");
@@ -222,14 +222,14 @@ sont presque sans fin ;-)
       }
       
       /**
-       * Generates the Markov model that will be used for the alignment. <p>The
-       * pMatch is the probability of a match (technically the prob of a match 
-       * extending itself). If you set this to a high number gaps will be infrequent.
-       * <p>
-       * pExtendGap is the gap extension probability. The is not the penalty for
-       * gap opening as that is dependant on the value of pMatch, rather it is the
-       * probability of extending a gap which is similar to the affine gap penaly
-       * used in Smith-Waterman and other algorithms.
+       * Genere le modele de MArkov qui sera utilise pour l'alignement. la valeur
+       * pMatch est la probabilite d'une identite (techniquement, la probabilite qu'un
+       * match reussisse a s'allonger). Si pMatch est eleve, les insertions seront peu courantes.
+       * 
+       * pExtendGap est la probabilite de l'extension d'une insertion. Ceci n'est pas la penalite
+       * pour la creation de l'insertion, qui est plutot sous la dependance de pMatch. C'est plutot
+       * laprobabilité qu'une insertion puisse s'allonger. Ceci est similaire a la penalite d'affinage
+       * des insertions des algorithmes tels que Smith-Waterman.
        */
       private static MarkovModel generateAligner(
         FiniteAlphabet alpha, double pMatch, double pExtendGap) throws Exception {
@@ -242,16 +242,16 @@ sont presque sans fin ;-)
           
         MarkovModel model = new SimpleMarkovModel(2, dna2, "pair-wise aligner");
         
-        //the background distribution, for DNA it represents random, but for protein
-        //or highly biased background composition it should be calculated.
+        //la distribution de base. Pour l'ADN, elle est aleatoire mais pour les proteines
+        //ou une composition tres biaisee, elle devrais etre calcule.
         Distribution nullModel = new UniformDistribution(dna);
-        //the emission distribution that emits gaps for the insert states
+        //la distribution d'emission pour les gaps des etats d'insertion
         Distribution gap = new GapDistribution(dna);
-        //the emission distribution that emits pairs of matched (or mismatched) symbols
+        //la distribution d'emission pour les paires de symboles identiques (ou non)
         Distribution matchDist = generateMatchDist((FiniteAlphabet) dna2);
-        //the distribution that emits nucleotide/gap pairs
+        //la distribution emettant les paires nucleotide/gap
         Distribution insert1Dist = new PairDistribution(nullModel, gap);
-        //the distribution that emits gap/nucleotide pairs
+        //la distribution emettant les paires gap/nucleotide
         Distribution insert2Dist = new PairDistribution(gap, nullModel);
         
         //-----create the states-----//
