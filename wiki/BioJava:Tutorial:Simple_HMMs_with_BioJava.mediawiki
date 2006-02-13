@@ -1,6 +1,6 @@
 '''by David Huen'''
 
-We will now go through the source of one of the examples in the demos/dp directory: Dice.java (contributed by Samiul Hasan). 
+We will now go through the source of one of the examples in the <code>demos/dp<code> directory: <code>Dice.java</code> (contributed by Samiul Hasan). 
 
 
 == Introduction ==
