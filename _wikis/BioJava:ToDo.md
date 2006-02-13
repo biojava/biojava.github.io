@@ -23,10 +23,8 @@ Whats in progress?
 
 -   Choosing a logo!
 -   Tutorial - laborious but straightforward, some parts are in need of
-    updating and/or are no longer relevant (I can't update it, because
-    I've not enough experiences with the classes, but I'll take on the
-    formatting --[Martin](User:Martin "wikilink") 15:52, 7 February 2006
-    (EST))
+    updating and/or are no longer relevant (Formatting is done --
+    [Martin](User:Martin "wikilink") 21:02, 12 February 2006 (EST))
 -   Cookbook (BioJava in Anger French version: working on
     it - --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
     (EST))
