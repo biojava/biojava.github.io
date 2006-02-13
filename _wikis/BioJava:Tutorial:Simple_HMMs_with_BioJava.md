@@ -16,6 +16,9 @@ The program implements the "occasionally dishonest casino" example used
 in the book "Biological Sequence Analysis" by R. Durbin, S. Eddy, A.
 Krogh, G. Mitchison.
 
+![The resultant HMM looks like
+this.](HMM.png "The resultant HMM looks like this.")
+
 Basically, it conceives a casino with two dice, one fair and one loaded.
 The fair die lands on any of its sides equal probability while the
 loaded die yields "6" half the time, all the other sides being of equal
@@ -27,9 +30,6 @@ periodically. When on the fair die, the probability that the next throw
 is with the fair die too is 0.95. Similarly, when on the loaded die, the
 probability of continuing with it is 0.90. These probabilities yield the
 transition distributions of the states.
-
-![The resultant HMM looks like
-this.](HMM.png "The resultant HMM looks like this.")
 
 The HMM as modelled in the code is slightly modified from the above
 description with the inclusion of a MagicalState. This state is used to
