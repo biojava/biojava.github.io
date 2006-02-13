@@ -17,7 +17,7 @@ The HMM as modelled in the code is slightly modified from the above description 
 
 == Code ==
 
-The core of the program is the createCasino() method. This creates an instance of the MarkovModel class that implements the model. 
+The core of the program is the <code>createCasino()</code> method. This creates an instance of the <code>MarkovModel</code> class that implements the model. 
 
 <pre>  public static MarkovModel createCasino() {
     Symbol[] rolls=new Symbol[6];
