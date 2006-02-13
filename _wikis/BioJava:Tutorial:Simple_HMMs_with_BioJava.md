@@ -7,8 +7,7 @@ tags:
 **by David Huen**
 
 We will now go through the source of one of the examples in the
-`demos/dp<code> directory: <code>Dice.java` (contributed by Samiul
-Hasan).
+`demos/dp` directory: `Dice.java` (contributed by Samiul Hasan).
 
 Introduction
 ------------
