@@ -123,7 +123,7 @@ Having completed constructing the MarkovModel, all that remains is to return it 
 
 == Using the MarkovModel ==
 
-Having created the MarkovModel, we create the corresponding dynamic programming object:- 
+Having created the <code>MarkovModel</code>, we create the corresponding dynamic programming object:- 
 
 <pre>      DP dp=DPFactory.DEFAULT.createDP(casino);</pre>
 
@@ -133,13 +133,13 @@ Now, at last, we have something we can use! To generate a sequence of dice throw
 
       SymbolList roll_sequence = obs_rolls.symbolListForLabel(StatePath.SEQUENCE);</pre>
 
-The generate() method generates a path through the model that emits 300 symbols and we turn that path into a SymbolList with the second line. 
+The <code>generate()</code> method generates a path through the model that emits 300 symbols and we turn that path into a <code>SymbolList</code> with the second line. 
 
-At this point, it will be worthwhile digressing briefly on the StatePath object. This object embodies an Alignment of the sequences emitted by the DP object. In a multihead object, multiple aligned sequences will be emitted. In our case, only a single sequence is emitted and that is accessed with the label StatePath.SEQUENCE. That sequence turns out to a run of dice throws from our occasionally dishonest casino. 
+At this point, it will be worthwhile digressing briefly on the <code>StatePath</code> object. This object embodies an <code>Alignment</code> of the sequences emitted by the <code>DP</code> object. In a multihead object, multiple aligned sequences will be emitted. In our case, only a single sequence is emitted and that is accessed with the label <code>StatePath.SEQUENCE</code>. That sequence turns out to a run of dice throws from our occasionally dishonest casino. 
 
-Next, we want to test one of the DP algorithms in the DP object. We want to process the roll_sequence SymbolList we have just generated and use the Viterbi method to predict which die each of the throws might have arisen from. 
+Next, we want to test one of the DP algorithms in the <code>DP</code> object. We want to process the <code>roll_sequence SymbolList</code> we have just generated and use the Viterbi method to predict which die each of the throws might have arisen from. 
 
-To do this, we create an array of SymbolLists with only roll_sequence in it - ours is a single-head HMM - and apply the Viterbi algorithm using the the model probabilities (ScoreType.PROBABILITY) for the computation (you could have also applied the null-model or log-odds probabilities here). This will yield the state path that has most support from the model and that state path is the model's prediction of which die a particular result came from. 
+To do this, we create an array of <code>SymbolLists</code> with only <code>roll_sequence</code> in it - ours is a single-head HMM - and apply the Viterbi algorithm using the model probabilities (<code>ScoreType.PROBABILITY</code>) for the computation (you could have also applied the null-model or log-odds probabilities here). This will yield the state path that has most support from the model and that state path is the model's prediction of which die a particular result came from. 
 
 <pre>      SymbolList[] res_array = {roll_sequence};
       StatePath v = dp.viterbi(res_array, ScoreType.PROBABILITY);</pre>
@@ -151,11 +151,10 @@ All that remains is to print out the generated sequence and the actual state pat
         for(int j=i*60; j</pre>
 
 The first two print statements print the generated sequence and the actual
-state path by accessing the obs_rolls StatePath with the
-StatePath.SEQUENCE and StatePath.STATES respectively.  The predicted
+state path by accessing the <code>obs_rolls StatePath<code> with the
+<code>StatePath.SEQUENCE</code> and <code>StatePath.STATES</code> respectively.  The predicted
 state path comes from the third print block which accesses the
-v StatePath.
-
+<code>v</code> StatePath.
 
 The output then looks like this:-
 
@@ -179,10 +178,10 @@ The top line is the sequence emitted by our HMM when we
 made it generate 300 throws. The next is the state from
 which the throw came (f-fair l-loaded, these are the
 first letters of the labels "fair" and "loaded" we
-used when creating the SimpleEmissionState
+used when creating the <code>SimpleEmissionState</code>
 objects that represent the dice).  The last is similar
-but this time from the StatePath v
+but this time from the StatePath <code>v</code>
 that is the result of the Viterbi algorithm.  The performance
-is pretty on on this occasion but it can vary widely!
+is pretty on this occasion but it can vary widely!
 
 {{Tutorial:Footer}}
