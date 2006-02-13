@@ -43,8 +43,8 @@ with a probability of 0.01.
 Code
 ----
 
-The core of the program is the createCasino() method. This creates an
-instance of the MarkovModel class that implements the model.
+The core of the program is the `createCasino()` method. This creates an
+instance of the `MarkovModel` class that implements the model.
 
       public static MarkovModel createCasino() {
         Symbol[] rolls=new Symbol[6];
