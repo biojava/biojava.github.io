@@ -46,8 +46,9 @@ How about simplified
 Presentations
 -------------
 
-This is a powerpoint presentation on the BioJava core API that I have
-given a few times.
+This is a powerpoint presentation on the [BioJava core API (version
+1.4)](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt) that I
+have given a few times.
 
 Publications
 ------------
