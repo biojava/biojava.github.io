@@ -25,7 +25,7 @@ yourself an entry here (this is Wiki after all).
 -   [Richard Holland](User:Rholland "wikilink")
 -   [Martin Szugat](User:Martin "wikilink")
 -   [Keith James](Keith James "wikilink")
--   [Sylvan Foisy](Sylvan Foisy "wikilink")
+-   [Sylvan Foisy](Sylvain Foisy "wikilink")
 
 Core Developers
 ---------------
