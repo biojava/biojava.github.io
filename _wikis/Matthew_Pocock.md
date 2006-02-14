@@ -13,3 +13,5 @@ software capable of representing genomic data efficiently. Matthew is
 now at the University of Newcastle Upon Tyne, investigating ways that
 existing scalable solutions, such as Biojava, can be leveraged through
 web service and grid technologies for life sciences.
+
+<Category:People>
