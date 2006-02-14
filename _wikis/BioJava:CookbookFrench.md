@@ -213,8 +213,8 @@ Comment faire pour ...?
     en anglais seulement. Contribution de D. Huen)
 -   Comment créer une base de données avec BioSQL et Oracle (N. B.: en
     anglais seulement. Contribution de R. Holland)
--   [Comment ajouter, voir et ôter des objets Séquences d'une base de
-    données BioSQL?](BioJava:CookbookFrench:BioSQL:Manage "wikilink")
+-   [Comment ajouter, voir et éliminer des objets Séquences d'une base
+    de données BioSQL?](BioJava:CookbookFrench:BioSQL:Manage "wikilink")
 
 ### Algorithmes génétiques
 
