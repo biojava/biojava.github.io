@@ -1,5 +1,7 @@
 ---
 title: BioJava:Community Portal
+tags:
+ - People
 ---
 
 BioJava is an [open source](wp:open_source "wikilink") project developed
