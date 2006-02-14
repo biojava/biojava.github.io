@@ -13,5 +13,4 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[User:Martin|Martin Szugat]]
 * [[Keith James|Keith James]]
 * [[Sylvain Foisy|Sylvan Foisy]]
-
-[[Andreas Dräger|Andreas Dräger]]
+* [[Andreas Dräger|Andreas Dräger]]
