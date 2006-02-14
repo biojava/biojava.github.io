@@ -15,4 +15,4 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[Sylvain Foisy|Sylvan Foisy]]
 * [[Andreas Dräger|Andreas Dräger]]
 * [[Andreas Prlic|Andreas Prlic]]
-* [[Dickson S. Guedes|Dickson Guedes]]
+* [[Dickson Guedes|Dickson S. Guedes]]
