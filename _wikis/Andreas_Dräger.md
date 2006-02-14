@@ -5,7 +5,8 @@ tags:
 ---
 
 Andreas Dräger is a PhD-student at the Cener for Bioinformatics (ZBIT)
-in Tübingen. During his master thesis he improved the storage of
-taxonomic information in BioSQL databases and implemented sequence
-alignment algorithms such as the Needleman-Wunsch- and the
-Smith-Waterman-Algorithm for global or local alignment, respectively.
+in Tübingen. During his master thesis at the Martin-Luther-University
+Halle-Wittenberg he improved the storage of taxonomic information in
+BioSQL databases and implemented sequence alignment algorithms such as
+the Needleman-Wunsch- and the Smith-Waterman-Algorithm for global or
+local alignment, respectively.
