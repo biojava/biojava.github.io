@@ -1,3 +1,5 @@
+BioJava is an [[wp:open_source|open source]] project developed and used by a diverse and international community of java bioinformatics programmers. The BioJava website is likewise a community development.
+
 == Contributors ==
 
 The following people have contributed to BioJava in some way. If you've contributed to BioJava in any form -- code, documentation, suggestions, or helping people out on the mailing lists -- and want to be listed here, please e-mail a short bio to the biojava mailing list or make yourself an entry here (this is Wiki after all).
@@ -15,3 +17,7 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[User:Rholland|Richard Holland]]
 
 * [[User:Martin|Martin Szugat]]
+
+== Core Developers ==
+
+For a list of the current development core team take a look [[Core Team|here]]
