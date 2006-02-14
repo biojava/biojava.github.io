@@ -2,6 +2,10 @@
 title: BioJava:Community Portal
 ---
 
+BioJava is an [open source](wp:open_source "wikilink") project developed
+and used by a diverse and international community of java bioinformatics
+programmers. The BioJava website is likewise a community development.
+
 Contributors
 ------------
 
@@ -37,3 +41,8 @@ yourself an entry here (this is Wiki after all).
 
 -   [Martin Szugat](User:Martin "wikilink")
 
+Core Developers
+---------------
+
+For a list of the current development core team take a look
+[here](Core Team "wikilink")
