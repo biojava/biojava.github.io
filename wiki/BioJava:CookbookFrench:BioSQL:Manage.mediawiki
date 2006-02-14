@@ -1,4 +1,4 @@
-== Comment ajouter, voir et enlever des objets de type Sequence d'une base de donn&eacute;es BioSQL? ==
+== Comment ajouter, voir et &eacuteliminer des objets de type Sequence d'une base de donn&eacute;es BioSQL? ==
 
 BioJava contient des classes utilitaires qui donne l'aspect d'une instance SequenceDB &agrave; n'importe quel base de donn&eacute;s respectant la sch&eacute;ma BioSQL. La classe qui vous utiliserait probablement le plus est ''BioSQLSequenceDB''. ''BioSQLSequenceDB'' est une instance d&eacute;riv&eacute;e de ''SequenceDB'' et s'utilise exactement de la m&ecirc;me mani&egrave;re. L'heureuse cons&eacute;quence de cet &eacute;tat de fait est que ceci rends inutile l'utilisation de commandes SQL ou la connaissance du sc&eacute;ma BioSQL. Toute op&eacute;ration faite sur l'objet ''BioSSQLSequenceDB'' se r&eacute;percute de fait dans la base de donn&eacute;es BioSQL qui se trouve derri&egrave; cette classe.
 
