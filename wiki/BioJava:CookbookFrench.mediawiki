@@ -119,7 +119,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Algorithmes g&eacute;n&eacute;tiques ===
 
-* Comment écrire un algorithme génétique avec BioJava?
+* [[BioJava:CookbookFrench:GA|Comment écrire un algorithme génétique avec BioJava?]]
 
 === Analyse structurale des protéines ===
 

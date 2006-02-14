@@ -218,7 +218,8 @@ Comment faire pour ...?
 
 ### Algorithmes génétiques
 
--   Comment écrire un algorithme génétique avec BioJava?
+-   [Comment écrire un algorithme génétique avec
+    BioJava?](BioJava:CookbookFrench:GA "wikilink")
 
 ### Analyse structurale des protéines
 
