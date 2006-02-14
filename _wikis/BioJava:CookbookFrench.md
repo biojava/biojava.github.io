@@ -161,7 +161,7 @@ Comment faire pour ...?
     SearchContentHandler?](BioJava:CookbookFrench:Blast:Echo "wikilink")
 -   [Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de
     Biojava?](BioJava:Tutorial:Blast-like_Parsing_Cook_Book "wikilink")
-    Note: section du tutorial anglais
+    Note: section du tutoriel anglais
 
 ### Comptes et Distributions
 
@@ -190,7 +190,9 @@ Comment faire pour ...?
     motif?](BioJava:CookbookFrench:DP:WeightMatrix "wikilink")
 -   [Comment créer un HMM semblable à un profile
     HMMER?](BioJava:CookbookFrench:DP:HMM "wikilink")
--   Comment créer un HMM sur mesure? (N. B.: en anglais seulement)
+-   [Comment créer un HMM sur
+    mesure?](BioJava:Tutorial:Dynamic_programming_examples "wikilink")
+    Note: section du tutoriel anglais)
 -   [Comment faire un alignement de deux
     séquences?](BioJava:CookbookFrench:DP:PairWise "wikilink")
 

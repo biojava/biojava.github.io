@@ -83,7 +83,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:Fasta:Parser|Comment lire un fichier de résultats FASTA?]]
 * [[BioJava:CookbookFrench:Blast:Extract|Comment extraire les informations à partir des résultats lus?]]
 * [[BioJava:CookbookFrench:Blast:Echo|Comment extraire les infos d'un gros fichier ou comment créer son propre SearchContentHandler?]]
-* [[BioJava:Tutorial:Blast-like_Parsing_Cook_Book|Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de Biojava?]] Note: section du tutorial anglais
+* [[BioJava:Tutorial:Blast-like_Parsing_Cook_Book|Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de Biojava?]] Note: section du tutoriel anglais
 
 === Comptes et Distributions ===
 
@@ -101,7 +101,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 * [[BioJava:CookbookFrench:DP:WeightMatrix|Comment utiliser une WeightMatrix pour trouver un motif?]]
 * [[BioJava:CookbookFrench:DP:HMM|Comment créer un HMM semblable à un profile HMMER?]]
-* Comment créer un HMM sur mesure? (N. B.: en anglais seulement)
+* [[BioJava:Tutorial:Dynamic_programming_examples|Comment créer un HMM sur mesure?]] Note: section du tutoriel anglais)
 * [[BioJava:CookbookFrench:DP:PairWise|Comment faire un alignement de deux séquences?]]
 
 === Interfaces Usagers Graphiques ===
