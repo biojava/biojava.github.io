@@ -12,7 +12,6 @@
 == Whats in progress? ==
 * Choosing a logo!
 * Tutorial - laborious but straightforward, some parts are in need of updating and/or are no longer relevant (Formatting is done -- [[User:Martin|Martin]] 21:02, 12 February 2006 (EST))
-* Cookbook (BioJava in Anger French version: working on it - --[[User:Foisys|Foisys]] 12:36, 6 February 2006 (EST))
 * Participants - Mostly links to user pages. eg User:Mark. This is not ideal. Jason is going to set up a People domain then we can set User:Mark to redirect to People:Mark Schreiber
 
 == Whats done already? ==
@@ -21,6 +20,7 @@
 * Thanks
 * Getting Started (Done --[[User:Foisys|Foisys]] 12:49, 6 February 2006 (EST))
 * CookBook (BioJava in Anger English version) - Done --[[User:Guedes|Guedes]] 14:34, 8 February 2006 (EST)
+* CookBook (BioJava in Anger French Version) - Done --[[User:Foisys|Foisys]] 15:00, 14 February 2006 (EST)
 * JavaDoc 1.3 - how? link back to old? Links to old established --[[User:Mark|Mark]] 12:13, 6 February 2006 (EST)
 * JavaDoc 1.4 - how? link back to old? Links to old established --[[User:Mark|Mark]] 12:13, 6 February 2006 (EST)
 * Hackers Guide - Done --[[User:Foisys|Foisys]] 16:37, 6 February 2006 (EST)

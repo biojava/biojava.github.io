@@ -25,9 +25,6 @@ Whats in progress?
 -   Tutorial - laborious but straightforward, some parts are in need of
     updating and/or are no longer relevant (Formatting is done --
     [Martin](User:Martin "wikilink") 21:02, 12 February 2006 (EST))
--   Cookbook (BioJava in Anger French version: working on
-    it - --[Foisys](User:Foisys "wikilink") 12:36, 6 February 2006
-    (EST))
 -   Participants - Mostly links to user pages. eg User:Mark. This is not
     ideal. Jason is going to set up a People domain then we can set
     User:Mark to redirect to People:Mark Schreiber
@@ -42,6 +39,9 @@ Whats done already?
     February 2006 (EST))
 -   CookBook (BioJava in Anger English version) -
     Done --[Guedes](User:Guedes "wikilink") 14:34, 8 February 2006 (EST)
+-   CookBook (BioJava in Anger French Version) -
+    Done --[Foisys](User:Foisys "wikilink") 15:00, 14 February 2006
+    (EST)
 -   JavaDoc 1.3 - how? link back to old? Links to old
     established --[Mark](User:Mark "wikilink") 12:13, 6 February 2006
     (EST)
