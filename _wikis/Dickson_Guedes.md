@@ -9,8 +9,9 @@ Dickson S. Guedes
 
 I was born in [Laguna](wp:Laguna (Santa Catarina) "wikilink") but now I
 live in Tubarão, [Santa Catarina](wp:Santa Catarina (state) "wikilink"),
-[Brazil](wp:Brazil "wikilink") and work in UNISUL - a local University
-of [Santa Catarina](wp:Santa Catarina (state) "wikilink").
+[Brazil](wp:Brazil "wikilink") and work in
+[UNISUL](http://www.unisul.br) - a local University of [Santa
+Catarina](wp:Santa Catarina (state) "wikilink").
 
 I've contributed with BioJava by porting the
 [CookBook's](Biojava:Cookbook "wikilink") English version to this Wiki,
