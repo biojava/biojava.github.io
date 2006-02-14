@@ -27,3 +27,5 @@ try to organize a new BootCamp in 2007.
 
 While not doing bio-informatics, I am also a biology instructor in a
 junior college in Montreal, a Mac guru and enjoy whisky and suhis.
+
+<Category:People>
