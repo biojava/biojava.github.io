@@ -1,7 +1,5 @@
 ---
 title: BioJava:Community Portal
-tags:
- - People
 ---
 
 BioJava is an [open source](wp:open_source "wikilink") project developed
@@ -27,8 +25,4 @@ yourself an entry here (this is Wiki after all).
 -   [Keith James](Keith James "wikilink")
 -   [Sylvan Foisy](Sylvain Foisy "wikilink")
 
-Core Developers
----------------
-
-For a list of the current development core team take a look
-[here](Core Team "wikilink")
+[Andreas Dräger](Andreas Dräger "wikilink")
