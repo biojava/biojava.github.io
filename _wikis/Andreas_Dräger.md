@@ -10,4 +10,4 @@ Smith-Waterman-Algorithm for local alignments including an output
 formatting function that produces a BLAST like output of the aligned
 sequences. He also improved the database interaction with BioSQL,
 escpecially the storage of taxonomic information in the database and
-contributed some suggestions for further developement of BioJava.
+contributed some suggestions for the further developement of BioJava.
