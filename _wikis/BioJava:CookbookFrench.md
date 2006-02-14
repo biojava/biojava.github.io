@@ -230,10 +230,18 @@ Comment faire pour ...?
 
 ### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
 
--   Introduction à l'API de STRAP
--   Interactions STRAP / BioJava
--   Comment faire un alignement multiple de séquences?
--   Comment prédire la structure secondaire d'une protéine?
+-   [Introduction à l'API de
+    STRAP.](http://www.charite.de/bioinf/strap/Scripting.html) Note: en
+    anglais seulement
+-   [Interactions STRAP /
+    BioJava](http://www.charite.de/bioinf/strap/biojava.html) Note: en
+    anglais seulement
+-   [Comment faire un alignement multiple de
+    séquences?](http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html)
+    Note: en anglais seulement
+-   [Comment prédire la structure secondaire d'une
+    protéine?](http://www.charite.de/bioinf/strap/biojavaInAnger_SecondaryStructure_Predictor.html)
+    Note: en anglais seulement
 
 Désaveu de responsabilité
 -------------------------
