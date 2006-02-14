@@ -18,6 +18,8 @@ The following people have contributed to BioJava in some way. If you've contribu
 
 * [[User:Martin|Martin Szugat]]
 
+* [[Keith James|Keith James]]
+
 == Core Developers ==
 
 For a list of the current development core team take a look [[Core Team|here]]
