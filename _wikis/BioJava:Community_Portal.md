@@ -25,10 +25,4 @@ yourself an entry here (this is Wiki after all).
 -   [Keith James](Keith James "wikilink")
 -   [Sylvan Foisy](Sylvain Foisy "wikilink")
 
-Core Developers
----------------
-
-For a list of the current development core team take a look
-[here](Core Team "wikilink")
-
-<Category:People>
+[Andreas Dräger](Andreas Dräger "wikilink")
