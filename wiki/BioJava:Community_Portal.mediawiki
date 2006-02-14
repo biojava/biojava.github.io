@@ -6,9 +6,9 @@ The following people have contributed to BioJava in some way. If you've contribu
 
 * [[User:Heuermh|Michael Heuer]]
 
-* [[User:David|David Huen]]
+* [[David Huen|David Huen]]
 
-* [[User:Matthew|Matthew Pocock]]
+* [[Matthew Pocock|Matthew Pocock]]
 
 * [[User:Mark|Mark Schreiber]]
 
