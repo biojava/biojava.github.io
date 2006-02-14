@@ -222,8 +222,10 @@ Comment faire pour ...?
 
 ### Analyse structurale des protéines
 
--   Comment faire pour lire un fichier en format PDB?
--   Comment puis-je modifié un résidu?
+-   [Comment faire pour lire un fichier en format
+    PDB?](BioJava:CookbookFrench:PDB:Read "wikilink")
+-   [Comment puis-je modifié un
+    résidu?](BioJava:CookbookFrench:PDB:Mutate "wikilink")
 
 ### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
 
