@@ -159,9 +159,9 @@ Comment faire pour ...?
 -   [Comment extraire les infos d'un gros fichier ou comment créer son
     propre
     SearchContentHandler?](BioJava:CookbookFrench:Blast:Echo "wikilink")
--   Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de
-    Biojava? -- À venir --[Foisys](User:Foisys "wikilink") 21:19, 8
-    February 2006 (EST)
+-   [Vous voulez plus d'info sur l'infrastructure de lecture SAX2 de
+    Biojava?](BioJava:Tutorial:Blast-like_Parsing_Cook_Book "wikilink")
+    Note: section du tutorial anglais
 
 ### Comptes et Distributions
 
