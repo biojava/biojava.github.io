@@ -26,4 +26,5 @@ yourself an entry here (this is Wiki after all).
 -   [Sylvan Foisy](Sylvain Foisy "wikilink")
 -   [Andreas Dräger](Andreas Dräger "wikilink")
 -   [Andreas Prlic](Andreas Prlic "wikilink")
+-   [Dickson Guedes](Dickson S. Guedes "wikilink")
 
