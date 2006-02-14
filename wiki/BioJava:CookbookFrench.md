@@ -209,10 +209,12 @@ Comment faire pour ...?
 
 ### Intégration avec des bases de données externes: OBDC / JDBC / BioSQL
 
--   Comment créer une base de données avec BioSQL et PostgreSQL (N. B.:
-    en anglais seulement. Contribution de D. Huen)
--   Comment créer une base de données avec BioSQL et Oracle (N. B.: en
-    anglais seulement. Contribution de R. Holland)
+-   [Comment créer une base de données avec BioSQL et
+    PostgreSQL?](BioJava:CookBook:BioSQL:SetupPostGre "wikilink") Note:
+    en anglais seulement
+-   [Comment créer une base de données avec BioSQL et
+    Oracle?](BioJava:CookBook:BioSQL:SetupOracle "wikilink") Note: en
+    anglais seulement
 -   [Comment ajouter, voir et éliminer des objets Séquences d'une base
     de données BioSQL?](BioJava:CookbookFrench:BioSQL:Manage "wikilink")
 
