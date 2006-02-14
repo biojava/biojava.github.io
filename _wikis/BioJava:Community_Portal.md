@@ -25,6 +25,5 @@ yourself an entry here (this is Wiki after all).
 -   [Keith James](Keith James "wikilink")
 -   [Sylvan Foisy](Sylvain Foisy "wikilink")
 -   [Andreas Dräger](Andreas Dräger "wikilink")
--   [Andreas Prlic[Andreas
-    Prlic](Andreas Prlic[Andreas Prlic "wikilink")
+-   [Andreas Prlic](Andreas Prlic "wikilink")
 
