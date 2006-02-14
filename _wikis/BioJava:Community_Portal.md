@@ -18,34 +18,14 @@ here, please e-mail a short bio to the biojava mailing list or make
 yourself an entry here (this is Wiki after all).
 
 -   [Thomas Down](Thomas Down "wikilink")
-
-<!-- -->
-
 -   [Michael Heuer](User:Heuermh "wikilink")
-
-<!-- -->
-
 -   [David Huen](David Huen "wikilink")
-
-<!-- -->
-
 -   [Matthew Pocock](Matthew Pocock "wikilink")
-
-<!-- -->
-
 -   [Mark Schreiber](User:Mark "wikilink")
-
-<!-- -->
-
 -   [Richard Holland](User:Rholland "wikilink")
-
-<!-- -->
-
 -   [Martin Szugat](User:Martin "wikilink")
-
-<!-- -->
-
 -   [Keith James](Keith James "wikilink")
+-   [Sylvan Foisy](Sylvan Foisy "wikilink")
 
 Core Developers
 ---------------
