@@ -10,7 +10,7 @@ Traduction française: [mailto://sylvain.foisyCHEZbioneq.qc.ca Sylvain Foisy]. D
 
 == Présentation ==
 
-Une présentation en format Powerpoint de Mark décrivant Biojava se trouve ici.
+Une présentation en format Powerpoint de Mark décrivant Biojava se trouve [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt ici].
 
 == Publications utilisant BioJava ==
 
