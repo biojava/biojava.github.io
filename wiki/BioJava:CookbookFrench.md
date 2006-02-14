@@ -35,7 +35,7 @@ Présentation
 ------------
 
 Une présentation en format Powerpoint de Mark décrivant Biojava se
-trouve ici.
+trouve [ici](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt).
 
 Publications utilisant BioJava
 ------------------------------
