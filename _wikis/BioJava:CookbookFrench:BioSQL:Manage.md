@@ -2,8 +2,8 @@
 title: BioJava:CookbookFrench:BioSQL:Manage
 ---
 
-Comment ajouter, voir et enlever des objets de type Sequence d'une base de données BioSQL?
-------------------------------------------------------------------------------------------
+Comment ajouter, voir et &eacuteliminer des objets de type Sequence d'une base de données BioSQL?
+-------------------------------------------------------------------------------------------------
 
 BioJava contient des classes utilitaires qui donne l'aspect d'une
 instance SequenceDB à n'importe quel base de donnés respectant la schéma
