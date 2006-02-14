@@ -1,5 +1,7 @@
 ---
 title: Sylvain Foisy
+tags:
+ - People
 ---
 
 My name is Sylvain Foisy and I am a project manager for the [Réseau
