@@ -5,20 +5,14 @@ BioJava is an [[wp:open_source|open source]] project developed and used by a div
 The following people have contributed to BioJava in some way. If you've contributed to BioJava in any form -- code, documentation, suggestions, or helping people out on the mailing lists -- and want to be listed here, please e-mail a short bio to the biojava mailing list or make yourself an entry here (this is Wiki after all).
 
 * [[Thomas Down|Thomas Down]]
-
 * [[User:Heuermh|Michael Heuer]]
-
 * [[David Huen|David Huen]]
-
 * [[Matthew Pocock|Matthew Pocock]]
-
 * [[User:Mark|Mark Schreiber]]
-
 * [[User:Rholland|Richard Holland]]
-
 * [[User:Martin|Martin Szugat]]
-
 * [[Keith James|Keith James]]
+* [[Sylvan Foisy|Sylvan Foisy]]
 
 == Core Developers ==
 
