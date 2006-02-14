@@ -2,4 +2,4 @@
 
 I was born in [[wp:Laguna (Santa Catarina)|Laguna]] but now I live in Tubarão, [[wp:Santa Catarina (state)|Santa Catarina]], [[wp:Brazil|Brazil]] and work in UNISUL - a local University of  [[wp:Santa Catarina (state)|Santa Catarina]].
 
-I've contributed with BioJava by porting the [[Biojava:Cookbook|CookBook's]] English version to this Wiki, but I've introduced to BioJava in 2005, when I've started my Bacharel's Tesis using it how a framework to contruct [[wp:Phylogenetic trees|Phylogenetic trees]] "powered by" Genetics Algorithms. So... if all dones right, I'll presents my tesis at July of 2006... good luck for me.. ":)
+I've contributed with BioJava by porting the [[Biojava:Cookbook|CookBook's]] English version to this Wiki, but I've introduced to BioJava in 2005, when I've started my Bacharel's Tesis using it how a framework to contruct [[wp:Phylogenetic trees|Phylogenetic trees]] "powered by" [[wp:Genetic algorithms]]. So... if all dones right, I'll presents my tesis at July of 2006... good luck for me.. ":)

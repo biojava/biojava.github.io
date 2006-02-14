@@ -16,6 +16,6 @@ I've contributed with BioJava by porting the
 [CookBook's](Biojava:Cookbook "wikilink") English version to this Wiki,
 but I've introduced to BioJava in 2005, when I've started my Bacharel's
 Tesis using it how a framework to contruct [Phylogenetic
-trees](wp:Phylogenetic trees "wikilink") "powered by" Genetics
-Algorithms. So... if all dones right, I'll presents my tesis at July of
-2006... good luck for me.. ":)
+trees](wp:Phylogenetic trees "wikilink") "powered by" [wp:Genetic
+algorithms](wp:Genetic algorithms "wikilink"). So... if all dones right,
+I'll presents my tesis at July of 2006... good luck for me.. ":)
