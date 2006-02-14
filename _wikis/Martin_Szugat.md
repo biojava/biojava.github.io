@@ -1,5 +1,7 @@
 ---
 title: Martin Szugat
+tags:
+ - People
 ---
 
 I used BioJava for the [BioWeka](http://www.bioweka.org) project - this
@@ -20,4 +22,3 @@ or just google for [Martin
 Szugat](http://www.google.com/search?q=%22Martin+Szugat%22).
 
 [Martin](User:Martin "wikilink") 12:42, 7 February 2006 (EST)
-<Categories:People>
