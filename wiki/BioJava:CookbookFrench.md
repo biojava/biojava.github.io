@@ -192,7 +192,7 @@ Comment faire pour ...?
     HMMER?](BioJava:CookbookFrench:DP:HMM "wikilink")
 -   [Comment créer un HMM sur
     mesure?](BioJava:Tutorial:Dynamic_programming_examples "wikilink")
-    Note: section du tutoriel anglais)
+    Note: section du tutoriel anglais
 -   [Comment faire un alignement de deux
     séquences?](BioJava:CookbookFrench:DP:PairWise "wikilink")
 
