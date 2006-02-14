@@ -3,3 +3,4 @@ I used BioJava for the [http://www.bioweka.org BioWeka] project - this was my Ba
 More information about me and my work (e.g. on XML, .NET and Bioinformatics) can be found on my [http://szugat.gmxhome.de homepage] or just google for [http://www.google.com/search?q=%22Martin+Szugat%22 Martin Szugat].
 
 [[User:Martin|Martin]] 12:42, 7 February 2006 (EST)
+[[Categories:People]]
