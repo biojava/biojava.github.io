@@ -198,10 +198,14 @@ Comment faire pour ...?
 
 ### Interfaces Usagers Graphiques
 
--   Comment visualiser Annotations et Features sous la forme d'un arbre?
--   Comment afficher une Sequence dans un interface graphique?
--   Comment afficher les coordonnées d'une séquence?
--   Comment afficher les caractéristiques d'une séquence?
+-   [Comment visualiser Annotations et Features sous la forme d'un
+    arbre?](BioJava:CookbookFrench:Interfaces:ViewAsTree "wikilink")
+-   [Comment afficher une Sequence dans un interface
+    graphique?](BioJava:CookbookFrench:Interfaces:ViewInGUI "wikilink")
+-   [Comment afficher les coordonnées d'une
+    séquence?](BioJava:CookbookFrench:Interfaces:Coordinates "wikilink")
+-   [Comment afficher les caractéristiques d'une
+    séquence?](BioJava:CookbookFrench:Interfaces:Features "wikilink")
 
 ### Intégration avec des bases de données externes: OBDC / JDBC / BioSQL
 
