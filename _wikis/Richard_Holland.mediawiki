@@ -1,0 +1,3 @@
+I got involved with BioJava through working with [[User:Mark|Mark Schreiber]] on the [http://www.dengueinfo.org/ dengueinfo] project, which required BioJava to be able to work seamlessly with [http://biosql.org/ BioSQL] databases. As this was not completely possible in version 1.4, we produced the BioJavaX extensions to be release in version 1.5 that allow BioJava to use the Hibernate framework for accessing BioSQL. 
+
+I currently work at the [http://www.gis.a-star.edu.sg/ Genome Institute of Singapore] but will soon be moving to the [http://www.ebi.ac.uk/ EBI] at Hinxton to join the [http://www.biomart.org BioMart] team."
