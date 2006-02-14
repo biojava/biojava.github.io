@@ -41,6 +41,10 @@ yourself an entry here (this is Wiki after all).
 
 -   [Martin Szugat](User:Martin "wikilink")
 
+<!-- -->
+
+-   [Keith James](Keith James "wikilink")
+
 Core Developers
 ---------------
 
