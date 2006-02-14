@@ -1,5 +1,7 @@
 ---
 title: Matthew Pocock
+tags:
+ - People
 ---
 
 Matthew is a co-founder of Biojava, and has developed (with [Thomas
