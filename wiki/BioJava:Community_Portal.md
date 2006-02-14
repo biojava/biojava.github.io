@@ -50,3 +50,5 @@ Core Developers
 
 For a list of the current development core team take a look
 [here](Core Team "wikilink")
+
+<Category:People>
