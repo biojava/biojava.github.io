@@ -19,11 +19,11 @@ yourself an entry here (this is Wiki after all).
 
 <!-- -->
 
--   [David Huen](User:David "wikilink")
+-   [David Huen](David Huen "wikilink")
 
 <!-- -->
 
--   [Matthew Pocock](User:Matthew "wikilink")
+-   [Matthew Pocock](Matthew Pocock "wikilink")
 
 <!-- -->
 
