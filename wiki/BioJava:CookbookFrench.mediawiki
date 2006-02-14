@@ -115,7 +115,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 * Comment créer une base de données avec BioSQL et PostgreSQL (N. B.: en anglais seulement. Contribution de D. Huen)
 * Comment créer une base de données avec BioSQL et Oracle (N. B.: en anglais seulement. Contribution de R. Holland)
-* [[BioJava:CookbookFrench:BioSQL:Manage|Comment ajouter, voir et ôter des objets Séquences d'une base de données BioSQL?]]
+* [[BioJava:CookbookFrench:BioSQL:Manage|Comment ajouter, voir et &eacute;liminer des objets Séquences d'une base de données BioSQL?]]
 
 === Algorithmes g&eacute;n&eacute;tiques ===
 
