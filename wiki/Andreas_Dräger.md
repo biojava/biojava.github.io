@@ -2,7 +2,7 @@
 title: Andreas Dräger
 ---
 
-Andreas Dräger is a PhD-student at the Cener for Bioinformatics (ZBIT)
+Andreas Dräger is a PhD-student at the Center for Bioinformatics (ZBIT)
 in Tübingen, Germany. During his master thesis at the
 Martin-Luther-University Halle-Wittenberg he improved the storage of
 taxonomic information in BioSQL databases and implemented sequence
