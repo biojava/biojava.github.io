@@ -106,10 +106,10 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Interfaces Usagers Graphiques ===
 
-* Comment visualiser Annotations et Features sous la forme d'un arbre?
-* Comment afficher une Sequence dans un interface graphique?
-* Comment afficher les coordonnées d'une séquence?
-* Comment afficher les caractéristiques d'une séquence?
+* [[BioJava:CookbookFrench:Interfaces:ViewAsTree|Comment visualiser Annotations et Features sous la forme d'un arbre?]]
+* [[BioJava:CookbookFrench:Interfaces:ViewInGUI|Comment afficher une Sequence dans un interface graphique?]]
+* [[BioJava:CookbookFrench:Interfaces:Coordinates|Comment afficher les coordonnées d'une séquence?]]
+* [[BioJava:CookbookFrench:Interfaces:Features|Comment afficher les caractéristiques d'une séquence?]]
 
 === Int&eacute;gration avec des bases de donn&eacute;es externes: OBDC / JDBC / BioSQL ===
 
