@@ -12,7 +12,7 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[User:Rholland|Richard Holland]]
 * [[User:Martin|Martin Szugat]]
 * [[Keith James|Keith James]]
-* [[Sylvan Foisy|Sylvan Foisy]]
+* [[Sylvain Foisy|Sylvan Foisy]]
 
 == Core Developers ==
 
