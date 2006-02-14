@@ -11,7 +11,7 @@ or helping people out on the mailing lists -- and want to be listed
 here, please e-mail a short bio to the biojava mailing list or make
 yourself an entry here (this is Wiki after all).
 
--   [Thomas Down](User:Thomas "wikilink")
+-   [Thomas Down](Thomas Down "wikilink")
 
 <!-- -->
 
