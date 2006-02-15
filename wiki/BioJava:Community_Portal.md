@@ -28,3 +28,8 @@ yourself an entry here (this is Wiki after all).
 -   [Andreas Prlic](Andreas Prlic "wikilink")
 -   [Dickson S. Guedes](Dickson Guedes "wikilink")
 
+Core Team
+---------
+
+The core team are a group of dedicated volunteers who keep BioJava
+running. You can find out more about them [here](Core Team "wikilink").
