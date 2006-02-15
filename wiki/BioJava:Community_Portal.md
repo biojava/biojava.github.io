@@ -27,6 +27,7 @@ yourself an entry here (this is Wiki after all).
 -   [Andreas Dräger](Andreas Dräger "wikilink")
 -   [Andreas Prlic](Andreas Prlic "wikilink")
 -   [Dickson S. Guedes](Dickson Guedes "wikilink")
+-   [Francois Pepin](Francois Pepin "wikilink")
 
 Core Team
 ---------
