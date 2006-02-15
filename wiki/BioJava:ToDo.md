@@ -55,11 +55,11 @@ Whats done already?
 -   Download 1.4 - Done -- [Martin](User:Martin "wikilink") 12:18, 7
     February 2006 (EST)
 -   CVS access - Unnecessary -- links to CVS and WebCVS are already in
-    <BioJava::GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51,
-    8 February 2006 (SGT)
+    <BioJava:GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51, 8
+    February 2006 (SGT)
 -   WebCVS - Unnecessary -- links to CVS and WebCVS are already in
-    <BioJava::GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51,
-    8 February 2006 (SGT)
+    <BioJava:GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51, 8
+    February 2006 (SGT)
 
 Inspiration
 -----------
