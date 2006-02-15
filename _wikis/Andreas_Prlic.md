@@ -1,5 +1,7 @@
 ---
 title: Andreas Prlic
+tags:
+ - People
 ---
 
 Andreas Prlic is PostDoc at the [Wellcome Trust Sanger
