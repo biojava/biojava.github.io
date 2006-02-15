@@ -8,3 +8,5 @@ API to biojava. Other projects he is working on include e.g.
 [SPICE](http://www.efamily.org.uk/software/dasclients/spice) a browser
 for protein sequence and structure annotations, based on the Distributed
 Annotation System.
+
+<Category:People>
