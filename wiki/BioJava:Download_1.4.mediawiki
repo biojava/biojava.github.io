@@ -6,6 +6,7 @@ This page offers downloads for the BioJava 1.4 release. BioJava 1.4 runs only on
 * [http://www.biojava.org/download/docs/biojava-docs-1.4.tar.gz API documentation] 
 * [http://www.biojava.org/download/source/biojava-1.4.tar.gz Source code] 
 
+
 == Required libraries ==
 
 * [http://www.biojava.org/download/binaries/bytecode-0.92.jar bytecode-0.92.jar]
@@ -15,6 +16,11 @@ This page offers downloads for the BioJava 1.4 release. BioJava 1.4 runs only on
 * [http://www.biojava.org/download/binaries/commons-pool-1.1.jar commons-pool-1.1.jar] Only required for BioSQL access (and building biojava.jar)
 
 The Jakarta-commons APIs are covered by the [http://www.biojava.org/download/binaries/LICENSE.COMMONS Apache license].
+
+
+== Future releases ==
+* [[BioJava:1.5ReleasePlan|Release plan]] for version 1.5.
+
 
 == Getting older versions ==
 
