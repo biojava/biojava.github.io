@@ -27,3 +27,8 @@ Pre-release tasks
 ### Alpha, beta, RCs
 
 ### Release notes
+
+Wish-list, or Items-yet-to-be-sorted
+------------------------------------
+
+Edit this section with items to be considered for the 1.5 release
