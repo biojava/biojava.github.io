@@ -32,6 +32,11 @@ Required libraries
 The Jakarta-commons APIs are covered by the [Apache
 license](http://www.biojava.org/download/binaries/LICENSE.COMMONS).
 
+Future releases
+---------------
+
+-   [Release plan](BioJava:1.5ReleasePlan "wikilink") for version 1.5.
+
 Getting older versions
 ----------------------
 
