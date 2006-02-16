@@ -16,6 +16,9 @@ In progress
 ===Coding===
 
 ===Documentation===
+* Update [[BioJava:Cookbook|Cookbook]] code to reflect best practices with BioJavaX
+* Should we keep legacy examples in the [[BioJava:Cookbook|Cookbook]]?
+* Check for errors in biojavax docbook
 
 ===Javadoc===
 * The ant javadoc-all task must complete without any failures or warnings. 
