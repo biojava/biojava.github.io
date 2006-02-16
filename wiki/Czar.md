@@ -2,6 +2,9 @@
 title: Czar
 ---
 
+Biojava Release Czar
+====================
+
 The Release Czar is a volunteer who overseas one or more releases of
 biojava in accordance with the [ release
 plan](Project:1.5ReleasePlan "wikilink").
