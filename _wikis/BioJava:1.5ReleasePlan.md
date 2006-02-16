@@ -7,6 +7,17 @@ Release plan for BioJava 1.5
 
 ### Background
 
+We would like to begin work on making a 1.5 release of BioJava. This
+will include all new developments such as the BioJavaX and structure
+APIs.
+
+I propose we initially make a BioJava1.5 beta which will be a snapshot
+of CVS and will only contain the documentation, demos and unit tests at
+that date (not a complete and up to date suite).
+
+A full BioJava 1.5 final release will ideally contain fully updated
+documentation, demos, unit tests etc.
+
 ### Status
 
 In progress
