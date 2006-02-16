@@ -31,6 +31,10 @@ Pre-release tasks
 
 ### Javadoc
 
+The ant javadoc-all task must complete without any failures or warnings.
+Volunteers are needed to check for poorly javadoced packages and add
+comments where they can.
+
 ### Quality
 
 ### Check compatibility
