@@ -85,6 +85,29 @@ all relevant but it would pay to check.
 
 ### Alpha, beta, RCs
 
+#### Alpha
+
+We don't specifically make Alpha releases, the closest approximation
+would be a snapshot of the CVS repository leading up to the beta
+release.
+
+Requirements:
+
+-   Code fully compiles under Ant
+
+#### Beta
+
+A Beta release would show the likely API of a final release.
+
+Requirements:
+
+-   Code fully compiles and passes JUnit tests.
+-   All javadocs build and no warnings issued.
+-   All demos and cook demos compile.
+-   JARs, JavaDocs and source code posted to webserver (admin task)
+-   Links to download and API updated
+-   Beta released announced on mail-list and news site
+
 ### Release notes
 
 Wish-list, or Items-yet-to-be-sorted
