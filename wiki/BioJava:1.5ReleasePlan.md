@@ -27,6 +27,9 @@ Pre-release tasks
 
 ### Coding
 
+-   Code for any release (even Alpha) should minimally compile and pass
+    all JUnit tests!
+
 #### Changes to build.xml
 
 -   add tasks to Ant build script to make distribution that includes
