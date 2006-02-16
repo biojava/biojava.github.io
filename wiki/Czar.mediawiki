@@ -1,4 +1,4 @@
 =Biojava Release Czar=
-The Release Czar is a volunteer who overseas one or more releases of biojava in accordance with the [[Project:1.5ReleasePlan| release plan]].
+The Release Czar (or Czarina) is a volunteer who overseas one or more releases of biojava in accordance with the [[Project:1.5ReleasePlan| release plan]].
 
 If you wish to volunteer to join these exalted ranks please email one of the [[Core Team|core team]].
