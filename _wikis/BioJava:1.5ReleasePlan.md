@@ -35,6 +35,18 @@ Pre-release tasks
 
 ### Check compatibility
 
+#### Are RichSequence objects compatable with GUI code?
+
+We need a volunteer to test how well RichSequence objects behaive with
+biojava's GUI code. GUI code as well as relevant javadocs, demos, and
+cookbook code may need to change.
+
+#### Are BioJavaX objects compatable with DAS/DAZZLE?
+
+Someone with experience of the DAS server DAZZLE is needed to check if
+there are any issues with DAS and BioJavaX objects. This may not be at
+all relevant but it would pay to check.
+
 ### Alpha, beta, RCs
 
 ### Release notes
