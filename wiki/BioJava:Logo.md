@@ -54,6 +54,12 @@ Hi, here's my proposal:
 
 --[Jordi](User::Jordi "wikilink") 20:31, 9 February 2006 (SGT)
 
+-- Count my vote on this one. An idea: how about removing the blue
+circle and inverting colors white to blue. This would keep the logo in
+harmony with the background of the page. Just my 2
+cents... --[Foisys](User:Foisys "wikilink") 15:00, 16 February 2006
+(EST)
+
 Here are some proposals by Ong Swee Hoe from
 [http://www.gis.a-star.edu.sg
 GIS](http://www.gis.a-star.edu.sg GIS "wikilink") in
