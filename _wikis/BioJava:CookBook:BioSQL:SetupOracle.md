@@ -69,7 +69,9 @@ ODM Blast will throw "table or view does not exist" errors if you pass
 it a cursor over a table that is in fact a synonym (eg. biosequence and
 bioentry in any of the users you have granted biosql\_user or
 biosql\_loader to). You can only run ODM Blast over actual physical
-tables or views, and not synonyms of them. Installation
+tables or views, and not synonyms of them.
+
+### Installation
 
 Make sure you have set the $ORACLE\_SID environment variable to the
 correct database before running the scripts. There may be occasional
@@ -193,11 +195,30 @@ Note that if your users can't connect or can't get the appropriate
 permissions to do what you want them to do, try re-running the
 BS-create-roles script as sysdba, then the BS-grants script as the
 biosql\_owner user. Disconnect and reconnect as the user having trouble
-and it should be fixed. Testing
+and it should be fixed.
+
+### Testing
 
 Any BioJava script should work fine.
 
 THE END!
 
-[Richard Holland](USer:Richard "wikilink"), December 2004, updated May
+[Richard Holland](User:Rholland "wikilink"), December 2004, updated May
 2005
+
+### Addendum
+
+With the new BioJavaX extensions, you will find that data saved to
+BioSQL by the old BioJava/BioSQL bindings will not get interpreted
+correctly by BioJavaX, and vice versa. This is because the old bindings
+used significantly different ways of representing the same information
+within the database, whereas the new bindings in BioJavaX do it more
+intelligently and make better use of the various tables available. In
+fact, BioJavaX is also be able to read/write most data saved into BioSQL
+by BioPerl, which was not possible with the old bindings.
+
+To convert data saved by the old BioJava into data readable by the new
+BioJavaX, is is necessary to extract the database to a suitable file
+format (eg. Genbank) using the old BioJava, then delete all the data
+from the database. Then, use BioJavaX to parse the files you created and
+save the data back into the database.
