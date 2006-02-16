@@ -30,7 +30,8 @@ before running the installer.
 During the production of this document, in cooperation with Hilmar Lapp, all potential problems that were identified with the default BioSQL setup scripts were resolved. However there may still be issues unique to your environment so keep a careful eye open during installation.
 
 One interesting bug that is not related to BioSQL but may cause you grief is to do with the built-in ODM Blast functionality in Oracle 10g. ODM Blast will throw "table or view does not exist" errors if you pass it a cursor over a table that is in fact a synonym (eg. biosequence and bioentry in any of the users you have granted biosql_user or biosql_loader to). You can only run ODM Blast over actual physical tables or views, and not synonyms of them.
-Installation
+
+=== Installation ===
 
 Make sure you have set the $ORACLE_SID environment variable to the correct database before running the scripts. There may be occasional requirements to reconnect to the database, and if it is not set, you may end up running the scripts against the wrong database. Alternatively, you can append "@SID" to your passwords each time you are prompted for them during setup, where "SID" is the SID of your database.
 
@@ -83,10 +84,17 @@ If something goes wrong, you can safely rerun the script without dropping anythi
 Now, your database has been installed! The only remaining step is to log in to each user who will be using BioSQL, and run the usersyns.sql script that the installation generated for you in the biosql-ora directory. This script creates the synonyms for the BioSQL objects and allows the users to see them. This script should not have any errors at all. If it does, edit it and check it closely for things like misplaced linebreaks etc.
 
 Note that if your users can't connect or can't get the appropriate permissions to do what you want them to do, try re-running the BS-create-roles script as sysdba, then the BS-grants script as the biosql_owner user. Disconnect and reconnect as the user having trouble and it should be fixed.
-Testing
+
+=== Testing ===
 
 Any BioJava script should work fine.
 
 THE END!
 
-[[USer:Richard|Richard Holland]], December 2004, updated May 2005
+[[User:Rholland|Richard Holland]], December 2004, updated May 2005
+
+=== Addendum ===
+
+With the new BioJavaX extensions, you will find that data saved to BioSQL by the old BioJava/BioSQL bindings will not get interpreted correctly by BioJavaX, and vice versa. This is because the old bindings used significantly different ways of representing the same information within the database, whereas the new bindings in BioJavaX do it more intelligently and make better use of the various tables available. In fact, BioJavaX is also be able to read/write most data saved into BioSQL by BioPerl, which was not possible with the old bindings.
+
+To convert data saved by the old BioJava into data readable by the new BioJavaX, is is necessary to extract the database to a suitable file format (eg. Genbank) using the old BioJava, then delete all the data from the database. Then, use BioJavaX to parse the files you created and save the data back into the database.
