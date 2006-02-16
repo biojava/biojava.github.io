@@ -29,6 +29,12 @@ Pre-release tasks
 
 ### Documentation
 
+-   Update [Cookbook](BioJava:Cookbook "wikilink") code to reflect best
+    practices with BioJavaX
+-   Should we keep legacy examples in the
+    [Cookbook](BioJava:Cookbook "wikilink")?
+-   Check for errors in biojavax docbook
+
 ### Javadoc
 
 -   The ant javadoc-all task must complete without any failures or
