@@ -27,6 +27,16 @@ Pre-release tasks
 
 ### Coding
 
+#### Changes to build.xml
+
+-   add tasks to Ant build script to make distribution that includes
+    biojava.jar, bytecode jar etc, all javadocs and docbook HTML (as
+    zipped tar), and all source (as zipped tar).
+
+<!-- -->
+
+-   would be nice to have checksums for biojava.jar.
+
 ### Documentation
 
 -   Update [Cookbook](BioJava:Cookbook "wikilink") code to reflect best
