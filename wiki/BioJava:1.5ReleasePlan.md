@@ -37,6 +37,11 @@ comments where they can.
 
 ### Quality
 
+-   All JUnit tests must pass.
+-   Volunteers needed to increase coverage of JUnit tests.
+-   We badly need JUnit tests for BioJavaX / BioSQL interaction
+-   Can someone with a good testing tool generate a coverage report?
+
 ### Check compatibility
 
 #### Are RichSequence objects compatable with GUI code?
