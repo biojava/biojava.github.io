@@ -46,8 +46,15 @@ the [biojava-dev mailing
 list](http://www.biojava.org/mailman/listinfo/biojava-dev) and post a
 request for an account.
 
-New Logo Needed!
-----------------
+BioJava 1.5 Release Planning
+----------------------------
+
+Planning has begun for a new BioJava release. The [release
+plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
+be asking for a volunteer to be the [Release Czar](Czar "wikilink") to
+oversee the coordination of the release.
+
+### New Logo Needed!
 
 The BioJava project needs a new Logo. The sunflower in the top left
 corner of this page doesn't really do it justice. If you have artistic

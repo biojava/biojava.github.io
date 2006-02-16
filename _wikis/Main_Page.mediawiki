@@ -16,7 +16,10 @@ BioJava releases can be obtained from our [[Project:download|download]] area. In
 
 You can also maintain an up-to-date view of BioJava with [http://www.cvs.org/ CVS]. We provide anonymous [[wp:Concurrent Versions System|CVS]] server. If you wish to contribute your existing code or help maintain part of the BioJava code-base, then we can supply you with a read/write account. Sign up for the [http://www.biojava.org/mailman/listinfo/biojava-dev biojava-dev mailing list] and post a request for an account.
 
-== New Logo Needed! ==
+==BioJava 1.5 Release Planning==
+Planning has begun for a new BioJava release. The [[Project:1.5ReleasePlan|release plan]] has been drawn up. Soon we will be asking for a volunteer to be the [[Czar|Release Czar]] to oversee the coordination of the release.
+
+=== New Logo Needed! ===
 
 The BioJava project needs a new Logo. The sunflower in the top left corner of this page doesn't really do it justice. If you have artistic flair then upload you logo to this [[Project:logo|page]]. Everyone feel free to make your comments about which ones you like. At some as yet undecided point one will become the official logo.
 --[[User:Mark|Mark]] 21:21, 1 February 2006 (EST)
