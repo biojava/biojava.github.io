@@ -15,24 +15,22 @@ prefer. --[Mark](User:Mark "wikilink") 21:28, 1 February 2006 (EST)
 Logo Suggestions
 ----------------
 
-BioJava Logo 1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") Nice but
-we cannot incorporate the Sun Java logo, that would need to change.
+Logo1 ![](bio-java-logo.gif "fig:bio-java-logo.gif") Nice but we cannot
+incorporate the Sun Java logo, that would need to change.
 
-BioJava Logo 2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") I like
-this one.
+Logo2 ![](bio-java-logo-2.gif "fig:bio-java-logo-2.gif") I like this
+one.
 
-BioJava Logo 3 ![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif") This
-is good.
+Logo3 ![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif") This is good.
 
-BioJava Logo 4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif")
+Logo4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif")
 
-BioJava Logo 5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") 5, 6 and 7 are
-good but we would need to modify the cup so that we are not using the
-Sun Java logo.
+Logo5 ![](bj-logo-5.gif "fig:bj-logo-5.gif") 5, 6 and 7 are good but we
+would need to modify the cup so that we are not using the Sun Java logo.
 
-BioJava Logo 6 ![](bj-log4.gif "fig:bj-log4.gif")
+Logo6 ![](bj-log4.gif "fig:bj-log4.gif")
 
-BioJava Logo 7 ![](bj-cup1.gif "fig:bj-cup1.gif")
+Logo7 ![](bj-cup1.gif "fig:bj-cup1.gif")
 
 Hi Mark and all. I would tend to go with the Zen look of the BioPerl
 logo. You are right about the cup as it is right now (deigns 5 to 7), it
@@ -41,16 +39,12 @@ out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0
 and 1, a,c,g,t ? --[Foisys](User:Foisys "wikilink") 09:48, 7 February
 2006 (EST)
 
-Hey all, here's another one:
-
-![](Biojava-logo-rh1.png "Biojava-logo-rh1.png")
+Logo8 ![](Biojava-logo-rh1.png "fig:Biojava-logo-rh1.png")
 
 It's a caffeine molecule! --[Rholland](User::Rholland "wikilink") 17:45,
 8 February 2006 (SGT)
 
-Hi, here's my proposal:
-
-![](blue_spot_logo.jpg "blue_spot_logo.jpg")
+Logo9 ![](blue_spot_logo.jpg "fig:blue_spot_logo.jpg")
 
 --[Jordi](User::Jordi "wikilink") 20:31, 9 February 2006 (SGT)
 
@@ -65,17 +59,10 @@ Here are some proposals by Ong Swee Hoe from
 GIS](http://www.gis.a-star.edu.sg GIS "wikilink") in
 [Singapore](wp:Singapore "wikilink")
 
--   ![](OSHBiojava1.jpg "fig:OSHBiojava1.jpg")
+Logo10 ![](OSHBiojava1.jpg "fig:OSHBiojava1.jpg")
 
-<!-- -->
+Logo11 ![](OSHBiojava2.jpg "fig:OSHBiojava2.jpg")
 
--   ![](OSHBiojava2.jpg "fig:OSHBiojava2.jpg")
+Logo12 ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
 
-<!-- -->
-
--   ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
-
-<!-- -->
-
--   ![](Biojava4.jpg "fig:Biojava4.jpg")
-
+Logo13 ![](Biojava4.jpg "fig:Biojava4.jpg")

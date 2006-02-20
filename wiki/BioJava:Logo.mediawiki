@@ -7,52 +7,51 @@ The new wiki site calls for a new BioJava logo. If you have ideas for a new logo
 [[Image:Dilbert_logo.png]]
 
 == Logo Suggestions ==
-BioJava Logo 1 
+Logo1 
 [[Image:bio-java-logo.gif]]   Nice but we cannot incorporate the Sun Java logo, that would need to change.
 
 
 
 
-BioJava Logo 2
+Logo2
 [[Image:bio-java-logo-2.gif]]    I like this one.
 
 
 
 
-BioJava Logo 3
+Logo3
 [[Image:bio-java-logo-3.gif]]   This is good.
 
 
 
 
-BioJava Logo 4
+Logo4
 [[Image:bio-java-logo-4.gif]]
 
 
 
 
-BioJava Logo 5
+Logo5
 [[Image:bj-logo-5.gif]]    5, 6 and 7 are good but we would need to modify the cup so that we are not using the Sun Java logo.
 
 
 
 
 
-BioJava Logo 6 
+Logo6 
 [[Image:bj-log4.gif]]
 
 
 
 
-BioJava Logo 7 
+Logo7 
 [[Image:bj-cup1.gif]]
 
 
 Hi Mark and all. I would tend to go with the Zen look of the BioPerl logo. You are right about the cup as it is right now (deigns 5 to 7), it looks to much like Sun's. My original idea was to have a DNA helix swirl out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0 and 1, a,c,g,t ? --[[User:Foisys|Foisys]] 09:48, 7 February 2006 (EST)
 
 
-Hey all, here's another one:
-
+Logo8
 [[Image:Biojava-logo-rh1.png]]
 
 It's a caffeine molecule!
@@ -60,8 +59,7 @@ It's a caffeine molecule!
 
 
 
-Hi, here's my proposal:
-
+Logo9
 [[Image:blue_spot_logo.jpg]]
 
 --[[User::Jordi|Jordi]] 20:31, 9 February 2006 (SGT)
@@ -69,10 +67,11 @@ Hi, here's my proposal:
 -- Count my vote on this one. An idea: how about removing the blue circle and inverting colors white to blue. This would keep the logo in harmony with the background of the page. Just my 2 cents... --[[User:Foisys|Foisys]] 15:00, 16 February 2006 (EST)
 
 Here are some proposals by Ong Swee Hoe from [[http://www.gis.a-star.edu.sg GIS]] in [[wp:Singapore|Singapore]]
-* [[Image:OSHBiojava1.jpg]]
 
-* [[Image:OSHBiojava2.jpg]]
+Logo10 [[Image:OSHBiojava1.jpg]]
 
-* [[Image:OSHBiojava3.jpg]]
+Logo11 [[Image:OSHBiojava2.jpg]]
 
-* [[Image:Biojava4.jpg]]
+Logo12 [[Image:OSHBiojava3.jpg]]
+
+Logo13 [[Image:Biojava4.jpg]]
