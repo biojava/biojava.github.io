@@ -14,8 +14,8 @@ List rules
     flame war on the list, we would like to keep it that way.
 -   Job vacancies can be posted but only if relevant to the list, i.e
     they should be aimed at bioinformatics or genomics java programmers.
-    If you are not sure ask one of the [core
-    team](People:Core Team "wikilink") first.
+    If you are not sure ask one of the [core team](Core Team "wikilink")
+    first.
 -   Never spam!
 -   Off topic issues should be kept to a minimum. The subjectline should
     be pre-pended with [Off Topic] or similar
