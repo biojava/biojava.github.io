@@ -11,23 +11,12 @@ What needs starting?
     the complete workings of BioJava
 -   Consolidate cookbook, tutorials and BJX docbook into a single
     HowTo - time-consuming, might as well just write a book!
--   User mailing list - easy
--   Susbcribe to mailing list - easy
--   Mailing list archive - not sure how to transfer this? Probably link
-    to old archive
--   Dev mailing list stuff - as per user mailing list
 -   Related sites eg bioperl, biopython etc - easy, could use interwiki
 
 Whats in progress?
 ------------------
 
 -   Choosing a logo!
--   Tutorial - laborious but straightforward, some parts are in need of
-    updating and/or are no longer relevant (Formatting is done --
-    [Martin](User:Martin "wikilink") 21:02, 12 February 2006 (EST))
--   Participants - Mostly links to user pages. eg User:Mark. This is not
-    ideal. Jason is going to set up a People domain then we can set
-    User:Mark to redirect to People:Mark Schreiber
 
 Whats done already?
 -------------------
@@ -60,6 +49,13 @@ Whats done already?
 -   WebCVS - Unnecessary -- links to CVS and WebCVS are already in
     <BioJava:GetStarted>-- [Rholland](User:Rholland "wikilink") 14:51, 8
     February 2006 (SGT)
+-   Mailing list pages --[Mark](User:Mark "wikilink") 07:17, 23 February
+    2006 (EST)
+-   Participants --[Mark](User:Mark "wikilink") 07:17, 23 February 2006
+    (EST)
+-   Tutorial - laborious but straightforward, some parts are in need of
+    updating and/or are no longer relevant (Formatting is done --
+    [Martin](User:Martin "wikilink") 21:02, 12 February 2006 (EST))
 
 Inspiration
 -----------
