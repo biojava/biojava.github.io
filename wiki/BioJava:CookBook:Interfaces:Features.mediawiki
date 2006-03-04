@@ -6,6 +6,8 @@ A SequenceRenderContext has no way of interacting directly with a FeatureRendere
 
 The use of a FeatureBlockSequenceRenderer and a FeatureRenderer is demonstrated in the program below. A screen shot follows the program.
 
+[[image:Featview.jpg|frame|center|Features in a GUI]]
+
 <pre>
 import java.awt.*;
 import java.awt.event.*;
@@ -101,5 +103,3 @@ public class FeatureView extends JFrame {
   }
 }
 </pre>
-
-[[image:Featview.jpg]]
