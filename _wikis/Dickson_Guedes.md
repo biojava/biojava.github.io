@@ -15,7 +15,7 @@ Catarina](wp:Santa Catarina (state) "wikilink").
 
 I've contributed with BioJava by porting the
 [CookBook's](Biojava:Cookbook "wikilink") English version to this Wiki,
-but I've introduced to BioJava in 2005, when I've started my Bacharel's
+but I've introduced to BioJava at 2005, when I've started my Bacharel's
 thesis using it how a framework to contruct [Phylogenetic
 trees](wp:Phylogenetic trees "wikilink") "powered by" [Genetic
 algorithms](wp:Genetic algorithms "wikilink"). So... if all dones right,
