@@ -19,6 +19,9 @@ The use of a RulerRenderer and a MultiLineRenderer is demonstrated in
 the program below. A screen shot of the GUI is displayed below the
 program.
 
+[frame|center|View Sequence coordinates in a
+GUI](image:Multiview.jpg "wikilink")
+
     import java.awt.*;
     import java.awt.event.*;
     import javax.swing.*;
@@ -86,5 +89,3 @@ program.
         seqPanel.setRange(new RangeLocation(1,seq.length()));
       }
     }
-
-<image:Multiview.jpg>
