@@ -17,6 +17,8 @@ FeatureRenderer and act as a proxy.
 The use of a FeatureBlockSequenceRenderer and a FeatureRenderer is
 demonstrated in the program below. A screen shot follows the program.
 
+[frame|center|Features in a GUI](image:Featview.jpg "wikilink")
+
     import java.awt.*;
     import java.awt.event.*;
 
@@ -110,5 +112,3 @@ demonstrated in the program below. A screen shot follows the program.
         }
       }
     }
-
-<image:Featview.jpg>
