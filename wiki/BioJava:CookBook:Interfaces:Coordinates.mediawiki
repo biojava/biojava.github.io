@@ -6,6 +6,8 @@ Because a SequenceRenderContext can only use a single SequenceRenderer at a time
 
 The use of a RulerRenderer and a MultiLineRenderer is demonstrated in the program below. A screen shot of the GUI is displayed below the program.
 
+[[image:Multiview.jpg|frame|center|View Sequence coordinates in a GUI]]
+
 <pre>
 import java.awt.*;
 import java.awt.event.*;
@@ -75,5 +77,3 @@ public class MultiView extends JFrame {
   }
 }
 </pre>
-
-[[image:Multiview.jpg]]
