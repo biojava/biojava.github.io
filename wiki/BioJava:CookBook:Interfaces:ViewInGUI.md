@@ -19,6 +19,8 @@ order of residues is the SymbolSequenceRenderer.
 The following program demonstrates the use of a SequenceRenderContext
 and a SequenceRenderer to display the symbols in a Sequence.
 
+[frame|center|A screen shot of the GUI](image:Seqview.jpg "wikilink")
+
     import java.awt.*;
     import java.awt.event.*;
 
@@ -84,7 +86,3 @@ and a SequenceRenderer to display the symbols in a Sequence.
         }
       }
     }
-
-Below the program is a screen shot of the GUI.
-
-<image:Seqview.jpg>
