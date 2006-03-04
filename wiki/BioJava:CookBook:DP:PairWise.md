@@ -21,7 +21,8 @@ A simple markov model that produces pairwise alignments is shown in the
 classic book "Biological Sequence Analysis" by Durbin et al. (page 30).
 The model consists of 3 states (see the diagram below).
 
-<image:Pairwise.png>
+[frame|center|The Simple Markov Model's
+diagram](image:Pairwise.png "wikilink")
 
 The Match (M) state emits pairs of symbols and is heavily weighted to
 emit pairs of identical symbols (a match). It can also emit pairs of

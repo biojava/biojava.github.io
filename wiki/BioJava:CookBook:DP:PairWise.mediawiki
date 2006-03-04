@@ -6,7 +6,7 @@ Potentially frustrating to the new user of biojava is that there is no class tha
 
 A simple markov model that produces pairwise alignments is shown in the classic book "Biological Sequence Analysis" by Durbin et al. (page 30). The model consists of 3 states (see the diagram below).
 
-[[image:Pairwise.png]]
+[[image:Pairwise.png|frame|center|The Simple Markov Model's diagram]]
 
 The Match (M) state emits pairs of symbols and is heavily weighted to emit pairs of identical symbols (a match). It can also emit pairs of mismatched symbols (a mismatch). The code below treats all mismatches equally, however by using different probabilities for each mismatch one can generate the equivalent of a substitution matrix. There are two insert states (I1 and I2) which emit a symbol-gap pair or a gap-symbol pair respectively. These are the equivalent of a gap in the query or subject sequence. The star shaped state is the start and finish point. In biojava this is called the 'magical' state.
 
