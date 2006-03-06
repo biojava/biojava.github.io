@@ -6,7 +6,7 @@ Une source de frustration assez fréquente pour l'utilisateur débutant de BioJa
 
 Un simple modèle de Markov capable de produire des alignements est démontré dans le livre de Durbin et al., "Biological Sequence Analysis", à la page 30. ce modèle contient 3 états.
 
-[[image:Pairwise.png]]
+[[image:Pairwise.png|frame|center|Diagramme du mod&egrave;le simple de Markov utilis&eacute;]]
 
 L'état ''Match'' (M) transmet des paires de symboles et est fortement biaisé pour transmettre des paires de symboles identiques(''match''). Il peut également transmettre des paires de symboles non-identiques (''mismatch''). Le code qui suit traite toutes les non-identités de la meme manière. Il est toutefois possible d'utiliser différentes probabilités d'états ''mismatch'' ce qui correspond alors à définir différentes matrices de substitution. Il existe également deux états d'insertion (I1 and I2) qui transmettent des paires symbole-gap ou gap-symbole respectivement; ceux-ci correspondent è l'insertion d'espace dans la séquence inconnue ou la séquence témoin. L'état représenté par l'étoile correspond au point de départ et d'arrivée, ce que BioJava appelle l'état "magique".
 
