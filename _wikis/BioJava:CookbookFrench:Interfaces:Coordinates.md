@@ -85,4 +85,5 @@ se trouve sous le programme.
       }
     }
 
-<image:Multiview.jpg>
+[frame|center|Affichage du système de coordonnées d'une
+séquence](image:Multiview.jpg "wikilink")

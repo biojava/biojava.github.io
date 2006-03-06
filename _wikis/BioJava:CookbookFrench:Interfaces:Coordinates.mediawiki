@@ -72,4 +72,4 @@ public class MultiView extends JFrame {
 }
 </pre>
 
-[[image:Multiview.jpg]]
+[[image:Multiview.jpg|frame|center|Affichage du syst&egrave;me de coordonn&eacute;es d'une s&eacute;quence]]
