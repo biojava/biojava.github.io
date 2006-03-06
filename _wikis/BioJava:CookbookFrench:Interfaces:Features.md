@@ -102,4 +102,5 @@ d'écran suit le programme.
       }
     }
 
-<image:Featview.jpg>
+[frame|center|Affichage des Features d'une
+séquence](image:Featview.jpg "wikilink")
