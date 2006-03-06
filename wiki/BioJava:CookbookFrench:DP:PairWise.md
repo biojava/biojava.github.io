@@ -22,7 +22,8 @@ Un simple modèle de Markov capable de produire des alignements est
 démontré dans le livre de Durbin et al., "Biological Sequence Analysis",
 à la page 30. ce modèle contient 3 états.
 
-<image:Pairwise.png>
+[frame|center|Diagramme du modèle simple de Markov
+utilisé](image:Pairwise.png "wikilink")
 
 L'état *Match* (M) transmet des paires de symboles et est fortement
 biaisé pour transmettre des paires de symboles identiques(*match*). Il
