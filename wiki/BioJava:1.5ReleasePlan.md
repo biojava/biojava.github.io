@@ -66,6 +66,7 @@ Requirements:
 -   Where totally new functionality is introduced new cookbook, demo, or
     tutorial examples should be added.
 -   New API's should have complete javadocs.
+-   New API's should be marked with proper @since tags.
 -   New API's should have good JUnit test coverage.
 -   JARs, JavaDocs and source code posted to webserver (admin task).
 -   Links to download and API updated (admin task).
