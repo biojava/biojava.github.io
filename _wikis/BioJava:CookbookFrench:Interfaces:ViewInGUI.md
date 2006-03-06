@@ -83,4 +83,5 @@ et d'un *SequenceRenderer* pour afficher les symboles d'une *Sequence*.
 
 Le code précédent donne l'image suivante:
 
-<image:Seqview.jpg>
+[frame|center|Affichage simple d'une séquence dans une fenêtre
+graphique](image:Seqview.jpg "wikilink")
