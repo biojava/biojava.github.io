@@ -91,4 +91,4 @@ public class FeatureView extends JFrame {
 }
 </pre>
 
-[[image:Featview.jpg]]
+[[image:Featview.jpg|frame|center|Affichage des Features d'une s&eacute;quence]]
