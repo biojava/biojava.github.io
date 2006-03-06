@@ -70,4 +70,4 @@ public class SeqView extends JFrame {
 
 Le code précédent donne l'image suivante:
 
-[[image:Seqview.jpg]]
+[[image:Seqview.jpg|frame|center|Affichage simple d'une s&eacute;quence dans une fen&ecirc;tre graphique]]
