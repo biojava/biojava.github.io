@@ -128,7 +128,7 @@ consideration.
 
 #### Are RichSequence objects compatable with GUI code?
 
--   We need a volunteer to test how well RichSequence objects behaive
+-   We need a volunteer to test how well RichSequence objects behave
     with biojava's GUI code.
 -   GUI code as well as relevant javadocs, demos, and cookbook code may
     need to change.
@@ -145,9 +145,20 @@ all relevant but it would pay to check.
 -   Can someone run a change tool that will detect API differences that
     would prevent biojava 1.4 apps compiling with biojava 1.5
 
-### Release notes
-
 Wish-list, or Items-yet-to-be-sorted
 ------------------------------------
 
 Edit this section with items to be considered for the 1.5 release
+
+Reference
+---------
+
+The Apache Jakarta Commons project release prep and release notes might
+contain helpful information, particularly as far as providing checksums
+for and signing releases:
+
+-   [Jakarta Commons - Preparations for a
+    Release](http://jakarta.apache.org/commons/releases/prepare.html)
+-   [Jakarta Commons - Cutting the
+    Release](http://jakarta.apache.org/commons/releases/release.html)
+
