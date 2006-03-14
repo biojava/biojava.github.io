@@ -22,7 +22,6 @@ calculating sequence composition.
      * Created on October 10, 2005, 2:30 PM
      */
 
-    package com.nitd.novartis.app;
 
     import java.io.BufferedReader;
     import java.io.FileOutputStream;
@@ -270,7 +269,7 @@ calculating sequence composition.
          */
         public static void help(){
             HelpFormatter helpf = new HelpFormatter();
-            helpf.printHelp("java seqanalyzer.stats.Composition [options]", options());
+            helpf.printHelp("java Composition [options]", options());
             System.exit(0);
         }
         
