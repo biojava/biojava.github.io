@@ -183,9 +183,11 @@ Comment faire pour ...?
     XML?](BioJava:CookbookFrench:Distribution:XML "wikilink")
 -   [Comment construire un échantilloneur de Gibbs à l'aide de
     Distributions?](BioJava:CookbookFrench:Distribution:Gibbs "wikilink")
--   [Comment utiliser les Distributions afin d'obtenir un classificateur
-    bayésien
+-   [Comment utiliser les Distributions afin d'obtebir un classificateur
+    bayÉsien
     simple?](BioJava:CookbookFrench:Distribution:Bayes "wikilink")
+-   [COmment calculer la composition d'une ou plusieurs
+    séquences?](BioJava:CookbookFrench:Distribution:Composition "wikilink")
 
 ### Matrices et Programmation Dynamique
 
