@@ -193,6 +193,8 @@ How Do I....?
     sampler](BioJava:CookBook:Distribution:Gibbs "wikilink")
 -   [Using Distributions to make a naive Bayes
     classifier](BioJava:CookBook:Distribution:Bayes "wikilink")
+-   [How do I calculate the compositon of a Sequence or collection of
+    Sequences?](Biojava:CookBook:Distribution:Composition "wikilink")
 
 ### Weight Matrices and Dynamic Programming
 
