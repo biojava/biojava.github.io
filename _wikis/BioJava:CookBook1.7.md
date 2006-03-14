@@ -191,6 +191,8 @@ How Do I....?
     XML](BioJava:CookBook:Distribution:XML "wikilink")?
 -   [Using Distributions to make a Gibbs
     sampler](BioJava:CookBook:Distribution:Gibbs "wikilink")
+-   [Using Distributions to make a naive Bayes
+    classifier](BioJava:CookBook:Distribution:Bayes "wikilink")
 
 ### Weight Matrices and Dynamic Programming
 
