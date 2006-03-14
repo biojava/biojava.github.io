@@ -195,6 +195,7 @@ How Do I....?
     classifier](BioJava:CookBook:Distribution:Bayes "wikilink")
 -   [How do I calculate the compositon of a Sequence or collection of
     Sequences?](Biojava:CookBook:Distribution:Composition "wikilink")
+    This example uses JDK 1.5 and BioJavaX
 
 ### Weight Matrices and Dynamic Programming
 
