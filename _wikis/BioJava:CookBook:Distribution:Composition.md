@@ -5,6 +5,17 @@ title: BioJava:CookBook:Distribution:Composition
 Calculating the composition of a Sequence or collection of Sequences
 --------------------------------------------------------------------
 
+The following program is a full application that can determine the
+composition of one or more `SymbolList`s or `RichSequence` objects. The
+application can count words or any order (size) and can count them as
+overlapping or non-overlapping words (eg triplets or codons).
+
+The program uses the Jakarta CLI library for processing command line
+options. It uses java 1.5 generics for type safety. It also demonstrates
+the use of the BioJavaX I/O framework including customizations that
+ignore things like features and comments that are not relevant to
+calculating sequence composition.
+
     /*
      * Composition.java
      *
