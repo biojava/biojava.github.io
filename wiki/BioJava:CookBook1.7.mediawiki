@@ -104,6 +104,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:Distribution:Custom|How can I make an OrderNDistribution over a custom Alphabet]]?
 * [[BioJava:CookBook:Distribution:XML|How can I write a Distribution as XML]]?
 * [[BioJava:CookBook:Distribution:Gibbs|Using Distributions to make a Gibbs sampler]]
+* [[BioJava:CookBook:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
 
 === Weight Matrices and Dynamic Programming ===
 
