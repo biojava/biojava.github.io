@@ -96,6 +96,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:Distirbution:Custom|Comment créer une OrderNDistribution avec un Alphabet sur mesure?]]
 * [[BioJava:CookbookFrench:Distribution:XML|Comment écrire une Distribution en format XML?]]
 * [[BioJava:CookbookFrench:Distribution:Gibbs|Comment construire un &eacute;chantilloneur de Gibbs &agrave; l'aide de Distributions?]]
+* [[BioJava:CookbookFrench:Distribution:Bayes|Comment utiliser les Distributions afin d'obtebir un classificateur bay&eacute;sien simple?]]
 
 === Matrices et Programmation Dynamique ===
 
