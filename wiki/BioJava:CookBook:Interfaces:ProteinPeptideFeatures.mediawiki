@@ -1,4 +1,4 @@
-How do I display protein features / a Peptide Digest?
+== How do I display protein features / a Peptide Digest? ==
 
 This example demonstrates features of the ProteinDigestDemo. Proteins are typically viewed at or close to single residue resolution so we use a SequencePanelWrapper that renders the sequence over several horizontal or vertical tracks in the display. In this way, at residue resolution we can see far more of the sequence on screen.
 

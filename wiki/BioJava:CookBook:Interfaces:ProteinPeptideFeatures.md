@@ -3,6 +3,7 @@ title: BioJava:CookBook:Interfaces:ProteinPeptideFeatures
 ---
 
 How do I display protein features / a Peptide Digest?
+-----------------------------------------------------
 
 This example demonstrates features of the ProteinDigestDemo. Proteins
 are typically viewed at or close to single residue resolution so we use
