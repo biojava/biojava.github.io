@@ -120,6 +120,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:Interfaces:ViewInGUI|How can I display a Sequence in a GUI]]?
 * [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
 * [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
+* [[BioJava:CookBook:Interfaces:PeptideDigest|How can I display a peptide digest]]?
 
 === BioSQL and Sequence Databases ===
 
