@@ -219,6 +219,8 @@ How Do I....?
     coordinates](BioJava:CookBook:Interfaces:Coordinates "wikilink")?
 -   [How can I display
     features](BioJava:CookBook:Interfaces:Features "wikilink")?
+-   [How can I display a peptide
+    digest](BioJava:CookBook:Interfaces:PeptideDigest "wikilink")?
 
 ### BioSQL and Sequence Databases
 
