@@ -9,21 +9,28 @@ This example demonstrates several different features of the
 ProteinDigestDemo. To best view this demo you will need a swissprot
 format file that contains secondary structural elements in its Feature
 Table. The following link is for such a file:
-[<http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz>?-id+465\_c1S9c9A+-e+[SWISSPROT:'PPARG\_HUMAN']+-qnum+1+-enum+2]
+
+    http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz?-id+465_c1S9c9A+-e+[SWISSPROT:'PPARG_HUMAN']+-qnum+1+-enum+2
 
 **1) Wrapped Sequence Display**
 
-`   Proteins are typically viewed at or close to single residue resolution so we use a SequencePanelWrapper that renders the sequence over several horizontal or vertical tracks in the display. In this way, at residue resolution we can see far more of the sequence on screen and it looks far more like something we could print or publish.`  
+`   Proteins are typically viewed at or close to single residue resolution so we use an org.biojava.bio.gui.sequence.SequencePanelWrapper that renders the sequence over several horizontal or vertical tracks in the display. In this way, at residue resolution we can see far more of the sequence on screen and it looks far more like something we could print or publish.`  
 `   The SequencePanelWrapper makes use of different layout stragies via classes that implement the org.biojava.bio.gui.sequence.tracklayout.TrackLayout interface. A simple TrackLayout strategy is to render the same number of residues per line. A more complicated strategy is to render different numbers of residues on each line. This might be useful in cases where you would not want to break up the rendering of a feature across lines.`
 
 **2) An offset ruler**
 
-`  For when your sequence starts at a position other than +1. The example is when your protein contains a his tag that would otherwise make the sequence coordinates incompatible.`
+`  For when a sequence starts at a position other than +1. The example is when your protein contains a his tag that would otherwise make the sequence coordinates incompatible.`
 
 **3) Display of Secondary Structural Features (Helices, Turns, Sheets)
 and Domains**
 
-`   A Swissprot sequence file when loaded may include secondary structural features from it's Feature Table. Here we make use of org.biojava.bio.gui.sequence.GlyphFeatureRenderer's and subclasses that render glyphs from the org.biojava.bio.gui.glyph package and implement the org.biojava.bio.gui.glyph.Glyph interface.`
+`   A Swissprot sequence file when loaded may include secondary structural features from it's Feature Table. Here we make use of org.biojava.bio.gui.sequence.GlyphFeatureRenderer's and subclasses such as SecondaryStructureFeatureRenderer that render glyphs (HelixGlyph, TurnGlyph etc.) from the org.biojava.bio.gui.glyph package and are implementors of the org.biojava.bio.gui.glyph.Glyph interface.`
+
+**4) Display of a Protein Digest**
+
+`   This example brings together the sequence gui and the org.biojava.bio.proteomics package. The key class is an org.biojava.bio.gui.sequence.PeptideDigestRenderer. We use the Digest class from the proteomics package to generate sequence features of the Digest.PEPTIDE_FEATURE_TYPE and then filter for these with the PeptideDigestRenderer. The PeptideDigestRenderer is a subclass of MultiLineRenderer and internally sorts  and aligns the features so that they do not overlap in the display, creating extra lines as necessary. The rendering of the features is very configurable with the parent class method: `**`public`
+`FeatureRenderer` `createRenderer(int`
+`lane)`**` overridden for custom rendering.`
 
 ------------------------------------------------------------------------
 
