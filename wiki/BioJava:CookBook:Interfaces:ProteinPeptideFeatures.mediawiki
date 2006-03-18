@@ -1,12 +1,12 @@
 == How do I display protein features / a Peptide Digest? ==
 
-This example demonstrates several different features of the ProteinDigestDemo. To best view this demo you will need a swissprot format file that contains secondary structural elements in its Feature Table.
+This example demonstrates several different features of the ProteinDigestDemo. To best view this demo you will need a SwissProt format file that contains secondary structural elements in its Feature Table.
 The following link is for such a file: <pre>http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz?-id+465_c1S9c9A+-e+[SWISSPROT:'PPARG_HUMAN']+-qnum+1+-enum+2</pre>
 
 '''1) Wrapped Sequence Display'''
 <p>
     Proteins are typically viewed at or close to single residue resolution so we use an org.biojava.bio.gui.sequence.SequencePanelWrapper that renders the sequence over several horizontal or vertical tracks in the display. In this way, at residue resolution we can see far more of the sequence on screen and it looks far more like something we could print or publish.
-    The SequencePanelWrapper makes use of different layout stragies via classes that implement the org.biojava.bio.gui.sequence.tracklayout.TrackLayout interface. A simple TrackLayout strategy is to render the same number of residues per line. A more complicated strategy is to render different numbers of residues on each line. This might be useful in cases where you would not want to break up the rendering of a feature across lines.
+    The SequencePanelWrapper makes use of different layout strategies via classes that implement the org.biojava.bio.gui.sequence.tracklayout.TrackLayout interface. A simple TrackLayout strategy is to render the same number of residues per line. A more complicated strategy is to render different numbers of residues on each line. This might be useful in cases where you would not want to break up the rendering of a feature across lines.
 </p>
 '''2) An offset ruler'''
 <p>
