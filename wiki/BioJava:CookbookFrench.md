@@ -186,7 +186,7 @@ Comment faire pour ...?
 -   [Comment utiliser les Distributions afin d'obtebir un classificateur
     bayÉsien
     simple?](BioJava:CookbookFrench:Distribution:Bayes "wikilink")
--   [COmment calculer la composition d'une ou plusieurs
+-   [Comment calculer la composition d'une ou plusieurs
     séquences?](BioJava:CookbookFrench:Distribution:Composition "wikilink")
 
 ### Matrices et Programmation Dynamique
