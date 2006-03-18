@@ -1,5 +1,7 @@
 == How do I display protein features / a Peptide Digest? ==
 
+'''Note: this recipe makes use of the latest BioJava version available via CVS.''' 
+
 This example demonstrates several different features of the ProteinDigestDemo. To best view this demo you will need a SwissProt format file that contains secondary structural elements in its Feature Table.
 The following link is for such a file: <pre>http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz?-id+465_c1S9c9A+-e+[SWISSPROT:'PPARG_HUMAN']+-qnum+1+-enum+2</pre>
 
