@@ -211,6 +211,9 @@ Comment faire pour ...?
     séquence?](BioJava:CookbookFrench:Interfaces:Coordinates "wikilink")
 -   [Comment afficher les caractéristiques d'une
     séquence?](BioJava:CookbookFrench:Interfaces:Features "wikilink")
+-   [Comment afficher les caractéristiques d'une protéine avec les
+    fragments d'une digestion tryptique (ou
+    autre)?](BioJava:CookbookFrench:Interfaces:ProteinPeptideFeatures "wikilink")
 
 ### Intégration avec des bases de données externes: OBDC / JDBC / BioSQL
 
