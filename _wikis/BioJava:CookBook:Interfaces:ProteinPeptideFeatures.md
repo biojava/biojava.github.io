@@ -5,6 +5,9 @@ title: BioJava:CookBook:Interfaces:ProteinPeptideFeatures
 How do I display protein features / a Peptide Digest?
 -----------------------------------------------------
 
+**Note: this recipe makes use of the latest BioJava version available
+via CVS.**
+
 This example demonstrates several different features of the
 ProteinDigestDemo. To best view this demo you will need a SwissProt
 format file that contains secondary structural elements in its Feature
