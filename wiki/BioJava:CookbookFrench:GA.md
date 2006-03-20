@@ -7,32 +7,32 @@ Comment puis-je faire un algorithme génétique avec BioJava?
 
 Avec l'introduction du package org.biojavax.ga dans la version
 biojava-live, il est maintenant possible de créer des algorithmes
-génétiques avec BioJava. Les alogrithmes génétiques sont des algorithmes
-de simulation, d'optimisation ou de solutions de problèmes qui tentent
-de faire "évoluer" une solution pour un problème. La solution en
-volution est représenée sous la forme d'un "chromosome", typiquement une
-chaîne de caractères binaires quoique d'autres formes d'encodage
-puissent être possibles. À chaque génération (ou itération), une
-population de chromosomes est disponible. Tel de vrais chromosomes, ils
-sont capables de muter et de se recombiner à une certaine fréquence pour
-chaque génération. Le point critique est qu'à chaque ronde de
-mutation/recombinaison potentielles, seul les chromosomes ayant la
+génétiques avec BioJava. Les algorithmes génétiques sont des algorithmes
+de simulation, d'optimisation ou de solution de problèmes qui tentent de
+faire "évoluer" une solution pour un problème. La solution en évolution
+est représenée sous la forme d'un "chromosome", typiquement une chaîne
+de caractères binaires quoique d'autres formes d'encodage puissent être
+possibles. À chaque génération (ou itération), une population de
+chromosomes est disponible. Tel de vrais chromosomes, ils sont capables
+de muter et de se recombiner à une certaine fréquence pour chaque
+génération. Le point critique est qu'à chaque ronde de
+mutation/recombinaison potentielle, seul les chromosomes ayant la
 meilleure solution sont sélectionnés pour réplication. Par conséquent,
 la tendance de l'algorithme sera de produire des solutions de plus en
 plus efficaces pour une population.
 
 L'exemple ci-dessous démontre comment faire un algorithme génétique très
 simple en utilisant l'architecture GA de BioJava. Cette architecture est
-conçue afin d'etre très flexible et utilise une philosophie utilisant
+conçue afin d'être très flexible et utilise une philosophie utilisant
 des pièces détachées interchangeables. L'interface au coeur de
 l'architecture s'appelle GeneticAlgorithm qui a une implémentation par
 défaut, SimpleGeneticAlgorithm. GeneticAlgorithm prends n'importe quelle
 Population d'organismes afin de lui faire faire les itérations aux
 travers des générations. À chaque étape, une MutationFunction et une
-CrossOverFunction sont responsables pour l'introduction de variations.
-Une FitnessFunction est quand à elle responsable d'évaluer la capacité
-de chaque Organisme dans le contexte de sa Population d'origine. Parce
-que cette capacité se calcule dans le contexte d'une Population, il est
+CrossOverFunction sont responsables de l'introduction de variations. Une
+FitnessFunction est quand à elle responsable d'évaluer la capacité de
+chaque Organisme dans le contexte de sa Population d'origine. Parce que
+cette capacité se calcule dans le contexte d'une Population, il est
 possible de modéliser la compétition à l'intérieur de cette Population.
 Les Organismes sélectionnés pour réplication sont choisis par la
 SelectionFunction, d'ordinaire sur la base de cette FitnessFunction. Le
@@ -41,7 +41,7 @@ lui dira. Ceci pourrais se faire sur la base de l'obtention d'une
 solution adéquate ou après une certain nombre d'itérations.
 
 Les fonctions ainsi que les critères d'arrêt sont tous des interfaces
-Jave et par conséquent, des implémentations personnalisées sont
+Java et par conséquent, des implémentations personnalisées sont
 possibles. Les seuls pré-requis pour le GeneticAlgorithm sont:
 
 -   une Population;
