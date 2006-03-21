@@ -1,6 +1,6 @@
-== Comment ajouter, voir et &eacuteliminer des objets de type Sequence d'une base de donn&eacute;es BioSQL? ==
+== Comment ajouter, voir et &eacute;liminer des objets de type Sequence d'une base de donn&eacute;es BioSQL? ==
 
-BioJava contient des classes utilitaires qui donne l'aspect d'une instance SequenceDB &agrave; n'importe quel base de donn&eacute;s respectant la sch&eacute;ma BioSQL. La classe qui vous utiliserait probablement le plus est ''BioSQLSequenceDB''. ''BioSQLSequenceDB'' est une instance d&eacute;riv&eacute;e de ''SequenceDB'' et s'utilise exactement de la m&ecirc;me mani&egrave;re. L'heureuse cons&eacute;quence de cet &eacute;tat de fait est que ceci rends inutile l'utilisation de commandes SQL ou la connaissance du sc&eacute;ma BioSQL. Toute op&eacute;ration faite sur l'objet ''BioSSQLSequenceDB'' se r&eacute;percute de fait dans la base de donn&eacute;es BioSQL qui se trouve derri&egrave; cette classe.
+BioJava contient des classes utilitaires qui donne l'aspect d'une instance SequenceDB &agrave; n'importe quel base de donn&eacute;s respectant la sch&eacute;ma BioSQL. La classe qui vous utiliserait probablement le plus est ''BioSQLSequenceDB''. ''BioSQLSequenceDB'' est une instance d&eacute;riv&eacute;e de ''SequenceDB'' et s'utilise exactement de la m&ecirc;me mani&egrave;re. L'heureuse cons&eacute;quence de cet &eacute;tat de fait est que ceci rends inutile l'utilisation de commandes SQL ou la connaissance du sch&eacute;ma BioSQL. Toute op&eacute;ration faite sur l'objet ''BioSQLSequenceDB'' se r&eacute;percute de fait dans la base de donn&eacute;es BioSQL qui se trouve derri&egrave;re cette classe.
 
 L'exemple suivant montre la technique &agrave; utiliser afin de se brancher &agrave; une base de donn&eacute;es BioSQL, comment y ajouter une s&eacute;quence, comme faire une recherche sur la base de donn&eacute;es et comment &eacute;liminer cette s&eacute;quence de la base de donn&eacute;es.
 
@@ -71,7 +71,7 @@ public class Connect {
 
       try { 
         //eliminer l'inscription a la bd
-        //impossible a moins qu' aucune reference n'existe pour cette sequence 
+        //impossible a moins qu'aucune reference n'existe pour cette sequence 
         seq = null;
         System.out.println("deleting test_seq1");
         db.removeSequence("test_seq1"); 
