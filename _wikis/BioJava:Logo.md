@@ -66,3 +66,5 @@ Logo11 ![](OSHBiojava2.jpg "fig:OSHBiojava2.jpg")
 Logo12 ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
 
 Logo13 ![](Biojava4.jpg "fig:Biojava4.jpg")
+
+Logo14 ![](Biojavalogo.gif "fig:Biojavalogo.gif")
