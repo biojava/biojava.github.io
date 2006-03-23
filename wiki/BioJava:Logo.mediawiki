@@ -77,3 +77,5 @@ Logo12 [[Image:OSHBiojava3.jpg]]
 Logo13 [[Image:Biojava4.jpg]]
 
 Logo14 [[Image:Biojavalogo.gif]]
+
+If you like it I will upload the svg version, so you can change colors
