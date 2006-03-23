@@ -67,6 +67,6 @@ Logo12 ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
 
 Logo13 ![](Biojava4.jpg "fig:Biojava4.jpg")
 
-Logo14 ![](Biojavalogo.gif "fig:Biojavalogo.gif")
+Logo14 ![](Biojavalogo.png "fig:Biojavalogo.png")
 
 If you like it I will upload the svg version, so you can change colors
