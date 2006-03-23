@@ -75,3 +75,5 @@ Logo11 [[Image:OSHBiojava2.jpg]]
 Logo12 [[Image:OSHBiojava3.jpg]]
 
 Logo13 [[Image:Biojava4.jpg]]
+
+Logo14 [[Image:Biojavalogo.gif]]
