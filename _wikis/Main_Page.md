@@ -88,11 +88,15 @@ The BioJava tutorial is [here](BioJava:Tutorial "wikilink")
 Thanks
 ------
 
-The [open-bio](http://www.open-bio.org/) servers reside in Cambridge,
-Massachusetts USA with colocation facilities and internet bandwidth
-donated by [Wyeth](http://www.wyeth.com/) Research. We would like to
-thank Chris Dagdigian from [The Bioteam](http://www.bioteam.net/) for
-maintaining the bio\* servers.
+The [open-bio](http://www.open-bio.org/) servers reside in in a Tier 1
+Boston area colocation facility. Infrastructure geeks can see pictures
+of the colocation cage and the new OBF servers online at this URL:
+[1](http://bioteam.net/gallery/bioteamBDC) -- those servers also host
+EMBOSS FTP/CVS and mailing lists.
+
+We would like to thank Chris Dagdigian from [The
+Bioteam](http://www.bioteam.net/) for providing and maintaining the
+bio\* servers.
 
 Please see [documentation on customizing the
 interface](http://meta.wikipedia.org/wiki/MediaWiki_i18n) and the
