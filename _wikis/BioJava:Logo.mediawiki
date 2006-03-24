@@ -79,3 +79,5 @@ Logo13 [[Image:Biojava4.jpg]]
 Logo14 [[Image:Biojavalogo.png]]
 
 If you like it I will upload the svg version, so you can change colors
+
+Logo15 [[Image:BIOJAVA_LOGO_samiul.jpg]]
