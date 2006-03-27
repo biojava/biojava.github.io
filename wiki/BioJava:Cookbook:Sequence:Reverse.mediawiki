@@ -2,7 +2,7 @@
 
 To reverse complement a DNA SymbolList or Sequence simply use the DNATools.reverseComplement(SymbolList sl) method. An equivalent method is found in RNATools for performing the same operation on RNA based Sequences and SymbolLists.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -28,4 +28,4 @@ public class ReverseComplement {
     }
   }
 }
-</pre>
+</java>
