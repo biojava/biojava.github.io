@@ -6,9 +6,7 @@ The [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbol
 
 Contrast this with the definition of a [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol]. A [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] can be validly divided into components that are still part of the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet]. In this way a [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] can be ambiguous. For further discussion of [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] follow this link.
 
-== Teste ==
-
-<pre>
+<java>
 package biojava_in_anger;
 
 import java.util.*;
@@ -36,4 +34,4 @@ public class BreakingComponents {
     }
   }
 }
-</pre>
+</java>
