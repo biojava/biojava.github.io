@@ -27,19 +27,20 @@ on different virtual machines (thanks to some
 [Serialization](http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html)
 magic) which means BioJava works across RMI.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class Canonical {
-      public static void main(String[] args) {
+public class Canonical {
 
-        //get the DNA alphabet two ways
-        Alphabet a1 = DNATools.getDNA();
-        Alphabet a2 = AlphabetManager.alphabetForName("DNA");
+` public static void main(String[] args) {`
 
-        //are they equal
-        System.out.println("equal: "+ a1.equals(a2));
-        //are they canonical
-        System.out.println("canonical: "+ (a1 == a2));
-      }
-    }
+`   //get the DNA alphabet two ways`  
+`   Alphabet a1 = DNATools.getDNA();`  
+`   Alphabet a2 = AlphabetManager.alphabetForName("DNA");`
+
+`   //are they equal`  
+`   System.out.println("equal: "+ a1.equals(a2));`  
+`   //are they canonical`  
+`   System.out.println("canonical: "+ (a1 == a2));`  
+` }`
+
+} </java>

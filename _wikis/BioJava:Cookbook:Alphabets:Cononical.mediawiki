@@ -5,7 +5,7 @@ In Biojava the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Al
 This is even true of [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] on different virtual machines (thanks to some [http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html Serialization] magic) which means BioJava works across RMI.
 
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -22,4 +22,4 @@ public class Canonical {
     System.out.println("canonical: "+ (a1 == a2));
   }
 }
-</pre>
+</java>
