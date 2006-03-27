@@ -18,45 +18,46 @@ can then be used to make
 [Distributions](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html),
 etc.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
+import java.util.\*;
 
-    public class Binary {
-      public static void main(String[] args) {
+public class Binary {
 
-        //make the "zero" Symbol with no annotation
-        Symbol zero =
-            AlphabetManager.createSymbol("zero", Annotation.EMPTY_ANNOTATION);
+` public static void main(String[] args) {`
 
-        //make the "one" Symbol
-        Symbol one =
-            AlphabetManager.createSymbol("one", Annotation.EMPTY_ANNOTATION);
+`   //make the "zero" Symbol with no annotation`  
+`   Symbol zero =`  
+`       AlphabetManager.createSymbol("zero", Annotation.EMPTY_ANNOTATION);`
 
-        //collect the Symbols in a Set
-        Set symbols = new HashSet();
-        symbols.add(zero); symbols.add(one);
+`   //make the "one" Symbol`  
+`   Symbol one =`  
+`       AlphabetManager.createSymbol("one", Annotation.EMPTY_ANNOTATION);`
 
-        //make the Binary Alphabet
-        FiniteAlphabet binary = new SimpleAlphabet(symbols, "Binary");
+`   //collect the Symbols in a Set`  
+`   Set symbols = new HashSet();`  
+`   symbols.add(zero); symbols.add(one);`
 
-        //iterate through the symbols to show everything works
-        for (Iterator i = binary.iterator(); i.hasNext(); ) {
-          Symbol sym = (Symbol)i.next();
-          System.out.println(sym.getName());
-        }
+`   //make the Binary Alphabet`  
+`   FiniteAlphabet binary = new SimpleAlphabet(symbols, "Binary");`
 
-        //it is usual to register newly creates Alphabets with the AlphabetManager
-        AlphabetManager.registerAlphabet(binary.getName(), binary);
+`   //iterate through the symbols to show everything works`  
+`   for (Iterator i = binary.iterator(); i.hasNext(); ) {`  
+`     Symbol sym = (Symbol)i.next();`  
+`     System.out.println(sym.getName());`  
+`   }`
 
-        /*
-         * The newly created Alphabet will have been registered with the
-         * AlphabetManager under the name "Binary". If you retreive an instance
-         * of it using this name it should be canonical with the previous instance
-         */
-        Alphabet alpha = AlphabetManager.alphabetForName("Binary");
+`   //it is usual to register newly creates Alphabets with the AlphabetManager`  
+`   AlphabetManager.registerAlphabet(binary.getName(), binary);`
 
-        //check canonical status
-        System.out.println(alpha == binary);
-      }
-    }
+`   /*`  
+`    * The newly created Alphabet will have been registered with the`  
+`    * AlphabetManager under the name "Binary". If you retreive an instance`  
+`    * of it using this name it should be canonical with the previous instance`  
+`    */`  
+`   Alphabet alpha = AlphabetManager.alphabetForName("Binary");`
+
+`   //check canonical status`  
+`   System.out.println(alpha == binary);`  
+` }`
+
+} </java>
