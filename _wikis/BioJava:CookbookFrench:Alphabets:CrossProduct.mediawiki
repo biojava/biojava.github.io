@@ -4,7 +4,7 @@ Les ''CrossProductAlphabets'' sont le résultat de la multiplication d'autres ''
 
 Les ''CrossProductAlphabets'' sont crées par nom (si les ''Alphabets'' qui les constitutent sont enregistrés avec le ''AlphabetManager'') ou en créant une liste des ''Alphabets'' désirés et en fabriquant l'''Alphabet'' à partir de cette liste. Les deux approches sont utilisées dans l'exemple ci-dessous.
 
-<pre>
+<java>
 import java.util.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -24,4 +24,4 @@ public class CrossProduct {
     System.out.println(codon == codon2);
   }
 }
-</pre>
+</java>
