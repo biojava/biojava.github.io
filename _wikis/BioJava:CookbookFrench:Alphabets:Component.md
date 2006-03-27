@@ -28,31 +28,32 @@ Cette situation contraste avec la définition d'un *BasisSymbol*. Un
 du même *Alphabet*. de cette façon, un *BasisSymbol* peut être ambigüe.
 Pour une discussion sur les *BasisSymbols*, cliquer ici.
 
-    package biojava_in_anger;
+<java> package biojava\_in\_anger;
 
-    import java.util.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+import java.util.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class BreakingComponents {
-        public static void main(String[] args) {
-            
-            // créer l'Alphabet "codon"
-            List l = Collections.nCopies(3, DNATools.getDNA());
-            Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);
-            
-                  // obtenir le premier Symbol de cet Alphabet
-            Iterator iter = ((FiniteAlphabet)alpha).iterator();
-            AtomicSymbol codon = (AtomicSymbol)iter.next();
-            System.out.print(codon.getName()+" is made of: ");
-            
-            // décomposer pour obtenir une liste des composantes
-            List symbols = codon.getSymbols();
-            for(int i = 0; i < symbols.size(); i++){
-                if(i != 0)
-                    System.out.print(", ");
-                Symbol sym = (Symbol)symbols.get(i);
-                System.out.print(sym.getName());
-            }
-        }
-    }
+public class BreakingComponents {
+
+`   public static void main(String[] args) {`  
+`       `  
+`       // créer l'Alphabet "codon"`  
+`       List l = Collections.nCopies(3, DNATools.getDNA());`  
+`       Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);`  
+`       `  
+`             // obtenir le premier Symbol de cet Alphabet`  
+`       Iterator iter = ((FiniteAlphabet)alpha).iterator();`  
+`       AtomicSymbol codon = (AtomicSymbol)iter.next();`  
+`       System.out.print(codon.getName()+" is made of: ");`  
+`       `  
+`       // décomposer pour obtenir une liste des composantes`  
+`       List symbols = codon.getSymbols();`  
+`       for(int i = 0; i < symbols.size(); i++){`  
+`           if(i != 0)`  
+`               System.out.print(", ");`  
+`           Symbol sym = (Symbol)symbols.get(i);`  
+`           System.out.print(sym.getName());`  
+`       }`  
+`   }`
+
+} </java>
