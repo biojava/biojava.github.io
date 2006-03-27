@@ -22,7 +22,7 @@ These are also the valid names that can be used as an argument in the static RNA
 
 The following program shows the use of the Euplotid Nuclear translation table (where UGA = Cys).
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -53,4 +53,4 @@ public class AlternateTranslation {
     }
   }
 }
-</pre>
+</java>

@@ -35,33 +35,34 @@ available as static Strings in the TranslationTools class.
 The following program shows the use of the Euplotid Nuclear translation
 table (where UGA = Cys).
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class AlternateTranslation {
-      public static void main(String[] args) {
+public class AlternateTranslation {
 
-        //get the Euplotoid translation table
-        TranslationTable eup = RNATools.getGeneticCode(TranslationTable.EUPL_NUC);
+` public static void main(String[] args) {`
 
-        try {
-          //make a DNA sequence including the 'tga' codon
-          SymbolList seq = DNATools.createDNA("atgggcccatgaaaaggcttggagtaa");
+`   //get the Euplotoid translation table`  
+`   TranslationTable eup = RNATools.getGeneticCode(TranslationTable.EUPL_NUC);`
 
-          //transcribe to RNA
-          seq = RNATools.transcribe(seq);
+`   try {`  
+`     //make a DNA sequence including the 'tga' codon`  
+`     SymbolList seq = DNATools.createDNA("atgggcccatgaaaaggcttggagtaa");`
 
-          //veiw the RNA sequence as codons, this is done internally by RNATool.translate()
-          seq = SymbolListViews.windowedSymbolList(seq, 3);
+`     //transcribe to RNA`  
+`     seq = RNATools.transcribe(seq);`
 
-          //translate
-          SymbolList protein = SymbolListViews.translate(seq, eup);
+`     //veiw the RNA sequence as codons, this is done internally by RNATool.translate()`  
+`     seq = SymbolListViews.windowedSymbolList(seq, 3);`
 
-          //print out the protein
-          System.out.println(protein.seqString());
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //translate`  
+`     SymbolList protein = SymbolListViews.translate(seq, eup);`
+
+`     //print out the protein`  
+`     System.out.println(protein.seqString());`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
