@@ -24,31 +24,32 @@ respectively.
 
 Both of these approaches are shown in the example below
 
-    import org.biojava.bio.symbol.*;
-    import java.util.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import java.util.\*; import
+org.biojava.bio.seq.\*;
 
-    public class AlphabetExample {
-      public static void main(String[] args) {
-        Alphabet dna, rna, prot;
+public class AlphabetExample {
 
-        //get the DNA alphabet by name
-        dna = AlphabetManager.alphabetForName("DNA");
+` public static void main(String[] args) {`  
+`   Alphabet dna, rna, prot;`
 
-        //get the RNA alphabet by name
-        rna = AlphabetManager.alphabetForName("RNA");
+`   //get the DNA alphabet by name`  
+`   dna = AlphabetManager.alphabetForName("DNA");`
 
-        //get the Protein alphabet by name
-        prot = AlphabetManager.alphabetForName("PROTEIN");
-        //get the protein alphabet that includes the * termination Symbol
-        prot = AlphabetManager.alphabetForName("PROTEIN-TERM");
+`   //get the RNA alphabet by name`  
+`   rna = AlphabetManager.alphabetForName("RNA");`
 
-        //get those same Alphabets from the Tools classes
-        dna = DNATools.getDNA();
-        rna = RNATools.getRNA();
-        prot = ProteinTools.getAlphabet();
-        //or the one with the * symbol
-        prot = ProteinTools.getTAlphabet();
+`   //get the Protein alphabet by name`  
+`   prot = AlphabetManager.alphabetForName("PROTEIN");`  
+`   //get the protein alphabet that includes the * termination Symbol`  
+`   prot = AlphabetManager.alphabetForName("PROTEIN-TERM");`
 
-      }
-    }
+`   //get those same Alphabets from the Tools classes`  
+`   dna = DNATools.getDNA();`  
+`   rna = RNATools.getRNA();`  
+`   prot = ProteinTools.getAlphabet();`  
+`   //or the one with the * symbol`  
+`   prot = ProteinTools.getTAlphabet();`
+
+` }`
+
+}
