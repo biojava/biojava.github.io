@@ -11,7 +11,7 @@ Almost all of this can be achieved using static methods from BioJava tools class
 ''NOTE: if you try and create a 'triplet view' on a SymbolList or Sequence who's length is not evenly divisible by three an IllegalArgumentException will be thrown. See 'how to get a subsequence' for a description of how to get a portion of a Sequence for 
 translation.''
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -47,4 +47,4 @@ public class Translate {
      }
    }
 }
-</pre>
+</java>
