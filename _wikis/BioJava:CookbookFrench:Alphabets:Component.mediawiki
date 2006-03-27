@@ -6,7 +6,7 @@ Les ''Symbols'' d'un ''CrossProductAlphabet'' sont des implémentations de l'int
 
 Cette situation contraste avec la définition d'un ''BasisSymbol''. Un ''BasisSymbol'' peut très bien être diviser en composantes qui font partie du même ''Alphabet''. de cette façon, un ''BasisSymbol'' peut être ambigüe. Pour une discussion sur les ''BasisSymbols'', cliquer ici.
 
-<pre>
+<java>
 package biojava_in_anger;
 
 import java.util.*;
@@ -35,4 +35,4 @@ public class BreakingComponents {
         }
     }
 }
-</pre>
+</java>
