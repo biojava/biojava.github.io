@@ -6,7 +6,7 @@ BioJava uses a biological coordinate system for identifying bases. The first bas
 
 === Getting a Sub - Sequence ===
 
-<pre>
+<java>
     SymbolList symL = null;
 
     //code here to generate a SymbolList
@@ -19,19 +19,19 @@ BioJava uses a biological coordinate system for identifying bases. The first bas
 
     //get the last three bases
     SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
-</pre>
+</java>
 
 === Printing a Sub - Sequence ===
 
-<pre>
+<java>
     //print the last three bases of a SymbolList or Sequence
     String s = symL.subStr(symL.length() - 3, symL.length());
     System.out.println(s);
-</pre>
+</java>
 
 === Complete Listing ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -61,4 +61,4 @@ public class SubSequencing {
     System.out.println(s);
   }
 }
-</pre>
+</java>
