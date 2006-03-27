@@ -4,7 +4,7 @@ Mostly BioJava Sequence objects are immutable. This is really a safety feature t
 
 The following program demonstrates this.
 
-<pre>
+<java>
 import java.io.*;
 
 
@@ -33,4 +33,4 @@ public class NameChange {
     }
   }
 }
-</pre>
+</java>
