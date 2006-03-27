@@ -33,6 +33,4 @@ public class AlphabetExample {
 
   }
 }
-</<java>>
-
 </java>
