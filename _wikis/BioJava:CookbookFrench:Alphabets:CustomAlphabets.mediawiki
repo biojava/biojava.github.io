@@ -2,7 +2,7 @@
 
 Cet exemple présente la création d'un ''Alphabet'' appell&eacute; 'Binary' qui contiendra deux ''Symbols'': zéro et un. L'''Alphabet'' et les ''Symbols'' sur mesure peuvent alors être utilisé pour créer des ''SymbolLists'', des ''Sequences'', des ''Distributions'', etc.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.*;
 import java.util.*;
@@ -46,4 +46,4 @@ public class Binary {
     System.out.println(alpha == binary);
   }
 }
-</pre>
+</java>
