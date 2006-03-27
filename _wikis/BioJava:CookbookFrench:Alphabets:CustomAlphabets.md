@@ -10,46 +10,47 @@ contiendra deux *Symbols*: zéro et un. L*'Alphabet* et les *Symbols* sur
 mesure peuvent alors être utilisé pour créer des *SymbolLists*, des
 *Sequences*, des *Distributions*, etc.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
+import java.util.\*;
 
-    public class Binary {
-      public static void main(String[] args) {
+public class Binary {
 
-        // créer le Symbol "zero" sans annotation
-        Symbol zero =
-            AlphabetManager.createSymbol("zero", Annotation.EMPTY_ANNOTATION);
+` public static void main(String[] args) {`
 
-        // créer le Symbol "un", similaire
-        Symbol one =
-            AlphabetManager.createSymbol("one", Annotation.EMPTY_ANNOTATION);
+`   // créer le Symbol "zero" sans annotation`  
+`   Symbol zero =`  
+`       AlphabetManager.createSymbol("zero", Annotation.EMPTY_ANNOTATION);`
 
-        // regrouper les Symbols dans un Set
-        Set symbols = new HashSet();
-        symbols.add(zero); symbols.add(one);
+`   // créer le Symbol "un", similaire`  
+`   Symbol one =`  
+`       AlphabetManager.createSymbol("one", Annotation.EMPTY_ANNOTATION);`
 
-        // créer l'Alphabet binaire: Binary
-        FiniteAlphabet binary = new SimpleAlphabet(symbols, "Binary");
+`   // regrouper les Symbols dans un Set`  
+`   Set symbols = new HashSet();`  
+`   symbols.add(zero); symbols.add(one);`
 
-        // faire une itération sur les Symbols pour montrer que tout fonctionne
-        for (Iterator i = binary.iterator(); i.hasNext(); ) {
-          Symbol sym = (Symbol)i.next();
-          System.out.println(sym.getName());
-        }
+`   // créer l'Alphabet binaire: Binary`  
+`   FiniteAlphabet binary = new SimpleAlphabet(symbols, "Binary");`
 
-        // il est pratique usuel d'enregistrer les Alphabets nouvellement
-        // crées avec l'AlphabetManager
-        AlphabetManager.registerAlphabet(binary.getName(), binary);
+`   // faire une itération sur les Symbols pour montrer que tout fonctionne`  
+`   for (Iterator i = binary.iterator(); i.hasNext(); ) {`  
+`     Symbol sym = (Symbol)i.next();`  
+`     System.out.println(sym.getName());`  
+`   }`
 
-         /*
-          * L'Alphabet nouvellement crée a été enregistré avec l'AlphabetManager
-          * sous le nom de "Binary". Si vous cherchez une copie de l'objet avec cet alphabet, il 
-          * devrait etre identique à celui qui l'a créer
-          */
-        Alphabet alpha = AlphabetManager.alphabetForName("Binary");
+`   // il est pratique usuel d'enregistrer les Alphabets nouvellement`  
+`   // crées avec l'AlphabetManager`  
+`   AlphabetManager.registerAlphabet(binary.getName(), binary);`
 
-        // vérifier que les deux objets sont identiques
-        System.out.println(alpha == binary);
-      }
-    }
+`    /*`  
+`     * L'Alphabet nouvellement crée a été enregistré avec l'AlphabetManager`  
+`     * sous le nom de "Binary". Si vous cherchez une copie de l'objet avec cet alphabet, il `  
+`     * devrait etre identique à celui qui l'a créer`  
+`     */`  
+`   Alphabet alpha = AlphabetManager.alphabetForName("Binary");`
+
+`   // vérifier que les deux objets sont identiques`  
+`   System.out.println(alpha == binary);`  
+` }`
+
+} </java>
