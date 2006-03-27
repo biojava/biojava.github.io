@@ -23,38 +23,38 @@ IllegalArgumentException will be thrown. See 'how to get a subsequence'
 for a description of how to get a portion of a Sequence for
 translation.*
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class Translate {
+public class Translate {
 
-      public static void main(String[] args) {
-        try {
-          //create a DNA SymbolList
-          SymbolList symL = DNATools.createDNA("atggccattgaatga");
+` public static void main(String[] args) {`  
+`   try {`  
+`     //create a DNA SymbolList`  
+`     SymbolList symL = DNATools.createDNA("atggccattgaatga");`
 
-          //transcribe to RNA (after biojava 1.4 this method is deprecated)
-          symL = RNATools.transcribe(symL);
+`     //transcribe to RNA (after biojava 1.4 this method is deprecated)`  
+`     symL = RNATools.transcribe(symL);`
 
-          //transcribe to RNA (after biojava 1.4 use this method instead)
-          symL = DNATools.toRNA(symL);
-          
-          //translate to protein
-          symL = RNATools.translate(symL);
+`     //transcribe to RNA (after biojava 1.4 use this method instead)`  
+`     symL = DNATools.toRNA(symL);`  
+`     `  
+`     //translate to protein`  
+`     symL = RNATools.translate(symL);`
 
-          //prove that it worked
-               System.out.println(symL.seqString());
-         }catch (IllegalAlphabetException ex) {
-          
-         
-          /* 
-           * this will occur if you try and transcribe a non DNA sequence or translate
-           * a sequence that isn't a triplet view on a RNA sequence.
-           */
-           ex.printStackTrace();
-         }catch (IllegalSymbolException ex) {
-          // this will happen if non IUB characters are used to create the DNA SymbolList
-           ex.printStackTrace();
-         }
-       }
-    }
+`     //prove that it worked`  
+`          System.out.println(symL.seqString());`  
+`    }catch (IllegalAlphabetException ex) {`  
+`     `  
+`    `  
+`     /* `  
+`      * this will occur if you try and transcribe a non DNA sequence or translate`  
+`      * a sequence that isn't a triplet view on a RNA sequence.`  
+`      */`  
+`      ex.printStackTrace();`  
+`    }catch (IllegalSymbolException ex) {`  
+`     // this will happen if non IUB characters are used to create the DNA SymbolList`  
+`      ex.printStackTrace();`  
+`    }`  
+`  }`
+
+} </java>
