@@ -4,7 +4,7 @@ In BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.ht
 
 Both of these approaches are shown in the example below
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import java.util.*;
 import org.biojava.bio.seq.*;
@@ -33,4 +33,6 @@ public class AlphabetExample {
 
   }
 }
-</pre>
+</<java>>
+
+</java>
