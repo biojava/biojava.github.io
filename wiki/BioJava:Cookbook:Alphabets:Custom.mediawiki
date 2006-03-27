@@ -2,7 +2,7 @@
 
 This example demonstrates the creation of a 'binary' alphabet that will have two [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols], zero and one. The custom made [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] and [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet] can then be used to make [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolList.html SymbolList], [http://www.biojava.org/docs/api14/org/biojava/bio/seq/Sequence.html Sequences], [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distributions], etc.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.*;
 import java.util.*;
@@ -45,4 +45,4 @@ public class Binary {
     System.out.println(alpha == binary);
   }
 }
-</pre>
+</java>
