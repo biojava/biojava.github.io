@@ -19,22 +19,23 @@ créant une liste des *Alphabets* désirés et en fabriquant l*'Alphabet* à
 partir de cette liste. Les deux approches sont utilisées dans l'exemple
 ci-dessous.
 
-    import java.util.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class CrossProduct {
-      public static void main(String[] args) {
+public class CrossProduct {
 
-        // créer un CrossProductAlphabet à partir d'une liste
-        List l = Collections.nCopies(3, DNATools.getDNA());
-        Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);
+` public static void main(String[] args) {`
 
-        // obtenir le même Alphabet par nom
-        Alphabet codon2 =
-            AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");
+`   // créer un CrossProductAlphabet à partir d'une liste`  
+`   List l = Collections.nCopies(3, DNATools.getDNA());`  
+`   Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);`
 
-        // démontrer que les deux Alphabets sont identiques
-        System.out.println(codon == codon2);
-      }
-    }
+`   // obtenir le même Alphabet par nom`  
+`   Alphabet codon2 =`  
+`       AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");`
+
+`   // démontrer que les deux Alphabets sont identiques`  
+`   System.out.println(codon == codon2);`  
+` }`
+
+} </java>
