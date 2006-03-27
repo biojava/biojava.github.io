@@ -4,7 +4,7 @@ One of the interesting things you can do with BioJava's MotifTools is to make a 
 
 The following example from Andy Hammer demonstrates how this can be used to search Sequences for Motifs.
 
-<pre>
+<java>
 /**
  * MotifLister.java
  * Modified slightly from the original by Andy Hammer
@@ -132,4 +132,4 @@ public class MotifLister{
     }
   }
 }
-</pre>
+</java>
