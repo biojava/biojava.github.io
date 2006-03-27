@@ -4,7 +4,7 @@ The general translation example shows how to use RNATools to translate a RNA Sym
 
 There are actually a number of ways to do this, below I have presented only one.
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -39,4 +39,4 @@ public class SingleTranslationDemo {
     }
   }
 }
-</pre>
+</java>
