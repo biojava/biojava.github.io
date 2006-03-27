@@ -55,33 +55,31 @@ can be ambiguous. For further discussion of
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 follow this link.
 
-Teste
------
+<java> package biojava\_in\_anger;
 
-    package biojava_in_anger;
+import java.util.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*;
 
-    import java.util.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+public class BreakingComponents {
 
-    public class BreakingComponents {
-      public static void main(String[] args) {
-        //make the 'codon' alphabet
-        List l = Collections.nCopies(3, DNATools.getDNA());
-        Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);
+` public static void main(String[] args) {`  
+`   //make the 'codon' alphabet`  
+`   List l = Collections.nCopies(3, DNATools.getDNA());`  
+`   Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);`
 
-        //get the first symbol in the alphabet
-        Iterator iter = ((FiniteAlphabet)alpha).iterator();
-        AtomicSymbol codon = (AtomicSymbol)iter.next();
-        System.out.print(codon.getName()+" is made of: ");
+`   //get the first symbol in the alphabet`  
+`   Iterator iter = ((FiniteAlphabet)alpha).iterator();`  
+`   AtomicSymbol codon = (AtomicSymbol)iter.next();`  
+`   System.out.print(codon.getName()+" is made of: ");`
 
-        //break it into a list its components
-        List symbols = codon.getSymbols();
-        for(int i = 0; i < symbols.size(); i++){
-          if(i != 0)
-            System.out.print(", ");
-          Symbol sym = (Symbol)symbols.get(i);
-          System.out.print(sym.getName());
-        }
-      }
-    }
+`   //break it into a list its components`  
+`   List symbols = codon.getSymbols();`  
+`   for(int i = 0; i < symbols.size(); i++){`  
+`     if(i != 0)`  
+`       System.out.print(", ");`  
+`     Symbol sym = (Symbol)symbols.get(i);`  
+`     System.out.print(sym.getName());`  
+`   }`  
+` }`
+
+} </java>
