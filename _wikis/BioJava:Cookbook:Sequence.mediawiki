@@ -6,7 +6,7 @@ Within Sequence and SymbolList the polymer is not stored as a String. BioJava di
 
 === String to SymbolList ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -31,11 +31,11 @@ public class StringToSymbolList {
    
   }
 }
-</pre>
+</java>
 
 === String to Sequence === 
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -58,13 +58,13 @@ public class StringToSequence {
     }
   }
 }
-</pre>
+</java>
 
 === SymbolList to String === 
 
 You can call the seqString() method on either a SymbolList or a Sequence to get it's Stringified version.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 
 public class SymbolListToString {
@@ -76,4 +76,4 @@ public class SymbolListToString {
     String s = sl.seqString();
   }
 }
-</pre>
+</java>
