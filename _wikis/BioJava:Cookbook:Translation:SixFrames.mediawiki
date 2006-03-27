@@ -6,7 +6,7 @@ Six frame translations are good for identifying large ORFs which can be indicato
 
 The following example shows a simple program that will six frame translate all sequences in a file and print the results to STDOUT in fasta format.
 
-<pre>
+<java>
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -102,4 +102,4 @@ public class Hex {
     }
   }
 }
-</pre>
+</java>
