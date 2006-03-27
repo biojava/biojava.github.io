@@ -18,53 +18,62 @@ region outside of 1...length an IndexOutOfBoundsException will occur.
 
 ### Getting a Sub - Sequence
 
-        SymbolList symL = null;
+<java>
 
-        //code here to generate a SymbolList
+`   SymbolList symL = null;`
 
-        //get the first Symbol
-        Symbol sym = symL.symbolAt(1);
+`   //code here to generate a SymbolList`
 
-        //get the first three bases
-        SymbolList symL2 = symL.subList(1,3);
+`   //get the first Symbol`  
+`   Symbol sym = symL.symbolAt(1);`
 
-        //get the last three bases
-        SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
+`   //get the first three bases`  
+`   SymbolList symL2 = symL.subList(1,3);`
+
+`   //get the last three bases`  
+`   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
+
+</java>
 
 ### Printing a Sub - Sequence
 
-        //print the last three bases of a SymbolList or Sequence
-        String s = symL.subStr(symL.length() - 3, symL.length());
-        System.out.println(s);
+<java>
+
+`   //print the last three bases of a SymbolList or Sequence`  
+`   String s = symL.subStr(symL.length() - 3, symL.length());`  
+`   System.out.println(s);`
+
+</java>
 
 ### Complete Listing
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class SubSequencing {
-      public static void main(String[] args) {
-        SymbolList symL = null;
+public class SubSequencing {
 
-        //generate an RNA SymbolList
-        try {
-          symL = RNATools.createRNA("auggcaccguccagauu");
-        }
-        catch (IllegalSymbolException ex) {
-          ex.printStackTrace();
-        }
+` public static void main(String[] args) {`  
+`   SymbolList symL = null;`
 
-        //get the first Symbol
-        Symbol sym = symL.symbolAt(1);
+`   //generate an RNA SymbolList`  
+`   try {`  
+`     symL = RNATools.createRNA("auggcaccguccagauu");`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     ex.printStackTrace();`  
+`   }`
 
-        //get the first three bases
-        SymbolList symL2 = symL.subList(1,3);
+`   //get the first Symbol`  
+`   Symbol sym = symL.symbolAt(1);`
 
-        //get the last three bases
-        SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
+`   //get the first three bases`  
+`   SymbolList symL2 = symL.subList(1,3);`
 
-        //print the last three bases
-        String s = symL.subStr(symL.length() - 3, symL.length());
-        System.out.println(s);
-      }
-    }
+`   //get the last three bases`  
+`   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
+
+`   //print the last three bases`  
+`   String s = symL.subStr(symL.length() - 3, symL.length());`  
+`   System.out.println(s);`  
+` }`
+
+} </java>
