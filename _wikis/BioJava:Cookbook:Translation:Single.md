@@ -15,37 +15,37 @@ of what is going on under the hood.
 There are actually a number of ways to do this, below I have presented
 only one.
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class SingleTranslationDemo {
-      public static void main(String[] args) {
-        //make a compound alphabet where codons are Symbols
-        Alphabet a = AlphabetManager.alphabetForName("(RNA x RNA x RNA)");
+public class SingleTranslationDemo {
 
-        //get our translation table using one of the static names from TranslationTable
-        TranslationTable table = RNATools.getGeneticCode(TranslationTable.UNIVERSAL);
+` public static void main(String[] args) {`  
+`   //make a compound alphabet where codons are Symbols`  
+`   Alphabet a = AlphabetManager.alphabetForName("(RNA x RNA x RNA)");`
 
-        try {
-          //make a 'codon'
-          SymbolList codon = RNATools.createRNA("UUG");
+`   //get our translation table using one of the static names from TranslationTable`  
+`   TranslationTable table = RNATools.getGeneticCode(TranslationTable.UNIVERSAL);`
 
+`   try {`  
+`     //make a 'codon'`  
+`     SymbolList codon = RNATools.createRNA("UUG");`
 
-          //get the representation of that codon as a Symbol
-          Symbol sym = a.getSymbol(codon.toList());
+`     //get the representation of that codon as a Symbol`  
+`     Symbol sym = a.getSymbol(codon.toList());`
 
-          //translate to amino acid
-          Symbol aminoAcid = table.translate(sym);
+`     //translate to amino acid`  
+`     Symbol aminoAcid = table.translate(sym);`
 
-          /*
-           * This bit is not required for the translation it just proves that the
-           * Symbol is from the right Alphabet. An Exception will be thrown if it
-           * isn't.
-           */
-          ProteinTools.getTAlphabet().validate(aminoAcid);
-        }
-        catch (IllegalSymbolException ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`     /*`  
+`      * This bit is not required for the translation it just proves that the`  
+`      * Symbol is from the right Alphabet. An Exception will be thrown if it`  
+`      * isn't.`  
+`      */`  
+`     ProteinTools.getTAlphabet().validate(aminoAcid);`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
