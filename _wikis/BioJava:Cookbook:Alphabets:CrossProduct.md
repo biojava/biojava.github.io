@@ -33,22 +33,23 @@ from the
 [List](http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html).
 Both approaches are shown in the example below.
 
-    import java.util.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class CrossProduct {
-      public static void main(String[] args) {
+public class CrossProduct {
 
-        //make a CrossProductAlphabet from a List
-        List l = Collections.nCopies(3, DNATools.getDNA());
-        Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);
+` public static void main(String[] args) {`
 
-        //get the same Alphabet by name
-        Alphabet codon2 =
-            AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");
+`   //make a CrossProductAlphabet from a List`  
+`   List l = Collections.nCopies(3, DNATools.getDNA());`  
+`   Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);`
 
-        //show that the two Alphabets are canonical
-        System.out.println(codon == codon2);
-      }
-    }
+`   //get the same Alphabet by name`  
+`   Alphabet codon2 =`  
+`       AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");`
+
+`   //show that the two Alphabets are canonical`  
+`   System.out.println(codon == codon2);`  
+` }`
+
+} </java>

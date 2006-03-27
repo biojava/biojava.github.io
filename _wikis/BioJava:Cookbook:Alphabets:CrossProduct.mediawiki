@@ -4,7 +4,7 @@ CrossProductAlphabets result from the multiplication of other [http://www.biojav
 
 CrossProductAlphabets can be created by name (if the component [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] are registered in the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager]) or by making a list of the desired [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and creating the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet] from the [http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html List]. Both approaches are shown in the example below.
 
-<pre>
+<java>
 import java.util.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -24,4 +24,4 @@ public class CrossProduct {
     System.out.println(codon == codon2);
   }
 }
-</pre>
+</java>
