@@ -30,52 +30,50 @@ Les gabarits de *Feature* peuvent être crées de novo ou copiés à partir
 d'un *Feature* déjà existant; l'exemple qui suit montre les deux
 méthodes.
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
-    import org.biojava.utils.*;
+<java> import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
 
-    public class MakeAFeature {
-      public static void main(String[] args) {
-        //obtenir le gabarit du Feature pour un StrandedFeature
-        StrandedFeature.Template templ = new StrandedFeature.Template();
+public class MakeAFeature {
 
-        //remplir l"info pour ce gabarit
-        templ.annotation = Annotation.EMPTY_ANNOTATION;
-        templ.location = new RangeLocation(3,6);
-        templ.source = "my feature";
-        templ.strand = StrandedFeature.POSITIVE;
-        templ.type = "interesting motif";
+` public static void main(String[] args) {`  
+`   //obtenir le gabarit du Feature pour un StrandedFeature`  
+`   StrandedFeature.Template templ = new StrandedFeature.Template();`
 
-        try {
-          //la séquence qui va avoir ce Feature
-          Sequence seq = DNATools.createDNASequence("atgcgcttaag","seq1");
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
+`   //remplir l"info pour ce gabarit`  
+`   templ.annotation = Annotation.EMPTY_ANNOTATION;`  
+`   templ.location = new RangeLocation(3,6);`  
+`   templ.source = "my feature";`  
+`   templ.strand = StrandedFeature.POSITIVE;`  
+`   templ.type = "interesting motif";`
 
+`   try {`  
+`     //la séquence qui va avoir ce Feature`  
+`     Sequence seq = DNATools.createDNASequence("atgcgcttaag","seq1");`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`
 
-          System.out.println("adding new feature...");
+`     System.out.println("adding new feature...");`
 
-          //créer ce Feature sur cette séquence et obtenir un pointeur qui nous permettra d'en faire un autre
-          Feature f = seq.createFeature(templ);
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
+`     //créer ce Feature sur cette séquence et obtenir un pointeur qui nous permettra d'en faire un autre`  
+`     Feature f = seq.createFeature(templ);`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`
 
-          //créer un gabarit identique à celui utilisé pour faire f
-          templ = (StrandedFeature.Template)f.makeTemplate();
-          //on lui donne une position et un nom différent
-          templ.location = new PointLocation(4);
-          templ.type = "point mutation";
+`     //créer un gabarit identique à celui utilisé pour faire f`  
+`     templ = (StrandedFeature.Template)f.makeTemplate();`  
+`     //on lui donne une position et un nom différent`  
+`     templ.location = new PointLocation(4);`  
+`     templ.type = "point mutation";`
 
+`     System.out.println("adding nested feature...");`  
+`     //ajouter ce nouveau Feature comme imbriqué dans f`  
+`     f.createFeature(templ);`
 
-          System.out.println("adding nested feature...");
-          //ajouter ce nouveau Feature comme imbriqué dans f
-          f.createFeature(templ);
+`     //observer que countFeatures() ne compte que les Features de 1er niveau`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`  
+`     System.out.println(f.getSource()+" contains "+seq.countFeatures()+" features");`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          //observer que countFeatures() ne compte que les Features de 1er niveau
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
-          System.out.println(f.getSource()+" contains "+seq.countFeatures()+" features");
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
