@@ -4,7 +4,7 @@ Testing two distributions for equal weights is a good way of telling if a traini
 
 Using this method is demonstrated below.
 
-<pre>
+<java>
 import org.biojava.bio.dist.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -35,4 +35,4 @@ public class EqualDistributions {
     }
   }
 }
-</pre>
+</java>
