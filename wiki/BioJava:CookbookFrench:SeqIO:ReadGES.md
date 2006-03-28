@@ -55,45 +55,44 @@ public class ReadGB {
 
 ### Lire un fichier SwissProt
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadSwiss {
-      public static void main(String[] args) {
-        BufferedReader br = null;
+public class ReadSwiss {
 
-        try {
-          // créer un BufferedReader pour lire le fichier spécifié par args[0]
-          br = new BufferedReader(new FileReader(args[0]));
-        }
-        catch (FileNotFoundException ex) {
-          // ne peut trouver le fichier spécifié par args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`
 
-        // lire le fichier SwissProt
-        SequenceIterator sequences = SeqIOTools.readSwissprot(br);
+`   try {`  
+`     // créer un BufferedReader pour lire le fichier spécifié par args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     // ne peut trouver le fichier spécifié par args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`
 
-        // itérer parmi les séquences
-        while(sequences.hasNext()){
-          try {
-            Sequence seq = sequences.nextSequence();
-            // votre traitement de la séquence
-          }
-          catch (BioException ex) {
-            // pas en format SwissProt
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            // requête faite pour une séquence lorsqu'aucune n'existe
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`   // lire le fichier SwissProt`  
+`   SequenceIterator sequences = SeqIOTools.readSwissprot(br);`
+
+`   // itérer parmi les séquences`  
+`   while(sequences.hasNext()){`  
+`     try {`  
+`       Sequence seq = sequences.nextSequence();`  
+`       // votre traitement de la séquence`  
+`     }`  
+`     catch (BioException ex) {`  
+`       // pas en format SwissProt`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       // requête faite pour une séquence lorsqu'aucune n'existe`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### Lire un fichier EMBL
 
