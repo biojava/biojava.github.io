@@ -6,7 +6,7 @@ The following program reads some type of sequence file and counts the residues, 
 
 === Solution 1 ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -63,11 +63,11 @@ public class CountResidues {
     }
   }
 }
-</pre>
+</java>
 
 === Solution 2 ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -134,4 +134,4 @@ public class CountResidues2 {
     }
   }
 }
-</pre>
+</java>
