@@ -39,9 +39,13 @@ erreur de type *IndexOutOfBoundsException*.
 
 ### Imprimer une partie d'une Sequence
 
-        // imprimer les 3 derniers résidus d'une SymbolList ou Sequence
-        String s = symL.subStr(symL.length() - 3, symL.length());
-        System.out.println(s);
+<java>
+
+`   // imprimer les 3 derniers résidus d'une SymbolList ou Sequence`  
+`   String s = symL.subStr(symL.length() - 3, symL.length());`  
+`   System.out.println(s);`
+
+</java>
 
 ### Code complet
 
