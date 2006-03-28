@@ -22,128 +22,122 @@ If this is the case you would use this solution.
 
 ### Solution 1
 
-    import java.io.*;
-    import java.util.*;
+<java> import java.io.\*; import java.util.\*;
 
+import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+public class CountResidues {
 
-    public class CountResidues {
+` /**`  
+`  * Takes 3 arguments, first is a sequence filename the second is the`  
+`  * sequence format (case insensitive) and the third is the sequence`  
+`  * alphabet (eg DNA, also case insensitive)`  
+`  */`  
+` public static void main(String[] args) {`  
+`   //reference to object to hold the counts`  
+`   Count counts = null;`
 
-      /**
-       * Takes 3 arguments, first is a sequence filename the second is the
-       * sequence format (case insensitive) and the third is the sequence
-       * alphabet (eg DNA, also case insensitive)
-       */
-      public static void main(String[] args) {
-        //reference to object to hold the counts
-        Count counts = null;
+`   try {`  
+`     //open sequence file`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-        try {
-          //open sequence file
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+`     //get a SequenceIterator for the sequences in the file`  
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(args[1],args[2],br);`
 
-          //get a SequenceIterator for the sequences in the file
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(args[1],args[2],br);
+`     //for each sequence`  
+`     while(iter.hasNext()){`  
+`       Sequence seq = iter.nextSequence();`
 
-          //for each sequence
-          while(iter.hasNext()){
-            Sequence seq = iter.nextSequence();
+`       //if needed initialize counts`  
+`       if(counts == null){`  
+`         counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());`  
+`       }`
 
-            //if needed initialize counts
-            if(counts == null){
-              counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());
-            }
+`       //iterate through the Symbols in seq`  
+`       for (Iterator i = seq.iterator(); i.hasNext(); ) {`  
+`         AtomicSymbol sym = (AtomicSymbol)i.next();`  
+`         counts.increaseCount(sym,1.0);`  
+`       }`  
+`     }`
 
-            //iterate through the Symbols in seq
-            for (Iterator i = seq.iterator(); i.hasNext(); ) {
-              AtomicSymbol sym = (AtomicSymbol)i.next();
-              counts.increaseCount(sym,1.0);
-            }
-          }
+`     //now print the results`  
+`     for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();`  
+`          i.hasNext(); ) {`  
+`       AtomicSymbol sym = (AtomicSymbol)i.next();`  
+`       System.out.println(sym.getName()+" : "+counts.getCount(sym));`  
+`     }`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          //now print the results
-          for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();
-               i.hasNext(); ) {
-            AtomicSymbol sym = (AtomicSymbol)i.next();
-            System.out.println(sym.getName()+" : "+counts.getCount(sym));
-          }
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
 
 ### Solution 2
 
-    import java.io.*;
-    import java.util.*;
+<java> import java.io.\*; import java.util.\*;
 
+import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+public class CountResidues2 {
 
-    public class CountResidues2 {
+`   /**`  
+`  * Takes 3 arguments, first is a sequence filename the second is the`  
+`  * sequence format (case insensitive) and the third is the sequence`  
+`  * alphabet (eg DNA, also case insensitive)`  
+`  */`  
+` public static void main(String[] args) {`  
+`   //reference to object to hold the counts`  
+`   Count counts = null;`
 
-        /**
-       * Takes 3 arguments, first is a sequence filename the second is the
-       * sequence format (case insensitive) and the third is the sequence
-       * alphabet (eg DNA, also case insensitive)
-       */
-      public static void main(String[] args) {
-        //reference to object to hold the counts
-        Count counts = null;
+`   try {`  
+`     //open sequence file`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-        try {
-          //open sequence file
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+`     //get a SequenceIterator for the sequences in the file`  
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(args[1],args[2],br);`
 
-          //get a SequenceIterator for the sequences in the file
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(args[1],args[2],br);
+`     //for each sequence`  
+`     while(iter.hasNext()){`  
+`       Sequence seq = iter.nextSequence();`
 
-          //for each sequence
-          while(iter.hasNext()){
-            Sequence seq = iter.nextSequence();
+`       //if needed initialize counts`  
+`       if(counts == null){`  
+`         counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());`  
+`       }`
 
-            //if needed initialize counts
-            if(counts == null){
-              counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());
-            }
+`       //iterate through the Symbols in seq`  
+`       for (Iterator i = seq.iterator(); i.hasNext(); ) {`  
+`         Symbol sym = (Symbol)i.next();`
 
-            //iterate through the Symbols in seq
-            for (Iterator i = seq.iterator(); i.hasNext(); ) {
-              Symbol sym = (Symbol)i.next();
+`         /*`  
+`          * The Symbol may be ambiguous so add a partial count for each Symbol`  
+`          * that makes up the ambiguity Symbol. Eg the DNA ambiguity n is made`  
+`          * of an Alphabet of four Symbols so add 0.25 of a count to each.`  
+`          */`  
+`         FiniteAlphabet subSymbols = (FiniteAlphabet)sym.getMatches();`  
+`         for (Iterator i2 = subSymbols.iterator(); i2.hasNext(); ) {`  
+`           AtomicSymbol sym2 = (AtomicSymbol)i2.next();`  
+`           counts.increaseCount(sym2, 1.0 / (double)subSymbols.size());`  
+`         }`  
+`       }`  
+`     }`
 
-              /*
-               * The Symbol may be ambiguous so add a partial count for each Symbol
-               * that makes up the ambiguity Symbol. Eg the DNA ambiguity n is made
-               * of an Alphabet of four Symbols so add 0.25 of a count to each.
-               */
-              FiniteAlphabet subSymbols = (FiniteAlphabet)sym.getMatches();
-              for (Iterator i2 = subSymbols.iterator(); i2.hasNext(); ) {
-                AtomicSymbol sym2 = (AtomicSymbol)i2.next();
-                counts.increaseCount(sym2, 1.0 / (double)subSymbols.size());
-              }
-            }
-          }
+`     //now print the results`  
+`     for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();`  
+`          i.hasNext(); ) {`  
+`       AtomicSymbol sym = (AtomicSymbol)i.next();`  
+`       System.out.println(sym.getName()+" : "+counts.getCount(sym));`  
+`     }`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          //now print the results
-          for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();
-               i.hasNext(); ) {
-            AtomicSymbol sym = (AtomicSymbol)i.next();
-            System.out.println(sym.getName()+" : "+counts.getCount(sym));
-          }
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
