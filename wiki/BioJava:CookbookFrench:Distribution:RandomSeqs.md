@@ -17,26 +17,26 @@ chaque fois différente mais sa composition devrait être proche de 25%
 par résidu. Des distributions non-uniformes peuvent aussi être utilisées
 pour créer des séquences biaisées.
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
+<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+import org.biojava.bio.seq.io.\*; import java.io.\*;
 
-    public class RandomSequence {
-      public static void main(String[] args) {
-        //créer une distribution uniforme sur l'Alphabet ADN
-        Distribution dist = new UniformDistribution(DNATools.getDNA());
+public class RandomSequence {
 
-        //créer une séquence aléatoire de 700 nuc.
-        Sequence seq = DistributionTools.generateSequence("random seq", dist, 700);
-        
-        try {
-          //imprimer sur STDOUT
-          SeqIOTools.writeFasta(System.out, seq);
-        }
-        catch (IOException ex) {
-          //erreur de i/o
-          ex.printStackTrace();
-        }
-      }
-    }
+` public static void main(String[] args) {`  
+`   //créer une distribution uniforme sur l'Alphabet ADN`  
+`   Distribution dist = new UniformDistribution(DNATools.getDNA());`
+
+`   //créer une séquence aléatoire de 700 nuc.`  
+`   Sequence seq = DistributionTools.generateSequence("random seq", dist, 700);`  
+`   `  
+`   try {`  
+`     //imprimer sur STDOUT`  
+`     SeqIOTools.writeFasta(System.out, seq);`  
+`   }`  
+`   catch (IOException ex) {`  
+`     //erreur de i/o`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>

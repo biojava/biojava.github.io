@@ -4,7 +4,7 @@ Les objets ''Distribution'' de BioJava ont une méthode pour échantillonner les
 
 Le programme suivant crée une séquence aléatoire utilisant une ''Distribution'' uniforme sur l'Alphabet ADN. La séquence émise sera à chaque fois différente mais sa composition devrait être proche de 25% par résidu. Des distributions non-uniformes peuvent aussi être utilisées pour créer des séquences biaisées.
 
-<pre>
+<java>
 import org.biojava.bio.dist.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.seq.io.*;
@@ -28,4 +28,4 @@ public class RandomSequence {
     }
   }
 }
-</pre>
+</java>
