@@ -15,37 +15,38 @@ comprendre ce qui se passe sous le capot.
 
 Il y a plusieurs façons de faire, mais une seule est présentée ici.
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class SingleTranslationDemo {
-      public static void main(String[] args) {
-        // faire un alphabet composé où les codons sont des Symbols
-        Alphabet a = AlphabetManager.alphabetForName("(RNA x RNA x RNA)");
+public class SingleTranslationDemo {
 
-        // obtenir notre table de traduction en utilisant 
-        // un des noms statiques de TranslationTable
-        TranslationTable table = RNATools.getGeneticCode(TranslationTable.UNIVERSAL);
+` public static void main(String[] args) {`  
+`   // faire un alphabet composé où les codons sont des Symbols`  
+`   Alphabet a = AlphabetManager.alphabetForName("(RNA x RNA x RNA)");`
 
-        try {
-          // faire un "codon"
-          SymbolList codon = RNATools.createRNA("UUG");
+`   // obtenir notre table de traduction en utilisant `  
+`   // un des noms statiques de TranslationTable`  
+`   TranslationTable table = RNATools.getGeneticCode(TranslationTable.UNIVERSAL);`
 
-          // obtenir la représentation de ce codon comme un Symbol
-          Symbol sym = a.getSymbol(codon.toList());
+`   try {`  
+`     // faire un "codon"`  
+`     SymbolList codon = RNATools.createRNA("UUG");`
 
-          // traduire en acide aminé
-          Symbol aminoAcid = table.translate(sym);
+`     // obtenir la représentation de ce codon comme un Symbol`  
+`     Symbol sym = a.getSymbol(codon.toList());`
 
-          /*
-           * Cette partie n'est pas nécessaire pour la traduction mais prouve que 
-           * le Symbol vient du bon Alphabet. Une Exception sera lancee s'il 
-           * ne l'ai pas.
-           */
-          ProteinTools.getTAlphabet().validate(aminoAcid);
-        }
-        catch (IllegalSymbolException ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`     // traduire en acide aminé`  
+`     Symbol aminoAcid = table.translate(sym);`
+
+`     /*`  
+`      * Cette partie n'est pas nécessaire pour la traduction mais prouve que `  
+`      * le Symbol vient du bon Alphabet. Une Exception sera lancee s'il `  
+`      * ne l'ai pas.`  
+`      */`  
+`     ProteinTools.getTAlphabet().validate(aminoAcid);`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
