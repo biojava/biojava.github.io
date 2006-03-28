@@ -8,7 +8,7 @@ La première classe se nomme ''SimpleGibbsAligner''. C'est le moteur de base, fa
 
 === SimpleGibbsAligner ===
 
-<pre>
+<java>
 package gibbs;
 
 import java.util.HashMap;
@@ -378,7 +378,7 @@ public class SimpleGibbsAligner {
     return w;
   }
 }
-</pre>
+</java>
 
 === GibbsStoppingCriteria ===
 
