@@ -27,7 +27,7 @@ The following link is for such a file: <pre>http://srs.ebi.ac.uk/srsbin/cgi-bin/
 [[Image:PeptideDigestDemo.jpg]]
 ----
 
-<pre>
+<java>
 import org.biojava.bio.*;
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.gui.sequence.*;
@@ -297,4 +297,4 @@ public class PeptideDigestDemo extends JFrame{
         }
     }
 }
-</pre>
+</java>
