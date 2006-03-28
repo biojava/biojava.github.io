@@ -102,7 +102,8 @@ public class DeterministicAlignmentDemo {
 `     System.out.println("global alignment with NeedlemanWunsch:\n"+`  
 `       aligner.getAlignmentString());    `  
 `     `  
-`     // Perform a local alginment from the sequences.`  
+`     // Perform a local alginment from the sequences. `  
+`     // Firstly, define the expenses for every single operation.`  
 `     aligner = new SmithWaterman(`  
 `       0, // match`  
 `       2, // insert`  
