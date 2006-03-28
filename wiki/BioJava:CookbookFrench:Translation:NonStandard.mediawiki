@@ -35,7 +35,7 @@ Ce sont des noms valides qui peuvent servir d'argument dans la méthode statique
 
 L'exemple suivant montre comment utiliser le code génétique pour la traduction des gènes nucléaire chez les Euplotides (ici, UGA = Cys).
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -69,4 +69,4 @@ public class SingleTranslationDemo {
     }
   }
 }
-</pre>
+</java>
