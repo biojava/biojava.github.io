@@ -18,162 +18,160 @@ sont pas montré ici. Consulter
 l'[API](http://www.biojava.org/docs/api14/index.html) de Biojava afin
 d'en savoir plus.
 
-    import java.io.BufferedReader;
-    import java.io.FileOutputStream;
-    import java.io.FileReader;
-    import java.io.PrintWriter;
+<java> import java.io.BufferedReader; import java.io.FileOutputStream;
+import java.io.FileReader; import java.io.PrintWriter;
 
-    import org.biojava.bio.BioException;
-    import org.biojava.bio.proteomics.IsoelectricPointCalc;
-    import org.biojava.bio.proteomics.MassCalc;
-    import org.biojava.bio.seq.ProteinTools;
-    import org.biojava.bio.seq.RNATools;
-    import org.biojava.bio.seq.Sequence;
-    import org.biojava.bio.seq.SequenceIterator;
-    import org.biojava.bio.seq.io.SeqIOTools;
-    import org.biojava.bio.symbol.Edit;
-    import org.biojava.bio.symbol.IllegalAlphabetException;
-    import org.biojava.bio.symbol.IllegalSymbolException;
-    import org.biojava.bio.symbol.SimpleSymbolList;
-    import org.biojava.bio.symbol.SymbolList;
-    import org.biojava.bio.symbol.SymbolPropertyTable;
+import org.biojava.bio.BioException; import
+org.biojava.bio.proteomics.IsoelectricPointCalc; import
+org.biojava.bio.proteomics.MassCalc; import
+org.biojava.bio.seq.ProteinTools; import org.biojava.bio.seq.RNATools;
+import org.biojava.bio.seq.Sequence; import
+org.biojava.bio.seq.SequenceIterator; import
+org.biojava.bio.seq.io.SeqIOTools; import org.biojava.bio.symbol.Edit;
+import org.biojava.bio.symbol.IllegalAlphabetException; import
+org.biojava.bio.symbol.IllegalSymbolException; import
+org.biojava.bio.symbol.SimpleSymbolList; import
+org.biojava.bio.symbol.SymbolList; import
+org.biojava.bio.symbol.SymbolPropertyTable;
 
-    /**
-     *  Calculer la masse et le point isoelectrique d'une collection de
-     *  séquences  
-     */
+/\*\*
 
-    public class CalcMass {
+`*  Calculer la masse et le point isoelectrique d'une collection de`  
+`*  séquences  `  
+`*/`
 
-      /**
-       *  Méthode définissant l'info d"utilisation, terminant le programme
-       *  après.
-       */
-      public static void help(){
-        System.out.println(
-            "usage: java calcMass <file> <format> <DNA|RNA|PROTEIN> <out file>");
-        System.exit( -1);
+public class CalcMass {
 
-      }
+` /**`  
+`  *  Méthode définissant l'info d"utilisation, terminant le programme`  
+`  *  après.`  
+`  */`  
+` public static void help(){`  
+`   System.out.println(`  
+`       "usage: java calcMass `<file>` `<format>` `<DNA|RNA|PROTEIN>` `<out file>`");`  
+`   System.exit( -1);`
 
-      public CalcMass() {
-      }
+` }`
 
-      /**
-       *  Calcule  la masse du peptide en Daltons, en utilisant la masse
-       *  isotopique moyenne.
-       *  @param protein: le peptide
-       *  @lance IllegalSymbolException si protein n'est pas une proteine
-       *  @retourne mass, la masse
-       */
-      public double mass(SymbolList protein)throws IllegalSymbolException{
-        double mass = 0.0;
-        MassCalc mc = new MassCalc(SymbolPropertyTable.AVG_MASS, true);
-        mass = mc.getMass(protein);
-        return mass;
-      }
+` public CalcMass() {`  
+` }`
 
-      /**
-       *  Calcule le point isoelectrique en assumant des extrémités
-       *  NH2 et COOH libres
-       *  @param protein: le peptide
-       *  @lance IllegalAlphabetException si protein n'est pas une proteine
-       *  @lance BioException
-       *  @return pI: le pI de type double
-       */
-      public double pI(SymbolList protein)
-          throws IllegalAlphabetException, BioException{
+` /**`  
+`  *  Calcule  la masse du peptide en Daltons, en utilisant la masse`  
+`  *  isotopique moyenne.`  
+`  *  @param protein: le peptide`  
+`  *  @lance IllegalSymbolException si protein n'est pas une proteine`  
+`  *  @retourne mass, la masse`  
+`  */`  
+` public double mass(SymbolList protein)throws IllegalSymbolException{`  
+`   double mass = 0.0;`  
+`   MassCalc mc = new MassCalc(SymbolPropertyTable.AVG_MASS, true);`  
+`   mass = mc.getMass(protein);`  
+`   return mass;`  
+` }`
 
-        double pI = 0.0;
-        IsoelectricPointCalc ic = new IsoelectricPointCalc();
-        pI = ic.getPI(protein, true, true);
-        return pI;
-      }
+` /**`  
+`  *  Calcule le point isoelectrique en assumant des extrémités`  
+`  *  NH2 et COOH libres`  
+`  *  @param protein: le peptide`  
+`  *  @lance IllegalAlphabetException si protein n'est pas une proteine`  
+`  *  @lance BioException`  
+`  *  @return pI: le pI de type double`  
+`  */`  
+` public double pI(SymbolList protein)`  
+`     throws IllegalAlphabetException, BioException{`
 
-      public static void main(String[] args) throws Exception{
-        if(args.length != 4)
-          help();
+`   double pI = 0.0;`  
+`   IsoelectricPointCalc ic = new IsoelectricPointCalc();`  
+`   pI = ic.getPI(protein, true, true);`  
+`   return pI;`  
+` }`
 
-        BufferedReader br = null;
-        PrintWriter out = null;
-        try{
-          // lecture des séquences
-          br = new BufferedReader(new FileReader(args[0]));
-          SequenceIterator seqi =
-              (SequenceIterator)SeqIOTools.fileToBiojava(args[1], args[2], br);
+` public static void main(String[] args) throws Exception{`  
+`   if(args.length != 4)`  
+`     help();`
 
-          out = new PrintWriter(new FileOutputStream(args[3]));
+`   BufferedReader br = null;`  
+`   PrintWriter out = null;`  
+`   try{`  
+`     // lecture des séquences`  
+`     br = new BufferedReader(new FileReader(args[0]));`  
+`     SequenceIterator seqi =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(args[1], args[2], br);`
 
-          // écrire l'en-tête du rapport
-          out.println("name, mass, pI, size, sequence");
+`     out = new PrintWriter(new FileOutputStream(args[3]));`
 
-          // initialiser le calcul de la masse
-          CalcMass calcMass = new CalcMass();
+`     // écrire l'en-tête du rapport`  
+`     out.println("name, mass, pI, size, sequence");`
 
-          while (seqi.hasNext()) {
-            SymbolList syms = seqi.nextSequence();
-            String name = null;
+`     // initialiser le calcul de la masse`  
+`     CalcMass calcMass = new CalcMass();`
 
-            // obtenir un nom approprié pour la protéine
-           if(args[1].equalsIgnoreCase("fasta")){
-              name = ((Sequence) syms).getAnnotation().
-                  getProperty("description_line").toString();
-            }else{
-              name = ((Sequence)syms).getName();
-            }
-            out.print(name+",");
+`     while (seqi.hasNext()) {`  
+`       SymbolList syms = seqi.nextSequence();`  
+`       String name = null;`
 
-            // si la séquence n'est pas une protéine, la traduire.
-            if(syms.getAlphabet() != ProteinTools.getAlphabet() &&
-               syms.getAlphabet() != ProteinTools.getTAlphabet()){
-              if(syms.getAlphabet() != RNATools.getRNA()){
-                syms = RNATools.transcribe(syms);
-              }
+`       // obtenir un nom approprié pour la protéine`  
+`      if(args[1].equalsIgnoreCase("fasta")){`  
+`         name = ((Sequence) syms).getAnnotation().`  
+`             getProperty("description_line").toString();`  
+`       }else{`  
+`         name = ((Sequence)syms).getName();`  
+`       }`  
+`       out.print(name+",");`
 
-              // si non-divisible par 3, tronquer la protéine
-              if(syms.length() % 3 != 0){
-                syms = syms.subList(1, syms.length() - (syms.length() %3));
-              }
+`       // si la séquence n'est pas une protéine, la traduire.`  
+`       if(syms.getAlphabet() != ProteinTools.getAlphabet() &&`  
+`          syms.getAlphabet() != ProteinTools.getTAlphabet()){`  
+`         if(syms.getAlphabet() != RNATools.getRNA()){`  
+`           syms = RNATools.transcribe(syms);`  
+`         }`
 
-              syms = RNATools.translate(syms);
+`         // si non-divisible par 3, tronquer la protéine`  
+`         if(syms.length() % 3 != 0){`  
+`           syms = syms.subList(1, syms.length() - (syms.length() %3));`  
+`         }`
 
-             /*
-              * Tranduction des codons GTG et TTG produit une Methionine si
-              * ils sont les codons d"initiation (toute proteine commence avec f-Met). 
-              * Par conséquent, il faut éditer la séquence.
-              */      
-              if(syms.symbolAt(1) != ProteinTools.met()){
-                
-                // Les objets SimpleSymbolLists peuvent être 
-                // modifiés mais d'autres pourraient ne pas l'être
-                syms = new SimpleSymbolList(syms);
-                Edit e = new Edit(1, syms.getAlphabet(), ProteinTools.met());
-                syms.edit(e);
-              }
-            }
+`         syms = RNATools.translate(syms);`
 
-            // si les séquences se termine avec un * (terminaison), il faut
-            // enlever ce caractère
-            if (syms.symbolAt(syms.length()) == ProteinTools.ter()) {
-              syms = syms.subList(1, syms.length()-1);
-            }
+`        /*`  
+`         * Tranduction des codons GTG et TTG produit une Methionine si`  
+`         * ils sont les codons d"initiation (toute proteine commence avec f-Met). `  
+`         * Par conséquent, il faut éditer la séquence.`  
+`         */      `  
+`         if(syms.symbolAt(1) != ProteinTools.met()){`  
+`           `  
+`           // Les objets SimpleSymbolLists peuvent être `  
+`           // modifiés mais d'autres pourraient ne pas l'être`  
+`           syms = new SimpleSymbolList(syms);`  
+`           Edit e = new Edit(1, syms.getAlphabet(), ProteinTools.met());`  
+`           syms.edit(e);`  
+`         }`  
+`       }`
 
-            // effectuer les calculs
-          double mass = calcMass.mass(syms);
-            double pI = calcMass.pI(syms);
+`       // si les séquences se termine avec un * (terminaison), il faut`  
+`       // enlever ce caractère`  
+`       if (syms.symbolAt(syms.length()) == ProteinTools.ter()) {`  
+`         syms = syms.subList(1, syms.length()-1);`  
+`       }`
 
-            // imprimer les résultats pour cette protéine
-            out.println(mass+","+pI+","+syms.length()+","+syms.seqString());
-          }
-        }
-        finally{ // pour en finir
-          if(br != null){
-            br.close();
-          }
-          if(out != null){
-            out.flush();
-            out.close();
-          }
-        }
-      }
-    }
+`       // effectuer les calculs`  
+`     double mass = calcMass.mass(syms);`  
+`       double pI = calcMass.pI(syms);`
+
+`       // imprimer les résultats pour cette protéine`  
+`       out.println(mass+","+pI+","+syms.length()+","+syms.seqString());`  
+`     }`  
+`   }`  
+`   finally{ // pour en finir`  
+`     if(br != null){`  
+`       br.close();`  
+`     }`  
+`     if(out != null){`  
+`       out.flush();`  
+`       out.close();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
