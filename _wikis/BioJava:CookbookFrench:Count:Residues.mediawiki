@@ -73,7 +73,7 @@ public class CountResidues {
 
 === Solution 2 ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -146,4 +146,4 @@ public class CountResidues2 {
     }
   }
 }
-</pre>
+</java>
