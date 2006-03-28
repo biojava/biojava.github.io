@@ -30,7 +30,7 @@ Le code de cette recette accompli les 4 tâches suivantes:
 [[Image:PeptideDigestDemo.jpg]]
 ----
 
-<pre>
+<java>
 import org.biojava.bio.*;
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.gui.sequence.*;
@@ -300,4 +300,4 @@ public class PeptideDigestDemo extends JFrame{
         }
     }
 }
-</pre>
+</java>
