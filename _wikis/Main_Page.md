@@ -57,7 +57,7 @@ oversee the coordination of the release.
 
 The BioJava project needs a new Logo. The sunflower in the top left
 corner of this page doesn't really do it justice. If you have artistic
-flair then upload you logo to this [page](Project:logo "wikilink").
+flair then upload your logo to this [page](Project:logo "wikilink").
 Everyone feel free to make your comments about which ones you like. At
 some as yet undecided point one will become the official
 logo. --[Mark](User:Mark "wikilink") 21:21, 1 February 2006 (EST)
