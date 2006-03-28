@@ -27,55 +27,55 @@ BlastLikeSearchBuilder --\> List
 L'API est très flexible mais dans la plupart des cas, la recette qui
 suit vous donnera les résultats que vous recherchez.
 
-    import java.io.*;
-    import java.util.*;
+<java> import java.io.\*; import java.util.\*;
 
-    import org.biojava.bio.program.sax.*;
-    import org.biojava.bio.program.ssbind.*;
-    import org.biojava.bio.search.*;
-    import org.biojava.bio.seq.db.*;
-    import org.xml.sax.*;
-    import org.biojava.bio.*;
+import org.biojava.bio.program.sax.\*; import
+org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
+import org.biojava.bio.seq.db.\*; import org.xml.sax.\*; import
+org.biojava.bio.\*;
 
-    public class BlastParser {
-      /**
-       * args[0] est assumé être le nom du fichier de sortie BLAST */
-      public static void main(String[] args) {
-        try {
-          //obtenir les entrées Blast sous la forme de Stream
-          InputStream is = new FileInputStream(args[0]);
+public class BlastParser {
 
-          //construire un BlastLikeSAXParser
-          BlastLikeSAXParser parser = new BlastLikeSAXParser();
+` /**`  
+`  * args[0] est assumé être le nom du fichier de sortie BLAST */`  
+` public static void main(String[] args) {`  
+`   try {`  
+`     //obtenir les entrées Blast sous la forme de Stream`  
+`     InputStream is = new FileInputStream(args[0]);`
 
-          //construire un adaptateur pour SAX event qui les passera a un Handler.
-          SeqSimilarityAdapter adapter = new SeqSimilarityAdapter();
+`     //construire un BlastLikeSAXParser`  
+`     BlastLikeSAXParser parser = new BlastLikeSAXParser();`
 
-          //initialiser l'adaptateur des SAX events  de l'objet parser
-          parser.setContentHandler(adapter);
+`     //construire un adaptateur pour SAX event qui les passera a un Handler.`  
+`     SeqSimilarityAdapter adapter = new SeqSimilarityAdapter();`
 
-          //la liste qui contiendra les SeqSimilaritySearchResults
-          List results = new ArrayList();
+`     //initialiser l'adaptateur des SAX events  de l'objet parser`  
+`     parser.setContentHandler(adapter);`
 
-          //créer le SearchContentHandler qui construira les SeqSimilaritySearchResults
-          //dans la liste results
-          SearchContentHandler builder = new BlastLikeSearchBuilder(results,
-              new DummySequenceDB("queries"), new DummySequenceDBInstallation());
+`     //la liste qui contiendra les SeqSimilaritySearchResults`  
+`     List results = new ArrayList();`
 
-          //enregistrer builder aupres de adapter
-          adapter.setSearchContentHandler(builder);
+`     //créer le SearchContentHandler qui construira les SeqSimilaritySearchResults`  
+`     //dans la liste results`  
+`     SearchContentHandler builder = new BlastLikeSearchBuilder(results,`  
+`         new DummySequenceDB("queries"), new DummySequenceDBInstallation());`
 
-          //parcourir le fichier; après, la liste result contiendra
-          //les SeqSimilaritySearchResults
+`     //enregistrer builder aupres de adapter`  
+`     adapter.setSearchContentHandler(builder);`
 
-          parser.parse(new InputSource(is));
-          formatResults(results);
-        }
-        catch (SAXException ex) {
-          //probleme de XML
-          ex.printStackTrace();
-        }catch (IOException ex) {
-          //probleme de IO, comme un fichier introuvable
-          ex.printStackTrace();
-        }
-      }
+`     //parcourir le fichier; après, la liste result contiendra`  
+`     //les SeqSimilaritySearchResults`
+
+`     parser.parse(new InputSource(is));`  
+`     formatResults(results);`  
+`   }`  
+`   catch (SAXException ex) {`  
+`     //probleme de XML`  
+`     ex.printStackTrace();`  
+`   }catch (IOException ex) {`  
+`     //probleme de IO, comme un fichier introuvable`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+</java>

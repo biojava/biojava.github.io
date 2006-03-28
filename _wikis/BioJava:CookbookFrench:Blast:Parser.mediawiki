@@ -14,7 +14,7 @@ InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter --> BlastLikeSearchBui
 
 L'API est très flexible mais dans la plupart des cas, la recette qui suit vous donnera les résultats que vous recherchez.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -67,4 +67,4 @@ public class BlastParser {
       ex.printStackTrace();
     }
   }
-</pre>
+</java>
