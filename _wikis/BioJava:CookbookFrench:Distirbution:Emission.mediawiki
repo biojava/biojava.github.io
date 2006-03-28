@@ -4,7 +4,7 @@ Vérifier si deux ''Distributions'' sont identiques est une bonne façon de dire
 
 L'utilisation de cette méthode se trouve ci-dessous.
 
-<pre>
+<java>
 import org.biojava.bio.dist.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -37,4 +37,4 @@ public class EqualDistributions {
     }
   }
 }
-</pre>
+</java>
