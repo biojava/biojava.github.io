@@ -6,7 +6,7 @@ Le programme suivant est une d&eacute;monstration compl&egrave;te capable de cal
 
 Le programme utilise la librairie CLI pour le traitement des options de la ligne de commande et utilise les types g&eacute;n&eacute;riques pour la s&eacute;curit&eacute; des types. Il fait aussi la d&eacute;monstration de l'usage de l'architecture I/O BioJavax en incluant la particularisation capable d'ignorer certaines informations commes les caract&eacute;ristiques et les commentaires, sans importance pour la calcul de la composition. 
 
-<pre>
+<java>
 /*
  * Composition.java
  *
@@ -524,4 +524,4 @@ public class Composition {
     }
 }
 
-</pre>
+</java>
