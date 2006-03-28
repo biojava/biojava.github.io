@@ -91,7 +91,7 @@ public class ReadSwiss {
 
 === Lire un fichier EMBL ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.seq.io.*;
 import java.io.*;
@@ -130,7 +130,7 @@ public class ReadEMBL {
     }
   }
 }
-</pre>
+</java>
 
 === GeneralReader, un lecteur générique (avec BioJava 1.3) ===
 
