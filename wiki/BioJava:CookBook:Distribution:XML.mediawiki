@@ -4,7 +4,7 @@ If you frequently construct Distributions from large training sets for later ana
 
 A better solution is write the Distribution to XML, providing a long term, human readable and language independent solution. The following example shows how a Distribution can be written to XML and read back again. The example requires a fairly recent version of BioJava as the readFromXML() and writeToXML() methods in DistributionTools are fairly new features. The cvs version or version 1.3 (when released) will be adequate.
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.dist.*;
@@ -40,4 +40,4 @@ public class Dist2XMLAndBack{
 
   }
 }
-</pre>
+</java>
