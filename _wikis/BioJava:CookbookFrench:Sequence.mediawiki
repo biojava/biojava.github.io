@@ -6,7 +6,7 @@ A l'intérieur d'une ''Sequence'' ou d'une ''SymbolList'', le polymère lui-mêm
 
 === D'une chaîne à une ''SymbolList'' ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -31,7 +31,7 @@ public class StringToSymbolList {
    
   }
 }
-</pre>
+</java>
 
 === D'une chaîne à une ''Sequence'' ===
 
