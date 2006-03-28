@@ -4,7 +4,7 @@ Cet exemple illustre la création d'un ''Alphabet'' sur mesure de sept ''Symbols
 
 Contribution de Russel Smithies.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -42,11 +42,11 @@ public class DistTest {
     AlphabetManager.registerAlphabet(dwarfAlphabet.getName(), dwarfAlphabet);
 
     }
-</pre>
+</java>
 
 Créer une ''OrderNDstribution'' qui utilise l'''Alphabet'' Dwarf fraichement crée.
 
-<pre>
+<java>
     // ordre de la distribution
     int order = 3;
 
@@ -63,11 +63,11 @@ Créer une ''OrderNDstribution'' qui utilise l'''Alphabet'' Dwarf fraichement cr
 
     // enregistrer la Distribution avec l'entraineur
     dtc.registerDistribution(ond);
-</pre>
+</java>
 
 Voici comment créer une ''SymbolList'' à partir de l'alphabet Dwarf pour pouvoir tester notre nouvelle ''OrderNDistribution''. Ceci se fait en fabriquant une ''UniformDistribution'' échantillonnée de manière aléatoire et en ajoutant les ''Symbols'' dans une ''ArrayList''. L'''ArrayList'' est ensuite utilisée pour construire la ''SymbolList''.
 
-<pre>
+<java>
     // créer une SymbolList aléatoire de nains
     UniformDistribution udist = 
        new UniformDistribution((FiniteAlphabet)dwarfAlphabet);
@@ -81,11 +81,11 @@ Voici comment créer une ''SymbolList'' à partir de l'alphabet Dwarf pour pouvo
 
     // créer une SymbolList pour tester la Distribution
     SymbolList symbl = new SimpleSymbolList(dwarfAlphabet, list);
-</pre>	
+</java>	
 
 La ''SymbolList'' est ensuite convertie en ''OrderNSymbolList'' pour permettre à une ''OrderNDistribution'' d'être creer avec elle.
 
-<pre>
+<java>
     // convertir en OrderNSymbolList
     symbl = SymbolListViews.orderNSymbolList(symbl, order);
 
@@ -111,4 +111,4 @@ La ''SymbolList'' est ensuite convertie en ''OrderNSymbolList'' pour permettre �
     writer.writeDistribution(ond, new FileOutputStream("dwarf.xml"));
   }
 }
-</pre>
+</java>
