@@ -18,47 +18,47 @@ selon l'espèce. La même recette de base peut être utilisé, avec quelques
 modifications, pour rechercher n'importe quelle propriété d'une
 *Annotation*.
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.db.*;
-    import org.biojava.bio.seq.io.*;
+import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.db.\*; import org.biojava.bio.seq.io.\*;
 
-    public class FilterEMBLBySpecies {
-      public static void main(String[] args) {
-       try {
-          //lire un fichier  EMBL  specifié en args[0]
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
-          SequenceIterator iter = SeqIOTools.readEmbl(br);
+public class FilterEMBLBySpecies {
 
-          //le nom de l'espèce à chercher (spécifié par args[1]);
-          String species = args[1];
+` public static void main(String[] args) {`  
+`  try {`  
+`     //lire un fichier  EMBL  specifié en args[0]`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`  
+`     SequenceIterator iter = SeqIOTools.readEmbl(br);`
 
-          //une SequenceDB pour stocker les Sequences filtrées
-          SequenceDB db = new HashSequenceDB();
+`     //le nom de l'espèce à chercher (spécifié par args[1]);`  
+`     String species = args[1];`
 
-          //lorsque chaque séquence est lue
-          while(iter.hasNext()){
-            Sequence seq = iter.nextSequence();
-            Annotation anno = seq.getAnnotation();
+`     //une SequenceDB pour stocker les Sequences filtrées`  
+`     SequenceDB db = new HashSequenceDB();`
 
-            //vérifier si l'Annotation contient le champs "OS"
-            if(anno.containsProperty("OS")){
+`     //lorsque chaque séquence est lue`  
+`     while(iter.hasNext()){`  
+`       Sequence seq = iter.nextSequence();`  
+`       Annotation anno = seq.getAnnotation();`
 
-              String property = (String)anno.getProperty("OS");
+`       //vérifier si l'Annotation contient le champs "OS"`  
+`       if(anno.containsProperty("OS")){`
 
-              //vérifier la valeur de la proprieté; pourrait être une expression régulière
-              if(property.startsWith(species)){
-                db.addSequence(seq);
-              }
-            }
-          }
-          //écrire les séquences en format FASTA
-          SeqIOTools.writeFasta(System.out, db);
-        }
-       catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`         String property = (String)anno.getProperty("OS");`
+
+`         //vérifier la valeur de la proprieté; pourrait être une expression régulière`  
+`         if(property.startsWith(species)){`  
+`           db.addSequence(seq);`  
+`         }`  
+`       }`  
+`     }`  
+`     //écrire les séquences en format FASTA`  
+`     SeqIOTools.writeFasta(System.out, db);`  
+`   }`  
+`  catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>

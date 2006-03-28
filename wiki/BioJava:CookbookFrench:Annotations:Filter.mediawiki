@@ -6,7 +6,7 @@ La propriété de l'espèce dépends du fichier source: pour EMBL et SwissProt, 
 
 Le programme suivant va lire les sequences d'un fichier et les filtrer selon l'espèce. La même recette de base peut être utilisé, avec quelques modifications, pour rechercher n'importe quelle propriété d'une ''Annotation''.
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.*;
@@ -51,4 +51,4 @@ public class FilterEMBLBySpecies {
     }
   }
 }
-</pre>
+</java>
