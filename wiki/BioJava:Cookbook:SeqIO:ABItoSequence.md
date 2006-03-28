@@ -21,64 +21,62 @@ below.
 
 ### Reading ABI
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.program.abi.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.impl.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.\*; import org.biojava.bio.program.abi.\*; import
+org.biojava.bio.seq.\*; import org.biojava.bio.seq.impl.\*; import
+org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 
-    public class Trace2Seq {
-      public static void main(String[] args)
-      throws Exception {
-        File traceFile = new File(args[0]);
+public class Trace2Seq {
 
-        //the name of the sequence
-        String name = traceFile.getName();
+` public static void main(String[] args)`  
+` throws Exception {`  
+`   File traceFile = new File(args[0]);`
 
-        //read the trace
-        ABITrace trace = new ABITrace(traceFile);
+`   //the name of the sequence`  
+`   String name = traceFile.getName();`
 
-        //extract the Symbols
-        SymbolList symbols = trace.getSequence();
-        //make a fully fledged sequence
-        Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);
+`   //read the trace`  
+`   ABITrace trace = new ABITrace(traceFile);`
 
-        //write it to STDOUT
-        SeqIOTools.writeFasta(System.out, seq);
-      }
-    }
+`   //extract the Symbols`  
+`   SymbolList symbols = trace.getSequence();`  
+`   //make a fully fledged sequence`  
+`   Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);`
+
+`   //write it to STDOUT`  
+`   SeqIOTools.writeFasta(System.out, seq);`  
+` }`
+
+} </java>
 
 ### Generic Solution
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.chromatogram.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.impl.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.\*; import org.biojava.bio.chromatogram.\*;
+import org.biojava.bio.seq.\*; import org.biojava.bio.seq.impl.\*;
+import org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 
-    public class Trace2Seq {
-      public static void main(String[] args)
-      throws Exception {
-        File traceFile = new File(args[0]);
+public class Trace2Seq {
 
-        //the name of the sequence
-        String name = traceFile.getName();
+` public static void main(String[] args)`  
+` throws Exception {`  
+`   File traceFile = new File(args[0]);`
 
-        //read the trace
-        Chromatogram trace = ChromatogramFactory.create(traceFile);
+`   //the name of the sequence`  
+`   String name = traceFile.getName();`
 
-        //extract the Symbols
-        SymbolList symbols = ChromatogramTools.getDNASequence(trace);
-        //make a fully fledged sequence
-        Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);
+`   //read the trace`  
+`   Chromatogram trace = ChromatogramFactory.create(traceFile);`
 
-        //write it to STDOUT
-        SeqIOTools.writeFasta(System.out, seq);
-      }
-    }
+`   //extract the Symbols`  
+`   SymbolList symbols = ChromatogramTools.getDNASequence(trace);`  
+`   //make a fully fledged sequence`  
+`   Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);`
+
+`   //write it to STDOUT`  
+`   SeqIOTools.writeFasta(System.out, seq);`  
+` }`
+
+} </java>
