@@ -2,7 +2,7 @@
 
 Pour obtenir le brin complémentaire d'une ''SymbolList'' ou d'une ''Sequence'' d'ADN, vous utilisez simplement la méthode statique '''DNATool.reverseComplement(SymbolList sl)'''. Une méthode équivalente existe dans la classe ''RNATools'' pour faire la même opération sur les ''Sequences'' et ''SymbolLists'' d'ARN.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -31,4 +31,4 @@ public class ReverseComplement {
       ex.printStackTrace();
     }
   }
-</pre>
+</java>
