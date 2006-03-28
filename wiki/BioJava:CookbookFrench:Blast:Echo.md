@@ -25,75 +25,78 @@ alors créer un *SearchContentHandler* qui fera le travail en étendant
 *SearchContentAdapter* et en redéfinissant les méthodes qui prendront en
 charge les évènements qui vous intéressent.
 
-    import org.xml.sax.*; 
-    import java.io.*; 
-    import org.biojava.bio.program.sax.*; 
-    import org.biojava.bio.program.ssbind.*; 
-    import org.biojava.bio.search.*; 
+<java> import org.xml.sax.\*;
 
-    /** 
-     *  Retransmets sur STDOUT les évènements
-     *  d'un parser SAX Blast-like  
-     */ public class BlastEcho { 
-      public BlastEcho() { 
-      } 
+import java.io.\*;
 
-      private void echo (InputSource source) throws IOException, SAXException{ 
-        // créer un BlastLikeSAXParser 
-        BlastLikeSAXParser parser = new BlastLikeSAXParser(); 
-        
-           // Appeller cette méthode pour que le parser ne se préoccupe
-           // pas de vérifier la version de Blast utilisée par ce rapport
-        // avant de le parcourir
-        parser.setModeLazy(); 
+import org.biojava.bio.program.sax.\*; import
+org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
 
-        ContentHandler handler = new SeqSimilarityAdapter();
-        
-        // utiliser vos propres SearchContentHandler (voir ci-dessous)
-        SearchContentHandler scHandler = new EchoSCHandler(); 
-        ((SeqSimilarityAdapter)handler).setSearchContentHandler(scHandler); 
+/\*\*
 
-        parser.setContentHandler(handler); 
-        parser.parse(source); 
-      } 
+`*  Retransmets sur STDOUT les évènements`  
+`*  d'un parser SAX Blast-like  `  
+`*/ public class BlastEcho { `  
+` public BlastEcho() { `  
+` } `
 
-      /**
-       * Création d'un SearchContentHandler personnalisé. 
-       * Intercepte tous les évènements et les transmets à STDOUT
-       */
-      private class EchoSCHandler extends SearchContentAdapter{ 
-        public void startHit(){ 
-          System.out.println("startHit()"); 
-        } 
-        public void endHit(){ 
-          System.out.println("endHit()"); 
-        } 
-        public void startSubHit(){ 
-          System.out.println("startSubHit()"); 
-        } 
-        public void endSubHit(){ 
-          System.out.println("endSubHit()"); 
-        } 
-        public void startSearch(){ 
-          System.out.println("startSearch"); 
-        } 
-        public void endSearch(){ 
-          System.out.println("endSearch"); 
-        } 
-        public void addHitProperty(Object key, Object val){ 
-          System.out.println("\tHitProp:\t"+key+": "+val); 
-        } 
-        public void addSearchProperty(Object key, Object val){ 
-          System.out.println("\tSearchProp:\t"+key+": "+val); 
-        } 
-        public void addSubHitProperty(Object key, Object val){ 
-          System.out.println("\tSubHitProp:\t"+key+": "+val); 
-        } 
-      } 
+` private void echo (InputSource source) throws IOException, SAXException{ `  
+`   // créer un BlastLikeSAXParser `  
+`   BlastLikeSAXParser parser = new BlastLikeSAXParser(); `  
+`   `  
+`   // Appeller cette méthode pour que le parser ne se préoccupe`  
+`   // pas de vérifier la version de Blast utilisée par ce rapport`  
+`   // avant de le parcourir`  
+`   parser.setModeLazy(); `
 
-      public static void main(String[] args) throws Exception{ 
-        InputSource is = new InputSource(new FileInputStream(args[0])); 
-        BlastEcho blastEcho = new BlastEcho(); 
-        blastEcho.echo(is); 
-      } 
-    }
+`   ContentHandler handler = new SeqSimilarityAdapter();`  
+`   `  
+`   // utiliser vos propres SearchContentHandler (voir ci-dessous)`  
+`   SearchContentHandler scHandler = new EchoSCHandler(); `  
+`   ((SeqSimilarityAdapter)handler).setSearchContentHandler(scHandler); `
+
+`   parser.setContentHandler(handler); `  
+`   parser.parse(source); `  
+` } `
+
+` /**`  
+`  * Création d'un SearchContentHandler personnalisé. `  
+`  * Intercepte tous les évènements et les transmets à STDOUT`  
+`  */`  
+` private class EchoSCHandler extends SearchContentAdapter{ `  
+`   public void startHit(){ `  
+`     System.out.println("startHit()"); `  
+`   } `  
+`   public void endHit(){ `  
+`     System.out.println("endHit()"); `  
+`   } `  
+`   public void startSubHit(){ `  
+`     System.out.println("startSubHit()"); `  
+`   } `  
+`   public void endSubHit(){ `  
+`     System.out.println("endSubHit()"); `  
+`   } `  
+`   public void startSearch(){ `  
+`     System.out.println("startSearch"); `  
+`   } `  
+`   public void endSearch(){ `  
+`     System.out.println("endSearch"); `  
+`   } `  
+`   public void addHitProperty(Object key, Object val){ `  
+`     System.out.println("\tHitProp:\t"+key+": "+val); `  
+`   } `  
+`   public void addSearchProperty(Object key, Object val){ `  
+`     System.out.println("\tSearchProp:\t"+key+": "+val); `  
+`   } `  
+`   public void addSubHitProperty(Object key, Object val){ `  
+`     System.out.println("\tSubHitProp:\t"+key+": "+val); `  
+`   } `  
+` } `
+
+` public static void main(String[] args) throws Exception{ `  
+`   InputSource is = new InputSource(new FileInputStream(args[0])); `  
+`   BlastEcho blastEcho = new BlastEcho(); `  
+`   blastEcho.echo(is); `  
+` } `
+
+} </java>
