@@ -6,7 +6,7 @@ The species property name depends on the source: for EMBL or SwissProt it is "OS
 
 The following program will read in Sequences from a file and filter them according to their species. The same general recipe with a little modification could be used for any Annotation property.
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.*;
@@ -53,4 +53,4 @@ public class FilterEMBLBySpecies {
     }
   }
 }
-</pre>
+</java>

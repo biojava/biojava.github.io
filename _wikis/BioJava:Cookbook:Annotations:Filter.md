@@ -17,49 +17,49 @@ The following program will read in Sequences from a file and filter them
 according to their species. The same general recipe with a little
 modification could be used for any Annotation property.
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.db.*;
-    import org.biojava.bio.seq.io.*;
+import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.db.\*; import org.biojava.bio.seq.io.\*;
 
-    public class FilterEMBLBySpecies {
-      public static void main(String[] args) {
+public class FilterEMBLBySpecies {
 
-        try {
-          //read an EMBL file specified in args[0]
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
-          SequenceIterator iter = SeqIOTools.readEmbl(br);
+` public static void main(String[] args) {`
 
-          //the species name to search for (specified by args[1]);
-          String species = args[1];
+`   try {`  
+`     //read an EMBL file specified in args[0]`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`  
+`     SequenceIterator iter = SeqIOTools.readEmbl(br);`
 
-          //A sequenceDB to store the filtered Seqs
-          SequenceDB db = new HashSequenceDB();
+`     //the species name to search for (specified by args[1]);`  
+`     String species = args[1];`
 
-          //As each sequence is read
-          while(iter.hasNext()){
-            Sequence seq = iter.nextSequence();
-            Annotation anno = seq.getAnnotation();
+`     //A sequenceDB to store the filtered Seqs`  
+`     SequenceDB db = new HashSequenceDB();`
 
-            //check the annotation for Embl organism field "OS"
-            if(anno.containsProperty("OS")){
+`     //As each sequence is read`  
+`     while(iter.hasNext()){`  
+`       Sequence seq = iter.nextSequence();`  
+`       Annotation anno = seq.getAnnotation();`
 
-              String property = (String)anno.getProperty("OS");
+`       //check the annotation for Embl organism field "OS"`  
+`       if(anno.containsProperty("OS")){`
 
-              //check the value of the property, could also do this with a regular expression
-              if(property.startsWith(species)){
-                db.addSequence(seq);
-              }
-            }
-          }
+`         String property = (String)anno.getProperty("OS");`
 
-          //write the sequences as FASTA
-          SeqIOTools.writeFasta(System.out, db);
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`         //check the value of the property, could also do this with a regular expression`  
+`         if(property.startsWith(species)){`  
+`           db.addSequence(seq);`  
+`         }`  
+`       }`  
+`     }`
+
+`     //write the sequences as FASTA`  
+`     SeqIOTools.writeFasta(System.out, db);`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
