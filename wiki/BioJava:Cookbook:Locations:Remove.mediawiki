@@ -2,7 +2,7 @@
 
 When processing a Sequence object you may wish to delete some Features. The following example, kindly donated by Keith James, shows how to remove all of the Features that meet some specific requirement. In this example all the Features on the positive strand of the Sequence are erased.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -38,4 +38,4 @@ public class RemoveFeatures
         }
     }
 }
-</pre>
+</java>
