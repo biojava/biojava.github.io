@@ -21,68 +21,68 @@ and a SequenceRenderer to display the symbols in a Sequence.
 
 [frame|center|A screen shot of the GUI](image:Seqview.jpg "wikilink")
 
-    import java.awt.*;
-    import java.awt.event.*;
+<java> import java.awt.\*; import java.awt.event.\*;
 
-    import javax.swing.*;
+import javax.swing.\*;
 
-    import org.biojava.bio.gui.sequence.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.gui.sequence.\*; import org.biojava.bio.seq.\*;
+import org.biojava.bio.symbol.\*;
 
-    public class SeqView extends JFrame {
-      private Sequence seq;
-      private JPanel jPanel = new JPanel();
-      private SequencePanel seqPanel = new SequencePanel();
-      private SequenceRenderer symSeqRenderer = new SymbolSequenceRenderer();
+public class SeqView extends JFrame {
 
-      public SeqView() {
-        try {
-          //create the sequence to display
-          seq = RNATools.createRNASequence("accggcgcgagauuugcagcgcgcgcgcaucgcg"+
-                                           "gggcgcauuaccagacuucauucgacgacucagc"
-                                           ,"rna1");
-          init();
-        }
-        catch(Exception e) {
-          e.printStackTrace();
-        }
+` private Sequence seq;`  
+` private JPanel jPanel = new JPanel();`  
+` private SequencePanel seqPanel = new SequencePanel();`  
+` private SequenceRenderer symSeqRenderer = new SymbolSequenceRenderer();`
 
-      }
-      public static void main(String[] args) {
-        SeqView seqView = new SeqView();
-        seqView.pack();
-        seqView.show();
-      }
+` public SeqView() {`  
+`   try {`  
+`     //create the sequence to display`  
+`     seq = RNATools.createRNASequence("accggcgcgagauuugcagcgcgcgcgcaucgcg"+`  
+`                                      "gggcgcauuaccagacuucauucgacgacucagc"`  
+`                                      ,"rna1");`  
+`     init();`  
+`   }`  
+`   catch(Exception e) {`  
+`     e.printStackTrace();`  
+`   }`
 
-      /**
-       * Set up the components to display the graphics
-       */
-      private void init() throws Exception {
-        this.getContentPane().setLayout(new BorderLayout());
-        this.getContentPane().add(jPanel, BorderLayout.CENTER);
-        this.setTitle("SeqView");
-        jPanel.add(seqPanel, BorderLayout.CENTER);
+` }`  
+` public static void main(String[] args) {`  
+`   SeqView seqView = new SeqView();`  
+`   seqView.pack();`  
+`   seqView.show();`  
+` }`
 
-        //set the sequence to display
-        seqPanel.setSequence(seq);
+` /**`  
+`  * Set up the components to display the graphics`  
+`  */`  
+` private void init() throws Exception {`  
+`   this.getContentPane().setLayout(new BorderLayout());`  
+`   this.getContentPane().add(jPanel, BorderLayout.CENTER);`  
+`   this.setTitle("SeqView");`  
+`   jPanel.add(seqPanel, BorderLayout.CENTER);`
 
-        //set the object responsible for painting the sequence
-        seqPanel.setRenderer(symSeqRenderer);
+`   //set the sequence to display`  
+`   seqPanel.setSequence(seq);`
 
-        //the amount of sequence to display
-        seqPanel.setRange(new RangeLocation(1,seq.length()));
-      }
+`   //set the object responsible for painting the sequence`  
+`   seqPanel.setRenderer(symSeqRenderer);`
 
-      /**
-       * Overide this to close the program when the window closes.
-       */
-      protected void processWindowEvent(WindowEvent we){
-        if (we.getID() == WindowEvent.WINDOW_CLOSING) {
-          System.exit(0);
-        }
-        else {
-          super.processWindowEvent(we);
-        }
-      }
-    }
+`   //the amount of sequence to display`  
+`   seqPanel.setRange(new RangeLocation(1,seq.length()));`  
+` }`
+
+` /**`  
+`  * Overide this to close the program when the window closes.`  
+`  */`  
+` protected void processWindowEvent(WindowEvent we){`  
+`   if (we.getID() == WindowEvent.WINDOW_CLOSING) {`  
+`     System.exit(0);`  
+`   }`  
+`   else {`  
+`     super.processWindowEvent(we);`  
+`   }`  
+` }`
+
+} </java>
