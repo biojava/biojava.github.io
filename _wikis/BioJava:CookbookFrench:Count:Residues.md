@@ -24,68 +24,65 @@ utiliseriez la solution 2.
 
 ### Solution 1
 
-    import java.io.*;
-    import java.util.*;
+<java> import java.io.\*; import java.util.\*;
 
+import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+public class CountResidues {
 
-    public class CountResidues {
+` /**`  
+`  * Prends 2 arguments: le 1er est un nom de fichier de séquence,le 2ème est un entier `  
+`  * qui est égal à un des formats supportés par SeqIOTools. Les formats de fichiers`  
+`  * appropriés sont:`  
+`  * FASTADNA = 1;`  
+`  * FASTAPROTEIN = 2;`  
+`  * EMBL = 3;`  
+`  * GENBANK = 4;`  
+`  * SWISSPROT = 5;`  
+`  * GENPEPT = 6;`  
+`  */`  
+` public static void main(String[] args) {`  
+`   //créer une réference à un objet pour contenir les décomptes`  
+`   Count counts = null;`
 
-      /**
-       * Prends 2 arguments: le 1er est un nom de fichier de séquence,le 2ème est un entier 
-       * qui est égal à un des formats supportés par SeqIOTools. Les formats de fichiers
-       * appropriés sont:
-       * FASTADNA = 1;
-       * FASTAPROTEIN = 2;
-       * EMBL = 3;
-       * GENBANK = 4;
-       * SWISSPROT = 5;
-       * GENPEPT = 6;
-       */
-      public static void main(String[] args) {
-        //créer une réference à un objet pour contenir les décomptes
-        Count counts = null;
+`   try {`  
+`     //lire le fichier de séquence`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-        try {
-          //lire le fichier de séquence
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+`     //obtenir un SequenceIterator pour les séquences contenues dans ce fichier`  
+`     SequenceIterator iter = (SequenceIterator)SeqIOTools.fileToBiojava(`  
+`         Integer.parseInt(args[1]), br);`
 
-          //obtenir un SequenceIterator pour les séquences contenues dans ce fichier
-          SequenceIterator iter = (SequenceIterator)SeqIOTools.fileToBiojava(
-              Integer.parseInt(args[1]), br);
+`     //pour chaque séquence`  
+`     while(iter.hasNext()){`  
+`       Sequence seq = iter.nextSequence();`
 
-          //pour chaque séquence
-          while(iter.hasNext()){
-            Sequence seq = iter.nextSequence();
+`       //au besoin, initialiser counts`  
+`       if(counts == null){`  
+`         counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());`  
+`       }`
 
-            //au besoin, initialiser counts
-            if(counts == null){
-              counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());
-            }
+`       //iteration à travers les Symbols contenus dans seq`  
+`       for (Iterator i = seq.iterator(); i.hasNext(); ) {`  
+`         AtomicSymbol sym = (AtomicSymbol)i.next();`  
+`         counts.increaseCount(sym,1.0);`  
+`       }`  
+`     }`
 
-            //iteration à travers les Symbols contenus dans seq
-            for (Iterator i = seq.iterator(); i.hasNext(); ) {
-              AtomicSymbol sym = (AtomicSymbol)i.next();
-              counts.increaseCount(sym,1.0);
-            }
-          }
+`     //imprimer les résultats`  
+`     for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();`  
+`          i.hasNext(); ) {`  
+`       AtomicSymbol sym = (AtomicSymbol)i.next();`  
+`       System.out.println(sym.getName()+" : "+counts.getCount(sym));`  
+`     }`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          //imprimer les résultats
-          for (Iterator i = ((FiniteAlphabet)counts.getAlphabet()).iterator();
-               i.hasNext(); ) {
-            AtomicSymbol sym = (AtomicSymbol)i.next();
-            System.out.println(sym.getName()+" : "+counts.getCount(sym));
-          }
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
 
 ### Solution 2
 
