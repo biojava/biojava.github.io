@@ -23,12 +23,14 @@ for reading a variety of common formats. All these methods take a Java
 `BufferedReader` object, and return an iterator which allows you to scan
 through the sequences in a file. For example:
 
-    BufferedReader br = new BufferedReader(new FileReader(fileName));
-    SequenceIterator stream = SeqIOTools.readFastaDNA(br);
-    while (stream.hasNext()) {
-        Sequence seq = stream.nextSequence();
-        // do something with the sequence.
-    }
+<java>BufferedReader br = new BufferedReader(new FileReader(fileName));
+SequenceIterator stream = SeqIOTools.readFastaDNA(br); while
+(stream.hasNext()) {
+
+`   Sequence seq = stream.nextSequence();`  
+`   // do something with the sequence.`
+
+}</java>
 
 For a full list of formats supported in this way, check the Javadoc
 documentation for the `SeqIOTools` class.
