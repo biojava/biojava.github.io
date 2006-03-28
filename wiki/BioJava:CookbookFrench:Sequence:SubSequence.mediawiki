@@ -31,7 +31,7 @@ BioJava utilise un système biologique de coordonnées pour identifier la positi
 
 === Code complet ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -61,4 +61,4 @@ public class SubSequencing {
     System.out.println(s);
   }
 }
-</pre>
+</java>
