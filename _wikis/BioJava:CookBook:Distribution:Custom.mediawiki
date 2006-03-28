@@ -4,7 +4,7 @@ This example demonstrates the creation of a custom Alphabet that will have seven
 
 Contributed by Russell Smithies.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -40,11 +40,11 @@ public class DistTest {
     AlphabetManager.registerAlphabet(dwarfAlphabet.getName(), dwarfAlphabet);
 
     }
-</pre>
+</java>
 
 Create an OrderNDstribution using the newly built Dwarf Alphabet
 
-<pre>
+<java>
     //order of the distribution
     int order = 3;
 
@@ -59,11 +59,11 @@ Create an OrderNDstribution using the newly built Dwarf Alphabet
 
     //register the Distribution with the trainer
     dtc.registerDistribution(ond);
-</pre>
+</java>
 
 This shows the creation of of a SymbolList from the Dwarf Alphabet so we can test our new OrderNDistribution. This is done by making, a UniformDistribution which is randomly sampled and adding the Symbols to an ArrayList. The ArrayList is then used to build the SymbolList.
 
-<pre>
+<java>
     //create a random symbolList of dwarves
     UniformDistribution udist = new UniformDistribution((FiniteAlphabet)dwarfAlphabet);
 
@@ -76,11 +76,11 @@ This shows the creation of of a SymbolList from the Dwarf Alphabet so we can tes
 
     //create a symbolList to test the Distribution
     SymbolList symbl = new SimpleSymbolList(dwarfAlphabet, list);
-</pre>
+</java>
 
 The SymbolList is changed into an OrderNSymbolList to enable an OrderNDistribution to be made over it.
 
-<pre>
+<java>
     //make it into an orderNSymbolList
     symbl = SymbolListViews.orderNSymbolList(symbl, order);
 
@@ -106,4 +106,4 @@ The SymbolList is changed into an OrderNSymbolList to enable an OrderNDistributi
     writer.writeDistribution(ond, new FileOutputStream("dwarf.xml"));
   }
 }
-</pre>
+</java>
