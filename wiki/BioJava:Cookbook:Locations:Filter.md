@@ -14,29 +14,31 @@ the FeatureFilter.
 
 The following example shows the use of a "byType" FeatureFilter.
 
-    import java.util.*;
+<java> import java.util.\*;
 
-    import org.biojava.bio.seq.*;
+import org.biojava.bio.seq.\*;
 
-    public class FilterByType {
-      public static void main(String[] args) {
-        Sequence seq = null;
+public class FilterByType {
 
-      /*
-       * code here to intitailize seq with numerous different features
-       * possibly by reading a Genbank or similar file.
-       *
-       */
+` public static void main(String[] args) {`  
+`   Sequence seq = null;`
 
-        //make a Filter for "CDS" types
-        FeatureFilter ff = new FeatureFilter.ByType("CDS");
+` /*`  
+`  * code here to intitailize seq with numerous different features`  
+`  * possibly by reading a Genbank or similar file.`  
+`  *`  
+`  */`
 
-        //get the filtered Features
-        FeatureHolder fh = seq.filter(ff);
+`   //make a Filter for "CDS" types`  
+`   FeatureFilter ff = new FeatureFilter.ByType("CDS");`
 
-        //iterate over the Features in fh
-        for (Iterator i = fh.features(); i.hasNext(); ) {
-          Feature f = (Feature)i.next();
-        }
-      }
-    }
+`   //get the filtered Features`  
+`   FeatureHolder fh = seq.filter(ff);`
+
+`   //iterate over the Features in fh`  
+`   for (Iterator i = fh.features(); i.hasNext(); ) {`  
+`     Feature f = (Feature)i.next();`  
+`   }`  
+` }`
+
+} </java>
