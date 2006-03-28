@@ -10,7 +10,7 @@ L'opportunité pour la personalisation se trouve vraiment au sein de l'implémen
 L'exemple ci-dessous est une application qui affiche les signaux en entrée/sortie sur la console en STDOUT. La classe SeqIOEcho est utile afin de vous montrez ce qui se passe lorsqu'un fichier est lu. Elle vous serait utile également si vous aviez à débugger une classe ''SequenceFormat'' afin de vous assurez que celle-ci envoit le bon signal au bon moment. Finalement, elle peut aussi être utile si vous aviez à écrire un objet ''SeqIOListener'' spécifique en vous montrant quels signaux vous avez à bloquer/écouter/modifier.
 
 
-<pre>
+<java>
 /*
  * SeqIOEcho.java
  *
@@ -165,4 +165,4 @@ public class SeqIOEcho implements SeqIOListener {
         
     }
 }
-</pre>
+</java>
