@@ -13,7 +13,7 @@ The basic pipeline is as follows:
 
 The API is very flexible however for most purposes the following simple recipe will get you what you want.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -93,4 +93,4 @@ public class BlastParser {
     }
   }
 }
-</pre>
+</java>
