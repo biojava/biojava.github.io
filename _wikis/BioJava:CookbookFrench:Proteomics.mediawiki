@@ -4,7 +4,7 @@ Si vous travaillez sur un projet de protéomique, il est important de savoir la 
 
 Le programme qui suit montre l'usage de base de ces deux classes. Cet exemple simple utilise des paramètres par défaut mais autant ''MassCalc'' que ''IsoelectricPointCalc'' possèdent des options spécialisées qui ne sont pas montré ici. Consulter l'[http://www.biojava.org/docs/api14/index.html API] de Biojava afin d'en savoir plus.
 
-<pre>
+<java>
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -164,4 +164,4 @@ public class CalcMass {
     }
   }
 }
-</pre>
+</java>
