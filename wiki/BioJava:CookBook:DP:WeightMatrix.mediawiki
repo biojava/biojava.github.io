@@ -4,7 +4,7 @@ A Weight Matrix is a useful way of representing an alignment or a motif. It can 
 
 The following program generates a WeightMatrix from an aligment and uses that matrix to annotate a Sequence with a threshold of 0.1
 
-<pre>
+<java>
 import java.util.*;
 
 import org.biojava.bio.dist.*;
@@ -45,4 +45,4 @@ public class WeightMatrixDemo {
     }
   }
 }
-</pre>
+</java>
