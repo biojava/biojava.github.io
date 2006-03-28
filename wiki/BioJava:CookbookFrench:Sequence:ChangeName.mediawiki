@@ -2,7 +2,7 @@
 
 La plus grande partie des objets BioJava sont immuables. C'est une mesure de sécurité pour prévenir des changements pouvant corrompre l'intégrité des données. Une conséquence de cette politique est que la méthode '''setName()''' n'existe pas pour des objets de type ''Sequence''. Une façon de changer votre "aperçu" d'une ''Sequence'' est de créer un objet de type ''ViewSequence'' en utilisant l'objet ''Sequence'' original en argument dans le constructeur. En arrière-scène, ''ViewSequence'', agissant en wrapper, intercepte certains des appels de méthodes à la ''Sequence'' sous-jacente et donne la possibilité de changer le nom. Le programme suivant montre la manière de faire.
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.seq.*;
@@ -31,4 +31,4 @@ public class NameChange {
     }
   }
 }
-</pre>
+</java>
