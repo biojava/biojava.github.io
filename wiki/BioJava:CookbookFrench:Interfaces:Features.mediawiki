@@ -6,7 +6,7 @@ Un SequenceRenderContext n'a aucun moyen d'interagir directement avec un ''Featu
 
 L'utilisation d'un ''FeatureBlockSequenceRenderer'' et d'un ''FeatureRenderer'' sont monté dans le programme ci-dessous. Une capture d'écran suit le programme.
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -89,6 +89,6 @@ public class FeatureView extends JFrame {
     }
   }
 }
-</pre>
+</java>
 
 [[image:Featview.jpg|frame|center|Affichage des Features d'une s&eacute;quence]]
