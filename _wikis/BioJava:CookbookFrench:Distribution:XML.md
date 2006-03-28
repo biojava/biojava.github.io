@@ -23,39 +23,39 @@ puisque les classes *XMLDistributionWriter* et *XMLDistributionReader*
 sont de nouvelles additions. La version 1.3 ou plus récente est
 suffisante.
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
+import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 
-    public class Dist2XMLandBack {
-    public static void main(String[] args) {    
-        XMLDistributionWriter writer = new XMLDistributionWriter();
-        XMLDistributionReader reader = new XMLDistributionReader();
+public class Dist2XMLandBack { public static void main(String[] args) {
 
-        try {
-          File temp = File.createTempFile("xmltemp",".xml");
+`   XMLDistributionWriter writer = new XMLDistributionWriter();`  
+`   XMLDistributionReader reader = new XMLDistributionReader();`
 
-          //créer une Distribution à écrire
-          Distribution d =
-              DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());
+`   try {`  
+`     File temp = File.createTempFile("xmltemp",".xml");`
 
-          //donner à la Distribution des valeurs aléatoires
-          DistributionTools.randomizeDistribution(d);
+`     //créer une Distribution à écrire`  
+`     Distribution d =`  
+`         DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());`
 
-          //écrire sur "temp"
-          writer.writeDistribution(d, new FileOutputStream(temp));
+`     //donner à la Distribution des valeurs aléatoires`  
+`     DistributionTools.randomizeDistribution(d);`
 
-          //lire le XML
-          Distribution d2 = reader.parseXML(new FileInputStream(temp));
+`     //écrire sur "temp"`  
+`     writer.writeDistribution(d, new FileOutputStream(temp));`
 
-          //vérifier ques les valeurs sont reproduites
-          boolean b = DistributionTools.areEmissionSpectraEqual(d,d2);
-          System.out.println("Are values reproduced? "+b);
-        }
+`     //lire le XML`  
+`     Distribution d2 = reader.parseXML(new FileInputStream(temp));`
 
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //vérifier ques les valeurs sont reproduites`  
+`     boolean b = DistributionTools.areEmissionSpectraEqual(d,d2);`  
+`     System.out.println("Are values reproduced? "+b);`  
+`   }`
+
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
