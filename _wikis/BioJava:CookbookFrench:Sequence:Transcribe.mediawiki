@@ -2,7 +2,7 @@
 
 Avec BioJava, les ''Sequences'' et les ''SymbolLists'' d'ADN et d'ARN sont faits à partir de différents ''Alphabets''. Vous pouvez alors convertir l'ADN en ARN en utilisant la méthode statique '''transcribe()''' de ''RNATools''.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -30,4 +30,4 @@ public class TranscribeDNAtoRNA {
       ex.printStackTrace();
     }
   }
-</pre>
+</java>
