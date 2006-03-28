@@ -8,7 +8,7 @@ The following program demonstrates the use of a SequenceRenderContext and a Sequ
 
 [[image:Seqview.jpg|frame|center|A screen shot of the GUI]]
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 
@@ -74,4 +74,4 @@ public class SeqView extends JFrame {
     }
   }
 }
-</pre>
+</java>
