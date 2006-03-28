@@ -29,7 +29,7 @@ SequenceIterator iter  =  (SequenceIterator) SeqIOTools.fileToBiojava(fileType,b
 		 
 // écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas juste System.out)
 SeqIOTools.writeFasta(System.out,iter);
-<java>
+</java>
 
 === Imprimer une seule Sequence ===
 
