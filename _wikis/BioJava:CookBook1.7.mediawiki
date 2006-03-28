@@ -156,4 +156,4 @@ The documentation on this site is the property of the people who contributed it.
 The code is [[wp:Open source|open-source]]. A good definition of open-source can be found [http://www.opensource.org/docs/definition_plain.php here]. If you agree with that definition then you can use it.
 
 
---[[User:Guedes|Guedes]] 20:59, 6 February 2006 (EST)
+--[[User:Guedes|Guedes]] 16:19, 28 March 2006 (EST)
