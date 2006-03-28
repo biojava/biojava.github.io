@@ -16,70 +16,70 @@ BasisSymbol.
 The following program demonstrates the training of three Distributions
 with Sequences from three different Alphabets.
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.dist.*;
-    import org.biojava.utils.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+import org.biojava.bio.dist.\*; import org.biojava.utils.\*; import
+java.util.\*;
 
-    public class Frequency {
-      public static void main(String[] args) {
+public class Frequency {
 
-        try {
-          //make a DNA SymbolList
-          SymbolList dna = DNATools.createDNA("atcgctagcgtyagcntatsggca");
+` public static void main(String[] args) {`
 
-          //make a RNA SymbolList
-          SymbolList rna = RNATools.createRNA("aucgcuaucccaggga");
+`   try {`  
+`     //make a DNA SymbolList`  
+`     SymbolList dna = DNATools.createDNA("atcgctagcgtyagcntatsggca");`
 
-          //make a protein SymbolList
-          SymbolList protein = ProteinTools.createProtein("asrvgchvhilmkapqrt");
+`     //make a RNA SymbolList`  
+`     SymbolList rna = RNATools.createRNA("aucgcuaucccaggga");`
 
-          SymbolList[] sla = {dna, rna, protein};
+`     //make a protein SymbolList`  
+`     SymbolList protein = ProteinTools.createProtein("asrvgchvhilmkapqrt");`
 
-          //get a DistributionTrainerContext
-          DistributionTrainerContext dtc = new SimpleDistributionTrainerContext();
+`     SymbolList[] sla = {dna, rna, protein};`
 
-          //make three Distributions
-          Distribution dnaDist =
-              DistributionFactory.DEFAULT.createDistribution(dna.getAlphabet());
-          Distribution rnaDist =
-              DistributionFactory.DEFAULT.createDistribution(rna.getAlphabet());
-          Distribution proteinDist =
-              DistributionFactory.DEFAULT.createDistribution(protein.getAlphabet());
+`     //get a DistributionTrainerContext`  
+`     DistributionTrainerContext dtc = new SimpleDistributionTrainerContext();`
 
-          Distribution[] da = {dnaDist, rnaDist, proteinDist};
+`     //make three Distributions`  
+`     Distribution dnaDist =`  
+`         DistributionFactory.DEFAULT.createDistribution(dna.getAlphabet());`  
+`     Distribution rnaDist =`  
+`         DistributionFactory.DEFAULT.createDistribution(rna.getAlphabet());`  
+`     Distribution proteinDist =`  
+`         DistributionFactory.DEFAULT.createDistribution(protein.getAlphabet());`
 
-          //register the Distributions with the trainer
-          dtc.registerDistribution(dnaDist);
-          dtc.registerDistribution(rnaDist);
-          dtc.registerDistribution(proteinDist);
+`     Distribution[] da = {dnaDist, rnaDist, proteinDist};`
 
-          //for each Sequence
-          for (int i = 0; i < sla.length; i++) {
-            //count each Symbol to the appropriate Distribution
-            for(int j = 1; j <= sla[i].length(); j++){
-              dtc.addCount(da[i], sla[i].symbolAt(j), 1.0);
-            }
-          }
+`     //register the Distributions with the trainer`  
+`     dtc.registerDistribution(dnaDist);`  
+`     dtc.registerDistribution(rnaDist);`  
+`     dtc.registerDistribution(proteinDist);`
 
-          //train the Distributions
-          dtc.train();
+`     //for each Sequence`  
+`     for (int i = 0; i < sla.length; i++) {`  
+`       //count each Symbol to the appropriate Distribution`  
+`       for(int j = 1; j <= sla[i].length(); j++){`  
+`         dtc.addCount(da[i], sla[i].symbolAt(j), 1.0);`  
+`       }`  
+`     }`
 
-          //print the weights of each Distribution
-          for (int i = 0; i < da.length; i++) {
-            for (Iterator iter = ((FiniteAlphabet)da[i].getAlphabet()).iterator();
-                 iter.hasNext(); ) {
+`     //train the Distributions`  
+`     dtc.train();`
 
-              Symbol sym = (Symbol)iter.next();
-              System.out.println(sym.getName()+" : "+da[i].getWeight(sym));
-            }
-            System.out.println("\n");
-          }
+`     //print the weights of each Distribution`  
+`     for (int i = 0; i < da.length; i++) {`  
+`       for (Iterator iter = ((FiniteAlphabet)da[i].getAlphabet()).iterator();`  
+`            iter.hasNext(); ) {`
 
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`         Symbol sym = (Symbol)iter.next();`  
+`         System.out.println(sym.getName()+" : "+da[i].getWeight(sym));`  
+`       }`  
+`       System.out.println("\n");`  
+`     }`
+
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
