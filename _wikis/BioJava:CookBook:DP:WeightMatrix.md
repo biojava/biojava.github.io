@@ -15,43 +15,43 @@ being searched which exceed the scoring threshold.
 The following program generates a WeightMatrix from an aligment and uses
 that matrix to annotate a Sequence with a threshold of 0.1
 
-    import java.util.*;
+<java> import java.util.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.dp.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.dist.\*; import org.biojava.bio.dp.\*; import
+org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class WeightMatrixDemo {
-      public static void main(String[] args) throws Exception{
-        //make an Alignment of a motif.
-        Map map = new HashMap();
-        map.put("seq0", DNATools.createDNA("aggag"));
-        map.put("seq1", DNATools.createDNA("aggaa"));
-        map.put("seq2", DNATools.createDNA("aggag"));
-        map.put("seq3", DNATools.createDNA("aagag"));
-        Alignment align = new SimpleAlignment(map);
+public class WeightMatrixDemo {
 
-        //make a Distribution[] of the motif
-        Distribution[] dists =
-            DistributionTools.distOverAlignment(align, false, 0.01);
+` public static void main(String[] args) throws Exception{`  
+`   //make an Alignment of a motif.`  
+`   Map map = new HashMap();`  
+`   map.put("seq0", DNATools.createDNA("aggag"));`  
+`   map.put("seq1", DNATools.createDNA("aggaa"));`  
+`   map.put("seq2", DNATools.createDNA("aggag"));`  
+`   map.put("seq3", DNATools.createDNA("aagag"));`  
+`   Alignment align = new SimpleAlignment(map);`
 
-        //make a Weight Matrix
-        WeightMatrix matrix = new SimpleWeightMatrix(dists);
+`   //make a Distribution[] of the motif`  
+`   Distribution[] dists =`  
+`       DistributionTools.distOverAlignment(align, false, 0.01);`
 
-        //the sequence to score against
-        Sequence seq = DNATools.createDNASequence("aaagcctaggaagaggagctgat","seq");
+`   //make a Weight Matrix`  
+`   WeightMatrix matrix = new SimpleWeightMatrix(dists);`
 
-        //annotate the sequence with the weight matrix using a low threshold (0.1)
-        WeightMatrixAnnotator wma = new WeightMatrixAnnotator(matrix, 0.1);
-        seq = wma.annotate(seq);
+`   //the sequence to score against`  
+`   Sequence seq = DNATools.createDNASequence("aaagcctaggaagaggagctgat","seq");`
 
-        //output match information
-        for (Iterator it = seq.features(); it.hasNext(); ) {
-          Feature f = (Feature)it.next();
-          Location loc = f.getLocation();
-          System.out.println("Match at " + loc.getMin()+"-"+loc.getMax());
-          System.out.println("\tscore : "+f.getAnnotation().getProperty("score"));
-        }
-      }
-    }
+`   //annotate the sequence with the weight matrix using a low threshold (0.1)`  
+`   WeightMatrixAnnotator wma = new WeightMatrixAnnotator(matrix, 0.1);`  
+`   seq = wma.annotate(seq);`
+
+`   //output match information`  
+`   for (Iterator it = seq.features(); it.hasNext(); ) {`  
+`     Feature f = (Feature)it.next();`  
+`     Location loc = f.getLocation();`  
+`     System.out.println("Match at " + loc.getMin()+"-"+loc.getMax());`  
+`     System.out.println("\tscore : "+f.getAnnotation().getProperty("score"));`  
+`   }`  
+` }`
+
+} </java>
