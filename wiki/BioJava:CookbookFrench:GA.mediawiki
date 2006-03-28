@@ -19,7 +19,7 @@ Le package org.biojavax.ga est disponible dans la version biojava-live disponibl
 
 === GADemo.java ===
 
-<pre>
+<java>
 package GA;
 
 import java.util.Iterator;
@@ -173,4 +173,4 @@ public class GADemo{
     }
   }
 }
-</pre>
+</java>
