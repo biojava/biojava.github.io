@@ -8,11 +8,11 @@ This file can be loaded through the <code>AAindexStreamReader</code> class. Afte
 
 The following example shows how to calculate the average hydrophobicity for a given amino acid sequence (in this example the sequence only contains the twenty amino acids) on the basis of the ''CIDH920105'' table from the AAindex1 file ''aaindex1'':
 
-<pre>SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
+<java>SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
 AAindex hydrophobicity = (AAindex) db.table("CIDH920105");
 SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");
 double hp = 0.0;
 for (int i = 1; i <= symbols.length(); i++) {
     hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
 }
-System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));</pre>
+System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));</java>
