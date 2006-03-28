@@ -17,29 +17,30 @@ SymbolList.
 Remember that BioJava uses the biological coordinate system thus the
 first PointLocation in a Sequence will be 1 not 0.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class SpecifyPoint {
-      public static void main(String[] args) {
-        try {
-          //make a PointLocation specifying the third residue
-          PointLocation point = new PointLocation(3);
-          //print the location
-          System.out.println("Location: "+point.toString());
+public class SpecifyPoint {
 
-          //make a SymbolList
-          SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");
-          System.out.println("SymbolList: "+sl.seqString());
+` public static void main(String[] args) {`  
+`   try {`  
+`     //make a PointLocation specifying the third residue`  
+`     PointLocation point = new PointLocation(3);`  
+`     //print the location`  
+`     System.out.println("Location: "+point.toString());`
 
-          //get the SymbolList specified by the Location
-          SymbolList sym = point.symbols(sl);
-          //in this case the SymbolList will only have one base
-          System.out.println("Symbol specified by Location: "+sym.seqString());
-        }
-        catch (IllegalSymbolException ex) {
-          //illegal symbol used to make sl
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //make a SymbolList`  
+`     SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");`  
+`     System.out.println("SymbolList: "+sl.seqString());`
+
+`     //get the SymbolList specified by the Location`  
+`     SymbolList sym = point.symbols(sl);`  
+`     //in this case the SymbolList will only have one base`  
+`     System.out.println("Symbol specified by Location: "+sym.seqString());`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     //illegal symbol used to make sl`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
