@@ -22,70 +22,68 @@ program.
 [frame|center|View Sequence coordinates in a
 GUI](image:Multiview.jpg "wikilink")
 
-    import java.awt.*;
-    import java.awt.event.*;
-    import javax.swing.*;
-    import org.biojava.bio.gui.sequence.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.awt.\*; import java.awt.event.\*; import
+javax.swing.\*; import org.biojava.bio.gui.sequence.\*; import
+org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class MultiView extends JFrame {
-      private JPanel jPanel = new JPanel();
-      private MultiLineRenderer mlr = new MultiLineRenderer();
-      private SequenceRenderer symR = new SymbolSequenceRenderer();
-      private RulerRenderer ruler = new RulerRenderer();
-      private SequencePanel seqPanel = new SequencePanel();
-      private Sequence seq;
+public class MultiView extends JFrame {
 
+` private JPanel jPanel = new JPanel();`  
+` private MultiLineRenderer mlr = new MultiLineRenderer();`  
+` private SequenceRenderer symR = new SymbolSequenceRenderer();`  
+` private RulerRenderer ruler = new RulerRenderer();`  
+` private SequencePanel seqPanel = new SequencePanel();`  
+` private Sequence seq;`
 
-      public MultiView() {
-        try {
-          seq = ProteinTools.createProteinSequence(
-              "agcgstyravlivtymaragrsecharlvahklchg",
-              "protein 1");
-          init();
-        }
-        catch(Exception e) {
-          e.printStackTrace();
-        }
-      }
-      public static void main(String[] args) {
-        MultiView multiView = new MultiView();
-        multiView.pack();
-        multiView.show();
-      }
+` public MultiView() {`  
+`   try {`  
+`     seq = ProteinTools.createProteinSequence(`  
+`         "agcgstyravlivtymaragrsecharlvahklchg",`  
+`         "protein 1");`  
+`     init();`  
+`   }`  
+`   catch(Exception e) {`  
+`     e.printStackTrace();`  
+`   }`  
+` }`  
+` public static void main(String[] args) {`  
+`   MultiView multiView = new MultiView();`  
+`   multiView.pack();`  
+`   multiView.show();`  
+` }`
 
-      /**
-       * OverRide to allow termination of program.
-       */
-      protected void processWindowEvent(WindowEvent we){
-        if (we.getID() == WindowEvent.WINDOW_CLOSING) {
-          System.exit(0);
-        }
-        else {
-          super.processWindowEvent(we);
-        }
-      }
+` /**`  
+`  * OverRide to allow termination of program.`  
+`  */`  
+` protected void processWindowEvent(WindowEvent we){`  
+`   if (we.getID() == WindowEvent.WINDOW_CLOSING) {`  
+`     System.exit(0);`  
+`   }`  
+`   else {`  
+`     super.processWindowEvent(we);`  
+`   }`  
+` }`
 
-      /**
-       * Set up GUI components
-       */
-      private void init() throws Exception {
-        this.setTitle("MultiView");
-        this.getContentPane().add(jPanel, BorderLayout.CENTER);
-        jPanel.add(seqPanel, BorderLayout.CENTER);
+` /**`  
+`  * Set up GUI components`  
+`  */`  
+` private void init() throws Exception {`  
+`   this.setTitle("MultiView");`  
+`   this.getContentPane().add(jPanel, BorderLayout.CENTER);`  
+`   jPanel.add(seqPanel, BorderLayout.CENTER);`
 
-        //add the SymbolSequenceRenderer and RulerRenderer to the MultiLineRenderer
-        mlr.addRenderer(symR);
-        mlr.addRenderer(ruler);
+`   //add the SymbolSequenceRenderer and RulerRenderer to the MultiLineRenderer`  
+`   mlr.addRenderer(symR);`  
+`   mlr.addRenderer(ruler);`
 
-        //set the MultiLineRenderer as the main renderer
-        seqPanel.setRenderer(mlr);
+`   //set the MultiLineRenderer as the main renderer`  
+`   seqPanel.setRenderer(mlr);`
 
-        //set the Sequence
-        seqPanel.setSequence(seq);
+`   //set the Sequence`  
+`   seqPanel.setSequence(seq);`
 
-        //set the range to show
-        seqPanel.setRange(new RangeLocation(1,seq.length()));
-      }
-    }
+`   //set the range to show`  
+`   seqPanel.setRange(new RangeLocation(1,seq.length()));`  
+` }`
+
+} </java>
