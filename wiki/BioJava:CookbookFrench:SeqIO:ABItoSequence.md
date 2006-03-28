@@ -16,31 +16,30 @@ Le programme suivant est une version modifiée d'un programme
 gracieusement offert par Matthew Pocock. Il montre comment créer une
 *Sequence* BioJava à partir d'un fichier de tracé ABI.
 
-    import java.io.*;
-    import org.biojava.bio.*;
-    import org.biojava.bio.program.abi.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.impl.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.io.\*; import org.biojava.bio.\*; import
+org.biojava.bio.program.abi.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.impl.\*; import org.biojava.bio.seq.io.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class Trace2Seq {
-        public static void main(String[] args) throws Exception {
-        File traceFile = new File(args[0]);
-        
-        //le nom de la séquence
-        String name = traceFile.getName();
+public class Trace2Seq {
 
-        //lire le tracé
-        ABITrace trace = new ABITrace(traceFile);
+`   public static void main(String[] args) throws Exception {`  
+`   File traceFile = new File(args[0]);`  
+`   `  
+`   //le nom de la séquence`  
+`   String name = traceFile.getName();`
 
-        //extraire les Symbols
-        SymbolList symbols = trace.getSequence();
+`   //lire le tracé`  
+`   ABITrace trace = new ABITrace(traceFile);`
 
-        //créer une séquence en bonne et due forme    
-        Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);
+`   //extraire les Symbols`  
+`   SymbolList symbols = trace.getSequence();`
 
-        //écrire la séquence sur STDOUT
-        SeqIOTools.writeFasta(System.out, seq);
-      }
-    }
+`   //créer une séquence en bonne et due forme    `  
+`   Sequence seq = new SimpleSequence(symbols, name, name, Annotation.EMPTY_ANNOTATION);`
+
+`   //écrire la séquence sur STDOUT`  
+`   SeqIOTools.writeFasta(System.out, seq);`  
+` }`
+
+} </java>
