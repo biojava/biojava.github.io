@@ -4,7 +4,7 @@ Une utilisation très intéressante de la classe ''MotifTools'' est la transform
 
 L'exemple suivant, gracieuseté de Andy Hammer, montre comment faire pour chercher des motifs dans des ''Sequences''. Le programme trouve toutes les instances d'un motif sur une séquence lue en format FASTA et les affichent en sortie standard.
 
-<pre>
+<java>
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -125,4 +125,4 @@ public class MotifLister{
     }
   }
 }
-</pre>
+</java>
