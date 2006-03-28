@@ -22,62 +22,63 @@ dépendent. La meilleure stratégie dans ce cas est de faire une copie des
 *Symbols* dans la *Sequence* ou *SymbolList* et modifier la copie. Ceci
 est démontré dans l'example de code ci-dessous.
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class EditExamples {
-      public static void main(String[] args) throws Exception{
-        
-        // il est impossible de modifier la séquence
-        Sequence seq = DNATools.createDNASequence("atggct", "seq");
+public class EditExamples {
 
-        // donc il est nécessaire de faire une copie de ses Symbols
-        // en utilisant un "constructeur de copie"
-        SimpleSymbolList syms = new SimpleSymbolList(seq);
+` public static void main(String[] args) throws Exception{`  
+`   `  
+`   // il est impossible de modifier la séquence`  
+`   Sequence seq = DNATools.createDNASequence("atggct", "seq");`
 
-        // ajouter à la fin, en effaçant 0 symbols, "cc"
-        Edit e = new Edit(seq.length()+1, 0, DNATools.createDNA("cc"));
-        
-        // appliquer la modification
-        syms.edit(e);
-        
-        // devrait afficher la chaîne atggctcc
-        System.out.println(syms.seqString());
+`   // donc il est nécessaire de faire une copie de ses Symbols`  
+`   // en utilisant un "constructeur de copie"`  
+`   SimpleSymbolList syms = new SimpleSymbolList(seq);`
 
-        // ajouter au début, en effaçant 0 symbols, "tt"
-        e = new Edit(1, 0, DNATools.createDNA("tt"));
-        syms.edit(e);
-        //devrait être ttatggctcc
-        System.out.println(syms.seqString());
+`   // ajouter à la fin, en effaçant 0 symbols, "cc"`  
+`   Edit e = new Edit(seq.length()+1, 0, DNATools.createDNA("cc"));`  
+`   `  
+`   // appliquer la modification`  
+`   syms.edit(e);`  
+`   `  
+`   // devrait afficher la chaîne atggctcc`  
+`   System.out.println(syms.seqString());`
 
-        //insérer à la  position 4, en effacant 0 symbols, "aca"
-        e = new Edit(4, 0, DNATools.createDNA("aca"));
-        syms.edit(e);
+`   // ajouter au début, en effaçant 0 symbols, "tt"`  
+`   e = new Edit(1, 0, DNATools.createDNA("tt"));`  
+`   syms.edit(e);`  
+`   //devrait être ttatggctcc`  
+`   System.out.println(syms.seqString());`
 
-        // devrait être ttaacatggctcc
-        System.out.println(syms.seqString());
+`   //insérer à la  position 4, en effacant 0 symbols, "aca"`  
+`   e = new Edit(4, 0, DNATools.createDNA("aca"));`  
+`   syms.edit(e);`
 
-        // insérer à la position 2 en remplaçant 3 bases avec "ggg"
-        e = new Edit(2, 3, DNATools.createDNA("ggg"));
-        syms.edit(e);
+`   // devrait être ttaacatggctcc`  
+`   System.out.println(syms.seqString());`
 
-        // devrait afficher la chaîne tgggcatggctcc
-        System.out.println(syms.seqString());
+`   // insérer à la position 2 en remplaçant 3 bases avec "ggg"`  
+`   e = new Edit(2, 3, DNATools.createDNA("ggg"));`  
+`   syms.edit(e);`
 
-        // enlever les 5 premières bases (remplacer 5 bases avec rien)
-        e = new Edit(1, 5, SymbolList.EMPTY_LIST);
-        syms.edit(e);
+`   // devrait afficher la chaîne tgggcatggctcc`  
+`   System.out.println(syms.seqString());`
 
-        // devrait afficher la chaîne atggctcc
-        System.out.println(syms.seqString());
+`   // enlever les 5 premières bases (remplacer 5 bases avec rien)`  
+`   e = new Edit(1, 5, SymbolList.EMPTY_LIST);`  
+`   syms.edit(e);`
 
-        // maintenant un example plus compliqué
+`   // devrait afficher la chaîne atggctcc`  
+`   System.out.println(syms.seqString());`
 
-        // remplacer les positions 2 and 3 avec aa et après y insérer tt
-        e = new Edit(2, 2, DNATools.createDNA("aatt"));
-        syms.edit(e);
+`   // maintenant un example plus compliqué`
 
-        // devrait afficher la chaîne aaattgctcc
-        System.out.println(syms.seqString());
-      }
-    }
+`   // remplacer les positions 2 and 3 avec aa et après y insérer tt`  
+`   e = new Edit(2, 2, DNATools.createDNA("aatt"));`  
+`   syms.edit(e);`
+
+`   // devrait afficher la chaîne aaattgctcc`  
+`   System.out.println(syms.seqString());`  
+` }`
+
+} </java>
