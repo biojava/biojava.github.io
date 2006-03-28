@@ -6,7 +6,7 @@ Parce qu'un ''SequenceRenderContext'' ne peut utiliser qu'un seul ''SequenceRend
 
 L'usage d'un ''RulerRenderer'' et d'un ''MultiLineRenderer'' est montré dans le programme ci-dessous. Un exemple d'affichage de l'interface graphique se trouve sous le programme.
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -70,6 +70,6 @@ public class MultiView extends JFrame {
     seqPanel.setRange(new RangeLocation(1,seq.length()));
   }
 }
-</pre>
+</java>
 
 [[image:Multiview.jpg|frame|center|Affichage du syst&egrave;me de coordonn&eacute;es d'une s&eacute;quence]]
