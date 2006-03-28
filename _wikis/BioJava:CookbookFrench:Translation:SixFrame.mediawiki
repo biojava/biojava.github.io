@@ -6,7 +6,7 @@ La traduction des six cadres de lecture est efficace pour identifier des grands 
 
 L'exemple suivant montre un simpe programme qui traduira les six cadres de lecture de toutes les séquences contenues dans un fichier pour en imprimer les résultats sur la console en format FASTA.
 
-<pre>
+<java>
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -99,4 +99,4 @@ public class Hex {
     }
   }
 }
-</pre>
+</java>
