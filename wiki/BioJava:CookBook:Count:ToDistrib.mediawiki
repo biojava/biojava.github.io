@@ -2,7 +2,7 @@
 
 A Count can be simply converted into a Distribution by using the static countToDistribution() method from the DistributionTools class.
 
-<pre>
+<java>
 import org.biojava.bio.dist.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -40,4 +40,4 @@ public class count2Dist {
     }
   }
 }
-</pre>
+</java>
