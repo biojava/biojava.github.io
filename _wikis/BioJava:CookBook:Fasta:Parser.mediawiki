@@ -8,7 +8,7 @@ Below are two code examples. The first is a parser that binds everything to bioj
 
 === FastaParser.java ===
 
-<pre>
+<java>
 /*
  * FastaParser.java
  *
@@ -105,11 +105,11 @@ public class FastaParser {
     }
   }
 }
-</pre>
+</java>
 
 === FastaEcho.java ===
 
-<pre>
+<java>
 import java.io.FileInputStream;
 import java.io.IOException;
 import org.biojava.bio.program.sax.FastaSearchSAXParser;
@@ -189,4 +189,4 @@ public class FastaEcho {
     fastaEcho.echo(is); 
   } 
 }
-</pre>
+</java>
