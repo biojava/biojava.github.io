@@ -18,29 +18,30 @@ sont faciles à instantier. L'exemple suivant montre comment créer une
 coordonnées biologiques. Par conséquent, la première *PointLocation*
 possible d'une *Sequence* sera à l'index 1 et non 0.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class SpecifyPoint {
-      public static void main(String[] args) {
-        try {
-          //créer une PointLocation désignant le 3ème résidu
-          PointLocation point = new PointLocation(3);
-          //imprimer cette position
-          System.out.println("Location: "+point.toString());
+public class SpecifyPoint {
 
-          //crŽer une SymbolList
-          SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");
-          System.out.println("SymbolList: "+sl.seqString());
+` public static void main(String[] args) {`  
+`   try {`  
+`     //créer une PointLocation désignant le 3ème résidu`  
+`     PointLocation point = new PointLocation(3);`  
+`     //imprimer cette position`  
+`     System.out.println("Location: "+point.toString());`
 
-          //obtenir la SymbolList spécifiée par la  PointLocation point
-          SymbolList sym = point.symbols(sl);
-          //dans ce cas, la SymbolList ne contiendra qu'une seule base
-          System.out.println("Symbol specified by Location: "+sym.seqString());
-        }
-        catch (IllegalSymbolException ex) {
-          //création de sl avec un symbole illégal
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //creer une SymbolList`  
+`     SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");`  
+`     System.out.println("SymbolList: "+sl.seqString());`
+
+`     //obtenir la SymbolList spécifiée par la  PointLocation point`  
+`     SymbolList sym = point.symbols(sl);`  
+`     //dans ce cas, la SymbolList ne contiendra qu'une seule base`  
+`     System.out.println("Symbol specified by Location: "+sym.seqString());`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     //création de sl avec un symbole illégal`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
