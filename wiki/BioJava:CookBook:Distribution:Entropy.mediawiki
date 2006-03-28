@@ -4,7 +4,7 @@ The amount of information or entropy in a Distribution is a reflection of the re
 
 Shannon information is returned as a double and reflects the total information content. The entropy is returned as a HashMap between each Symbol and its corresponding entropy. The following program calculates both for a very biased Distribution.
 
-<pre>
+<java>
 import java.util.*;
 
 import org.biojava.bio.dist.*;
@@ -49,4 +49,4 @@ public class Entropy {
     }
   }
 }
-</pre>
+</java>
