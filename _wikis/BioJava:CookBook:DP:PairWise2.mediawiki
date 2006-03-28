@@ -74,7 +74,7 @@ public class DeterministicAlignmentDemo {
         target
       );
       // Print the alignment to the screen
-      System.out.println("global alignment with NeedlemanWunsch"+
+      System.out.println("global alignment with NeedlemanWunsch:\n"+
         aligner.getAlignmentString());	  
 	  
       // Perform a local alginment from the sequences.
