@@ -20,18 +20,22 @@ erreur de type *IndexOutOfBoundsException*.
 
 ### Obtenir une portion de Sequence
 
-        SymbolList symL = null;
+<java>
 
-        // votre code générant une SymbolList
+`   SymbolList symL = null;`
 
-        // obtenir le premier Symbol
-        Symbol sym = symL.symbolAt(1);
+`   // votre code générant une SymbolList`
 
-        // obtenir les 3 premiers résidus
-        SymbolList symL2 = symL.subList(1,3);
+`   // obtenir le premier Symbol`  
+`   Symbol sym = symL.symbolAt(1);`
 
-        // obtenir les 3 derniers résidus
-        SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
+`   // obtenir les 3 premiers résidus`  
+`   SymbolList symL2 = symL.subList(1,3);`
+
+`   // obtenir les 3 derniers résidus`  
+`   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
+
+</java>
 
 ### Imprimer une partie d'une Sequence
 

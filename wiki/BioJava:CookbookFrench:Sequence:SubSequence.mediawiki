@@ -6,7 +6,7 @@ BioJava utilise un système biologique de coordonnées pour identifier la positi
 
 === Obtenir une portion de Sequence ===
 
-<pre>
+<java>
     SymbolList symL = null;
 
     // votre code générant une SymbolList
@@ -19,7 +19,7 @@ BioJava utilise un système biologique de coordonnées pour identifier la positi
 
     // obtenir les 3 derniers résidus
     SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
-</pre>
+</java>
 
 === Imprimer une partie d'une Sequence ===
 
