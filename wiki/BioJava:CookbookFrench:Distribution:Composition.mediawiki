@@ -1,4 +1,4 @@
-== Calculating the composition of a Sequence or collection of Sequences ==
+== Comment calculer la composition d'une ou plusieurs Sequences? ==
 
 '''Attention: cet exemple n&eacute;cessite Java 1.5 ainsi que les extensions biojavax retrouv&eacute;es dans la version CVS de BioJava.'''
 

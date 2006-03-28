@@ -2,8 +2,8 @@
 title: BioJava:CookbookFrench:Distribution:Composition
 ---
 
-Calculating the composition of a Sequence or collection of Sequences
---------------------------------------------------------------------
+Comment calculer la composition d'une ou plusieurs Sequences?
+-------------------------------------------------------------
 
 **Attention: cet exemple nécessite Java 1.5 ainsi que les extensions
 biojavax retrouvées dans la version CVS de BioJava.**
