@@ -4,7 +4,7 @@ La méthode générale de traduction donnée ici montre comment utiliser ''RNATo
 
 Il y a plusieurs façons de faire, mais une seule est présentée ici.
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -39,4 +39,4 @@ public class SingleTranslationDemo {
     }
   }
 }
-</pre>
+</java>
