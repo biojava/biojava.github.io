@@ -11,31 +11,33 @@ Pour obtenir le brin complémentaire d'une *SymbolList* ou d'une
 existe dans la classe *RNATools* pour faire la même opération sur les
 *Sequences* et *SymbolLists* d'ARN.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class ReverseComplement {
-      public static void main(String[] args) {
-       
-        try {
-          // créer une SymbolList d'ADN
-          SymbolList symL = DNATools.createDNA("atgcacgggaactaa");
+public class ReverseComplement {
 
-          // faire le brin complémentaire
-          symL = DNATools.reverseComplement(symL);
-         
-          // prouver que cela à fonctionner
-          System.out.println(symL.seqString());
-        }
-        catch (IllegalSymbolException ex) {
-          // ce qui va arriver si vous tenter de faire une séquence
-          // d'ADN qui utilise des symboles non-IUB
-          ex.printStackTrace();
-        }
+` public static void main(String[] args) {`  
+`  `  
+`   try {`  
+`     // créer une SymbolList d'ADN`  
+`     SymbolList symL = DNATools.createDNA("atgcacgggaactaa");`
 
-        catch (IllegalAlphabetException ex) {
-          // ce qui va arriver si vous tenter d"obtenir le complément
-          // d'une séquence non-ADN avec DNATools
-          ex.printStackTrace();
-        }
-      }
+`     // faire le brin complémentaire`  
+`     symL = DNATools.reverseComplement(symL);`  
+`    `  
+`     // prouver que cela à fonctionner`  
+`     System.out.println(symL.seqString());`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     // ce qui va arriver si vous tenter de faire une séquence`  
+`     // d'ADN qui utilise des symboles non-IUB`  
+`     ex.printStackTrace();`  
+`   }`
+
+`   catch (IllegalAlphabetException ex) {`  
+`     // ce qui va arriver si vous tenter d"obtenir le complément`  
+`     // d'une séquence non-ADN avec DNATools`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+</java>
