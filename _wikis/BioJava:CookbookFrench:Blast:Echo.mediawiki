@@ -4,9 +4,11 @@ Si vous voulez parcourir un rapport BLAST (ou FASTA), vous pouvez utiliser la pr
 
 Le programme ci-dessous montre des fonctionnalités très utiles lorsqu'on veut créer des manipulations sur mesure; il montre aussi la manière de le créer. Essentiellement, le programme contient un ''handler'' sur mesure qui est à l'écoute de tous les évènements de lecture et les renvois sur STDOUT. Ceci vous permet d'observer quels evènements sont créés et lesquels contiennent les informations que vous recherchez. Vous pouvez alors créer un ''SearchContentHandler'' qui fera le travail en étendant ''SearchContentAdapter'' et en redéfinissant les méthodes qui prendront en charge les évènements qui vous intéressent.
 
-<pre>
+<java>
 import org.xml.sax.*; 
+
 import java.io.*; 
+
 import org.biojava.bio.program.sax.*; 
 import org.biojava.bio.program.ssbind.*; 
 import org.biojava.bio.search.*; 
@@ -22,8 +24,8 @@ import org.biojava.bio.search.*;
     // créer un BlastLikeSAXParser 
     BlastLikeSAXParser parser = new BlastLikeSAXParser(); 
     
-       // Appeller cette méthode pour que le parser ne se préoccupe
-       // pas de vérifier la version de Blast utilisée par ce rapport
+    // Appeller cette méthode pour que le parser ne se préoccupe
+    // pas de vérifier la version de Blast utilisée par ce rapport
     // avant de le parcourir
     parser.setModeLazy(); 
 
@@ -77,4 +79,4 @@ import org.biojava.bio.search.*;
     blastEcho.echo(is); 
   } 
 }
-</pre>
+</java>
