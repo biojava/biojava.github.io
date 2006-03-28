@@ -6,7 +6,7 @@ Le programme suivant lit un fichier de séquence d'un type quelquonque et en com
 
 === Solution 1 ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -69,7 +69,7 @@ public class CountResidues {
     }
   }
 }
-</pre> 
+</java>
 
 === Solution 2 ===
 
