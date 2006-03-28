@@ -47,7 +47,7 @@ public class ReadGB {
 
 === Lire un fichier SwissProt ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.seq.io.*;
 import java.io.*;
@@ -87,7 +87,7 @@ public class ReadSwiss {
     }
   }
 }
-</pre>
+</java>
 
 === Lire un fichier EMBL ===
 
