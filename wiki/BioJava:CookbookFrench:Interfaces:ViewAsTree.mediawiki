@@ -6,7 +6,7 @@ Heureusement, la joyeuse équipe BioJava a crée la classe ''FeatureTree'' pour 
 
 Le programme suivant démontre l'utilisation d'un ''FeatureTree''. Il prends deux arguments: le premier est le nom du fichier, le deuxième est un entier désignant le format des données.
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -94,4 +94,4 @@ public class TreeFrame extends JFrame {
       }
   }
 }
-</pre>
+</java>
