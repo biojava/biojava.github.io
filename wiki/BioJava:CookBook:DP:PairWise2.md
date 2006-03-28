@@ -27,7 +27,8 @@ both.
 
 Many scoring matrices have been released for the purpose to evaluate the
 transition from one symbol to another one. These can be downloaded at
-[1](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)
+[1](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are needed to use
+the following example.
 
 A demo of local and global alignments
 -------------------------------------
