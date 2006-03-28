@@ -8,7 +8,7 @@ Le fichier ''aaindex1'' se charge en m&eacute;moire via l'utilisation de la clas
 
 L'exemple suivant montre comment calculer l'hydrophobicit&eacute; moyeenne pour une s&eacute;quence de prot&eacute;ine (l'exemple ici contient les 20 acides amin&eacute;s) en utilisant l'information contenue dans la table CIDH920105 du fichier ''aaindex1'':
 
-<pre>
+<java>
 import org.biojava.seq.*;
 import org.biojava.symbol.*;
 import org.biojava.bio.proteomics.aaindex.*;
@@ -35,4 +35,4 @@ public class PropertyCalculator {
     System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));
   }
 }
-</pre>
+</java>
