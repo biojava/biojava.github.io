@@ -96,44 +96,43 @@ public class ReadSwiss {
 
 ### Lire un fichier EMBL
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadEMBL {
-      public static void main(String[] args) {
-        BufferedReader br = null;
+public class ReadEMBL {
 
-        try {
-          // créer un BufferedReader pour lire le fichier spécifié par args[0]
-          br = new BufferedReader(new FileReader(args[0]));
-        }
-        catch (FileNotFoundException ex) {
-          // ne peut trouver le fichier specifie par args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
-        // lire le fichier en format EMBL
-        SequenceIterator sequences = SeqIOTools.readEmbl(br);
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`
 
-        // itérer parmi les séquences
-        while(sequences.hasNext()){
-          try {
-            Sequence seq = sequences.nextSequence();
-            // travail à faire sur votre séquence
-          }
-          catch (BioException ex) {
-            // pas en format EMBL
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            // requête faite pour une séquence lorsqu'aucune n'existe
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`   try {`  
+`     // créer un BufferedReader pour lire le fichier spécifié par args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     // ne peut trouver le fichier specifie par args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`  
+`   // lire le fichier en format EMBL`  
+`   SequenceIterator sequences = SeqIOTools.readEmbl(br);`
+
+`   // itérer parmi les séquences`  
+`   while(sequences.hasNext()){`  
+`     try {`  
+`       Sequence seq = sequences.nextSequence();`  
+`       // travail à faire sur votre séquence`  
+`     }`  
+`     catch (BioException ex) {`  
+`       // pas en format EMBL`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       // requête faite pour une séquence lorsqu'aucune n'existe`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### GeneralReader, un lecteur générique (avec BioJava 1.3)
 
