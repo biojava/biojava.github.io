@@ -6,7 +6,7 @@ The idea of these deterministic aproaches is to maintain a matrix representation
 
 Alignments with different scores/expenses for gap opening and gap extension consume much more time and memory as with equal scores for both.
 
-Many scoring matrices have been released for the purpose to evaluate the transition from one symbol to another one. These can be downloaded at [ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/]
+Many scoring matrices have been released for the purpose to evaluate the transition from one symbol to another one. These can be downloaded at [ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/] and are needed to use the following example.
 
 == A demo of local and global alignments ==
 
