@@ -52,37 +52,37 @@ Le programme suivant lit un fichier EMBL et donne la liste des
 différentes propriétés des Annotations. La sortie du programme est
 donnée en exemple à la fin du programme.
 
-    import java.io.*;
-    import java.util.*;
+<java> import java.io.\*; import java.util.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
+import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*;
 
-    public class ListAnnotations {
-      public static void main(String[] args) {
+public class ListAnnotations {
 
-        try {
-          //lire un fichier EMBL 
-          BufferedReader br = new  BufferedReader(new FileReader(args[0]));
-          SequenceIterator seqs = SeqIOTools.readEmbl(br);
+` public static void main(String[] args) {`
 
-          //pour chacune des séquences du fichier, faire la liste des annotations
-          while(seqs.hasNext()){
-            Annotation anno = seqs.nextSequence().getAnnotation();
+`   try {`  
+`     //lire un fichier EMBL `  
+`     BufferedReader br = new  BufferedReader(new FileReader(args[0]));`  
+`     SequenceIterator seqs = SeqIOTools.readEmbl(br);`
 
-            //imprimer chacune des paires clé-valeur 
-            for (Iterator i = anno.keys().iterator(); i.hasNext(); ) {
-              Object key = i.next();
-              System.out.println(key +" : "+ anno.getProperty(key));
-            }
-          }
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //pour chacune des séquences du fichier, faire la liste des annotations`  
+`     while(seqs.hasNext()){`  
+`       Annotation anno = seqs.nextSequence().getAnnotation();`
+
+`       //imprimer chacune des paires clé-valeur `  
+`       for (Iterator i = anno.keys().iterator(); i.hasNext(); ) {`  
+`         Object key = i.next();`  
+`         System.out.println(key +" : "+ anno.getProperty(key));`  
+`       }`  
+`     }`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
 
 Sortie du programme:
 

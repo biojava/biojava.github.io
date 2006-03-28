@@ -42,7 +42,7 @@ CC   (URL: http://egp.gs.washington.edu).
 
 Le programme suivant lit un fichier EMBL et donne la liste des différentes propriétés des Annotations. La sortie du programme est donnée en exemple à la fin du programme.
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -74,7 +74,7 @@ public class ListAnnotations {
     }
   }
 }
-</pre>
+</java>
 
 Sortie du programme:
 
