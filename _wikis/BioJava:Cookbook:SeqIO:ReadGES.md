@@ -23,262 +23,258 @@ friendlier.
 
 ### Reading GenBank
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadGB {
-      public static void main(String[] args) {
-        BufferedReader br = null;
+public class ReadGB {
 
-        try {
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`
 
-          //create a buffered reader to read the sequence file specified by args[0]
-          br = new BufferedReader(new FileReader(args[0]));
+`   try {`
 
-        }
-        catch (FileNotFoundException ex) {
-          //can't find the file specified by args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
+`     //create a buffered reader to read the sequence file specified by args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`
 
-        //read the GenBank File
-        SequenceIterator sequences = SeqIOTools.readGenbank(br);
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     //can't find the file specified by args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`
 
-        //iterate through the sequences
-        while(sequences.hasNext()){
-          try {
+`   //read the GenBank File`  
+`   SequenceIterator sequences = SeqIOTools.readGenbank(br);`
 
-            Sequence seq = sequences.nextSequence();
-            //do stuff with the sequence
+`   //iterate through the sequences`  
+`   while(sequences.hasNext()){`  
+`     try {`
 
-          }
-          catch (BioException ex) {
-            //not in GenBank format
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            //request for more sequence when there isn't any
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`       Sequence seq = sequences.nextSequence();`  
+`       //do stuff with the sequence`
+
+`     }`  
+`     catch (BioException ex) {`  
+`       //not in GenBank format`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       //request for more sequence when there isn't any`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### Reading SwissProt
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadSwiss {
-      public static void main(String[] args) {
-        BufferedReader br = null;
+public class ReadSwiss {
 
-        try {
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`
 
-          //create a buffered reader to read the sequence file specified by args[0]
-          br = new BufferedReader(new FileReader(args[0]));
+`   try {`
 
-        }
-        catch (FileNotFoundException ex) {
-          //can't find the file specified by args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
+`     //create a buffered reader to read the sequence file specified by args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`
 
-        //read the SwissProt File
-        SequenceIterator sequences = SeqIOTools.readSwissprot(br);
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     //can't find the file specified by args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`
 
-        //iterate through the sequences
-        while(sequences.hasNext()){
-          try {
+`   //read the SwissProt File`  
+`   SequenceIterator sequences = SeqIOTools.readSwissprot(br);`
 
-            Sequence seq = sequences.nextSequence();
-            //do stuff with the sequence
+`   //iterate through the sequences`  
+`   while(sequences.hasNext()){`  
+`     try {`
 
-          }
-          catch (BioException ex) {
-            //not in SwissProt format
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            //request for more sequence when there isn't any
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`       Sequence seq = sequences.nextSequence();`  
+`       //do stuff with the sequence`
+
+`     }`  
+`     catch (BioException ex) {`  
+`       //not in SwissProt format`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       //request for more sequence when there isn't any`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### Reading EMBL
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadEMBL {
-      public static void main(String[] args) {
-        BufferedReader br = null;
+public class ReadEMBL {
 
-        try {
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`
 
-          //create a buffered reader to read the sequence file specified by args[0]
-          br = new BufferedReader(new FileReader(args[0]));
+`   try {`
 
-        }
-        catch (FileNotFoundException ex) {
-          //can't find the file specified by args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
+`     //create a buffered reader to read the sequence file specified by args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`
 
-        //read the EMBL File
-        SequenceIterator sequences = SeqIOTools.readEmbl(br);
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     //can't find the file specified by args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`
 
-        //iterate through the sequences
-        while(sequences.hasNext()){
-          try {
+`   //read the EMBL File`  
+`   SequenceIterator sequences = SeqIOTools.readEmbl(br);`
 
-            Sequence seq = sequences.nextSequence();
-            //do stuff with the sequence
+`   //iterate through the sequences`  
+`   while(sequences.hasNext()){`  
+`     try {`
 
-          }
-          catch (BioException ex) {
-            //not in EMBL format
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            //request for more sequence when there isn't any
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`       Sequence seq = sequences.nextSequence();`  
+`       //do stuff with the sequence`
+
+`     }`  
+`     catch (BioException ex) {`  
+`       //not in EMBL format`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       //request for more sequence when there isn't any`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### GeneralReader (biojava 1.3 pre 1)
 
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.seq.*;
-    import java.io.*;
+<java> import org.biojava.bio.seq.io.\*; import org.biojava.bio.seq.\*;
+import java.io.\*;
 
-    public class GeneralReader {
+public class GeneralReader {
 
-      /**
-       * This program will read any file supported by SeqIOTools it takes two
-       * arguments, the first is the file name the second is the int constant
-       * for the file type in SeqIOTools. See SeqIOTools for possible file types.
-       * The constants used are:
-       * UNKNOWN = 0;
-       * FASTADNA = 1;
-       * FASTAPROTEIN = 2;
-       * EMBL = 3;
-       * GENBANK = 4;
-       * SWISSPROT = 5;
-       * GENPEPT = 6;
-       * MSFDNA = 7;
-       * FASTAALIGNDNA = 9;
-       * MSFPROTEIN = 10;
-       * FASTAALIGNPROTEIN = 11;
-       * MSF = 12;               //only appropriate for reading
-       *
-       */
-      public static void main(String[] args) {
-        try {
-          //prepare a BufferedReader for file io
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+` /**`  
+`  * This program will read any file supported by SeqIOTools it takes two`  
+`  * arguments, the first is the file name the second is the int constant`  
+`  * for the file type in SeqIOTools. See SeqIOTools for possible file types.`  
+`  * The constants used are:`  
+`  * UNKNOWN = 0;`  
+`  * FASTADNA = 1;`  
+`  * FASTAPROTEIN = 2;`  
+`  * EMBL = 3;`  
+`  * GENBANK = 4;`  
+`  * SWISSPROT = 5;`  
+`  * GENPEPT = 6;`  
+`  * MSFDNA = 7;`  
+`  * FASTAALIGNDNA = 9;`  
+`  * MSFPROTEIN = 10;`  
+`  * FASTAALIGNPROTEIN = 11;`  
+`  * MSF = 12;               //only appropriate for reading`  
+`  *`  
+`  */`  
+` public static void main(String[] args) {`  
+`   try {`  
+`     //prepare a BufferedReader for file io`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-          //get the int constant for the file type
-          int fileType = Integer.parseInt(args[1]);
+`     //get the int constant for the file type`  
+`     int fileType = Integer.parseInt(args[1]);`
 
-          /*
-           * get a Sequence Iterator over all the sequences in the file.
-           * SeqIOTools.fileToBiojava() returns an Object. If the file read
-           * is an alignment format like MSF and Alignment object is returned
-           * otherwise a SequenceIterator is returned.
-           */
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);
-        }
-        catch (FileNotFoundException ex) {
-          //can't find file specified by args[0]
-          ex.printStackTrace();
-        }catch (NumberFormatException ex) {
-          //args[1] is not an integer
-          ex.printStackTrace();
-        }
-      }
-    }
+`     /*`  
+`      * get a Sequence Iterator over all the sequences in the file.`  
+`      * SeqIOTools.fileToBiojava() returns an Object. If the file read`  
+`      * is an alignment format like MSF and Alignment object is returned`  
+`      * otherwise a SequenceIterator is returned.`  
+`      */`  
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     //can't find file specified by args[0]`  
+`     ex.printStackTrace();`  
+`   }catch (NumberFormatException ex) {`  
+`     //args[1] is not an integer`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
 
 ### GeneralReader (biojava 1.3)
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
+import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*;
 
-    public class GeneralReader {
+public class GeneralReader {
 
-      /**
-       * This program will read any file supported by SeqIOTools it takes three
-       * arguments, the first is the file name the second is the format type the
-       * third is the type of residue being read. Illegal combinations such as
-       * SwissProt and DNA will cause an exception.
-       *
-       * Allowed formats are: (case insensitive).
-       *
-       * FASTA
-       * EMBL
-       * GENBANK
-       * SWISSPROT (or swiss)
-       * GENPEPT
-       *
-       * Allowed sequence types are: (case insensititve).
-       *
-       * DNA
-       * AA (or Protein)
-       * RNA
-       *
-       */
-      public static void main(String[] args) {
-        try {
-          //prepare a BufferedReader for file io
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+` /**`  
+`  * This program will read any file supported by SeqIOTools it takes three`  
+`  * arguments, the first is the file name the second is the format type the`  
+`  * third is the type of residue being read. Illegal combinations such as`  
+`  * SwissProt and DNA will cause an exception.`  
+`  *`  
+`  * Allowed formats are: (case insensitive).`  
+`  *`  
+`  * FASTA`  
+`  * EMBL`  
+`  * GENBANK`  
+`  * SWISSPROT (or swiss)`  
+`  * GENPEPT`  
+`  *`  
+`  * Allowed sequence types are: (case insensititve).`  
+`  *`  
+`  * DNA`  
+`  * AA (or Protein)`  
+`  * RNA`  
+`  *`  
+`  */`  
+` public static void main(String[] args) {`  
+`   try {`  
+`     //prepare a BufferedReader for file io`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-          //the flat file format
-          String format = args[1];
+`     //the flat file format`  
+`     String format = args[1];`
 
-          //the Alphabet
-          String alpha = args[2];
+`     //the Alphabet`  
+`     String alpha = args[2];`
 
-          //get the int value for the format and alphabet
+`     //get the int value for the format and alphabet`
 
+`     /*`  
+`      * get a Sequence Iterator over all the sequences in the file.`  
+`      * SeqIOTools.fileToBiojava() returns an Object. If the file read`  
+`      * is an alignment format like MSF and Alignment object is returned`  
+`      * otherwise a SequenceIterator is returned.`  
+`      */`  
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);`
 
-          /*
-           * get a Sequence Iterator over all the sequences in the file.
-           * SeqIOTools.fileToBiojava() returns an Object. If the file read
-           * is an alignment format like MSF and Alignment object is returned
-           * otherwise a SequenceIterator is returned.
-           */
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);
+`     // do something with the sequences`  
+`     SeqIOTools.writeFasta(System.out, iter);`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     //can't find file specified by args[0]`  
+`     ex.printStackTrace();`  
+`   }catch (BioException ex) {`  
+`     //invalid file format name`  
+`     ex.printStackTrace();`  
+`   }catch (IOException ex){`  
+`     //error writing to fasta`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          // do something with the sequences
-          SeqIOTools.writeFasta(System.out, iter);
-        }
-        catch (FileNotFoundException ex) {
-          //can't find file specified by args[0]
-          ex.printStackTrace();
-        }catch (BioException ex) {
-          //invalid file format name
-          ex.printStackTrace();
-        }catch (IOException ex){
-          //error writing to fasta
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
