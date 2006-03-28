@@ -1,6 +1,8 @@
 == How do I generate a global or local alignment with the Needleman-Wunsch- or the Smith-Waterman-algorithm, respectively? ==
 
 <java>
+import java.io.File;
+
 import org.biojava.bio.alignment.NeedlemanWunsch;
 import org.biojava.bio.alignment.SequenceAlignment;
 import org.biojava.bio.alignment.SmithWaterman;
