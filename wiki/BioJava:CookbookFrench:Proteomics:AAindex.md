@@ -39,29 +39,30 @@ une séquence de protéine (l'exemple ici contient les 20 acides aminés)
 en utilisant l'information contenue dans la table CIDH920105 du fichier
 *aaindex1*:
 
-    import org.biojava.seq.*;
-    import org.biojava.symbol.*;
-    import org.biojava.bio.proteomics.aaindex.*;
+<java> import org.biojava.seq.\*; import org.biojava.symbol.\*; import
+org.biojava.bio.proteomics.aaindex.\*;
 
-    public class PropertyCalculator {
-      public static void main(String[] args) {
+public class PropertyCalculator {
 
-        //Lecture du fichier
-        SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
-        
-        // Creation de l'AAindex contenant les donnees de la table
-        AAindex hydrophobicity = (AAindex) db.table("CIDH920105");
+` public static void main(String[] args) {`
 
-        // Creation d'une sequence simple
-        SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");
-        double hp = 0.0;
+`   //Lecture du fichier`  
+`   SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));`  
+`   `  
+`   // Creation de l'AAindex contenant les donnees de la table`  
+`   AAindex hydrophobicity = (AAindex) db.table("CIDH920105");`
 
-        // Iteration sur les symboles contenus dans la sequence    
-        for (int i = 1; i <= symbols.length(); i++) {
-          hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
-        }
+`   // Creation d'une sequence simple`  
+`   SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");`  
+`   double hp = 0.0;`
 
-        // Sortie du resultat sur STDOUT
-        System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));
-      }
-    }
+`   // Iteration sur les symboles contenus dans la sequence    `  
+`   for (int i = 1; i <= symbols.length(); i++) {`  
+`     hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));`  
+`   }`
+
+`   // Sortie du resultat sur STDOUT`  
+`   System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));`  
+` }`
+
+} </java>
