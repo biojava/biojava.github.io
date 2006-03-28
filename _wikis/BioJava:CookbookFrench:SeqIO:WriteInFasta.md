@@ -20,19 +20,20 @@ trouve dans le package org.biojava.bio.seq.io
 
 ### Imprimer les séquences contenues dans un objet SequenceDB
 
-    // créer une instance de l'interface SequenceDB
-    SequenceDB db = new HashSequenceDB();
+<java> // créer une instance de l'interface SequenceDB SequenceDB db =
+new HashSequenceDB();
 
-    // ajouter des séquences à la DB
-    db.addSequence(seq1);
-    db.addSequence(seq2);
+// ajouter des séquences à la DB db.addSequence(seq1);
+db.addSequence(seq2);
 
-    /*
-     * imprimer maintenant à un flux de sortie en format FASTA en utilisant la méthode
-     * statique retrouvée dans la classe-utilitaire SeqIOTools. Ici, la sortie se fait sur
-     * STDOUT
-     */
-    SeqIOTools.writeFasta(System.out, db);
+/\*
+
+`* imprimer maintenant à un flux de sortie en format FASTA en utilisant la méthode`  
+`* statique retrouvée dans la classe-utilitaire SeqIOTools. Ici, la sortie se fait sur`  
+`* STDOUT`  
+`*/`
+
+SeqIOTools.writeFasta(System.out, db); </java>
 
 ### Imprimer à partir d'un objet SequenceIterator
 
@@ -41,14 +42,17 @@ SequenceIterator qui fait l'iteration de toutes les séquences d'un
 fichier. La plupart des méthodes writeXXX() de SeqIOTools ont donc une
 version qui prends un SequenceIterator comme argument.
 
-    SequenceIterator iter  =  (SequenceIterator) SeqIOTools.fileToBiojava(fileType,br);
-             
-    // écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas juste System.out)
-    SeqIOTools.writeFasta(System.out,iter);
+<java> SequenceIterator iter = (SequenceIterator)
+SeqIOTools.fileToBiojava(fileType,br);
+
+// écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas
+juste System.out) SeqIOTools.writeFasta(System.out,iter); <java>
 
 ### Imprimer une seule Sequence
 
-    /* SeqIOTools a aussi une méthode qui prends une seule séquence
-     * pour ne pas avoir à créer une SequenceDB
-     */
-    SeqIOTools.writeFasta(System.out,iter);
+<java> /\* SeqIOTools a aussi une méthode qui prends une seule séquence
+
+`* pour ne pas avoir à créer une SequenceDB`  
+`*/`
+
+SeqIOTools.writeFasta(System.out,iter); </java>
