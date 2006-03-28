@@ -5,7 +5,9 @@ title: BioJava:CookBook:DP:PairWise2
 How do I generate a global or local alignment with the Needleman-Wunsch- or the Smith-Waterman-algorithm, respectively?
 -----------------------------------------------------------------------------------------------------------------------
 
-<java> import org.biojava.bio.alignment.NeedlemanWunsch; import
+<java> import java.io.File;
+
+import org.biojava.bio.alignment.NeedlemanWunsch; import
 org.biojava.bio.alignment.SequenceAlignment; import
 org.biojava.bio.alignment.SmithWaterman; import
 org.biojava.bio.alignment.SubstitutionMatrix; import
