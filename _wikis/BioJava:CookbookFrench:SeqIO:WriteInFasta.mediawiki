@@ -4,7 +4,7 @@ Le format FASTA est un format de sortie pas mal standard de la bioinformatique e
 
 === Imprimer les séquences contenues dans un objet SequenceDB ===
 
-<pre>
+<java>
 // créer une instance de l'interface SequenceDB
 SequenceDB db = new HashSequenceDB();
 
@@ -18,24 +18,24 @@ db.addSequence(seq2);
  * STDOUT
  */
 SeqIOTools.writeFasta(System.out, db);
-</pre>
+</java>
 
 === Imprimer à partir d'un objet SequenceIterator ===
 
 Plusieurs des méthodes readXYZ() de SeqIOTools retournent un SequenceIterator qui fait l'iteration de toutes les séquences d'un fichier. La plupart des méthodes writeXXX() de SeqIOTools ont donc une version qui prends un SequenceIterator comme argument.
 
-<pre>
+<java>
 SequenceIterator iter  =  (SequenceIterator) SeqIOTools.fileToBiojava(fileType,br);
 		 
 // écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas juste System.out)
 SeqIOTools.writeFasta(System.out,iter);
-</pre>
+<java>
 
 === Imprimer une seule Sequence ===
 
-<pre>
+<java>
 /* SeqIOTools a aussi une méthode qui prends une seule séquence
  * pour ne pas avoir à créer une SequenceDB
  */
 SeqIOTools.writeFasta(System.out,iter);
-</pre>
+</java>
