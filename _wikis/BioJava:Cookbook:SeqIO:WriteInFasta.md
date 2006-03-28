@@ -18,19 +18,23 @@ SeqIOTools is in the package org.biojava.bio.seq.io
 
 ### Printing a SequenceDB
 
-          //make a instance of the SequenceDB interface
-          SequenceDB db = new HashSequenceDB();
+<java>
 
-          //add the sequences to the DB
-          db.addSequence(seq1);
-          db.addSequence(seq2);
+`     //make a instance of the SequenceDB interface`  
+`     SequenceDB db = new HashSequenceDB();`
 
-          /*
-           * now print it to an output stream in FASTA format using a static method
-           * from the utility class SeqIOTools. In this case our output stream is
-           * STDOUT
-           */
-          SeqIOTools.writeFasta(System.out, db);
+`     //add the sequences to the DB`  
+`     db.addSequence(seq1);`  
+`     db.addSequence(seq2);`
+
+`     /*`  
+`      * now print it to an output stream in FASTA format using a static method`  
+`      * from the utility class SeqIOTools. In this case our output stream is`  
+`      * STDOUT`  
+`      */`  
+`     SeqIOTools.writeFasta(System.out, db);`
+
+</java>
 
 ### Printing from a SequenceIterator
 
@@ -39,16 +43,24 @@ iterates over all the Sequences in a file. Most of teh writeXXX()
 methods from SeqIOTools have a version of the methods that takes a
 SequenceIterator as and argument eg.
 
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);
+<java>
 
-          //and now write it all to FASTA, (you can write to any OutputStream, not just System.out)
-          SeqIOTools.writeFasta(System.out, iter);
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);`
+
+`     //and now write it all to FASTA, (you can write to any OutputStream, not just System.out)`  
+`     SeqIOTools.writeFasta(System.out, iter);`
+
+</java>
 
 ### Printing a Single Sequence
 
-          /*
-           * SeqIOTools also has a method that takes a single sequence so you don't
-           * have to make a SequenceDB
-           */
-          SeqIOTools.writeFasta(System.out, seq1);
+<java>
+
+`     /*`  
+`      * SeqIOTools also has a method that takes a single sequence so you don't`  
+`      * have to make a SequenceDB`  
+`      */`  
+`     SeqIOTools.writeFasta(System.out, seq1);`
+
+</java>
