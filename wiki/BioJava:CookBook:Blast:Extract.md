@@ -20,20 +20,24 @@ The code snippet below shows a private method that would take a List
 produced by a BLAST or FASTA parser and then extracts the hit id
 (subject id), its bit score and its e score.
 
-      private static void formatResults(List results){
+<java>
 
-        //iterate through each SeqSimilaritySearchResult
-        for (Iterator i = results.iterator(); i.hasNext(); ) {
-          SeqSimilaritySearchResult result = (SeqSimilaritySearchResult)i.next();
+` private static void formatResults(List results){`
 
-          //iterate through the hits
-          for (Iterator i2 = result.getHits().iterator(); i2.hasNext(); ) {
-            SeqSimilaritySearchHit hit = (SeqSimilaritySearchHit)i2.next();
+`   //iterate through each SeqSimilaritySearchResult`  
+`   for (Iterator i = results.iterator(); i.hasNext(); ) {`  
+`     SeqSimilaritySearchResult result = (SeqSimilaritySearchResult)i.next();`
 
-            //output the hit ID, bit score and e score
-            System.out.println("subject:\t"+hit.getSubjectID() +
-                               " bits:\t"+hit.getScore()+
-                               " e:\t"+hit.getEValue());
-          }
-        }
-      }
+`     //iterate through the hits`  
+`     for (Iterator i2 = result.getHits().iterator(); i2.hasNext(); ) {`  
+`       SeqSimilaritySearchHit hit = (SeqSimilaritySearchHit)i2.next();`
+
+`       //output the hit ID, bit score and e score`  
+`       System.out.println("subject:\t"+hit.getSubjectID() +`  
+`                          " bits:\t"+hit.getScore()+`  
+`                          " e:\t"+hit.getEValue());`  
+`     }`  
+`   }`  
+` }`
+
+</java>
