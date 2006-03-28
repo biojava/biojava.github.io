@@ -6,7 +6,7 @@ En pratique, la classe ''Sequence'' est un sous-interface de ''FeatureHolder'', 
 
 Les gabarits de ''Feature'' peuvent être crées de novo ou copiés à partir d'un ''Feature'' déjà existant; l'exemple qui suit montre les deux méthodes.
 
-<pre>
+<java>
 import org.biojava.bio.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -56,4 +56,4 @@ public class MakeAFeature {
     }
   }
 }
-</pre>
+</java>
