@@ -13,6 +13,18 @@ the implementation of both of the algorithms from the alignment package.
 It requires BioJava 1.5, so for testing purposes the biojava-live needs
 to be downloaded from the cvs.
 
+The idea of these deterministic aproaches is to maintain a matrix
+representation of an edit graph, which covers the operation insert,
+delete, replace and gap extension (insert and delete are gap openings in
+the query or the target sequence, respectively). By dynamic programing
+the matrix elements, which are costs or scores, respectively, of the
+certain operation, is computed. The high scoring path through the matrix
+gives the best alignment.
+
+Alignments with different scores/expenses for gap opening and gap
+extension consume much more time and memory as with equal scores for
+both.
+
 <java> import java.io.File;
 
 import org.biojava.bio.alignment.NeedlemanWunsch; import
@@ -61,9 +73,9 @@ public class DeterministicAlignmentDemo {
 `     // Define the default costs for sequence manipulation for the global alignment.`  
 `     SequenceAlignment aligner = new NeedlemanWunsch( `  
 `       alphabet, `  
-`       2,  // insert`  
+`       2,      // insert`  
 `       2,  // delete`  
-`       1,  // gapExtend`  
+`       1,      // gapExtend`  
 `       0,  // match`  
 `       3,  // replace`  
 `       matrix  // SubstitutionMatrix`  
