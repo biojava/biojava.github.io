@@ -59,157 +59,159 @@ need to block/ listen-for / modify.
 
 ### SeqIOEcho.java
 
-    /*
-     * SeqIOEcho.java
-     *
-     * Created on May 10, 2005, 2:39 PM
-     */
+<java> /\*
 
-    import java.io.BufferedReader;
-    import java.io.FileReader;
-    import java.util.Iterator;
-    import org.biojava.bio.Annotation;
-    import org.biojava.bio.seq.Feature;
-    import org.biojava.bio.seq.io.SeqIOListener;
-    import org.biojava.bio.seq.io.SequenceFormat;
-    import org.biojava.bio.seq.io.SymbolTokenization;
-    import org.biojava.bio.symbol.Alphabet;
-    import org.biojava.bio.symbol.AlphabetManager;
-    import org.biojava.bio.symbol.SimpleSymbolList;
-    import org.biojava.bio.symbol.Symbol;
+`* SeqIOEcho.java`  
+`*`  
+`* Created on May 10, 2005, 2:39 PM`  
+`*/`
 
+import java.io.BufferedReader; import java.io.FileReader; import
+java.util.Iterator; import org.biojava.bio.Annotation; import
+org.biojava.bio.seq.Feature; import
+org.biojava.bio.seq.io.SeqIOListener; import
+org.biojava.bio.seq.io.SequenceFormat; import
+org.biojava.bio.seq.io.SymbolTokenization; import
+org.biojava.bio.symbol.Alphabet; import
+org.biojava.bio.symbol.AlphabetManager; import
+org.biojava.bio.symbol.SimpleSymbolList; import
+org.biojava.bio.symbol.Symbol;
 
-    /**
-     * A SeqIOListener that reports events being emitted by a format object
-     * @author Mark Schreiber
-     */
-    public class SeqIOEcho implements SeqIOListener {
-        int tab = 0;
-        
-        
-        /** Creates a new instance of SeqIOEcho */
-        public SeqIOEcho() {
-            
-        }
+/\*\*
 
-        public void setURI(String uri) {
-            System.out.println(tabOut()+"Call to setURI(String uri)");
-            tab++;
-            System.out.println(tabOut()+"uri: "+uri);
-            tab--;
-        }
+`* A SeqIOListener that reports events being emitted by a format object`  
+`* @author Mark Schreiber`  
+`*/`
 
-        public void setName(String name) {
-            System.out.println(tabOut()+"Call to setName(String name)");
-            tab++;
-            System.out.println(tabOut()+"name: "+name);
-            tab--;
-        }
+public class SeqIOEcho implements SeqIOListener {
 
-        public void startFeature(Feature.Template templ){
-            tab++;
-            System.out.println(tabOut()+"Call to startFeature(Feature.Template templ)");
-            tab++;
-            System.out.println(tabOut()+"type: "+templ.type);
-            System.out.println(tabOut()+"source: "+templ.source);
-            System.out.println(tabOut()+"location: "+templ.location);
-            tab--;
-        }
+`   int tab = 0;`  
+`   `  
+`   `  
+`   /** Creates a new instance of SeqIOEcho */`  
+`   public SeqIOEcho() {`  
+`       `  
+`   }`
 
-        public void addSymbols(Alphabet alpha, Symbol[] syms, int start, int length) {
-            System.out.println(tabOut()+
-                    "Call to addSymbols(Alphabet alpha, Symbol[] syms, int start, int length)");
-            tab++;
-            System.out.println(tabOut()+"alpha: "+alpha.getName());
-            System.out.println(tabOut()+"syms.length: "+syms.length);
-            System.out.println(tabOut()+"start: "+start);
-            System.out.println(tabOut()+"length: "+length);
-            
-            SimpleSymbolList ssl = new SimpleSymbolList(alpha);
-            try{
-                for(int i = start; i < length; i++){
-                    ssl.addSymbol(syms[i]);
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            System.out.println(tabOut()+"Symbol[]: "+ssl.seqString());
-            tab--;
-        }
+`   public void setURI(String uri) {`  
+`       System.out.println(tabOut()+"Call to setURI(String uri)");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"uri: "+uri);`  
+`       tab--;`  
+`   }`
 
-        public void startSequence() {
-            
-            System.out.println(tabOut()+"Call to startSequence()");
-            tab++;
-        }
+`   public void setName(String name) {`  
+`       System.out.println(tabOut()+"Call to setName(String name)");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"name: "+name);`  
+`       tab--;`  
+`   }`
 
-        public void addSequenceProperty(Object key, Object value) {
-            System.out.println(tabOut()+"Call to addSequenceProperty(Object key, Object value) ");
-            tab++;
-            System.out.println(tabOut()+"key: "+key);
-            System.out.println(tabOut()+"value: "+value);
-            tab--;
-        }
+`   public void startFeature(Feature.Template templ){`  
+`       tab++;`  
+`       System.out.println(tabOut()+"Call to startFeature(Feature.Template templ)");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"type: "+templ.type);`  
+`       System.out.println(tabOut()+"source: "+templ.source);`  
+`       System.out.println(tabOut()+"location: "+templ.location);`  
+`       tab--;`  
+`   }`
 
-        public void endFeature() {
-            tab--;
-            System.out.println(tabOut()+"Call to endFeature()");
-        }
+`   public void addSymbols(Alphabet alpha, Symbol[] syms, int start, int length) {`  
+`       System.out.println(tabOut()+`  
+`               "Call to addSymbols(Alphabet alpha, Symbol[] syms, int start, int length)");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"alpha: "+alpha.getName());`  
+`       System.out.println(tabOut()+"syms.length: "+syms.length);`  
+`       System.out.println(tabOut()+"start: "+start);`  
+`       System.out.println(tabOut()+"length: "+length);`  
+`       `  
+`       SimpleSymbolList ssl = new SimpleSymbolList(alpha);`  
+`       try{`  
+`           for(int i = start; i < length; i++){`  
+`               ssl.addSymbol(syms[i]);`  
+`           }`  
+`       }catch(Exception e){`  
+`           e.printStackTrace();`  
+`       }`  
+`       System.out.println(tabOut()+"Symbol[]: "+ssl.seqString());`  
+`       tab--;`  
+`   }`
 
-        public void endSequence() {
-            tab--;
-            System.out.println(tabOut()+"Call to endSequence()");
-        }
+`   public void startSequence() {`  
+`       `  
+`       System.out.println(tabOut()+"Call to startSequence()");`  
+`       tab++;`  
+`   }`
 
-        public void addFeatureProperty(Object key, Object value) {
-            System.out.println(tabOut()+"Call to addFeatureProperty(Object key, Object value)");
-            tab++;
-            System.out.println(tabOut()+"key: "+key);
-            System.out.println(tabOut()+"value: "+value);
-            tab--;
-        }
-        
-        
-        private String tabOut(){
-            StringBuffer sb = new StringBuffer();
-            for(int i = 0; i < tab; i++){
-                sb.append("\t");
-            }
-            return sb.toString();
-        }
-        
-        private void dumpAnnotation(Annotation anno){
-            System.out.println(tabOut()+"Annotation: "+anno.getClass().getName());
-            tab++;
-            for(Iterator i = anno.keys().iterator(); i.hasNext();){
-                Object key = i.next();
-                Object val = anno.getProperty(key);
-                System.out.println(tabOut()+"key: "+key+" value: "+val);
-            }
-            tab--;
-        }
-        
-         /**
-          * Run the program. The file name, format class name and alphabet name
-          * are all supplied to the command line.
-          * @param args arg[0] the file containing the sequences
-          * arg[1] the fully qualified name of the format class to be used
-          * (eg "org.biojava.bio.seq.io.FastaFormat")
-          * arg[2] the case sensitive name of the alphabet (eg "DNA" or "Protein");
-          */
-        public static void main(String[] args) throws Exception{
-            BufferedReader br = new BufferedReader(new FileReader(args[0]));
-            
-            Class formatClass = Class.forName(args[1]);
-            SequenceFormat format = (SequenceFormat)formatClass.newInstance();
-            SeqIOListener echo = new SeqIOEcho();
-            SymbolTokenization toke = 
-                    AlphabetManager.alphabetForName(args[2]).getTokenization("token");
-        
-            boolean moreSeq = false;
-            do{
-                moreSeq = format.readSequence(br, toke, echo);
-            }while(moreSeq);
-            
-        }
-    }
+`   public void addSequenceProperty(Object key, Object value) {`  
+`       System.out.println(tabOut()+"Call to addSequenceProperty(Object key, Object value) ");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"key: "+key);`  
+`       System.out.println(tabOut()+"value: "+value);`  
+`       tab--;`  
+`   }`
+
+`   public void endFeature() {`  
+`       tab--;`  
+`       System.out.println(tabOut()+"Call to endFeature()");`  
+`   }`
+
+`   public void endSequence() {`  
+`       tab--;`  
+`       System.out.println(tabOut()+"Call to endSequence()");`  
+`   }`
+
+`   public void addFeatureProperty(Object key, Object value) {`  
+`       System.out.println(tabOut()+"Call to addFeatureProperty(Object key, Object value)");`  
+`       tab++;`  
+`       System.out.println(tabOut()+"key: "+key);`  
+`       System.out.println(tabOut()+"value: "+value);`  
+`       tab--;`  
+`   }`  
+`   `  
+`   `  
+`   private String tabOut(){`  
+`       StringBuffer sb = new StringBuffer();`  
+`       for(int i = 0; i < tab; i++){`  
+`           sb.append("\t");`  
+`       }`  
+`       return sb.toString();`  
+`   }`  
+`   `  
+`   private void dumpAnnotation(Annotation anno){`  
+`       System.out.println(tabOut()+"Annotation: "+anno.getClass().getName());`  
+`       tab++;`  
+`       for(Iterator i = anno.keys().iterator(); i.hasNext();){`  
+`           Object key = i.next();`  
+`           Object val = anno.getProperty(key);`  
+`           System.out.println(tabOut()+"key: "+key+" value: "+val);`  
+`       }`  
+`       tab--;`  
+`   }`  
+`   `  
+`    /**`  
+`     * Run the program. The file name, format class name and alphabet name`  
+`     * are all supplied to the command line.`  
+`     * @param args arg[0] the file containing the sequences`  
+`     * arg[1] the fully qualified name of the format class to be used`  
+`     * (eg "org.biojava.bio.seq.io.FastaFormat")`  
+`     * arg[2] the case sensitive name of the alphabet (eg "DNA" or "Protein");`  
+`     */`  
+`   public static void main(String[] args) throws Exception{`  
+`       BufferedReader br = new BufferedReader(new FileReader(args[0]));`  
+`       `  
+`       Class formatClass = Class.forName(args[1]);`  
+`       SequenceFormat format = (SequenceFormat)formatClass.newInstance();`  
+`       SeqIOListener echo = new SeqIOEcho();`  
+`       SymbolTokenization toke = `  
+`               AlphabetManager.alphabetForName(args[2]).getTokenization("token");`  
+`   `  
+`       boolean moreSeq = false;`  
+`       do{`  
+`           moreSeq = format.readSequence(br, toke, echo);`  
+`       }while(moreSeq);`  
+`       `  
+`   }`
+
+} </java>
