@@ -63,28 +63,29 @@ public class StringToSymbolList {
 
 ### D'une chaîne à une *Sequence*
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class StringToSequence {
-      public static void main(String[] args) {
+public class StringToSequence {
 
-        try {
-          // créer une séquence d'ADN du nom de dna_1
-          Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");
+` public static void main(String[] args) {`
 
-          // créer une séquence d'ARN du nom de rna_1
-          Sequence rna = RNATools.createRNASequence("augcug", "rna_1");
+`   try {`  
+`     // créer une séquence d'ADN du nom de dna_1`  
+`     Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");`
 
-          // créer une séquence de protéine du nom de prot_1
-          Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");
-        }
-        catch (IllegalSymbolException ex) {
-          // une exception lancée si vous utilisés un symbol non-IUB
-          ex.printStackTrace();
-        }
-      }
-    }
+`     // créer une séquence d'ARN du nom de rna_1`  
+`     Sequence rna = RNATools.createRNASequence("augcug", "rna_1");`
+
+`     // créer une séquence de protéine du nom de prot_1`  
+`     Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     // une exception lancée si vous utilisés un symbol non-IUB`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
 
 ### D'une *SymbolList* à une chaîne de caractères
 
