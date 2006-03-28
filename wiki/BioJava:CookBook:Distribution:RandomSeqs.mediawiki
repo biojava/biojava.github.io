@@ -4,7 +4,7 @@ BioJava Distribution objects have a method for sampling Symbols. By successively
 
 The following program generates a random Sequence using a uniform Distribution over the DNA Alphabet. The emitted sequence will differ each time although its composition should be close to 25% of each residue. Non uniform distributions can be used to generate biased sequences.
 
-<pre>
+<java>
 import org.biojava.bio.dist.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.seq.io.*;
@@ -29,4 +29,4 @@ public class RandomSequence {
     }
   }
 }
-</pre>
+</java>
