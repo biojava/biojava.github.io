@@ -40,7 +40,6 @@ Comment faire une mutation dans un fichier PDB
 ` `  
 ` `  
 ` } catch (Exception e) {`  
-`     e.printStackTrace();`  
-` } `
+`     e.printStackTrace();`
 
-</java>
+} </java>
