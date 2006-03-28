@@ -4,7 +4,7 @@ One of the most frequent I/O tasks is the reading of a flat file representation 
 
 === Solution 1 ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -46,11 +46,11 @@ public class ReadFasta {
     }
   }
 }
-</pre>
+</java>
 
 === Solution 2 ===
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.*;
@@ -94,4 +94,4 @@ public class ReadFasta2 {
     }
   }
 }
-</pre>
+</java>
