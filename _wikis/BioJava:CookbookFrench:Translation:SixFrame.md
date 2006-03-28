@@ -21,95 +21,95 @@ L'exemple suivant montre un simpe programme qui traduira les six cadres
 de lecture de toutes les séquences contenues dans un fichier pour en
 imprimer les résultats sur la console en format FASTA.
 
-    import java.io.BufferedReader;
-    import java.io.FileReader;
+<java> import java.io.BufferedReader; import java.io.FileReader;
 
-    import org.biojava.bio.Annotation;
-    import org.biojava.bio.seq.DNATools;
-    import org.biojava.bio.seq.RNATools;
-    import org.biojava.bio.seq.Sequence;
-    import org.biojava.bio.seq.SequenceIterator;
-    import org.biojava.bio.seq.SequenceTools;
-    import org.biojava.bio.seq.io.SeqIOTools;
-    import org.biojava.bio.symbol.SymbolList;
+import org.biojava.bio.Annotation; import org.biojava.bio.seq.DNATools;
+import org.biojava.bio.seq.RNATools; import
+org.biojava.bio.seq.Sequence; import
+org.biojava.bio.seq.SequenceIterator; import
+org.biojava.bio.seq.SequenceTools; import
+org.biojava.bio.seq.io.SeqIOTools; import
+org.biojava.bio.symbol.SymbolList;
 
-    /**
-     * Programme pour traduire les six cadres de lecture
-     * d'une séquence de nucléotides 
-     */
+/\*\*
 
-    public class Hex {
-      /**
-       * Méthode appellée pour info sur l'utilisation
-       * Le programme se termine après son appel.
-       */
-      public static void help() {
-        System.out.println(
-            "usage: java Hex <file> <format eg fasta> <dna|rna>");
-        System.exit( -1);
-      }
+`* Programme pour traduire les six cadres de lecture`  
+`* d'une séquence de nucléotides `  
+`*/`
 
-      public static void main(String[] args) throws Exception{
-        if (args.length != 3) {
-          help();
-        }
+public class Hex {
 
-        BufferedReader br = null;
-        // format du fichier  (par ex.: fasta)
-        String format = args[1];
-        // type de séquence  (par ex.: dna)
-        String alpha = args[2];
+` /**`  
+`  * Méthode appellée pour info sur l'utilisation`  
+`  * Le programme se termine après son appel.`  
+`  */`  
+` public static void help() {`  
+`   System.out.println(`  
+`       "usage: java Hex `<file>` `<format eg fasta>` `<dna|rna>`");`  
+`   System.exit( -1);`  
+` }`
 
-        try {
-          br = new BufferedReader(new FileReader(args[0]));
+` public static void main(String[] args) throws Exception{`  
+`   if (args.length != 3) {`  
+`     help();`  
+`   }`
 
-          SequenceIterator seqi =
-              (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);
+`   BufferedReader br = null;`  
+`   // format du fichier  (par ex.: fasta)`  
+`   String format = args[1];`  
+`   // type de séquence  (par ex.: dna)`  
+`   String alpha = args[2];`
 
-         // pour chaque séquence
-         while(seqi.hasNext()){
-            Sequence seq = seqi.nextSequence();
+`   try {`  
+`     br = new BufferedReader(new FileReader(args[0]));`
 
-            // pour chaque cadre
-            for (int i = 0; i < 3; i++) {
-              SymbolList prot;
-              Sequence trans;
+`     SequenceIterator seqi =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);`
 
-             // prenez le cadre de lecture
-              SymbolList syms = seq.subList(
-                    i+1,
-                    seq.length() - (seq.length() - i)%3);
+`    // pour chaque séquence`  
+`    while(seqi.hasNext()){`  
+`       Sequence seq = seqi.nextSequence();`
 
+`       // pour chaque cadre`  
+`       for (int i = 0; i < 3; i++) {`  
+`         SymbolList prot;`  
+`         Sequence trans;`
 
-              // si la séquence est d'ADN, transcription en ARN
-              if(syms.getAlphabet() == DNATools.getDNA()){
-                syms = RNATools.transcribe(syms);
-              }
+`        // prenez le cadre de lecture`  
+`         SymbolList syms = seq.subList(`  
+`               i+1,`  
+`               seq.length() - (seq.length() - i)%3);`
 
-             // sortir la traduction des cadres avant sur STDOUT
-              prot = RNATools.translate(syms);
-              trans = SequenceTools.createSequence(prot, "",
-                                                   seq.getName()+
-                                                   "TranslationFrame: +"+i,
-                                                   Annotation.EMPTY_ANNOTATION);
-              SeqIOTools.writeFasta(System.out, trans);
+`         // si la séquence est d'ADN, transcription en ARN`  
+`         if(syms.getAlphabet() == DNATools.getDNA()){`  
+`           syms = RNATools.transcribe(syms);`  
+`         }`
 
-             // sortir la traduction des cadres inverses sur STDOUT
-              syms = RNATools.reverseComplement(syms);
-              prot = RNATools.translate(syms);
-              trans = SequenceTools.createSequence(prot, "",
-                                                   seq.getName() +
-                                                   " TranslationFrame: -" + i,
-                                                   Annotation.EMPTY_ANNOTATION);
-              SeqIOTools.writeFasta(System.out, trans);
-            }
-          }
-        }
-        finally {
-          // pour finir
-          if(br != null){
-            br.close();
-          }
-        }
-      }
-    }
+`        // sortir la traduction des cadres avant sur STDOUT`  
+`         prot = RNATools.translate(syms);`  
+`         trans = SequenceTools.createSequence(prot, "",`  
+`                                              seq.getName()+`  
+`                                              "TranslationFrame: +"+i,`  
+`                                              Annotation.EMPTY_ANNOTATION);`  
+`         SeqIOTools.writeFasta(System.out, trans);`
+
+`        // sortir la traduction des cadres inverses sur STDOUT`  
+`         syms = RNATools.reverseComplement(syms);`  
+`         prot = RNATools.translate(syms);`  
+`         trans = SequenceTools.createSequence(prot, "",`  
+`                                              seq.getName() +`  
+`                                              " TranslationFrame: -" + i,`  
+`                                              Annotation.EMPTY_ANNOTATION);`  
+`         SeqIOTools.writeFasta(System.out, trans);`  
+`       }`  
+`     }`  
+`   }`  
+`   finally {`  
+`     // pour finir`  
+`     if(br != null){`  
+`       br.close();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
