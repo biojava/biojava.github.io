@@ -18,7 +18,7 @@ Les valeurs utilisées ci-dessous pour la transition et l'émission des états s
 
 === PairAlign.java ===
 
-<pre>
+<java>
 /*
  * PairAlign.java
  *
@@ -372,4 +372,4 @@ public class PairAlign {
       System.out.println(targetString);
   }
 }
-</pre>
+</java>
