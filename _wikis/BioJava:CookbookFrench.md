@@ -199,7 +199,11 @@ Comment faire pour ...?
     mesure?](BioJava:Tutorial:Dynamic_programming_examples "wikilink")
     Note: section du tutoriel anglais
 -   [Comment faire un alignement de deux
-    séquences?](BioJava:CookbookFrench:DP:PairWise "wikilink")
+    séquences](BioJava:CookbookFrench:DP:PairWise "wikilink") en
+    utilisant un modèle de Markov?
+-   [Comment faire un alignement de deux
+    séquences](BioJava:CookbookFrench:DP:PairWise2 "wikilink") en
+    utilisant l'algorithme de Smith-Waterman ou de Needleman-Wunsh?
 
 ### Interfaces Usagers Graphiques
 
