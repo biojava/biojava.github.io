@@ -16,47 +16,47 @@ objet de type *HashMap*, entre chacun des *Symbol* et son entropie
 correspondant. Le programme suivant calcule les deux paramètres pour une
 *Distribution* très biaisée.
 
-    import java.util.*;
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.util.\*; import org.biojava.bio.dist.\*; import
+org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class Entropy {
-      public static void main(String[] args) {
-        
-        Distribution dist = null;
+public class Entropy {
 
-        try {
-          //créer une Distribution biaisée
-          dist =
-              DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());
-          //ajuster la valeur de à 0.97
-          dist.setWeight(DNATools.a(), 0.97);
-          //ajuster les autres valeurs à 0.01
-          dist.setWeight(DNATools.c(), 0.01);
-          dist.setWeight(DNATools.g(), 0.01);
-          dist.setWeight(DNATools.t(), 0.01);
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-          System.exit(-1);
-        }
-        
-        //calculer le contenu en information
-        double info = DistributionTools.bitsOfInformation(dist);
-        
-        System.out.println("information = "+info+" bits");
-        System.out.print("\n");
-        
-        //calculer l'entropie (utilisant le log en base 2, conventionnel)
-        HashMap entropy = DistributionTools.shannonEntropy(dist, 2.0);
-        
-        //imprimer l'entropie pour chacun des résidues
-        System.out.println("Symbol\tEntropy");
-        
-        for (Iterator i = entropy.keySet().iterator(); i.hasNext(); ) {
-          Symbol sym = (Symbol)i.next();
-          System.out.println(sym.getName()+ "\t" +entropy.get(sym));
-        }
-      }
-    }
+` public static void main(String[] args) {`  
+`   `  
+`   Distribution dist = null;`
+
+`   try {`  
+`     //créer une Distribution biaisée`  
+`     dist =`  
+`         DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());`  
+`     //ajuster la valeur de à 0.97`  
+`     dist.setWeight(DNATools.a(), 0.97);`  
+`     //ajuster les autres valeurs à 0.01`  
+`     dist.setWeight(DNATools.c(), 0.01);`  
+`     dist.setWeight(DNATools.g(), 0.01);`  
+`     dist.setWeight(DNATools.t(), 0.01);`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`  
+`   `  
+`   //calculer le contenu en information`  
+`   double info = DistributionTools.bitsOfInformation(dist);`  
+`   `  
+`   System.out.println("information = "+info+" bits");`  
+`   System.out.print("\n");`  
+`   `  
+`   //calculer l'entropie (utilisant le log en base 2, conventionnel)`  
+`   HashMap entropy = DistributionTools.shannonEntropy(dist, 2.0);`  
+`   `  
+`   //imprimer l'entropie pour chacun des résidues`  
+`   System.out.println("Symbol\tEntropy");`  
+`   `  
+`   for (Iterator i = entropy.keySet().iterator(); i.hasNext(); ) {`  
+`     Symbol sym = (Symbol)i.next();`  
+`     System.out.println(sym.getName()+ "\t" +entropy.get(sym));`  
+`   }`  
+` }`
+
+} </java>
