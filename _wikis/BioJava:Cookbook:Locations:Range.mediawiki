@@ -4,7 +4,7 @@ In BioJava a RangeLocation is an object that holds the minimum and maximum bound
 
 The following example demonstrates the use of a RangeLocation.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -30,4 +30,4 @@ public class SpecifyRange {
     }
   }
 }
-</pre>
+</java>
