@@ -15,15 +15,19 @@ org.biojava.bio.structure.io. Le code ci-dessous, introduit dans la
 portion appropriée de votre programme (;-)), vous montre la marche à
 suivre.
 
-     // PDBFileREader peut egalement lire les archives
-     // de type zip en entree
-     String filename =  "parcours/vers/fichier.entree" ;
-     
-     PDBFileReader pdbreader = new PDBFileReader();
-     
-     try{
-         Structure struc = pdbreader.getStructure(filename);
-         System.out.println(struc);
-     } catch (Exception e) {
-         e.printStackTrace();
-     }
+<java>
+
+`// PDBFileREader peut egalement lire les archives`  
+`// de type zip en entree`  
+`String filename =  "parcours/vers/fichier.entree" ;`  
+  
+`PDBFileReader pdbreader = new PDBFileReader();`  
+  
+`try{`  
+`    Structure struc = pdbreader.getStructure(filename);`  
+`    System.out.println(struc);`  
+`} catch (Exception e) {`  
+`    e.printStackTrace();`  
+`}`
+
+</java>
