@@ -37,49 +37,49 @@ public class DeterministicAlignmentDemo {
     if (args.length < 3)
 	  throw new Error("Usage: DeterministicAlignmentDemo " +
 	                  "querySeq targetSeq substitutionMatrixFile");
-	try {
-	  // The alphabet of the sequences. For this example DNA is choosen.
-	  FiniteAlphabet alphabet = (FiniteAlphabet) AlphabetManager.alphabetForName("DNA");
-	  // Read the substitution matrix file. 
-	  // For this example the matrix NUC.4.4 is good.
-	  SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));
-	  // Define the default costs for sequence manipulation for the global alignment.
-	  SequenceAlignment aligner = new NeedlemanWunsch( 
-	    alphabet, 
-		2,  // insert
-		2,	// delete
-		1,  // gapExtend
-		0, 	// match
-		3,	// replace
-		matrix 	// SubstitutionMatrix
-	  );
-	  Sequence query  = DNATools.createDNASequence(args[0], "query");
-	  Sequence target = DNATools.createDNASequence(args[1], "target");	  
-	  // Perform an alignment and save the results.
-	  aligner.pairwiseAlignment(
-	    // sources
-	    query, 
-	    // sequenceDB
-	    target
-	  );
-	  // Print the alignment to the screen
-	  System.out.println("global alignment with NeedlemanWunsch"+
-	  		aligner.getAlignmentString());	  
+    try {
+      // The alphabet of the sequences. For this example DNA is choosen.
+      FiniteAlphabet alphabet = (FiniteAlphabet) AlphabetManager.alphabetForName("DNA");
+      // Read the substitution matrix file. 
+      // For this example the matrix NUC.4.4 is good.
+      SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));
+      // Define the default costs for sequence manipulation for the global alignment.
+      SequenceAlignment aligner = new NeedlemanWunsch( 
+        alphabet, 
+        2,  // insert
+        2,	// delete
+        1,  // gapExtend
+        0, 	// match
+        3,	// replace
+        matrix 	// SubstitutionMatrix
+      );
+      Sequence query  = DNATools.createDNASequence(args[0], "query");
+      Sequence target = DNATools.createDNASequence(args[1], "target");
+      // Perform an alignment and save the results.
+      aligner.pairwiseAlignment(
+        // sources
+        query, 
+      	// sequenceDB
+        target
+      );
+      // Print the alignment to the screen
+      System.out.println("global alignment with NeedlemanWunsch"+
+        aligner.getAlignmentString());	  
 	  
-	  // Perform a local alginment from the sequences.
-	  aligner = new SmithWaterman(
-	    0, // match
-	  	2, // insert
-		3, // replace 
-		2, // delete
-		1, // gapExtend
-		matrix); // Substitution matrix
-	  aligner.pairwiseAlignment(query, target);
-	  System.out.println("\nlocal alignment with SmithWaterman:\n"+
-	    aligner.getAlignmentString());
-	} catch (Exception exc) {
-	  exc.printStackTrace();
-	}
+      // Perform a local alginment from the sequences.
+      aligner = new SmithWaterman(
+        0, // match
+        2, // insert
+        3, // replace 
+        2, // delete
+        1, // gapExtend
+        matrix); // Substitution matrix
+      aligner.pairwiseAlignment(query, target);
+      System.out.println("\nlocal alignment with SmithWaterman:\n"+
+        aligner.getAlignmentString());
+    } catch (Exception exc) {
+      exc.printStackTrace();
+    }
   }
 }
 </java>
