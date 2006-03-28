@@ -16,31 +16,32 @@ agissant en wrapper, intercepte certains des appels de méthodes à la
 *Sequence* sous-jacente et donne la possibilité de changer le nom. Le
 programme suivant montre la manière de faire.
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class NameChange {
-      public static void main(String[] args) {
-        try {
-          Sequence seq =
-              DNATools.createDNASequence("atgcgctaggctag","gi|12356|ABC123");
+public class NameChange {
 
-          // créer un aperçu de la séquence et en changer le nom
-          Sequence view = SequenceTools.view(seq, "ABC123");
+` public static void main(String[] args) {`  
+`   try {`  
+`     Sequence seq =`  
+`         DNATools.createDNASequence("atgcgctaggctag","gi|12356|ABC123");`
 
-          // imprime en FASTA pour prouver le changement de nom
-          SeqIOTools.writeFasta(System.out, view);
-        }
-        catch (IllegalSymbolException ex) {
-          // tentative de créer seq avec des symboles non-ADN
-          ex.printStackTrace();
-        }
-        catch (IOException ex) {
-          // impossible d'imprimer seq2 sur System.out??
-          ex.printStackTrace();
-        }
-      }
-    }
+`     // créer un aperçu de la séquence et en changer le nom`  
+`     Sequence view = SequenceTools.view(seq, "ABC123");`
+
+`     // imprime en FASTA pour prouver le changement de nom`  
+`     SeqIOTools.writeFasta(System.out, view);`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     // tentative de créer seq avec des symboles non-ADN`  
+`     ex.printStackTrace();`  
+`   }`  
+`   catch (IOException ex) {`  
+`     // impossible d'imprimer seq2 sur System.out??`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
