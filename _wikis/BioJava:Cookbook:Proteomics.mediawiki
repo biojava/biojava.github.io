@@ -4,7 +4,7 @@ If you are doing a proteomics project it is important to know what the approxima
 
 The program below demonstrates a basic usage of these classes. This simple example uses fairly default settings but both MassCalc and IsoelectricPointCalc have other specialised options that are not demosntrated here. Consult the biojava API docs for these options.
 
-<pre>
+<java>
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -160,4 +160,4 @@ public class CalcMass {
     }
   }
 }
-</pre>
+</java>
