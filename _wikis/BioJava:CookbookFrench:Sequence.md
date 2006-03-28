@@ -93,15 +93,17 @@ Vous pouvez appeller la méthode **seqString()** sur une *SymbolList* ou
 une *Sequence* pour obtenir la chaîne de caractères contenant la
 séquence.
 
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.symbol.\*;
 
-    public class SymbolListToString {
-      public static void main(String[] args) {
-        SymbolList sl = null;
-        
-        // mettre ici votre code afin d'instantier sl
-       
-        // convertir sl en chaîne de caractères
-        String s = sl.seqString();
-      }
-    }
+public class SymbolListToString {
+
+` public static void main(String[] args) {`  
+`   SymbolList sl = null;`  
+`   `  
+`   // mettre ici votre code afin d'instantier sl`  
+`  `  
+`   // convertir sl en chaîne de caractères`  
+`   String s = sl.seqString();`  
+` }`
+
+} </java>
