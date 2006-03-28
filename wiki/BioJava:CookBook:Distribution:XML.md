@@ -20,38 +20,37 @@ readFromXML() and writeToXML() methods in DistributionTools are fairly
 new features. The cvs version or version 1.3 (when released) will be
 adequate.
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
+import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 
-    public class Dist2XMLAndBack{
+public class Dist2XMLAndBack{
 
+` public static void main(String[] args){`
 
-      public static void main(String[] args){
+`     try{`  
+`       File temp = File.createTempFile("xmltemp", ".xml");`
 
-          try{
-            File temp = File.createTempFile("xmltemp", ".xml");
+`       //create a Distribution to write`  
+`       Distribution d = DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());`
 
-            //create a Distribution to write
-            Distribution d = DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());
+`       //give the Distribution some random values`  
+`       DistributionTools.randomizeDistribution(d);`
 
-            //give the Distribution some random values
-            DistributionTools.randomizeDistribution(d);
+`       //write it to 'temp'`  
+`       DistributionTools.writeToXML(d, new FileOutputStream(temp));`
 
-            //write it to 'temp'
-            DistributionTools.writeToXML(d, new FileOutputStream(temp));
+`       //read it back in`  
+`       Distribution d2 = DistributionTools.readFromXML(new FileInputStream(temp));`
 
-            //read it back in
-            Distribution d2 = DistributionTools.readFromXML(new FileInputStream(temp));
+`       //check that the weights are reproduced`  
+`       boolean b = DistributionTools.areEmissionSpectraEqual(d, d2);`
 
-            //check that the weights are reproduced
-            boolean b = DistributionTools.areEmissionSpectraEqual(d, d2);
+`       System.out.println("Are values reproduced? " + b);`  
+`     } catch(Exception ex){`  
+`       ex.printStackTrace();`  
+`     }`
 
-            System.out.println("Are values reproduced? " + b);
-          } catch(Exception ex){
-            ex.printStackTrace();
-          }
+` }`
 
-      }
-    }
+} </java>
