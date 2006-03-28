@@ -4,7 +4,7 @@ L'UIB defini des codes standard pour les symboles ambiguës tel que Y (représen
 
 Généralement, un ''Symbol'' ambiguë est récupéré en appelant la méthode '''getAmbiguity(Set symbols)''' de l'Alphabet à partir du quel le ''Symbol'' en question est supposé provenir. Dans le cas de la création du ''Symbol'' Y, l'ensemble (Set) utilisé comme argument contiendra les ''Symbols'' 'C' et 'T' de l'''Alphabet'' ADN.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 import java.util.*;
@@ -44,4 +44,4 @@ try {
     }
   }
 }
-<pre></pre>
+</java>
