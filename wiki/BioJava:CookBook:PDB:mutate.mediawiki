@@ -1,6 +1,6 @@
 === How can I mutate a residue ===
 
-<pre>
+<java>
  // mutate a protein structure
  // and save to file
  
@@ -35,4 +35,4 @@
   } catch (Exception e) {
       e.printStackTrace();
   } 
-</pre>
+</java>
