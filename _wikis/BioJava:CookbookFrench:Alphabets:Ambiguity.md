@@ -19,43 +19,41 @@ en question est supposé provenir. Dans le cas de la création du *Symbol*
 Y, l'ensemble (Set) utilisé comme argument contiendra les *Symbols* 'C'
 et 'T' de l*'Alphabet* ADN.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
-    import java.util.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+import java.util.\*;
 
-    public class Ambiguity {
-    public static void main(String[] args) {
-    try {
-          // obtenir l'alphabet d"ADN
-          Alphabet dna = DNATools.getDNA();
+public class Ambiguity { public static void main(String[] args) { try {
 
-          // créer le Symbol "Y"
-          Set symbolsThatMakeY = new HashSet();
-          symbolsThatMakeY.add(DNATools.c());
-          symbolsThatMakeY.add(DNATools.t());
-          Symbol y = dna.getAmbiguity(symbolsThatMakeY);
+`     // obtenir l'alphabet d"ADN`  
+`     Alphabet dna = DNATools.getDNA();`
 
-          // imprimer l'info à propos du BasisSymbol  "Y"
-          System.out.println("Formal name of "Y" is: "+y.getName());
-          System.out.println("Class type of "Y" is: "+y.getClass().getName());
+`     // créer le Symbol "Y"`  
+`     Set symbolsThatMakeY = new HashSet();`  
+`     symbolsThatMakeY.add(DNATools.c());`  
+`     symbolsThatMakeY.add(DNATools.t());`  
+`     Symbol y = dna.getAmbiguity(symbolsThatMakeY);`
 
-          // décomposer le BasisSymbol Y en ces composantes AtomicSymbols
-          Alphabet matches = y.getMatches();
-          System.out.print("The "Y" Symbol is made of: ");
+`     // imprimer l'info à propos du BasisSymbol  "Y"`  
+`     System.out.println("Formal name of "Y" is: "+y.getName());`  
+`     System.out.println("Class type of "Y" is: "+y.getClass().getName());`
 
-          // nous savons que l'ensemble est de nature fini(FiniteAlphabet)
-          // donc nous pouvons en imposer le type
-          for(Iterator i = ((FiniteAlphabet)matches).iterator(); i.hasNext();){
-            Symbol sym = (Symbol)i.next();
-            System.out.print(sym.getName());
-            if(i.hasNext())
-              System.out.print(", ");
-          }
+`     // décomposer le BasisSymbol Y en ces composantes AtomicSymbols`  
+`     Alphabet matches = y.getMatches();`  
+`     System.out.print("The "Y" Symbol is made of: ");`
 
-        }
-        catch (IllegalSymbolException ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
-    <pre>
+`     // nous savons que l'ensemble est de nature fini(FiniteAlphabet)`  
+`     // donc nous pouvons en imposer le type`  
+`     for(Iterator i = ((FiniteAlphabet)matches).iterator(); i.hasNext();){`  
+`       Symbol sym = (Symbol)i.next();`  
+`       System.out.print(sym.getName());`  
+`       if(i.hasNext())`  
+`         System.out.print(", ");`  
+`     }`
+
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
