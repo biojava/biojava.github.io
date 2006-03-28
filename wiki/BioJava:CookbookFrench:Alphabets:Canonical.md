@@ -18,20 +18,21 @@ C'est vrai même pour des *Alphabets* et des *Symbols* qui se trouvent
 sur différentes machines virtuels (grâce à un peu de magie par
 Serialization) ce qui veut dire que BioJava fonctionne à travers RMI.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class Canonical {
-      public static void main(String[] args) {
+public class Canonical {
 
-        // obtenir l'alphabet d'ADN des deux manières
-        Alphabet a1 = DNATools.getDNA();
-        Alphabet a2 = AlphabetManager.alphabetForName("DNA");
+` public static void main(String[] args) {`
 
-        // sont-ils identiques?
-        System.out.println("equal: "+ a1.equals(a2));
+`   // obtenir l'alphabet d'ADN des deux manières`  
+`   Alphabet a1 = DNATools.getDNA();`  
+`   Alphabet a2 = AlphabetManager.alphabetForName("DNA");`
 
-        // sont-ils identiques?
-        System.out.println("canonical: "+ (a1 == a2));
-      }
-    }
+`   // sont-ils identiques?`  
+`   System.out.println("equal: "+ a1.equals(a2));`
+
+`   // sont-ils identiques?`  
+`   System.out.println("canonical: "+ (a1 == a2));`  
+` }`
+
+} </java>
