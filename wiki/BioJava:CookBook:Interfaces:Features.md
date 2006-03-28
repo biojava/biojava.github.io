@@ -19,96 +19,95 @@ demonstrated in the program below. A screen shot follows the program.
 
 [frame|center|Features in a GUI](image:Featview.jpg "wikilink")
 
-    import java.awt.*;
-    import java.awt.event.*;
+<java> import java.awt.\*; import java.awt.event.\*;
 
-    import javax.swing.*;
+import javax.swing.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.gui.sequence.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+import org.biojava.bio.\*; import org.biojava.bio.gui.sequence.\*;
+import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class FeatureView extends JFrame {
-      private Sequence seq;
-      private JPanel jPanel1 = new JPanel();
+public class FeatureView extends JFrame {
 
-      private MultiLineRenderer mlr = new MultiLineRenderer();
-      private FeatureRenderer featr = new BasicFeatureRenderer();
-      private SequenceRenderer seqR = new SymbolSequenceRenderer();
-      private SequencePanel seqPanel = new SequencePanel();
-      //the proxy between featr and seqPanel
-      private FeatureBlockSequenceRenderer fbr = new FeatureBlockSequenceRenderer();
+` private Sequence seq;`  
+` private JPanel jPanel1 = new JPanel();`
 
-      public FeatureView() {
-        try {
-          seq = DNATools.createDNASequence(
-              "atcgcgcatgcgcgcgcgcgcgcgctttatagcgatagagatata",
-              "dna 1");
+` private MultiLineRenderer mlr = new MultiLineRenderer();`  
+` private FeatureRenderer featr = new BasicFeatureRenderer();`  
+` private SequenceRenderer seqR = new SymbolSequenceRenderer();`  
+` private SequencePanel seqPanel = new SequencePanel();`  
+` //the proxy between featr and seqPanel`  
+` private FeatureBlockSequenceRenderer fbr = new FeatureBlockSequenceRenderer();`
 
-          //create feature from 10 to 25
-          StrandedFeature.Template temp = new StrandedFeature.Template();
-          temp.annotation = Annotation.EMPTY_ANNOTATION;
-          temp.location = new RangeLocation(10,25);
-          temp.source = "";
-          temp.strand = StrandedFeature.POSITIVE;
-          temp.type = "";
+` public FeatureView() {`  
+`   try {`  
+`     seq = DNATools.createDNASequence(`  
+`         "atcgcgcatgcgcgcgcgcgcgcgctttatagcgatagagatata",`  
+`         "dna 1");`
 
-          //create another from 30 to 35
-          Feature f = seq.createFeature(temp);
-          temp = (StrandedFeature.Template)f.makeTemplate();
-          temp.location = new RangeLocation(30,35);
-          temp.strand = StrandedFeature.NEGATIVE;
-          seq.createFeature(temp);
+`     //create feature from 10 to 25`  
+`     StrandedFeature.Template temp = new StrandedFeature.Template();`  
+`     temp.annotation = Annotation.EMPTY_ANNOTATION;`  
+`     temp.location = new RangeLocation(10,25);`  
+`     temp.source = "";`  
+`     temp.strand = StrandedFeature.POSITIVE;`  
+`     temp.type = "";`
 
-          //setup GUI
-          init();
-        }
-        catch(Exception e) {
-          e.printStackTrace();
-        }
-      }
+`     //create another from 30 to 35`  
+`     Feature f = seq.createFeature(temp);`  
+`     temp = (StrandedFeature.Template)f.makeTemplate();`  
+`     temp.location = new RangeLocation(30,35);`  
+`     temp.strand = StrandedFeature.NEGATIVE;`  
+`     seq.createFeature(temp);`
 
-      public static void main(String[] args) {
-        FeatureView featureView = new FeatureView();
-        featureView.pack();
-        featureView.show();
-      }
+`     //setup GUI`  
+`     init();`  
+`   }`  
+`   catch(Exception e) {`  
+`     e.printStackTrace();`  
+`   }`  
+` }`
 
-      /**
-       * initialize GUI components
-       */
-      private void init() throws Exception {
-        this.setTitle("FeatureView");
-        this.getContentPane().add(jPanel1, BorderLayout.CENTER);
-        jPanel1.add(seqPanel, null);
+` public static void main(String[] args) {`  
+`   FeatureView featureView = new FeatureView();`  
+`   featureView.pack();`  
+`   featureView.show();`  
+` }`
 
-        //Register the FeatureRenderer with the FeatureBlockSequenceRenderer
-        fbr.setFeatureRenderer(featr);
+` /**`  
+`  * initialize GUI components`  
+`  */`  
+` private void init() throws Exception {`  
+`   this.setTitle("FeatureView");`  
+`   this.getContentPane().add(jPanel1, BorderLayout.CENTER);`  
+`   jPanel1.add(seqPanel, null);`
 
-        //add Renderers to the MultiLineRenderer
-        mlr.addRenderer(fbr);
-        mlr.addRenderer(seqR);
+`   //Register the FeatureRenderer with the FeatureBlockSequenceRenderer`  
+`   fbr.setFeatureRenderer(featr);`
 
-        //set the MultiLineRenderer as the SequencePanels renderer
-        seqPanel.setRenderer(mlr);
+`   //add Renderers to the MultiLineRenderer`  
+`   mlr.addRenderer(fbr);`  
+`   mlr.addRenderer(seqR);`
 
-        //set the Sequence to Render
-        seqPanel.setSequence(seq);
+`   //set the MultiLineRenderer as the SequencePanels renderer`  
+`   seqPanel.setRenderer(mlr);`
 
-        //display the whole Sequence
-        seqPanel.setRange(new RangeLocation(1,seq.length()));
-      }
+`   //set the Sequence to Render`  
+`   seqPanel.setSequence(seq);`
 
-      /**
-       * Overridden so program terminates when window closes
-       */
-      protected void processWindowEvent(WindowEvent we){
-        if (we.getID() == WindowEvent.WINDOW_CLOSING) {
-          System.exit(0);
-        }
-        else {
-          super.processWindowEvent(we);
-        }
-      }
-    }
+`   //display the whole Sequence`  
+`   seqPanel.setRange(new RangeLocation(1,seq.length()));`  
+` }`
+
+` /**`  
+`  * Overridden so program terminates when window closes`  
+`  */`  
+` protected void processWindowEvent(WindowEvent we){`  
+`   if (we.getID() == WindowEvent.WINDOW_CLOSING) {`  
+`     System.exit(0);`  
+`   }`  
+`   else {`  
+`     super.processWindowEvent(we);`  
+`   }`  
+` }`
+
+} </java>
