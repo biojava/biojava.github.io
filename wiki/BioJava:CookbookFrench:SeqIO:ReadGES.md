@@ -136,67 +136,67 @@ public class ReadEMBL {
 
 ### GeneralReader, un lecteur générique (avec BioJava 1.3)
 
-    import java.io.*;
+<java> import java.io.\*;
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
+import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.seq.io.\*;
 
-    public class GeneralReader {
+public class GeneralReader {
 
-      /**
-       * Ce programme peut lire n'importe quel format de fichier supporté par SeqIOTools. Il prend
-       * trois arguments: le 1er est le nom du fichier, le 2ème est le type de format et le
-       * 3ème est le type de résidus contenus dans la séquence. Les combinaisons illégales
-       * comme une séquence d'ADN en format SwissProt lanceront une exception.
-       *
-       * Les formats supportés sont: (minuscule ou majuscule).
-       *
-       * FASTA
-       * EMBL
-       * GENBANK
-       * SWISSPROT (ou swiss)
-       * GENPEPT
-       *
-       * Les séquences des types suivants sont permises: (minuscule ou majuscule).
-       *
-       * DNA
-       * AA (or Protein)
-       * RNA
-       *
-       */
-      public static void main(String[] args) {
-        try {
-          // préparer un BufferedReader pour entrée/sortie de fichier
-          BufferedReader br = new BufferedReader(new FileReader(args[0]));
+` /**`  
+`  * Ce programme peut lire n'importe quel format de fichier supporté par SeqIOTools. Il prend`  
+`  * trois arguments: le 1er est le nom du fichier, le 2ème est le type de format et le`  
+`  * 3ème est le type de résidus contenus dans la séquence. Les combinaisons illégales`  
+`  * comme une séquence d'ADN en format SwissProt lanceront une exception.`  
+`  *`  
+`  * Les formats supportés sont: (minuscule ou majuscule).`  
+`  *`  
+`  * FASTA`  
+`  * EMBL`  
+`  * GENBANK`  
+`  * SWISSPROT (ou swiss)`  
+`  * GENPEPT`  
+`  *`  
+`  * Les séquences des types suivants sont permises: (minuscule ou majuscule).`  
+`  *`  
+`  * DNA`  
+`  * AA (or Protein)`  
+`  * RNA`  
+`  *`  
+`  */`  
+` public static void main(String[] args) {`  
+`   try {`  
+`     // préparer un BufferedReader pour entrée/sortie de fichier`  
+`     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
-          // le format du fichier de séquence
-          String format = args[1];
+`     // le format du fichier de séquence`  
+`     String format = args[1];`
 
-          // l'Alphabet
-          String alpha = args[2];
+`     // l'Alphabet`  
+`     String alpha = args[2];`
 
-          /*
-           * obtenir un SequenceIterator sur toutes les séquences du fichier.
-           * SeqIOTools.fileToBiojava() retourne un Object. Si le fichier lu est
-           * en un format d"alignement comme MSF, un objet de type Alignment 
-           * est retourné. Sinon un SequenceIterator est retourné.
-           */
-          SequenceIterator iter =
-              (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);
+`     /*`  
+`      * obtenir un SequenceIterator sur toutes les séquences du fichier.`  
+`      * SeqIOTools.fileToBiojava() retourne un Object. Si le fichier lu est`  
+`      * en un format d"alignement comme MSF, un objet de type Alignment `  
+`      * est retourné. Sinon un SequenceIterator est retourné.`  
+`      */`  
+`     SequenceIterator iter =`  
+`         (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);`
 
-          // un travail à faire sur votre séquence
-          SeqIOTools.writeFasta(System.out, iter);
-        }
-        catch (FileNotFoundException ex) {
-          // ne peut trouver le fichier spécifié par args[0]
-          ex.printStackTrace();
-        }catch (BioException ex) {
-          // format de fichier non-valide
-          ex.printStackTrace();
-        }catch (IOException ex){
-          // erreur à l'écriture du fichier FASTA
-          ex.printStackTrace();
-        }
-      }
-    }
+`     // un travail à faire sur votre séquence`  
+`     SeqIOTools.writeFasta(System.out, iter);`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     // ne peut trouver le fichier spécifié par args[0]`  
+`     ex.printStackTrace();`  
+`   }catch (BioException ex) {`  
+`     // format de fichier non-valide`  
+`     ex.printStackTrace();`  
+`   }catch (IOException ex){`  
+`     // erreur à l'écriture du fichier FASTA`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
