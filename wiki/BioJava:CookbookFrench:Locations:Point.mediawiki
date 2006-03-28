@@ -6,7 +6,7 @@ Une position de type ''PointLocation'' est la position d'un unique symbole, qui 
 
 '''Note:''' Il faut se souvenir que BioJava utilise un système de coordonnées biologiques. Par conséquent, la première ''PointLocation'' possible d'une ''Sequence'' sera à l'index 1 et non 0.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -18,7 +18,7 @@ public class SpecifyPoint {
       //imprimer cette position
       System.out.println("Location: "+point.toString());
 
-      //crŽer une SymbolList
+      //creer une SymbolList
       SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");
       System.out.println("SymbolList: "+sl.seqString());
 
@@ -33,4 +33,4 @@ public class SpecifyPoint {
     }
   }
 }
-</pre>
+</java>
