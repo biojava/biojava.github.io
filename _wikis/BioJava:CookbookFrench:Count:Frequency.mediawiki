@@ -4,7 +4,7 @@ Une des classes les plus utiles de BioJava est la classe ''Distribution''. Une '
 
 Le programme suivant montre l'entrainement de trois ''Distributions'' avec des ''Sequences'' faites à partir de trois ''Alphabets'' différents.
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.dist.*;
@@ -65,4 +65,4 @@ public class Frequency {
     }
   }
 }
-</pre>
+</java>
