@@ -1,6 +1,6 @@
 === How do I read a PDB file? ===
 
-<pre>
+<java>
  // also works for gzip compressed files
  String filename =  "path/to/pdbfile.ent" ;
  
@@ -12,4 +12,4 @@
  } catch (Exception e) {
      e.printStackTrace();
  }
-</pre>
+</java>
