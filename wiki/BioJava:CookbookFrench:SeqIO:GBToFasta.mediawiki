@@ -2,7 +2,7 @@
 
 Pour accomplir cette tâche de conversion, nous allons modifier le lecteur de base de la démo précédente pour y inclure la possibilité d'écrire les données de séquence en format FASTA. L'exmple fourni fonctionne à partir de la version 1.3 de BioJava.
 
-<pre>
+<java>
 import java.io.*;
 
 import org.biojava.bio.*;
@@ -67,4 +67,4 @@ public class GeneralReader {
        }
    }
 }
-</pre>
+</java>
