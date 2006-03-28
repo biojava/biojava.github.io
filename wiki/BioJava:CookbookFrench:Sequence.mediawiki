@@ -35,7 +35,7 @@ public class StringToSymbolList {
 
 === D'une chaîne à une ''Sequence'' ===
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -58,7 +58,7 @@ public class StringToSequence {
     }
   }
 }
-</pre>
+</java>
 
 === D'une ''SymbolList'' à une chaîne de caractères ===
 
