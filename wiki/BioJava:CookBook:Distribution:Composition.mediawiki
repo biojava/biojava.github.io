@@ -4,7 +4,7 @@ The following program is a full application that can determine the composition o
 
 The program uses the Jakarta CLI library for processing command line options. It uses java 1.5 generics for type safety. It also demonstrates the use of the BioJavaX I/O framework including customizations that ignore things like features and comments that are not relevant to calculating sequence composition. 
 
-<pre>
+<java>
 /*
  * Composition.java
  *
@@ -522,4 +522,4 @@ public class Composition {
     }
 }
 
-</pre>
+</java>
