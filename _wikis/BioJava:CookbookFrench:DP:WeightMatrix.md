@@ -18,44 +18,42 @@ Le programme suivant crée une *WeightMatrix* à partir d'un alignement et
 utilise cette matrice pour annoter une *Sequence* avec un seuil minimal
 de détection de 0.1.
 
-    import java.util.*;
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.dp.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import java.util.\*; import org.biojava.bio.dist.\*; import
+org.biojava.bio.dp.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*;
 
-    public class WeightMatrixDemo {
-    public static void main(String[] args) throws Exception{
-        //créer un alignement de motifs.
-        Map map = new HashMap();
-        map.put("seq0", DNATools.createDNA("aggag"));
-        map.put("seq1", DNATools.createDNA("aggaa"));
-        map.put("seq2", DNATools.createDNA("aggag"));
-        map.put("seq3", DNATools.createDNA("aagag"));
-        Alignment align = new SimpleAlignment(map);
+public class WeightMatrixDemo { public static void main(String[] args)
+throws Exception{
 
-        //créer un tableau de Distribution[] pour ce motif
-        Distribution[] dists =
-            DistributionTools.distOverAlignment(align, false, 0.01);
+`   //créer un alignement de motifs.`  
+`   Map map = new HashMap();`  
+`   map.put("seq0", DNATools.createDNA("aggag"));`  
+`   map.put("seq1", DNATools.createDNA("aggaa"));`  
+`   map.put("seq2", DNATools.createDNA("aggag"));`  
+`   map.put("seq3", DNATools.createDNA("aagag"));`  
+`   Alignment align = new SimpleAlignment(map);`
 
+`   //créer un tableau de Distribution[] pour ce motif`  
+`   Distribution[] dists =`  
+`       DistributionTools.distOverAlignment(align, false, 0.01);`
 
-        //créer une WeightMatrix
-        WeightMatrix matrix = new SimpleWeightMatrix(dists);
+`   //créer une WeightMatrix`  
+`   WeightMatrix matrix = new SimpleWeightMatrix(dists);`
 
+`   //la séquence où ce motif est recherché`  
+`   Sequence seq = DNATools.createDNASequence("aaagcctaggaagaggagctgat","seq");`
 
-        //la séquence où ce motif est recherché
-        Sequence seq = DNATools.createDNASequence("aaagcctaggaagaggagctgat","seq");
+`   //annoter la séquence avec la matrice pour une valeur seuil basse (0.1)`  
+`   WeightMatrixAnnotator wma = new WeightMatrixAnnotator(matrix, 0.1);`  
+`   seq = wma.annotate(seq);`
 
-        //annoter la séquence avec la matrice pour une valeur seuil basse (0.1)
-        WeightMatrixAnnotator wma = new WeightMatrixAnnotator(matrix, 0.1);
-        seq = wma.annotate(seq);
+`   //imprimer l'information des matches`  
+`   for (Iterator it = seq.features(); it.hasNext(); ) {`  
+`        Feature f = (Feature)it.next();`  
+`        Location loc = f.getLocation();`  
+`        System.out.println("Match at " + loc.getMin()+"-"+loc.getMax());`  
+`        System.out.println("\tscore : "+f.getAnnotation().getProperty("score"));`  
+`   }`  
+` }`
 
-        //imprimer l'information des matches
-        for (Iterator it = seq.features(); it.hasNext(); ) {
-             Feature f = (Feature)it.next();
-             Location loc = f.getLocation();
-             System.out.println("Match at " + loc.getMin()+"-"+loc.getMax());
-             System.out.println("\tscore : "+f.getAnnotation().getProperty("score"));
-        }
-      }
-    }
+} </java>
