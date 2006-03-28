@@ -79,356 +79,349 @@ sont presque sans fin ;-)
 
 ### PairAlign.java
 
-    /*
-     * PairAlign.java
-     *
-     * Created on July 7, 2005, 10:47 AM
-     */
+<java> /\*
 
+`* PairAlign.java`  
+`*`  
+`* Created on July 7, 2005, 10:47 AM`  
+`*/`
 
-    package dp;
+package dp;
 
-    import java.io.BufferedReader;
-    import java.io.File;
-    import java.io.FileReader;
-    import java.util.Collections;
-    import java.util.Iterator;
-    import java.util.List;
-    import org.biojava.bio.Annotation;
-    import org.biojava.bio.BioError;
-    import org.biojava.bio.dist.Distribution;
-    import org.biojava.bio.dist.DistributionFactory;
-    import org.biojava.bio.dist.GapDistribution;
-    import org.biojava.bio.dist.PairDistribution;
-    import org.biojava.bio.dist.UniformDistribution;
-    import org.biojava.bio.dp.DP;
-    import org.biojava.bio.dp.DPFactory;
-    import org.biojava.bio.dp.EmissionState;
-    import org.biojava.bio.dp.MarkovModel;
-    import org.biojava.bio.dp.ScoreType;
-    import org.biojava.bio.dp.SimpleEmissionState;
-    import org.biojava.bio.dp.SimpleMarkovModel;
-    import org.biojava.bio.dp.StatePath;
-    import org.biojava.bio.dp.twohead.CellCalculatorFactoryMaker;
-    import org.biojava.bio.dp.twohead.DPInterpreter;
-    import org.biojava.bio.seq.DNATools;
-    import org.biojava.bio.seq.Sequence;
-    import org.biojava.bio.seq.SequenceIterator;
-    import org.biojava.bio.seq.io.SeqIOTools;
-    import org.biojava.bio.seq.io.SymbolTokenization;
-    import org.biojava.bio.symbol.AlphabetManager;
-    import org.biojava.bio.symbol.BasisSymbol;
-    import org.biojava.bio.symbol.FiniteAlphabet;
-    import org.biojava.bio.symbol.IllegalSymbolException;
-    import org.biojava.bio.symbol.Symbol;
-    import org.biojava.bio.symbol.SymbolList;
+import java.io.BufferedReader; import java.io.File; import
+java.io.FileReader; import java.util.Collections; import
+java.util.Iterator; import java.util.List; import
+org.biojava.bio.Annotation; import org.biojava.bio.BioError; import
+org.biojava.bio.dist.Distribution; import
+org.biojava.bio.dist.DistributionFactory; import
+org.biojava.bio.dist.GapDistribution; import
+org.biojava.bio.dist.PairDistribution; import
+org.biojava.bio.dist.UniformDistribution; import org.biojava.bio.dp.DP;
+import org.biojava.bio.dp.DPFactory; import
+org.biojava.bio.dp.EmissionState; import org.biojava.bio.dp.MarkovModel;
+import org.biojava.bio.dp.ScoreType; import
+org.biojava.bio.dp.SimpleEmissionState; import
+org.biojava.bio.dp.SimpleMarkovModel; import
+org.biojava.bio.dp.StatePath; import
+org.biojava.bio.dp.twohead.CellCalculatorFactoryMaker; import
+org.biojava.bio.dp.twohead.DPInterpreter; import
+org.biojava.bio.seq.DNATools; import org.biojava.bio.seq.Sequence;
+import org.biojava.bio.seq.SequenceIterator; import
+org.biojava.bio.seq.io.SeqIOTools; import
+org.biojava.bio.seq.io.SymbolTokenization; import
+org.biojava.bio.symbol.AlphabetManager; import
+org.biojava.bio.symbol.BasisSymbol; import
+org.biojava.bio.symbol.FiniteAlphabet; import
+org.biojava.bio.symbol.IllegalSymbolException; import
+org.biojava.bio.symbol.Symbol; import org.biojava.bio.symbol.SymbolList;
 
+/\*\*
 
-    /**
-     * PairAlign realise l'alignement par paire entre deux sequence d'DNA ou plus
-     * selon un modele similaire a un alignement de Smith-Waterman. Il vous sert de patron
-     * pour un alignement global, un alignement proteine-proteine ou meme un alignement
-     * proteine - codon. En modifiant l'architecture du modele HMM, il vous est assez facile
-     * d'introduire des subtilités tel que des penalites doubles (création+elongation) pour 
-     * les insertions.
-     * 
-     * Ce programme est derive de celui cree par Matthew Pocock et qui se trouve dans la 
-     * section demos de BioJava. Il a ete simplifie et documente. Il corrige egalement certains
-     * bugs de design du modele original, qui quoi tecniquement correct, ne se comportait pas 
-     * tout a fait comme l'auteur le supposait.
-     *
-     * @author Mark Schreiber
-     */
+`* PairAlign realise l'alignement par paire entre deux sequence d'DNA ou plus`  
+`* selon un modele similaire a un alignement de Smith-Waterman. Il vous sert de patron`  
+`* pour un alignement global, un alignement proteine-proteine ou meme un alignement`  
+`* proteine - codon. En modifiant l'architecture du modele HMM, il vous est assez facile`  
+`* d'introduire des subtilités tel que des penalites doubles (création+elongation) pour `  
+`* les insertions.`  
+`* `  
+`* Ce programme est derive de celui cree par Matthew Pocock et qui se trouve dans la `  
+`* section demos de BioJava. Il a ete simplifie et documente. Il corrige egalement certains`  
+`* bugs de design du modele original, qui quoi tecniquement correct, ne se comportait pas `  
+`* tout a fait comme l'auteur le supposait.`  
+`*`  
+`* @author Mark Schreiber`  
+`*/`
 
-    public class PairAlign {
-        
-      /**
-       * La methode deux execute le programme. Il vous faut donne deux chaines de caracteres en arguments:
-       * une est le nom du fichier contenant les sequences inconnues, l'autre, le fichier contenant les 
-       * sequences connues. Dans un programme reel, vous devriez probablement ajouter la probabilite d'un match
-       * ainsi que la probabilite pour une extension d'insertion. Dans l'exemple, ces valeurs sont écrites
-       * a meme le programme.
-       */  
-      public static void main(String [] args) {
-        try {
-          if(args.length != 2) {
-            throw new Exception("Use: PairwiseAlignment sourceSeqFile targetSeqFile\n");
-          }
+public class PairAlign {
 
-          File sourceSeqFile = new File(args[0]);
-          File targetSeqFile = new File(args[1]);
-          FiniteAlphabet alpha = DNATools.getDNA();
-          
-          CellCalculatorFactoryMaker cfFactM = new DPInterpreter.Maker();
-          DPFactory fact = new DPFactory.DefaultFactory(cfFactM);
-          
-          /*
-           * Creer un modele avec une valeur pMatch=0.7 et pGapExtension=0.8.
-           * de ces deux valeurs, nous pouvons calculer que pMatch -> pGap 
-           * transition = 0.3 (approx.), pGap -> pMatch = 0.2 (approx.)
-           * etc.
-           */
-          MarkovModel model = generateAligner(
-                  alpha, 0.7, 0.6);
-          
-          // creer l'objet DP alignant les sequences au modele
-          DP aligner = fact.createDP(model);
-          
-          //lire les sequences inconnues.
-          SequenceIterator sourceI = SeqIOTools.readFastaDNA(
-                  new BufferedReader(new FileReader(sourceSeqFile)));
-          
-          //pour chaque inconnue...
-          while(sourceI.hasNext()) {
-            Sequence sourceSeq = sourceI.nextSequence();
-            
-            // ...comparez la a chaque sequence connue
-            SequenceIterator targetI = SeqIOTools.readFastaDNA(
-                  new BufferedReader(new FileReader(targetSeqFile)));
-            
-            while(targetI.hasNext()) {
-              Sequence targetSeq = targetI.nextSequence();
-              Sequence [] seqs = new Sequence [] {
-                sourceSeq, targetSeq
-              };
-              System.out.println(
-                "Aligning " + sourceSeq.getName() + ":" + targetSeq.getName()
-              );
+` /**`  
+`  * La methode deux execute le programme. Il vous faut donne deux chaines de caracteres en arguments:`  
+`  * une est le nom du fichier contenant les sequences inconnues, l'autre, le fichier contenant les `  
+`  * sequences connues. Dans un programme reel, vous devriez probablement ajouter la probabilite d'un match`  
+`  * ainsi que la probabilite pour une extension d'insertion. Dans l'exemple, ces valeurs sont écrites`  
+`  * a meme le programme.`  
+`  */  `  
+` public static void main(String [] args) {`  
+`   try {`  
+`     if(args.length != 2) {`  
+`       throw new Exception("Use: PairwiseAlignment sourceSeqFile targetSeqFile\n");`  
+`     }`
 
-              //trouver le chemin le plus probable a travers le modele pour ces deux sequences
-              StatePath result = aligner.viterbi(seqs, ScoreType.PROBABILITY);
-              //calculate the log odds of the alignment
-              System.out.println("Log odds Viterbi probability:\t" + result.getScore());
-              System.out.println("\t" + result.getScore());
-              
-              
-              //ecrire l'alignement
-              SymbolList alignment = result.symbolListForLabel(StatePath.SEQUENCE);
-              System.out.println(alignment.getAlphabet());
-              SymbolTokenization tok = alignment.getAlphabet().getTokenization("default");
-              System.out.println(tok.tokenizeSymbolList(alignment));
-              
-              //ecrire le chemin des etats
-              alignment = result.symbolListForLabel(StatePath.STATES);
-              System.out.println(alignment.getAlphabet());
-              tok = alignment.getAlphabet().getTokenization("default");
-              System.out.println(tok.tokenizeSymbolList(alignment));
-              tokenizePath(result);
-            }
-          }
-        } catch (Throwable t) {
-          t.printStackTrace();
-          System.exit(1);
-        }
-      }
-      
-      /**
-       * Genere le modele de MArkov qui sera utilise pour l'alignement. la valeur
-       * pMatch est la probabilite d'une identite (techniquement, la probabilite qu'un
-       * match reussisse a s'allonger). Si pMatch est eleve, les insertions seront peu courantes.
-       * 
-       * pExtendGap est la probabilite de l'extension d'une insertion. Ceci n'est pas la penalite
-       * pour la creation de l'insertion, qui est plutot sous la dependance de pMatch. C'est plutot
-       * laprobabilité qu'une insertion puisse s'allonger. Ceci est similaire a la penalite d'affinage
-       * des insertions des algorithmes tels que Smith-Waterman.
-       */
-      private static MarkovModel generateAligner(
-        FiniteAlphabet alpha, double pMatch, double pExtendGap) throws Exception {
-        
-        
-        FiniteAlphabet dna = alpha;
-        FiniteAlphabet dna2 =
-          (FiniteAlphabet) AlphabetManager.getCrossProductAlphabet(
-            Collections.nCopies(2, dna));
-          
-        MarkovModel model = new SimpleMarkovModel(2, dna2, "pair-wise aligner");
-        
-        //la distribution de base. Pour l'ADN, elle est aleatoire mais pour les proteines
-        //ou une composition tres biaisee, elle devrais etre calcule.
-        Distribution nullModel = new UniformDistribution(dna);
-        //la distribution d'emission pour les gaps des etats d'insertion
-        Distribution gap = new GapDistribution(dna);
-        //la distribution d'emission pour les paires de symboles identiques (ou non)
-        Distribution matchDist = generateMatchDist((FiniteAlphabet) dna2);
-        //la distribution emettant les paires nucleotide/gap
-        Distribution insert1Dist = new PairDistribution(nullModel, gap);
-        //la distribution emettant les paires gap/nucleotide
-        Distribution insert2Dist = new PairDistribution(gap, nullModel);
-        
-        //-----create the states-----//
-        
-        //etat transmettant les paires de nucleotides 
-        //identiques ou non-identiques
-        EmissionState match = new SimpleEmissionState(
-          "match",
-          Annotation.EMPTY_ANNOTATION,
-          new int [] { 1, 1 },
-          matchDist
-        );
-        //etat transmettant les paires nucleotide/gap
-        //(insertions dans la sequence connue)
-        EmissionState insert1 = new SimpleEmissionState(
-          "insert1",
-          Annotation.EMPTY_ANNOTATION,
-          new int [] { 1, 0 },
-          insert1Dist
-        );
-        //etat transmettant les paires gap/nucleotide
-        //(insertion dans la sequence inconnue)
-        EmissionState insert2 = new SimpleEmissionState(
-          "insert2",
-          Annotation.EMPTY_ANNOTATION,
-          new int [] { 0, 1 },
-          insert2Dist
-        );
-        
-        //ajouter ces etats aux modeles
-        model.addState(match);
-        model.addState(insert1);
-        model.addState(insert2);
-        
-        //transitions commencant le modele
-        model.createTransition(model.magicalState(), insert1);
-        model.createTransition(model.magicalState(), insert2);
-        model.createTransition(model.magicalState(), match);
-        
-        //transitions terminant le modele
-        model.createTransition(insert1, model.magicalState());
-        model.createTransition(insert2, model.magicalState());
-        model.createTransition(match, model.magicalState());
-        
-        //auto-transitions
-        model.createTransition(match, match); //allonger match
-        model.createTransition(insert1, insert1); //allonger gap
-        model.createTransition(insert2, insert2); //allonger gap
-        
-        model.createTransition(match, insert1); //insert a gap
-        model.createTransition(match, insert2); //insert a gap
-        model.createTransition(insert1, match); //back to matching again
-        model.createTransition(insert2, match); //back to matching again
-        
-        //----Transition probabilities---//
+`     File sourceSeqFile = new File(args[0]);`  
+`     File targetSeqFile = new File(args[1]);`  
+`     FiniteAlphabet alpha = DNATools.getDNA();`  
+`     `  
+`     CellCalculatorFactoryMaker cfFactM = new DPInterpreter.Maker();`  
+`     DPFactory fact = new DPFactory.DefaultFactory(cfFactM);`  
+`     `  
+`     /*`  
+`      * Creer un modele avec une valeur pMatch=0.7 et pGapExtension=0.8.`  
+`      * de ces deux valeurs, nous pouvons calculer que pMatch -> pGap `  
+`      * transition = 0.3 (approx.), pGap -> pMatch = 0.2 (approx.)`  
+`      * etc.`  
+`      */`  
+`     MarkovModel model = generateAligner(`  
+`             alpha, 0.7, 0.6);`  
+`     `  
+`     // creer l'objet DP alignant les sequences au modele`  
+`     DP aligner = fact.createDP(model);`  
+`     `  
+`     //lire les sequences inconnues.`  
+`     SequenceIterator sourceI = SeqIOTools.readFastaDNA(`  
+`             new BufferedReader(new FileReader(sourceSeqFile)));`  
+`     `  
+`     //pour chaque inconnue...`  
+`     while(sourceI.hasNext()) {`  
+`       Sequence sourceSeq = sourceI.nextSequence();`  
+`       `  
+`       // ...comparez la a chaque sequence connue`  
+`       SequenceIterator targetI = SeqIOTools.readFastaDNA(`  
+`             new BufferedReader(new FileReader(targetSeqFile)));`  
+`       `  
+`       while(targetI.hasNext()) {`  
+`         Sequence targetSeq = targetI.nextSequence();`  
+`         Sequence [] seqs = new Sequence [] {`  
+`           sourceSeq, targetSeq`  
+`         };`  
+`         System.out.println(`  
+`           "Aligning " + sourceSeq.getName() + ":" + targetSeq.getName()`  
+`         );`
 
-        /*
-         * Utiliser des valeurs egales pour match et insert corresponds plus
-         * ou moins a un alignement local. Comme il y a deux etats insert, ils
-         * obtienne 0.25 alors que l'etat match obtient 0.5
-         */
-        model.getWeights(model.magicalState()).setWeight(match, 0.5);
-        model.getWeights(model.magicalState()).setWeight(insert1, 0.25);
-        model.getWeights(model.magicalState()).setWeight(insert2, 0.25);
+`         //trouver le chemin le plus probable a travers le modele pour ces deux sequences`  
+`         StatePath result = aligner.viterbi(seqs, ScoreType.PROBABILITY);`  
+`         //calculate the log odds of the alignment`  
+`         System.out.println("Log odds Viterbi probability:\t" + result.getScore());`  
+`         System.out.println("\t" + result.getScore());`  
+`         `  
+`         `  
+`         //ecrire l'alignement`  
+`         SymbolList alignment = result.symbolListForLabel(StatePath.SEQUENCE);`  
+`         System.out.println(alignment.getAlphabet());`  
+`         SymbolTokenization tok = alignment.getAlphabet().getTokenization("default");`  
+`         System.out.println(tok.tokenizeSymbolList(alignment));`  
+`         `  
+`         //ecrire le chemin des etats`  
+`         alignment = result.symbolListForLabel(StatePath.STATES);`  
+`         System.out.println(alignment.getAlphabet());`  
+`         tok = alignment.getAlphabet().getTokenization("default");`  
+`         System.out.println(tok.tokenizeSymbolList(alignment));`  
+`         tokenizePath(result);`  
+`       }`  
+`     }`  
+`   } catch (Throwable t) {`  
+`     t.printStackTrace();`  
+`     System.exit(1);`  
+`   }`  
+` }`  
+` `  
+` /**`  
+`  * Genere le modele de MArkov qui sera utilise pour l'alignement. la valeur`  
+`  * pMatch est la probabilite d'une identite (techniquement, la probabilite qu'un`  
+`  * match reussisse a s'allonger). Si pMatch est eleve, les insertions seront peu courantes.`  
+`  * `  
+`  * pExtendGap est la probabilite de l'extension d'une insertion. Ceci n'est pas la penalite`  
+`  * pour la creation de l'insertion, qui est plutot sous la dependance de pMatch. C'est plutot`  
+`  * laprobabilité qu'une insertion puisse s'allonger. Ceci est similaire a la penalite d'affinage`  
+`  * des insertions des algorithmes tels que Smith-Waterman.`  
+`  */`  
+` private static MarkovModel generateAligner(`  
+`   FiniteAlphabet alpha, double pMatch, double pExtendGap) throws Exception {`  
+`   `  
+`   `  
+`   FiniteAlphabet dna = alpha;`  
+`   FiniteAlphabet dna2 =`  
+`     (FiniteAlphabet) AlphabetManager.getCrossProductAlphabet(`  
+`       Collections.nCopies(2, dna));`  
+`     `  
+`   MarkovModel model = new SimpleMarkovModel(2, dna2, "pair-wise aligner");`  
+`   `  
+`   //la distribution de base. Pour l'ADN, elle est aleatoire mais pour les proteines`  
+`   //ou une composition tres biaisee, elle devrais etre calcule.`  
+`   Distribution nullModel = new UniformDistribution(dna);`  
+`   //la distribution d'emission pour les gaps des etats d'insertion`  
+`   Distribution gap = new GapDistribution(dna);`  
+`   //la distribution d'emission pour les paires de symboles identiques (ou non)`  
+`   Distribution matchDist = generateMatchDist((FiniteAlphabet) dna2);`  
+`   //la distribution emettant les paires nucleotide/gap`  
+`   Distribution insert1Dist = new PairDistribution(nullModel, gap);`  
+`   //la distribution emettant les paires gap/nucleotide`  
+`   Distribution insert2Dist = new PairDistribution(gap, nullModel);`  
+`   `  
+`   //-----create the states-----//`  
+`   `  
+`   //etat transmettant les paires de nucleotides `  
+`   //identiques ou non-identiques`  
+`   EmissionState match = new SimpleEmissionState(`  
+`     "match",`  
+`     Annotation.EMPTY_ANNOTATION,`  
+`     new int [] { 1, 1 },`  
+`     matchDist`  
+`   );`  
+`   //etat transmettant les paires nucleotide/gap`  
+`   //(insertions dans la sequence connue)`  
+`   EmissionState insert1 = new SimpleEmissionState(`  
+`     "insert1",`  
+`     Annotation.EMPTY_ANNOTATION,`  
+`     new int [] { 1, 0 },`  
+`     insert1Dist`  
+`   );`  
+`   //etat transmettant les paires gap/nucleotide`  
+`   //(insertion dans la sequence inconnue)`  
+`   EmissionState insert2 = new SimpleEmissionState(`  
+`     "insert2",`  
+`     Annotation.EMPTY_ANNOTATION,`  
+`     new int [] { 0, 1 },`  
+`     insert2Dist`  
+`   );`  
+`   `  
+`   //ajouter ces etats aux modeles`  
+`   model.addState(match);`  
+`   model.addState(insert1);`  
+`   model.addState(insert2);`  
+`   `  
+`   //transitions commencant le modele`  
+`   model.createTransition(model.magicalState(), insert1);`  
+`   model.createTransition(model.magicalState(), insert2);`  
+`   model.createTransition(model.magicalState(), match);`  
+`   `  
+`   //transitions terminant le modele`  
+`   model.createTransition(insert1, model.magicalState());`  
+`   model.createTransition(insert2, model.magicalState());`  
+`   model.createTransition(match, model.magicalState());`  
+`   `  
+`   //auto-transitions`  
+`   model.createTransition(match, match); //allonger match`  
+`   model.createTransition(insert1, insert1); //allonger gap`  
+`   model.createTransition(insert2, insert2); //allonger gap`  
+`   `  
+`   model.createTransition(match, insert1); //insert a gap`  
+`   model.createTransition(match, insert2); //insert a gap`  
+`   model.createTransition(insert1, match); //back to matching again`  
+`   model.createTransition(insert2, match); //back to matching again`  
+`   `  
+`   //----Transition probabilities---//`
 
-        Distribution dist;
-        
-        /*
-         * Ceci est la petite probabilite que tout se termine (transition vers magique)
-         * a partir de n'importe quel etat. Cette valeur est créé de toute piece car 
-         * l'algorithme de Viterbi ne peut se terminerque si il a epuise les sequences 
-         * mais il faut assigner une probabilite a cet evenement aussi qui doit etre 
-         * soustrait tu total disponible pour les autres transitions.
-         */
-        double pEnd = 0.01;
-        
-        //----Probabilites des transitions pour l'etat match
-        dist = model.getWeights(match);
-        //probabilite d'auto-transition a partir de match
-        dist.setWeight(match, pMatch);
-        //probabilite de transtion de match vers insert in seq1
-        dist.setWeight(insert1, (1.0 - pMatch - pEnd)/2.0);
-        //probabilite de transtion de match vers insert in seq1
-        dist.setWeight(insert2, (1.0 - pMatch - pEnd)/2.0);
-        //la chance que tout se termine a partir de cet etat match
-        dist.setWeight(model.magicalState(), pEnd);
+`   /*`  
+`    * Utiliser des valeurs egales pour match et insert corresponds plus`  
+`    * ou moins a un alignement local. Comme il y a deux etats insert, ils`  
+`    * obtienne 0.25 alors que l'etat match obtient 0.5`  
+`    */`  
+`   model.getWeights(model.magicalState()).setWeight(match, 0.5);`  
+`   model.getWeights(model.magicalState()).setWeight(insert1, 0.25);`  
+`   model.getWeights(model.magicalState()).setWeight(insert2, 0.25);`
 
-        //----Probabilite de transition pour le 1er etat d'insertion
-        dist = model.getWeights(insert1);
-        //probabilite d'une auto-transition (elongation d'une insertion)
-        dist.setWeight(insert1, pExtendGap);
-        //probabilite d'une transition a l'etat match
-        dist.setWeight(match, 1.0 - pEnd - pExtendGap);
-        //probabilite de finir apres une insertion
-        dist.setWeight(model.magicalState(), pEnd);
+`   Distribution dist;`  
+`   `  
+`   /*`  
+`    * Ceci est la petite probabilite que tout se termine (transition vers magique)`  
+`    * a partir de n'importe quel etat. Cette valeur est créé de toute piece car `  
+`    * l'algorithme de Viterbi ne peut se terminerque si il a epuise les sequences `  
+`    * mais il faut assigner une probabilite a cet evenement aussi qui doit etre `  
+`    * soustrait tu total disponible pour les autres transitions.`  
+`    */`  
+`   double pEnd = 0.01;`  
+`   `  
+`   //----Probabilites des transitions pour l'etat match`  
+`   dist = model.getWeights(match);`  
+`   //probabilite d'auto-transition a partir de match`  
+`   dist.setWeight(match, pMatch);`  
+`   //probabilite de transtion de match vers insert in seq1`  
+`   dist.setWeight(insert1, (1.0 - pMatch - pEnd)/2.0);`  
+`   //probabilite de transtion de match vers insert in seq1`  
+`   dist.setWeight(insert2, (1.0 - pMatch - pEnd)/2.0);`  
+`   //la chance que tout se termine a partir de cet etat match`  
+`   dist.setWeight(model.magicalState(), pEnd);`
 
-        //----Probabilite de transition pour le 2eme etat d'insertion
-        dist = model.getWeights(insert2);
-        //probabilite d'une auto-transition (elongation d'une insertion)
-        dist.setWeight(insert2, pExtendGap);
-        //probabilite d'une transition a l'etat match
-        dist.setWeight(match, 1.0 - pEnd - pExtendGap);
-        //probabilite de finir apres une insertion
-        dist.setWeight(model.magicalState(), pEnd);
-        
-        return model;
-      }
-      
-      /**
-       * Cette methode produit l'equivalent statistique d'une matrice de substitution.
-       * Un "match" obtient une forte probabilite alors qu'un "mismatch" est penalise
-       * par l'attribution d'une faible probabilite. Parce que l'alignement est
-       * DNAxDNA, les "mismatches" sont tous mauvais de la même maniere. Si l'alignement 
-       * etait proteine-proteine, il serait raisonnable de donner à certains "mismatches"
-       * des probabilites plus elevees, d'une maniere similaire aux matrices PAM et BLOSUM.
-       */
-      private static Distribution generateMatchDist(FiniteAlphabet dna2)
-      throws Exception {
-        Distribution dist = DistributionFactory.DEFAULT.createDistribution(dna2);
-        int size = dna2.size();
-        int matches = (int) Math.sqrt(size);
-        
-        //la probabilite d'une identite.
-        double pMatch = 0.7;
-        
-        double matchWeight = pMatch / matches;
-        double missWeight = (1.0 - pMatch) / (size - matches);
-        
-        for(Iterator i = dna2.iterator(); i.hasNext(); ) {
-          BasisSymbol cps = (BasisSymbol) i.next();
-          List sl = cps.getSymbols();
-          if(sl.get(0) == sl.get(1)) {
-            dist.setWeight(cps, matchWeight);
-          } else {
-            dist.setWeight(cps, missWeight);
-          }
-        }
-        
-        return dist;
-      }
-      
-      private static void tokenizePath(StatePath path) throws IllegalSymbolException{
-          SymbolList states = path.symbolListForLabel(StatePath.STATES);
-          SymbolList symbols = path.symbolListForLabel(StatePath.SEQUENCE);
-          StringBuilder queryString = new StringBuilder();
-          StringBuilder targetString = new StringBuilder();
-          StringBuilder pathString = new StringBuilder();
-                
-          if(states.length() != symbols.length())
-              throw new BioError("State path lengths should be identical");
-          
-          char queryToken = " "; char targetToken = " "; char pathToken = " ";
-          
-          for(int i = 1; i < symbols.length(); i++){
-              //fragmenter le symbole DNAxDNA           
-              //pourrait etre un AtomicSymbol mais Basis couvre bien le besoin :)
-              BasisSymbol doublet = (BasisSymbol)symbols.symbolAt(i);
-              List sl = doublet.getSymbols();
-              queryToken = DNATools.dnaToken( (Symbol)sl.get(0) );
-              targetToken = DNATools.dnaToken( (Symbol)sl.get(1) );
-              
-              // fragmenter le parcours d'etat
-              Symbol s = states.symbolAt(i);
-              //si identite parfaite, retourne le caractere "+"
-              if (s.getName() == "match" && queryToken == targetToken){
-                  pathToken = "+";
-              }else{
-                  pathToken = " ";
-              }
-              
-              queryString.append(queryToken);
-              pathString.append(pathToken);
-              targetString.append(targetToken);
-          }
-          System.out.println(queryString);
-          System.out.println(pathString);
-          System.out.println(targetString);
-      }
-    }
+`   //----Probabilite de transition pour le 1er etat d'insertion`  
+`   dist = model.getWeights(insert1);`  
+`   //probabilite d'une auto-transition (elongation d'une insertion)`  
+`   dist.setWeight(insert1, pExtendGap);`  
+`   //probabilite d'une transition a l'etat match`  
+`   dist.setWeight(match, 1.0 - pEnd - pExtendGap);`  
+`   //probabilite de finir apres une insertion`  
+`   dist.setWeight(model.magicalState(), pEnd);`
+
+`   //----Probabilite de transition pour le 2eme etat d'insertion`  
+`   dist = model.getWeights(insert2);`  
+`   //probabilite d'une auto-transition (elongation d'une insertion)`  
+`   dist.setWeight(insert2, pExtendGap);`  
+`   //probabilite d'une transition a l'etat match`  
+`   dist.setWeight(match, 1.0 - pEnd - pExtendGap);`  
+`   //probabilite de finir apres une insertion`  
+`   dist.setWeight(model.magicalState(), pEnd);`  
+`   `  
+`   return model;`  
+` }`  
+` `  
+` /**`  
+`  * Cette methode produit l'equivalent statistique d'une matrice de substitution.`  
+`  * Un "match" obtient une forte probabilite alors qu'un "mismatch" est penalise`  
+`  * par l'attribution d'une faible probabilite. Parce que l'alignement est`  
+`  * DNAxDNA, les "mismatches" sont tous mauvais de la même maniere. Si l'alignement `  
+`  * etait proteine-proteine, il serait raisonnable de donner à certains "mismatches"`  
+`  * des probabilites plus elevees, d'une maniere similaire aux matrices PAM et BLOSUM.`  
+`  */`  
+` private static Distribution generateMatchDist(FiniteAlphabet dna2)`  
+` throws Exception {`  
+`   Distribution dist = DistributionFactory.DEFAULT.createDistribution(dna2);`  
+`   int size = dna2.size();`  
+`   int matches = (int) Math.sqrt(size);`  
+`   `  
+`   //la probabilite d'une identite.`  
+`   double pMatch = 0.7;`  
+`   `  
+`   double matchWeight = pMatch / matches;`  
+`   double missWeight = (1.0 - pMatch) / (size - matches);`  
+`   `  
+`   for(Iterator i = dna2.iterator(); i.hasNext(); ) {`  
+`     BasisSymbol cps = (BasisSymbol) i.next();`  
+`     List sl = cps.getSymbols();`  
+`     if(sl.get(0) == sl.get(1)) {`  
+`       dist.setWeight(cps, matchWeight);`  
+`     } else {`  
+`       dist.setWeight(cps, missWeight);`  
+`     }`  
+`   }`  
+`   `  
+`   return dist;`  
+` }`  
+` `  
+` private static void tokenizePath(StatePath path) throws IllegalSymbolException{`  
+`     SymbolList states = path.symbolListForLabel(StatePath.STATES);`  
+`     SymbolList symbols = path.symbolListForLabel(StatePath.SEQUENCE);`  
+`     StringBuilder queryString = new StringBuilder();`  
+`     StringBuilder targetString = new StringBuilder();`  
+`     StringBuilder pathString = new StringBuilder();`  
+`           `  
+`     if(states.length() != symbols.length())`  
+`         throw new BioError("State path lengths should be identical");`  
+`     `  
+`     char queryToken = " "; char targetToken = " "; char pathToken = " ";`  
+`     `  
+`     for(int i = 1; i < symbols.length(); i++){`  
+`         //fragmenter le symbole DNAxDNA           `  
+`         //pourrait etre un AtomicSymbol mais Basis couvre bien le besoin :)`  
+`         BasisSymbol doublet = (BasisSymbol)symbols.symbolAt(i);`  
+`         List sl = doublet.getSymbols();`  
+`         queryToken = DNATools.dnaToken( (Symbol)sl.get(0) );`  
+`         targetToken = DNATools.dnaToken( (Symbol)sl.get(1) );`  
+`         `  
+`         // fragmenter le parcours d'etat`  
+`         Symbol s = states.symbolAt(i);`  
+`         //si identite parfaite, retourne le caractere "+"`  
+`         if (s.getName() == "match" && queryToken == targetToken){`  
+`             pathToken = "+";`  
+`         }else{`  
+`             pathToken = " ";`  
+`         }`  
+`         `  
+`         queryString.append(queryToken);`  
+`         pathString.append(pathToken);`  
+`         targetString.append(targetToken);`  
+`     }`  
+`     System.out.println(queryString);`  
+`     System.out.println(pathString);`  
+`     System.out.println(targetString);`  
+` }`
+
+} </java>
