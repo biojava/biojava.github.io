@@ -500,76 +500,72 @@ public class SimpleGibbsAligner {
 
 ### SimpleGibbsAlignerDemo
 
-    package gibbs; 
+<java> package gibbs;
 
-    import java.io.BufferedReader;
-    import java.io.File;
-    import java.io.FileReader;
-    import org.biojava.bio.seq.Sequence;
-    import org.biojava.bio.seq.SequenceIterator;
-    import org.biojava.bio.seq.io.SeqIOTools;
+import java.io.BufferedReader; import java.io.File; import
+java.io.FileReader; import org.biojava.bio.seq.Sequence; import
+org.biojava.bio.seq.SequenceIterator; import
+org.biojava.bio.seq.io.SeqIOTools;
 
+public class SimpleGibbsAlignerDemo {
 
+`   /**`  
+`    * Usage information`  
+`    */`  
+` public static void help(){`  
+`   System.out.println(`  
+`   "Usage: java SimpleGibbsAlignerDemo `<fasta_file>` "+`  
+`   "`<true/false>` `<window>` `<trails>`");`  
+`   System.out.println("\tfasta_file:\tthe sequences");`  
+`   System.out.println("\ttrue/false:\ttrue if protein false if dna");`  
+`   System.out.println("\twindow:\t\tthe window size");`  
+`   System.out.println("\ttrails:\t\tthe number of seeds to try");`  
+`   System.exit(0);`  
+` }`
 
-    public class SimpleGibbsAlignerDemo {
-      
-        /**
-         * Usage information
-         */
-      public static void help(){
-        System.out.println(
-        "Usage: java SimpleGibbsAlignerDemo <fasta_file> "+
-        "<true/false> <window> <trails>");
-        System.out.println("\tfasta_file:\tthe sequences");
-        System.out.println("\ttrue/false:\ttrue if protein false if dna");
-        System.out.println("\twindow:\t\tthe window size");
-        System.out.println("\ttrails:\t\tthe number of seeds to try");
-        System.exit(0);
-      }
+` public static void main(String[] args) throws Exception{`  
+`   if(args.length != 4) help();`  
+`   `  
+`   //a file of sequences sequences`  
+`   File f = new File(args[0]);`  
+`   //am I dealing with protein?`  
+`   boolean protein = new Boolean(args[1]).booleanValue();`  
+`   //the size of the motif I am looking for.`  
+`   int window = Integer.parseInt(args[2]);`  
+`   //the number of times to attempt a motif identification.`  
+`   int trials = Integer.parseInt(args[3]);`  
+`   SequenceIterator it;`
 
-      public static void main(String[] args) throws Exception{
-        if(args.length != 4) help();
-        
-        //a file of sequences sequences
-        File f = new File(args[0]);
-        //am I dealing with protein?
-        boolean protein = new Boolean(args[1]).booleanValue();
-        //the size of the motif I am looking for.
-        int window = Integer.parseInt(args[2]);
-        //the number of times to attempt a motif identification.
-        int trials = Integer.parseInt(args[3]);
-        SequenceIterator it;
+`   for(int i = 0; i < trials; i++){`  
+`     BufferedReader br = new BufferedReader(new FileReader(f));`  
+`     if(protein){`  
+`       it =(SequenceIterator)SeqIOTools.fileToBiojava("fasta", "protein", br);`  
+`     }else{`  
+`       it =(SequenceIterator)SeqIOTools.fileToBiojava("fasta", "DNA", br);`  
+`     }`  
+`     `  
+`     //make an aligner wih Heuristic stopping criteria`  
+`     SimpleGibbsAligner gibbs = new SimpleGibbsAligner(window,`  
+`         it, GibbsStoppingCriteria.HEURISTIC);`  
+`     //start the aligner running`  
+`     gibbs.iterate();`
 
+`     //how many iterations till convergence?`  
+`     System.out.println("Converged after "+gibbs.getIterations()+" iterations");`  
+`     //What is the information content of the motif?`  
+`     System.out.println("Information (bits): "+gibbs.getInfoContent());`  
+`     `  
+`     //get the sequences, offsets and window size to print out the motif`  
+`     Sequence[] seqs = gibbs.getSequences();`  
+`     int[] offSets = gibbs.getOffSets();`  
+`     int wind = gibbs.getWindowSize();`
 
-        for(int i = 0; i < trials; i++){
-          BufferedReader br = new BufferedReader(new FileReader(f));
-          if(protein){
-            it =(SequenceIterator)SeqIOTools.fileToBiojava("fasta", "protein", br);
-          }else{
-            it =(SequenceIterator)SeqIOTools.fileToBiojava("fasta", "DNA", br);
-          }
-          
-          //make an aligner wih Heuristic stopping criteria
-          SimpleGibbsAligner gibbs = new SimpleGibbsAligner(window,
-              it, GibbsStoppingCriteria.HEURISTIC);
-          //start the aligner running
-          gibbs.iterate();
+`     //print out the motif`  
+`     for (int j = 0; j < offSets.length; j++) {`  
+`       System.out.println(seqs[j].subStr(offSets[j],offSets[j]+wind -1));`  
+`     }`  
+`     System.out.println();`  
+`   }`  
+` }`
 
-          //how many iterations till convergence?
-          System.out.println("Converged after "+gibbs.getIterations()+" iterations");
-          //What is the information content of the motif?
-          System.out.println("Information (bits): "+gibbs.getInfoContent());
-          
-          //get the sequences, offsets and window size to print out the motif
-          Sequence[] seqs = gibbs.getSequences();
-          int[] offSets = gibbs.getOffSets();
-          int wind = gibbs.getWindowSize();
-
-          //print out the motif
-          for (int j = 0; j < offSets.length; j++) {
-            System.out.println(seqs[j].subStr(offSets[j],offSets[j]+wind -1));
-          }
-          System.out.println();
-        }
-      }
-    }
+} </java>
