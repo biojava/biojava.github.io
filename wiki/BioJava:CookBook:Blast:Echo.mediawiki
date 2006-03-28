@@ -6,7 +6,7 @@ The program below shows a program that I find very useful when I want to make a 
 
 === BlastEcho.java ===
 
-<pre>
+<java>
  1 import org.xml.sax.*; 
  2 import java.io.*; 
  3 import org.biojava.bio.program.sax.*; 
@@ -84,4 +84,4 @@ The program below shows a program that I find very useful when I want to make a 
 75     blastEcho.echo(is); 
 76   } 
 77 }
-</pre>
+</java>
