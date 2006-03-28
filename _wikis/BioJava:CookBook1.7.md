@@ -207,7 +207,11 @@ How Do I....?
     Tutorial?? --[Guedes](User:Guedes "wikilink") 11:43, 8 February 2006
     (EST) )
 -   [How do I generate a pair-wise
-    alignment](BioJava:CookBook:DP:PairWise "wikilink")?
+    alignment](BioJava:CookBook:DP:PairWise "wikilink") with a Hidden
+    Markov Model?
+-   [How do I generate a global or local
+    alignment](BioJava:CookBook:DP:PairWise2 "wikilink") with the
+    Needleman-Wunsch- or the Smith-Waterman-algorithm, respectively?
 
 ### User Interfaces
 
