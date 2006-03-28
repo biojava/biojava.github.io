@@ -6,7 +6,7 @@ A point location is the inclusive location of a single symbol in a SymbolList or
 
 Remember that BioJava uses the biological coordinate system thus the first PointLocation in a Sequence will be 1 not 0.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -33,4 +33,4 @@ public class SpecifyPoint {
     }
   }
 }
-</pre>
+</java>
