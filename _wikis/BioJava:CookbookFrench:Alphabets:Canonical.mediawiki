@@ -4,7 +4,7 @@ Dans Biojava, les mêmes ''Alphabets'' et les mêmes ''Symbols'' sont identiques
 
 C'est vrai même pour des ''Alphabets'' et des ''Symbols'' qui se trouvent sur différentes machines virtuels (grâce à un peu de magie par Serialization) ce qui veut dire que BioJava fonctionne à travers RMI.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -22,4 +22,4 @@ public class Canonical {
     System.out.println("canonical: "+ (a1 == a2));
   }
 }
-</pre>
+</java>
