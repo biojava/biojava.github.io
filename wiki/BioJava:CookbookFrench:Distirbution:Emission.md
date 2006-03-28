@@ -15,35 +15,35 @@ simplifie la tâche en vérifiant pour vous.
 
 L'utilisation de cette méthode se trouve ci-dessous.
 
-    import org.biojava.bio.dist.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.*;
-    import org.biojava.utils.*;
+<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+import org.biojava.bio.symbol.\*; import org.biojava.bio.\*; import
+org.biojava.utils.\*;
 
-    public class EqualDistributions {
-      public static void main(String[] args) {
-        
-        FiniteAlphabet alpha = DNATools.getDNA();
-        
-        //créer une Distribution uniforme
-        Distribution uniform = new UniformDistribution(alpha);
-        
-        try {
-          //créer une autre Distribution avec des valeurs uniformes
-          Distribution dist = DistributionFactory.DEFAULT.createDistribution(alpha);
-          dist.setWeight(DNATools.a(), 0.25);
-          dist.setWeight(DNATools.c(), 0.25);
-          dist.setWeight(DNATools.g(), 0.25);
-          dist.setWeight(DNATools.t(), 0.25);
-          
-          //vérifier si les valeurs sont égales
-          boolean equal = DistributionTools.areEmissionSpectraEqual(uniform, dist);
-          
-          System.out.println("Are "uniform" and "dist" equal? "+ equal);
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+public class EqualDistributions {
+
+` public static void main(String[] args) {`  
+`   `  
+`   FiniteAlphabet alpha = DNATools.getDNA();`  
+`   `  
+`   //créer une Distribution uniforme`  
+`   Distribution uniform = new UniformDistribution(alpha);`  
+`   `  
+`   try {`  
+`     //créer une autre Distribution avec des valeurs uniformes`  
+`     Distribution dist = DistributionFactory.DEFAULT.createDistribution(alpha);`  
+`     dist.setWeight(DNATools.a(), 0.25);`  
+`     dist.setWeight(DNATools.c(), 0.25);`  
+`     dist.setWeight(DNATools.g(), 0.25);`  
+`     dist.setWeight(DNATools.t(), 0.25);`  
+`     `  
+`     //vérifier si les valeurs sont égales`  
+`     boolean equal = DistributionTools.areEmissionSpectraEqual(uniform, dist);`  
+`     `  
+`     System.out.println("Are "uniform" and "dist" equal? "+ equal);`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
