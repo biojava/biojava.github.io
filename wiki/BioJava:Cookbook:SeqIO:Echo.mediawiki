@@ -10,7 +10,7 @@ The example below is a class that echos IO events to STDOUT. This class is usefu
 
 === SeqIOEcho.java ===
 
-<pre>
+<java>
 /*
  * SeqIOEcho.java
  *
@@ -165,4 +165,4 @@ public class SeqIOEcho implements SeqIOListener {
         
     }
 }
-</pre>
+</java>
