@@ -6,7 +6,7 @@ Les classes associées aux résultats, les homologies et les HSPs contiennent de
 
 Le petit fragment de code ci-dessous montre une méthode privée qui prends une liste produite par la lecture d'un fichier BLAST ou FASTA et qui en extrait l'id de l'homologie (subject id), sa valeur et son score e.
 
-<pre>
+<java>
 private static void formatResults(List results){
 
     //itération à travers chacun des SeqSimilaritySearchResult
@@ -24,4 +24,4 @@ private static void formatResults(List results){
       }
     }
 }
-</pre>
+</java>
