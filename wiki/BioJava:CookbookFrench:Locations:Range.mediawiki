@@ -4,7 +4,7 @@ Dans BioJava, une ''RangeLocation'' est un objet qui contient les positions de d
 
 L'exemple suivant montre l'utilisation d'une RangeLocation.
 
-<pre>
+<java>
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -30,4 +30,4 @@ public class SpecifyRange {
     }
   }
 }
-</pre>
+</java>
