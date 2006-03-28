@@ -184,7 +184,7 @@ Comment faire pour ...?
 -   [Comment construire un échantilloneur de Gibbs à l'aide de
     Distributions?](BioJava:CookbookFrench:Distribution:Gibbs "wikilink")
 -   [Comment utiliser les Distributions afin d'obtebir un classificateur
-    bayÉsien
+    bayésien
     simple?](BioJava:CookbookFrench:Distribution:Bayes "wikilink")
 -   [Comment calculer la composition d'une ou plusieurs
     séquences?](BioJava:CookbookFrench:Distribution:Composition "wikilink")
