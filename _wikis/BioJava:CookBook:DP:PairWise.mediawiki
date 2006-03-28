@@ -19,7 +19,6 @@ The transition and emission weights set below are pretty arbitrary. To generate 
 === PairAlign.java ===
 
 <java>
-<pre>
 /*
  * PairAlign.java
  *
@@ -370,5 +369,4 @@ public class PairAlign {
       System.out.println(targetString);
   }
 }
-</pre>
 </java>
