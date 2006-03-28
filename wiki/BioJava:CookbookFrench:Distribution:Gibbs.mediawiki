@@ -382,7 +382,7 @@ public class SimpleGibbsAligner {
 
 === GibbsStoppingCriteria ===
 
-<pre>
+<java>
 package gibbs;
 
 import org.biojava.bio.BioException;
@@ -467,7 +467,7 @@ public interface GibbsStoppingCriteria {
 
 
 }// end of GibbsStoppingCriteria
-</pre>
+</java>
 
 === SimpleGibbsAlignerDemo ===
 
