@@ -2,11 +2,9 @@
 
 Lors du traitement d'un objet ''Sequence'', il est possible que vous vouliez supprimer certains ''Features''. L'exemple suivant, gracieusement offert par Keith James, montre comment faire pour supprimer tous les ''Features'' rencontrant un critère donné. Dans cet exemple, tous les ''Features'' sur le brin codant sont effacés.
 
-<pre>
+<java>
 import java.io.*;
-
 import java.util.*;
-
 import org.biojava.bio.*;
 
 import org.biojava.bio.seq.*;
@@ -38,4 +36,4 @@ public class RemoveFeatures
         }
     }
 }
-</pre>
+</java>
