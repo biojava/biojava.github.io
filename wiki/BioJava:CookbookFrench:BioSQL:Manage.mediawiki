@@ -4,7 +4,7 @@ BioJava contient des classes utilitaires qui donne l'aspect d'une instance Seque
 
 L'exemple suivant montre la technique &agrave; utiliser afin de se brancher &agrave; une base de donn&eacute;es BioSQL, comment y ajouter une s&eacute;quence, comme faire une recherche sur la base de donn&eacute;es et comment &eacute;liminer cette s&eacute;quence de la base de donn&eacute;es.
 
-<pre>
+<java>
 import org.biojava.bio.BioException; 
 import org.biojava.bio.seq.DNATools; 
 import org.biojava.bio.seq.Sequence; 
@@ -86,4 +86,4 @@ public class Connect {
     } 
   } 
 }
-</pre>
+</java>
