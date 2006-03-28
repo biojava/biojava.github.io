@@ -9,7 +9,7 @@ In the simple example below we use BioJava arrays of <code>Distribution</code>s 
 The example consists of three java classes. The <code>BayesClassifier</code> holds <code>Classification</code> objects (one for each class the classifier will evaluate) and evaluates new observations against these classes. The <code>TestRun</code> class is a simple program with a <code>main</code> method to demo the application.
 
 == BayesClassifier.java ==
-<pre>
+<java>
 /*
  * BayesClassifier.java
  *
@@ -92,11 +92,11 @@ public class BayesClassifier {
         return Math.log(getPriorProb(classificationName))+c.pObservation(obs);                
     }
 }
-</pre>
+</java>
 
 
 == Classification.java ==
-<pre>
+<java>
 /*
  * Classification.java
  *
@@ -164,11 +164,11 @@ class Classification {
         return p;
     }
 }
-</pre>
+</java>
 
 
 == TestRun.java ==
-<pre>
+<java>
 /*
  * TestRun.java
  */
@@ -265,4 +265,4 @@ public class TestRun {
     }
     
 }
-</pre>
+</java>
