@@ -1,0 +1,94 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import org.biojava.bio.BioException;
+import org.biojava.bio.alignment.NeedlemanWunsch;
+import org.biojava.bio.alignment.SequenceAlignment;
+import org.biojava.bio.alignment.SmithWaterman;
+import org.biojava.bio.alignment.SubstitutionMatrix;
+import org.biojava.bio.seq.DNATools;
+import org.biojava.bio.seq.Sequence;
+import org.biojava.bio.symbol.AlphabetManager;
+import org.biojava.bio.symbol.FiniteAlphabet;
+
+/*
+ * Created on Mar 28, 2006
+ */
+
+/** This is a demo class that performes both a local and a global alignment
+  * from two given sequences. The result is printed on the screen. 
+  * Therfore a substitution matrix file is required, which can be downloaded
+  * at @link ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/
+  * This demo only works for DNA-Sequences, however, the alignment algorithms
+  * are able to use any kind of alphabet as long as there is a substitution
+  * matrix available. For this example the matrix NUC.4.4 is the best one.
+  * @author Andreas Dr&auml;ger
+  */
+public class DeterministicAlignmentDemo {
+
+  /** This performs an alignment of two given sequences and 
+    * prints it on the screen.
+    * @param args: one file for each the query and the target sequence 
+    *   and one file containing the substitution matrix to be used.
+    * @link ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/
+    */
+  public static void main (String args[]) {
+    if (args.length < 3)
+	  throw new Error("Usage: DeterministicAlignmentDemo " +
+	                  "querySeq targetSeq substitutionMatrixFile");
+	try {
+	  // The alphabet of the sequences. For this example DNA is choosen.
+	  FiniteAlphabet alphabet = (FiniteAlphabet) AlphabetManager.alphabetForName("DNA");
+	  // Read the substitution matrix file. 
+	  // For this example the matrix NUC.4.4 is good.
+	  SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));
+	  // Define the default costs for sequence manipulation for the global alignment.
+	  SequenceAlignment aligner = new NeedlemanWunsch( 
+	    alphabet, 
+		2,  // insert
+		2,	// delete
+		1,  // gapExtend
+		0, 	// match
+		3,	// replace
+		matrix 	// SubstitutionMatrix
+	  );
+	  Sequence query  = DNATools.createDNASequence(args[0], "query");
+	  Sequence target = DNATools.createDNASequence(args[1], "target");	  
+	  // Perform an alignment and save the results.
+	  aligner.pairwiseAlignment(
+	    // sources
+	    query, 
+	    // sequenceDB
+	    target
+	  );
+	  // Print the alignment to the screen
+	  System.out.println("global alignment with NeedlemanWunsch"+
+	  		aligner.getAlignmentString());	  
+	  
+	  // Perform a local alginment from the sequences.
+	  aligner = new SmithWaterman(
+	    0, // match
+	  	2, // insert
+		3, // replace 
+		2, // delete
+		1, // gapExtend
+		matrix); // Substitution matrix
+	  aligner.pairwiseAlignment(query, target);
+	  System.out.println("\nlocal alignment with SmithWaterman:\n"+
+	    aligner.getAlignmentString());
+	  
+	} catch (NoSuchElementException exc) {
+	  exc.printStackTrace();
+	} catch (FileNotFoundException exc) {
+	  exc.printStackTrace();
+	} catch (BioException exc) {
+	  exc.printStackTrace();
+	} catch (IOException exc) {
+	  exc.printStackTrace();
+	} catch (Exception exc) {
+	  exc.printStackTrace();
+	}
+  }
+}
