@@ -6,7 +6,7 @@ Conveniently Sequence is a sub interface of FeatureHolder so it can hold feature
 
 Feature templates can be created de novo or copied from an existing Feature. The following example shows both options.
 
-<pre>
+<java>
 import org.biojava.bio.*;
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
@@ -56,4 +56,4 @@ public class MakeAFeature {
     }
   }
 }
-</pre>
+</java>
