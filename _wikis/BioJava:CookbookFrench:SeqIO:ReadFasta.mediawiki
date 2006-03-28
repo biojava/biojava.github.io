@@ -48,7 +48,7 @@ public class ReadFasta {
 
 === Méthode générale ===
 
-<pre>
+<java>
 import java.io.*;
 import java.util.*;
 
@@ -87,4 +87,4 @@ public class ReadFasta {
     }
   }
 }
-</pre>
+</java>
