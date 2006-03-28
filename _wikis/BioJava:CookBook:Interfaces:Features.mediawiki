@@ -8,7 +8,7 @@ The use of a FeatureBlockSequenceRenderer and a FeatureRenderer is demonstrated 
 
 [[image:Featview.jpg|frame|center|Features in a GUI]]
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 
@@ -102,4 +102,4 @@ public class FeatureView extends JFrame {
     }
   }
 }
-</pre>
+</java>
