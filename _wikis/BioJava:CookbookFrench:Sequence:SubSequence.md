@@ -49,32 +49,33 @@ erreur de type *IndexOutOfBoundsException*.
 
 ### Code complet
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class SubSequencing {
-      public static void main(String[] args) {
-        SymbolList symL = null;
+public class SubSequencing {
 
-        // créer une SymbolList d'ARN
-        try {
-          symL = RNATools.createRNA("auggcaccguccagauu");
-        }
-        catch (IllegalSymbolException ex) {
-          ex.printStackTrace();
-        }
+` public static void main(String[] args) {`  
+`   SymbolList symL = null;`
 
-        // obtenir le premier résidu
-        Symbol sym = symL.symbolAt(1);
+`   // créer une SymbolList d'ARN`  
+`   try {`  
+`     symL = RNATools.createRNA("auggcaccguccagauu");`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     ex.printStackTrace();`  
+`   }`
 
-        // obtenir les 3 premiers résidus
-        SymbolList symL2 = symL.subList(1,3);
+`   // obtenir le premier résidu`  
+`   Symbol sym = symL.symbolAt(1);`
 
-        // obtenir les 3 derniers résidus
-        SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
+`   // obtenir les 3 premiers résidus`  
+`   SymbolList symL2 = symL.subList(1,3);`
 
-        // imprimer les 3 derniers résidus
-        String s = symL.subStr(symL.length() - 3, symL.length());
-        System.out.println(s);
-      }
-    }
+`   // obtenir les 3 derniers résidus`  
+`   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
+
+`   // imprimer les 3 derniers résidus`  
+`   String s = symL.subStr(symL.length() - 3, symL.length());`  
+`   System.out.println(s);`  
+` }`
+
+} </java>
