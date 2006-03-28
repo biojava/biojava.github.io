@@ -68,6 +68,8 @@ a gene-finder. The possibilities are endless.
 
 ### PairAlign.java
 
+<java>
+
     /*
      * PairAlign.java
      *
@@ -418,3 +420,5 @@ a gene-finder. The possibilities are endless.
           System.out.println(targetString);
       }
     }
+
+</java>
