@@ -1,6 +1,6 @@
 == Comment faire une mutation dans un fichier PDB ==
 
-<pre>
+<java>
  // muter la structure de la proteine
  // pour sauver en fichier
  
@@ -36,4 +36,4 @@
   } catch (Exception e) {
       e.printStackTrace();
   } 
-</pre>
+</java>
