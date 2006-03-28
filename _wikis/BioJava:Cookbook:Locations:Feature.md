@@ -24,52 +24,50 @@ feature holding itself.
 Feature templates can be created de novo or copied from an existing
 Feature. The following example shows both options.
 
-    import org.biojava.bio.*;
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
-    import org.biojava.utils.*;
+<java> import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
 
-    public class MakeAFeature {
-      public static void main(String[] args) {
-        //get the feature template for a StrandedFeature
-        StrandedFeature.Template templ = new StrandedFeature.Template();
+public class MakeAFeature {
 
-        //fill in the template
-        templ.annotation = Annotation.EMPTY_ANNOTATION;
-        templ.location = new RangeLocation(3,6);
-        templ.source = "my feature";
-        templ.strand = StrandedFeature.POSITIVE;
-        templ.type = "interesting motif";
+` public static void main(String[] args) {`  
+`   //get the feature template for a StrandedFeature`  
+`   StrandedFeature.Template templ = new StrandedFeature.Template();`
 
-        try {
-          //the sequence the feature will go on
-          Sequence seq = DNATools.createDNASequence("atgcgcttaag","seq1");
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
+`   //fill in the template`  
+`   templ.annotation = Annotation.EMPTY_ANNOTATION;`  
+`   templ.location = new RangeLocation(3,6);`  
+`   templ.source = "my feature";`  
+`   templ.strand = StrandedFeature.POSITIVE;`  
+`   templ.type = "interesting motif";`
 
+`   try {`  
+`     //the sequence the feature will go on`  
+`     Sequence seq = DNATools.createDNASequence("atgcgcttaag","seq1");`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`
 
-          System.out.println("adding new feature...");
+`     System.out.println("adding new feature...");`
 
-          //realize the feature on the Sequence and get a pointer to it so we can make another
-          Feature f = seq.createFeature(templ);
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
+`     //realize the feature on the Sequence and get a pointer to it so we can make another`  
+`     Feature f = seq.createFeature(templ);`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`
 
-          //make an identical template to that used to make f
-          templ = (StrandedFeature.Template)f.makeTemplate();
-          //give it a different location and type
-          templ.location = new PointLocation(4);
-          templ.type = "point mutation";
+`     //make an identical template to that used to make f`  
+`     templ = (StrandedFeature.Template)f.makeTemplate();`  
+`     //give it a different location and type`  
+`     templ.location = new PointLocation(4);`  
+`     templ.type = "point mutation";`
 
+`     System.out.println("adding nested feature...");`  
+`     //realize the new feature as a nested feature of f`  
+`     f.createFeature(templ);`
 
-          System.out.println("adding nested feature...");
-          //realize the new feature as a nested feature of f
-          f.createFeature(templ);
+`     //notice how the countFeatures() method only counts top level features`  
+`     System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");`  
+`     System.out.println(f.getSource()+" contains "+seq.countFeatures()+" features");`  
+`   }`  
+`   catch (Exception ex) {`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
 
-          //notice how the countFeatures() method only counts top level features
-          System.out.println(seq.getName()+" contains "+seq.countFeatures()+" features");
-          System.out.println(f.getSource()+" contains "+seq.countFeatures()+" features");
-        }
-        catch (Exception ex) {
-          ex.printStackTrace();
-        }
-      }
-    }
+} </java>
