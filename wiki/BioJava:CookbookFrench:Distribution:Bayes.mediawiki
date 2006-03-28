@@ -9,7 +9,8 @@ Dans l'exemple simple qui suit, nous utilisons des tableaux BioJava de <code>Dis
 L'exemple contient trois classes Java. La classe <code>BayesClassifier</code> contient des objets de type <code>Classification</code> (un pour chaque classe que le classificateur doit &eacute;valuer) et d&eacute;termine la classification des nouvelles observations selon ces classes. L'application <code>TestRun</code> est un tout petit programme pour accomplir la t&acirc;che en d&eacute;monstration.
 
 == BayesClassifier.java ==
-<pre>
+
+<java>
 /*
  * BayesClassifier.java
  *
@@ -92,11 +93,11 @@ public class BayesClassifier {
         return Math.log(getPriorProb(classificationName))+c.pObservation(obs);                
     }
 }
-</pre>
+</java>
 
 
 == Classification.java ==
-<pre>
+<java>
 /*
  * Classification.java
  *
@@ -165,11 +166,11 @@ class Classification {
         return p;
     }
 }
-</pre>
+</java>
 
 
 == TestRun.java ==
-<pre>
+<java>
 /*
  * TestRun.java
  */
@@ -266,4 +267,4 @@ public class TestRun {
     }
     
 }
-</pre>
+</java>
