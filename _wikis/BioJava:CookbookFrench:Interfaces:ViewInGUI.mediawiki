@@ -6,7 +6,7 @@ L'unité de base de toute interface graphique basée sur un objet ''Sequence'' e
 
 Le programme suivant montre l'utilisation d'un ''SequenceRenderContext'' et d'un ''SequenceRenderer'' pour afficher les symboles d'une ''Sequence''.
 
-<pre>
+<java>
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -66,7 +66,7 @@ public class SeqView extends JFrame {
     }
   }
 }
-</pre>
+</java>
 
 Le code précédent donne l'image suivante:
 
