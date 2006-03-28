@@ -31,43 +31,43 @@ un coup d'oeil sur la [manière de choisir une portion de la
 séquence](BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
 de faire une bonne sélection.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
+public class Translate {
 
-    public class Translate {
-      public static void main(String[] args) {
-        try {
-          // créer une SymbolList d'ADN
-          SymbolList symL = DNATools.createDNA("atggccattgaatga");
+` public static void main(String[] args) {`  
+`   try {`  
+`     // créer une SymbolList d'ADN`  
+`     SymbolList symL = DNATools.createDNA("atggccattgaatga");`
 
-          // transcrire en ARN (après Biojava1.4,
-          // cette méthode sera obsolète) 
-          symL = RNATools.transcribe(symL);
-          
-          // transcrire en ARN (après Biojava1.4,
-          // utiliser plutôt cette méthode) 
-          symL = RNATools.transcribe(symL);
+`     // transcrire en ARN (après Biojava1.4,`  
+`     // cette méthode sera obsolète) `  
+`     symL = RNATools.transcribe(symL);`  
+`     `  
+`     // transcrire en ARN (après Biojava1.4,`  
+`     // utiliser plutôt cette méthode) `  
+`     symL = RNATools.transcribe(symL);`
 
-          // traduire en protéine
-          symL = RNATools.translate(symL);
+`     // traduire en protéine`  
+`     symL = RNATools.translate(symL);`
 
-          // démonstration que ça fonctionne
-          System.out.println(symL.seqString());
-        }
+`     // démonstration que ça fonctionne`  
+`     System.out.println(symL.seqString());`  
+`   }`
 
-        catch (IllegalAlphabetException ex) {
-             /* 
-              * ce qui arrivera si vous essayez de transcrire une séquence
-              * non-ADN ou de traduire une séquence qui n'est pas une vue 
-              * par triplet d'une séquence d'ARN.
-              */
-          ex.printStackTrace();
-        }
-        catch (IllegalSymbolException ex) {
-        // ce qui se passera si des symboles non-IUB sont 
-        // utilisés pour créer la SymbolList d"ADN
-          ex.printStackTrace();
-        }
-     }
-    }
+`   catch (IllegalAlphabetException ex) {`  
+`        /* `  
+`         * ce qui arrivera si vous essayez de transcrire une séquence`  
+`         * non-ADN ou de traduire une séquence qui n'est pas une vue `  
+`         * par triplet d'une séquence d'ARN.`  
+`         */`  
+`     ex.printStackTrace();`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`   // ce qui se passera si des symboles non-IUB sont `  
+`   // utilisés pour créer la SymbolList d"ADN`  
+`     ex.printStackTrace();`  
+`   }`  
+`}`
+
+} </java>
