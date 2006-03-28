@@ -4,7 +4,7 @@ Si vous venez de lire un fichier de séquence écrit en format GenBank, le résu
 
 L'exemple suivant montre l'utilisation d'un ''FeatureFilter'' "by Type".
 
-<pre>
+<java>
 import java.util.*;
 
 import org.biojava.bio.seq.*;
@@ -30,4 +30,4 @@ public class FilterByType {
     }
   }
 }
-</pre>
+</java>
