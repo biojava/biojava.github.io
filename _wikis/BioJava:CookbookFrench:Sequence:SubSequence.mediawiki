@@ -23,11 +23,11 @@ BioJava utilise un système biologique de coordonnées pour identifier la positi
 
 === Imprimer une partie d'une Sequence ===
 
-<pre>
+<java>
     // imprimer les 3 derniers résidus d'une SymbolList ou Sequence
     String s = symL.subStr(symL.length() - 3, symL.length());
     System.out.println(s);
-</pre>
+</java>
 
 === Code complet ===
 
