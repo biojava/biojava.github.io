@@ -12,7 +12,7 @@ CircularLocations are dealt with using the CircularLocation class. CircularLocat
 
 '''NOTE: due to bugs in earlier versions of BioJava this recipe will give strange results unless you are working off a fairly recent version of BioJava. To get the most up to date version follow the "[[BioJava:GetStarted|How do I get and install BioJava]]" link on the main page and read the section on cvs.  biojava-live BioJava version 1.3 (when released) will be adequate.'''
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -46,4 +46,4 @@ public class SpecifyCircular {
     }
   }
 }
-</pre>
+</java>
