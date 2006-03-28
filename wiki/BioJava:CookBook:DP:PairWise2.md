@@ -36,7 +36,7 @@ public class DeterministicAlignmentDemo {
 
 ` /** This performs an alignment of two given sequences and `  
 `   * prints it on the screen.`  
-`   * @param args: one file for each the query and the target sequence `  
+`   * @param args: a query and a target sequence `  
 `   *   and one file containing the substitution matrix to be used.`  
 `   * @link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
 `   */`  
@@ -84,15 +84,6 @@ public class DeterministicAlignmentDemo {
 `     aligner.pairwiseAlignment(query, target);`  
 `     System.out.println("\nlocal alignment with SmithWaterman:\n"+`  
 `       aligner.getAlignmentString());`  
-`     `  
-`   } catch (NoSuchElementException exc) {`  
-`     exc.printStackTrace();`  
-`   } catch (FileNotFoundException exc) {`  
-`     exc.printStackTrace();`  
-`   } catch (BioException exc) {`  
-`     exc.printStackTrace();`  
-`   } catch (IOException exc) {`  
-`     exc.printStackTrace();`  
 `   } catch (Exception exc) {`  
 `     exc.printStackTrace();`  
 `   }`  
