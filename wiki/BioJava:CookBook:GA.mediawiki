@@ -10,7 +10,7 @@ The org.biojavax.ga package is available with biojava-live from CVS. It will als
 
 === GADemo.java ===
 
-<pre>
+<java>
 package GA;
 
 import java.util.Iterator;
@@ -163,4 +163,4 @@ public class GADemo{
     }
   }
 }
-</pre>
+</java>
