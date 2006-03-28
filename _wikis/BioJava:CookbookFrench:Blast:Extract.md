@@ -24,20 +24,21 @@ prends une liste produite par la lecture d'un fichier BLAST ou FASTA et
 qui en extrait l'id de l'homologie (subject id), sa valeur et son score
 e.
 
-    private static void formatResults(List results){
+<java> private static void formatResults(List results){
 
-        //itération à travers chacun des SeqSimilaritySearchResult
-        for (Iterator i = results.iterator(); i.hasNext(); ) {
-          SeqSimilaritySearchResult result = (SeqSimilaritySearchResult)i.next();
+`   //itération à travers chacun des SeqSimilaritySearchResult`  
+`   for (Iterator i = results.iterator(); i.hasNext(); ) {`  
+`     SeqSimilaritySearchResult result = (SeqSimilaritySearchResult)i.next();`
 
-          //itération à travers les homologies
-          for (Iterator i2 = result.getHits().iterator(); i2.hasNext(); ) {
-            SeqSimilaritySearchHit hit = (SeqSimilaritySearchHit)i2.next();
+`     //itération à travers les homologies`  
+`     for (Iterator i2 = result.getHits().iterator(); i2.hasNext(); ) {`  
+`       SeqSimilaritySearchHit hit = (SeqSimilaritySearchHit)i2.next();`
 
-            //imprimer ID pour chacune des séquences trouvées, sa valeur et son score e
-            System.out.println("subject:\t"+hit.getSubjectID() +
-                               " bits:\t"+hit.getScore()+
-                               " e:\t"+hit.getEValue());
-          }
-        }
-    }
+`       //imprimer ID pour chacune des séquences trouvées, sa valeur et son score e`  
+`       System.out.println("subject:\t"+hit.getSubjectID() +`  
+`                          " bits:\t"+hit.getScore()+`  
+`                          " e:\t"+hit.getEValue());`  
+`     }`  
+`   }`
+
+} </java>
