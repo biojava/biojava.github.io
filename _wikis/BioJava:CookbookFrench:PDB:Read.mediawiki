@@ -2,7 +2,7 @@
 
 La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. &Agrave; partir de la version 1.4, BioJava est capable de lire ces fichiers &agrve; l'aide des classes du package org.biojava.bio.structure.io. Le code ci-dessous, introduit dans la portion appropri&eacute;e de votre programme (;-)), vous montre la marche &agrave; suivre. 
 
-<pre>
+<java>
  // PDBFileREader peut egalement lire les archives
  // de type zip en entree
  String filename =  "parcours/vers/fichier.entree" ;
@@ -15,4 +15,4 @@ La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&e
  } catch (Exception e) {
      e.printStackTrace();
  }
-</pre>
+</java>
