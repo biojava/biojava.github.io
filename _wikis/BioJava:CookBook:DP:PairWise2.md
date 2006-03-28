@@ -2,7 +2,7 @@
 title: BioJava:CookBook:DP:PairWise2
 ---
 
-import java.io.File; import java.io.FileNotFoundException; import
+<java> import java.io.File; import java.io.FileNotFoundException; import
 java.io.IOException; import java.util.NoSuchElementException;
 
 import org.biojava.bio.BioException; import
@@ -97,4 +97,4 @@ public class DeterministicAlignmentDemo {
 `   }`  
 ` }`
 
-}
+} </java>
