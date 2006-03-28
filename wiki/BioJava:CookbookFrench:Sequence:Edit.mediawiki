@@ -4,7 +4,7 @@ Il est parfois nécessaire de modifier l'ordre des ''Symbols'' dans une ''Symbol
 
 Il vaut la peine de mentionner que plusieurs des implémentations Biojava de ''Sequence'' et de ''SymbolList'' ne permettent pas de faire des modifications, parce que celles-ci pourraient invalider des caractéristiques (''Features'') et des notes (''Annotations'') qui en dépendent. La meilleure stratégie dans ce cas est de faire une copie des ''Symbols'' dans la ''Sequence'' ou ''SymbolList'' et modifier la copie. Ceci est démontré dans l'example de code ci-dessous.
 
-<pre>
+<java>
 import org.biojava.bio.seq.*;
 import org.biojava.bio.symbol.*;
 
@@ -64,4 +64,4 @@ public class EditExamples {
     System.out.println(syms.seqString());
   }
 }
-</pre>
+</java>
