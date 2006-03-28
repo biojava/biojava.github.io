@@ -35,30 +35,31 @@ des classes *DNATools*, *RNATools* ou *ProteinTools*.
 
 ### D'une chaîne à une *SymbolList*
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class StringToSymbolList {
-      public static void main(String[] args) {
-       
-        try {
-          // créer une SymbolList d'ADN à partir d'une chaîne
-          SymbolList dna = DNATools.createDNA("atcggtcggctta");
+public class StringToSymbolList {
 
-          // créer une SymbolList d'ARN à partir d'une chaîne
-          SymbolList rna = RNATools.createRNA("auugccuacauaggc");
+` public static void main(String[] args) {`  
+`  `  
+`   try {`  
+`     // créer une SymbolList d'ADN à partir d'une chaîne`  
+`     SymbolList dna = DNATools.createDNA("atcggtcggctta");`
 
-          // créer une SymbolList de Protein à partir d'une chaîne
-          SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");
-        }
-        catch (IllegalSymbolException ex) {
-          // ce qui arrivera si un caractère d'une chaîne n'est pas
-          // un caractère accepté par l"IUB pour ce Symbol.
-          ex.printStackTrace();
-        }
-       
-      }
-    }
+`     // créer une SymbolList d'ARN à partir d'une chaîne`  
+`     SymbolList rna = RNATools.createRNA("auugccuacauaggc");`
+
+`     // créer une SymbolList de Protein à partir d'une chaîne`  
+`     SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     // ce qui arrivera si un caractère d'une chaîne n'est pas`  
+`     // un caractère accepté par l"IUB pour ce Symbol.`  
+`     ex.printStackTrace();`  
+`   }`  
+`  `  
+` }`
+
+} </java>
 
 ### D'une chaîne à une *Sequence*
 
