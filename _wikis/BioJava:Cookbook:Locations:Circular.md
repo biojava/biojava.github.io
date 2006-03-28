@@ -38,36 +38,37 @@ and install BioJava](BioJava:GetStarted "wikilink")" link on the main
 page and read the section on cvs. biojava-live BioJava version 1.3 (when
 released) will be adequate.**
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.symbol.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
-    public class SpecifyCircular {
-      public static void main(String[] args) {
-        try {
-          Location[] locs = new Location[3];
-          //make a CircularLocation specifying the residues 3-8 on a 20mer
-          locs[0] = LocationTools.makeCircularLocation(3,8,20);
-          //make a CircularLocation specifying the residues 0-4 on a 20mer
-          locs[1] = LocationTools.makeCircularLocation(0,4,20);
-          //make a CircularLocation specifying the residues 18-24 on a 20mer
-          locs[2] = LocationTools.makeCircularLocation(18,24,20);
+public class SpecifyCircular {
 
-          for (int i = 0; i < locs.length; i++){
-            //print the location
-            System.out.println("Location: "+locs[i].toString());
+` public static void main(String[] args) {`  
+`   try {`  
+`     Location[] locs = new Location[3];`  
+`     //make a CircularLocation specifying the residues 3-8 on a 20mer`  
+`     locs[0] = LocationTools.makeCircularLocation(3,8,20);`  
+`     //make a CircularLocation specifying the residues 0-4 on a 20mer`  
+`     locs[1] = LocationTools.makeCircularLocation(0,4,20);`  
+`     //make a CircularLocation specifying the residues 18-24 on a 20mer`  
+`     locs[2] = LocationTools.makeCircularLocation(18,24,20);`
 
-            //make a SymbolList
-            SymbolList sl = DNATools.createDNA("gcagctaggcggaaggagct");
-            System.out.println("SymbolList: "+sl.seqString());
+`     for (int i = 0; i < locs.length; i++){`  
+`       //print the location`  
+`       System.out.println("Location: "+locs[i].toString());`
 
-            //get the SymbolList specified by the Location
-            SymbolList sym = locs[i].symbols(sl);
-            System.out.println("Symbol specified by Location: "+sym.seqString());
-          }
-        }
-        catch (IllegalSymbolException ex) {
-          //illegal symbol used to make sl
-          ex.printStackTrace();
-        }
-      }
-    }
+`       //make a SymbolList`  
+`       SymbolList sl = DNATools.createDNA("gcagctaggcggaaggagct");`  
+`       System.out.println("SymbolList: "+sl.seqString());`
+
+`       //get the SymbolList specified by the Location`  
+`       SymbolList sym = locs[i].symbols(sl);`  
+`       System.out.println("Symbol specified by Location: "+sym.seqString());`  
+`     }`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     //illegal symbol used to make sl`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
