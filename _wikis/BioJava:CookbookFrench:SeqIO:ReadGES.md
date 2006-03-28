@@ -15,44 +15,43 @@ collections de séquences avec des ressources modestes.
 
 ### Lire un fichier GenBank
 
-    import org.biojava.bio.seq.*;
-    import org.biojava.bio.seq.io.*;
-    import java.io.*;
-    import org.biojava.bio.*;
-    import java.util.*;
+<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
-    public class ReadGB {
-      public static void main(String[] args) {
-        BufferedReader br = null;
-        try {
-         // créer un BufferedReader pour lire le fichier specifié par args[0]
-          br = new BufferedReader(new FileReader(args[0]));
-        }
-        catch (FileNotFoundException ex) {
-          // ne peut trouver le fichier spécifié par args[0]
-          ex.printStackTrace();
-          System.exit(-1);
-        }
+public class ReadGB {
 
-        // lire le fichier GenBank
-        SequenceIterator sequences = SeqIOTools.readGenbank(br);
+` public static void main(String[] args) {`  
+`   BufferedReader br = null;`  
+`   try {`  
+`    // créer un BufferedReader pour lire le fichier specifié par args[0]`  
+`     br = new BufferedReader(new FileReader(args[0]));`  
+`   }`  
+`   catch (FileNotFoundException ex) {`  
+`     // ne peut trouver le fichier spécifié par args[0]`  
+`     ex.printStackTrace();`  
+`     System.exit(-1);`  
+`   }`
 
-        // itérer parmi les séquences
-        while(sequences.hasNext()){
-          try {
-            Sequence seq = sequences.nextSequence();
-            // à vous de décider quoi faire avec la séquence
-           }
-          catch (BioException ex) {
-            // pas en format GenBank
-            ex.printStackTrace();
-          }catch (NoSuchElementException ex) {
-            // requête faite pour une séquence lorsqu'aucune n'existe
-            ex.printStackTrace();
-          }
-        }
-      }
-    }
+`   // lire le fichier GenBank`  
+`   SequenceIterator sequences = SeqIOTools.readGenbank(br);`
+
+`   // itérer parmi les séquences`  
+`   while(sequences.hasNext()){`  
+`     try {`  
+`       Sequence seq = sequences.nextSequence();`  
+`       // à vous de décider quoi faire avec la séquence`  
+`      }`  
+`     catch (BioException ex) {`  
+`       // pas en format GenBank`  
+`       ex.printStackTrace();`  
+`     }catch (NoSuchElementException ex) {`  
+`       // requête faite pour une séquence lorsqu'aucune n'existe`  
+`       ex.printStackTrace();`  
+`     }`  
+`   }`  
+` }`
+
+} </java>
 
 ### Lire un fichier SwissProt
 
