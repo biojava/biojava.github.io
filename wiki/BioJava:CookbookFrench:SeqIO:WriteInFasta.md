@@ -46,7 +46,7 @@ version qui prends un SequenceIterator comme argument.
 SeqIOTools.fileToBiojava(fileType,br);
 
 // écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas
-juste System.out) SeqIOTools.writeFasta(System.out,iter); <java>
+juste System.out) SeqIOTools.writeFasta(System.out,iter); </java>
 
 ### Imprimer une seule Sequence
 
