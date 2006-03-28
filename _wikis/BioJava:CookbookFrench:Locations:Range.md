@@ -11,28 +11,29 @@ positions de départ (minimum) et de fin (maximum) d'une région sur une
 
 L'exemple suivant montre l'utilisation d'une RangeLocation.
 
-    import org.biojava.bio.symbol.*;
-    import org.biojava.bio.seq.*;
+<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
-    public class SpecifyRange {
-      public static void main(String[] args) {
-        try {
-          //créer une RangeLocation contenant les résidus 3 a 8
-          Location loc = LocationTools.makeLocation(3,8);
-          //imprimer la position désirée
-          System.out.println("Location: "+loc.toString());
+public class SpecifyRange {
 
-          //créer une SymbolList
-          SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");
-          System.out.println("SymbolList: "+sl.seqString());
+` public static void main(String[] args) {`  
+`   try {`  
+`     //créer une RangeLocation contenant les résidus 3 a 8`  
+`     Location loc = LocationTools.makeLocation(3,8);`  
+`     //imprimer la position désirée`  
+`     System.out.println("Location: "+loc.toString());`
 
-          //obtenir la SymbolList specifiée par loc
-          SymbolList sym = loc.symbols(sl);
-          System.out.println("Symbols specified by Location: "+sym.seqString());
-        }
-        catch (IllegalSymbolException ex) {
-          //symbole illégal utilisé pour créer sl
-          ex.printStackTrace();
-        }
-      }
-    }
+`     //créer une SymbolList`  
+`     SymbolList sl = RNATools.createRNA("gcagcuaggcggaaggagc");`  
+`     System.out.println("SymbolList: "+sl.seqString());`
+
+`     //obtenir la SymbolList specifiée par loc`  
+`     SymbolList sym = loc.symbols(sl);`  
+`     System.out.println("Symbols specified by Location: "+sym.seqString());`  
+`   }`  
+`   catch (IllegalSymbolException ex) {`  
+`     //symbole illégal utilisé pour créer sl`  
+`     ex.printStackTrace();`  
+`   }`  
+` }`
+
+} </java>
