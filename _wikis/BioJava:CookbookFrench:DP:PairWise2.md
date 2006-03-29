@@ -25,10 +25,7 @@ sein de la séquence connue de l'un, de la séquence inconnue de l'autre).
 Par programmation dynamique, les éléments contenus dans la matrice, qui
 sont des valeurs représentant la valeur de l'opération à effectuer, sont
 calculés. Le parcours permettant d'obtenir le meilleur score produit le
-meilleur alignement. Les alignements utilisant des valeurs différentes
-pour la valeur et la pénalité d'une ouverture et son élongation
-consument une plus grande quantité de mémoire et de temps par rapport à
-des valeurs identiques pour les deux.
+meilleur alignement.
 
 Il est possible d'utiliser des matrices de substitution pour faire la
 calcul des alignements; elles permettent de calculer la valeur de
@@ -37,6 +34,27 @@ existent et sont disponibles publiquement. Elles peuvent être
 téléchargées à partir du
 [NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) et sont nécessaires
 pour cet exemple.
+
+Les alignements utilisant des valeurs différentes pour la valeur et la
+pénalité d'une ouverture et son élongation consument une plus grande
+quantité de mémoire et de temps par rapport à des valeurs identiques
+pour les deux. La raison est qu'il faut maintenir trois matrices pour
+préserver l'information nécessaire afin de retrouver le meilleur chemin
+sur le graphe. Il est nécessaire ed maintenir une matrice pour les
+identités et les substitution, une pour les ouvertures de une position
+et une pour les ouvertures étendues; toutes ces matrices ont une
+dimensions de `query.length()` par `target.length()`.
+
+Les implémentations de ces algorithmes douvent être initialisées avec
+des valeurs (coûts et pénalités) poour chaque opération d'édition.
+Cependant, les matrices de substitution sont des bonifications, tout le
+contraire d'un coût. La superclasse *SequenceAlignment* de chaque
+algorithme possède une méthode pour formatter la sortie de l'alignement.
+Par conséquent, si vous désirez écrire votre propre algorithme
+d'alignment ou si vous voulez utiliser [l'algorithme basé sur les
+modèles de Markov](BioJava:CookbookFrench:DP:PairWise "wikilink"), vous
+pouvez dériver votre classe â partir de la super-classe et appliquer la
+méthode.
 
 Une démo des classes d'alignement global et local
 -------------------------------------------------
