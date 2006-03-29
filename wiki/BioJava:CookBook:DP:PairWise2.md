@@ -11,7 +11,8 @@ Waterman developed an algorithm for local alignments, which was the
 basis for the later [BLAST program](http://www.ncbi.nih.gov/BLAST/). The
 example below shows how to use the implementation of both of the
 algorithms from the alignment package. It requires BioJava 1.5, so for
-testing purposes the biojava-live needs to be downloaded from the cvs.
+testing purposes biojava-live needs to be downloaded from the
+[cvs](http://cvs.biojava.org).
 
 The idea of these deterministic approaches is to maintain a matrix
 representation of an edit graph, which covers the operation insert,
