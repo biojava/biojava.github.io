@@ -24,7 +24,7 @@ matrix gives the best alignment.
 
 Alignments with different scores/expenses for gap opening and gap
 extension (affine gap penalties) consume significantly more time and
-memory as with equal scores (costs). The reason is this is that instead
+memory as with equal scores (costs). The reason for this is that instead
 of one matrix three matrices are needed to remember the best path
 through the edit graph. One matrix for matches and replaces, one for
 gaps of lenght one and another one matrix for extended gaps. All these
