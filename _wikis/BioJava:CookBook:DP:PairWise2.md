@@ -18,8 +18,8 @@ representation of an edit graph, which covers the operation insert,
 delete, replace and gap extension (insert and delete are gap openings in
 the query or the target sequence, respectively). By dynamic programing
 the matrix elements, which are costs or scores, respectively, of the
-certain operation, is computed. The high scoring path through the matrix
-gives the best alignment.
+certain operation, is computed. The high scoring (low cost) path through
+the matrix gives the best alignment.
 
 Alignments with different scores/expenses for gap opening and gap
 extension (affine gap penalties) consume significant more time and
