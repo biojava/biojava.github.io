@@ -13,7 +13,7 @@ the implementation of both of the algorithms from the alignment package.
 It requires BioJava 1.5, so for testing purposes the biojava-live needs
 to be downloaded from the cvs.
 
-The idea of these deterministic aproaches is to maintain a matrix
+The idea of these deterministic approaches is to maintain a matrix
 representation of an edit graph, which covers the operation insert,
 delete, replace and gap extension (insert and delete are gap openings in
 the query or the target sequence, respectively). By dynamic programing
@@ -22,8 +22,16 @@ certain operation, is computed. The high scoring path through the matrix
 gives the best alignment.
 
 Alignments with different scores/expenses for gap opening and gap
-extension consume much more time and memory as with equal scores for
-both.
+extension (affine gap penalties) consume significant more time and
+memory as with equal scores for both. The reason is that instead of one
+matrix three matrices are needed to remember the best way through the
+edit graph. One matrix for matches and replaces, one for gaps of lenght
+one and one matrix for extended gaps. All these matrices have the
+dimension `query.length()` times `target.length()`.
+
+These implementations of the algorithms need to be initialized with
+expenses (costs, penalties) for every edit operation. However, the
+substitution matrices use scores, which are the opposit of expenses.
 
 Many scoring matrices have been released for the purpose to evaluate the
 transition from one symbol to another one. These can be downloaded at
