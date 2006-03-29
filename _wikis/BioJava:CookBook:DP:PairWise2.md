@@ -27,7 +27,7 @@ extension (affine gap penalties) consume significantly more time and
 memory as with equal scores (costs). The reason for this is that instead
 of one matrix three matrices are needed to remember the best path
 through the edit graph. One matrix for matches and replaces, one for
-gaps of lenght one and another one matrix for extended gaps. All these
+gaps of lenght one and another matrix for extended gaps. All these
 matrices have the dimension `query.length()` times `target.length()`.
 
 These implementations of the algorithms need to be initialized with
