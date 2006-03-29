@@ -211,7 +211,7 @@ How Do I....?
     Markov Model?
 -   [How do I generate a global or local
     alignment](BioJava:CookBook:DP:PairWise2 "wikilink") with the
-    Needleman-Wunsch- or the Smith-Waterman-algorithm, respectively?
+    Needleman-Wunsch- or the Smith-Waterman-algorithm?
 
 ### User Interfaces
 
