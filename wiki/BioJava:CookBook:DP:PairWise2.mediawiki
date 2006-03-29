@@ -8,7 +8,7 @@ Alignments with different scores/expenses for gap opening and gap extension (aff
 
 These implementations of the algorithms need to be initialized with expenses (costs, penalties) for every edit operation. However, the substitution matrices use scores, which are the opposit of expenses. The super class <code>SequenceAlignment</code> of the specific alignment algorithms already provides a method to format the alignment output. So if you want to write your own alignment algorithm or to use the [http://biojava.org/wiki/BioJava:CookBook:DP:PairWise HMM-alignment algorithm], you can derive your class from this super class and apply the given method.
 
-Many scoring matrices have been released for the purpose to evaluate the transition from one symbol to another one. These can be downloaded at [ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/ NCBI] and are needed for the following example.
+Many substitution matrices have been released for the purpose to evaluate the transition from one symbol to another one. These can be downloaded at [ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/ NCBI] and are needed for the following example.
 
 == A demo of local and global alignments ==
 
