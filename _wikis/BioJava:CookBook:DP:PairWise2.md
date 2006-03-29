@@ -39,10 +39,10 @@ to write your own alignment algorithm or to use the [HMM-alignment
 algorithm](http://biojava.org/wiki/BioJava:CookBook:DP:PairWise), you
 can derive your class from this super class and apply the given method.
 
-Many scoring matrices have been released for the purpose to evaluate the
-transition from one symbol to another one. These can be downloaded at
-[NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are needed for
-the following example.
+Many substitution matrices have been released for the purpose to
+evaluate the transition from one symbol to another one. These can be
+downloaded at [NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are
+needed for the following example.
 
 A demo of local and global alignments
 -------------------------------------
