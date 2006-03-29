@@ -6,7 +6,7 @@ The idea of these deterministic approaches is to maintain a matrix representatio
 
 Alignments with different scores/expenses for gap opening and gap extension (affine gap penalties) consume significant more time and memory as with equal scores (costs) for both. The reason is that instead of one matrix three matrices are needed to remember the best way through the edit graph. One matrix for matches and replaces, one for gaps of lenght one and one matrix for extended gaps. All these matrices have the dimension <code>query.length()</code> times <code>target.length()</code>. 
 
-These implementations of the algorithms need to be initialized with expenses (costs, penalties) for every edit operation. However, the substitution matrices use scores, which are the opposit of expenses.
+These implementations of the algorithms need to be initialized with expenses (costs, penalties) for every edit operation. However, the substitution matrices use scores, which are the opposit of expenses. The super class of the specific alignment algorithms (<code>SequenceAlignment</code>) already provides method to format the alignment output. So if you want to write your own alignment algorithm or to use the [http://biojava.org/wiki/BioJava:CookBook:DP:PairWise HMM-alignment algorithm], you can use the methods from this super class.
 
 Many scoring matrices have been released for the purpose to evaluate the transition from one symbol to another one. These can be downloaded at [ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/] and are needed to use the following example.
 

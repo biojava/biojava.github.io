@@ -31,7 +31,12 @@ dimension `query.length()` times `target.length()`.
 
 These implementations of the algorithms need to be initialized with
 expenses (costs, penalties) for every edit operation. However, the
-substitution matrices use scores, which are the opposit of expenses.
+substitution matrices use scores, which are the opposit of expenses. The
+super class of the specific alignment algorithms (`SequenceAlignment`)
+already provides method to format the alignment output. So if you want
+to write your own alignment algorithm or to use the [HMM-alignment
+algorithm](http://biojava.org/wiki/BioJava:CookBook:DP:PairWise), you
+can use the methods from this super class.
 
 Many scoring matrices have been released for the purpose to evaluate the
 transition from one symbol to another one. These can be downloaded at
