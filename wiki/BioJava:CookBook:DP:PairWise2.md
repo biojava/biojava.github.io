@@ -23,10 +23,10 @@ the matrix gives the best alignment.
 
 Alignments with different scores/expenses for gap opening and gap
 extension (affine gap penalties) consume significant more time and
-memory as with equal scores for both. The reason is that instead of one
-matrix three matrices are needed to remember the best way through the
-edit graph. One matrix for matches and replaces, one for gaps of lenght
-one and one matrix for extended gaps. All these matrices have the
+memory as with equal scores (costs) for both. The reason is that instead
+of one matrix three matrices are needed to remember the best way through
+the edit graph. One matrix for matches and replaces, one for gaps of
+lenght one and one matrix for extended gaps. All these matrices have the
 dimension `query.length()` times `target.length()`.
 
 These implementations of the algorithms need to be initialized with
@@ -35,8 +35,8 @@ substitution matrices use scores, which are the opposit of expenses.
 
 Many scoring matrices have been released for the purpose to evaluate the
 transition from one symbol to another one. These can be downloaded at
-[1](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are needed to use
-the following example.
+[<ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/>](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)
+and are needed to use the following example.
 
 A demo of local and global alignments
 -------------------------------------
