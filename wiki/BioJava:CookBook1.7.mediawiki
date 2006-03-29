@@ -105,7 +105,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:Distribution:XML|How can I write a Distribution as XML]]?
 * [[BioJava:CookBook:Distribution:Gibbs|Using Distributions to make a Gibbs sampler]]
 * [[BioJava:CookBook:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
-* [[Biojava:CookBook:Distribution:Composition|How do I calculate the compositon of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
+* [[Biojava:CookBook:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
 
 === Weight Matrices and Dynamic Programming ===
 
