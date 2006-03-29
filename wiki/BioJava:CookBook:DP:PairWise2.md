@@ -9,11 +9,11 @@ A common approach to perform pairwise sequence alignments is to use the
 deterministic algorithms of Needleman-Wunsch and Smith-Waterman.
 Needleman and Wunsch defined the problem for global alignments, whereas
 Smith and Waterman developed an algorithm for local alignments, which
-was the basis for the later [BLAST
-program](http://www.ncbi.nih.gov/BLAST/). The example below shows how to
-use the implementation of both of the algorithms from the alignment
-package. It requires BioJava 1.5, which can be downloaded from the
-[cvs](http://cvs.biojava.org) for testing purposes.
+was the basis for the [BLAST program](http://www.ncbi.nih.gov/BLAST/).
+The example below shows how to use the implementation of both of the
+algorithms from the alignment package. It requires BioJava 1.5, which
+can be downloaded from the [cvs](http://cvs.biojava.org) for testing
+purposes.
 
 The idea of these deterministic approaches is to maintain a matrix
 representation of an edit graph, which covers the operations insert,
