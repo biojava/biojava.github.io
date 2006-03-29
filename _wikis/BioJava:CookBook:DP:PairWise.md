@@ -7,15 +7,16 @@ How do I generate a pair-wise alignment?
 
 A very common task in bioinformatics is the alignment of two sequences
 also known as a 'pair-wise alignment'. Two common algorithms to generate
-pairwise alignments are the Needleman-Wunsch and Smith-Waterman
-algorithms which generate global and local alignments respectively.
+pairwise alignments are the [Needleman-Wunsch and Smith-Waterman
+algorithms](http://biojava.org/wiki/BioJava:CookBook:DP:PairWise2) which
+generate global and local alignments respectively.
 
-Potentially frustrating to the new user of biojava is that there is no
-class that performs local or global alignments for you. Why is that? The
-simple answer is that there doesn't need to be. You can easily perform a
-pairwise alignment (either global or local) using a pretty simple markov
-model that can be quickly generated using the very powerful
-org.biojava.bio.dp package provided in biojava.
+\<-- Potentially frustrating to the new user of biojava is that there is
+no class that performs local or global alignments for you. Why is that?
+The simple answer is that there doesn't need to be.--!\> You can easily
+perform a pairwise alignment (either global or local) using a pretty
+simple markov model that can be quickly generated using the very
+powerful org.biojava.bio.dp package provided in biojava.
 
 A simple markov model that produces pairwise alignments is shown in the
 classic book "Biological Sequence Analysis" by Durbin et al. (page 30).
