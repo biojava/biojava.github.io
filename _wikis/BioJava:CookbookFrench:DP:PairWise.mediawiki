@@ -1,8 +1,8 @@
 == Comment faire l'alignement de deux séquences gr&acirc;ce &agrave; un mod&egrave;le probabiliste de Markov? ==
 
-Une des tâches les plus communes de la bio-informatique est l'alignement de deux séquences. Deux algorithmes très communs pour réussir cette tâche sont les [[BioJava:CookbookFrench:DP:PairWise2|algorithmes de Needleman-Wunsch et de Smith-Waterman]], algorithmes capables de produire, respectivement, des alignements globaux ou  locaux. Il est très facile de faire ces alignements par paire (global ou local) en utilisant un modèle de Markov assez simple que vous créez grâce au puissant package org.biojava.bio.dp contenu dans BioJava.
+Une des tâches les plus communes de la bio-informatique est l'alignement de deux séquences. Deux algorithmes très communs pour réussir cette tâche sont les [[BioJava:CookbookFrench:DP:PairWise2|algorithmes de Needleman-Wunsch et de Smith-Waterman]], algorithmes capables de produire, respectivement, des alignements globaux ou  locaux. Il est &eacute;galement très facile de faire ces alignements par paire (autant global que local) en utilisant un modèle de Markov assez simple que vous créez grâce au puissant package org.biojava.bio.dp contenu dans BioJava.
 
-Un simple modèle de Markov capable de produire des alignements est démontré dans le livre de Durbin et al., "Biological Sequence Analysis", à la page 30. ce modèle contient 3 états.
+Un simple modèle de Markov capable de produire des alignements est démontré dans le livre de Durbin ''et al.'', "Biological Sequence Analysis", à la page 30. ce modèle contient 3 états.
 
 [[image:Pairwise.png|frame|center|Diagramme du mod&egrave;le simple de Markov utilis&eacute;]]
 
