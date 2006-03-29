@@ -10,13 +10,14 @@ de deux séquences. Deux algorithmes très communs pour réussir cette
 tâche sont les [algorithmes de Needleman-Wunsch et de
 Smith-Waterman](BioJava:CookbookFrench:DP:PairWise2 "wikilink"),
 algorithmes capables de produire, respectivement, des alignements
-globaux ou locaux. Il est très facile de faire ces alignements par paire
-(global ou local) en utilisant un modèle de Markov assez simple que vous
-créez grâce au puissant package org.biojava.bio.dp contenu dans BioJava.
+globaux ou locaux. Il est également très facile de faire ces alignements
+par paire (autant global que local) en utilisant un modèle de Markov
+assez simple que vous créez grâce au puissant package org.biojava.bio.dp
+contenu dans BioJava.
 
 Un simple modèle de Markov capable de produire des alignements est
-démontré dans le livre de Durbin et al., "Biological Sequence Analysis",
-à la page 30. ce modèle contient 3 états.
+démontré dans le livre de Durbin *et al.*, "Biological Sequence
+Analysis", à la page 30. ce modèle contient 3 états.
 
 [frame|center|Diagramme du modèle simple de Markov
 utilisé](image:Pairwise.png "wikilink")
