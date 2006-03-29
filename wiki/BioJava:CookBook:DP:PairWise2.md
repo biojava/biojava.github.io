@@ -35,8 +35,8 @@ substitution matrices use scores, which are the opposit of expenses.
 
 Many scoring matrices have been released for the purpose to evaluate the
 transition from one symbol to another one. These can be downloaded at
-[NCBI-matrices](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are
-needed to use the following example.
+[1](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are needed to use
+the following example.
 
 A demo of local and global alignments
 -------------------------------------
