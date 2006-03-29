@@ -101,10 +101,8 @@ public class DeterministicAlignmentDemo {
 `     Sequence target = DNATools.createDNASequence(args[1], "target");`  
 `     // Perform an alignment and save the results.`  
 `     aligner.pairwiseAlignment(`  
-`       // sources`  
-`       query, `  
-`       // sequenceDB`  
-`       target`  
+`       query, // first sequence`  
+`       target // second one`  
 `     );`  
 `     // Print the alignment to the screen`  
 `     System.out.println("global alignment with NeedlemanWunsch:\n"+`  
@@ -119,7 +117,7 @@ public class DeterministicAlignmentDemo {
 `       2, // delete`  
 `       1, // gapExtend`  
 `       matrix); // Substitution matrix`  
-`     aligner.pairwiseAlignment(query, target);`  
+`     aligner.pairwiseAlignment(query, target); // perform another alignment`  
 `     System.out.println("\nlocal alignment with SmithWaterman:\n"+`  
 `       aligner.getAlignmentString());`  
 `   } catch (Exception exc) {`  
