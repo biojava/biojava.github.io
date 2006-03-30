@@ -7,15 +7,15 @@ Comment faire pour créer un alignement global (algorithme de Needleman-Wunsh) o
 
 Les alignements de deux séquences ont traditionnellement été obtenues
 par des approches de programmation dynamique déterministique. Deux
-algorithmes de cette nature sont utilisés: l'algorithme de Needleman and
-Wunsch est utilisé pour des alignements globaux alors que l'algorithme
-de Smith-Waterman a été développé pour les alignements locaux. L'exemple
-ci-dessous vous montre comment faire l'un ou l'autre grâce aux
-implémentations de chacun de ces algorithmes retrouvées dans le package
-alignment. Ces classe ne sont pas disponibles dans la version 1.4; vous
-les retrouverez dans la version biojava-live disponible sur le [serveur
-CVS](http://cvs.biojava.org). Évidemment, ils se retrouveront dans la
-version 1.5 ;-)
+algorithmes de cette nature sont utilisés: l'algorithme de
+Needleman-Wunsch est utilisé pour des alignements globaux alors que
+l'algorithme de Smith-Waterman a été développé pour les alignements
+locaux. L'exemple ci-dessous vous montre comment faire l'un ou l'autre
+grâce aux implémentations de chacun de ces algorithmes retrouvées dans
+le package alignment. Ces classe ne sont pas disponibles dans la version
+1.4; vous les retrouverez dans la version biojava-live disponible sur le
+[serveur CVS](http://cvs.biojava.org). Évidemment, ils se retrouveront
+dans la version 1.5 ;-)
 
 L'idée derrière ces approches est de maintenir un représentation
 matricielle d'un graphe d'édition, avec des fonctions d'insertion, de
