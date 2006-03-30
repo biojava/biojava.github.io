@@ -21,7 +21,7 @@ L'idée derrière ces approches est de maintenir un représentation
 matricielle d'un graphe d'édition, avec des fonctions d'insertion, de
 délétion, de substitution et d'extension de gap; en pratique,
 l'insertion et la délétion sont des opérations d'ouverture de gaps au
-sein de la séquence connue de l'un, de la séquence inconnue de l'autre).
+sein de la séquence connue de l'un, de la séquence inconnue de l'autre.
 Par programmation dynamique, les éléments contenus dans la matrice, qui
 sont des valeurs représentant la valeur de l'opération à effectuer, sont
 calculés. Le parcours permettant d'obtenir le meilleur score produit le
