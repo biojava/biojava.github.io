@@ -18,7 +18,7 @@ CVS](http://cvs.biojava.org). Évidemment, ils se retrouveront dans la
 version 1.5 ;-)
 
 L'idée derrière ces approches est de maintenir un représentation
-matricielle d'un graphe d'éedition, avec des fonctions d'insertion, de
+matricielle d'un graphe d'édition, avec des fonctions d'insertion, de
 délétion, de substitution et d'extension de gap; en pratique,
 l'insertion et la délétion sont des opérations d'ouverture de gaps au
 sein de la séquence connue de l'un, de la séquence inconnue de l'autre).
