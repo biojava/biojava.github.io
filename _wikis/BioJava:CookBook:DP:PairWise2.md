@@ -67,8 +67,8 @@ alignment
 
 ` * from two given sequences. The result is printed on the screen. `  
 ` * Therfore a substitution matrix file is required, which can be downloaded`  
-` * at @link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
-` * This demo only works for DNA-Sequences, however, the alignment algorithms`  
+` * at {@link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)`}.`  
+` * This demo only works for DNA sequences. However, the alignment algorithms`  
 ` * are able to use any kind of alphabet as long as there is a substitution`  
 ` * matrix available. For this example the matrix NUC.4.4 is the best one.`  
 ` *`  
@@ -78,10 +78,10 @@ alignment
 public class DeterministicAlignmentDemo {
 
 ` /** This performs an alignment of two given sequences and `  
-`   * prints it on the screen.`  
+`   * prints the result on the screen.`  
 `   * @param args: a query and a target sequence `  
 `   *   and one file containing the substitution matrix to be used.`  
-`   * @link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
+`   * {@link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)`}`  
 `   */`  
 ` public static void main (String args[]) {`  
 `   if (args.length < 3)`  
@@ -111,21 +111,21 @@ public class DeterministicAlignmentDemo {
 `       target // second one`  
 `     );`  
 `     // Print the alignment to the screen`  
-`     System.out.println("global alignment with NeedlemanWunsch:\n"+`  
-`       aligner.getAlignmentString());    `  
+`     System.out.println("Global alignment with Needleman-Wunsch:\n" + aligner.getAlignmentString());     `  
 `     `  
-`     // Perform a local alginment from the sequences. `  
-`     // Firstly, define the expenses for every single operation.`  
+`     // Perform a local alginment from the sequences with Smith-Waterman. `  
+`     // Firstly, define the expenses (penalties) for every single operation.`  
 `     aligner = new SmithWaterman(`  
-`       0, // match`  
-`       2, // insert`  
-`       3, // replace `  
-`       2, // delete`  
-`       1, // gapExtend`  
-`       matrix); // Substitution matrix`  
-`     aligner.pairwiseAlignment(query, target); // perform another alignment`  
-`     System.out.println("\nlocal alignment with SmithWaterman:\n"+`  
-`       aligner.getAlignmentString());`  
+`       0,      // match`  
+`       2,      // insert`  
+`       3,      // replace `  
+`       2,      // delete`  
+`       1,      // gapExtend`  
+`       matrix  // SubstitutionMatrix`  
+`     );`  
+`     // Perform the local alignment.`  
+`     aligner.pairwiseAlignment(query, target); `  
+`     System.out.println("\nlocal alignment with SmithWaterman:\n" + aligner.getAlignmentString());`  
 `   } catch (Exception exc) {`  
 `     exc.printStackTrace();`  
 `   }`  
