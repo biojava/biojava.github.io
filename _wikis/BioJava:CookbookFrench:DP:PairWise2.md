@@ -78,10 +78,10 @@ org.biojava.bio.symbol.FiniteAlphabet;
 
 ` * de deux sequences avec affichage des resultats a l'ecran. `  
 ` * L'usage d'une matrice de substitution est necessaire, facilement obtenues via`  
-` * at @link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
+` * `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
 ` * Cette demo ne fonctionne qu'avec des sequences d'ADN. Cependant, les algorithmes fonctionnent `  
 ` * avec n'importe quel Alphabet pourvu qu'une matrice valable existe `  
-` * Dans cet exemple, la matrice NUC.4.4 est correcte.`  
+` * Dans cet exemple, la matrice NUC.4.4 est adequate.`  
 ` *`  
 ` * @author Andreas Dräger`  
 ` */`
@@ -90,8 +90,8 @@ public class DeterministicAlignmentDemo {
 
 ` /** Cette classe permet l'alignement de deux sequences `  
 `   * pour affichage a l'ecran.`  
-`   * @param args: une sequnece inconnue et une sequence connue, `  
-`   *   un fichier avec lea valeurs de la matrice de subsitution a utiliser.`  
+`   * @param args: une sequence inconnue et une sequence connue, `  
+`   *   un fichier avec les valeurs de la matrice de subsitution a utiliser.`  
 `   * @link `[`ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/`](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/)  
 `   */`  
 ` public static void main (String args[]) {`  
@@ -99,16 +99,17 @@ public class DeterministicAlignmentDemo {
 `     throw new Error("Usage: DeterministicAlignmentDemo " +`  
 `                     "querySeq targetSeq substitutionMatrixFile");`  
 `   try {`  
-`     // Specification de l'Alphabet des sequences, DNA dans cet exemple.`  
-`     // Pour des sequences proteiques, simplement utiliser`  
-`     // AlphabetManager.alphabetForName("Protein");`  
+`     /* Specification de l'Alphabet des sequences, DNA dans cet exemple.`  
+`     *  Pour des sequences proteiques, simplement utiliser`  
+`     *  AlphabetManager.alphabetForName("Protein");`  
+`     */      `  
 `     FiniteAlphabet alphabet = (FiniteAlphabet) AlphabetManager.alphabetForName("DNA");`  
 `     `  
 `     // Lecture du fichier de la matrice de substitution. `  
 `     // Pour cet exemple, la matrice NUC.4.4 est correcte.`  
 `     SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));`  
 `     `  
-`     // Definition des valeurs par defaut pour l'alignement global.`  
+`     // Definition les valeurs des couts par defaut pour l'alignement global.`  
 `     SequenceAlignment aligner = new NeedlemanWunsch( `  
 `       alphabet, `  
 `       2,      // insertion`  
@@ -131,20 +132,24 @@ public class DeterministicAlignmentDemo {
 `     );`
 
 `     // Imprimer l'alignement obtenu a l'ecran`  
-`     System.out.println("global alignment with NeedlemanWunsch:\n"+`  
+`     System.out.println("Global alignment with Needleman-Wunsch:\n"+`  
 `       aligner.getAlignmentString());    `  
 `     `  
 `     // Effectuer l'alignement local. `  
-`     // Primo, definir la valeur pour chaque operation.`  
+`     // Primo, definir la valeur du cout de chaque operation.`  
 `     aligner = new SmithWaterman(`  
 `       0, // match`  
 `       2, // insertion`  
 `       3, // replacement `  
 `       2, // deletion`  
 `       1, // gapExtend`  
-`       matrix); // Matrice de substitution`  
-`     aligner.pairwiseAlignment(query, target);`  
-`     System.out.println("\nlocal alignment with SmithWaterman:\n"+`  
+`       matrix); // Matrice de substitution`
+
+`     // Faire l'alignement et perserver les resultats.`  
+`     aligner.pairwiseAlignment(query, target);`
+
+`     // Imprimer l'alignement obtenu a l'ecran`  
+`     System.out.println("\nLocal alignment with Smith-Waterman:\n"+`  
 `       aligner.getAlignmentString());`  
 `   } catch (Exception exc) {`  
 `     exc.printStackTrace();`  
