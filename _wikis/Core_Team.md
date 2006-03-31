@@ -4,8 +4,8 @@ tags:
  - People
 ---
 
-The so-called Core developers are the project leaders who insure that
-releases are made, try and insure that unanswered questions are
+The so-called Core developers are the project leaders who ensure that
+releases are made, try and ensure that unanswered questions are
 addressed, and set a vision for the project where appropriate.
 
 Current Core
