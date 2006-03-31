@@ -8,7 +8,7 @@ I propose we initially make a BioJava1.5 beta which will be a snapshot of CVS an
 A full BioJava 1.5 final release will ideally contain fully updated documentation, demos, unit tests etc.
 
 ===Status===
-In planning phase.
+In planning phase. A release [[BioJava:Czar release Czar]] is being sought to coordinate the current release.
 
 ===Alpha, beta, RCs===
 
