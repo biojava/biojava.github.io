@@ -20,9 +20,8 @@ documentation, demos, unit tests etc.
 
 ### Status
 
-In planning phase. A release [BioJava:Czar release
-Czar](BioJava:Czar release Czar "wikilink") is being sought to
-coordinate the current release.
+In planning phase. A [release Czar](BioJava:Czar "wikilink") is being
+sought to coordinate the current release.
 
 ### Alpha, beta, RCs
 
