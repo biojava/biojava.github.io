@@ -111,12 +111,11 @@ public class DeterministicAlignmentDemo {
 `     `  
 `     // Definition les valeurs des couts par defaut pour l'alignement global.`  
 `     SequenceAlignment aligner = new NeedlemanWunsch( `  
-`       alphabet, `  
+`       0,  // match`  
+`       3,  // remplacement`  
 `       2,      // insertion`  
 `       2,  // deletion`  
 `       1,      // gapExtend`  
-`       0,  // match`  
-`       3,  // remplacement`  
 `       matrix  // Matrice de substitution`  
 `     );`
 
