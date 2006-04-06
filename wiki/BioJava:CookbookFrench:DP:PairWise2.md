@@ -124,10 +124,8 @@ public class DeterministicAlignmentDemo {
 
 `     // Faire l'alignement et perserver les resultats.`  
 `     aligner.pairwiseAlignment(`  
-`       // sources`  
-`       query, `  
-`       // sequenceDB`  
-`       target`  
+`       query,  // sources`  
+`       target  // sequenceDB`  
 `     );`
 
 `     // Imprimer l'alignement obtenu a l'ecran`  
@@ -142,8 +140,8 @@ public class DeterministicAlignmentDemo {
 `       2,       // insertion`  
 `       2,       // deletion`  
 `       1,       // gapExtend`  
-`       matrix); // Matrice de substitution`
-
+`       matrix // Matrice de substitution`  
+`     );`  
 `     // Faire l'alignement et perserver les resultats.`  
 `     aligner.pairwiseAlignment(query, target);`
 
