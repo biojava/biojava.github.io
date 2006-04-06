@@ -79,8 +79,8 @@ public class DeterministicAlignmentDemo {
       // Firstly, define the expenses (penalties) for every single operation.
       aligner = new SmithWaterman(
         0,      // match
-        2,      // insert
         3,      // replace 
+        2,      // insert
         2,      // delete
         1,      // gapExtend
         matrix  // SubstitutionMatrix
