@@ -137,11 +137,11 @@ public class DeterministicAlignmentDemo {
 `     // Effectuer l'alignement local. `  
 `     // Primo, definir la valeur du cout de chaque operation.`  
 `     aligner = new SmithWaterman(`  
-`       0, // match`  
-`       2, // insertion`  
-`       3, // replacement `  
-`       2, // deletion`  
-`       1, // gapExtend`  
+`       0,       // match`  
+`       3,       // replacement `  
+`       2,       // insertion`  
+`       2,       // deletion`  
+`       1,       // gapExtend`  
 `       matrix); // Matrice de substitution`
 
 `     // Faire l'alignement et perserver les resultats.`  
