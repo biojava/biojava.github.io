@@ -58,12 +58,11 @@ public class DeterministicAlignmentDemo {
       SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));
       // Define the default costs for sequence manipulation for the global alignment.
       SequenceAlignment aligner = new NeedlemanWunsch( 
-        alphabet, 
+        0, 	// match
+        3,	// replace
         2,      // insert
         2,	// delete
         1,      // gapExtend
-        0, 	// match
-        3,	// replace
         matrix 	// SubstitutionMatrix
       );
       Sequence query  = DNATools.createDNASequence(args[0], "query");
