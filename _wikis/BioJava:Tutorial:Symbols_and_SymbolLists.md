@@ -54,7 +54,7 @@ Annotations are just set of key-value data. The final method,
 at the end of this chapter.
 
 The set of `Symbol` objects which may be found in a particular type of
-sequence data are defined in an `Alphabet`. It it always possible to
+sequence data are defined in an `Alphabet`. It is always possible to
 define custom symbols and alphabets, but BioJava supplies a set of
 predefined alphabets for representing biological molecules. These are
 accessible through a central registry called the `AlphabetManager`, and
