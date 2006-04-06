@@ -46,7 +46,7 @@ et une pour les ouvertures étendues; toutes ces matrices ont une
 dimensions de `query.length()` par `target.length()`.
 
 Les implémentations de ces algorithmes douvent être initialisées avec
-des valeurs (coûts et pénalités) poour chaque opération d'édition.
+des valeurs (coûts et pénalités) pour chaque opération d'édition.
 Cependant, les matrices de substitution sont des bonifications, tout le
 contraire d'un coût. La superclasse *SequenceAlignment* de chaque
 algorithme possède une méthode pour formatter la sortie de l'alignement.
