@@ -29,21 +29,20 @@ clique [aqui](http://biojava.org/mailman/listinfo/biojava-l)
 
 Estas demonstrações foram testadas no BioJava 1.3 and BioJava 1.4
 
-Announcing
-----------
+Anúncios
+--------
 
-You can now read BioJava in Anger in
-[French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
-Foisy).
+Você encontra também a versão em
+[Francês](Biojava:CookbookFrench "wikilink") do 'Biojava in Anger'
+(traduzido por Sylvain Foisy).
 
-You can also read BioJava in Anger in
-[Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
-(Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
-2004).
+Você também pode ler uma versão em
+[Japonês](http://www.geocities.jp/bio_portal/bj_in_anger_ja/) (traduzida
+por Takeshi Sasayama and Kentaro Sugino, atualizada em 14 Ago 2004).
 
-How about simplified
-[Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
-(Translated by Wu Xin).
+Ou ainda em
+[Chinês](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
+(traduzido por Wu Xin).
 
 Presentations
 -------------
