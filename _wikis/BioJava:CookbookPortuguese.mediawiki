@@ -11,13 +11,13 @@ Biojava in Anger é mantido por [[User:Mark|Mark Schreiber]]. Se voce tem qualqu
 
 Estas demonstrações foram testadas no BioJava 1.3 and BioJava 1.4
 
-== Announcing ==
+== Anúncios ==
 
-You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy).
+Você encontra também a versão em [[Biojava:CookbookFrench|Francês]] do 'Biojava in Anger' (traduzido por Sylvain Foisy).
 
-You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Japanese] (Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug 2004).
+Você também pode ler uma versão em [http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Japonês] (traduzida por Takeshi Sasayama and Kentaro Sugino, atualizada em 14 Ago 2004).
 
-How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
+Ou ainda em [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinês]? (traduzido por Wu Xin).
 
 == Presentations ==
 
