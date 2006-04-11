@@ -2,21 +2,14 @@
 title: BioJava:CookBook1.7
 ---
 
-BioJava in Anger - um livro de receitas para aquelas que tem pressa
--------------------------------------------------------------------
+BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry
+------------------------------------------------------------------
 
-BioJava pode ser grande e intimidador. Para aqueles que, como nós, tem
-pressa em obter resultados e ir direto ao ponto foi montado este
-documento com a finalidade de auxilia-los no desenvolvimento de
-programas utilizando Biojava. Cerca de 99% das tarefas comuns no uso do
-Biojava estão descritas aqui, de forma que não se faz necessário decorar
-99% de sua API.
-
-A pagina foi inspirada em varios outros livros de receitas e segue a
-linha "Como eu faço...?". Cada "Como eu faço?" esta linkado a alguns
-codigos de exemplo que faz o que voce precisa e algumas vezes mais do
-que espera. Basicamente se voce encontrar o código voce pode copiá-lo e
-colá-lo em seu programa e ele irá executar rapidamente.
+BioJava can be both big and intimidating. For those of us who are in a
+hurry there really is a whole lot there to get your head around. This
+document is designed to help you develop BioJava programs that do 99% of
+common tasks without needing to read and understand 99% of the BioJava
+API.
 
 The page was inspired by various programming cookbooks and follows a
 "How do I...?" type approach. Each "How do I?" is linked to some example
