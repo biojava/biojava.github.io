@@ -50,12 +50,12 @@ Apresentações
 Está é uma apresentação no PowerPoint para [BioJava API version
 1.4](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt)
 
-Publications
-------------
+Publicações
+-----------
 
-Click here to search [Google
-Scholar](http://scholar.google.com/scholar?q=biojava) for papers using
-BioJava.
+Busque informações no [Google
+Scholar](http://scholar.google.com/scholar?q=biojava) sobre publicações
+a respeito do BioJava.
 
 How Do I....?
 -------------
