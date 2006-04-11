@@ -44,12 +44,11 @@ Ou ainda em
 [Chinês](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (traduzido por Wu Xin).
 
-Presentations
+Apresentações
 -------------
 
-This is a powerpoint presentation on the [BioJava core API (version
-1.4)](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt) that I
-have given a few times.
+Está é uma apresentação no PowerPoint para [BioJava API version
+1.4](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt)
 
 Publications
 ------------
