@@ -15,7 +15,7 @@ programas utilizando Biojava. Cerca de 99% das tarefas comuns no uso do
 Biojava estão descritas aqui, de forma que não se faz necessário decorar
 99% de sua API.
 
-A pagina foi inspirada em varios outros livros de receitas e segue a
+A página foi inspirada em vários outros livros de receitas e segue a
 linha "Como eu faço...?". Cada "Como eu faço?" esta linkado a alguns
 codigos de exemplo que faz o que voce precisa e algumas vezes mais do
 que espera. Basicamente se voce encontrar o código voce pode copiá-lo e
@@ -27,13 +27,7 @@ Se voce tem qualquer sugestão, dúvidas ou comentários contate a [lista
 do biojava](mailto:biojava-l@biojava.org). Para se inscrever na lista
 clique [aqui](http://biojava.org/mailman/listinfo/biojava-l)
 
-'BioJava in Anger' is maintained by [Mark
-Schreiber](User:Mark "wikilink"). If you have any suggestions, questions
-or comments contact the [biojava mailing
-list](mailto:biojava-l@biojava.org). To subscribe to this list go
-[here](http://biojava.org/mailman/listinfo/biojava-l)
-
-These demos are tested with BioJava 1.3 and Java 1.4
+Estas demonstrações foram testadas no BioJava 1.3 and BioJava 1.4
 
 Announcing
 ----------
