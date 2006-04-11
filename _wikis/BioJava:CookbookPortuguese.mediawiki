@@ -37,7 +37,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 === Alfabetos e Simbolos ===
 
 * [[Biojava:CookbookPortuguese:Alphabets|Como obter o Alfabeto de DNA, RNA ou Proteina]]?
-* [[Biojava:CookbookPortuguese:Alphabets:Custom|How do I make a custom Alphabet from custom Symbols]]?
+* [[Biojava:CookbookPortuguese:Alphabets:Custom|Como crio alfabetos customizados a partir de simbolos customizados?]]?
 * [[Biojava:CookbookPortuguese:Alphabets:CrossProduct|How do I make a CrossProductAlphabet such as a codon Alphabet]]?
 * [[Biojava:CookbookPortuguese:Alphabets:Component|How do I break Symbols from CrossProduct Alphabets into their component Symbols]]?
 * [[Biojava:CookbookPortuguese:Alphabets:Cononical|How can I tell if two Alphabets or Symbols are equal]]?
