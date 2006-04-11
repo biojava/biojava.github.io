@@ -1,0 +1,158 @@
+'''UNDER CONSTRUCTION''' --[[User:Guedes|Guedes]] 15:22, 11 April 2006 (EDT)
+
+== BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry ==
+
+BioJava can be both big and intimidating. For those of us who are in a hurry there really is a whole lot there to get your head around. This document is designed to help you develop BioJava programs that do 99% of common tasks without needing to read and understand 99% of the BioJava API.
+
+The page was inspired by various programming cookbooks and follows a "How do I...?" type approach. Each "How do I?" is linked to some example code that does what you want and sometimes more. Basically if you find the code you want and copy and paste it into your program you should be up and running quickly. I have endeavoured to over document the code to make it more obvious what I am doing so some of the code might look a bit bloated.
+
+'BioJava in Anger' is maintained by [[User:Mark|Mark Schreiber]]. If you have any suggestions, questions or comments contact the [mailto:biojava-l@biojava.org biojava mailing list]. To subscribe to this list go [http://biojava.org/mailman/listinfo/biojava-l here]
+
+These demos are tested with BioJava 1.3 and Java 1.4
+
+== Announcing ==
+
+You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy).
+
+You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Japanese] (Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug 2004).
+
+How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
+
+== Presentations ==
+
+This is a powerpoint presentation on the [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt BioJava core API (version 1.4)] that I have given a few times.
+
+== Publications ==
+
+Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar] for papers using BioJava.
+
+== How Do I....? ==
+
+=== Setup ===
+
+* [http://java.sun.com/downloads/ Where do I get a Java installation]?
+* [[BioJava:GetStarted|How do I get and install BioJava]]?
+
+=== Alphabets and Symbols ===
+
+* [[Biojava:Cookbook:Alphabets|How do I get a DNA, RNA or Protein Alphabet]]?
+* [[Biojava:Cookbook:Alphabets:Custom|How do I make a custom Alphabet from custom Symbols]]?
+* [[Biojava:Cookbook:Alphabets:CrossProduct|How do I make a CrossProductAlphabet such as a codon Alphabet]]?
+* [[Biojava:Cookbook:Alphabets:Component|How do I break Symbols from CrossProduct Alphabets into their component Symbols]]?
+* [[Biojava:Cookbook:Alphabets:Cononical|How can I tell if two Alphabets or Symbols are equal]]?
+* [[Biojava:Cookbook:Alphabets:Ambiguous|How can I make an ambiguous Symbol like Y or R]]?
+
+=== Basic Sequence Manipulation ===
+
+* [[Biojava:Cookbook:Sequence|How do I make a Sequence from a String or make a Sequence Object back into a String]]?
+* [[Biojava:Cookbook:Sequence:SubSequence|How do I get a subsection of a Sequence]]?
+* [[Biojava:Cookbook:Sequence:Transcribe|How do I transcribe a DNA Sequence to a RNA Sequence]]?
+* [[Biojava:Cookbook:Sequence:Reverse|How do I reverse complement a DNA or RNA Sequence]]?
+* [[Biojava:Cookbook:Sequence:ChangeName|Sequences are immutable so how can I change it's name]]?
+* [[Biojava:Cookbook:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
+* [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
+
+=== Translation ===
+
+* [[Biojava:Cookbook:Translation|How do I translate a DNA or RNA Sequence or SymbolList to Protein]]?
+* [[Biojava:Cookbook:Translation:Single|How do I translate a single codon to a single amino acid]]?
+* [[Biojava:Cookbook:Translation:NonStandart|How do I use a non standard translation table]]?
+* [[Biojava:Cookbook:Translation:SixFrames|How do I translate a nucleotide sequence in all six frames]]?
+
+=== Proteomics ===
+
+* [[Biojava:Cookbook:Proteomics|How do I calculate the mass and pI of a peptide]]?
+* [[Biojava:Cookbook:Proteomics:AAindex|How do I analyze the symbol properties of an amino acid sequence using the Amino Acid Index database]]?
+
+=== Sequence I/O ===
+
+* [[Biojava:Cookbook:SeqIO:WriteInFasta|How do I write Sequences in Fasta format]]?
+* [[Biojava:Cookbook:SeqIO:ReadFasta|How do I read in a Fasta file]]?
+* [[Biojava:Cookbook:SeqIO:ReadGES|How do I read a GenBank/EMBL/SwissProt file]]?
+* [[Biojava:Cookbook:SeqIO:GBtoFasta|How do I extract GenBank/EMBL/Swissprot sequences and write them as Fasta]]?
+* [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
+* [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
+
+=== Annotations ===
+
+* [[BioJava:Cookbook:Annotations:List|How do I list the Annotations in a Sequence]]?
+* [[BioJava:Cookbook:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
+
+=== Locations and Features ===
+
+* [[BioJava:Cookbook:Locations:Point|How do I specify a PointLocation]]?
+* [[BioJava:Cookbook:Locations:Range|How do I specify a RangeLocation]]?
+* [[BioJava:Cookbook:Locations:Circular|How do CircularLocations work]]?
+* [[BioJava:Cookbook:Locations:Feature|How can I make a Feature]]?
+* [[BioJava:Cookbook:Locations:Filter|How can I filter Features by type]]?
+* [[BioJava:Cookbook:Locations:Remove|How can I remove features]]?
+
+=== BLAST and FASTA ===
+
+* [[BioJava:CookBook:Blast:Parser|How do I set up a BLAST parser]]?
+* [[BioJava:CookBook:Fasta:Parser|How do I set up a FASTA parser]]?
+* [[BioJava:CookBook:Blast:Extract|How do I extract information from parsed results]]?
+* [[BioJava:CookBook:Blast:Echo|How do I parse a large file; Or, How do I make a custom SearchContentHandler]]?
+* Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now. (to be continued --[[User:Guedes|Guedes]] 16:30, 7 February 2006 (EST))
+
+=== Counts and Distributions ===
+
+* [[BioJava:CookBook:Count:Residues|How do I count the residues in a Sequence]]?
+* [[BioJava:CookBook:Count:Frequency|How do I calculate the frequency of a Symbol in a Sequence]]?
+* [[BioJava:CookBook:Count:ToDistrib|How can I turn a Count into a Distribution]]?
+* [[BioJava:CookBook:Distribution:RandomSeqs|How can I generate a random sequence from a Distribution]]?
+* [[BioJava:CookBook:Distribution:Entropy|How can I find the amount of information or entropy in a Distribution]]?
+* [[BioJava:CookBook:Distribution:Emission|What is an easy way to tell if two Distributions have equal weights]]?
+* [[BioJava:CookBook:Distribution:Custom|How can I make an OrderNDistribution over a custom Alphabet]]?
+* [[BioJava:CookBook:Distribution:XML|How can I write a Distribution as XML]]?
+* [[BioJava:CookBook:Distribution:Gibbs|Using Distributions to make a Gibbs sampler]]
+* [[BioJava:CookBook:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
+* [[Biojava:CookBook:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
+
+=== Weight Matrices and Dynamic Programming ===
+
+* [[BioJava:CookBook:DP:WeightMatrix|How do I use a WeightMatrix to find a motif]]?
+* [[BioJava:CookBook:DP:HMM|How do I make a HMMER like profile HMM]]?
+* |How do I set up a custom HMM? (Link to Tutorial?? --[[User:Guedes|Guedes]] 11:43, 8 February 2006 (EST) )
+* [[BioJava:CookBook:DP:PairWise|How do I generate a pair-wise alignment]] with a Hidden Markov Model?
+* [[BioJava:CookBook:DP:PairWise2|How do I generate a global or local alignment]] with the Needleman-Wunsch- or the Smith-Waterman-algorithm?
+
+=== User Interfaces ===
+
+* [[BioJava:CookBook:Interfaces:ViewAsTree|How can I visualize Annotations and Features as a tree]]?
+* [[BioJava:CookBook:Interfaces:ViewInGUI|How can I display a Sequence in a GUI]]?
+* [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
+* [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
+* [[BioJava:CookBook:Interfaces:ProteinPeptideFeatures|How can I display Protein Features / a Peptide Digest]]?
+
+=== BioSQL and Sequence Databases ===
+
+* [[BioJava:CookBook:BioSQL:SetupPostGre|How do I set up BioSQL with PostgreSQL]]? (by [[User:David|David Huen]])
+* [[BioJava:CookBook:BioSQL:SetupOracle|How do I set up BioSQL with Oracle]]? (by [[User:Richard|Richard Holland]])
+* [[BioJava:CookBook:BioSQL:Manage|How do I add, view and remove Sequence Objects from a BioSQL DB]]?
+
+=== Genetic Algorithms ===
+
+* [[BioJava:CookBook:GA|How can I make a Genetic Algorithm with BioJava]]?
+
+=== Protein Structure ===
+
+* [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
+* [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
+
+=== Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
+
+* [http://www.charite.de/bioinf/strap/Scripting.html Introduction to the STRAP API]
+* [http://www.charite.de/bioinf/strap/biojava.html STRAP/BioJava interoperability]
+* [http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html How do I make a multiple sequence alignment]?
+* [http://www.charite.de/bioinf/strap/biojavaInAnger_SecondaryStructure_Predictor.html How can predict protein secondary structure]?
+
+== Disclaimer ==
+
+This code is generously donated by people who probably have better things to do. Where possible we test it but errors may have crept in. As such, all code and advice here in has no warranty or guarantee of any sort. You didn't pay for it and if you use it we are not responsible for anything that goes wrong. Be a good programmer and test it yourself before unleashing it on your corporate database.
+
+== Copyright ==
+
+The documentation on this site is the property of the people who contributed it. If you wish to use it in a publication please make a request through the [mailto:biojava-l@biojava.org biojava mailing list].
+
+The code is [[wp:Open source|open-source]]. A good definition of open-source can be found [http://www.opensource.org/docs/definition_plain.php here]. If you agree with that definition then you can use it.
