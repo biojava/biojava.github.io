@@ -23,9 +23,9 @@ Ou ainda em [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.h
 
 Está é uma apresentação no PowerPoint para [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt BioJava API version 1.4]
 
-== Publications ==
+== Publicações ==
 
-Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar] for papers using BioJava.
+Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scholar] sobre publicações a respeito do BioJava.
 
 == How Do I....? ==
 
