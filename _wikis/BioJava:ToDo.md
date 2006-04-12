@@ -17,6 +17,9 @@ Whats in progress?
 ------------------
 
 -   Choosing a logo!
+-   CookBook (BioJava in Anger) Portuguese
+    version --[Guedes](User:Guedes "wikilink") 06:50, 12 April 2006
+    (EDT)
 
 Whats done already?
 -------------------
