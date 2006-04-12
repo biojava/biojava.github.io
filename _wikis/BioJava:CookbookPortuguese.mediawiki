@@ -8,8 +8,7 @@ A página foi inspirada em vários outros livros de receitas e segue a linha "Co
 
 Biojava in Anger é mantido por [[User:Mark|Mark Schreiber]]. Se voce tem qualquer sugestão, dúvidas ou comentários contate a [mailto:biojava-l@biojava.org lista do biojava]. Para se inscrever na lista clique [http://biojava.org/mailman/listinfo/biojava-l aqui]
 
-
-Estas demonstrações foram testadas no BioJava 1.3 and BioJava 1.4
+Esta tradução para o Portugues (Brasil) é mantida por [[User:Guedes| Dickson S. Guedes]], porém, por se tratar de um sistema Wiki, correções podem ser feitas desde que estejam de acordo com o documento original [[BioJava:Cookbook|neste link]].
 
 == Anúncios ==
 
