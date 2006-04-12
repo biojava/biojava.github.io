@@ -75,14 +75,13 @@ Como eu faço para....?
     Proteina](Biojava:CookbookPortuguese:Alphabets "wikilink")?
 -   [Como crio alfabetos customizados a partir de simbolos
     customizados?](Biojava:CookbookPortuguese:Alphabets:Custom "wikilink")?
--   [How do I make a CrossProductAlphabet such as a codon
-    Alphabet](Biojava:CookbookPortuguese:Alphabets:CrossProduct "wikilink")?
--   [How do I break Symbols from CrossProduct Alphabets into their
-    component
-    Symbols](Biojava:CookbookPortuguese:Alphabets:Component "wikilink")?
--   [How can I tell if two Alphabets or Symbols are
-    equal](Biojava:CookbookPortuguese:Alphabets:Cononical "wikilink")?
--   [How can I make an ambiguous Symbol like Y or
+-   [Como crio um CrossProductAlphabet, por exemplo, um alfabeto de
+    codons](Biojava:CookbookPortuguese:Alphabets:CrossProduct "wikilink")?
+-   [Como eu divido os Simbolos de um CrossProductAlphabet em seus
+    componentes](Biojava:CookbookPortuguese:Alphabets:Component "wikilink")?
+-   [Como eu verifico se Alfabetos ou Simbolos são
+    iguais](Biojava:CookbookPortuguese:Alphabets:Cononical "wikilink")?
+-   [Como eu crio simbolos ambíguos, por exemplo Y ou
     R](Biojava:CookbookPortuguese:Alphabets:Ambiguous "wikilink")?
 
 ### Basic Sequence Manipulation
