@@ -40,7 +40,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:Alphabets:CrossProduct|Como crio um CrossProductAlphabet, por exemplo, um alfabeto de codons]]?
 * [[Biojava:CookbookPortuguese:Alphabets:Component|Como eu divido os Simbolos de um CrossProductAlphabet em seus componentes]]?
 * [[Biojava:CookbookPortuguese:Alphabets:Cononical|Como eu verifico se Alfabetos ou Simbolos são iguais]]?
-* [[Biojava:CookbookPortuguese:Alphabets:Ambiguous|Como eu crio simbolos ambíguos, por exemplo Y ou R]]?
+* [[Biojava:CookbookPortuguese:Alphabets:Ambiguous|Como eu crio simbolos ambíguos como Y ou R]]?
 
 === Basic Sequence Manipulation ===
 
