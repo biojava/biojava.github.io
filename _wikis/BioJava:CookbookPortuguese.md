@@ -84,10 +84,11 @@ Como eu faço para....?
 -   [Como eu crio simbolos ambíguos como Y ou
     R](Biojava:CookbookPortuguese:Alphabets:Ambiguous "wikilink")?
 
-### Basic Sequence Manipulation
+### Manipulação básica de sequencia
 
--   [How do I make a Sequence from a String or make a Sequence Object
-    back into a String](Biojava:CookbookPortuguese:Sequence "wikilink")?
+-   [Como eu crio uma Sequence a partir de uma String ou como eu crio
+    uma String a partir de um objeto
+    Sequence](Biojava:CookbookPortuguese:Sequence "wikilink")?
 -   [How do I get a subsection of a
     Sequence](Biojava:CookbookPortuguese:Sequence:SubSequence "wikilink")?
 -   [How do I transcribe a DNA Sequence to a RNA
