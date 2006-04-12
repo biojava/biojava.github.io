@@ -93,14 +93,14 @@ Como eu faço para....?
     Sequence](Biojava:CookbookPortuguese:Sequence:SubSequence "wikilink")?
 -   [Como transcrevo uma Sequencia de DNA em uma Sequencia de
     RNA](Biojava:CookbookPortuguese:Sequence:Transcribe "wikilink")?
--   [How do I reverse complement a DNA or RNA
-    Sequence](Biojava:CookbookPortuguese:Sequence:Reverse "wikilink")?
--   [Sequences are immutable so how can I change it's
-    name](Biojava:CookbookPortuguese:Sequence:ChangeName "wikilink")?
--   [How can I edit a Sequence or
+-   [Como obtenho o complemento reverso de uma sequencia de DNA ou
+    RNA](Biojava:CookbookPortuguese:Sequence:Reverse "wikilink")?
+-   [O tipo Sequence é imutável porem como altero o seu
+    nome](Biojava:CookbookPortuguese:Sequence:ChangeName "wikilink")?
+-   [Como eu edito um objeto do tipo Sequence ou
     SymbolList](Biojava:CookbookPortuguese:Sequence:Edit "wikilink")?
--   [How can I make a sequence motif into a regular
-    expression](Biojava:CookbookPortuguese:Sequence:Regex "wikilink")?
+-   [Como utilizar expressões regulares em uma sequencia para encontrar
+    seu motif](Biojava:CookbookPortuguese:Sequence:Regex "wikilink")?
 
 ### Translation
 
