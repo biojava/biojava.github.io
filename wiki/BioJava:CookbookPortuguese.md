@@ -27,7 +27,10 @@ Se voce tem qualquer sugestão, dúvidas ou comentários contate a [lista
 do biojava](mailto:biojava-l@biojava.org). Para se inscrever na lista
 clique [aqui](http://biojava.org/mailman/listinfo/biojava-l)
 
-Estas demonstrações foram testadas no BioJava 1.3 and BioJava 1.4
+Esta tradução para o Portugues (Brasil) é mantida por [ Dickson S.
+Guedes](User:Guedes "wikilink"), porém, por se tratar de um sistema
+Wiki, correções podem ser feitas desde que estejam de acordo com o
+documento original [neste link](BioJava:Cookbook "wikilink").
 
 Anúncios
 --------
