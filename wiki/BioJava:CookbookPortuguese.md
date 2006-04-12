@@ -89,10 +89,10 @@ Como eu faço para....?
 -   [Como eu crio uma Sequence a partir de uma String ou como eu crio
     uma String a partir de um objeto
     Sequence](Biojava:CookbookPortuguese:Sequence "wikilink")?
--   [How do I get a subsection of a
+-   [Como obtenho uma subseção de uma
     Sequence](Biojava:CookbookPortuguese:Sequence:SubSequence "wikilink")?
--   [How do I transcribe a DNA Sequence to a RNA
-    Sequence](Biojava:CookbookPortuguese:Sequence:Transcribe "wikilink")?
+-   [Como transcrevo uma Sequencia de DNA em uma Sequencia de
+    RNA](Biojava:CookbookPortuguese:Sequence:Transcribe "wikilink")?
 -   [How do I reverse complement a DNA or RNA
     Sequence](Biojava:CookbookPortuguese:Sequence:Reverse "wikilink")?
 -   [Sequences are immutable so how can I change it's
