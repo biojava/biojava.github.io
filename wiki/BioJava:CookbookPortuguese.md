@@ -81,7 +81,7 @@ Como eu faço para....?
     componentes](Biojava:CookbookPortuguese:Alphabets:Component "wikilink")?
 -   [Como eu verifico se Alfabetos ou Simbolos são
     iguais](Biojava:CookbookPortuguese:Alphabets:Cononical "wikilink")?
--   [Como eu crio simbolos ambíguos, por exemplo Y ou
+-   [Como eu crio simbolos ambíguos como Y ou
     R](Biojava:CookbookPortuguese:Alphabets:Ambiguous "wikilink")?
 
 ### Basic Sequence Manipulation
