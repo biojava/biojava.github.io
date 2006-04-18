@@ -328,54 +328,19 @@ an array of parameters which you would normally have passed directly to
 that class' constructor. Here is a list of the parameters required, and
 an example, for each of the classes accepted by the current factory:
 
-Table 5.1. RichObjectFactory singleton examples. SimpleNamespace [name
-(String)]
+Table 5.1. RichObjectFactory singleton examples.
 
-Namespace ns = (Namespace)RichObjectFactory.getObject(
+| Objects                    | Parameters                                                     | Example                                                                                                                                                                                        |
+|----------------------------|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `SimpleNamespace`          | [name (String)]                                                | `Namespace ns = (Namespace)RichObjectFactory.getObject(SimpleNamespace.class,new Object[]{"myNamespace"});`                                                                                    |
+| `SimpleComparableOntology` | [name (String)]                                                | `ComparableOntology ont = (ComparableOntology)RichObjectFactory.getObject(ComparableOntology.class,new Object[]{"myOntology"});`                                                               |
+| `SimpleNCBITaxon`          | [taxID (Integer)]                                              | `Integer taxID = new Integer(12345);` `NCBITaxon tax = (NCBITaxon)RichObjectFactory.getObject(SimpleNCBITaxon.class,new Object[]{taxID});`                                                     |
+| `SimpleCrossRef`           | [databaseName (String), accession (String), version (Integer)] | `Integer version = new Integer(0);` `CrossRef cr = (CrossRef)RichObjectFactory.getObject(` `SimpleCrossRef.class, ` `new Object[]{"PUBMED","56789",version}` `);`                              |
+| `SimpleDocRef`             | [authors (List of DocRefAuthor), location (String)]            | `DocRefAuthor author = new SimpleDocRefAuthor("Bloggs,J.");` `List authors = new ArrayList();`                                                                                                 
+                                                                                               `authors.add(author);`                                                                                                                                                                          
+                                                                                               `DocRef dr = (DocRef)RichObjectFactory.getObject(` `                       SimpleDocRef.class, ` `                       new Object[]{authors,"Journal of Voodoo Virology, 2005, 23:55-57"});`  |
 
-`                            SimpleNamespace.class, `  
-`                            new Object[]{"myNamespace"}`  
-`                         );`
-
-SimpleComparableOntology [name (String)]
-
-ComparableOntology ont =
-(ComparableOntology)RichObjectFactory.getObject(
-
-`                                               ComparableOntology.class, `  
-`                                               new Object[]{"myOntology"}`  
-`                                            );`
-
-SimpleNCBITaxon [taxID (Integer)]
-
-Integer taxID = new Integer(12345); NCBITaxon tax =
-(NCBITaxon)RichObjectFactory.getObject(
-
-`                             SimpleNCBITaxon.class, `  
-`                             new Object[]{taxID}`  
-`                          );`
-
-SimpleCrossRef [databaseName (String), accession (String), version
-(Integer)]
-
-Integer version = new Integer(0); CrossRef cr =
-(CrossRef)RichObjectFactory.getObject(
-
-`                          SimpleCrossRef.class, `  
-`                          new Object[]{"PUBMED","56789",version}`  
-`                       );`
-
-SimpleDocRef [authors (List of DocRefAuthor), location (String)]
-
-DocRefAuthor author = new SimpleDocRefAuthor("Bloggs,J."); List authors
-= new ArrayList(); authors.add(author); DocRef dr =
-(DocRef)RichObjectFactory.getObject(
-
-`                      SimpleDocRef.class, `  
-`                      new Object[]{authors,"Journal of Voodoo Virology, 2005, 23:55-57"}`  
-`                   );`
-
-2. Where the singletons come from.
+### Where the singletons come from.
 
 The actual instances of the classes requested are generated using a
 RichObjectBuilder. The default RichObjectBuilder,
@@ -386,9 +351,9 @@ set this up.
 If you do decide to write your own RichObjectBuilder for whatever
 reason, you can set it to be used by RichObjectFactory like this:
 
-RichObjectBuilder builder = ...; // create your own one here
+<java> RichObjectBuilder builder = ...; // create your own one here
 RichObjectFactory.setRichObjectBuilder(builder); // make the factory use
-it from now on
+it from now on </java>
 
 If you change the default RichObjectBuilder to a different one, you must
 do so at the very beginning of your program before any call to the
@@ -396,7 +361,9 @@ RichObjectFactory has been made. This is because when the builder is
 changed, existing singletons or default instances are not removed. If
 you do not follow this guideline, you will end up with a mix of objects
 in the cache created by two different builders, which could lead to
-interesting situations. 3. Hibernate singletons.
+interesting situations.
+
+### Hibernate singletons.
 
 When working with Hibernate, you must connect BioJavaX to Hibernate by
 calling RichObjectFactory.connectToBioSQL(session) and passing it your
@@ -414,7 +381,9 @@ BioSQLRichObjectBuilder and BioSQLCrossReferenceResolver objects and
 passing these to the appropriate methods in RichObjectFactory.
 
 See the section on BioSQL and Hibernate later in this document for more
-details. 4. Managing the LRU cache.
+details.
+
+### Managing the LRU cache.
 
 By default, the LRU cache keeps the 20 most recently requested instances
 of any given class in memory. If more than 20 objects are requested, the
@@ -429,17 +398,19 @@ LRU cache. There are two ways of doing this.
 Changes to the LRU cache size are not instantaneous. The size of the
 cache only changes physically next time an instance is requested from
 it. Even then, only the cache of instances of the class requested will
-actually change. 4.1. Global LRU cache size.
+actually change.
+
+#### Global LRU cache size.
 
 Changing the global LRU cache size will change the cache size for all
 classes. It applies the new cache size to every single class. Next time
 any of those classes are accessed via the RichObjectFactory, the LRU
 cache for that class will adjust to the new size.
 
-RichObjectFactory.setLRUCacheSize(50); // increases the global LRU cache
-size to 50 instances per class
+<java> RichObjectFactory.setLRUCacheSize(50); // increases the global
+LRU cache size to 50 instances per class </java>
 
-4.2. Class-specific LRU cache size.
+#### Class-specific LRU cache size.
 
 Changing the LRU cache size for a specific class will only affect that
 class. Your class-specific settings will be lost if you later change the
@@ -448,61 +419,28 @@ global LRU cache size.
 RichObjectFactory.setLRUCacheSize(SimpleNamespace.class, 50); //
 increases the LRU cache for SimpleNamespace instances to 50
 
-5. Convenience methods.
+### Convenience methods
 
 A number of convenience methods are provided by the RichObjectFactory to
 allow easy access to some useful default singletons:
 
-Table 5.2. RichObjectFactory convenience methods. void
-setDefaultNamespaceName(String name); Sets the name of the default
-namespace. This namespace is used when loading files which have no
-namespace information of their own, and when no namespace has been
-passed to the file loading routines. It can also be used when creating
-temporary RichSequence or BioEntry objects, as the namespace parameter
-is compulsory on these objects. Namespace getDefaultNamespace(); Returns
-the default namespace singleton instance (delegates to getObject()).
-void setDefaultOntologyName(String name); Sets the name of the default
-ontology. When parsing files, new terms are often created. If the file
-format does not have an ontology of its own, then it will use the
-default ontology to store these terms. Terms commonly used throughout
-BioJavaX, including those common to all file formats, are also stored in
-the default ontology. ComparableOntology getDefaultOntology(); Returns
-the default ontology singleton instance (delegates to getObject()). void
-setDefaultPositionResolver(PositionResolver pr); When converting fuzzy
-locations into actual physical locations, a PositionResolver instance is
-used. The default one is AveragePositionResolver, which averages out the
-range of fuzziness to provide a value somewhere in the middle. You can
-override this setting using this function. All locations that are
-resolved without explicility specifying a PositionResolver to use will
-then use this resolver to do the work. PositionResolver
-getDefaultPositionResolver(); Returns the default position resolver.
-void setDefaultCrossReferenceResolver(CrossReferenceResolver cr);
-CrossRef instances are links to other databases. When a CrossRef is used
-in a RichLocation instance, it means that to obtain the symbols
-(sequence) for that location, it must first retrieve the remote sequence
-object. The CrossReferenceResolver object specified using this method is
-used to carry this out. The default implementation of this interface
-DummyCrossReferenceResolver, which always returns infinitely ambiguous
-symbol lists and cannot look up any remote sequence objects. Use
-BioSQLCrossReferenceResolver instead (or use
-RichObjectFactory.connectToBioSQL(session)) if you are using Hibernate,
-which is able to actually look up the sequences (if they exist in your
-database). CrossReferenceResolver getDefaultCrossReferenceResolver();
-Returns the default cross reference resolver. void
-setDefaultRichSequenceHandler(RichSequenceHandler rh); Calls to
-RichSequence methods which reference sequence data will delegate to this
-handler to carry the requests out. The default implementation is a
-DummyRichSequenceHandler, which just uses the internal SymbolList of the
-RichSequence to look up the data. When this is set to a
-BioSQLRichSequenceHandler, the handler will go to the database to look
-up the information instead of keeping an in-memory copy of it.
-RichSequenceHandler getDefaultRichSequenceHandler(); Returns the default
-rich sequence handler. void connectToBioSQL(Object session);
-Instantiates BioSQLCrossReferenceResolver, BioSQLRichObjectBuilder and
-BioSQLRichSequenceHandler using the Hibernate session object provided,
-and sets these objects as the default instances. After this call, the
-factory will try to look up all object requests in the underlying
-database first. 6. Default settings.
+RichObjectFactory convenience methods.
+
+| Name of method                                                    | Use                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| void setDefaultNamespaceName(String name)                         | Sets the name of the default namespace. This namespace is used when loading files which have no namespace information of their own, and when no namespace has been passed to the file loading routines. It can also be used when creating temporary RichSequence or BioEntry objects, as the namespace parameter is compulsory on these objects.                                                                                                                                                                                                                                                                                                                                                               |
+| Namespace getDefaultNamespace();                                  | Returns the default namespace singleton instance (delegates to getObject()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| void setDefaultOntologyName(String name);                         | Sets the name of the default ontology. When parsing files, new terms are often created. If the file format does not have an ontology of its own, then it will use the default ontology to store these terms. Terms commonly used throughout BioJavaX, including those common to all file formats, are also stored in the default ontology.                                                                                                                                                                                                                                                                                                                                                                     |
+| ComparableOntology getDefaultOntology();                          | Returns the default ontology singleton instance (delegates to getObject()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| void setDefaultPositionResolver(PositionResolver pr);             | When converting fuzzy locations into actual physical locations, a PositionResolver instance is used. The default one is AveragePositionResolver, which averages out the range of fuzziness to provide a value somewhere in the middle. You can override this setting using this function. All locations that are resolved without explicility specifying a PositionResolver to use will then use this resolver to do the work.                                                                                                                                                                                                                                                                                 |
+| PositionResolver getDefaultPositionResolver();                    | Returns the default position resolver.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| void setDefaultCrossReferenceResolver(CrossReferenceResolver cr); | CrossRef instances are links to other databases. When a CrossRef is used in a RichLocation instance, it means that to obtain the symbols (sequence) for that location, it must first retrieve the remote sequence object. The CrossReferenceResolver object specified using this method is used to carry this out. The default implementation of this interface DummyCrossReferenceResolver, which always returns infinitely ambiguous symbol lists and cannot look up any remote sequence objects. Use BioSQLCrossReferenceResolver instead (or use RichObjectFactory.connectToBioSQL(session)) if you are using Hibernate, which is able to actually look up the sequences (if they exist in your database). |
+| CrossReferenceResolver getDefaultCrossReferenceResolver();        | Returns the default cross reference resolver.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| void setDefaultRichSequenceHandler(RichSequenceHandler rh);       | Calls to RichSequence methods which reference sequence data will delegate to this handler to carry the requests out. The default implementation is a DummyRichSequenceHandler, which just uses the internal SymbolList of the RichSequence to look up the data. When this is set to a BioSQLRichSequenceHandler, the handler will go to the database to look up the information instead of keeping an in-memory copy of it.                                                                                                                                                                                                                                                                                    |
+| RichSequenceHandler getDefaultRichSequenceHandler();              | Returns the default rich sequence handler.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| void connectToBioSQL(Object session);                             | Instantiates BioSQLCrossReferenceResolver, BioSQLRichObjectBuilder and BioSQLRichSequenceHandler using the Hibernate session object provided, and sets these objects as the default instances. After this call, the factory will try to look up all object requests in the underlying database first.                                                                                                                                                                                                                                                                                                                                                                                                          |
+
+### Default settings.
 
 The default namespace name is lcl.
 
@@ -519,7 +457,7 @@ The default rich sequence handler is DummyRichSequenceHandler.
 Working with sequences.
 -----------------------
 
-1. Creating sequences.
+### Creating sequences.
 
 BioJavaX has a two-tier definition of sequence data.
 
@@ -534,15 +472,16 @@ and a feature table.
 
 So, when to use them?
 
-`   *`
-
-`     BioEntry objects are most useful when performing simple operations such as counting sequences, checking taxonomy data, looking up accessions, or finding out things like which objects refer to a particular PUBMED entry.`  
-`   *`
-
-`     RichSequence objects are useful only when you need access to the sequence data itself, or to the sequence feature table.`  
-`   *`
-
-`     RichSequence objects must be used whenever you wish to pass objects to legacy code that is expecting Sequence objects, as only RichSequence objects implement the Sequence interface. BioEntry objects do not.`
+-   BioEntry objects are most useful when performing simple operations
+    such as counting sequences, checking taxonomy data, looking up
+    accessions, or finding out things like which objects refer to a
+    particular PUBMED entry.
+-   RichSequence objects are useful only when you need access to the
+    sequence data itself, or to the sequence feature table.
+-   RichSequence objects must be used whenever you wish to pass objects
+    to legacy code that is expecting Sequence objects, as only
+    RichSequence objects implement the Sequence interface. BioEntry
+    objects do not.
 
 Throughout the rest of this document, both BioEntry and RichSequence
 objects will be referred to interchangeably as sequence objects.
@@ -550,34 +489,25 @@ objects will be referred to interchangeably as sequence objects.
 To create a BioEntry object, you need to have at least the following
 information:
 
-`   *`
-
-`     a Namespace instance to associate the sequence with (use RichObjectFactory.getDefaultNamespace() for an easy way out)`  
-`   *`
-
-`     a name for the sequence`  
-`   *`
-
-`     an accession for the sequence`  
-`   *`
-
-`     a version for the sequence (use 0 if you don't want to bother with versions)`
+-   a Namespace instance to associate the sequence with (use
+    RichObjectFactory.getDefaultNamespace() for an easy way out)
+-   a name for the sequence
+-   an accession for the sequence
+-   a version for the sequence (use 0 if you don't want to bother with
+    versions)
 
 To create a RichSequence object, you need to have all the above plus:
 
-`   *`
+-   a SymbolList containing the sequence data
+-   a version for the sequence data (this is separate from the version
+    of the sequence object)
 
-`     a SymbolList containing the sequence data`  
-`   *`
-
-`     a version for the sequence data (this is separate from the version of the sequence object)`
-
-2. Multiple accessions.
+### Multiple accessions
 
 If you wish to assign multiple accessions to a sequence, you must do so
 using the special term provided, like this:
 
-ComparableTerm accTerm =
+<java> ComparableTerm accTerm =
 RichSequence.Terms.getAdditionalAccessionTerm(); Note accession1 = new
 SimpleNote(accTerm,"A12345",1); // this note has an arbitrary rank of 1
 Note accession2 = new SimpleNote(accTerm,"Z56789",2); // this note has
@@ -588,9 +518,12 @@ rs.getNoteSet().add(accession2); // annotate the rich sequence with the
 second additional accession ... // you can annotate bioentry objects in
 exactly the same way BioEntry be = ...; // get a bioentry from somewhere
 be.getNoteSet().add(accession1); be.getNoteSet().add(accession2);
+</java>
 
 See later in this document for more information on how to annotate and
-comment on sequences. 3. Circular sequences.
+comment on sequences.
+
+### Circular sequences
 
 BioJavaX can flag sequences as being circular, using the setCircular()
 and getCircular() methods on RichSequence instances. However, as this
@@ -603,7 +536,7 @@ locations associated with them.
 Relationships between sequences.
 --------------------------------
 
-1. Relating two sequences.
+### Relating two sequences
 
 Two sequences can be related to each other by using a
 BioEntryRelationship object to construct the link.
@@ -615,7 +548,7 @@ The following code snippet defines a new term "contains" in the default
 ontology, then creates a relationship that states that sequence A (the
 parent) contains sequence B (the child):
 
-ComparableTerm contains =
+<java> ComparableTerm contains =
 RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains"); ...
 RichSequence parent = ...; // get sequence A from somewhere RichSequence
 child = ...; // get sequence B from somewhere BioEntryRelationship
@@ -623,9 +556,9 @@ relationship = new
 SimpleBioEntryRelationship(parent,child,contains,null);
 parent.addRelationship(relationship); // add the relationship to the
 parent ... parent.removeRelationship(relationship); // you can always
-take it away again later
+take it away again later </java>
 
-2. Querying the relationship.
+### Querying the relationship
 
 Sequences are only aware of relationships in which they are the parent
 sequence. A child sequence cannot find out which parent sequences it is
@@ -634,7 +567,7 @@ related to.
 The following code snippet prints out all the relationships a sequence
 has with child sequences:
 
-RichSequence rs = ...; // get a rich sequence from somewhere for
+<java> RichSequence rs = ...; // get a rich sequence from somewhere for
 (Iterator i = rs.getRelationships().iterator(); i.hasNext(); ) {
 
 `    BioEntryRelationship br = (BioEntryRelationship)i.next();`  
@@ -644,12 +577,12 @@ RichSequence rs = ...; // get a rich sequence from somewhere for
 `    // print out the relationship (eg. "A contains B");`  
 `    System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());`
 
-}
+} </java>
 
 Reading and writing files.
 --------------------------
 
-1. Tools for reading/writing files.
+### Tools for reading/writing files
 
 BioJavaX provides a replacement set of tools for working with files.
 This is necessary because the new file parsers must work with the new
@@ -666,8 +599,8 @@ Here is an example of using the RichSequence.IOTools methods. The
 example reads a file in Genbank format containing some DNA sequences,
 then prints them out to standard out (the screen) in EMBL format:
 
-BufferedReader br = new BufferedReader(new FileReader("myGenbank.gbk"));
-// an input GenBank file Namespace ns =
+<java> BufferedReader br = new BufferedReader(new
+FileReader("myGenbank.gbk")); // an input GenBank file Namespace ns =
 RichObjectFactory.getDefaultNamespace(); // a namespace to override that
 in the file RichSequenceIterator seqs =
 RichSequence.IOTools.readGenbankDNA(br,ns); // we are reading DNA
@@ -676,37 +609,39 @@ sequences while (seqs.hasNext()) {
 `   RichSequence rs = seqs.nextRichSequence();`  
 `   RichSequence.IOTools.writeEMBL(System.out, rs, ns);                   // write it in EMBL format to standard out`
 
-}
+} </java>
 
 If you wish to output a number of sequences in one of the XML formats,
 you have to pass a RichSequenceIterator over your collection of
 sequences in order for the XML format to group them together into a
 single file with the correct headers:
 
-BufferedReader br = new BufferedReader(new FileReader("myGenbank.gbk"));
-// an input GenBank file Namespace ns =
+<java> BufferedReader br = new BufferedReader(new
+FileReader("myGenbank.gbk")); // an input GenBank file Namespace ns =
 RichObjectFactory.getDefaultNamespace(); // a namespace to override that
 in the file RichSequenceIterator seqs =
 RichSequence.IOTools.readGenbankDNA(br,ns); // we are reading DNA
 sequences RichSequence.IOTools.writeEMBLxml(System.out, seqs, ns); //
-write the whole lot in EMBLxml format to standard out
+write the whole lot in EMBLxml format to standard out </java>
 
 If you don't know what format your input file is in, but know it could
 be one of a fixed set of acceptable formats, then you can use BioJavaX's
 format-guessing routine to attempt to read it:
 
-// Not sure if your input is EMBL or Genbank? Load them both here.
-Class.forName("org.biojavax.bio.seq.io.EMBLFormat");
+<java> // Not sure if your input is EMBL or Genbank? Load them both
+here. Class.forName("org.biojavax.bio.seq.io.EMBLFormat");
 Class.forName("org.biojavax.bio.seq.io.GenbankFormat");
 
 // Now let BioJavaX guess which format you actually should use (using
 the default namespace) Namespace ns =
 RichObjectFactory.getDefaultNamespace(); RichSequenceIterator seqs =
-RichSequence.IOTools.readFile(new File("myfile.seq"),ns);
+RichSequence.IOTools.readFile(new File("myfile.seq"),ns); </java>
 
 For those who like to do things the hard way, reading and writing by
 directly using the RichStreamReader and RichStreamWriter interfaces is
-described below. 1.1. Reading using RichStreamReader.
+described below.
+
+#### Reading using RichStreamReader
 
 File reading is based around the concept of a RichStreamReader. This
 object returns a RichSequenceIterator which iterates over every sequence
@@ -714,21 +649,15 @@ in the file on demand.
 
 To construct a RichStreamReader, you will need five things.
 
-`  1.`
-
-`     a BufferedReader instance which is connected to the file you wish to parse.`  
-`  2.`
-
-`     a RichSequenceFormat instance which understands the format of the file (eg. FastaFormat, GenbankFormat, etc.)`  
-`  3.`
-
-`     a SymbolTokenization which understands how to translate the sequence data in the file into a BioJava SymbolList.`  
-`  4.`
-
-`     a RichSequenceBuilderFactory instance which generates instances of RichSequenceBuilder.`  
-`  5.`
-
-`     a Namespace instance to associate the sequences with.`
+1.  a BufferedReader instance which is connected to the file you wish to
+    parse;
+2.  a RichSequenceFormat instance which understands the format of the
+    file (eg. FastaFormat, GenbankFormat, etc.);
+3.  a SymbolTokenization which understands how to translate the sequence
+    data in the file into a BioJava SymbolList;
+4.  a RichSequenceBuilderFactory instance which generates instances of
+    RichSequenceBuilder;
+5.  a Namespace instance to associate the sequences with.
 
 The RichSequenceBuilderFactory is best set to one of the predefined
 constants in the RichSequenceBuilderFactory interface. These constants
@@ -759,7 +688,7 @@ For an alphabet which does not have a tools class, you can do this:
 Alphabet a = ...; // get an alphabet instance from somewhere
 SymbolTokenization st = a.getTokenization("token");
 
-1.2. Writing using RichStreamWriter.
+#### Writing using RichStreamWriter
 
 File output is done using RichStreamWriter. This requires:
 
@@ -791,7 +720,7 @@ RichSequence rs = ...; // get sequence from somewhere
 RichSequenceIterator it = new SingleRichSeqIterator(rs); // wrap it in
 an iterator
 
-1.3. Example.
+#### Example
 
 The following is an example that will read some DNA sequences from a
 GenBank file and write them out to standard output (screen) as FASTA
@@ -820,7 +749,7 @@ seqsOut = new RichStreamWriter(output,fasta);
 seqsOut.writeStream(seqsIn,bloggsNS); // one-step Genbank to Fasta
 conversion!
 
-1.4. Line widths and eliding information.
+#### Line widths and eliding information
 
 When working at this level, extra methods can be used when direct access
 to the RichSequenceFormat object is available. These methods are:
@@ -1278,7 +1207,9 @@ present in the feature from getNoteSet(Terms.getFTIdTerm()), is written
 out underneath. No other qualifiers are written out. UniProt uses its
 own unique set of feature names. No attempt is made to translate other
 feature names to/from this set. SQ Sequence counts are generated, then
-sequence is read directly as it is a SymbolList. 6. INSDSeq (XML).
+sequence is read directly as it is a SymbolList.
+
+### INSDSeq (XML)
 
 For parsing files that conform to
 <http://www.ebi.ac.uk/embl/Documentation/DTD/INSDSeq_v1.3.dtd.txt>.
@@ -1286,8 +1217,9 @@ For parsing files that conform to
 INSDSeqFormat is similar to the GenBank flat-file format in the way it
 organises information. Data will end up in the same places and using the
 same annotation terms. There are no additional annotation terms involved
-which are not also present in the GenBank flat-file format. 7. EMBLxml
-(XML).
+which are not also present in the GenBank flat-file format.
+
+### EMBLxml (XML)
 
 For parsing files that conform to
 <http://www.ebi.ac.uk/embl/Documentation/DTD/EMBL_dtd.txt>.
@@ -1303,7 +1235,9 @@ this complexity by constructing Genbank-style location strings out of
 the XML hierarchies. These strings are then passed to
 GenbankLocationParser for parsing into RichLocation objects. On output,
 the location tags are constructed directly from the RichLocation
-objects. 8. UniProtXML (XML).
+objects.
+
+### UniProtXML (XML)
 
 For parsing files that conform to
 <http://www.ebi.uniprot.org/support/docs/uniprot.xsd>.
@@ -1363,20 +1297,21 @@ A number of additional annotation terms are used by UniProt XML. These
 are:
 
 Table 8.12. Additional UniProtXMLFormat annotation terms.
-Terms.getProteinTypeTerm() Used to store the type attribute from the
-protein tag. Terms.getEvidenceCategoryTerm() Used to store the category
-attribute of the evidence tag. Terms.getEvidenceTypeTerm() Used to store
-the type attribute of the evidence tag. Terms.getEvidenceDateTerm() Used
-to store the date attribute of the evidence tag.
-Terms.getEvidenceAttrTerm() Used to store the attribute attribute of the
-evidence tag. Terms.getFeatureRefTerm() Used to store the ref attribute
-of the feature tag. Terms.getFeatureOriginalTerm() Used to store the
-value of the original sub-tag of the feature tag.
-Terms.getFeatureVariationTerm() Used to store the value of the variation
-sub-tag of the feature tag. Terms.getFeatureStatusTerm() Used to store
-the status attribute of the feature tag. Terms.getLocationSequenceTerm()
-Used to store the seq attribute of the location sub-tag of the feature
-tag. 9. New formats
+
+| Terms                           | Usage                                                                       |
+|---------------------------------|-----------------------------------------------------------------------------|
+| Terms.getProteinTypeTerm()      | Used to store the type attribute from the protein tag.                      |
+| Terms.getEvidenceCategoryTerm() | Used to store the category attribute of the evidence tag.                   |
+| Terms.getEvidenceTypeTerm()     | Used to store the type attribute of the evidence tag.                       |
+| Terms.getEvidenceDateTerm()     | Used to store the date attribute of the evidence tag.                       |
+| Terms.getEvidenceAttrTerm()     | Used to store the attribute attribute of the evidence tag.                  |
+| Terms.getFeatureRefTerm()       | Used to store the ref attribute of the feature tag.                         |
+| Terms.getFeatureOriginalTerm()  | Used to store the value of the original sub-tag of the feature tag.         |
+| Terms.getFeatureVariationTerm() | Used to store the value of the variation sub-tag of the feature tag.        |
+| Terms.getFeatureStatusTerm()    | Used to store the status attribute of the feature tag.                      |
+| Terms.getLocationSequenceTerm() | Used to store the seq attribute of the location sub-tag of the feature tag. |
+
+### New formats
 
 If you want to add a new format, the best thing to do is to extend
 RichSequenceFormat.BasicFormat and go from there. In order to make your
@@ -1385,7 +1320,7 @@ class work with the automatic format-guesser
 guessSymbolTokenization(), and add a static initializer block to your
 class, similar to this:
 
-public class MyFormat extends RichSequenceFormat.BasicFormat {
+<java> public class MyFormat extends RichSequenceFormat.BasicFormat {
 
 `   static {`  
 `       RichSequence.IOTools.registerFormat(MyFormat.class);`  
@@ -1393,9 +1328,9 @@ public class MyFormat extends RichSequenceFormat.BasicFormat {
 
 `   // implement the rest of the class here ...`
 
-}
+} </java>
 
-10. NCBI Taxonomy data.
+### NCBI Taxonomy data
 
 The NCBI taxonomy loader operates outside the standed file parsing
 framework, as it is not dealing with a single file and does not generate
@@ -1404,16 +1339,16 @@ the nodes.dmp and names.dmp files line-by-line, and returning the
 corresponding NCBITaxon object for each line of the file. An example to
 load the taxonomy data follows:
 
-NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader(); BufferedReader
-nodes = new BufferedReader(new FileReader("nodes.dmp")); BufferedReader
-names = new BufferedReader(new FileReader("names.dmp"));
+<java> NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader();
+BufferedReader nodes = new BufferedReader(new FileReader("nodes.dmp"));
+BufferedReader names = new BufferedReader(new FileReader("names.dmp"));
 
 NCBITaxon t; while ((t=l.readNode(nodes))!=null); // read all the nodes
 first while ((t=l.readName(names))!=null); // then read all the names
 
 // if your LRU cache is big enough, it'll now hold fully-populated
 instances // of all the taxon objects. Not much use unless you're using
-a database!
+a database! </java>
 
 Note that this is most effective when using BioJavaX with Hibernate to
 persist data to the database. You do not need to do anything apart from
@@ -1427,15 +1362,16 @@ BioSQLRichObjectFactory.
 Creative file parsing with RichSeqIOListener.
 ---------------------------------------------
 
-1. Using RichSeqIOListeners directly.
+### Using RichSeqIOListeners directly
 
 In order to do creative file parsing, you need to start using very low
 level BioJava APIs. This involves setting up a RichSeqIOListener and
 allowing it to communicate directly with the RichSequenceFormat
 instances that parse files. You have to choose whether you want just to
 listen to data as it is read from the file, or whether you want to use
-these events to construct a RichSequence object. 1.1. Listening to
-events only.
+these events to construct a RichSequence object.
+
+#### Listening to events only
 
 You need to write a class which implements RichSeqIOListener. The
 easiest way to do this is to extend RichSeqIOAdapter, which is a very
@@ -1446,9 +1382,9 @@ You can then use your class like this (see the earlier section on
 RichStreamReader for how to construct the various other objects
 required):
 
-BufferedReader input = ...; // your input file Namespace ns = ...; //
-the namespace to read sequences into SymbolTokenization st = ...; // the
-tokenization used to parse sequence data
+<java> BufferedReader input = ...; // your input file Namespace ns =
+...; // the namespace to read sequences into SymbolTokenization st =
+...; // the tokenization used to parse sequence data
 
 RichSeqIOListener listener = ...; // your custom listener object
 
@@ -1458,9 +1394,9 @@ sequence in the file while (moreSeqsAvailable) {
 `    moreSeqsAvailable = format.readRichSequence(input, st, listener, ns);`  
 `    // your listener will have received all the information for the current sequence by this stage`
 
-}
+} </java>
 
-1.2. Constructing sequences from events.
+#### Constructing sequences from events
 
 You need to write a class which implements both RichSeqIOListener and
 RichSequenceBuilder. Again you could just extend RichSeqIOAdapter, and
@@ -1475,7 +1411,7 @@ will also need to create a RichSequenceBuilderFactory implementation to
 work with it. The simplest form of such a factory (assuming a custom
 builder named CustomRichSequenceBuilder) looks like this:
 
-public class CustomRichSequenceBuilderFactory implements
+<java> public class CustomRichSequenceBuilderFactory implements
 RichSequenceBuilderFactory {
 
 `   public CustomRichSequenceBuilderFactory() {}`  
@@ -1483,9 +1419,9 @@ RichSequenceBuilderFactory {
 `       return new CustomRichSequenceBuilder();`  
 `   }`
 
-}
+} </java>
 
-2. Parsing only specific fields.
+### Parsing only specific fields
 
 The basic RichSeqIOAdapter class ignores all data passed to it. This is
 the simplest form of a RichSeqIOListener. Building from this base, you
@@ -1493,7 +1429,7 @@ can construct specialist RichSeqIOListener implementations that perform
 very specific tasks very efficiently. For instance, a listener that
 counts all the sequences in a file would look like this:
 
-public class MyListener extends RichSeqIOAdapter {
+<java> public class MyListener extends RichSeqIOAdapter {
 
 `   private int seqCount;`  
 `   public MyListener() { `  
@@ -1503,7 +1439,7 @@ public class MyListener extends RichSeqIOAdapter {
 `   public void startSequence() { this.seqCount++; }`  
 `   public void getSeqCount() { return this.seqCount; }`
 
-}
+} </java>
 
 You could then call getSeqCount() on this class after parsing a file to
 find out exactly how many sequences it contained.
@@ -1511,7 +1447,7 @@ find out exactly how many sequences it contained.
 Publication cross-references.
 -----------------------------
 
-1. Everything is a 'journal article'.
+### Everything is a 'journal article'
 
 Owing to the way in which BioSQL stores publication cross-references,
 there is no way to distinguish between different types of publication.
@@ -1539,7 +1475,9 @@ persisting to a BioSQL database.
 
 DocRef instances must be wrapped in a RankedDocRef before they can be
 associated with a sequence via addRankedDocRef(). The usual default rank
-is 0. 2. Editors and consortiums as authors.
+is 0.
+
+### Editors and consortiums as authors
 
 When dealing in plain text, authors who are editors are suffixed with "
 (ed.)". Authors who are consortiums are suffixed with " (consortium)".
@@ -1551,7 +1489,7 @@ will also append these suffixes as necessary.
 Database cross-references.
 --------------------------
 
-1. Database names.
+### Database names
 
 Cross-references to other databases are defined as CrossRef objects. To
 associate a cross-reference with a particular sequence, you need to
@@ -1569,7 +1507,9 @@ might be handy. If you come up with one and feel it would be useful for
 others too, please feel free to send it in and we'll add it below.
 
 Common database names can be found as constants (eg. PUBMED\_KEY) in
-RichSequence.Terms. 2. Accessions and versions.
+RichSequence.Terms.
+
+### Accessions and versions
 
 All database cross-references have at least one accession, which is the
 primary accession for that reference. The version is also compulsory,
@@ -1586,7 +1526,7 @@ to be understood across all parts of BioJavaX.
 Working with RichLocation objects.
 ----------------------------------
 
-1. Working with locations.
+### Working with locations
 
 In BioJavaX, all locations are instances of classes which implement the
 RichLocation interface. These are very complex objects, so need to be
@@ -1616,36 +1556,37 @@ implemented by the SimpleRichLocation class.
 
 This example describes the GenBank-style location string "56":
 
-Position pos = new SimplePosition(56); RichLocation loc = new
+<java> Position pos = new SimplePosition(56); RichLocation loc = new
 SimpleRichLocation(pos,0); // the 0 is an arbitrary value for the rank
-of this location
+of this location </java>
 
 This example describes the GenBank-style location string
 "(23^34)..57\>":
 
-Position min = new SimplePosition(false,false,23,34,"^"); // two falses
-= not fuzzy at all Position max = new SimplePosition(false,true,57); //
-false = non-fuzzy start, true = fuzzy end RichLocation loc = new
-SimpleRichLocation(min,max,0); // the 0 is an arbitrary value for the
-rank of this location
+<java> Position min = new SimplePosition(false,false,23,34,"^"); // two
+falses = not fuzzy at all Position max = new
+SimplePosition(false,true,57); // false = non-fuzzy start, true = fuzzy
+end RichLocation loc = new SimpleRichLocation(min,max,0); // the 0 is an
+arbitrary value for the rank of this location </java>
 
 This example describes the GenBank-style location string
 "complement((23^34)..57\>)":
 
-Position min = new SimplePosition(false,false,23,34,"^"); // two falses
-= not fuzzy at all Position max = new SimplePosition(false,true,57); //
-false = non-fuzzy start, true = fuzzy end RichLocation loc = new
-SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND);
+<java> Position min = new SimplePosition(false,false,23,34,"^"); // two
+falses = not fuzzy at all Position max = new
+SimplePosition(false,true,57); // false = non-fuzzy start, true = fuzzy
+end RichLocation loc = new
+SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND); </java>
 
 This example describes the GenBank-style location string
 "A12345.3:complement((23^34)..57\>)":
 
-CrossRef cr = new SimpleCrossRef("GenBank","A12345",3); // version 3 of
-accession A12345 in the GenBank database Position min = new
+<java> CrossRef cr = new SimpleCrossRef("GenBank","A12345",3); //
+version 3 of accession A12345 in the GenBank database Position min = new
 SimplePosition(false,false,23,34,"^"); // two falses = not fuzzy at all
 Position max = new SimplePosition(false,true,57); // false = non-fuzzy
 start, true = fuzzy end RichLocation loc = new
-SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr);
+SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr); </java>
 
 If you require locations that cover more than one range, you must use
 the RichLocation.Tools methods to help you. If you don't, you run a
@@ -1665,33 +1606,24 @@ passed in as input.
 To construct a complex location from a set of existing RichLocation
 instances, follow this example:
 
-RichLocation first = ...; // some arbitrary location RichLocation second
-= ...; // some other location Collection members = Arrays.asList(new
-RichLocation[]{first,second}); RichLocation combined =
-RichLocation.Tools.construct(members);
+<java> RichLocation first = ...; // some arbitrary location RichLocation
+second = ...; // some other location Collection members =
+Arrays.asList(new RichLocation[]{first,second}); RichLocation combined =
+RichLocation.Tools.construct(members); </java>
 
 The construct() method will return one of four different types of
 RichLocation objects, depending on the members passed in:
 
 Table 12.1. RichLocation.Tools.construct() result types.
-EmptyRichLocation If the input collection was empty, or only contained a
-single entry which was an instance of EmptyRichLocation itself.
-SimpleRichLocation If all the members in the input collection overlap
-and are on the same strand of the same sequence, the result will be a
-single location covering the entire overlapping range.
-CompoundRichLocation If all the members in the input collection are on
-the same strand of the same sequence, but after merging overlapping
-locations there are still gaps, then a CompoundRichLocation is returned
-containing one SimpleRichLocation per merged region. All the members are
-guaranteed to be on the same strand of the same sequence. The strand and
-cross-ref of the location returned will be consistent with its members.
-The min and max of the location will correspond to the min and max of
-all the members combined. MultiSourceCompoundRichLocation As per
-CompoundRichLocation, but members may appear on different strands or
-even different (remote) sequences. The min, max, strand and cross-ref of
-the location returned are meaningless, and should not be used. You
-should instead interrogate each member location (block) for this
-information as required. 2. Strandedness.
+
+| Type of Location objects        | Use                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| EmptyRichLocation               | If the input collection was empty, or only contained a single entry which was an instance of EmptyRichLocation itself.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| SimpleRichLocation              | If all the members in the input collection overlap and are on the same strand of the same sequence, the result will be a single location covering the entire overlapping range.                                                                                                                                                                                                                                                                                                                                         |
+| CompoundRichLocation            | If all the members in the input collection are on the same strand of the same sequence, but after merging overlapping locations there are still gaps, then a CompoundRichLocation is returned containing one SimpleRichLocation per merged region. All the members are guaranteed to be on the same strand of the same sequence. The strand and cross-ref of the location returned will be consistent with its members. The min and max of the location will correspond to the min and max of all the members combined. |
+| MultiSourceCompoundRichLocation | As per CompoundRichLocation, but members may appear on different strands or even different (remote) sequences. The min, max, strand and cross-ref of the location returned are meaningless, and should not be used. You should instead interrogate each member location (block) for this information as required.                                                                                                                                                                                                       |
+
+### Strandedness.
 
 All SimpleRichLocation and CompoundRichLocation objects have a strand
 assigned to them. The various strands available are defined as constants
@@ -1701,8 +1633,9 @@ they may occur together in a MultiSourceCompoundRichLocation.
 
 In all cases, location coordinates are given w.r.t. the 5' end of the
 positive strand, with the first base numbered as 1. This is to make
-overlap, union, and intersection calculations easier. 3. Remote
-locations.
+overlap, union, and intersection calculations easier.
+
+### Remote locations.
 
 Locations are generally sequence-agnostic until they are applied to a
 specific sequence, usually through a feature. However, some locations
@@ -1730,8 +1663,9 @@ resolver is attempted.
 If you are using a database with BioJavaX and that sequence is to be
 found in the same database, then make sure that the database name given
 to the CrossRef instance is the same as the namespace of the sequence in
-your database, and that the accessions and versions are the same. 4.
-Resolving fuzziness.
+your database, and that the accessions and versions are the same.
+
+### Resolving fuzziness.
 
 Fuzziness is all well and good until you try and work out whether one
 sequence overlaps another, or try and store the location in a database
@@ -1745,17 +1679,23 @@ can replace this default resolver for all locations by using the
 appropriate methods in RichObjectFactory, or you can change it for this
 location only by calling setPositionResolver() on the location object. A
 number of useful ones are provided as sub-classes of the
-PositionResolver interface. 5. Translation.
+PositionResolver interface.
+
+### Translation.
 
 Locations can be moved left or right by a fixed number of bases by using
 the translate() method. This method returns a new location with all
 members offset by the value specified. A negative offset will move
 locations towards the 5' end of the positive strand, whilst a positive
-offset will move them towards the 3' end. 6. Empty locations.
+offset will move them towards the 3' end.
+
+### Empty locations.
 
 The empty location is represented by a singleton instance of
 EmptyRichLocation, available as a constant as
-RichLocation.EMPTY\_LOCATION. 7. Circular locations.
+RichLocation.EMPTY\_LOCATION.
+
+### Circular locations
 
 Locations are circular if a call is made to setCircularLength() with a
 value greater than zero. The value indicates the length of the circular
@@ -1769,7 +1709,9 @@ not the same as the one returned by the getCircularLength() method of
 the location.
 
 The concept of circularity is not understood by BioSQL, so this
-information will be lost if you persist it to a database. 8. Union.
+information will be lost if you persist it to a database.
+
+### Union
 
 The union of any two locations X and Y that do not overlap (see section
 on overlapping locations), or that overlap but on different strands, is
@@ -1788,7 +1730,9 @@ Complex locations will perform the above steps on each pair of member
 locations in turn, and the union will be the combination set of all
 unique locations that these pair-wise intersections produce. Any
 overlapping locations on the same strand within this set will be merged
-into single, larger locations. 9. Intersection.
+into single, larger locations.
+
+### Intersection
 
 Locations never intersect if they do not overlap (see section on
 overlapping locations). The intersection operation will return the empty
@@ -1811,7 +1755,9 @@ Complex locations will perform the above steps on each pair of member
 locations in turn, and the intersection will be the set of all unique
 locations that these pair-wise intersections produce. Any overlapping
 locations on the same strand within this set will be merged into single,
-larger locations. 10. Overlaps.
+larger locations.
+
+### Overlaps.
 
 Locations never overlap locations which are on a different remote
 sequence. However, locations on opposite strands may overlap each other.
@@ -1827,14 +1773,18 @@ Y.min.
 
 Circular locations (of the same circular length) X and Y overlap iff
 X.min \<= Y.max-N and X.max \>= Y.min-N where N is some multiple of the
-circular length of either location. 11. Contains.
+circular length of either location.
+
+### Contains
 
 There are two types of contains operation - one tests the presence of a
 particular point coordinate, the other tests whether this location
 entirely encompasses another location.
 
 Complex locations make the test against each member in turn. The empty
-location never will never contain anything. 11.1. Point coordinates.
+location never will never contain anything.
+
+#### Point coordinates.
 
 For linear locations, a location contains a point if that point falls on
 or between the min and max of this location. If the min or max of this
@@ -1843,8 +1793,9 @@ test is made.
 
 For circular locations, the point is defined to be contained by a
 location if the point +/- some multiple of the circular length of the
-location lies between the min and max of the location. 11.2. Other
-locations.
+location lies between the min and max of the location.
+
+#### Other locations.
 
 Locations never contain locations which are on a different strand or
 remote sequence.
@@ -1854,7 +1805,9 @@ Y.min and X.max \>= Y.max.
 
 A circular location X contains any other location Y iff X.min \<=
 Y.min-N and X.max \>= Y.max-N where N is some multiple of the circular
-length of the location X. 12. Obtaining the symbols for a location.
+length of the location X.
+
+### Obtaining the symbols for a location.
 
 The symbols for a location are obtained by calling symbols() on the
 location object and passing in the reference sequence which the location
@@ -1888,30 +1841,30 @@ strand if you want the symbols() call to return sensible results.
 Features
 --------
 
-1. Adding features to a RichSequence.
+### Adding features to a RichSequence.
 
 The best way to create a new feature is like this:
 
-Feature.Template templ = new RichFeature.Template(); // create a feature
-template templ.location = ...; // assign the feature template a
+<java> Feature.Template templ = new RichFeature.Template(); // create a
+feature template templ.location = ...; // assign the feature template a
 location, type, and source templ.typeTerm = ...; templ.sourceTerm = ...;
 templ.annotation = new SimpleRichAnnotation(); // assign the rest of the
 necessary stuff templ.featureRelationshipSet = new TreeSet();
 templ.rankedCrossRefs = new TreeSet(); RichSequence rs = ...; // get a
 sequence from somewhere RichFeature feat =
 rs.createFeature(RichFeature.Template()); // make a new feature on that
-sequence
+sequence </java>
 
 Alternatively, you can start with a completely empty dummy feature and
 just customise the bits you need:
 
-RichSequence rs = ...; // get a sequence RichFeature feat =
+<java> RichSequence rs = ...; // get a sequence RichFeature feat =
 RichFeature.Tools.makeEmptyFeature(); // make an empty feature
 feat.setParent(rs): // associate sequence with feature
 rs.getFeatureSet().add(feat); // associate feature with sequence //
-customise the feature here, eg. location, type, source etc.
+customise the feature here, eg. location, type, source etc. </java>
 
-2. Qualifiers as annotations.
+### Qualifiers as annotations.
 
 All feature qualifiers are stored as annotations. Qualifier annotations
 have a ComparableTerm as key, and a String as the value. Multiple
@@ -1921,8 +1874,8 @@ distinct. Use the rank of the annotation to preserve order.
 To go through all the qualifiers on a particular feature is quite
 straightforward:
 
-RichFeature feat = ...; // get the feature from somewhere for (Iterator
-i = feat.getNoteSet().iterator(); i.hasNext; ) {
+<java> RichFeature feat = ...; // get the feature from somewhere for
+(Iterator i = feat.getNoteSet().iterator(); i.hasNext; ) {
 
 `   // get the next note`  
 `   Note n = (Note)i.next();`  
@@ -1933,9 +1886,9 @@ i = feat.getNoteSet().iterator(); i.hasNext; ) {
 `   // print the qualifier out in key=value (rank) format`  
 `   System.out.println(key+"="+value+" ("+rank+")"); `
 
-}
+} </java>
 
-3. Obtaining the symbols for a feature.
+### Obtaining the symbols for a feature.
 
 The symbols for a feature are simply the result of a delegated call to
 the symbols() method of the feature's Location object, using the
@@ -1946,7 +1899,7 @@ are obtained.
 Relationships between features.
 -------------------------------
 
-1. Relating two features.
+### Relating two features.
 
 Two features can be related to each other by using a
 RichFeatureRelationship object to construct the link.
@@ -1958,16 +1911,16 @@ The following code snippet defines a new term "contains" in the default
 ontology, then creates a relationship that states that feature A (the
 parent) contains feature B (the child):
 
-ComparableTerm contains =
+<java> ComparableTerm contains =
 RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains"); ...
 RichFeature parent = ...; // get feature A from somewhere RichFeature
 child = ...; // get feature B from somewhere RichFeatureRelationship
 relationship = new RichFeatureRelationship(parent,child,contains,0);
 parent.addFeatureRelationship(relationship); // add the relationship to
 the parent ... parent.removeFeatureRelationship(relationship); // you
-can always take it away again later
+can always take it away again later </java>
 
-2. Querying the relationship.
+### Querying the relationship.
 
 Features are aware of all relationships in which they are the parent
 feature.
@@ -1975,8 +1928,9 @@ feature.
 The following code snippet prints out all the relationships to child
 features within a parent feature:
 
-RichFeature feature = ...; // get a feature from somewhere for (Iterator
-i = feature.getFeatureRelationshipSet().iterator(); i.hasNext(); ) {
+<java> RichFeature feature = ...; // get a feature from somewhere for
+(Iterator i = feature.getFeatureRelationshipSet().iterator();
+i.hasNext(); ) {
 
 `    RichFeatureRelationship fr = (RichFeatureRelationship)i.next();`  
 `    RichFeature parent = fr.getObject(); // parent == feature`  
@@ -1985,12 +1939,12 @@ i = feature.getFeatureRelationshipSet().iterator(); i.hasNext(); ) {
 `    // print out the relationship (eg. "A contains B");`  
 `    System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());`
 
-}
+} </java>
 
 Annotations and Comments.
 -------------------------
 
-1. Annotations.
+### Annotations.
 
 The original BioJava allowed annotations to take the form of any object
 as the key, with any other object as the value. BioJavaX restricts this
@@ -2005,16 +1959,18 @@ the RichAnnotation object and start annotating with it.
 
 To obtain the ComparableTerm objects to use as keys, the simplest method
 is to call
-RichObjectFactory.getDefaultOntology().getOrCreateTerm("myterm"). 2.
-Comments.
+RichObjectFactory.getDefaultOntology().getOrCreateTerm("myterm").
+
+### Comments.
 
 Sequences can have free-text comments (in the form of a String instance
 wrapped in a Comment instance) associated with them. Each comment is
 ranked. Duplicate comments with identical text and rank will be ignored.
 The number of comments allowed is unlimited.
 
-To add a comment, call addComment() on the sequence object. 3. UniProt
-structured comments.
+To add a comment, call addComment() on the sequence object.
+
+### UniProt structured comments.
 
 When parsing UniProt and UniProtXML files, comments take on a structured
 form. This is represented in text form by special formatting, but in
@@ -2032,7 +1988,7 @@ information to be written out next time generate() is called.
 Namespaces.
 -----------
 
-1. Obtaining Namespace instances.
+### Obtaining Namespace instances.
 
 All sequences in BioJavaX must belong to a namespace, by being
 associated with an instance of the Namespace interface. This is in line
@@ -2040,7 +1996,7 @@ with BioSQL.
 
 A default namespace is provided by the RichObjectFactory:
 
-// get the default namespace Namespace defaultNS =
+<java> // get the default namespace Namespace defaultNS =
 RichObjectFactory.getDefaultNamespace(); ... // make a custom namespace
 Namespace customNS =
 (Namespace)RichObjectFactory.getObject(SimpleNamespace.class, new
@@ -2048,20 +2004,20 @@ Object[]{"myNameSpace"}); ... // load a namespace from BioSQL, or create
 it if it doesn't exist yet Namespace biosqlNS =
 (Namespace)BioSQLRichObjectFactory.getObject(SimpleNamespace.class, new
 Object[]{"myBioSQLNameSpace"}); ... // change the default namespace to
-"bloggs" RichObjectFactory.setDefaultNamespaceName("bloggs");
+"bloggs" RichObjectFactory.setDefaultNamespaceName("bloggs"); </java>
 
 NCBI Taxonomy.
 --------------
 
-1. Traversing from child to parent.
+### Traversing from child to parent.
 
-NCBITaxon child = ...; // some taxon object you want the parent of
-Integer parentNCBITaxID = new Integer(child.getParentNCBITaxID());
+<java> NCBITaxon child = ...; // some taxon object you want the parent
+of Integer parentNCBITaxID = new Integer(child.getParentNCBITaxID());
 NCBITaxon parent =
 (NCBITaxon)RichObjectFactory.getObject(SimpleNCBITaxon.class,new
-Object[]{parentNCBITaxID});
+Object[]{parentNCBITaxID}); </java>
 
-2. Traversing from parent to child.
+### Traversing from parent to child.
 
 This cannot be done using the BioJavaX API.
 
@@ -2070,27 +2026,28 @@ information from a database. See the section on BioSQL and Hibernate for
 details about setting BioJavaX for use with a database. The query you
 are looking for is this:
 
-NCBITaxon parent = ...; // some taxon object you want to get the
+<java> NCBITaxon parent = ...; // some taxon object you want to get the
 immediate children of Query q = session.createQuery("from Taxon where
 parentNCBITaxID = :parentNCBITaxID");
 q.setInteger("parentNCBITaxID",parent.getNCBITaxID()); List children =
 q.list(); // children will now contain all the child taxon objects
+</java>
 
-3. Finding taxons by name.
+### Finding taxons by name.
 
 This also cannot be done using the BioJavaX API.
 
 Again, you can do it using HQL if you are reading your taxonomy
 information from a database. The query you are looking for is this:
 
-Query q = session.createQuery("from Taxon as taxon join taxon.nameSet as
-taxonName "+
+<java> Query q = session.createQuery("from Taxon as taxon join
+taxon.nameSet as taxonName "+
 
 `                                "where taxonName.nameClass=:nameClass and taxonName.name=:name");`
 
 q.setString("nameClass",NCBITaxon.SCIENTIFIC); q.setString("name","Homo
 sapiens"); List taxons = q.list(); // taxons will now contain all
-matching taxon objects
+matching taxon objects </java>
 
 BioEntry and RichSequence Databases
 -----------------------------------
