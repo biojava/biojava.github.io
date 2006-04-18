@@ -2171,29 +2171,38 @@ second is the mapping name to be used in HQL to query the table, and the
 third column is the class of object you will get when the query returns
 results:
 
-Table 19.1. Hibernate object-relational mappings. biodatabase Namespace
-SimpleNamespace taxon Taxon SimpleNCBITaxon bioentry BioEntry
-SimpleBioEntry taxon\_name (use properties of NCBITaxon)
-SimpleNCBITaxonName biosequence (including the sequence data) Sequence
-SimpleRichSequence biosequence (excluding the sequence data)
-ThinSequence ThinRichSequence bioentry\_relationship
-BioEntryRelationship SimpleBioEntryRelationship comment Comment
-SimpleComment dbxref CrossRef SimpleCrossRef bioentry\_dbxref (use
-properties of BioEntry) SimpleRankedCrossRef reference DocRef
-SimpleDocRef bioentry\_reference (use properties of BioEntry)
-SimpleRankedDocRef dbxref\_qualifer\_value (use properties of CrossRef)
-SimpleNote bioentry\_qualifier\_value (use properties of BioEntry)
-SimpleNote ontology Ontology ComparableOntology term Term ComparableTerm
-term\_relationship Triple ComparableTriple term\_synonym (use properties
-of Term) String term\_dbxref (use properties of Term)
-SimpleRankedCrossRef seqfeature Feature SimpleRichFeature
-seqfeature\_qualifier\_value (use properties of Feature) SimpleNote
-seqfeature\_dbxref (use properties of Feature) SimpleRankedCrossRef
-seqfeature\_relationship FeatureRelationship
-SimpleRichFeatureRelationship location Location SimpleRichLocation,
-CompoundRichLocation, or EmptyRichLocation location\_qualifier\_value
-(use properties of Location) SimpleNote seqfeature\_path - -
-bioentry\_path - - term\_path - -
+Table 19.1. Hibernate object-relational mappings.
+
+| BioSQL Table Name                         | HQL Name to use               | Type of returned object                                        |
+|-------------------------------------------|-------------------------------|----------------------------------------------------------------|
+| biodatabase                               | Namespace                     | SimpleNamespace                                                |
+| taxon                                     | Taxon                         | SimpleNCBITaxon                                                |
+| bioentry                                  | BioEntry                      | SimpleBioEntry                                                 |
+| taxon\_name                               | (use properties of NCBITaxon) | SimpleNCBITaxonName                                            |
+| biosequence (including the sequence data) | Sequence                      | SimpleRichSequence                                             |
+| biosequence (excluding the sequence data) | ThinSequence                  | ThinRichSequence                                               |
+| bioentry\_relationship                    | BioEntryRelationship          | SimpleBioEntryRelationship                                     |
+| comment                                   | Comment                       | SimpleComment                                                  |
+| dbxref                                    | CrossRef                      | SimpleCrossRef                                                 |
+| bioentry\_dbxref                          | (use properties of BioEntry)  | SimpleRankedCrossRef                                           |
+| reference                                 | DocRef                        | SimpleDocRef                                                   |
+| bioentry\_reference                       | (use properties of BioEntry)  | SimpleRankedDocRef                                             |
+| dbxref\_qualifer\_value                   | (use properties of CrossRef)  | SimpleNote                                                     |
+| bioentry\_qualifier\_value                | (use properties of BioEntry)  | SimpleNote                                                     |
+| ontology                                  | Ontology                      | ComparableOntology                                             |
+| term                                      | Term                          | ComparableTerm                                                 |
+| term\_relationship                        | Triple                        | ComparableTriple                                               |
+| term\_synonym                             | (use properties of Term)      | String                                                         |
+| term\_dbxref                              | (use properties of Term)      | SimpleRankedCrossRef                                           |
+| seqfeature                                | Feature                       | SimpleRichFeature                                              |
+| seqfeature\_qualifier\_value              | (use properties of Feature)   | SimpleNote                                                     |
+| seqfeature\_dbxref                        | (use properties of Feature)   | SimpleRankedCrossRef                                           |
+| seqfeature\_relationship                  | FeatureRelationship           | SimpleRichFeatureRelationship                                  |
+| location                                  | Location                      | SimpleRichLocation, CompoundRichLocation, or EmptyRichLocation |
+| location\_qualifier\_value                | (use properties of Location)  | SimpleNote                                                     |
+| seqfeature\_path                          | nil                           | nil                                                            |
+| bioentry\_path                            | nil                           | nil                                                            |
+| term\_path                                | nil                           | nil                                                            |
 
 ### Configuring your application to use Hibernate and BioSQL.
 
@@ -2234,9 +2243,11 @@ to one of the following places:
 To configure Hibernate, you must edit the copy you made of the
 hibernate.cfg.xml file. Near the top is a section that looks like this:
 
+<xml>
 <property name="connection.datasource">java:comp/env/jdbc/YOUR\_JNDI\_DATASOURCE\_GOES\_HERE</property>
 
-The exact details will vary according to which database you are using.
+</xml> The exact details will vary according to which database you are
+using.
 
 You will see that the default way of using Hibernate is through a JNDI
 datasource, usually supplied by a servlet container such as Tomcat. In
