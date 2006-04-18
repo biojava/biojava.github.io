@@ -1292,34 +1292,124 @@ Queries are constructed not using SQL but using the Hibernate Query Language, or
 The following table describes which object in BioJavaX ends up in which table in BioSQL. The first column is the name of the BioSQL table, the second is the mapping name to be used in HQL to query the table, and the third column is the class of object you will get when the query returns results:
 
 Table 19.1. Hibernate object-relational mappings.
-biodatabase	Namespace	SimpleNamespace
-taxon	Taxon	SimpleNCBITaxon
-bioentry	BioEntry	SimpleBioEntry
-taxon_name	(use properties of NCBITaxon)	SimpleNCBITaxonName
-biosequence (including the sequence data)	Sequence	SimpleRichSequence
-biosequence (excluding the sequence data)	ThinSequence	ThinRichSequence
-bioentry_relationship	BioEntryRelationship	SimpleBioEntryRelationship
-comment	Comment	SimpleComment
-dbxref	CrossRef	SimpleCrossRef
-bioentry_dbxref	(use properties of BioEntry)	SimpleRankedCrossRef
-reference	DocRef	SimpleDocRef
-bioentry_reference	(use properties of BioEntry)	SimpleRankedDocRef
-dbxref_qualifer_value	(use properties of CrossRef)	SimpleNote
-bioentry_qualifier_value	(use properties of BioEntry)	SimpleNote
-ontology	Ontology	ComparableOntology
-term	Term	ComparableTerm
-term_relationship	Triple	ComparableTriple
-term_synonym	(use properties of Term)	String
-term_dbxref	(use properties of Term)	SimpleRankedCrossRef
-seqfeature	Feature	SimpleRichFeature
-seqfeature_qualifier_value	(use properties of Feature)	SimpleNote
-seqfeature_dbxref	(use properties of Feature)	SimpleRankedCrossRef
-seqfeature_relationship	FeatureRelationship	SimpleRichFeatureRelationship
-location	Location	SimpleRichLocation, CompoundRichLocation, or EmptyRichLocation
-location_qualifier_value	(use properties of Location)	SimpleNote
-seqfeature_path	-	-
-bioentry_path	-	-
-term_path	-	-
+{|border="1" cellpadding="2"
+!width="200"|BioSQL Table Name
+!width="200"|HQL Name to use
+!width="200"|Type of returned object
+|-
+|biodatabase	
+|Namespace	
+|SimpleNamespace
+|-
+|taxon	
+|Taxon	
+|SimpleNCBITaxon
+|-
+|bioentry	
+|BioEntry	
+|SimpleBioEntry
+|-
+|taxon_name	
+|(use properties of NCBITaxon)	
+|SimpleNCBITaxonName
+|-
+|biosequence (including the sequence data)	
+|Sequence	
+|SimpleRichSequence
+|-
+|biosequence (excluding the sequence data)	
+|ThinSequence	
+|ThinRichSequence
+|-
+|bioentry_relationship	
+|BioEntryRelationship	
+|SimpleBioEntryRelationship
+|-
+|comment	
+|Comment	
+|SimpleComment
+|-
+|dbxref	
+|CrossRef	
+|SimpleCrossRef
+|-
+|bioentry_dbxref	
+|(use properties of BioEntry)	
+|SimpleRankedCrossRef
+|-
+|reference	
+|DocRef	
+|SimpleDocRef
+|-
+|bioentry_reference	
+|(use properties of BioEntry)	
+|SimpleRankedDocRef
+|-
+|dbxref_qualifer_value	
+|(use properties of CrossRef)	
+|SimpleNote
+|-
+|bioentry_qualifier_value	
+|(use properties of BioEntry)	
+|SimpleNote
+|-
+|ontology	
+|Ontology	
+|ComparableOntology
+|-
+|term	
+|Term	
+|ComparableTerm
+|-
+|term_relationship	
+|Triple	
+|ComparableTriple
+|-
+|term_synonym	
+|(use properties of Term)	
+|String
+|-
+|term_dbxref	
+|(use properties of Term)	
+|SimpleRankedCrossRef
+|-
+|seqfeature	
+|Feature	
+|SimpleRichFeature
+|-
+|seqfeature_qualifier_value	
+|(use properties of Feature)	
+|SimpleNote
+|-
+|seqfeature_dbxref	
+|(use properties of Feature)	
+|SimpleRankedCrossRef
+|-
+|seqfeature_relationship	
+|FeatureRelationship	
+|SimpleRichFeatureRelationship
+|-
+|location	
+|Location	
+|SimpleRichLocation, CompoundRichLocation, or EmptyRichLocation
+|-
+|location_qualifier_value	
+|(use properties of Location)	
+|SimpleNote
+|-
+|seqfeature_path	
+|nil	
+|nil
+|-
+|bioentry_path	
+|nil	
+|nil
+|-
+|term_path	
+|nil	
+|nil
+|}
+
 
 === Configuring your application to use Hibernate and BioSQL. ===
 
@@ -1354,6 +1444,7 @@ You will find the mapping files in the source package org.biojavax.bio.seq.db.bi
 
 To configure Hibernate, you must edit the copy you made of the hibernate.cfg.xml file. Near the top is a section that looks like this:
 
+<xml>
 <property name="connection.datasource">java:comp/env/jdbc/YOUR_JNDI_DATASOURCE_GOES_HERE</property>
         
 <!-- OR... (for testing only)...
@@ -1363,7 +1454,7 @@ To configure Hibernate, you must edit the copy you made of the hibernate.cfg.xml
 <property name="connection.password">MYPASSWORD</property>
 <property name="connection.pool_size">20</property>
 -->
-
+</xml>
 The exact details will vary according to which database you are using.
 
 You will see that the default way of using Hibernate is through a JNDI datasource, usually supplied by a servlet container such as Tomcat. In this case, you should modify the connection.datasource parameter to reflect the name of your JNDI datasource.
