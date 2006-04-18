@@ -1,0 +1,6 @@
+---
+title: BioJava:BioJavaXDocs
+---
+
+Currently under development! Use BioJava.xml in the biojava-live
+distribution for now, which is in DocBook format.
