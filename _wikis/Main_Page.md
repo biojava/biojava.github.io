@@ -91,8 +91,8 @@ This documentation is just as much under development as the code it
 refers to, so use with care. It is a rough guide rather than a detailed
 description.
 
--   [BioJava:BioJavaXDocs|BioJavaX Documentation (translated from the
-    original DocBook format)]
+-   [BioJavaX Documentation (translated from the original DocBook
+    format)](BioJava:BioJavaXDocs "wikilink")
 
 Thanks
 ------
