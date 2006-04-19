@@ -104,10 +104,10 @@ Como eu faço para....?
 
 ### Translation
 
--   [How do I translate a DNA or RNA Sequence or SymbolList to
-    Protein](Biojava:CookbookPortuguese:Translation "wikilink")?
--   [How do I translate a single codon to a single amino
-    acid](Biojava:CookbookPortuguese:Translation:Single "wikilink")?
+-   [Como eu faco para transcrever DNA em RNA e este em
+    Proteina](Biojava:CookbookPortuguese:Translation "wikilink")?
+-   [Como eu faco para traduzir um simples codon em um simples
+    aminoacido](Biojava:CookbookPortuguese:Translation:Single "wikilink")?
 -   [How do I use a non standard translation
     table](Biojava:CookbookPortuguese:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
