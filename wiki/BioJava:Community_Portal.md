@@ -23,7 +23,7 @@ yourself an entry here (this is Wiki after all).
 -   [Richard Holland](User:Rholland "wikilink")
 -   [Martin Szugat](User:Martin "wikilink")
 -   [Keith James](Keith James "wikilink")
--   [Sylvan Foisy](Sylvain Foisy "wikilink")
+-   [Sylvain Foisy](Sylvain Foisy "wikilink")
 -   [Andreas Dräger](Andreas Dräger "wikilink")
 -   [Andreas Prlic](Andreas Prlic "wikilink")
 -   [Dickson S. Guedes](Dickson Guedes "wikilink")
