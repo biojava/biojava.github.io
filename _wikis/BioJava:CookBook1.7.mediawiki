@@ -112,8 +112,8 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:DP:WeightMatrix|How do I use a WeightMatrix to find a motif]]?
 * [[BioJava:CookBook:DP:HMM|How do I make a HMMER like profile HMM]]?
 * |How do I set up a custom HMM? (Link to Tutorial?? --[[User:Guedes|Guedes]] 11:43, 8 February 2006 (EST) )
-* [[BioJava:CookBook:DP:PairWise|How do I generate a pair-wise alignment]] with a Hidden Markov Model?
-* [[BioJava:CookBook:DP:PairWise2|How do I generate a global or local alignment]] with the Needleman-Wunsch- or the Smith-Waterman-algorithm?
+* [[BioJava:CookBook:DP:PairWise|How do I generate a pair-wise alignment with a Hidden Markov Model]]?
+* [[BioJava:CookBook:DP:PairWise2|How do I generate a global or local alignment with the Needleman-Wunsch- or the Smith-Waterman-algorithm]]?
 
 === User Interfaces ===
 

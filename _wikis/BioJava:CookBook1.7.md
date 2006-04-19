@@ -206,12 +206,11 @@ How Do I....?
 -   |How do I set up a custom HMM? (Link to
     Tutorial?? --[Guedes](User:Guedes "wikilink") 11:43, 8 February 2006
     (EST) )
--   [How do I generate a pair-wise
-    alignment](BioJava:CookBook:DP:PairWise "wikilink") with a Hidden
-    Markov Model?
--   [How do I generate a global or local
-    alignment](BioJava:CookBook:DP:PairWise2 "wikilink") with the
-    Needleman-Wunsch- or the Smith-Waterman-algorithm?
+-   [How do I generate a pair-wise alignment with a Hidden Markov
+    Model](BioJava:CookBook:DP:PairWise "wikilink")?
+-   [How do I generate a global or local alignment with the
+    Needleman-Wunsch- or the
+    Smith-Waterman-algorithm](BioJava:CookBook:DP:PairWise2 "wikilink")?
 
 ### User Interfaces
 
