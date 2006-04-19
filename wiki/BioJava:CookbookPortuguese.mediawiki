@@ -54,8 +54,8 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 
 === Translation ===
 
-* [[Biojava:CookbookPortuguese:Translation|How do I translate a DNA or RNA Sequence or SymbolList to Protein]]?
-* [[Biojava:CookbookPortuguese:Translation:Single|How do I translate a single codon to a single amino acid]]?
+* [[Biojava:CookbookPortuguese:Translation|Como eu faco para transcrever DNA em RNA e este em Proteina]]?
+* [[Biojava:CookbookPortuguese:Translation:Single|Como eu faco para traduzir um simples codon em um simples aminoacido]]?
 * [[Biojava:CookbookPortuguese:Translation:NonStandart|How do I use a non standard translation table]]?
 * [[Biojava:CookbookPortuguese:Translation:SixFrames|How do I translate a nucleotide sequence in all six frames]]?
 
