@@ -12,7 +12,7 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[User:Rholland|Richard Holland]]
 * [[User:Martin|Martin Szugat]]
 * [[Keith James|Keith James]]
-* [[Sylvain Foisy|Sylvan Foisy]]
+* [[Sylvain Foisy|Sylvain Foisy]]
 * [[Andreas Dräger|Andreas Dräger]]
 * [[Andreas Prlic|Andreas Prlic]]
 * [[Dickson Guedes|Dickson S. Guedes]]
