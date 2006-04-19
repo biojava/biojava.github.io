@@ -616,13 +616,13 @@ you have to pass a RichSequenceIterator over your collection of
 sequences in order for the XML format to group them together into a
 single file with the correct headers:
 
-<java> BufferedReader br = new BufferedReader(new
-FileReader("myGenbank.gbk")); // an input GenBank file Namespace ns =
-RichObjectFactory.getDefaultNamespace(); // a namespace to override that
-in the file RichSequenceIterator seqs =
-RichSequence.IOTools.readGenbankDNA(br,ns); // we are reading DNA
-sequences RichSequence.IOTools.writeEMBLxml(System.out, seqs, ns); //
-write the whole lot in EMBLxml format to standard out </java>
+<java> // an input GenBank file BufferedReader br = new
+BufferedReader(new FileReader("myGenbank.gbk")); // a namespace to
+override that in the file Namespace ns =
+RichObjectFactory.getDefaultNamespace(); // we are reading DNA sequences
+RichSequenceIterator seqs = RichSequence.IOTools.readGenbankDNA(br,ns);
+// write the whole lot in EMBLxml format to standard out
+RichSequence.IOTools.writeEMBLxml(System.out, seqs, ns); </java>
 
 If you don't know what format your input file is in, but know it could
 be one of a fixed set of acceptable formats, then you can use BioJavaX's
@@ -664,12 +664,12 @@ constants in the RichSequenceBuilderFactory interface. These constants
 are defined as:
 
 Table 8.1. RichSequenceBuilderFactory predefined constants.
-RichSequenceBuilderFactor.FACTORY Does not attempt any compression on
-sequence data. RichSequenceBuilderFactor.PACKED Will compress all
-sequence data using PackedSymbolLists.
-RichSequenceBuilderFactor.THRESHOLD Will compress sequence data using a
-PackedSymbolList only when the sequence exceeds 5000 bases in length.
-Otherwise, data is not compressed.
+
+| Name of constant                    | What it will do                                                                                                                              |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| RichSequenceBuilderFactor.FACTORY   | Does not attempt any compression on sequence data.                                                                                           |
+| RichSequenceBuilderFactor.PACKED    | Will compress all sequence data using PackedSymbolLists.                                                                                     |
+| RichSequenceBuilderFactor.THRESHOLD | Will compress sequence data using a PackedSymbolList only when the sequence exceeds 5000 bases in length. Otherwise, data is not compressed. |
 
 If you set the namespace to null, then the namespace used will depend on
 the format you are reading. For formats which specify namespaces, the
@@ -685,22 +685,16 @@ classes will have similar methods.
 
 For an alphabet which does not have a tools class, you can do this:
 
-Alphabet a = ...; // get an alphabet instance from somewhere
-SymbolTokenization st = a.getTokenization("token");
+<java> Alphabet a = ...; // get an alphabet instance from somewhere
+SymbolTokenization st = a.getTokenization("token"); </java>
 
 #### Writing using RichStreamWriter
 
 File output is done using RichStreamWriter. This requires:
 
-`  1.`
-
-`     an OutputStream to write sequences to.`  
-`  2.`
-
-`     a Namespace to use for the sequences.`  
-`  3.`
-
-`     a RichSequenceIterator that provides the sequences to write.`
+1.  An OutputStream to write sequences to.
+2.  A Namespace to use for the sequences.
+3.  A RichSequenceIterator that provides the sequences to write.
 
 The namespace should only be specified when the file format includes
 namespace information and you wish to override the information
@@ -716,9 +710,9 @@ convert data from one file format to another with no intermediate steps.
 If you only have one sequence to write, you can wrap it in a temporary
 RichSequenceIterator by using a call like this:
 
-RichSequence rs = ...; // get sequence from somewhere
+<java> RichSequence rs = ...; // get sequence from somewhere
 RichSequenceIterator it = new SingleRichSeqIterator(rs); // wrap it in
-an iterator
+an iterator </java>
 
 #### Example
 
@@ -726,28 +720,26 @@ The following is an example that will read some DNA sequences from a
 GenBank file and write them out to standard output (screen) as FASTA
 using the methods outlined above:
 
-SymbolTokenization dna = DNATools.getDNA().getTokenization("token"); //
-sequences will be DNA sequences
-
-RichSequenceFormat genbank = new GenbankFormat(); // read Genbank
-RichSequenceFormat fasta = new FastaFormat(); // write FASTA
-RichSequenceBuilderFactory factory =
-RichSequenceBuilderFactory.THRESHOLD; // compress only longer sequences
-Namespace bloggsNS = RichObjectFactory.getObject(
+<java> // sequences will be DNA sequences SymbolTokenization dna =
+DNATools.getDNA().getTokenization("token"); // read Genbank
+RichSequenceFormat genbank = new GenbankFormat(); // write FASTA
+RichSequenceFormat fasta = new FastaFormat(); // compress only longer
+sequences RichSequenceBuilderFactory factory =
+RichSequenceBuilderFactory.THRESHOLD; // read/write everything using the
+'bloggs' namespace Namespace bloggsNS = RichObjectFactory.getObject(
 
 `                       SimpleNamespace.class, `  
 `                       new Object[]{"bloggs"} `  
-`                    );                                                     // read/write everything using the 'bloggs' namespace`
+`                    );                                                     `
 
-BufferedReader input = new BufferedReader(new
-FileReader("mygenbank.file"));// read seqs from "mygenbank.file"
-OutputStream output = System.out; // write seqs to STDOUT
+// read seqs from "mygenbank.file" BufferedReader input = new
+BufferedReader(new FileReader("mygenbank.file")); // write seqs to
+STDOUT OutputStream output = System.out;
 
 RichStreamReader seqsIn = new
 RichStreamReader(input,genbank,dna,factory,bloggsNS); RichStreamWriter
-seqsOut = new RichStreamWriter(output,fasta);
-seqsOut.writeStream(seqsIn,bloggsNS); // one-step Genbank to Fasta
-conversion!
+seqsOut = new RichStreamWriter(output,fasta); // one-step Genbank to
+Fasta conversion! seqsOut.writeStream(seqsIn,bloggsNS); </java>
 
 #### Line widths and eliding information
 
