@@ -94,6 +94,11 @@ description.
 -   [BioJavaX Documentation (translated from the original DocBook
     format)](BioJava:BioJavaXDocs "wikilink")
 
+### Dazzle
+
+The Dazzle DAS server has been moved to a new
+[location](http://www.derkholm.net/thomas/dazzle/)
+
 Thanks
 ------
 

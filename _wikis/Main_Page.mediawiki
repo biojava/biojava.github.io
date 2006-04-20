@@ -47,6 +47,10 @@ This documentation is just as much under development as the code it refers to, s
 
 * [[BioJava:BioJavaXDocs|BioJavaX Documentation (translated from the original DocBook format)]]
 
+=== Dazzle ===
+
+The Dazzle DAS server has been moved to a new [http://www.derkholm.net/thomas/dazzle/ location]
+
 == Thanks ==
  
 
