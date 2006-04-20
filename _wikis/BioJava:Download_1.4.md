@@ -32,6 +32,12 @@ Required libraries
 The Jakarta-commons APIs are covered by the [Apache
 license](http://www.biojava.org/download/binaries/LICENSE.COMMONS).
 
+CVS access
+----------
+
+the CVS repository can be browsed at:
+<http://code.open-bio.org/cgi/viewcvs.cgi/biojava-live/?cvsroot=biojava>
+
 Future releases
 ---------------
 
