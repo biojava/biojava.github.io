@@ -104,8 +104,8 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:DP:WeightMatrix|Comment utiliser une WeightMatrix pour trouver un motif?]]
 * [[BioJava:CookbookFrench:DP:HMM|Comment créer un HMM semblable à un profile HMMER?]]
 * [[BioJava:Tutorial:Dynamic_programming_examples|Comment créer un HMM sur mesure?]] Note: section du tutoriel anglais
-* [[BioJava:CookbookFrench:DP:PairWise|Comment faire un alignement de deux séquences]] en utilisant un mod&egrave;le de Markov?
-* [[BioJava:CookbookFrench:DP:PairWise2|Comment faire un alignement de deux séquences]] en utilisant l'algorithme de Smith-Waterman ou de Needleman-Wunsh?
+* [[BioJava:CookbookFrench:DP:PairWise|Comment faire un alignement de deux séquences en utilisant un mod&egrave;le de Markov?]]
+* [[BioJava:CookbookFrench:DP:PairWise2|Comment faire un alignement de deux séquences en utilisant l'algorithme de Smith-Waterman ou de Needleman-Wunsh?]]
 
 === Interfaces Usagers Graphiques ===
 
