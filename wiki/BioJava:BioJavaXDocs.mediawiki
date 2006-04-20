@@ -779,6 +779,7 @@ The first form is used if the identifier of the sequence object is not null, oth
 The fields are read from the RichSequence object as follows:
 
 Table 8.5. FastaFormat output field sources.
+
 {|border="1" cellpadding="2"
 !width="200"|FASTA Info type
 !width="400"|Method used to get info
@@ -814,47 +815,127 @@ GenbankFormat reads and writes GenBank files, and understands almost all permuta
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.6. GenBankFormat input field destinations.
-LOCUS	setName(), addSequenceProperty(Terms.getStrandedTerm()), setCircular(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDateUpdatedTerm()), and setDivision().
-DEFINITION	setDescription()
-ACCESSION	The first one is passed to setAccession(). Subsequent entries are passed to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
-VERSION	The section before the full stop "." is passed to setAccession(). If it differs from the first accession on the ACCESSION line, then the first accession on the ACCESSION line becomes an additional accession, whilst the accession from the VERSION line becomes the primary accession. The section after the full stop is passed to setVersion(). The GI number is passed to setIdentifier().
-KEYWORDS	The line is split up into individual keywords, each of which is passed to addSequenceProperty(Terms.getKeywordTerm()).
-SOURCE	Ignored.
-ORGANISM	Ignored.
-REFERENCE	The coordinates of the reference end up as start and end coordinates of a SimpleRankedDocRef object which is attached to the sequence by calling setRankedDocRef().
-AUTHORS	The value is parsed into a set of DocRefAuthor objects using DocRefAuthor.Tools. The resulting set becomes part of the DocRef object which is wrapped using a SimpleRankedDocRef and attached to the sequence.
-TITLE	The title is passed to the current DocRef object using setTitle().
-JOURNAL	The journal is passed to the current DocRef object using setLocation().
-PUBMED	A RankedCrossRef object is created pointing to Terms.PUBMED_KEY as the database, and using this value as the accession with a version of 0. It is attached to the sequence using setRankedCrossRef(). If no MEDLINE line is found, this is also associated with the current reference by using setCrossRef() on the DocRef object.
-MEDLINE	Behaves similarly to PUBMED, but with a database name of Terms.MEDLINE_KEY. It takes precedence over PUBMED and will always be used for the DocRef cross-reference.
-REMARK	Added to the current reference by calling setRemark() on the DocRef object.
-COMMENT	setComment()
-FEATURES	Each feature is started by calling startFeature(). The source is Terms.getGenBankTerm() whereas the type is obtained from RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the feature name. Qualifiers are added by using addFeatureProperty() with the term key created by RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the qualifier name. There are two special cases of qualifier: db_xref, and organism. Neither end up being stored as qualifiers. A database cross-reference is created for db_xref qualifiers and added to the feature using addRankedCrossRef(), except when the feature type is source and the database name (before the colon) is taxon, in which case the taxon ID is used in conjunction with the organism qualifier to determine the NCBITaxon for this sequence, and passed to the sequence using setTaxon(). Location strings are run through GenBankLocationParser to generate RichLocation instances to attach to the feature.
-BASE	Ignored.
-ORIGIN	The sequence is read and passed to addSymbols().
+{|border="1" cellpadding="2"
+!width="200"|GenBank Field
+!width="400"|How is it processed?
+|-
+|LOCUS	
+|setName(), addSequenceProperty(Terms.getStrandedTerm()), setCircular(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDateUpdatedTerm()), and setDivision().
+|-
+|DEFINITION	
+|setDescription()
+|-
+|ACCESSION	
+|The first one is passed to setAccession(). Subsequent entries are passed to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|VERSION	
+|The section before the full stop "." is passed to setAccession(). If it differs from the first accession on the ACCESSION line, then the first accession on the ACCESSION line becomes an additional accession, whilst the accession from the VERSION line becomes the primary accession. The section after the full stop is passed to setVersion(). The GI number is passed to setIdentifier().
+|-
+|KEYWORDS	
+|The line is split up into individual keywords, each of which is passed to addSequenceProperty(Terms.getKeywordTerm()).
+|-
+|SOURCE	
+|Ignored.
+|-
+|ORGANISM	
+|Ignored.
+|-
+|REFERENCE	
+|The coordinates of the reference end up as start and end coordinates of a SimpleRankedDocRef object which is attached to the sequence by calling setRankedDocRef().
+|-
+|AUTHORS	
+|The value is parsed into a set of DocRefAuthor objects using DocRefAuthor.Tools. The resulting set becomes part of the DocRef object which is wrapped using a SimpleRankedDocRef and attached to the sequence.
+|-
+|TITLE	
+|The title is passed to the current DocRef object using setTitle().
+|-
+|JOURNAL	
+|The journal is passed to the current DocRef object using setLocation().
+|-
+|PUBMED	
+|A RankedCrossRef object is created pointing to Terms.PUBMED_KEY as the database, and using this value as the accession with a version of 0. It is attached to the sequence using setRankedCrossRef(). If no MEDLINE line is found, this is also associated with the current reference by using setCrossRef() on the DocRef object.
+|-
+|MEDLINE	
+|Behaves similarly to PUBMED, but with a database name of Terms.MEDLINE_KEY. It takes precedence over PUBMED and will always be used for the DocRef cross-reference.
+|-
+|REMARK	
+|Added to the current reference by calling setRemark() on the DocRef object.
+|-
+|COMMENT	
+|setComment()
+|-
+|FEATURES	
+|Each feature is started by calling startFeature(). The source is Terms.getGenBankTerm() whereas the type is obtained from RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the feature name. Qualifiers are added by using addFeatureProperty() with the term key created by RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the qualifier name. There are two special cases of qualifier: db_xref, and organism. Neither end up being stored as qualifiers. A database cross-reference is created for db_xref qualifiers and added to the feature using addRankedCrossRef(), except when the feature type is source and the database name (before the colon) is taxon, in which case the taxon ID is used in conjunction with the organism qualifier to determine the NCBITaxon for this sequence, and passed to the sequence using setTaxon(). Location strings are run through GenBankLocationParser to generate RichLocation instances to attach to the feature.
+|-
+|BASE	
+|Ignored.
+|-
+|ORIGIN	
+|The sequence is read and passed to addSymbols().
+|}
+
 
 ==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.7. GenBankFormat output field sources.
-LOCUS	getName(), length(), getNoteSet(Terms.getStrandedTerm()), getNoteSet(Terms.getMolTypeTerm()), getCircular(), getDivision(), and getNoteSet(Terms.getDateUpdatedTerm())
-DEFINITION	getDescription()
-ACCESSION	getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
-VERSION	getAccession(), getIdentifier() and getVersion()
-KEYWORDS	getNoteSet(Terms.getKeywordTerm()).
-SOURCE	getNCBITaxon().getDisplayName()
-ORGANISM	getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy()
-REFERENCE	Each reference is obtained from getRankedDocRefs(). The coordinates of the reference are from the reference's getStart() and getEnd() methods.
-AUTHORS	The author string is from the reference's getAuthors() method.
-TITLE	The title is from the reference's getTitle().
-JOURNAL	The journal information is from the reference's getLocation().
-PUBMED / MEDLINE	The cross reference returned by getCrossRef() on the reference provides the database name and accession used here.
-REMARK	getRemark() on the current reference object.
-COMMENT	All the comments returned by getComments() are joined together, separated by newlines.
-FEATURES	Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db_xref and organism fields are added to the output by calling getNCBITaxon().getNCBITaxID() and getNCBITaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format.
-BASE	Calculated from the sequence data.
-ORIGIN	The sequence is read directly as it is a SymbolList..
+
+{|border="1" cellpadding="2"
+!width="200"|GenBank Field
+!width="400"|How is it outputted?
+|-
+|LOCUS	
+|getName(), length(), getNoteSet(Terms.getStrandedTerm()), getNoteSet(Terms.getMolTypeTerm()), getCircular(), getDivision(), and getNoteSet(Terms.getDateUpdatedTerm())
+|-
+|DEFINITION	
+|getDescription()
+|-
+|ACCESSION	
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|VERSION	
+|getAccession(), getIdentifier() and getVersion()
+|-
+|KEYWORDS	
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|SOURCE	
+|getNCBITaxon().getDisplayName()
+|-
+|ORGANISM	
+|getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy()
+|-
+|REFERENCE	
+|Each reference is obtained from getRankedDocRefs(). The coordinates of the reference are from the reference's getStart() and getEnd() methods.
+|-
+|AUTHORS	
+|The author string is from the reference's getAuthors() method.
+|-
+|TITLE	
+|The title is from the reference's getTitle().
+|-
+|JOURNAL	
+|The journal information is from the reference's getLocation().
+|-
+|PUBMED / MEDLINE	
+|The cross reference returned by getCrossRef() on the reference provides the database name and accession used here.
+|-
+|REMARK	
+|getRemark() on the current reference object.
+|-
+|COMMENT	
+|All the comments returned by getComments() are joined together, separated by newlines.
+|-
+|FEATURES	
+|Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db_xref and organism fields are added to the output by calling getNCBITaxon().getNCBITaxID() and getNCBITaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format.
+|-
+|BASE	
+|Calculated from the sequence data.
+|-
+|ORIGIN	
+|The sequence is read directly as it is a SymbolList..
+|}
 
 === EMBL ===
 
@@ -865,60 +946,167 @@ EMBLFormat reads and writes EMBL files, and understands almost all permutations 
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.8. EMBLFormat input field destinations.
-ID	setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular()
-AC	First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
-SV	If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion().
-DE	setDescription()
-DT	For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()).
-DR	Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
-OS	Ignored.
-OC	Ignored.
-OG	addSequenceProperty(Terms.getOrganelleTerm())
-RN	The number of the reference becomes the rank of the RankedDocRef object later.
-RP	The values on this line become the start and end of the RankedDocRef object later.
-RX	Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
-RA	Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
-RG	Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
-RT	The title for setTitle() on the DocRef object.
-RL	The location for the setLocation() method on the DocRef object.
-RC	Used for setRemark() on the DocRef object.
-KW	Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
-CC	setComment()
-FH	Ignored.
-FT	As per the GenBankFormat - please see the section on GenBank parsing.
-CO	Causes an exception as contigs are not supported.
-AH	Causes an exception as TPAs are not supported.
-SQ	Sequence data is passed to addSymbols().
+
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it processed?
+|-
+|ID	
+|setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular()
+|-
+|AC	
+|First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|SV	
+|If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion().
+|-
+|DE	
+|setDescription()
+|-
+|DT	
+|For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()).
+|-
+|DR	
+|Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
+|-
+|OS	
+|Ignored.
+|-
+|OC	
+|Ignored.
+|-
+|OG	
+|addSequenceProperty(Terms.getOrganelleTerm())
+|-
+|RN	
+|The number of the reference becomes the rank of the RankedDocRef object later.
+|-
+|RP	
+|The values on this line become the start and end of the RankedDocRef object later.
+|-
+|RX	
+|Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
+|-
+|RA	
+|Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
+|-
+|RG	
+|Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
+|-
+|RT	
+|The title for setTitle() on the DocRef object.
+|-
+|RL	
+|The location for the setLocation() method on the DocRef object.
+|-
+|RC	
+|Used for setRemark() on the DocRef object.
+|-
+|KW	
+|Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
+|-
+|CC	
+|setComment()
+|-
+|FH	
+|Ignored.
+|-
+|FT	
+|As per the GenBankFormat - please see the section on GenBank parsing.
+|-
+|CO	
+|Causes an exception as contigs are not supported.
+|-
+|AH	
+|Causes an exception as TPAs are not supported.
+|-
+|SQ	
+|Sequence data is passed to addSymbols().
+|}
+
 
 ==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.9. EMBLFormat output field sources.
-ID	getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular()
-AC	getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
-SV	getAccession() and getVersion().
-DE	getDescription()
-DT	For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). If date created is null, then the update date is duplicated and used here as well.
-DR	getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
-OS	getNCBITaxon().getDisplayName()
-OC	getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy().
-OG	getNoteSet(Terms.getOrganelleTerm())
-RN	Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
-RP	The start and end coordinates of the RankedDocRef object.
-RX	The getCrossRef() output from the DocRef object.
-RA	The getAuthors() output from the DocRef object, with the consortiums removed.
-RG	The getAuthors() output from the DocRef object, with all except consortiums removed.
-RT	The getTitle() from the DocRef.
-RL	The getLocation() from the DocRef.
-RC	The getRemark() from the DocRef.
-KW	getNoteSet(Terms.getKeywordTerm()).
-CC	One comment section per entry in getComments().
-FH	No fields necessary here.
-FT	As per the GenBankFormat - please see the section on GenBank parsing.
-CO	Never generated.
-AH	Never generated.
-SQ	Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it outputted?
+|-
+|ID	
+|getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular()
+|-
+|AC	
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|SV	
+|getAccession() and getVersion().
+|-
+|DE	
+|getDescription()
+|-
+|DT	
+|For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). If date created is null, then the update date is duplicated and used here as well.
+|-
+|DR	
+|getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
+|-
+|OS	
+|getNCBITaxon().getDisplayName()
+|-
+|OC	
+|getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy().
+|-
+|OG	
+|getNoteSet(Terms.getOrganelleTerm())
+|-
+|RN	
+|Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
+|-
+|RP	
+|The start and end coordinates of the RankedDocRef object.
+|-
+|RX	
+|The getCrossRef() output from the DocRef object.
+|-
+|RA	
+|The getAuthors() output from the DocRef object, with the consortiums removed.
+|-
+|RG	
+|The getAuthors() output from the DocRef object, with all except consortiums removed.
+|-
+|RT	
+|The getTitle() from the DocRef.
+|-
+|RL	
+|The getLocation() from the DocRef.
+|-
+|RC	
+|The getRemark() from the DocRef.
+|-
+|KW	
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|CC	
+|One comment section per entry in getComments().
+|-
+|FH	
+|No fields necessary here.
+|-
+|FT	
+|As per the GenBankFormat - please see the section on GenBank parsing.
+|-
+|CO	
+|Never generated.
+|-
+|AH	
+|Never generated.
+|-
+|SQ	
+|Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+|}
 
 === UniProt ===
 
@@ -929,56 +1117,156 @@ UniProtFormat reads and writes UniProt files.
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.10. UniProtFormat input field destinations.
-ID	setName(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDataClassTerm()), setDivision()
-AC	First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
-DE	setDescription()
-DT	For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last sequence updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()). For last annotation updated date: addSequenceProperty(Terms.getDateAnnotatedTerm()) and addSequenceProperty(Terms.getRelAnnotatedTerm()).
-DR	Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
-OS	First named species is used as the scientific name to construct an NCBITaxon object, along with the tax ID from the OX line, and passed to setTaxon(). The second name, if present, is the common name. Subsequent names are synonyms.
-OC	Ignored.
-OX	See details for the OS line.
-OG	addSequenceProperty(Terms.getOrganelleTerm())
-GN	Gene names are passed to addSequenceProperty(Terms.getGeneNameTerm()). Gene synonyms are passed to addSequenceProperty(Terms.getGeneSynonymTerm()). Ordered locus names are passed to addSequenceProperty(Terms.getOrderedLocusNameTerm()). ORF names are passed to addSequenceProperty(Terms.getORFNameTerm()). The values have a number and a colon prefixed, where the number refers to the sequence order of the current gene.
-RN	The number of the reference becomes the rank of the RankedDocRef object later.
-RP	The whole value is passed to setRemark(). If it contains the words 'SEQUENCE OF', then the sequence position is parsed out and becomes the start and end of the RankedDocRef object later.
-RX	Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
-RA	Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
-RG	Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
-RT	The title for setTitle() on the DocRef object.
-RL	The location for the setLocation() method on the DocRef object.
-RC	Comments are key-value pairs. Species comments are passed to addSequenceProperty(Terms.getSpeciesTerm()). Strain comments are passed to addSequenceProperty(Terms.getStrainTerm()). Tissue comments are passed to addSequenceProperty(Terms.getTissueTerm()). Transposon comments are passed to addSequenceProperty(Terms.getTransposonTerm()). Plasmid comments are passed to addSequenceProperty(Terms.getPlasmidTerm()). The values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef.
-KW	Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
-CC	If the comment is parseable using UniProtCommentParser then the value is passed to setComment(). Otherwise, it is assumed to be the copyright message that comes with UniProt records, and is passed to addSequenceProperty(Terms.getCopyrightTerm()).
-FT	Each feature encountered triggers a call to startFeature(), and calls endFeature() on completion. The location is parsed out using UniProtLocationParser. The source term is Terms.getUniProtTerm(), whereas the type term is a term from RichObjectFactory.getDefaultOntology().getOrCreateTerm() equivalent to the name of the feature. The feature description is stored using addFeatureProperty(Terms.getFeatureDescTerm()). Subsequent lines beginning with '/' are added as qualifiers. The only qualifier with a predefined term is 'FTId', which is represented by Terms.getFTIdTerm(). All others encountered have terms generated from RichObjectFactory.getDefaultOntology().getOrCreateTerm() with names equivalent to the name of the qualifier. Qualifiers are added using addFeatureProperty(). UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
-SQ	Sequence data is passed to addSymbols().
+
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it processed?
+|-
+|ID	
+|setName(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDataClassTerm()), setDivision()
+|-
+|AC	
+|First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|DE	
+|setDescription()
+|-
+|DT	
+|For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last sequence updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()). For last annotation updated date: addSequenceProperty(Terms.getDateAnnotatedTerm()) and addSequenceProperty(Terms.getRelAnnotatedTerm()).
+|-
+|DR	
+|Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
+|-
+|OS	
+|First named species is used as the scientific name to construct an NCBITaxon object, along with the tax ID from the OX line, and passed to setTaxon(). The second name, if present, is the common name. Subsequent names are synonyms.
+|-
+|OC	
+|Ignored.
+|-
+|OX	
+|See details for the OS line.
+|-
+|OG	
+|addSequenceProperty(Terms.getOrganelleTerm())
+|-
+|GN	
+|Gene names are passed to addSequenceProperty(Terms.getGeneNameTerm()). Gene synonyms are passed to addSequenceProperty(Terms.getGeneSynonymTerm()). Ordered locus names are passed to addSequenceProperty(Terms.getOrderedLocusNameTerm()). ORF names are passed to addSequenceProperty(Terms.getORFNameTerm()). The values have a number and a colon prefixed, where the number refers to the sequence order of the current gene.
+|-
+|RN	
+|The number of the reference becomes the rank of the RankedDocRef object later.
+|-
+|RP	
+|The whole value is passed to setRemark(). If it contains the words 'SEQUENCE OF', then the sequence position is parsed out and becomes the start and end of the RankedDocRef object later.
+|-
+|RX	
+|Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
+|-
+|RA	
+|Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
+|-
+|RG	
+|Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
+|-
+|RT	
+|The title for setTitle() on the DocRef object.
+|-
+|RL	
+|The location for the setLocation() method on the DocRef object.
+|-
+|RC	
+|Comments are key-value pairs. Species comments are passed to addSequenceProperty(Terms.getSpeciesTerm()). Strain comments are passed to addSequenceProperty(Terms.getStrainTerm()). Tissue comments are passed to addSequenceProperty(Terms.getTissueTerm()). Transposon comments are passed to addSequenceProperty(Terms.getTransposonTerm()). Plasmid comments are passed to addSequenceProperty(Terms.getPlasmidTerm()). The values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef.
+|-
+|KW	
+|Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
+|-
+|CC	
+|If the comment is parseable using UniProtCommentParser then the value is passed to setComment(). Otherwise, it is assumed to be the copyright message that comes with UniProt records, and is passed to addSequenceProperty(Terms.getCopyrightTerm()).
+|-
+|FT	
+|Each feature encountered triggers a call to startFeature(), and calls endFeature() on completion. The location is parsed out using UniProtLocationParser. The source term is Terms.getUniProtTerm(), whereas the type term is a term from RichObjectFactory.getDefaultOntology().getOrCreateTerm() equivalent to the name of the feature. The feature description is stored using addFeatureProperty(Terms.getFeatureDescTerm()). Subsequent lines beginning with '/' are added as qualifiers. The only qualifier with a predefined term is 'FTId', which is represented by Terms.getFTIdTerm(). All others encountered have terms generated from RichObjectFactory.getDefaultOntology().getOrCreateTerm() with names equivalent to the name of the qualifier. Qualifiers are added using addFeatureProperty(). UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
+|-
+|SQ	
+|Sequence data is passed to addSymbols().
+|}
+
 
 ==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.11. UniProtFormat output field sources.
-ID	getName(), getNoteSet(Terms.getMolTypeTerm()), getNoteSet(Terms.getDataClassTerm()), getDivision()
-AC	getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
-DE	getDescription()
-DT	For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). For last annotation date: getNoteSet(Terms.getDateAnnotatedTerm()) and getNoteSetTerms.getRelAnnotatedTerm()). If date created or date annotated is null, then the update date is duplicated and used here as well.
-DR	getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
-OS	getNCBITaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.
-OC	getNCBITaxon().getNameHierarchy().
-OG	getNoteSet(Terms.getOrganelleTerm())
-OX	getNCBITaxon().getNCBITaxID()
-GN	Gene names are written from getNoteSet(Terms.getGeneNameTerm()). Gene synonyms are written from getNoteSet(Terms.getGeneSynonymTerm()). Ordered locus names are written from getNoteSet(Terms.getOrderedLocusNameTerm()). ORF names are written from getNoteSet(Terms.getORFNameTerm()). As the values have a number and a colon prefixed, where the number refers to the sequence order of the current gene, these values are used to keep the correct names grouped together. This prefix is not included in the output.
-RN	Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
-RP	The getRemark() from the DocRef.
-RX	The getCrossRef() output from the DocRef object.
-RA	The getAuthors() output from the DocRef object, with the consortiums removed.
-RG	The getAuthors() output from the DocRef object, with all except consortiums removed.
-RT	The getTitle() from the DocRef.
-RL	The getLocation() from the DocRef.
-RC	Comments are key-value pairs. Species comments are from getNoteSet(Terms.getSpeciesTerm()). Strain comments are from getNoteSet(Terms.getStrainTerm()). Tissue comments are from getNoteSet(Terms.getTissueTerm()). Transposon comments are from getNoteSet(Terms.getTransposonTerm()). Plasmid comments are from getNoteSet(Terms.getPlasmidTerm()). As the values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef, this is used to match the appropriate comments with each reference. This prefix is not included in the output.
-KW	getNoteSet(Terms.getKeywordTerm()).
-CC	One comment section per entry in getComments().
-FT	Each feature is written out using UniProtLocationParser to construct the location string from the feature's getLocation() output, with the feature name being the getType() of the feature and the description being getNoteSet(Terms.getFeatureDescTerm()) on the feature. The FTId, if present in the feature from getNoteSet(Terms.getFTIdTerm()), is written out underneath. No other qualifiers are written out. UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
-SQ	Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it outputted?
+|-
+|ID	
+|getName(), getNoteSet(Terms.getMolTypeTerm()), getNoteSet(Terms.getDataClassTerm()), getDivision()
+|-
+|AC	
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|DE	
+|getDescription()
+|-
+|DT	
+|For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). For last annotation date: getNoteSet(Terms.getDateAnnotatedTerm()) and getNoteSetTerms.getRelAnnotatedTerm()). If date created or date annotated is null, then the update date is duplicated and used here as well.
+|-
+|DR	
+|getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
+|-
+|OS	
+|getNCBITaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.
+|-
+|OC	
+|getNCBITaxon().getNameHierarchy().
+|-
+|OG	
+|getNoteSet(Terms.getOrganelleTerm())
+|-
+|OX	
+|getNCBITaxon().getNCBITaxID()
+|-
+|GN	
+|Gene names are written from getNoteSet(Terms.getGeneNameTerm()). Gene synonyms are written from getNoteSet(Terms.getGeneSynonymTerm()). Ordered locus names are written from getNoteSet(Terms.getOrderedLocusNameTerm()). ORF names are written from getNoteSet(Terms.getORFNameTerm()). As the values have a number and a colon prefixed, where the number refers to the sequence order of the current gene, these values are used to keep the correct names grouped together. This prefix is not included in the output.
+|-
+|RN	
+|Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
+|-
+|RP	
+|The getRemark() from the DocRef.
+|-
+|RX	
+|The getCrossRef() output from the DocRef object.
+|-
+|RA	
+|The getAuthors() output from the DocRef object, with the consortiums removed.
+|-
+|RG	
+|The getAuthors() output from the DocRef object, with all except consortiums removed.
+|-
+|RT	
+|The getTitle() from the DocRef.
+|-
+|RL	
+|The getLocation() from the DocRef.
+|-
+|RC	
+|Comments are key-value pairs. Species comments are from getNoteSet(Terms.getSpeciesTerm()). Strain comments are from getNoteSet(Terms.getStrainTerm()). Tissue comments are from getNoteSet(Terms.getTissueTerm()). Transposon comments are from getNoteSet(Terms.getTransposonTerm()). Plasmid comments are from getNoteSet(Terms.getPlasmidTerm()). As the values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef, this is used to match the appropriate comments with each reference. This prefix is not included in the output.
+|-
+|KW	
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|CC	
+|One comment section per entry in getComments().
+|-
+|FT	
+|Each feature is written out using UniProtLocationParser to construct the location string from the feature's getLocation() output, with the feature name being the getType() of the feature and the description being getNoteSet(Terms.getFeatureDescTerm()) on the feature. The FTId, if present in the feature from getNoteSet(Terms.getFTIdTerm()), is written out underneath. No other qualifiers are written out. UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
+|-
+|SQ	
+|Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+|}
+
 
 === INSDSeq (XML) ===
 
