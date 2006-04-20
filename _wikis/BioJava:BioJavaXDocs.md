@@ -746,19 +746,21 @@ Fasta conversion! seqsOut.writeStream(seqsIn,bloggsNS); </java>
 When working at this level, extra methods can be used when direct access
 to the RichSequenceFormat object is available. These methods are:
 
-Table 8.2. RichSequenceFormat extra options. get/setLineWidth() Sets the
-line width for output. Any lines longer than this will be wrapped. The
-default for most formats is 80. get/setElideSymbols() When set to true,
-this will skip the sequence data (ie. the addSymbols() method of the
-RichSeqIOListener will never be called). get/setElideFeatures() When set
-to true, this will skip the feature tables in the file.
-get/setElideComments() When set to true, this will skip all comments in
-the file. get/setElideReferences() When set to true, this will skip all
-publication cross-references in the file.
+Table 8.2. RichSequenceFormat extra options.
+
+| Name of method           | What it will do                                                                                                                 |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| get/setLineWidth()       | Sets the line width for output. Any lines longer than this will be wrapped. The default for most formats is 80.                 |
+| get/setElideSymbols()    | When set to true, this will skip the sequence data (ie. the addSymbols() method of the RichSeqIOListener will never be called). |
+| get/setElideFeatures()   | When set to true, this will skip the feature tables in the file.                                                                |
+| get/setElideComments()   | When set to true, this will skip all comments in the file.                                                                      |
+| get/setElideReferences() | When set to true, this will skip all publication cross-references in the file.                                                  |
 
 Finer control is available when you go even deeper and write your own
 RichSeqIOListener objects. See later in this document for information on
-that subject. 1.5. How parsed data becomes a sequence.
+that subject.
+
+#### How parsed data becomes a sequence.
 
 All fields read from a file, regardless of the format, are passed to an
 instance of RichSequenceBuilder. In the case of the tools provided in
@@ -770,109 +772,59 @@ SimpleRichSequenceBuilder.
 SimpleRichSequenceBuilder constructs sequences as follows:
 
 Table 8.3. SimpleRichSequenceBuilder sequence construction.
-startSequence Resets all the values in the builder to their defaults,
-ready to parse a whole new sequence. addSequenceProperty Assumes that
-both the key and the value of the property are strings. It uses the key
-to look up a term with the same name (case-sensitive) in the ontology
-provided by RichObjectFactory.getDefaultOntology(). If it finds no such
-term, it creates one. It then adds an annotation to the sequence with
-that term as the key, using the value provided. The first annotation
-receives the rank of 0, the second 1, and so on. The annotations are
-attached to the sequence using setNoteSet() and the accumulated set of
-notes. setVersion Only accepts a single call per sequence. Value is
-passed directly to the resulting sequence's setVersion method. setURI
-Not implemented, throws an exception. setSeqVersion Only accepts a
-single call per sequence. Value is parsed into a double and passed to
-the resulting sequence's setSeqVersion method. If the value is null,
-then 0.0 is used. setAccession Value is passed directly to the
-sequence's setAccession method. Multiple calls will replace the
-accession, not add extra ones. The accession cannot be null.
-setDescription Only accepts a single call per sequence. Value is passed
-directly to the resulting sequence's setDescription method. setDivision
-Only accepts a single call per sequence. Value is passed directly to the
-resulting sequence's setDivision method. The division cannot be null.
-setIdentifier Only accepts a single call per sequence. Value is passed
-directly to the resulting sequence's setIdentifier method. setName Only
-accepts a single call per sequence. Value is passed directly to the
-resulting sequence's setName method. setNamespace Only accepts a single
-call per sequence. Value is passed directly to the resulting sequence's
-setNamespace method. The namespace cannot be null. setComment Adds the
-text supplied (which must not be null) as a comment to the sequence
-using addComment(). Multiple calls will result in multiple comments
-being added. The first comment is ranked 1, the second comment ranked 2,
-and so on. setTaxon Value is passed to the sequence's setNamespace
-method. It must not be null. If this method is called repeatedly, only
-the first call will be accepted. Subsequent calls will result in
-warnings being printed to standard error. These extra calls will not
-cause the builder to fail. The value from the initial call will be the
-one that is used. startFeature Tells the builder to start a new feature
-on this sequence. If the current feature has not yet been ended, then
-this feature will be a sub-feature of the current feature and associated
-with it via a RichFeatureRelationship, where the current feature is the
-parent and this new feature is the child. The relationship will be
-defined with the term "contains" from
-RichObjectFactory.getDefaultOntology(). Each feature will be attached to
-the resulting sequence by calling setParent() on the feature once the
-sequence has been created. getCurrentFeature Returns the current
-feature, if one has been started. If there is no current feature (eg. it
-has already ended, or one was never started) then an exception is
-thrown. addFeatureProperty Assumes that both the key and the value of
-the property are strings. It uses the key to look up a term with the
-same name (case-sensitive) in the ontology provided by
-RichObjectFactory.getDefaultOntology(). If it finds no such term, it
-creates one. It then adds an annotation to the current feature with that
-term as the key, using the value provided. The first annotation receives
-the rank of 0, the second 1, and so on. The annotations are attached to
-the feature using getAnnotation().addNote(). endFeature Ends the current
-feature. If there is no current feature, an exception is thrown.
-setRankedDocRef Adds the given RankedDocRef to the set of publication
-cross-references which the sequence being built refers to. The value
-cannot be null. If the same value is provided multiple times, it will
-only be saved once. Each value is stored by calling addRankedDocRef() on
-the resulting sequence. setRankedCrossRef Adds the given RankedCrossRef
-to the set of database cross-references which the sequence being built
-refers to. The value cannot be null. If the same value is provided
-multiple times, it will only be saved once. Each value is stored by
-calling addRankedCrossRef() on the resulting sequence. setRelationship
-Adds the given BioEntryRelationship to the set of relationships in which
-the sequence being built is the parent. The relationship cannot be null.
-If the same relationship is provided multiple times, it will only be
-saved once. Each relationship is stored by calling addRelationship() on
-the resulting sequence. setCircular You can call this as many times as
-you like. Each call will override the value provided by the previous
-call. The value is passed to the sequence's setCircular method.
-addSymbols Adds symbols to this sequence. You can call it multiple times
-to set symbols at different locations in the sequence. If any of the
-symbols found are not in the alphabet accepted by this builder, or if
-the locations provided to place the symbols at are unacceptable, an
-exception is thrown. The resulting SymbolList will be the basis upon
-which the final RichSequence object is built. endSequence Tells the
-builder that we have provided all the information we know. If at this
-point the name, namespace, or accession have not been provided, or if
-any of them are null, an exception is thrown. makeSequence Constructs a
-RichSequence object from the information provided, following the rules
-laid out in this table, and returns it. The RichSequence object does not
-actually exist until this method has been called. makeRichSequence
-Wrapper for makeSequence.
+
+| Name of method      | What it will do                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| startSequence       | Resets all the values in the builder to their defaults, ready to parse a whole new sequence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| addSequenceProperty | Assumes that both the key and the value of the property are strings. It uses the key to look up a term with the same name (case-sensitive) in the ontology provided by RichObjectFactory.getDefaultOntology(). If it finds no such term, it creates one. It then adds an annotation to the sequence with that term as the key, using the value provided. The first annotation receives the rank of 0, the second 1, and so on. The annotations are attached to the sequence using setNoteSet() and the accumulated set of notes.                                                                                                          |
+| setVersion          | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's |setVersion method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| setURI              | Not implemented, throws an exception.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| setSeqVersion       | Only accepts a single call per sequence. Value is parsed into a double and passed to the resulting sequence's setSeqVersion method. If the value is null, then 0.0 is used.                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| setAccession        | Value is passed directly to the sequence's setAccession method. Multiple calls will replace the accession, not add extra ones. The accession cannot be null.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| setDescription      | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's setDescription method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| setDivision         | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's setDivision method. The division cannot be null.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| setIdentifier       | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's setIdentifier method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| setName             | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's setName method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| setNamespace        | Only accepts a single call per sequence. Value is passed directly to the resulting sequence's setNamespace method. The namespace cannot be null.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| setComment          | Adds the text supplied (which must not be null) as a comment to the sequence using addComment(). Multiple calls will result in multiple comments being added. The first comment is ranked 1, the second comment ranked 2, and so on.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| setTaxon            | Value is passed to the sequence's setNamespace method. It must not be null. If this method is called repeatedly, only the first call will be accepted. Subsequent calls will result in warnings being printed to standard error. These extra calls will not cause the builder to fail. The value from the initial call will be the one that is used.                                                                                                                                                                                                                                                                                      |
+| startFeature        | Tells the builder to start a new feature on this sequence. If the current feature has not yet been ended, then this feature will be a sub-feature of the current feature and associated with it via a RichFeatureRelationship, where the current feature is the parent and this new feature is the child. The relationship will be defined with the term "contains" from RichObjectFactory.getDefaultOntology(). Each feature will be attached to the resulting sequence by calling setParent() on the feature once the sequence has been created.                                                                                        |
+| getCurrentFeature   | Returns the current feature, if one has been started. If there is no current feature (eg. it has already ended, or one was never started) then an exception is thrown.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| addFeatureProperty  | Assumes that both the key and the value of the property are strings. It uses the key to look up a term with the same name (case-sensitive) in the ontology provided by RichObjectFactory.getDefaultOntology(). If it finds no such term, it creates one. It then adds an annotation to the current feature with that term as the key, using the value provided. The first annotation receives the rank of 0, the second 1, and so on. The annotations are attached to the feature using getAnnotation().addNote().                                                                                                                        |
+| endFeature          | Ends the current feature. If there is no current feature, an exception is thrown.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| setRankedDocRef     | Adds the given RankedDocRef to the set of publication cross-references which the sequence being built refers to. The value cannot be null. If the same value is provided multiple times, it will only be saved once. Each value is stored by calling addRankedDocRef() on the resulting sequence.                                                                                                                                                                                                                                                                                                                                         |
+| setRankedCrossRef   | Adds the given RankedCrossRef to the set of database cross-references which the sequence being built refers to. The value cannot be null. If the same value is provided multiple times, it will only be saved once. Each value is stored by calling addRankedCrossRef() on the resulting sequence. setRelationship Adds the given BioEntryRelationship to the set of relationships in which the sequence being built is the parent. The relationship cannot be null. If the same relationship is provided multiple times, it will only be saved once. Each relationship is stored by calling addRelationship() on the resulting sequence. |
+| setCircular         | You can call this as many times as you like. Each call will override the value provided by the previous call. The value is passed to the sequence's setCircular method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| addSymbols          | Adds symbols to this sequence. You can call it multiple times to set symbols at different locations in the sequence. If any of the symbols found are not in the alphabet accepted by this builder, or if the locations provided to place the symbols at are unacceptable, an exception is thrown. The resulting SymbolList will be the basis upon which the final RichSequence object is built.                                                                                                                                                                                                                                           |
+| endSequence         | Tells the builder that we have provided all the information we know. If at this point the name, namespace, or accession have not been provided, or if any of them are null, an exception is thrown.                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| makeSequence        | Constructs a RichSequence object from the information provided, following the rules laid out in this table, and returns it. The RichSequence object does not actually exist until this method has been called.                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| makeRichSequence    | Wrapper for makeSequence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 If you want fine-grained control over every aspect of a file whilst it
 is being parsed, you must write your own implementation of the
 RichSeqIOListener interface (which RichSequenceBuilder extends). This is
-detailed later in this document. 2. FASTA.
+detailed later in this document.
+
+### FASTA
 
 FastaFormat reads and writes FASTA files, and is able to parse the
-description line in detail. 2.1. Reading.
+description line in detail.
+
+#### Reading
 
 The description line formats understood are as follows:
 
-\>gi|<identifier>|<namespace>|<accession>.<version>|<name>
-<description> \>gi|<identifier>|<namespace>|<accession>|<name>
-<description>
-
-\><namespace>|<accession>.<version>|<name>
-<description> \><namespace>|<accession>|<name> <description>
-
-\><name> <description>
+`
+>gi|<identifier>|<namespace>|<accession>.<version>|<name> <description>
+>gi|<identifier>|<namespace>|<accession>|<name> <description>
+`  
+`
+><namespace>|<accession>.<version>|<name> <description><br>
+><namespace>|<accession>|<name> <description>
+`  
+`
+><name> <description>
+`
 
 The description is optional in all cases. The version defaults to 0 if
 not provided.
@@ -886,15 +838,26 @@ RichObjectFactory.getDefaultNamespace() is used.
 
 The fields are passed into the RichSeqIOListener as follows:
 
-Table 8.4. FastaFormat input field destinations. identifier
-setIdentifier() namespace setNamespace() accession setAccession()
-version setVersion() name setName() description setDescription()
-<sequence data> addSymbols() 2.2. Writing.
+Table 8.4. FastaFormat input field destinations.
+
+| FASTA Info type | Method used to set info |
+|-----------------|-------------------------|
+| identifier      | setIdentifier()         |
+| namespace       | setNamespace()          |
+| accession       | setAccession()          |
+| version         | setVersion()            |
+| name            | setName()               |
+| description     | setDescription()        |
+| <sequence data> | addSymbols()            |
+
+#### Writing
 
 Description lines are always output in one of two forms:
 
-\>gi|<identifier>|<namespace>|<accession>.<version>|<name>
-<description> \><namespace>|<accession>.<version>|<name> <description>
+`
+>gi|<identifier>|<namespace>|<accession>.<version>|<name> <description><br>
+><namespace>|<accession>.<version>|<name> <description>
+`
 
 The first form is used if the identifier of the sequence object is not
 null, otherwise the second form is used. In both cases, the description
@@ -902,14 +865,24 @@ is only output if it is not null.
 
 The fields are read from the RichSequence object as follows:
 
-Table 8.5. FastaFormat output field sources. identifier getIdentifier()
-namespace getNamespace() accession getAccession() version getVersion()
-name getName() description getDescription() <sequence data> Sequence is
-read directly as it is a SymbolList. 3. GenBank.
+Table 8.5. FastaFormat output field sources.
+
+| FASTA Info type | Method used to get info                          |
+|-----------------|--------------------------------------------------|
+| identifier      | getIdentifier()                                  |
+| namespace       | getNamespace()                                   |
+| accession       | getAccession()                                   |
+| version         | getVersion()                                     |
+| name            | getName()                                        |
+| description     | getDescription()                                 |
+| <sequence data> | Sequence is read directly as it is a SymbolList. |
+
+### GenBank
 
 GenbankFormat reads and writes GenBank files, and understands almost all
 permutations of the location descriptors found in the feature tables.
-3.1. Reading.
+
+#### Reading
 
 The fields are passed into the RichSeqIOListener as follows:
 
@@ -960,8 +933,9 @@ the taxon ID is used in conjunction with the organism qualifier to
 determine the NCBITaxon for this sequence, and passed to the sequence
 using setTaxon(). Location strings are run through GenBankLocationParser
 to generate RichLocation instances to attach to the feature. BASE
-Ignored. ORIGIN The sequence is read and passed to addSymbols(). 3.2.
-Writing.
+Ignored. ORIGIN The sequence is read and passed to addSymbols().
+
+#### Writing
 
 The fields are read from the RichSequence object as follows:
 
@@ -995,11 +969,14 @@ the features are the contents of the feature's annotation, provided by
 getNoteSet() on the feature. GenBankLocationParser is used to convert
 the feature's getLocation() output into the correct text format. BASE
 Calculated from the sequence data. ORIGIN The sequence is read directly
-as it is a SymbolList.. 4. EMBL.
+as it is a SymbolList..
+
+### EMBL
 
 EMBLFormat reads and writes EMBL files, and understands almost all
 permutations of the location descriptors found in the feature tables.
-4.1. Reading.
+
+#### Reading
 
 The fields are passed into the RichSeqIOListener as follows:
 
@@ -1040,7 +1017,9 @@ to addSequenceProperty(Terms.getKeywordTerm()) CC setComment() FH
 Ignored. FT As per the GenBankFormat - please see the section on GenBank
 parsing. CO Causes an exception as contigs are not supported. AH Causes
 an exception as TPAs are not supported. SQ Sequence data is passed to
-addSymbols(). 4.2. Writing.
+addSymbols().
+
+#### Writing
 
 The fields are read from the RichSequence object as follows:
 
@@ -1069,9 +1048,13 @@ getNoteSet(Terms.getKeywordTerm()). CC One comment section per entry in
 getComments(). FH No fields necessary here. FT As per the
 GenBankFormat - please see the section on GenBank parsing. CO Never
 generated. AH Never generated. SQ Sequence counts are generated, then
-sequence is read directly as it is a SymbolList. 5. UniProt.
+sequence is read directly as it is a SymbolList.
 
-UniProtFormat reads and writes UniProt files. 5.1. Reading.
+### UniProt
+
+UniProtFormat reads and writes UniProt files.
+
+#### Reading
 
 The fields are passed into the RichSeqIOListener as follows:
 
@@ -1145,7 +1128,9 @@ RichObjectFactory.getDefaultOntology().getOrCreateTerm() with names
 equivalent to the name of the qualifier. Qualifiers are added using
 addFeatureProperty(). UniProt uses its own unique set of feature names.
 No attempt is made to translate other feature names to/from this set. SQ
-Sequence data is passed to addSymbols(). 5.2. Writing.
+Sequence data is passed to addSymbols().
+
+#### Writing
 
 The fields are read from the RichSequence object as follows:
 
