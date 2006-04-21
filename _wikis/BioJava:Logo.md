@@ -72,3 +72,7 @@ Logo14 ![](Biojavalogo.png "fig:Biojavalogo.png")
 If you like it I will upload the svg version, so you can change colors
 
 Logo15 ![](BIOJAVA_LOGO_samiul.jpg "fig:BIOJAVA_LOGO_samiul.jpg")
+
+Logo16 ![](Biojava_logo.gif "fig:Biojava_logo.gif")
+
+hope you like this one ! (hwd from Taiwan)
