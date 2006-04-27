@@ -1,3 +1,5 @@
+Note that if you intend to use the BioJavaX/ [http://www.hibernate.org/ Hibernate] bindings to BioSQL you should refer instead to the [[BioJava:BioJavaXDocs BioJavaX documentation]].
+
 '''by David Huen'''
 
 This document describes how to install and use BioSQL. BioSQL is a part of the [http://obda.open-bio.org/ OBDA] standard and was developed as a common sequence database schema for the different language projects within the [http://www.open-bio.org/ Open Bioinformatics Foundation]. 
