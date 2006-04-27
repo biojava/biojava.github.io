@@ -1,4 +1,5 @@
-Note that if you intend to use the BioJavaX/ [http://www.hibernate.org/ Hibernate] bindings to BioSQL you should refer instead to the [[BioJava:BioJavaXDocs BioJavaX documentation]].
+<b>Note</b> that if you intend to use the BioJavaX/ [http://www.hibernate.org/ Hibernate] bindings to BioSQL you should refer instead to the [[BioJava:BioJavaXDocs|BioJavaX documentation]].
+
 
 '''by David Huen'''
 
