@@ -4,6 +4,11 @@ tags:
  - Tutorial
 ---
 
+Note that if you intend to use the BioJavaX/
+[Hibernate](http://www.hibernate.org/) bindings to BioSQL you should
+refer instead to the [BioJava:BioJavaXDocs BioJavaX
+documentation](BioJava:BioJavaXDocs BioJavaX documentation "wikilink").
+
 **by David Huen**
 
 This document describes how to install and use BioSQL. BioSQL is a part
