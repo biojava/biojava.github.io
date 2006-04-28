@@ -58,6 +58,7 @@ Whats done already?
 -   Tutorial - laborious but straightforward, some parts are in need of
     updating and/or are no longer relevant (Formatting is done --
     [Martin](User:Martin "wikilink") 21:02, 12 February 2006 (EST))
+-   BioJavaX docbook need converting to Wiki - quite hard (done)
 
 Inspiration
 -----------
