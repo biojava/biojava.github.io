@@ -2365,8 +2365,9 @@ SchemaExport(cfg).create(true, false); </java>
 ### Reading/writing objects as XML.
 
 There is a bug in Hibernate which prevents this function from working
-100% correctly (bug details here), however the code is supplied as an
-example for when the bug is fixed.
+100% correctly (bug details
+[here](http://opensource.atlassian.com/projects/hibernate/browse/HHH-796)),
+however the code is supplied as an example for when the bug is fixed.
 
 The snippet below will query the database for all DocRef objects, then
 output an XML representation of them to standard out:
