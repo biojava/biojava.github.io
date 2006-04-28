@@ -5,7 +5,6 @@ title: BioJava:ToDo
 What needs starting?
 --------------------
 
--   BioJavaX docbook need converting to Wiki - quite hard
 -   Conversion of cookbook and tutorials to reflect 1.4 (and/or
     BioJavax) conventions - requires someone with in-depth knowledge of
     the complete workings of BioJava
