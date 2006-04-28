@@ -26,6 +26,7 @@
 * Mailing list pages --[[User:Mark|Mark]] 07:17, 23 February 2006 (EST)
 * Participants --[[User:Mark|Mark]] 07:17, 23 February 2006 (EST)
 * Tutorial - laborious but straightforward, some parts are in need of updating and/or are no longer relevant (Formatting is done -- [[User:Martin|Martin]] 21:02, 12 February 2006 (EST))
+* BioJavaX docbook need converting to Wiki - quite hard (done)
 
 == Inspiration ==
 
