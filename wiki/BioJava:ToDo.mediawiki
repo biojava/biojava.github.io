@@ -1,6 +1,6 @@
 == What needs starting? ==
 
-* BioJavaX docbook need converting to Wiki - quite hard
+
 * Conversion of cookbook and tutorials to reflect 1.4 (and/or BioJavax) conventions - requires someone with in-depth knowledge of the complete workings of BioJava
 * Consolidate cookbook, tutorials and BJX docbook into a single HowTo - time-consuming, might as well just write a book!
 * Related sites eg bioperl, biopython etc - easy, could use interwiki
