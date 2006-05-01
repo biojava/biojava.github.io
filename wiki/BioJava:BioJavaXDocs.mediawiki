@@ -2324,7 +2324,8 @@ The wrappers allow sequences to be read from, added to and deleted from the data
 Session sess = ...;    // connect to BioSQL using Hibernate and establish a session
 RichObjectFactory.connectToBioSQL(sess);    // bind BioJavaX to the Hibernate session
 
-RichSequenceDB db = new BioSQLRichSequenceDB(sess);   // create the RichSequenceDB wrapper around the Hibernate session
+// create the RichSequenceDB wrapper around the Hibernate session
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);   
 
 RichSequence seq1 = db.getRichSequence("joe");    // load the sequence where name='joe'
 
@@ -2342,7 +2343,8 @@ The code above is non-transactional, but it can be made to be transactional by d
 Session sess = ...;    // connect to BioSQL using Hibernate and establish a session
 RichObjectFactory.connectToBioSQL(sess);    // bind BioJavaX to the Hibernate session
 
-RichSequenceDB db = new BioSQLRichSequenceDB(sess);    // create the RichSequenceDB wrapper around the Hibernate session
+// create the RichSequenceDB wrapper around the Hibernate session
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);    
 
 Transaction tx;
 try {
