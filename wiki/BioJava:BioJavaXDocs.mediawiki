@@ -2244,9 +2244,9 @@ List lengths = q.list();  // list will contain Integer instances containing the 
 
 Objects can be removed from the database by calling:
 
-<code>
+<java>
 session.delete(obj); // where obj is some persistent object
-</code>
+</java>
 
 Only when the transaction is committed will they actually be deleted. If the transaction is rolled back, the objects will come back to life.
 
