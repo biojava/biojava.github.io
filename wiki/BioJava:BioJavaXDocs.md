@@ -2338,9 +2338,8 @@ instances containing the lengths </java>
 
 Objects can be removed from the database by calling:
 
-`
-session.delete(obj); // where obj is some persistent object
-`
+<java> session.delete(obj); // where obj is some persistent object
+</java>
 
 Only when the transaction is committed will they actually be deleted. If
 the transaction is rolled back, the objects will come back to life.
