@@ -2231,9 +2231,11 @@ You might not always want to retrieve lists of objects from the database. This q
 <java>
 Query q = session.createQuery("select name from Sequence");
 List names = q.list();  // list will contain String instances containing the names
+</java>
 
 This one returns all the lengths of sequences, which are integers. Note the use of sequenceLength, which is the object parameter, and not length which is the database table column name:
 
+<java>
 Query q = session.createQuery("select sequenceLength from Sequence");
 List lengths = q.list();  // list will contain Integer instances containing the lengths
 </java>
