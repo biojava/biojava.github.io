@@ -2115,9 +2115,7 @@ BioJavaX RichObjectFactory.connectToBioSQL(session); </java>
 
 To close the Hibernate session:
 
-`
-session.close();
-`
+<java> session.close(); </java>
 
 Note that the line that loads the Hibernate configuration only needs to
 be done once, regardless of how many sessions you open, as long as you
