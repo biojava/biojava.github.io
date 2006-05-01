@@ -1862,13 +1862,17 @@ A default namespace is provided by the RichObjectFactory:
 
 <java> // get the default namespace Namespace defaultNS =
 RichObjectFactory.getDefaultNamespace(); ... // make a custom namespace
-Namespace customNS =
-(Namespace)RichObjectFactory.getObject(SimpleNamespace.class, new
-Object[]{"myNameSpace"}); ... // load a namespace from BioSQL, or create
-it if it doesn't exist yet Namespace biosqlNS =
-(Namespace)BioSQLRichObjectFactory.getObject(SimpleNamespace.class, new
-Object[]{"myBioSQLNameSpace"}); ... // change the default namespace to
-"bloggs" RichObjectFactory.setDefaultNamespaceName("bloggs"); </java>
+Namespace customNS = (Namespace)RichObjectFactory.getObject(
+
+`                                                 SimpleNamespace.class, new Object[]{"myNameSpace"}); `
+
+... // load a namespace from BioSQL, or create it if it doesn't exist
+yet Namespace biosqlNS = (Namespace)BioSQLRichObjectFactory.getObject(
+
+`                                                       SimpleNamespace.class, new Object[]{"myBioSQLNameSpace"});`
+
+... // change the default namespace to "bloggs"
+RichObjectFactory.setDefaultNamespaceName("bloggs"); </java>
 
 NCBI Taxonomy.
 --------------
