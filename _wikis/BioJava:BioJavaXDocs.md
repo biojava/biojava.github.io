@@ -1420,36 +1420,36 @@ implemented by the SimpleRichLocation class.
 
 This example describes the GenBank-style location string "56":
 
-<java> Position pos = new SimplePosition(56); RichLocation loc = new
-SimpleRichLocation(pos,0); // the 0 is an arbitrary value for the rank
-of this location </java>
+<java> Position pos = new SimplePosition(56); // the 0 is an arbitrary
+value for the rank of this location RichLocation loc = new
+SimpleRichLocation(pos,0); </java>
 
 This example describes the GenBank-style location string
 "(23^34)..57\>":
 
-<java> Position min = new SimplePosition(false,false,23,34,"^"); // two
-falses = not fuzzy at all Position max = new
-SimplePosition(false,true,57); // false = non-fuzzy start, true = fuzzy
-end RichLocation loc = new SimpleRichLocation(min,max,0); // the 0 is an
-arbitrary value for the rank of this location </java>
+<java> // two falses = not fuzzy at all Position min = new
+SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
+= fuzzy end Position max = new SimplePosition(false,true,57); // the 0
+is an arbitrary value for the rank of this location RichLocation loc =
+new SimpleRichLocation(min,max,0); </java>
 
 This example describes the GenBank-style location string
 "complement((23^34)..57\>)":
 
-<java> Position min = new SimplePosition(false,false,23,34,"^"); // two
-falses = not fuzzy at all Position max = new
-SimplePosition(false,true,57); // false = non-fuzzy start, true = fuzzy
-end RichLocation loc = new
+<java> // two falses = not fuzzy at all Position min = new
+SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
+= fuzzy end Position max = new SimplePosition(false,true,57);
+RichLocation loc = new
 SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND); </java>
 
 This example describes the GenBank-style location string
 "A12345.3:complement((23^34)..57\>)":
 
-<java> CrossRef cr = new SimpleCrossRef("GenBank","A12345",3); //
-version 3 of accession A12345 in the GenBank database Position min = new
-SimplePosition(false,false,23,34,"^"); // two falses = not fuzzy at all
-Position max = new SimplePosition(false,true,57); // false = non-fuzzy
-start, true = fuzzy end RichLocation loc = new
+<java> // version 3 of accession A12345 in the GenBank database CrossRef
+cr = new SimpleCrossRef("GenBank","A12345",3); // two falses = not fuzzy
+at all Position min = new SimplePosition(false,false,23,34,"^"); //
+false = non-fuzzy start, true = fuzzy end Position max = new
+SimplePosition(false,true,57); RichLocation loc = new
 SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr); </java>
 
 If you require locations that cover more than one range, you must use
