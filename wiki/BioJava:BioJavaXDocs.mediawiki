@@ -2293,8 +2293,10 @@ writer.write(doc);
 Reading them back and saving them to the database is similar:
 
 <java>
-Document doc = ...;                          // open an XML document with some kind of org.dom4j.io.SAXReader
-List results = doc.selectNodes("//docref");  // use the node-name from the class tag of DocRef.hbm.xml mapping file
+// open an XML document with some kind of org.dom4j.io.SAXReader
+Document doc = ...;                          
+// use the node-name from the class tag of DocRef.hbm.xml mapping file
+List results = doc.selectNodes("//docref");  
         
 Transaction tx = session.beginTransaction();
 Session dom4jSession = session.getSession(EntityMode.DOM4J);
