@@ -2324,15 +2324,15 @@ database. This query retrieves the names of sequences:
 
 <java> Query q = session.createQuery("select name from Sequence"); List
 names = q.list(); // list will contain String instances containing the
-names
+names </java>
 
 This one returns all the lengths of sequences, which are integers. Note
 the use of sequenceLength, which is the object parameter, and not length
 which is the database table column name:
 
-Query q = session.createQuery("select sequenceLength from Sequence");
-List lengths = q.list(); // list will contain Integer instances
-containing the lengths </java>
+<java> Query q = session.createQuery("select sequenceLength from
+Sequence"); List lengths = q.list(); // list will contain Integer
+instances containing the lengths </java>
 
 ### Deleting objects.
 
