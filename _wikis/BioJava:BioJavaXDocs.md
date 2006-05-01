@@ -2108,11 +2108,10 @@ line in your code.
 
 To open a Hibernate session and connect it to BioJavaX:
 
-<java> SessionFactory sessionFactory = new
-Configuration().configure().buildSessionFactory(); // load Hibernate
-config Session session = sessionFactory.openSession(); // open the
-session RichObjectFactory.connectToBioSQL(session); // connect it to
-BioJavaX </java>
+<java> // load Hibernate config SessionFactory sessionFactory = new
+Configuration().configure().buildSessionFactory(); // open the session
+Session session = sessionFactory.openSession(); // connect it to
+BioJavaX RichObjectFactory.connectToBioSQL(session); </java>
 
 To close the Hibernate session:
 
