@@ -2442,8 +2442,8 @@ sequence is added, and a third is deleted:
 establish a session RichObjectFactory.connectToBioSQL(sess); // bind
 BioJavaX to the Hibernate session
 
-RichSequenceDB db = new BioSQLRichSequenceDB(sess); // create the
-RichSequenceDB wrapper around the Hibernate session
+// create the RichSequenceDB wrapper around the Hibernate session
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);
 
 RichSequence seq1 = db.getRichSequence("joe"); // load the sequence
 where name='joe'
@@ -2464,8 +2464,8 @@ JavaDocs for the Session object in Hibernate):
 establish a session RichObjectFactory.connectToBioSQL(sess); // bind
 BioJavaX to the Hibernate session
 
-RichSequenceDB db = new BioSQLRichSequenceDB(sess); // create the
-RichSequenceDB wrapper around the Hibernate session
+// create the RichSequenceDB wrapper around the Hibernate session
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);
 
 Transaction tx; try {
 
