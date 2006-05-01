@@ -599,15 +599,16 @@ Here is an example of using the RichSequence.IOTools methods. The
 example reads a file in Genbank format containing some DNA sequences,
 then prints them out to standard out (the screen) in EMBL format:
 
-<java> BufferedReader br = new BufferedReader(new
-FileReader("myGenbank.gbk")); // an input GenBank file Namespace ns =
-RichObjectFactory.getDefaultNamespace(); // a namespace to override that
-in the file RichSequenceIterator seqs =
-RichSequence.IOTools.readGenbankDNA(br,ns); // we are reading DNA
-sequences while (seqs.hasNext()) {
+<java> // an input GenBank file BufferedReader br = new
+BufferedReader(new FileReader("myGenbank.gbk")); // a namespace to
+override that in the file Namespace ns =
+RichObjectFactory.getDefaultNamespace(); // we are reading DNA sequences
+RichSequenceIterator seqs = RichSequence.IOTools.readGenbankDNA(br,ns);
+while (seqs.hasNext()) {
 
 `   RichSequence rs = seqs.nextRichSequence();`  
-`   RichSequence.IOTools.writeEMBL(System.out, rs, ns);                   // write it in EMBL format to standard out`
+`   // write it in EMBL format to standard out`  
+`   RichSequence.IOTools.writeEMBL(System.out, rs, ns);                   `
 
 } </java>
 
