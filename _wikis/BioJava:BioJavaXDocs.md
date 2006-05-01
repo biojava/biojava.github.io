@@ -2287,8 +2287,10 @@ directly without specifying which field to use. This query returns all
 RichSequence objects that have a comment that contains the word
 "rubbish" with a rank of 0:
 
-<java> Query q = session.createQuery("select rs from Sequence as rs join
-Comment as c where c.comment like :comment and rank=:rank");
+<java> Query q = session.createQuery(
+
+`         "select rs from Sequence as rs join Comment as c where c.comment like :comment and rank=:rank");`
+
 q.setString("comment","%rubbish%"); // % symbol means match any string
 q.setInteger("rank",0); List sequences = q.list(); // a list of all
 matching RichSequence objects. </java>
