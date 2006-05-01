@@ -1709,24 +1709,24 @@ Features
 
 The best way to create a new feature is like this:
 
-<java> Feature.Template templ = new RichFeature.Template(); // create a
-feature template templ.location = ...; // assign the feature template a
-location, type, and source templ.typeTerm = ...; templ.sourceTerm = ...;
-templ.annotation = new SimpleRichAnnotation(); // assign the rest of the
-necessary stuff templ.featureRelationshipSet = new TreeSet();
-templ.rankedCrossRefs = new TreeSet(); RichSequence rs = ...; // get a
-sequence from somewhere RichFeature feat =
-rs.createFeature(RichFeature.Template()); // make a new feature on that
-sequence </java>
+<java> // create a feature template Feature.Template templ = new
+RichFeature.Template(); // assign the feature template a location, type,
+and source templ.location = ...; templ.typeTerm = ...; templ.sourceTerm
+= ...; // assign the rest of the necessary stuff templ.annotation = new
+SimpleRichAnnotation(); templ.featureRelationshipSet = new TreeSet();
+templ.rankedCrossRefs = new TreeSet(); // get a sequence from somewhere
+RichSequence rs = ...; // make a new feature on that sequence
+RichFeature feat = rs.createFeature(RichFeature.Template()); </java>
 
 Alternatively, you can start with a completely empty dummy feature and
 just customise the bits you need:
 
-<java> RichSequence rs = ...; // get a sequence RichFeature feat =
-RichFeature.Tools.makeEmptyFeature(); // make an empty feature
-feat.setParent(rs): // associate sequence with feature
-rs.getFeatureSet().add(feat); // associate feature with sequence //
-customise the feature here, eg. location, type, source etc. </java>
+<java> // get a sequence RichSequence rs = ...; // make an empty feature
+RichFeature feat = RichFeature.Tools.makeEmptyFeature(); // associate
+sequence with feature feat.setParent(rs): // associate feature with
+sequence rs.getFeatureSet().add(feat);
+
+// customise the feature here, eg. location, type, source etc. </java>
 
 ### Qualifiers as annotations.
 
