@@ -1,1 +1,10 @@
 Where is UML diagram for classes?
+
+
+Hi,
+
+As far as I know, there is no UML diagram. Mark, Richard, does such a thing exists?
+
+Sylvain
+
+--[[User:Foisys|Foisys]] 20:14, 1 May 2006 (EDT)
