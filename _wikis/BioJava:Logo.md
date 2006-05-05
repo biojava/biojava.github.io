@@ -26,7 +26,7 @@ Logo3 ![](bio-java-logo-3.gif "fig:bio-java-logo-3.gif")
 This is good.
 
 I like this one, but I think the sequence on top and bottom is too
-much - can we have the middle part only? I assume the cup is in the
+much - can we have the middle part only? I assume the image is in the
 copyright of the contributor? [andreas](User:andreas "wikilink")
 
 Logo4 ![](bio-java-logo-4.gif "fig:bio-java-logo-4.gif")
