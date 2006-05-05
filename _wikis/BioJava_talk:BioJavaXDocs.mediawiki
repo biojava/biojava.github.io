@@ -8,3 +8,7 @@ As far as I know, there is no UML diagram. Mark, Richard, does such a thing exis
 Sylvain
 
 --[[User:Foisys|Foisys]] 20:14, 1 May 2006 (EDT)
+
+There is no UML that I know of. Volunteers??
+
+--[[User:Mark|Mark]] 22:03, 4 May 2006 (EDT)
