@@ -82,3 +82,7 @@ Logo15 ![](BIOJAVA_LOGO_samiul.jpg "fig:BIOJAVA_LOGO_samiul.jpg")
 Logo16 ![](Biojava_logo.gif "fig:Biojava_logo.gif")
 
 hope you like this one ! (hwd from Taiwan)
+
+I like the shape of this one, but the purple color is too strong. would
+it be possible to provide a version with e.g. blue or green ?
+[andreas](User:andreas "wikilink")
