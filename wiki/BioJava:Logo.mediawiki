@@ -20,7 +20,11 @@ Logo2
 
 
 Logo3
-[[Image:bio-java-logo-3.gif]]   This is good.
+[[Image:bio-java-logo-3.gif]]   
+
+This is good.
+
+I like this one, but I think the sequence on top and bottom is too much - can we have the middle part only? I assume the cup is in the copyright of the contributor? [[User:andreas|andreas]]
 
 
 
