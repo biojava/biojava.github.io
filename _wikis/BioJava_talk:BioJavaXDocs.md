@@ -12,3 +12,7 @@ thing exists?
 Sylvain
 
 --[Foisys](User:Foisys "wikilink") 20:14, 1 May 2006 (EDT)
+
+There is no UML that I know of. Volunteers??
+
+--[Mark](User:Mark "wikilink") 22:03, 4 May 2006 (EDT)
