@@ -87,4 +87,4 @@ I like the shape of this one, but the purple color is too strong. would
 it be possible to provide a version with e.g. blue or green ?
 [andreas](User:andreas "wikilink")
 
-Logo16 ![](Biojava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
+Logo16.1 ![](Biojava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
