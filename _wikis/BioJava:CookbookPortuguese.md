@@ -108,9 +108,9 @@ Como eu faço para....?
     Proteina](Biojava:CookbookPortuguese:Translation "wikilink")?
 -   [Como eu faco para traduzir um simples codon em um simples
     aminoacido](Biojava:CookbookPortuguese:Translation:Single "wikilink")?
--   [How do I use a non standard translation
-    table](Biojava:CookbookPortuguese:Translation:NonStandart "wikilink")?
--   [How do I translate a nucleotide sequence in all six
+-   [Como utiliza um outro tipo de tabela de
+    transcrição](Biojava:CookbookPortuguese:Translation:NonStandart "wikilink")?
+-   [Como eu traduzo uma sequência de nucleotideos em todos os seis
     frames](Biojava:CookbookPortuguese:Translation:SixFrames "wikilink")?
 
 ### Proteomics
