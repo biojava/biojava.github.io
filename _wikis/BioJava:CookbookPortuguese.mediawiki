@@ -52,7 +52,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:Sequence:Edit|Como eu edito um objeto do tipo Sequence ou SymbolList]]?
 * [[Biojava:CookbookPortuguese:Sequence:Regex|Como utilizar expressões regulares em uma sequencia para encontrar seu motif]]?
 
-=== Translation ===
+===Tradução===
 
 * [[Biojava:CookbookPortuguese:Translation|Como eu faco para transcrever DNA em RNA e este em Proteina]]?
 * [[Biojava:CookbookPortuguese:Translation:Single|Como eu faco para traduzir um simples codon em um simples aminoacido]]?
