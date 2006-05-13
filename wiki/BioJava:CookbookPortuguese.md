@@ -113,7 +113,7 @@ Como eu faço para....?
 -   [Como eu traduzo uma sequência de nucleotideos em todos os seis
     frames](Biojava:CookbookPortuguese:Translation:SixFrames "wikilink")?
 
-### Proteomics
+### Proteoma
 
 -   [Como eu calculo a massa e o pI de um
     peptideo](Biojava:CookbookPortuguese:Proteomics "wikilink")?
