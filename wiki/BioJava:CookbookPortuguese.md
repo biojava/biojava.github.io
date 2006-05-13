@@ -102,7 +102,7 @@ Como eu faço para....?
 -   [Como utilizar expressões regulares em uma sequencia para encontrar
     seu motif](Biojava:CookbookPortuguese:Sequence:Regex "wikilink")?
 
-### Translation
+### Tradução
 
 -   [Como eu faco para transcrever DNA em RNA e este em
     Proteina](Biojava:CookbookPortuguese:Translation "wikilink")?
