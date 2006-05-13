@@ -59,7 +59,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:Translation:NonStandart|Como utiliza um outro tipo de tabela de transcrição]]?
 * [[Biojava:CookbookPortuguese:Translation:SixFrames|Como eu traduzo uma sequência de nucleotideos em todos os seis frames]]?
 
-=== Proteomics ===
+===Proteoma===
 
 * [[Biojava:CookbookPortuguese:Proteomics|Como eu calculo a massa e o pI de um peptideo]]?
 * [[Biojava:CookbookPortuguese:Proteomics:AAindex|Como eu analizo as propriedades de um simbolo de uma sequencia de amino-acidos usando um banco de dados Amino Acid Indexado]]?
