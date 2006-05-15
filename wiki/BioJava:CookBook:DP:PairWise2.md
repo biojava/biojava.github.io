@@ -12,7 +12,7 @@ Smith and Waterman developed an algorithm for local alignments, which
 was the basis for the [BLAST program](http://www.ncbi.nih.gov/BLAST/).
 The example below shows how to use the implementation of both algorithms
 from the alignment package. It requires BioJava 1.5, which can be
-downloaded from the [cvs](http://cvs.biojava.org) for testing purposes.
+downloaded from the [CVS](http://cvs.biojava.org) for testing purposes.
 
 The idea of these deterministic approaches is to maintain a matrix
 representation of an edit graph, which covers the operations insert,
