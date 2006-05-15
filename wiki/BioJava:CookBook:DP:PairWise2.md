@@ -20,20 +20,31 @@ delete, replace and gap extension (insert and delete are gap openings in
 the query or the target sequence, respectively). By dynamic programing
 the matrix elements are computed, which are costs or scores of the
 respective operation. The highest scoring (lowest cost) path through the
-matrix gives the best alignment.
+matrix gives the best alignment, which can be obtained by tracing back
+the matrix elements.
 
 Alignments with different scores/expenses for gap opening and gap
 extension (affine gap penalties) consume significantly more time and
 memory as with equal scores (costs). The reason for this is that instead
 of one matrix three matrices are needed to remember the best path
-through the edit graph. One matrix for matches and replaces, one for
-gaps of lenght one and another matrix for extended gaps. All these
-matrices have the dimension `query.length()` times `target.length()`.
+through the edit graph. Two matrices to remember if a gap has just been
+started in the query or in the target sequence, respectively and a third
+matrix to remember the optimum of these two and match/replace
+operations. All these matrices have the dimension `query.length()` times
+`target.length()`.
 
 These implementations of the algorithms need to be initialized with
 expenses (costs, penalties) for every edit operation. However, the
-substitution matrices use scores, which are the opposit of expenses. The
-super class `SequenceAlignment` of the specific alignment algorithms
+substitution matrices use scores, which are the opposit of expenses.
+That means one can optain expenses from scores by multiplying them
+with -1. Using costs/penalties instead of scores allows to compute the
+edit distance for global alignments. This distance doesn't make sense
+for local alignments, because in extreme cases a local alignment is an
+alignment of one symbol from each sequence and the distance would be
+zero, even if the sequences are much longer. This is why local
+alignments are based on scores.
+
+The super class `SequenceAlignment` of the specific alignment algorithms
 already provides a method to format the alignment output. So if you want
 to write your own alignment algorithm or to use the [HMM-alignment
 algorithm](http://biojava.org/wiki/BioJava:CookBook:DP:PairWise), you
