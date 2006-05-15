@@ -55,7 +55,7 @@ Many substitution matrices have been released for the purpose to
 evaluate the transition from one symbol to another one. These can be
 downloaded at [NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) and are
 needed for the following example. Alternatively, the SubstitutionMatrix
-class provides a constructor to create you own substitution matrix with
+class provides a constructor to create your own substitution matrix with
 equal **scores** for every match and every replace.
 
 A demo of local and global alignments
