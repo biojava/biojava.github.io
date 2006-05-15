@@ -30,6 +30,8 @@ the JavaDoc API documentation
 -   [Walkthrough of one of the dynamic programming
     examples](BioJava:Tutorial:Dynamic programming examples "wikilink")
 -   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
+-   [Multi-Alignment using ClustalW and
+    BioJava](BioJava:Tutorial:MultiAlignClustalW "wikilink")
 
 The [BioJava in Anger](BioJava:Cookbook "wikilink") page offers
 cookbook-style tutorials about performing many common tasks in BioJava.

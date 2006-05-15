@@ -12,8 +12,8 @@ The following tutorials are currently available - more are always welcome! While
 ** [[BioJava:Tutorial:Blast-like Parsing Cook Book|Blast-like Parsing Cook Book]]
 ** [[BioJava:Tutorial:Blast2HTML Example Application|Blast2HTML Example Application]]
 * [[BioJava:Tutorial:Dynamic programming examples|Walkthrough of one of the dynamic programming examples]] 
-* [[BioJava:Tutorial:Installing BioSQL|Installing BioSQL]] 
-
+* [[BioJava:Tutorial:Installing BioSQL|Installing BioSQL]]
+* [[BioJava:Tutorial:MultiAlignClustalW|Multi-Alignment using ClustalW and BioJava]]
 The [[BioJava:Cookbook|BioJava in Anger]] page offers cookbook-style tutorials about performing many common tasks in BioJava. 
 
 Additionally, a number of small demo programs can be found in the <code>demos</code> directory of the BioJava source distribution.
