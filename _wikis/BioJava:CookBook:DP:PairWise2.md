@@ -28,10 +28,10 @@ extension (affine gap penalties) consume significantly more time and
 memory as with equal scores (costs). The reason for this is that instead
 of one matrix three matrices are needed to remember the best path
 through the edit graph. Two matrices to remember if a gap has just been
-started in the query or in the target sequence, respectively and a third
-matrix to remember the optimum of these two and match/replace
-operations. All these matrices have the dimension `query.length()` times
-`target.length()`.
+started or has been extended in the query or in the target sequence,
+respectively, and a third matrix to remember the optimum of these two
+and match/replace operations. All these matrices have the dimension
+`query.length()` times `target.length()`.
 
 These implementations of the algorithms need to be initialized with
 expenses (costs, penalties) for every edit operation. However, the
@@ -42,7 +42,8 @@ edit distance for global alignments. This distance doesn't make sense
 for local alignments, because in extreme cases a local alignment is an
 alignment of one symbol from each sequence and the distance would be
 zero, even if the sequences are much longer. This is why local
-alignments are based on scores.
+alignments are based on scores. Nevertheless the constructor of
+SmithWaterman needs penalties and not scores.
 
 The super class `SequenceAlignment` of the specific alignment algorithms
 already provides a method to format the alignment output. So if you want
