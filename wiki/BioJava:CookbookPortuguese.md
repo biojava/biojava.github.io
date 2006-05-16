@@ -123,13 +123,13 @@ Como eu faço para....?
 
 ### Sequence I/O
 
--   [How do I write Sequences in Fasta
-    format](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
--   [How do I read in a Fasta
-    file](Biojava:CookbookPortuguese:SeqIO:ReadFasta "wikilink")?
--   [How do I read a GenBank/EMBL/SwissProt
-    file](Biojava:CookbookPortuguese:SeqIO:ReadGES "wikilink")?
--   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
+-   [Como eu escrevo Sequencias no formato
+    Fasta](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
+-   [Como eu leio um arquivo
+    Fasta](Biojava:CookbookPortuguese:SeqIO:ReadFasta "wikilink")?
+-   [Como eu leio um arquivo
+    GenBank/EMBL/SwissProt](Biojava:CookbookPortuguese:SeqIO:ReadGES "wikilink")?
+-   [Como eu extraio sequencias em GenBank/EMBL/Swissprot e escrevo como
     Fasta](Biojava:CookbookPortuguese:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
     Sequence](Biojava:CookbookPortuguese:SeqIO:ABItoSequence "wikilink")?
