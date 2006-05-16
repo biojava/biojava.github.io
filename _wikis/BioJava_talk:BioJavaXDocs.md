@@ -17,6 +17,7 @@ There is no UML that I know of. Volunteers??
 
 --[Mark](User:Mark "wikilink") 22:03, 4 May 2006 (EDT)
 
-Is there any usable version of biojavax?
+Is there any usable version of biojavax? And, where can I find biosql
+workable with biojava1.4
 
 --[fishmacs](User:fishmacs "wikilink")
