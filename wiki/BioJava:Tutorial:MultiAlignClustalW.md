@@ -2,13 +2,21 @@
 title: BioJava:Tutorial:MultiAlignClustalW
 ---
 
-**by [Dickson S. Guedes](Guedes "wikilink")**
+**by [Dickson S. Guedes](Dickson Guedes "wikilink")**
+
+Because there are many question in list about Multi-Alignment using
+BioJava. BioJava DON'T make multi-alignments by itself, so I'll place a
+code that I created in my teses.
+
+Ok. Let's Go...
+
+First, this is how you call methods from ClustalWAlign's class.
 
 **MultAlignTest.java**
 
 <java> /\*\*
 
-`* ClustalWAlign.java`  
+`* MultAlignTest.java`  
 `* `  
 `* @author Dickson S. Guedes (guedes@unisul.br)`  
 `* @version 1.0 `  
@@ -26,17 +34,20 @@ public class MultAlignTest {
 
 `   public static void main(String[] args) {`  
 `       try {`  
-`           `  
+`           // First create an instance for ClustalWAlign`  
 `           ClustalWAlign alSequences = new ClustalWAlign("FakeSequencesFile");`  
 `           `  
+`           // Now only add Sequences to alSequences`  
 `           alSequences.addSequence(DNATools.createDNASequence("atttagatgatatatcggccactagcatcgactacgactgacatcgt","Sequence1"));`  
 `           alSequences.addSequence(DNATools.createDNASequence("atagatgatggccatcgatcgagacgggatgactgacgtacgt","Sequence2"));`  
 `           alSequences.addSequence(DNATools.createDNASequence("atagatgatggccatcgatcgaagacggatgactgacgtacgt","Sequence3"));`  
 `           alSequences.addSequence(DNATools.createDNASequence("atagatgatggccatggatgactgacgtacgt","Sequence4"));`  
-`           alSequences.addSequence(DNATools.createDNASequence("atagatgatggccatccgatgaggacgtacgt","Sequence5"));`  
-`           `  
-`           alSequences.doMultAlign();`  
-`           `  
+`           alSequences.addSequence(DNATools.createDNASequence("atagatgatggccatccgatgaggacgtacgt","Sequence5"));`
+
+`           // Here you are calling the core of class - The Multi-Alignment!`  
+`           alSequences.doMultAlign();`
+
+`           // Now, you want to see results. Well...`  
 `           SequenceIterator it = alSequences.getIterator();`  
 `           `  
 `           while (it.hasNext()) {`  
@@ -44,15 +55,16 @@ public class MultAlignTest {
 `               System.out.println(seq.getName() + ": " + seq.seqString());`  
 `           }`  
 `           `  
-`           System.out.print("GUILD TREE:" + alSequences.getGuildTree());`  
+`           System.out.print("GUIDE TREE:" + alSequences.getGuideTree());`  
 `           `  
 `       } catch (Throwable t) {`  
 `           t.printStackTrace();`  
-`       }`
-
+`       }`  
 `   }`
 
 } </java>
+
+Now, I you
 
 **ClustalWAlign.java** <java> /\*\*
 
@@ -82,14 +94,16 @@ org.biojava.utils.ChangeVetoException;
 
 public class ClustalWAlign {
 
+`   // This are Constants, but I'll change...`  
 `   private static final String fileFormat = "fasta";`  
 `   private static final String clustalwPath = "C:\\JAVA\\Workspace\\clustalw\\";`  
 `   `  
 `   private SequenceDB      dbSequences;`  
 `   private String          strAlfa;`  
 `   private String          fileName;`  
-`   private String          guildTree;`  
-`   `  
+`   private String          guideTree;`  
+`   `
+
 `   public ClustalWAlign () {`  
 `       `  
 `       this.dbSequences = new HashSequenceDB();`  
@@ -176,7 +190,7 @@ public class ClustalWAlign {
 `                               AlphabetManager.alphabetForName(strAlfa)`  
 `               );`  
 `               `  
-`               this.guildTree = fileToString(`  
+`               this.guideTree = fileToString(`  
 `                                       clustalwPath + `  
 `                                       fileName + `  
 `                                       ".dnd"`  
@@ -201,12 +215,12 @@ public class ClustalWAlign {
 `       return this.dbSequences.sequenceIterator();`  
 `   }`  
 `   `  
-`   public String getGuildTree() {`  
-`       return guildTree;`  
+`   public String getGuideTree() {`  
+`       return guideTree;`  
 `   }`
 
-`   public void setGuildTree(String guildTree) {`  
-`       this.guildTree = guildTree;`  
+`   public void setGuideTree(String guideTree) {`  
+`       this.guideTree = guideTree;`  
 `   }   `  
 `   `  
 `   private String fileToString(String fileName) {`  
