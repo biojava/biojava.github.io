@@ -21,3 +21,8 @@ Is there any usable version of biojavax? And, where can I find biosql
 workable with biojava1.4?
 
 --[fishmacs](User:fishmacs "wikilink")
+
+Biojavax is currently only available from CVS (public or development
+server). The BioSQL schema is also available from BioSQL the CVS.
+Instructions for getting both can be found on the open-bio source code
+[page](http://www.open-bio.org/wiki/SourceCode).
