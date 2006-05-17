@@ -5,7 +5,7 @@ title: BioJava:Tutorial:MultiAlignClustalW
 **by [Dickson S. Guedes](Dickson Guedes "wikilink")**
 
 Because there are many question in list about Multi-Alignment using
-BioJava. BioJava DON'T make multi-alignments by itself, so I'll place a
+BioJava but it DON'T make multi-alignments by itself, so I'll place a
 code that I created in my teses.
 
 Ok. Let's Go...
