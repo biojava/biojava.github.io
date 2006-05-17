@@ -1,6 +1,6 @@
 '''by [[Dickson Guedes|Dickson S. Guedes]]'''
 
-Because there are many question in list about Multi-Alignment using BioJava. BioJava DON'T make multi-alignments by itself, so I'll place a code that I created in my teses.
+Because there are many question in list about Multi-Alignment using BioJava but it DON'T make multi-alignments by itself, so I'll place a code that I created in my teses.
 
 Ok. Let's Go...
 
