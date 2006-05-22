@@ -87,7 +87,7 @@ public class DeterministicAlignmentDemo {
       // Effectuer l'alignement local. 
       // Primo, definir la valeur du cout de chaque operation.
       aligner = new SmithWaterman(
-        0,       // match
+        -1,      // match
         3,       // replacement 
         2,       // insertion
         2,       // deletion
