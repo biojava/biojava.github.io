@@ -80,7 +80,7 @@ public class DeterministicAlignmentDemo {
       // Perform a local alginment from the sequences with Smith-Waterman. 
       // Firstly, define the expenses (penalties) for every single operation.
       aligner = new SmithWaterman(
-        0,      // match
+        -1,     // match
         3,      // replace 
         2,      // insert
         2,      // delete
