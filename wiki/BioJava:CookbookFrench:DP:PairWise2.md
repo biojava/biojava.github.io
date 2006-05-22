@@ -12,10 +12,10 @@ Needleman-Wunsch est utilisé pour des alignements globaux alors que
 l'algorithme de Smith-Waterman a été développé pour les alignements
 locaux. L'exemple ci-dessous vous montre comment faire l'un ou l'autre
 grâce aux implémentations de chacun de ces algorithmes retrouvées dans
-le package alignment. Ces classe ne sont pas disponibles dans la version
-1.4; vous les retrouverez dans la version biojava-live disponible sur le
-[serveur CVS](http://cvs.biojava.org). Évidemment, ils se retrouveront
-dans la version 1.5 ;-)
+le package `org.biojava.bio.alignment`. Ces classe ne sont pas
+disponibles dans la version 1.4; vous les retrouverez dans la version
+biojava-live disponible sur le [serveur CVS](http://cvs.biojava.org).
+Évidemment, ils se retrouveront dans la version 1.5 ;-)
 
 L'idée derrière ces approches est de maintenir un représentation
 matricielle d'un graphe d'édition, avec des fonctions d'insertion, de
@@ -27,33 +27,49 @@ sont des valeurs représentant la valeur de l'opération à effectuer, sont
 calculés. Le parcours permettant d'obtenir le meilleur score produit le
 meilleur alignement.
 
-Il est possible d'utiliser des matrices de substitution pour faire la
-calcul des alignements; elles permettent de calculer la valeur de
-transition d'un acide aminé à un autre. Plusieurs de ces matrices
-existent et sont disponibles publiquement. Elles peuvent être
-téléchargées à partir du
-[NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) et sont nécessaires
-pour cet exemple.
+Les implémentations de ces algorithmes doivent être initialisées avec
+des pénalités pour chaque opération d'édition. Cependant, les matrices
+de substitution utilisent des scores (points) qui sont tout l'opposé des
+pénalités. Ceci signifie qu'on peut obtenir les pénalités en multipliant
+les scores par la valeur -1. L'utilisation de pénalités plutôt que des
+points permet de calculer une distance d'édition pour les alignements
+globaux. Une telle distance n'est pas utile dans le cas des alignements
+locaux car dans les cas extrêmes, l'alignement local entre deux
+séquences pourrait n'avoir qu'un seul symbole de chaque séquence et par
+conséquent avoir une valeur de distance de zéro. Voilà pourquoi les
+alignements locaux utilisent les points plutôt que les pénalités.
+Néanmoins, le constructeur de `SmithWaterman` demande des pénalités et
+pas des points.
 
-Les alignements utilisant des valeurs différentes pour la valeur et la
-pénalité d'une ouverture et son élongation consument une plus grande
-quantité de mémoire et de temps par rapport à des valeurs identiques
-pour les deux. La raison est qu'il faut maintenir trois matrices pour
+Les alignements utilisant des valeurs différentes pour la pénalité d'une
+ouverture et son élongation consomment une plus grande quantité de
+mémoire et de temps de traitement par rapport à des valeurs identiques
+pour les deux. C'est parce qu'il faut maintenir trois matrices pour
 préserver l'information nécessaire afin de retrouver le meilleur chemin
-sur le graphe. Il est nécessaire ed maintenir une matrice pour les
-identités et les substitution, une pour les ouvertures de une position
-et une pour les ouvertures étendues; toutes ces matrices ont une
-dimensions de `query.length()` par `target.length()`.
+sur le graphe. Il est nécessaire de maintenir deux matrices pour les
+identités et les substitutions dans la séquence connue et la séquence
+inconnue respectivement et une troisieme mattrice pour préserver les
+valeurs optimales de ces deux premières ainsi que des opérations de
+match/remplacement; toutes ces matrices ont une dimensions de
+`query.length()` par `target.length()`.
 
-Les implémentations de ces algorithmes douvent être initialisées avec
-des valeurs (coûts et pénalités) pour chaque opération d'édition.
-Cependant, les matrices de substitution sont des bonifications, tout le
-contraire d'un coût. La superclasse *SequenceAlignment* de chaque
-algorithme possède une méthode pour formatter la sortie de l'alignement.
-Par conséquent, si vous désirez écrire votre propre algorithme
-d'alignment ou si vous voulez utiliser [l'algorithme basé sur les
-modèles de Markov](BioJava:CookbookFrench:DP:PairWise "wikilink"), vous
-pouvez dériver votre classe à partir de la super-classe et appliquer la
+Il est possible d'utiliser une des nombreuses matrices de substitution
+existantes ainf de faire la calcul des alignements; elles permettent de
+calculer la valeur de transition d'un acide aminé à un autre. Elles
+peuvent être téléchargées à partir du
+[NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/matrices/) et sont nécessaires
+pour cet exemple. Si cela vous est nécessaire, il est possible de créer
+vos propres matrices grâce à la classe `SubstitutionMatrix`. Cette
+dernière vous donne accès à un constructeur permettant de créer votre
+propre matrice avec des valeurs **égales** pour chaque identité et
+chaque substitution.
+
+La superclasse *SequenceAlignment* de chaque algorithme possède une
+méthode pour formatter la sortie de l'alignement. Par conséquent, si
+vous désirez écrire votre propre algorithme d'alignment ou si vous
+voulez utiliser [l'algorithme basé sur les modèles de
+Markov](BioJava:CookbookFrench:DP:PairWise "wikilink"), vous pouvez
+dériver votre classe à partir de la super-classe et appliquer la
 méthode.
 
 Une démo des classes d'alignement global et local
@@ -136,7 +152,7 @@ public class DeterministicAlignmentDemo {
 `     // Primo, definir la valeur du cout de chaque operation.`  
 `     aligner = new SmithWaterman(`  
 `       -1,      // match`  
-`       3,       // replacement `  
+`       3,       // remplacement `  
 `       2,       // insertion`  
 `       2,       // deletion`  
 `       1,       // gapExtend`  
