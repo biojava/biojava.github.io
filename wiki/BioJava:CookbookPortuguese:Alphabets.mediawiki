@@ -1,0 +1,35 @@
+== How do I get a DNA, RNA or Protein Alphabet? ==
+
+Em BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabetos] são coleções de  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Símbolos]. Common biological alphabets ([[wp:DNA|DNA]], [[wp:RNA|RNA]], [[wp:protein|protein]], etc) are registered with the BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager] at startup and can be accessed by name. The [[wp:DNA|DNA]], [[wp:RNA|RNA]] and [[wp:protein|protein]] alphabets can also be accessed using convenient static methods from [http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html DNATools], [http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html RNATools] e respectivamente[http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html ProteinTools].
+
+Ambas abordagens são apresentadas no exemplo abaixo:
+
+<java>
+import org.biojava.bio.symbol.*;
+import java.util.*;
+import org.biojava.bio.seq.*;
+
+public class AlphabetExample {
+  public static void main(String[] args) {
+    Alphabet dna, rna, prot;
+
+    //pega o alfabeto do DNA pelo nome
+    dna = AlphabetManager.alphabetForName("DNA");
+
+    //pega o alfabeto do RNA pelo nome
+    rna = AlphabetManager.alphabetForName("RNA");
+
+    //pega o alfabeto da Proteina prlo nome
+    prot = AlphabetManager.alphabetForName("PROTEIN");
+    //pega o alfabeto da proteina que inclui o terminador *     
+    prot = AlphabetManager.alphabetForName("PROTEIN-TERM");
+
+    //get those same Alphabets from the Tools classes
+    dna = DNATools.getDNA();
+    rna = RNATools.getRNA();
+    prot = ProteinTools.getAlphabet();
+    //or the one with the * symbol
+    prot = ProteinTools.getTAlphabet();
+  }
+}
+</java>
