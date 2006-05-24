@@ -121,7 +121,7 @@ Como eu faço para....?
     amino-acidos usando um banco de dados Amino Acid
     Indexado](Biojava:CookbookPortuguese:Proteomics:AAindex "wikilink")?
 
-### Sequence I/O
+### Sequencia de E/S
 
 -   [Como eu escrevo Sequencias no formato
     Fasta](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
