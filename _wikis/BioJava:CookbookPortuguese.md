@@ -131,9 +131,9 @@ Como eu faço para....?
     GenBank/EMBL/SwissProt](Biojava:CookbookPortuguese:SeqIO:ReadGES "wikilink")?
 -   [Como eu extraio sequencias em GenBank/EMBL/Swissprot e escrevo como
     Fasta](Biojava:CookbookPortuguese:SeqIO:GBtoFasta "wikilink")?
--   [How do I turn an ABI sequence trace into a BioJava
-    Sequence](Biojava:CookbookPortuguese:SeqIO:ABItoSequence "wikilink")?
--   [How does sequence I/O work in
+-   [Como eu converto uma sequencia ABI em uma sequencia
+    BioJava](Biojava:CookbookPortuguese:SeqIO:ABItoSequence "wikilink")?
+-   [Como sequencias de E/S trabalham no
     BioJava](Biojava:CookbookPortuguese:SeqIO:Echo "wikilink")?
 
 ### Annotations
