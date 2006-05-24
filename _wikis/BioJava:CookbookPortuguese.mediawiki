@@ -70,8 +70,8 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:SeqIO:ReadFasta|Como eu leio um arquivo Fasta]]?
 * [[Biojava:CookbookPortuguese:SeqIO:ReadGES|Como eu leio um arquivo GenBank/EMBL/SwissProt]]?
 * [[Biojava:CookbookPortuguese:SeqIO:GBtoFasta|Como eu extraio sequencias em GenBank/EMBL/Swissprot e escrevo como Fasta]]?
-* [[Biojava:CookbookPortuguese:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
-* [[Biojava:CookbookPortuguese:SeqIO:Echo|How does sequence I/O work in BioJava]]?
+* [[Biojava:CookbookPortuguese:SeqIO:ABItoSequence|Como eu converto uma sequencia ABI em uma sequencia BioJava]]?
+* [[Biojava:CookbookPortuguese:SeqIO:Echo|Como sequencias de E/S trabalham no BioJava]]?
 
 === Annotations ===
 
