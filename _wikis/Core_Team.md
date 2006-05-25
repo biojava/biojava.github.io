@@ -28,8 +28,8 @@ the web.
 -   [Keith James](Keith James "wikilink")
 -   [David Huen](David Huen "wikilink")
 
-Becomming a Core Developer
---------------------------
+Becoming a Core Developer
+-------------------------
 
 Generally a person is asked to join the Core development team after
 showing significant leadership and contribution to the project. A core

@@ -13,5 +13,5 @@ These gurus laboured tirelessly as core developers in the early days of BioJava.
 * [[Keith James|Keith James]]
 * [[David Huen|David Huen]]
 
-== Becomming a Core Developer ==
+== Becoming a Core Developer ==
 Generally a person is asked to join the Core development team after showing significant leadership and contribution to the project. A core developer is an individual willing to take on the responsibilities of timely code releases, answering questions from users and developers on the Mailing list, and generally setting a vision for the project. If you feel yourself or other individuals have shown themselves to be a dedicated developer to the project and that they should be part of the leadership team, please email a current Core developer.
