@@ -2,20 +2,21 @@
 title: BioJava:CookbookPortuguese:Alphabets
 ---
 
-How do I get a DNA, RNA or Protein Alphabet?
---------------------------------------------
+Como eu pego um Alfabeto de DNA, RNA ou Proteina:
+-------------------------------------------------
 
 Em BioJava
 [Alfabetos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
 são coleções de
 [Símbolos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
 Common biological alphabets ([DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) are
-registered with the BioJava
+[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) são
+registrados com o BioJava
 [AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
-at startup and can be accessed by name. The [DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink") and [protein](wp:protein "wikilink") alphabets
-can also be accessed using convenient static methods from
+na inicialização e podem ser acessados pelo nome. Os alfabetos
+[DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
+a[proteina](wp:protein "wikilink") também podem ser acessados utilizando
+métodos estáticos de
 [DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
 [RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html)
 e
