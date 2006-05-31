@@ -32,7 +32,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 
 === Instalação ===
 
-* [http://java.sun.com/downloads/ Onde eu encontro a instalação do Java]?
+* [http://java.sun.com/downloads/ Onde eu encontro a instalação do Java]? (esta página está exclusivamente em Ingles)
 * [[BioJava:GetStarted|Como obter a instalação do BioJava]]? (esta página está exclusivamente em Ingles)
 
 === Alfabetos e Simbolos ===

@@ -70,7 +70,8 @@ Como eu faço para....?
 ### Instalação
 
 -   [Onde eu encontro a instalação do
-    Java](http://java.sun.com/downloads/)?
+    Java](http://java.sun.com/downloads/)? (esta página está
+    exclusivamente em Ingles)
 -   [Como obter a instalação do BioJava](BioJava:GetStarted "wikilink")?
     (esta página está exclusivamente em Ingles)
 
