@@ -9,14 +9,14 @@ Em BioJava
 [Alfabetos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
 são coleções de
 [Símbolos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-Common biological alphabets ([DNA](wp:DNA "wikilink"),
+Os Alfabetos comuns da biologia ([DNA](wp:DNA "wikilink"),
 [RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) são
-registrados com o BioJava
+registrados com o
 [AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
-na inicialização e podem ser acessados pelo nome. Os alfabetos
-[DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
+do BioJava na inicialização e podem ser acessados pelo nome. Os
+alfabetos [DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
 a[proteina](wp:protein "wikilink") também podem ser acessados utilizando
-métodos estáticos de
+métodos estáticos das Classes
 [DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
 [RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html)
 e
@@ -38,16 +38,16 @@ public class AlphabetExample {
 `   //pega o alfabeto do RNA pelo nome`  
 `   rna = AlphabetManager.alphabetForName("RNA");`
 
-`   //pega o alfabeto da Proteina prlo nome`  
+`   //pega o alfabeto da Proteina pelo nome`  
 `   prot = AlphabetManager.alphabetForName("PROTEIN");`  
 `   //pega o alfabeto da proteina que inclui o terminador *     `  
 `   prot = AlphabetManager.alphabetForName("PROTEIN-TERM");`
 
-`   //get those same Alphabets from the Tools classes`  
+`   //obtem os mesmos Alfabetos das Ferramentas da Classe`  
 `   dna = DNATools.getDNA();`  
 `   rna = RNATools.getRNA();`  
 `   prot = ProteinTools.getAlphabet();`  
-`   //or the one with the * symbol`  
+`   //ou com um único simbolo *`  
 `   prot = ProteinTools.getTAlphabet();`  
 ` }`
 
