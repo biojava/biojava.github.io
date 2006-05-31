@@ -53,8 +53,9 @@ Ou ainda em
 Apresentações
 -------------
 
-Está é uma apresentação no PowerPoint para [BioJava API version
-1.4](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt)
+Está é uma apresentação no PowerPoint para [API do BioJava API
+1.4](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt) (uma versão
+traduzida está sendo providenciada)
 
 Publicações
 -----------
