@@ -22,7 +22,7 @@ Ou ainda em [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.h
 
 == Apresentações ==
 
-Está é uma apresentação no PowerPoint para [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt BioJava API version 1.4]
+Está é uma apresentação no PowerPoint para [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt API do BioJava API 1.4] (uma versão traduzida está sendo providenciada)
 
 == Publicações ==
 
