@@ -72,6 +72,7 @@ Como eu faço para....?
 -   [Onde eu encontro a instalação do
     Java](http://java.sun.com/downloads/)?
 -   [Como obter a instalação do BioJava](BioJava:GetStarted "wikilink")?
+    (esta página está exclusivamente em Ingles)
 
 ### Alfabetos e Simbolos
 
