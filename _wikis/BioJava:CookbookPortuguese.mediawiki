@@ -119,13 +119,13 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:DP:PairWise|How do I generate a pair-wise alignment]] with a Hidden Markov Model?
 * [[BioJava:CookbookPortuguese:DP:PairWise2|How do I generate a global or local alignment]] with the Needleman-Wunsch- or the Smith-Waterman-algorithm?
 
-=== User Interfaces ===
+=== Interfaces de Usuário ===
 
-* [[BioJava:CookbookPortuguese:Interfaces:ViewAsTree|How can I visualize Annotations and Features as a tree]]?
-* [[BioJava:CookbookPortuguese:Interfaces:ViewInGUI|How can I display a Sequence in a GUI]]?
-* [[BioJava:CookbookPortuguese:Interfaces:Coordinates|How do I display Sequence coordinates]]?
-* [[BioJava:CookbookPortuguese:Interfaces:Features|How can I display features]]?
-* [[BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures|How can I display Protein Features / a Peptide Digest]]?
+* [[BioJava:CookbookPortuguese:Interfaces:ViewAsTree|Como eu posso visualizar Anotações e características como árvore]]?
+* [[BioJava:CookbookPortuguese:Interfaces:ViewInGUI|Como eu posso exibir uma sequencia na Interface Gráfica]]?
+* [[BioJava:CookbookPortuguese:Interfaces:Coordinates|Como eu posso exibir uma Sequencia de coordenadas]]?
+* [[BioJava:CookbookPortuguese:Interfaces:Features|Como eu posso exibir características]]?
+* [[BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures|Como eu posso exibir características sumárias da Proteina / Peptideo]]?
 
 === BioSQL and Sequence Databases ===
 
