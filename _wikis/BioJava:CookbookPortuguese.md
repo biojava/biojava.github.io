@@ -220,18 +220,18 @@ Como eu faço para....?
     alignment](BioJava:CookbookPortuguese:DP:PairWise2 "wikilink") with
     the Needleman-Wunsch- or the Smith-Waterman-algorithm?
 
-### User Interfaces
+### Interfaces de Usuário
 
--   [How can I visualize Annotations and Features as a
-    tree](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
--   [How can I display a Sequence in a
-    GUI](BioJava:CookbookPortuguese:Interfaces:ViewInGUI "wikilink")?
--   [How do I display Sequence
-    coordinates](BioJava:CookbookPortuguese:Interfaces:Coordinates "wikilink")?
--   [How can I display
-    features](BioJava:CookbookPortuguese:Interfaces:Features "wikilink")?
--   [How can I display Protein Features / a Peptide
-    Digest](BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures "wikilink")?
+-   [Como eu posso visualizar Anotações e características como
+    árvore](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
+-   [Como eu posso exibir uma sequencia na Interface
+    Gráfica](BioJava:CookbookPortuguese:Interfaces:ViewInGUI "wikilink")?
+-   [Como eu posso exibir uma Sequencia de
+    coordenadas](BioJava:CookbookPortuguese:Interfaces:Coordinates "wikilink")?
+-   [Como eu posso exibir
+    características](BioJava:CookbookPortuguese:Interfaces:Features "wikilink")?
+-   [Como eu posso exibir características sumárias da Proteina /
+    Peptideo](BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures "wikilink")?
 
 ### BioSQL and Sequence Databases
 
