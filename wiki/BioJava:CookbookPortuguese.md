@@ -5,6 +5,9 @@ title: BioJava:CookbookPortuguese
 **UNDER CONSTRUCTION** --[Guedes](User:Guedes "wikilink") 15:22, 11
 April 2006 (EDT)
 
+Guedes, preciso contactar voce, me adicione no MSN, ou simplesmente passe um mail, rahrah0@hotmail.com ou rah@ibest.com.br
+--------------------------------------------------------------------------------------------------------------------------
+
 BioJava in Anger - um livro de receitas para aquelas que tem pressa
 -------------------------------------------------------------------
 
