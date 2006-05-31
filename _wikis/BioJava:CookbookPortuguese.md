@@ -8,15 +8,15 @@ April 2006 (EDT)
 Guedes, preciso contactar voce, me adicione no MSN, ou simplesmente passe um mail, rahrah0@hotmail.com ou rah@ibest.com.br
 --------------------------------------------------------------------------------------------------------------------------
 
-BioJava in Anger - um livro de receitas para aquelas que tem pressa
+BioJava in Anger - um livro de receitas para aqueles que tem pressa
 -------------------------------------------------------------------
 
-BioJava pode ser grande e intimidador. Para aqueles que, como nós, tem
-pressa em obter resultados e ir direto ao ponto foi montado este
-documento com a finalidade de auxilia-los no desenvolvimento de
-programas utilizando Biojava. Cerca de 99% das tarefas comuns no uso do
-Biojava estão descritas aqui, de forma que não se faz necessário decorar
-99% de sua API.
+BioJava pode ser grande e intimidador. Este documento foi montado para
+aqueles que, como nós, tem pressa em obter resultados e ir direto ao
+ponto, com a finalidade de auxilia-los no desenvolvimento de programas
+utilizando Biojava. Cerca de 99% das tarefas comuns no uso do Biojava
+estão descritas aqui, de forma que não se faz necessário decorar 99% de
+sua API.
 
 A página foi inspirada em vários outros livros de receitas e segue a
 linha "Como eu faço...?". Cada "Como eu faço?" esta linkado a alguns
