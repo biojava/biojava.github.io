@@ -945,6 +945,8 @@ Table 8.7. GenBankFormat output field sources.
 
 EMBLFormat reads and writes EMBL files, and understands almost all permutations of the location descriptors found in the feature tables.
 
+In version 87 of EMBL, the format for the ID line changed. The parser will understand files with both 87 and pre-87 ID lines, but by default will write out files using the new 87 ID line format. If you wish to write files using the pre-87 ID line format, you must call the writeSequence() method directly and specify the EMBL_PRE87_FORMAT format.
+
 ==== Reading ====
 
 The fields are passed into the RichSeqIOListener as follows:
@@ -956,13 +958,13 @@ Table 8.8. EMBLFormat input field destinations.
 !width="400"|How is it processed?
 |-
 |ID	
-|setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular()
+|setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular(), addSequenceProperty(Terms.getGenomicTerm()), addSequenceProperty(Terms.getDataClassTerm()) (87 only)
 |-
 |AC	
 |First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
 |-
 |SV	
-|If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion().
+|If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion(). If the version line is unparseable, it is stored using addSequenceProperty(Terms.getVersionLine()) instead.
 |-
 |DE	
 |setDescription()
@@ -1040,13 +1042,13 @@ Table 8.9. EMBLFormat output field sources.
 !width="400"|How is it outputted?
 |-
 |ID	
-|getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular()
+|getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular(), getNoteSet(Terms.getGenomicTerm()), getNoteSet(Terms.getDataClassTerm()) (87 only)
 |-
 |AC	
 |getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
 |-
 |SV	
-|getAccession() and getVersion().
+|getAccession() and getVersion(), or addSequenceProperty(Terms.getVersionLine()) if present.
 |-
 |DE	
 |getDescription()
