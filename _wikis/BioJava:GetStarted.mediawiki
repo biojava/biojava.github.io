@@ -40,7 +40,7 @@ To use BioJava, add the required JAR files to your CLASSPATH environment variabl
 
  set CLASSPATH=C:\biojava.jar;C:\bytecode-0.92.jar;C:\commons-cli.jar;
                          C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
-                         C:\commons-dbcp-1.1.jar;.
+                         C:\commons-pool-1.1.jar;.
 
 It is also possible to "install" JAR files onto your system by copying them into your Java installation's extensions directory. On most Unix systems, this is named ''${JAVA_HOME}/jre/lib/ext''. On Mac OS X there is a per-user extensions directory called ''~/Library/Java/Extensions'' (you may have to create this directory yourself). For other platforms, consult your Java vendor.
 

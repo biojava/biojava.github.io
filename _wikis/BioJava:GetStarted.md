@@ -58,7 +58,7 @@ due to limited space. The actual commands should be on a single line:
 
 `set CLASSPATH=C:\biojava.jar;C:\bytecode-0.92.jar;C:\commons-cli.jar;`  
 `                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
-`                        C:\commons-dbcp-1.1.jar;.`
+`                        C:\commons-pool-1.1.jar;.`
 
 It is also possible to "install" JAR files onto your system by copying
 them into your Java installation's extensions directory. On most Unix
