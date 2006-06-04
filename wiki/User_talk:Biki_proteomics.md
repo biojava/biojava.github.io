@@ -2,17 +2,12 @@
 title: User talk:Biki proteomics
 ---
 
-Hi,
+i have install all set CLASSPATH
+C:\\biojava.jar;C:\\bytecode-0.92.jar;C:\\commons-cli.jar;
 
-I think that this is best answer in the Discussion section. Have you
-tried the instructions found [here](BioJava:GetStarted "wikilink")? It
-all depends on your OS but the end point is making sure that the JRE can
-find the JAR files. In my case (Mac OS X), the external libraries for
-Java live in /Library/Java/Extensions, only accessible using sudo or
-root access. You can of course write your own $CLASSPATH instead ;-).
+`                       C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
+`                       C:\commons-dbcp-1.1.jar;.along with xerces.jar and jakartaregex.jar but neither of my demo programme is running properly.please give me detail information.i know biojava some packages.but don't know installation and path setting.may be somewhere wrong with path and class path setting.`
 
-Best regards
-
-Sylvain
-
---[Foisys](User:Foisys "wikilink") 15:53, 3 June 2006 (EDT)
+pleasse tell me with detail instruction.i would like to purchase also
+mark schriber's "biojava in anger" book.should i delete my j2sdk1.4 path
+from environment variable.
