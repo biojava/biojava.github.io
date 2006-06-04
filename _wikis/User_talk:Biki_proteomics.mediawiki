@@ -1,9 +1,4 @@
-Hi,
-
-I think that this is best answer in the Discussion section. Have you tried the instructions found [[BioJava:GetStarted|here]]? It all depends on your OS but the end point is making sure that the JRE can find the JAR files. In my case (Mac OS X), the external libraries for Java live in /Library/Java/Extensions, only accessible using sudo or root access. You can of course write your own $CLASSPATH instead ;-).
-
-Best regards
-
-Sylvain
-
---[[User:Foisys|Foisys]] 15:53, 3 June 2006 (EDT)
+i have install all set CLASSPATH C:\biojava.jar;C:\bytecode-0.92.jar;C:\commons-cli.jar;
+                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
+                        C:\commons-dbcp-1.1.jar;.along with xerces.jar and jakartaregex.jar but neither of my demo programme is running properly.please give me detail information.i know biojava some packages.but don't know installation and path setting.may be somewhere wrong with path and class path setting.
+pleasse tell me with detail instruction.i would like to purchase also mark schriber's "biojava in anger" book.should i delete my j2sdk1.4 path from environment variable.
