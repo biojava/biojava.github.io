@@ -5,10 +5,11 @@ Uma tarefa freqüente em bioinformatica é a geração de resultados de pesquisa
 
 O caminho básico é mostrado a seguir:
 
- Blast_output -> Gera eventos SAX --> Converte eventos SAX --> 
-Cria objetos de resultado --> Armazena-os em uma lista.
+ Blast_output -> Gera eventos SAX --> Converte eventos SAX --> Cria
+ objetos de resultado --> Armazena-os em uma lista.
 
- InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter --> BlastLikeSearchBuilder --> List
+ InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter 
+--> BlastLikeSearchBuilder --> List
 
 O API é muito flexível para a maioria dos propósitos a simples receita seguinte o lhe dará o que você quer.
 
