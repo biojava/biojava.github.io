@@ -15,7 +15,9 @@ listeners registrados.
 
 O caminho básico é mostrado a seguir:
 
-`Blast_output -> Gera eventos SAX --> Converte eventos SAX --> Cria objetos de resultado --> Armazena-os em uma lista.`
+`Blast_output -> Gera eventos SAX --> Converte eventos SAX --> `
+
+Cria objetos de resultado --\> Armazena-os em uma lista.
 
 `InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter --> BlastLikeSearchBuilder --> List`
 
@@ -59,7 +61,8 @@ public class BlastParser {
 `     //registra o builder com adapter`  
 `     adapter.setSearchContentHandler(builder);`
 
-`     //Verifica o arquivo, após isto a Lista de resultado será populada com      //SeqSimilaritySearchResults`  
+`     //Verifica o arquivo, após isto a Lista de resultado será populada com      `  
+`     //SeqSimilaritySearchResults`  
 `     parser.parse(new InputSource(is));`
 
 `     //exibe alguns detalhes blast `  
