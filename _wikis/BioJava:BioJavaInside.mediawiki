@@ -1,5 +1,5 @@
-== The following projects make use of BioJava ==
-If you know of other projects please add them to the list.
+== Projects ==
+The following projects make use of BioJava. If you know of other projects please add them to the list.
 
 * [http://www.dengueinfo.org/dengueinfo DengueInfo]: a Dengue genome information portal that uses BioJava in the middleware and talks to a biosql database.
 

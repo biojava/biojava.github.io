@@ -2,10 +2,11 @@
 title: BioJava:BioJavaInside
 ---
 
-The following projects make use of BioJava
-------------------------------------------
+Projects
+--------
 
-If you know of other projects please add them to the list.
+The following projects make use of BioJava. If you know of other
+projects please add them to the list.
 
 -   [DengueInfo](http://www.dengueinfo.org/dengueinfo): a Dengue genome
     information portal that uses BioJava in the middleware and talks to
