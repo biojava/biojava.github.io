@@ -87,7 +87,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:Locations:Filter|How can I filter Features by type]]?
 * [[BioJava:CookbookPortuguese:Locations:Remove|How can I remove features]]?
 
-=== BLAST and FASTA ===
+=== BLAST e FASTA ===
 
 * [[BioJava:CookbookPortuguese:Blast:Parser|Como eu configuro um parser BLAST]]?
 * [[BioJava:CookbookPortuguese:Fasta:Parser|Como eu configuro um parser FASTA]]?
