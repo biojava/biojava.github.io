@@ -49,15 +49,6 @@ plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
 be asking for a volunteer to be the [Release Czar](Czar "wikilink") to
 oversee the coordination of the release.
 
-### New Logo Needed!
-
-The BioJava project needs a new Logo. The sunflower in the top left
-corner of this page doesn't really do it justice. If you have artistic
-flair then upload your logo to this [page](Project:logo "wikilink").
-Everyone feel free to make your comments about which ones you like. At
-some as yet undecided point one will become the official
-logo. --[Mark](User:Mark "wikilink") 21:21, 1 February 2006 (EST)
-
 Documentation
 -------------
 
