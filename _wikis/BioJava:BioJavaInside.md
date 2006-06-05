@@ -17,6 +17,13 @@ Publications
 BioJava has been used in the following publications. If you know of
 other publications please add them.
 
+-   [Jacobs GH, Stockwell PA, Schrieber MJ, Tate WP, Brown
+    CM.](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=10592251&query_hl=5&itool=pubmed_docsum)
+    Transterm: a database of messenger RNA components and signals.
+    Nucleic Acids Res. 2000 Jan 1;28(1):293-5.
+
+<!-- -->
+
 -   [Schreiber M, Brown
     C.](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=12016048&query_hl=2&itool=pubmed_docsum)
     Compensation for nucleotide bias in a genome by representation as a
