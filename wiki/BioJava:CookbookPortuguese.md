@@ -250,12 +250,12 @@ Como eu faço para....?
 -   [How can I make a Genetic Algorithm with
     BioJava](BioJava:CookbookPortuguese:GA "wikilink")?
 
-### Protein Structure
+### Estrutura da Proteina
 
--   [How can I read a PDB
-    file?](BioJava:CookbookPortuguese:PDB:read "wikilink")
--   [How can I mutate a
-    residue?](BioJava:CookbookPortuguese:PDB:mutate "wikilink")
+-   [Como eu posso ler um arquivo
+    PDB?](BioJava:CookbookPortuguese:PDB:read "wikilink")
+-   [Como eu posso mutar um
+    residuo?](BioJava:CookbookPortuguese:PDB:mutate "wikilink")
 
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
