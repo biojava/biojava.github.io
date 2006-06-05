@@ -20,6 +20,11 @@ suport, access to [BioSQL](http://www.biosql.org/) and
 analysis GUIs and powerful analysis and statistical routines including a
 dynamic programming toolkit.
 
+BioJava is used in several real-world [bioinformatics
+applications](Project:BioJavaInside "wikilink") and has been used for
+bioinformatics analysis in a number of [published
+studies](Project:BioJavaInside "wikilink").
+
 Getting BioJava
 ---------------
 
