@@ -162,7 +162,7 @@ Como eu faço para....?
 -   [How can I remove
     features](BioJava:CookbookPortuguese:Locations:Remove "wikilink")?
 
-### BLAST and FASTA
+### BLAST e FASTA
 
 -   [Como eu configuro um parser
     BLAST](BioJava:CookbookPortuguese:Blast:Parser "wikilink")?
