@@ -15,11 +15,12 @@ listeners registrados.
 
 O caminho básico é mostrado a seguir:
 
-`Blast_output -> Gera eventos SAX --> Converte eventos SAX --> `
+`Blast_output -> Gera eventos SAX --> Converte eventos SAX --> Cria`  
+`objetos de resultado --> Armazena-os em uma lista.`
 
-Cria objetos de resultado --\> Armazena-os em uma lista.
+`InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter `
 
-`InputStream--> BLASTLikeSAXParser --> SeqSimilartyAdapter --> BlastLikeSearchBuilder --> List`
+--\> BlastLikeSearchBuilder --\> List
 
 O API é muito flexível para a maioria dos propósitos a simples receita
 seguinte o lhe dará o que você quer.
