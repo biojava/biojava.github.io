@@ -8,8 +8,13 @@ The following projects make use of BioJava
 If you know of other projects please add them to the list.
 
 -   [DengueInfo](http://www.dengueinfo.org/dengueinfo): a Dengue genome
-    information portal that uses biojava in the middleware and talks to
+    information portal that uses BioJava in the middleware and talks to
     a biosql database.
+
+<!-- -->
+
+-   [Dazzle](http://www.derkholm.net/thomas/dazzle): A BioJava based DAS
+    server.
 
 Publications
 ------------
