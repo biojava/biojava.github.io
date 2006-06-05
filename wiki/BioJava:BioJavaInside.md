@@ -41,5 +41,12 @@ other publications please add them.
     Detection of signals in mRNAs that influence translation. Appl
     Bioinformatics. 2003;2(3 Suppl):S47-51.
 
+<!-- -->
+
+-   [Hasan S, Daugelat S, Rao P.S S, Schreiber
+    M](http://compbiol.plosjournals.org/perlserv/?request=cite-builder&doi=10.1371/journal.pcbi.0020061.eor)
+    Prioritizing genomic drug targets in pathogens. PLoS Comput Biol.
+    2006 In press.
+
 More biojava publications can be found in [Google
 Scholar](http://scholar.google.com/scholar?q=biojava).
