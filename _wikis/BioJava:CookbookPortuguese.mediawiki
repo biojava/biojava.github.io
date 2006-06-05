@@ -135,10 +135,10 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 
 * [[BioJava:CookbookPortuguese:GA|How can I make a Genetic Algorithm with BioJava]]?
 
-=== Protein Structure ===
+=== Estrutura da Proteina ===
 
-* [[BioJava:CookbookPortuguese:PDB:read|How can I read a PDB file?]]
-* [[BioJava:CookbookPortuguese:PDB:mutate|How can I mutate a residue?]]
+* [[BioJava:CookbookPortuguese:PDB:read|Como eu posso ler um arquivo PDB?]]
+* [[BioJava:CookbookPortuguese:PDB:mutate|Como eu posso mutar um residuo?]]
 
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
