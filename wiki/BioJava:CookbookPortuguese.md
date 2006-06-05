@@ -181,7 +181,7 @@ Como eu faço para....?
 
 ### Counts and Distributions
 
--   [How do I count the residues in a
+-   [Como eu posso contar os residuos em uma
     Sequence](BioJava:CookbookPortuguese:Count:Residues "wikilink")?
 -   [How do I calculate the frequency of a Symbol in a
     Sequence](BioJava:CookbookPortuguese:Count:Frequency "wikilink")?
