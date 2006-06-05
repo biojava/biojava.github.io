@@ -8,10 +8,6 @@ Welcome to BioJava
 See the [BioJava news page](http://biojava.open-bio.org/news) for
 BioJava news.
 
-This site is built by the biojava community. We are currently in the
-process of moving the old biojava site to this site. Click
-[here](Project:ToDo "wikilink") for a todo list.
-
 About BioJava
 -------------
 
