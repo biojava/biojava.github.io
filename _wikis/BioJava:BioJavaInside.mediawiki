@@ -5,6 +5,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.derkholm.net/thomas/dazzle Dazzle]: A BioJava based DAS server.
 
+* [http://www.inforsense.com/biosense.html Biosense]: A commercial informatics offering from [http://www.inforsense.com/ Inforsense] that uses BioJava under the hood.
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
