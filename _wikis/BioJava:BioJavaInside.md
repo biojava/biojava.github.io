@@ -17,6 +17,12 @@ projects please add them to the list.
 -   [Dazzle](http://www.derkholm.net/thomas/dazzle): A BioJava based DAS
     server.
 
+<!-- -->
+
+-   [Biosense](http://www.inforsense.com/biosense.html): A commercial
+    informatics offering from [Inforsense](http://www.inforsense.com/)
+    that uses BioJava under the hood.
+
 Publications
 ------------
 
