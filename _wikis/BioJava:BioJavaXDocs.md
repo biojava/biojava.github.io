@@ -1230,6 +1230,49 @@ going missing if you have an LRU cache in RichObjectFactory that is too
 small. This issue is avoided altogether when using the
 BioSQLRichObjectFactory.
 
+### When File Parsers Go Wrong
+
+Sometimes you'll come across a file that is not strictly in the correct
+format, or you may even uncover a bug in one of the parsers. We always
+appreciate feedback in these cases, including the input file in question
+and a full stack trace. However, sometimes you may want to find the
+problem yourself, or even attempt to fix it! So we have produced the
+DebuggingRichSeqIOListener for this purpose.
+
+The DebuggingRichSeqIOListener is a class that acts both as a
+BufferedInputStream, so it can be passed to a RichSequenceFormat for
+reading data, and as a RichSeqIOListener, so that it can be passed to
+the same RichSequenceFormat to listen to the sequence generation events.
+It dumps all input out to STDOUT as it reads it, and notifies every
+sequence generation event to STDOUT as it is received. This way you can
+see exactly at which points in the file the events are being generated,
+the data the format was working on at the time the event was generated,
+and if an exception happens, it will appear immediately after the
+section of the file that was in error.
+
+The idea is that you do something like this (the example debugs the
+parsing of a FASTA file):
+
+<java> Namespace ns = RichObjectFactory.getDefaultNamespace();
+InputStream is = new FileInputStream("myFastaFile.fasta"); FASTAFormat
+format = new FASTAFormat();
+
+DebuggingRichSeqIOListener debug = new DebuggingRichSeqIOListener(is);
+BufferedReader br = new BufferedReader(new InputStreamReader(debug));
+
+SymbolTokenization symParser = format.guessSymbolTokenization(debug);
+
+format.readRichSequence(br, symParser, debug, ns); </java>
+
+Note that you will often get bits of file repeated in the output, as the
+format runs backwards and forwards through the file between markers it
+has set. This is perfectly normal although it may look a little strange.
+
+When reporting problems with file parsing, it would be very useful if
+you could run the above code on your chosen input file and chosen
+RichSequenceFormat, and send us a copy of the output along with the
+stacktrace and input file.
+
 Creative file parsing with RichSeqIOListener.
 ---------------------------------------------
 
