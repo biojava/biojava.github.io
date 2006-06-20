@@ -33,8 +33,15 @@ other publications please add them.
 
 1.  jacobs2000 pmid=10592251
 2.  schrieber2002 pmid=12016048
-3.  brown2003 pmid=15130816
-4.  hasan2006 [Hasan S, Daugelat S, Rao P.S S, Schreiber
+3.  bussow2002 pmid=12493080
+4.  brown2003 pmid=15130816
+5.  aerts2003 pmid=12626717
+6.  aerts2004 pmid=15044242
+7.  dong2004 pmid=15215471
+8.  hajarnavis2004 pmid=15247332
+9.  finack2005 pmid=15572471
+10. gille2006 pmid=16469097
+11. hasan2006 [Hasan S, Daugelat S, Rao P.S S, Schreiber
     M](http://compbiol.plosjournals.org/perlserv/?request=cite-builder&doi=10.1371/journal.pcbi.0020061.eor)
     Prioritizing genomic drug targets in pathogens. PLoS Comput Biol.
     2006 In press.
