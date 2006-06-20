@@ -80,7 +80,7 @@ public class MotifLister{
     BufferedReader input = new BufferedReader(isr);
 
     try{
-      si = (SequenceIterator)SeqIOTools.fileToBiojava("fasta", "type", input);
+      si = (SequenceIterator)SeqIOTools.fileToBiojava("fasta", type, input);
 
       //for each sequence
       while (si.hasNext()){
