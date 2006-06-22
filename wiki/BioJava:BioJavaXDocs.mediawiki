@@ -1795,7 +1795,7 @@ for (Iterator i = feature.getFeatureRelationshipSet().iterator(); i.hasNext(); )
 
 === Annotations. ===
 
-The original BioJava allowed annotations to take the form of any object as the key, with any other object as the value. BioJavaX restricts this significantly in order to make life easier when dealing with databases. The new requirement, for RichAnnotation objects, is that they keys are all instances of ComparableTerm, and the values are all instances of String.
+The original BioJava allowed annotations to take the form of any object as the key, with any other object as the value. BioJavaX restricts this significantly in order to make life easier when dealing with databases. The new requirement, for RichAnnotation objects, is that the keys are all instances of ComparableTerm, and the values are all instances of String.
 
 Anything which is annotatable (eg. BioEntry, RichFeature, etc.) will implement RichAnnotatable. You can then use getAnnotation() to obtain the RichAnnotation object and start annotating with it.
 
