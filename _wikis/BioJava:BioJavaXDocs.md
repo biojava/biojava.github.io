@@ -1863,7 +1863,7 @@ Annotations and Comments.
 The original BioJava allowed annotations to take the form of any object
 as the key, with any other object as the value. BioJavaX restricts this
 significantly in order to make life easier when dealing with databases.
-The new requirement, for RichAnnotation objects, is that they keys are
+The new requirement, for RichAnnotation objects, is that the keys are
 all instances of ComparableTerm, and the values are all instances of
 String.
 
