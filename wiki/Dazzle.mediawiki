@@ -1,0 +1,1 @@
+Dazzle is a [[bp:DAS|DAS]] server.  The code and repository have relocated to [[Thomas Down]]'s [http://www.derkholm.net/thomas/dazzle/ site].
