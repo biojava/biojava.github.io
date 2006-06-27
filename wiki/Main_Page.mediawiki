@@ -45,7 +45,7 @@ This documentation is just as much under development as the code it refers to, s
 
 === Dazzle ===
 
-The Dazzle DAS server repository and documentation has been moved to a new [http://www.derkholm.net/thomas/dazzle/ location]
+The [[Dazzle]] DAS server repository and documentation has been moved to a new [http://www.derkholm.net/thomas/dazzle/ location]
 
 == Thanks ==
  

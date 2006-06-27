@@ -88,8 +88,9 @@ description.
 
 ### Dazzle
 
-The Dazzle DAS server repository and documentation has been moved to a
-new [location](http://www.derkholm.net/thomas/dazzle/)
+The [Dazzle](Dazzle "wikilink") DAS server repository and documentation
+has been moved to a new
+[location](http://www.derkholm.net/thomas/dazzle/)
 
 Thanks
 ------
