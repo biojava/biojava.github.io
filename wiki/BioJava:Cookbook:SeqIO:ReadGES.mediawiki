@@ -2,7 +2,7 @@
 
 The SeqIOTools class contains methods for reading GenBank, SwissProt and EMBL files. Because any of these files can contain more than one sequence entry SeqIOTools will return a SequenceIterator which can be used to iterate through the individual sequences. One of the attractive features of this model is that the Sequences are only parsed and created as needed so very large collections of sequences can be handled with moderate resources.
 
-Information in the file is store in the Sequence as Annotations or where there is location information as Features.
+Information in the file is stored in the Sequence as Annotations or where there is location information as Features.
 
 Three specific solutions are presented (which are all very similar) followed by a generic solution (for biojava1.3 pre1). A fourth solution revises the generic solution for the biojava1.3 API which is a bit friendlier.
 
