@@ -13,8 +13,8 @@ features of this model is that the Sequences are only parsed and created
 as needed so very large collections of sequences can be handled with
 moderate resources.
 
-Information in the file is store in the Sequence as Annotations or where
-there is location information as Features.
+Information in the file is stored in the Sequence as Annotations or
+where there is location information as Features.
 
 Three specific solutions are presented (which are all very similar)
 followed by a generic solution (for biojava1.3 pre1). A fourth solution
