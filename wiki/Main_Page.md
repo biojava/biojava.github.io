@@ -54,6 +54,16 @@ plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
 be asking for a volunteer to be the [Release Czar](Czar "wikilink") to
 oversee the coordination of the release.
 
+Bugs and Requests for enhancement
+---------------------------------
+
+BioJava probably contains the odd bug, who would have thought!! We make
+use of the [Bugzilla](http://www.bugzilla.org) bug reporting and
+tracking system. You can use it to
+[submit](http://bugzilla.open-bio.org/) a new bug or request for
+enhancement or to [view](http://bugzilla.open-bio.org/) open bugs or
+known issues.
+
 Documentation
 -------------
 
