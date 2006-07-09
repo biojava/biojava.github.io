@@ -2,5 +2,5 @@
 title: BioJava:CookBook:PDB:align
 ---
 
-Biojava can no calculate protein structure superimpositions. (more to
+Biojava can now calculate protein structure superimpositions. (more to
 follow soon)
