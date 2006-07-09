@@ -1,2 +1,2 @@
-Biojava can no calculate protein structure superimpositions.
+Biojava can now calculate protein structure superimpositions.
 (more to follow soon)
