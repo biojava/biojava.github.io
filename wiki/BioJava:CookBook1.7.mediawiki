@@ -137,6 +137,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 * [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
+* [[BioJava:CookBook:PDB:align|How to calculate a structure superimposition?]]
 
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
