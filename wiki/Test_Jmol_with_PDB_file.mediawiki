@@ -1,0 +1,5 @@
+<jmol>
+  <jmolApplet>
+    <uploadedFileContents>[[Image:Alig_1boo_1xva.pdb]]</uploadedFileContents>
+  </jmolApplet>
+</jmol>
