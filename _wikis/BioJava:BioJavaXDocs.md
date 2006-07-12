@@ -2329,7 +2329,7 @@ table columns. The following query selects the namespace that is called
 <java> Query q = session.createQuery("from Namespace where name=:name");
 q.setString("name","bloggs"); List namespaces = q.list(); // should only
 contain one Namespace object. Empty if none found. Namespace ns =
-(Namespace)q.uniqueObject(); // alternative notation for queries with
+(Namespace)q.uniqueResult(); // alternative notation for queries with
 single-row results </java>
 
 You don't have to worry about foreign keys, and can just join objects
