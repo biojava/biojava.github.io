@@ -1,0 +1,5 @@
+<jmol>
+  <jmolApplet>
+    <uploadedFileContents>[[Image:Ethanol.xyz]]</uploadedFileContents>
+  </jmolApplet>
+</jmol>
