@@ -1,5 +1,5 @@
 <jmol>
   <jmolApplet>
-    <uploadedFileContents>[[Image:Ethanol.xyz]]</uploadedFileContents>
+    <urlContents>http://biojava.org/w/images/f/f7/Ethanol.xyz</urlContents>
   </jmolApplet>
 </jmol>
