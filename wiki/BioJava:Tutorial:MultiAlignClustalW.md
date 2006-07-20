@@ -4,9 +4,9 @@ title: BioJava:Tutorial:MultiAlignClustalW
 
 **by [Dickson S. Guedes](Dickson Guedes "wikilink")**
 
-Because there are many question in list about Multi-Alignment using
-BioJava but it DON'T make multi-alignments by itself, so I'll place a
-code that I created in my teses.
+There are many question in list about "Multi-Alignment using BioJava",
+but Biojava DON'T make multi-alignments by itself, so I'll place a code
+that I've created in my teses.
 
 Ok. Let's Go...
 
@@ -19,6 +19,7 @@ First, this is how you call methods from ClustalWAlign's class.
 `* MultAlignTest.java`  
 `* `  
 `* @author Dickson S. Guedes (guedes@unisul.br)`  
+`* @author Israel S. de Medeiros (israelbrz@gmail.com)`  
 `* @version 1.0 `  
 `* @serialData 20060120 `  
 `* `  
@@ -64,13 +65,14 @@ public class MultAlignTest {
 
 } </java>
 
-Now, I you
+Now, the class that calls ClustalW as a external process:
 
 **ClustalWAlign.java** <java> /\*\*
 
 `* ClustalWAlign.java`  
 `* `  
 `* @author Dickson S. Guedes (guedes@unisul.br)`  
+`* @author Israel S. de Medeiros (israelbrz@gmail.com)`  
 `* @version 1.0 `  
 `* @serialData 20060120 `  
 `* `  
@@ -177,6 +179,8 @@ public class ClustalWAlign {
 `           `  
 `           while ( (br.readLine()) != null) {`  
 `               // do nothing only read "stdout" from ClustalW`  
+`                               // you can put a System.out.print here to prints`  
+`                               // the output from ClustalW to console.`  
 `           }`  
 `           `  
 `           exitVal = proc.waitFor();`  
