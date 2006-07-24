@@ -9,7 +9,7 @@ This is probably one of the more frequent tasks in bioinformatics and
 one of the most frequent questions posted to the mailing list.
 
 Six frame translations are good for identifying large ORFs which can be
-indicators of coding regions. At least in species that don't have
+indicators of coding regions, at least in species that don't have
 introns. A six frame translation is a simple matter of taking
 subsequences of the sequence(s) of interest and reverse
 complementing/translating as appropriate. The only trick is figuring out
