@@ -4,9 +4,10 @@ title: BioJava:Tutorial:MultiAlignClustalW
 
 **by [Dickson S. Guedes](Dickson Guedes "wikilink")**
 
-There are many question in list about "Multi-Alignment using BioJava",
-but Biojava DON'T make multi-alignments by itself, so I'll place a code
-that I've created in my teses.
+There are many questions in the mailing lists about "How to perform a
+Multiple Sequence Alignment using BioJava", but Biojava DOESN'T make
+multi-alignments by itself, so I'll post some code that I've created in
+my theses.
 
 Ok. Let's Go...
 
