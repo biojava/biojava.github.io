@@ -5,16 +5,9 @@ title: BioJava:CookbookPortuguese:Alphabets:Custom
 Como crio alfabetos customizados a partir de simbolos customizados?
 -------------------------------------------------------------------
 
-Este exemplo demonstra a criaçao de um alfabeto 'binário' que terá dois
-[Simbolos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html),
-zero e um. O
-[Simbolo](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-customizado e o
-[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-podem ser usados para criar
-[SymbolList](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolList.html),
-[Sequences](http://www.biojava.org/docs/api14/org/biojava/bio/seq/Sequence.html),
-[Distributions](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html),
+Este exemplo demonstra a criação de um alfabeto 'binário' que terá dois
+elementos *Symbol*, zero e um. O *Symbol* customizado e o *Alphabet*
+podem ser usados para criar *SymbolList*, *Sequences*, *Distributions*,
 etc.
 
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
