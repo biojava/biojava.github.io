@@ -2,25 +2,18 @@
 title: BioJava:CookbookPortuguese:Alphabets
 ---
 
-Como eu pego um Alfabeto de DNA, RNA ou Proteina:
+Como eu pego um Alfabeto de DNA, RNA ou Proteina?
 -------------------------------------------------
 
-Em BioJava
-[Alfabetos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-são coleções de
-[Símbolos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-Os Alfabetos comuns da biologia ([DNA](wp:DNA "wikilink"),
+No BioJava uma coleção de *Symbol* nada mais é do que um objeto
+*Alphabet*. Os alfabetos comuns na biologia ([DNA](wp:DNA "wikilink"),
 [RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) são
-registrados com o
-[AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
-do BioJava na inicialização e podem ser acessados pelo nome. Os
+registrados com o uso da classe *AlphabetManager* do BioJava na
+inicialização e podem ser acessados pelo utilizado o seu nome. Os
 alfabetos [DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
-a[proteina](wp:protein "wikilink") também podem ser acessados utilizando
-métodos estáticos das Classes
-[DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
-[RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html)
-e
-respectivamente[ProteinTools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html).
+[Proteina](wp:protein "wikilink") também podem ser acessados utilizando
+métodos estáticos das Classes *DNATools*, *RNATools* e respectivamente
+*ProteinTools*.
 
 Ambas abordagens são apresentadas no exemplo abaixo:
 
