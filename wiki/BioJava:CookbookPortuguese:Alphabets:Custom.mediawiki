@@ -1,6 +1,6 @@
 == Como crio alfabetos customizados a partir de simbolos customizados? ==
 
-Este exemplo demonstra a criaçao de um alfabeto 'binário' que terá dois [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolos], zero e um. O  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo] customizado e o [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto] podem ser usados para criar  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolList.html SymbolList], [http://www.biojava.org/docs/api14/org/biojava/bio/seq/Sequence.html Sequences], [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distributions], etc.
+Este exemplo demonstra a criação de um alfabeto 'binário' que terá dois elementos ''Symbol'', zero e um. O ''Symbol'' customizado e o ''Alphabet'' podem ser usados para criar ''SymbolList'', ''Sequences'', ''Distributions'', etc.
 
 <java>
 import org.biojava.bio.symbol.*;
