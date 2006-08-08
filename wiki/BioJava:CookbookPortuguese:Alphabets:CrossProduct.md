@@ -17,7 +17,7 @@ pode obter um [codon](wp:codon "wikilink") representado por um único
 [codons](wp:codon "wikilink") em um objeto *Count* ou ainda utilizá-los
 em um objeto *Distribution*.
 
-*CrossProductAlphabets* podem ser criados pelo nome (se o componete
+*CrossProductAlphabets* podem ser criados pelo nome (se o componente
 *Alphabet* está registrado no *AlphabetManager*) ou criando uma lista
 com o auxilio da Classe *Collections*. Ambas as possibilidades são
 mostradas no exemplo abaixo:
