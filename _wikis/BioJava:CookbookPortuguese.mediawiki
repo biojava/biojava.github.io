@@ -125,6 +125,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
 -->
 
+<!--
 === Weight Matrices and Dynamic Programming ===
 
 * [[BioJava:CookbookPortuguese:DP:WeightMatrix|How do I use a WeightMatrix to find a motif]]?
@@ -132,6 +133,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * |How do I set up a custom HMM? (Link to Tutorial?? --[[User:Guedes|Guedes]] 11:43, 8 February 2006 (EST) )
 * [[BioJava:CookbookPortuguese:DP:PairWise|How do I generate a pair-wise alignment]] with a Hidden Markov Model?
 * [[BioJava:CookbookPortuguese:DP:PairWise2|How do I generate a global or local alignment]] with the Needleman-Wunsch- or the Smith-Waterman-algorithm?
+-->
 
 === Interfaces de Usuário ===
 
