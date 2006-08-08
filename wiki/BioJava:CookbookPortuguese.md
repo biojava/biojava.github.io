@@ -82,12 +82,6 @@ Como eu faço para....?
     customizados](Biojava:CookbookPortuguese:Alphabets:Custom "wikilink")?
 -   [Como crio um CrossProductAlphabet, por exemplo, um alfabeto de
     codons](Biojava:CookbookPortuguese:Alphabets:CrossProduct "wikilink")?
--   [Como eu divido os Simbolos de um CrossProductAlphabet em seus
-    componentes](Biojava:CookbookPortuguese:Alphabets:Component "wikilink")?
--   [Como eu verifico se Alfabetos ou Simbolos são
-    iguais](Biojava:CookbookPortuguese:Alphabets:Cononical "wikilink")?
--   [Como eu crio simbolos ambíguos como Y ou
-    R](Biojava:CookbookPortuguese:Alphabets:Ambiguous "wikilink")?
 
 ### Manipulação básica de sequencia
 
