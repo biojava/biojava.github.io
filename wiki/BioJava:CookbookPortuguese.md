@@ -116,17 +116,6 @@ Como eu faço para....?
 -   [Como eu posso visualizar Anotações e características como
     árvore](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
 
-### BioSQL and Sequence Databases
-
--   [How do I set up BioSQL with
-    PostgreSQL](BioJava:CookbookPortuguese:BioSQL:SetupPostGre "wikilink")?
-    (by [David Huen](User:David "wikilink"))
--   [How do I set up BioSQL with
-    Oracle](BioJava:CookbookPortuguese:BioSQL:SetupOracle "wikilink")?
-    (by [Richard Holland](User:Richard "wikilink"))
--   [How do I add, view and remove Sequence Objects from a BioSQL
-    DB](BioJava:CookbookPortuguese:BioSQL:Manage "wikilink")?
-
 ### Genetic Algorithms
 
 -   [How can I make a Genetic Algorithm with
