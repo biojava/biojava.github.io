@@ -105,18 +105,6 @@ Como eu faço para....?
 
 -   [Como eu configuro um parser
     BLAST](BioJava:CookbookPortuguese:Blast:Parser "wikilink")?
--   [Como eu configuro um parser
-    FASTA](BioJava:CookbookPortuguese:Fasta:Parser "wikilink")?
--   [Como eu extraio informação dos resultados de um
-    parse](BioJava:CookbookPortuguese:Blast:Extract "wikilink")?
--   [Como eu faço um parse em um arquivo grande; Ou, Como eu crio um
-    SearchContentHandler
-    customizado](BioJava:CookbookPortuguese:Blast:Echo "wikilink")?
--   Expert information on the BioJava SAX2 event based parsing framework
-    by Cambridge Antibody Technology. Contains a UML diagram. Warning,
-    this information may be a little dated now. (to be
-    continued --[Guedes](User:Guedes "wikilink") 16:30, 7 February 2006
-    (EST))
 
 ### Counts and Distributions
 
