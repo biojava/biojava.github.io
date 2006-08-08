@@ -7,7 +7,7 @@ Por exemplo:
 Utilizando 3 nucleotideos do alfabeto de [[wp:DNA|DNA]] você pode obter um [[wp:codon|codon]] representado por um único ''Symbol''. A partir dai é possível obter uma contabilização dos [[wp:codon|codons]] em um objeto ''Count'' ou ainda utilizá-los em um objeto ''Distribution''.
 
 
-''CrossProductAlphabets'' podem ser criados pelo nome (se o componete ''Alphabet'' está registrado no ''AlphabetManager'') ou criando uma lista com o auxilio da Classe ''Collections''. Ambas as possibilidades são mostradas no exemplo abaixo:
+''CrossProductAlphabets'' podem ser criados pelo nome (se o componente ''Alphabet'' está registrado no ''AlphabetManager'') ou criando uma lista com o auxilio da Classe ''Collections''. Ambas as possibilidades são mostradas no exemplo abaixo:
 
 <java>
 import java.util.*;
