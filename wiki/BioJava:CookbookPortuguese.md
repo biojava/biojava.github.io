@@ -101,14 +101,6 @@ Como eu faço para....?
 -   [Como eu escrevo Sequencias no formato
     Fasta](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
 
-### Annotations
-
--   [How do I list the Annotations in a
-    Sequence](BioJava:CookbookPortuguese:Annotations:List "wikilink")?
--   [How do I filter a Sequences based on their species (or another
-    Annotation
-    property)](BioJava:CookbookPortuguese:Annotations:Filter "wikilink")?
-
 ### Locations and Features
 
 -   [How do I specify a

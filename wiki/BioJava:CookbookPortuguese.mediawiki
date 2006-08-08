@@ -81,10 +81,12 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:SeqIO:Echo|Como sequencias de E/S trabalham no BioJava]]?
 -->
 
+<!--
 === Annotations ===
 
 * [[BioJava:CookbookPortuguese:Annotations:List|How do I list the Annotations in a Sequence]]?
 * [[BioJava:CookbookPortuguese:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
+-->
 
 === Locations and Features ===
 
