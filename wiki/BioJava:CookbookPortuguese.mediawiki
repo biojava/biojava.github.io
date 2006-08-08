@@ -54,12 +54,14 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[Biojava:CookbookPortuguese:Sequence:Regex|Como utilizar expressões regulares em uma sequencia para encontrar seu motif]]?
 -->
 
-===Tradução===
+===Tradução e transcrição===
 
 * [[Biojava:CookbookPortuguese:Translation|Como eu faco para transcrever DNA em RNA e este em Proteina]]?
+<!--
 * [[Biojava:CookbookPortuguese:Translation:Single|Como eu faco para traduzir um simples codon em um simples aminoacido]]?
 * [[Biojava:CookbookPortuguese:Translation:NonStandart|Como utiliza um outro tipo de tabela de transcrição]]?
 * [[Biojava:CookbookPortuguese:Translation:SixFrames|Como eu traduzo uma sequência de nucleotideos em todos os seis frames]]?
+-->
 
 ===Proteoma===
 
