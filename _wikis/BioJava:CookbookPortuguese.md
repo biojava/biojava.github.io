@@ -145,4 +145,5 @@ biojava](mailto:biojava-l@biojava.org).
 O código é [open-source](wp:Open source "wikilink"). Uma boa definição
 para "Open-Source" pode ser encontrada
 [aqui](http://www.opensource.org/docs/definition_plain.php). Se você
-está de acordo com esta definição voce pode utilizálo.
+está de acordo com esta definição você pode utilizar os códigos aqui
+existentes.
