@@ -101,21 +101,6 @@ Como eu faço para....?
 -   [Como eu escrevo Sequencias no formato
     Fasta](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
 
-### Locations and Features
-
--   [How do I specify a
-    PointLocation](BioJava:CookbookPortuguese:Locations:Point "wikilink")?
--   [How do I specify a
-    RangeLocation](BioJava:CookbookPortuguese:Locations:Range "wikilink")?
--   [How do CircularLocations
-    work](BioJava:CookbookPortuguese:Locations:Circular "wikilink")?
--   [How can I make a
-    Feature](BioJava:CookbookPortuguese:Locations:Feature "wikilink")?
--   [How can I filter Features by
-    type](BioJava:CookbookPortuguese:Locations:Filter "wikilink")?
--   [How can I remove
-    features](BioJava:CookbookPortuguese:Locations:Remove "wikilink")?
-
 ### BLAST e FASTA
 
 -   [Como eu configuro um parser
