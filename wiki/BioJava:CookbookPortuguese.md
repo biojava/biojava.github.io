@@ -106,31 +106,10 @@ Como eu faço para....?
 -   [Como eu configuro um parser
     BLAST](BioJava:CookbookPortuguese:Blast:Parser "wikilink")?
 
-### Counts and Distributions
+### Contabilizações e Distribuições
 
 -   [Como eu posso contar os residuos em uma
     Sequence](BioJava:CookbookPortuguese:Count:Residues "wikilink")?
--   [How do I calculate the frequency of a Symbol in a
-    Sequence](BioJava:CookbookPortuguese:Count:Frequency "wikilink")?
--   [How can I turn a Count into a
-    Distribution](BioJava:CookbookPortuguese:Count:ToDistrib "wikilink")?
--   [How can I generate a random sequence from a
-    Distribution](BioJava:CookbookPortuguese:Distribution:RandomSeqs "wikilink")?
--   [How can I find the amount of information or entropy in a
-    Distribution](BioJava:CookbookPortuguese:Distribution:Entropy "wikilink")?
--   [What is an easy way to tell if two Distributions have equal
-    weights](BioJava:CookbookPortuguese:Distribution:Emission "wikilink")?
--   [How can I make an OrderNDistribution over a custom
-    Alphabet](BioJava:CookbookPortuguese:Distribution:Custom "wikilink")?
--   [How can I write a Distribution as
-    XML](BioJava:CookbookPortuguese:Distribution:XML "wikilink")?
--   [Using Distributions to make a Gibbs
-    sampler](BioJava:CookbookPortuguese:Distribution:Gibbs "wikilink")
--   [Using Distributions to make a naive Bayes
-    classifier](BioJava:CookbookPortuguese:Distribution:Bayes "wikilink")
--   [How do I calculate the composition of a Sequence or collection of
-    Sequences?](Biojava:CookbookPortuguese:Distribution:Composition "wikilink")
-    This example uses JDK 1.5 and BioJavaX
 
 ### Weight Matrices and Dynamic Programming
 
