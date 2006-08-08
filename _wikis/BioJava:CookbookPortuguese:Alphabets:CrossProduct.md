@@ -2,36 +2,25 @@
 title: BioJava:CookbookPortuguese:Alphabets:CrossProduct
 ---
 
-Como crio um CrossProductAlphabet, por exemplo, um alfabeto de codons
----------------------------------------------------------------------
+Como crio um CrossProductAlphabet, por exemplo, um alfabeto de codons?
+----------------------------------------------------------------------
 
-Um *CrossProductAlphabets* resulta da multiplicação de outros
+Um *CrossProductAlphabet* resulta da multiplicação de alguns
 *Alphabet*s. Eles são usados para transformar 2 ou mais *Symbol*s em um
 único *Symbol* "cross product".
 
 Por exemplo:
 
-Utilizando 3 [DNA](wp:DNA "wikilink") alphabet you could wrap a
-[codon](wp:codon "wikilink") as a
-[Simbolo](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-Voce pode then count those [codon](wp:codon "wikilink")
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-in a
-[Count](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html)
-or you could used them in a
-[Distribution](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html).
+Utilizando 3 nucleotideos do alfabeto de [DNA](wp:DNA "wikilink") você
+pode obter um [codon](wp:codon "wikilink") representado por um único
+*Symbol*. A partir dai é possível obter uma contabilização dos
+[codons](wp:codon "wikilink") em um objeto *Count* ou ainda utilizá-los
+em um objeto *Distribution*.
 
-CrossProductAlphabets can be created by name (if the component
-[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-are registered in the
-[AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html))
-or by making a list of the desired
-[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-and creating the
-[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-from the
-[List](http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html).
-Both approaches are shown in the example below.
+*CrossProductAlphabets* podem ser criados pelo nome (se o componete
+*Alphabet* está registrado no *AlphabetManager*) ou criando uma lista
+com o auxilio da Classe *Collections*. Ambas as possibilidades são
+mostradas no exemplo abaixo:
 
 <java> import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
@@ -40,11 +29,11 @@ public class CrossProduct {
 
 ` public static void main(String[] args) {`
 
-`   //cria uma CrossProductAlphabet de uma Lista`  
+`   //cria um CrossProductAlphabet a partir de uma Lista`  
 `   List l = Collections.nCopies(3, DNATools.getDNA());`  
 `   Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);`
 
-`   //pega o mesmo Alfabeto pelo nome`  
+`   //retorna o Alfabeto de codons`  
 `   Alphabet codon2 =`  
 `       AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");`
 
