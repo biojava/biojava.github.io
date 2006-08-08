@@ -109,9 +109,10 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * Expert information on the BioJava SAX2 event based parsing framework by Cambridge Antibody Technology. Contains a UML diagram. Warning, this information may be a little dated now. (to be continued --[[User:Guedes|Guedes]] 16:30, 7 February 2006 (EST))
 -->
 
-=== Counts and Distributions ===
+===Contabilizações e Distribuições===
 
 * [[BioJava:CookbookPortuguese:Count:Residues|Como eu posso contar os residuos em uma Sequence]]?
+<!--
 * [[BioJava:CookbookPortuguese:Count:Frequency|How do I calculate the frequency of a Symbol in a Sequence]]?
 * [[BioJava:CookbookPortuguese:Count:ToDistrib|How can I turn a Count into a Distribution]]?
 * [[BioJava:CookbookPortuguese:Distribution:RandomSeqs|How can I generate a random sequence from a Distribution]]?
@@ -122,6 +123,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:Distribution:Gibbs|Using Distributions to make a Gibbs sampler]]
 * [[BioJava:CookbookPortuguese:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
 * [[Biojava:CookbookPortuguese:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
+-->
 
 === Weight Matrices and Dynamic Programming ===
 
