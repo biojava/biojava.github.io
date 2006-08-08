@@ -66,7 +66,9 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 ===Proteoma===
 
 * [[Biojava:CookbookPortuguese:Proteomics|Como eu calculo a massa e o pI de um peptideo]]?
+<!--
 * [[Biojava:CookbookPortuguese:Proteomics:AAindex|Como eu analizo as propriedades de um simbolo de uma sequencia de amino-acidos usando um banco de dados Amino Acid Indexado]]?
+-->
 
 === Sequencia de E/S ===
 
