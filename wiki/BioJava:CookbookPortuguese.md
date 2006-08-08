@@ -95,9 +95,6 @@ Como eu faço para....?
 
 -   [Como eu calculo a massa e o pI de um
     peptideo](Biojava:CookbookPortuguese:Proteomics "wikilink")?
--   [Como eu analizo as propriedades de um simbolo de uma sequencia de
-    amino-acidos usando um banco de dados Amino Acid
-    Indexado](Biojava:CookbookPortuguese:Proteomics:AAindex "wikilink")?
 
 ### Sequencia de E/S
 
