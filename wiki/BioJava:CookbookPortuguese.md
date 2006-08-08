@@ -2,9 +2,6 @@
 title: BioJava:CookbookPortuguese
 ---
 
-**UNDER CONSTRUCTION** --[Guedes](User:Guedes "wikilink") 15:22, 11
-April 2006 (EDT)
-
 BioJava in Anger - um livro de receitas para aqueles que tem pressa
 -------------------------------------------------------------------
 
