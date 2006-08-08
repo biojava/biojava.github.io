@@ -100,16 +100,6 @@ Como eu faço para....?
 
 -   [Como eu escrevo Sequencias no formato
     Fasta](Biojava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
--   [Como eu leio um arquivo
-    Fasta](Biojava:CookbookPortuguese:SeqIO:ReadFasta "wikilink")?
--   [Como eu leio um arquivo
-    GenBank/EMBL/SwissProt](Biojava:CookbookPortuguese:SeqIO:ReadGES "wikilink")?
--   [Como eu extraio sequencias em GenBank/EMBL/Swissprot e escrevo como
-    Fasta](Biojava:CookbookPortuguese:SeqIO:GBtoFasta "wikilink")?
--   [Como eu converto uma sequencia ABI em uma sequencia
-    BioJava](Biojava:CookbookPortuguese:SeqIO:ABItoSequence "wikilink")?
--   [Como sequencias de E/S trabalham no
-    BioJava](Biojava:CookbookPortuguese:SeqIO:Echo "wikilink")?
 
 ### Annotations
 
