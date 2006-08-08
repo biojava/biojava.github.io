@@ -1,6 +1,10 @@
 == Como crio um CrossProductAlphabet, por exemplo, um alfabeto de codons ==
 
-CrossProductAlphabets resulta da multiplicação de outros [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabetos]. CrossProductAlphabets são usados para trocar 2 ou mais [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolos] em um único [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo] "cross product". Por exemplo utilizando a 3 way cross of the [[wp:DNA|DNA]] alphabet you could wrap a [[wp:codon|codon]] as a [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo]. Voce pode then count those [[wp:codon|codon]] [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] in a [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] or you could used them in a [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distribution].
+Um ''CrossProductAlphabets'' resulta da multiplicação de outros ''Alphabet''s. Eles são usados para transformar 2 ou mais ''Symbol''s em um único ''Symbol'' "cross product". 
+
+Por exemplo:
+
+Utilizando 3 [[wp:DNA|DNA]] alphabet you could wrap a [[wp:codon|codon]] as a [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo]. Voce pode then count those [[wp:codon|codon]] [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] in a [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] or you could used them in a [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distribution].
 
 CrossProductAlphabets can be created by name (if the component [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] are registered in the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager]) or by making a list of the desired [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and creating the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet] from the [http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html List]. Both approaches are shown in the example below.
 
