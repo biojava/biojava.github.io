@@ -111,22 +111,6 @@ Como eu faço para....?
 -   [Como eu posso contar os residuos em uma
     Sequence](BioJava:CookbookPortuguese:Count:Residues "wikilink")?
 
-### Weight Matrices and Dynamic Programming
-
--   [How do I use a WeightMatrix to find a
-    motif](BioJava:CookbookPortuguese:DP:WeightMatrix "wikilink")?
--   [How do I make a HMMER like profile
-    HMM](BioJava:CookbookPortuguese:DP:HMM "wikilink")?
--   |How do I set up a custom HMM? (Link to
-    Tutorial?? --[Guedes](User:Guedes "wikilink") 11:43, 8 February 2006
-    (EST) )
--   [How do I generate a pair-wise
-    alignment](BioJava:CookbookPortuguese:DP:PairWise "wikilink") with a
-    Hidden Markov Model?
--   [How do I generate a global or local
-    alignment](BioJava:CookbookPortuguese:DP:PairWise2 "wikilink") with
-    the Needleman-Wunsch- or the Smith-Waterman-algorithm?
-
 ### Interfaces de Usuário
 
 -   [Como eu posso visualizar Anotações e características como
