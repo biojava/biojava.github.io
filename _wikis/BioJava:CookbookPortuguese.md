@@ -137,12 +137,12 @@ produção.
 Copyright
 ---------
 
-The documentation on this site is the property of the people who
-contributed it. If you wish to use it in a publication please make a
-request through the [biojava mailing
-list](mailto:biojava-l@biojava.org).
+A documentação contida neste site é de propriedade das pessoas que
+contribuiram com ele. Se você deseja utilizá-lo em alguma publicação,
+por favor envie um email para [lista de email do
+biojava](mailto:biojava-l@biojava.org).
 
-The code is [open-source](wp:Open source "wikilink"). A good definition
-of open-source can be found
-[here](http://www.opensource.org/docs/definition_plain.php). If you
-agree with that definition then you can use it.
+O código é [open-source](wp:Open source "wikilink"). Uma boa definição
+para "Open-Source" pode ser encontrada
+[aqui](http://www.opensource.org/docs/definition_plain.php). Se você
+está de acordo com esta definição voce pode utilizálo.
