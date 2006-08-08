@@ -175,7 +175,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 
 == Disclaimer ==
 
-This code is generously donated by people who probably have better things to do. Where possible we test it but errors may have crept in. As such, all code and advice here in has no warranty or guarantee of any sort. You didn't pay for it and if you use it we are not responsible for anything that goes wrong. Be a good programmer and test it yourself before unleashing it on your corporate database.
+Os códigos aqui contidos foram gentilmente cedidos por pessoas que provavelmente tem outras coisas a fazer. Quando possível nós testamos, mas alguns erros podem acontecer. Em tempo, todos os códigos e conselhos aqui existentes não possuem nenhuma garantia. Você não paga pelo seu uso e nós não somos responsáveis caso algo dê errado. Seja um bom programador e teste você mesmo antes de colocar algum código em produção.
 
 == Copyright ==
 
