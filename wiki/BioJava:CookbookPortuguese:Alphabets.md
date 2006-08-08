@@ -9,8 +9,8 @@ No BioJava uma coleção de *Symbol* nada mais é do que um objeto
 *Alphabet*. Os alfabetos comuns na biologia ([DNA](wp:DNA "wikilink"),
 [RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) são
 registrados com o uso da classe *AlphabetManager* do BioJava na
-inicialização e podem ser acessados pelo utilizado o seu nome. Os
-alfabetos [DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
+inicialização e podem ser acessados utilizando o seu nome. Os alfabetos
+[DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") e
 [Proteina](wp:protein "wikilink") também podem ser acessados utilizando
 métodos estáticos das Classes *DNATools*, *RNATools* e respectivamente
 *ProteinTools*.
