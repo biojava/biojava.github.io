@@ -179,6 +179,6 @@ Os códigos aqui contidos foram gentilmente cedidos por pessoas que provavelment
 
 == Copyright ==
 
-The documentation on this site is the property of the people who contributed it. If you wish to use it in a publication please make a request through the [mailto:biojava-l@biojava.org biojava mailing list].
+A documentação contida neste site é de propriedade das pessoas que contribuiram com ele. Se você deseja utilizá-lo em alguma publicação, por favor envie um email para [mailto:biojava-l@biojava.org lista de email do biojava].
 
-The code is [[wp:Open source|open-source]]. A good definition of open-source can be found [http://www.opensource.org/docs/definition_plain.php here]. If you agree with that definition then you can use it.
+O código é [[wp:Open source|open-source]]. Uma boa definição para "Open-Source" pode ser encontrada  [http://www.opensource.org/docs/definition_plain.php aqui]. Se você está de acordo com esta definição voce pode utilizálo.
