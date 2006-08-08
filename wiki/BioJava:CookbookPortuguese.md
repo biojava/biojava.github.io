@@ -28,9 +28,11 @@ do biojava](mailto:biojava-l@biojava.org). Para se inscrever na lista
 clique [aqui](http://biojava.org/mailman/listinfo/biojava-l)
 
 Esta tradução para o Portugues (Brasil) é mantida por [ Dickson S.
-Guedes](User:Guedes "wikilink"), porém, por se tratar de um sistema
-Wiki, correções podem ser feitas desde que estejam de acordo com o
-documento original [neste link](BioJava:Cookbook "wikilink").
+Guedes](User:Guedes "wikilink"), porém não está completa, isto não
+impede que seja alimentada com maiores informações pois, por se tratar
+de um sistema Wiki, correções podem ser feitas desde que estejam de
+acordo com o documento original [neste
+link](BioJava:Cookbook "wikilink").
 
 Anúncios
 --------
