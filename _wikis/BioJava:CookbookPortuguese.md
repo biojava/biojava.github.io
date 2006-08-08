@@ -86,16 +86,10 @@ Como eu faço para....?
     uma String a partir de um objeto
     Sequence](Biojava:CookbookPortuguese:Sequence "wikilink")?
 
-### Tradução
+### Tradução e transcrição
 
 -   [Como eu faco para transcrever DNA em RNA e este em
     Proteina](Biojava:CookbookPortuguese:Translation "wikilink")?
--   [Como eu faco para traduzir um simples codon em um simples
-    aminoacido](Biojava:CookbookPortuguese:Translation:Single "wikilink")?
--   [Como utiliza um outro tipo de tabela de
-    transcrição](Biojava:CookbookPortuguese:Translation:NonStandart "wikilink")?
--   [Como eu traduzo uma sequência de nucleotideos em todos os seis
-    frames](Biojava:CookbookPortuguese:Translation:SixFrames "wikilink")?
 
 ### Proteoma
 
