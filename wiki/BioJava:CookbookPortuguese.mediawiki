@@ -181,4 +181,4 @@ Os códigos aqui contidos foram gentilmente cedidos por pessoas que provavelment
 
 A documentação contida neste site é de propriedade das pessoas que contribuiram com ele. Se você deseja utilizá-lo em alguma publicação, por favor envie um email para [mailto:biojava-l@biojava.org lista de email do biojava].
 
-O código é [[wp:Open source|open-source]]. Uma boa definição para "Open-Source" pode ser encontrada  [http://www.opensource.org/docs/definition_plain.php aqui]. Se você está de acordo com esta definição voce pode utilizálo.
+O código é [[wp:Open source|open-source]]. Uma boa definição para "Open-Source" pode ser encontrada  [http://www.opensource.org/docs/definition_plain.php aqui]. Se você está de acordo com esta definição você pode utilizar os códigos aqui existentes.
