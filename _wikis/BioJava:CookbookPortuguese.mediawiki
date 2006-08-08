@@ -164,12 +164,14 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:PDB:read|Como eu posso ler um arquivo PDB?]]
 * [[BioJava:CookbookPortuguese:PDB:mutate|Como eu posso mutar um residuo?]]
 
+<!--
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
 * [http://www.charite.de/bioinf/strap/Scripting.html Introduction to the STRAP API]
 * [http://www.charite.de/bioinf/strap/biojava.html STRAP/BioJava interoperability]
 * [http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html How do I make a multiple sequence alignment]?
 * [http://www.charite.de/bioinf/strap/biojavaInAnger_SecondaryStructure_Predictor.html How can predict protein secondary structure]?
+-->
 
 == Disclaimer ==
 
