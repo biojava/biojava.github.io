@@ -145,11 +145,13 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures|Como eu posso exibir características sumárias da Proteina / Peptideo]]?
 -->
 
+<!--
 === BioSQL and Sequence Databases ===
 
 * [[BioJava:CookbookPortuguese:BioSQL:SetupPostGre|How do I set up BioSQL with PostgreSQL]]? (by [[User:David|David Huen]])
 * [[BioJava:CookbookPortuguese:BioSQL:SetupOracle|How do I set up BioSQL with Oracle]]? (by [[User:Richard|Richard Holland]])
 * [[BioJava:CookbookPortuguese:BioSQL:Manage|How do I add, view and remove Sequence Objects from a BioSQL DB]]?
+-->
 
 === Genetic Algorithms ===
 
