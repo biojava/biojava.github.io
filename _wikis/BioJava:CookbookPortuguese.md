@@ -88,18 +88,6 @@ Como eu faço para....?
 -   [Como eu crio uma Sequence a partir de uma String ou como eu crio
     uma String a partir de um objeto
     Sequence](Biojava:CookbookPortuguese:Sequence "wikilink")?
--   [Como obtenho uma subseção de uma
-    Sequence](Biojava:CookbookPortuguese:Sequence:SubSequence "wikilink")?
--   [Como transcrevo uma Sequencia de DNA em uma Sequencia de
-    RNA](Biojava:CookbookPortuguese:Sequence:Transcribe "wikilink")?
--   [Como obtenho o complemento reverso de uma sequencia de DNA ou
-    RNA](Biojava:CookbookPortuguese:Sequence:Reverse "wikilink")?
--   [O tipo Sequence é imutável porem como altero o seu
-    nome](Biojava:CookbookPortuguese:Sequence:ChangeName "wikilink")?
--   [Como eu edito um objeto do tipo Sequence ou
-    SymbolList](Biojava:CookbookPortuguese:Sequence:Edit "wikilink")?
--   [Como utilizar expressões regulares em uma sequencia para encontrar
-    seu motif](Biojava:CookbookPortuguese:Sequence:Regex "wikilink")?
 
 ### Tradução
 
