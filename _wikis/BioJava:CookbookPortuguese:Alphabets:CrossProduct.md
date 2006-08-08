@@ -5,14 +5,13 @@ title: BioJava:CookbookPortuguese:Alphabets:CrossProduct
 Como crio um CrossProductAlphabet, por exemplo, um alfabeto de codons
 ---------------------------------------------------------------------
 
-CrossProductAlphabets resulta da multiplicação de outros
-[Alfabetos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-CrossProductAlphabets são usados para trocar 2 ou mais
-[Simbolos](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-em um único
-[Simbolo](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-"cross product". Por exemplo utilizando a 3 way cross of the
-[DNA](wp:DNA "wikilink") alphabet you could wrap a
+Um *CrossProductAlphabets* resulta da multiplicação de outros
+*Alphabet*s. Eles são usados para transformar 2 ou mais *Symbol*s em um
+único *Symbol* "cross product".
+
+Por exemplo:
+
+Utilizando 3 [DNA](wp:DNA "wikilink") alphabet you could wrap a
 [codon](wp:codon "wikilink") as a
 [Simbolo](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
 Voce pode then count those [codon](wp:codon "wikilink")
