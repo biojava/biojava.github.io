@@ -1,6 +1,6 @@
 == Como eu pego um Alfabeto de DNA, RNA ou Proteina? ==
 
-No BioJava uma coleção de ''Symbol'' nada mais é do que um objeto ''Alphabet''. Os alfabetos comuns na biologia ([[wp:DNA|DNA]], [[wp:RNA|RNA]], [[wp:protein|protein]], etc) são registrados com o uso da classe ''AlphabetManager'' do BioJava na inicialização e podem ser acessados pelo utilizado o seu nome. Os alfabetos [[wp:DNA|DNA]], [[wp:RNA|RNA]] e [[wp:protein|Proteina]] também podem ser acessados utilizando métodos estáticos das Classes ''DNATools'', ''RNATools'' e respectivamente ''ProteinTools''.
+No BioJava uma coleção de ''Symbol'' nada mais é do que um objeto ''Alphabet''. Os alfabetos comuns na biologia ([[wp:DNA|DNA]], [[wp:RNA|RNA]], [[wp:protein|protein]], etc) são registrados com o uso da classe ''AlphabetManager'' do BioJava na inicialização e podem ser acessados utilizando o seu nome. Os alfabetos [[wp:DNA|DNA]], [[wp:RNA|RNA]] e [[wp:protein|Proteina]] também podem ser acessados utilizando métodos estáticos das Classes ''DNATools'', ''RNATools'' e respectivamente ''ProteinTools''.
 
 Ambas abordagens são apresentadas no exemplo abaixo:
 
