@@ -115,14 +115,6 @@ Como eu faço para....?
 
 -   [Como eu posso visualizar Anotações e características como
     árvore](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
--   [Como eu posso exibir uma sequencia na Interface
-    Gráfica](BioJava:CookbookPortuguese:Interfaces:ViewInGUI "wikilink")?
--   [Como eu posso exibir uma Sequencia de
-    coordenadas](BioJava:CookbookPortuguese:Interfaces:Coordinates "wikilink")?
--   [Como eu posso exibir
-    características](BioJava:CookbookPortuguese:Interfaces:Features "wikilink")?
--   [Como eu posso exibir características sumárias da Proteina /
-    Peptideo](BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures "wikilink")?
 
 ### BioSQL and Sequence Databases
 

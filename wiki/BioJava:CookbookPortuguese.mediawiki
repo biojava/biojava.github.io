@@ -138,10 +138,12 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 === Interfaces de Usuário ===
 
 * [[BioJava:CookbookPortuguese:Interfaces:ViewAsTree|Como eu posso visualizar Anotações e características como árvore]]?
+<!--
 * [[BioJava:CookbookPortuguese:Interfaces:ViewInGUI|Como eu posso exibir uma sequencia na Interface Gráfica]]?
 * [[BioJava:CookbookPortuguese:Interfaces:Coordinates|Como eu posso exibir uma Sequencia de coordenadas]]?
 * [[BioJava:CookbookPortuguese:Interfaces:Features|Como eu posso exibir características]]?
 * [[BioJava:CookbookPortuguese:Interfaces:ProteinPeptideFeatures|Como eu posso exibir características sumárias da Proteina / Peptideo]]?
+-->
 
 === BioSQL and Sequence Databases ===
 
