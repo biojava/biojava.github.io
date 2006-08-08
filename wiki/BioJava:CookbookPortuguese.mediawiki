@@ -88,6 +88,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
 -->
 
+<!--
 === Locations and Features ===
 
 * [[BioJava:CookbookPortuguese:Locations:Point|How do I specify a PointLocation]]?
@@ -96,6 +97,7 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 * [[BioJava:CookbookPortuguese:Locations:Feature|How can I make a Feature]]?
 * [[BioJava:CookbookPortuguese:Locations:Filter|How can I filter Features by type]]?
 * [[BioJava:CookbookPortuguese:Locations:Remove|How can I remove features]]?
+-->
 
 === BLAST e FASTA ===
 
