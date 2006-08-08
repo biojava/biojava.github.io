@@ -116,11 +116,6 @@ Como eu faço para....?
 -   [Como eu posso visualizar Anotações e características como
     árvore](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
 
-### Genetic Algorithms
-
--   [How can I make a Genetic Algorithm with
-    BioJava](BioJava:CookbookPortuguese:GA "wikilink")?
-
 ### Estrutura da Proteina
 
 -   [Como eu posso ler um arquivo
