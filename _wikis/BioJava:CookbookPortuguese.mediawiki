@@ -47,12 +47,14 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 === Manipulação básica de sequencia ===
 
 * [[Biojava:CookbookPortuguese:Sequence|Como eu crio uma Sequence a partir de uma String ou como eu crio uma String a partir de um objeto Sequence]]?
+<!--
 * [[Biojava:CookbookPortuguese:Sequence:SubSequence|Como obtenho uma subseção de uma Sequence]]?
 * [[Biojava:CookbookPortuguese:Sequence:Transcribe|Como transcrevo uma Sequencia de DNA em uma Sequencia de RNA]]?
 * [[Biojava:CookbookPortuguese:Sequence:Reverse|Como obtenho o complemento reverso de uma sequencia de DNA ou RNA]]?
 * [[Biojava:CookbookPortuguese:Sequence:ChangeName|O tipo Sequence é imutável porem como altero o seu nome]]?
 * [[Biojava:CookbookPortuguese:Sequence:Edit|Como eu edito um objeto do tipo Sequence ou SymbolList]]?
 * [[Biojava:CookbookPortuguese:Sequence:Regex|Como utilizar expressões regulares em uma sequencia para encontrar seu motif]]?
+-->
 
 ===Tradução===
 
