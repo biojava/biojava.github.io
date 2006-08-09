@@ -5,16 +5,16 @@ title: BioJava:CookbookPortuguese:Proteomics
 Como eu posso calcular a massa e pI de um peptideo?
 ---------------------------------------------------
 
-se voce está fazendo um projeto em proteômica, é importante saber o
-quanto se aproxima a massa e o pI de gene colocado. BioJava contem duas
-classes (MassCalc e IsoelectricPointCalc) do pacote proteomics que irá
-calcular estes numeros para voce.
+Se voce está fazendo um projeto em proteômica, é importante saber o
+quanto a massa se aproxima do pI no gene. BioJava contém duas classes
+(*MassCalc* e *IsoelectricPointCalc*) no pacote proteomics que irá
+calcular estes números para você.
 
-O programa abaixo demonstra um uso básico destas classes. Este simples
-exemplo utiliza "fairly" parametros padroes mas as funções MassCalc and
-IsoelectricPointCalc tem outras opções especializadas que não serão
-demonstradas aqui. Consulte os documentos sobre biojava API docs para
-informações sobre estas opções.
+O código abaixo demonstra um uso básico destas classes. Este exemplo
+simples utiliza parametros razoavelmente padroes, porém as funções
+*MassCalc* e *IsoelectricPointCalc* tem outras opções especializadas que
+não serão demonstradas aqui. Consulte a API do biojava para informações
+sobre estas opções.
 
 <java> import java.io.BufferedReader; import java.io.FileOutputStream;
 import java.io.FileReader; import java.io.PrintWriter;
@@ -34,14 +34,14 @@ org.biojava.bio.symbol.SymbolPropertyTable;
 
 /\*\*
 
-`* Calcula a massa and o ponto Isoelectric de uma coleção de`  
+`* Calcula a massa eo ponto isoeletrico de uma coleção de`  
 `* sequencias`  
 `*/`
 
 public class CalcMass {
 
 ` /**`  
-`  * Chame isto para exibir informações de uso, o programa terminates após sua chamada.`  
+`  * Chame isto para exibir informações de uso, o programa encerra após sua chamada.`  
 `  */`  
 ` public static void help(){`  
 `   System.out.println(`  
@@ -56,9 +56,9 @@ public class CalcMass {
 ` /**`  
 `  * Calcula a Massa do peptideo em Daltons. Utilizando a massa `  
 `  * média do Isótopo`  
-`  * @param protein o peptideo`  
+`  * @param proteina`  
 `  * @throws IllegalSymbolException se ``protein`` não for uma proteina`  
-`  * @return a mass`  
+`  * @return uma massa`  
 `  */`  
 ` public double mass(SymbolList protein)throws IllegalSymbolException{`  
 `   double mass = 0.0;`  
@@ -68,11 +68,11 @@ public class CalcMass {
 ` }`
 
 ` /**`  
-`  * Calculates the isoelectric point assuming a free NH and COOH`  
-`  * @param protein the peptide`  
-`  * @throws IllegalAlphabetException if ``protein`` is not a peptide`  
+`  * Calcula o ponto isoeletrico assumindo NH e COOH livres`  
+`  * @param proteina`  
+`  * @throws IllegalAlphabetException se ``protein`` não for uma proteina`  
 `  * @throws BioException`  
-`  * @return double the PI`  
+`  * @return double o valor de pI`  
 `  */`  
 ` public double pI(SymbolList protein)`  
 `     throws IllegalAlphabetException, BioException{`
@@ -90,24 +90,24 @@ public class CalcMass {
 `   BufferedReader br = null;`  
 `   PrintWriter out = null;`  
 `   try{`  
-`     //read sequences`  
+`     //Le as sequencias`  
 `     br = new BufferedReader(new FileReader(args[0]));`  
 `     SequenceIterator seqi =`  
 `         (SequenceIterator)SeqIOTools.fileToBiojava(args[1], args[2], br);`
 
 `     out = new PrintWriter(new FileOutputStream(args[3]));`
 
-`     //write header`  
+`     //Escreve o cabeçalho`  
 `     out.println("name, mass, pI, size, sequence");`
 
-`     //initialize calulator`  
+`     //Inicializa o calculador`  
 `     CalcMass calcMass = new CalcMass();`
 
 `     while (seqi.hasNext()) {`  
 `       SymbolList syms = seqi.nextSequence();`  
 `       String name = null;`
 
-`       //get an appropriate name for the peptide`  
+`       //pega o nome do peptideo`  
 `       if(args[1].equalsIgnoreCase("fasta")){`  
 `         name = ((Sequence) syms).getAnnotation().`  
 `             getProperty("description_line").toString();`  
@@ -116,48 +116,42 @@ public class CalcMass {
 `       }`  
 `       out.print(name+",");`
 
-`       //if not protein we need to translate it.`  
+`       //se nao for uma proteina é necessário traduzir.`  
 `       if(syms.getAlphabet() != ProteinTools.getAlphabet() &&`  
 `          syms.getAlphabet() != ProteinTools.getTAlphabet()){`  
 `         if(syms.getAlphabet() != RNATools.getRNA()){`  
 `           syms = RNATools.transcribe(syms);`  
 `         }`
 
-`         //if not divisible by three truncate`  
+`         //se nao for divisível por 3 trunca`  
 `         if(syms.length() % 3 != 0){`  
 `           syms = syms.subList(1, syms.length() - (syms.length() %3));`  
 `         }`
 
-`         syms = RNATools.translate(syms);`
-
-`        /*`  
-`         * Translation of GTG or TTG actually results in a Methionine if`  
-`         * it is the start codon (all proteins start with f-Met). Therefore`  
-`         * we need to edit the sequence.`  
-`         */      `  
+`         syms = RNATools.translate(syms);`  
 `         if(syms.symbolAt(1) != ProteinTools.met()){`  
 `           `  
-`           //SimpleSymbolLists are editable others may not be`  
+`           //SimpleSymbolLists são editaveis outros podem não ser`  
 `           syms = new SimpleSymbolList(syms);`  
 `           Edit e = new Edit(1, syms.getAlphabet(), ProteinTools.met());`  
 `           syms.edit(e);`  
 `         }`  
 `       }`
 
-`       //if the seq ends with a * (termination) we need to remove the *`  
+`       //se a sequencia termina com um * é necessário remove-lo`  
 `       if (syms.symbolAt(syms.length()) == ProteinTools.ter()) {`  
 `         syms = syms.subList(1, syms.length()-1);`  
 `       }`
 
-`       //do calculations`  
+`       //calcula`  
 `       double mass = calcMass.mass(syms);`  
 `       double pI = calcMass.pI(syms);`
 
-`       //print result for this protein`  
+`       //mostra o resultado para esta proteina`  
 `       out.println(mass+","+pI+","+syms.length()+","+syms.seqString());`  
 `     }`  
 `   }`  
-`   finally{ //tidy up`  
+`   finally{ `  
 `     if(br != null){`  
 `       br.close();`  
 `     }`  
