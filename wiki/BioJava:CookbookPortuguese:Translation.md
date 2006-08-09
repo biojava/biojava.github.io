@@ -5,17 +5,17 @@ title: BioJava:CookbookPortuguese:Translation
 Como eu traduzo um SymbolList ou Sequence?
 ------------------------------------------
 
-Para traduzir uma suquencia de DNA você precisa fazer o seguinte
+Para traduzir uma sequencia de DNA você precisa fazer o seguinte
 
 -   [Transcrever para
     RNA](Biojava:Cookbook:Sequence:Transcribe "wikilink").
--   Adquirir uma triplet view (codon) no SymbolList.
+-   Adquirir uma (codon) usando SymbolList.
 -   Traduzir para proteína.
 
-Quase tudo isto pode ser alcançado utilizando métodos estáticos da
-BioJava tool classes. O bloco aseguir de código demonstra o
-procedimento. Obviamente se você já tem uma sequencia de RNA não há
-necessidade de transcrever isto.
+Quase tudo isto pode ser alcançado utilizando métodos estáticos de
+classes especiais do BioJava (Classes Tools). O bloco de código a seguir
+demonstra o procedimento este procedimento, obviamente se você já tem
+uma sequência de RNA não há necessidade de transcreve-la.
 
 *NOTA: se você tentar e criar uma 'triplet view' em uma SymbolList ou
 Sequence que seu tamanho não é uniformemente divisível por três, será
