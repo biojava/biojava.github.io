@@ -62,7 +62,7 @@ public class StringToSequence {
 
 === SymbolList para String === 
 
-Voce pode chamar o metodo seqString() em um ''SymbolList'' ou uma ''Sequence'' para adquiri-la em forma de uma ''String''.
+Você pode chamar o metodo seqString() em um ''SymbolList'' ou uma ''Sequence'' para adquiri-la em forma de uma ''String''.
 
 <java>
 import org.biojava.bio.symbol.*;
