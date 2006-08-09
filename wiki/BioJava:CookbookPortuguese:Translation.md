@@ -17,11 +17,9 @@ classes especiais do BioJava (Classes Tools). O bloco de código a seguir
 demonstra o procedimento este procedimento, obviamente se você já tem
 uma sequência de RNA não há necessidade de transcreve-la.
 
-*NOTA: se você tentar e criar uma 'triplet view' em uma SymbolList ou
-Sequence que seu tamanho não é uniformemente divisível por três, será
-lançado uma IllegalArgumentException. Veja 'como adquirir uma
-subsequencia' para uma descrição de como adquirir uma porção de uma
-Sequence para tradução.*
+''NOTA: se você tentar e criar uma 'triplet view' em uma SymbolList ou
+Sequence e o seu comprimento não seja divisível por três, será disparada
+uma *IllegalArgumentException*.
 
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
