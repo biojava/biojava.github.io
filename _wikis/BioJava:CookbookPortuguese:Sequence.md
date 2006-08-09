@@ -19,7 +19,7 @@ String. O BioJava diferencia os resíduos do polímero como objetos do
 tipo *Symbol* que vêm de *Alphabet*s diferentes. Deste modo é fácil
 dizer se uma sequencia pertence a DNA ou RNA ou qualquer outra coisa, em
 outras palavras o símbolo 'A' do DNA não é igual ao símbolo 'A' do RNA.
-A parte fundamental está na necessidade de existir um mode que um
+A parte fundamental está na necessidade de existir um metodo em que um
 programador possa converter uma *String* facilmente legível em um Objeto
 do Biojava, bem como permitir que inverso também ocorra. Desta forma, o
 BioJava possui *Tokenizer*s que podem ler uma *String* de um texto e
