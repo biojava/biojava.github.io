@@ -15,18 +15,18 @@ para armazenar coisas, como por exemplo, o nome da sequencia ou qualquer
 critério.
 
 Dentro da *Sequence* e *SymbolList* o polímero não é armazenado como uma
-String. O BioJava diferencia resíduos de polímero diferentes que usam
-objetos de Symbol que vêm de Alphabets diferentes. Deste modo é fácil
-dizer se uma sequencia pertence a DNA ou RNA ou qualquer outra coisa e o
-'A' símbolo de DNA não é igual para o 'A' símbolo de RNA. Os detalhes de
-Symbols, SymbolLists e Alphabets estão seguros aqui. A parte crucial
-está na necessidade de ter um modo para um programador converter entre a
-String facilmente legível e o BioJava Object e o inverso. Para fazer
-isto, o BioJava tem Tokenizers que pode ler uma String de um texto e
-pode analisar isto em um Sequence do BioJava ou um objeto de SymbolList.
-No caso de DNA, RNA e Protein você pode fazer isto com uma única chamada
-de método. A chamada é feita para um método estático de DNATools,
-RNATools ou ProteinTools.
+String. O BioJava diferencia os resíduos do polímero como objetos do
+tipo *Symbol* que vêm de *Alphabet*s diferentes. Deste modo é fácil
+dizer se uma sequencia pertence a DNA ou RNA ou qualquer outra coisa, em
+outras palavras o símbolo 'A' do DNA não é igual ao símbolo 'A' do RNA.
+A parte fundamental está na necessidade de existir um mode que um
+programador possa converter uma *String* facilmente legível em um Objeto
+do Biojava, bem como permitir que inverso também ocorra. Desta forma, o
+BioJava possui *Tokenizer*s que podem ler uma *String* de um texto e
+convertê-laem um objeto *Sequence* do BioJava ou um objeto *SymbolList*.
+No caso de DNA, RNA e Proteina você pode fazer isto com uma única
+chamada de método. A chamada é feita para um método estático das classes
+DNATools, RNATools ou ProteinTools.
 
 ### String para SymbolList
 
@@ -37,13 +37,13 @@ public class StringToSymbolList {
 ` public static void main(String[] args) {`  
 `  `  
 `   try {`  
-`     //cria um DNA SymbolList de uma String`  
+`     //cria um DNA SymbolList a partir de uma String`  
 `     SymbolList dna = DNATools.createDNA("atcggtcggctta");`
 
-`     //cria um RNA SymbolList de uma String`  
+`     //cria um RNA SymbolList a partir de uma String`  
 `     SymbolList rna = RNATools.createRNA("auugccuacauaggc");`
 
-`     //cria uma Protein SymbolList de uma String`  
+`     //cria uma Protein SymbolList a partir de uma String`  
 `     SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");`  
 `   }`  
 `   catch (IllegalSymbolException ex) {`  
@@ -64,13 +64,13 @@ public class StringToSequence {
 ` public static void main(String[] args) {`
 
 `   try {`  
-`     //cria um DNA sequence com o nome dna_1`  
+`     //cria uma sequencia de DNA com o nome dna_1`  
 `     Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");`
 
-`     //cria um RNA sequence com o nome rna_1`  
+`     //cria uma sequencia de RNA sequence com o nome rna_1`  
 `     Sequence rna = RNATools.createRNASequence("augcug", "rna_1");`
 
-`     //cria uma Protein sequence com o nome prot_1`  
+`     //cria uma sequencia de Protein com o nome prot_1`  
 `     Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");`  
 `   }`  
 `   catch (IllegalSymbolException ex) {`  
@@ -83,8 +83,8 @@ public class StringToSequence {
 
 ### SymbolList para String
 
-Voce pode chamar o metodo seqString() em um SymbolList ou uma Sequencia
-para adquirir sua versão de Stringified.
+Voce pode chamar o metodo seqString() em um *SymbolList* ou uma
+*Sequence* para adquiri-la em forma de uma *String*.
 
 <java> import org.biojava.bio.symbol.\*;
 
@@ -92,7 +92,7 @@ public class SymbolListToString {
 
 ` public static void main(String[] args) {`  
 `   SymbolList sl = null;`  
-`   //codigo aqui para instanciar sl`  
+`   //insira um codigo aqui para instanciar sl`  
 `  `  
 `   //converte sl numa String`  
 `   String s = sl.seqString();`  
