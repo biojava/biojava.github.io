@@ -5,15 +5,16 @@ title: BioJava:CookbookPortuguese:Sequence
 Como eu crio uma Sequence de uma String ou crio de volta uma String de um Objeto Sequence?
 ------------------------------------------------------------------------------------------
 
-A muito tempo vemos uma sequencia representada como uma String de
-caracteres ex "atgccgtggcatcgaggcatatagc". É um método conveniente por
-ver e sucintamente que representa um polímero biológico mais complexo. O
-BioJava utiliza SymbolLists e Sequences para representar este polímeros
-biológicos como Objetos. Sequences estendem SymbolLists e provêem
-métodos extras para armazenar coisas como o nome da sequencia e qualquer
-critério que voce poderia pensar em uma Sequence como um SymbolList.
+Há muito tempo que se utiliza uma sequencia representando-a como uma
+*String* como por exemplo "atgccgtggcatcgaggcatatagc". Este é um método
+bastante conveniente para vizualizar de forma simples a representação de
+um polímero biológico complexo. O BioJava utiliza *SymbolLists* e
+*Sequences* para representar este polímeros biológicos como Objetos. Um
+objeto do tipo ''Sequence' estende *SymbolList* e provê métodos extras
+para armazenar coisas, como por exemplo, o nome da sequencia ou qualquer
+critério.
 
-Dentro da Sequence e SymbolList o polímero não é armazenado como uma
+Dentro da *Sequence* e *SymbolList* o polímero não é armazenado como uma
 String. O BioJava diferencia resíduos de polímero diferentes que usam
 objetos de Symbol que vêm de Alphabets diferentes. Deste modo é fácil
 dizer se uma sequencia pertence a DNA ou RNA ou qualquer outra coisa e o
