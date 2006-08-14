@@ -23,6 +23,13 @@ projects please add them to the list.
     informatics offering from [Inforsense](http://www.inforsense.com/)
     that uses BioJava under the hood.
 
+<!-- -->
+
+-   [Bioclipse](http://www.bioclipse.net): A free, open source,
+    workbench for chemo- and bioinformatics with powerful editing and
+    visualization capabilities for molecules, sequences, proteins,
+    spectra etc.
+
 Publications
 ------------
 
