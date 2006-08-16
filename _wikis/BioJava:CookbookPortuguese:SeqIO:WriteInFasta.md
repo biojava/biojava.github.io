@@ -5,17 +5,20 @@ title: BioJava:CookbookPortuguese:SeqIO:WriteInFasta
 Como eu imprimo uma sequencia no formato Fasta?
 -----------------------------------------------
 
-O formato FASTA é uma saída padrão de bioinformatics por ser conveniente
-e fácil ler. O BioJava tem uma classe de ferramentas chamado SeqIOTools
-que provê métodos estáticos de conveniência para executar várias tarefas
-comums de IO da bioinformatica. Os trechos que se seguem, demonstram
-como imprimir uma Sequence ou até mesmo um SequenceDB inteiro em formato
-FASTA em um OutputStream como System.out. Todos os métodos de WriteXX de
-SeqIOTools tem um OutputStream como um argumento. Deste modo você pode
-enviar a sucessão recentemente formatada para um arquivo ou outro método
-ou STDOUT, STDERR etc.
+O FASTA é um formato de saída padrão para dados de bioinformatica,
+conveniente e fácil de ler. O BioJava possui uma classe de ferramentas
+chamada *SeqIOTools* que provê métodos estáticos para executar várias
+tarefas comums de entrada e saida (IO) em bioinformatica. Os trechos de
+código abaixo demonstram como imprimir uma *Sequence* ou até mesmo um
+''SequenceDB' completo em formato FASTA utilizando um *OutputStream* em
+conjunto com o *System*.**out**.
 
-SeqIOTools está no package org.biojava.bio.seq.io
+Todos os métodos do tipo *Write*XX do *SeqIOTools* possui um
+*OutputStream* como argumento. Deste modo você pode enviar os dados
+recém formatados para um arquivo ou outro método ou STDOUT, STDERR etc.
+
+A classe *SeqIOTools* pode ser encontrada na package
+org.biojava.bio.seq.io.
 
 ### Imprimindo uma SequenceDB
 
@@ -39,10 +42,11 @@ SeqIOTools está no package org.biojava.bio.seq.io
 
 ### Imprimindo de uma SequenceIterator
 
-Muitos métodos readXXX() de SeqIOTools retornam um SequenceIterator que
-itera em cima de todas as Sequences de um arquivo. A maioria dos métodos
-writeXXX() de SeqIOTools tem uma versão dos métodos que recebem um
-SequenceIterator como argumento. ex:
+Muitos métodos do tipo *read*XXX() da classe *SeqIOTools* retornam um
+objeto do tipo *SequenceIterator* que itera sobre todas as *Sequences*
+de um arquivo. A maioria dos métodos *write*XXX() da *SeqIOTools* tem
+uma versão dos métodos que recebem um *SequenceIterator* como argumento.
+ex:
 
 <java>
 
@@ -50,7 +54,8 @@ SequenceIterator como argumento. ex:
 `         (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);`
 
 `     // e agora escreve tudo para FASTA, (você pode escrever em `  
-`     // qualquer OutputStream, não apenas System.out)`  
+`     // qualquer OutputStream, não apenas System.out)`
+
 `     SeqIOTools.writeFasta(System.out, iter);`
 
 </java>
