@@ -7,11 +7,11 @@ Como eu verifico um BLAST Result?
 
 Grande parte do crédito para este exemplo pertence a Keith James.
 
-Uma tarefa freqüente em bioinformatica é a geração de resultados de
-pesquisa BLAST. O BioJava tem a habilidade para analisar gramaticalmente
-uma saída "Blast-like" como Blast e HMMER utilizando um truque que faz
-saída Blast produzida em eventos SAX que podem ser utilizados por
-listeners registrados.
+Uma tarefa freqüente em bioinformatica é a geração de resultados a
+partir de pesquisa BLAST. O BioJava possui a habilidade de analisar
+gramaticalmente uma saída "Blast-like" como Blast e HMMER utilizando um
+truque que faz a saída Blast produzir eventos SAX que podem ser
+utilizados por listeners registrados.
 
 O caminho básico é mostrado a seguir:
 
@@ -22,8 +22,8 @@ O caminho básico é mostrado a seguir:
 
 --\> BlastLikeSearchBuilder --\> List.
 
-O API é muito flexível para a maioria dos propósitos a simples receita
-seguinte o lhe dará o que você quer.
+A API é muito flexível para a maioria dos propósitos e a receita abaixo
+o lhe dará uma idéia de como funciona:
 
 <java> import java.io.\*; import java.util.\*;
 
@@ -35,7 +35,7 @@ org.biojava.bio.\*;
 public class BlastParser {
 
 ` /**`  
-`  * args[0] é assumido que é o nome do arquivo de saída Blast`  
+`  * args[0] nome do arquivo de saída Blast`  
 `  */`  
 ` public static void main(String[] args) {`  
 `   try {`  
