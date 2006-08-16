@@ -111,11 +111,6 @@ Como eu faço para....?
 -   [Como eu posso contar os residuos em uma
     Sequence](BioJava:CookbookPortuguese:Count:Residues "wikilink")?
 
-### Interfaces de Usuário
-
--   [Como eu posso visualizar Anotações e características como
-    árvore](BioJava:CookbookPortuguese:Interfaces:ViewAsTree "wikilink")?
-
 ### Estrutura da Proteina
 
 -   [Como eu posso ler um arquivo
