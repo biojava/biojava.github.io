@@ -6,7 +6,7 @@ title: BioJava:CookbookPortuguese:PDB:read
 
 <java>
 
-`// também funciona par arquivos comprimidos com gzip`  
+`// também funciona com arquivos compactados com gzip`  
 `String filename =  "path/to/pdbfile.ent" ;`  
   
 `PDBFileReader pdbreader = new PDBFileReader();`  
