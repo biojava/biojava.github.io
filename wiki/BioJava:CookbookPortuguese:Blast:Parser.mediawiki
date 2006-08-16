@@ -4,12 +4,13 @@ Grande parte do crédito para este exemplo pertence a Keith James.
 Uma tarefa freqüente em bioinformatica é a geração de resultados a partir de pesquisa BLAST. O BioJava possui a habilidade de analisar gramaticalmente uma saída "Blast-like" como Blast e HMMER utilizando um truque que faz a saída Blast produzir eventos SAX que podem ser utilizados por listeners registrados.
 
 O caminho básico é mostrado a seguir:
+<pre>
+Blast_output --> Gera eventos SAX --> Converte eventos SAX --> Cria objetos de resultado --> Armazena-os em uma lista.
+</pre>
 
- Blast_output --> Gera eventos SAX --> Converte eventos SAX --> Cria
- objetos de resultado --> Armazena-os em uma lista.
-
- InputStream --> BLASTLikeSAXParser --> SeqSimilartyAdapter 
---> BlastLikeSearchBuilder --> List.
+<pre>
+InputStream --> BLASTLikeSAXParser --> SeqSimilartyAdapter --> BlastLikeSearchBuilder --> List.
+</pre>
 
 A API é muito flexível para a maioria dos propósitos e a receita abaixo o lhe dará uma idéia de como funciona:
 
