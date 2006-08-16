@@ -34,6 +34,10 @@ You can now read BioJava in Anger in
 [French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
 Foisy).
 
+You can also read Biojava in Anger in
+[Portuguese](Biojava:CookbookPortuguese "wikilink") (Translated by
+Dickson Guedes)
+
 You can also read BioJava in Anger in
 [Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
 (Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
