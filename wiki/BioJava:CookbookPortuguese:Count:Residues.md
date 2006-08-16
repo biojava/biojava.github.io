@@ -7,19 +7,18 @@ Como eu posso contar os Residuos em uma Sequence?
 
 Contar os resíduos em uma Sequence é uma tarefa muito comum na
 bioinformatica. Geralmente você construiria um array de inteiros e
-usaria algum sistema indexador. Melhor ainda, você poderia usar um
-AlphabetIndex para impor um índice unificado. Você obteria um do
-AlphabetManager que usa um de seus métodos getAlphabetIndex(). Porque
-este tipo de atividade é tão comum que o BioJava empacotou tudo
-indexação etc em uma classe chamada IndexedCount que é uma implementação
-da interface Count.
+usaria algum sistema indexador. Ou ainda, você poderia usar um
+*AlphabetIndex* para impor um índice unificado, ou obteria um indice a
+partir do *AlphabetManager* usando um de seus métodos
+getAlphabetIndex().
 
-O programa seguinte lê algum tipo de arquivo de sequencia e conta os
+Por ser uma atividade tão comum o BioJava empacotou estes recursos em
+uma classe chamada *IndexedCount* que, nada mais é, uma implementação da
+interface Count.
+
+O exemplo a seguir lê algum tipo de arquivo de sequencias e conta os
 resíduos, imprimindo seu resultados para STDOUT. Note que este programa
-não trabalha com símbolos de ambigüidade. Se você desejar contar
-símbolos de ambigüidade, você precisa adicionar uma conta parcial para
-cada Symbol que compõe a ambigüidade se esta for seu caso, você usaria
-esta solução.
+não trabalha com símbolos de ambigüidade.
 
 ### Solução 1
 
@@ -56,7 +55,7 @@ public class CountResidues {
 `         counts = new IndexedCount((FiniteAlphabet)seq.getAlphabet());`  
 `       }`
 
-`       //iterate através dos Symbols na seq`  
+`       //itera através dos Symbols na seq`  
 `       for (Iterator i = seq.iterator(); i.hasNext(); ) {`  
 `         AtomicSymbol sym = (AtomicSymbol)i.next();`  
 `         counts.increaseCount(sym,1.0);`  
