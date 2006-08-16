@@ -1,7 +1,7 @@
 === Como eu leio um arquivo PDB? ===
 
 <java>
- // também funciona par arquivos comprimidos com gzip
+ // também funciona com arquivos compactados com gzip
  String filename =  "path/to/pdbfile.ent" ;
  
  PDBFileReader pdbreader = new PDBFileReader();
