@@ -12,3 +12,12 @@ title: User talk:Foisys
     here. --[Cjfields](User:Cjfields "wikilink") 15:36, 11 August 2006
     (EDT)
 
+<!-- -->
+
+-   I would be more than willing to do so! Jason S. got me admin
+    priviliges on the BioJava site but I can't seem to be able to find
+    it and his email address that I have is not responding anymore... I
+    would need a small how-to on how to do what you propose though. Best
+    regards. --[Foisys](User:Foisys "wikilink") 10:24, 17 August 2006
+    (EDT)
+
