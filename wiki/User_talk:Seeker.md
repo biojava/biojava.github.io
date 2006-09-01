@@ -22,8 +22,10 @@ instead of **getNCBITaxon()** method.
 
 ------------------------------------------------------------------------
 
-Iwas working with sequence file in GenBank format. This file contained
-the following text fragment:
+I was working with the sequence file in GenBank format when I notised
+one irrational thing.
+
+That file contained the following text fragment:
 
 `
  ...
@@ -100,21 +102,19 @@ while (nit.hasNext()) {
 
 The output was as follows:
 
-<code>
-
-`Function:`  
-`initation of replication cycle and DNA`  
-`elongation`  
-`Note:`  
-`decatenates newly replicated chromosomal DNA and`  
-`relaxes positive and negative DNA supercoiling`  
-`Translation:`  
-`MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWEIVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT               `
-
-\<\\code\>
+`
+ Function:
+ initation of replication cycle and DNA
+ elongation
+ Note:
+ decatenates newly replicated chromosomal DNA and
+ relaxes positive and negative DNA supercoiling
+ Translation:
+ MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWEIVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT               
+`
 
 As one can see from the output the **getValue()** method of the
 **SimpleNote** class returns String objects that contain *new line
-symbols* when its object represents **function** & **note** terms. I
+symbols* when its object represents **function** & **note** notes. I
 consider this rather irrational. One can also see that there are no *new
-line symbols* in the case of **translation** term. This is well.
+line symbols* in the case of **translation** note. This is well.
