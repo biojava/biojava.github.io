@@ -23,9 +23,10 @@ instead of **getNCBITaxon()** method.
 ------------------------------------------------------------------------
 
 Iwas working with sequence file in GenBank format. This file contained
-the following text:
+the following text fragment:
 
 `
+ ...
   FEATURES           Location/Qualifiers
      source          1..4214630
                      /organism="Bacillus subtilis subsp. subtilis str. 168"
@@ -55,6 +56,7 @@ the following text:
                      /translation="MFRIGQGFDVHQLVEGRPLIIGGIEIPYEKGLLGHSDADVLLHT
                      VADACLGAVGEGDIGKHFPDTDPEFKDADSFKLLQHVWGIVKQKGYVLGNIDCTIIAQ
                      KPKMLPYIEDMRKRIAEGLEADVSQVNVKATTTEKLGFTGRAEGIAAQATVLIQKG"
+ ...
 `
 
 <java>
