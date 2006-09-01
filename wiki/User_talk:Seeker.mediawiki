@@ -7,9 +7,10 @@
 If I clearly understand, the '''RichSequence''' object is ment by ''sequence''. But there is no '''getNCBITaxon()''' method in the '''RichSequence''' class. There is '''getTaxon()''' method in the '''RichSequence''' class. Thus, exectly this method should be used here instead of '''getNCBITaxon()''' method.
 
 ----
-Iwas working with sequence file in GenBank format. This file contained the following text:
+Iwas working with sequence file in GenBank format. This file contained the following text fragment:
 
 <code>
+ ...
   FEATURES           Location/Qualifiers
      source          1..4214630
                      /organism="Bacillus subtilis subsp. subtilis str. 168"
@@ -39,6 +40,7 @@ Iwas working with sequence file in GenBank format. This file contained the follo
                      /translation="MFRIGQGFDVHQLVEGRPLIIGGIEIPYEKGLLGHSDADVLLHT
                      VADACLGAVGEGDIGKHFPDTDPEFKDADSFKLLQHVWGIVKQKGYVLGNIDCTIIAQ
                      KPKMLPYIEDMRKRIAEGLEADVSQVNVKATTTEKLGFTGRAEGIAAQATVLIQKG"
+ ...
 </code>
 
 <java>
