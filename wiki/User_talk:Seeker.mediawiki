@@ -1,4 +1,3 @@
-
 == I've noticed some misprints in BioJavaX Documentation and in the source code. ==
 
 [[BioJava:BioJavaXDocs#Writing_2|Here]] in [[BioJava:BioJavaXDocs|BioJavaXDocs]] it is said that GenBank Field FEATURE can be outputted as follows:
