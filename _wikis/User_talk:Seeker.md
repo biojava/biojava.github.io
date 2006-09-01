@@ -59,6 +59,9 @@ the following text fragment:
  ...
 `
 
+I used the followng code to get values of notes **/function**, **/note**
+and **/translation** of the FEATURE Field:
+
 <java>
 
 RichSequenceIterator seqs = RichSequence.IOTools.readGenbankDNA(br, ns);
@@ -68,6 +71,8 @@ Iterator fsit = seq.getFeatureSet().iterator(); RichFeature rf =
 (RichFeature) fsit.next();
 
 Set noteSet = rf.getNoteSet(); Iterator nit = noteSet.iterator();
+
+String function = "", note = "";
 
 while (nit.hasNext()) {
 
@@ -81,7 +86,26 @@ while (nit.hasNext()) {
 
 `     note = sn.getValue();`  
 `     System.out.println("Note:\n" + note);`  
+`   } else if (snTermName.equals("translation")) {`
+
+`     translation = sn.getValue();`  
+`     System.out.println("Translation:\n" + translation);`  
 `   }`  
 ` }`
 
 } </java>
+
+The output was as follows:
+
+<code>
+
+`Function:`  
+`4-diphosphocytidyl-2-C-methyl-D-erythritol`  
+`kinase`  
+`Note:`  
+`catalyzes the phosphorylation of`  
+`4-diphosphocytidyl-2-C-methyl-D-erythritol in the`  
+`nonmevalonate pathway of isoprenoid biosynthesis`  
+`Translation:   MRILEKAPAKINLSLDVTRKRPDGYHEVEMIMTTIDLADRIELTELAEDEVRVSSHNRFVPDDQRNLAYQAAKLIKDRYNVKKGVSIMITKVIPVAAGLAGGSSDAAATLRGLNRLWNLNLSAETLAELGAEIGSDVSFCVYGGTALATGRGEKIKHISTPPHCWVILAKPTIGVSTAEVYRALKLDGIEHPDVQGMIEAIEEKSFQKMCSRLGNVLESVTLDMHPEVAMIKNQMKRFGADAVLMSGSGPTVFGLVQYESKVQRIYNGLRGFCDQVYAVRMIGEQNALD`
+
+\<\\code\>
