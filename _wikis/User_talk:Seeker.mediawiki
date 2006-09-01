@@ -16,7 +16,6 @@ FEATURES             Location/Qualifiers
                      /mol_type="genomic DNA"
                      /strain="168"
                      /db_xref="taxon:224308"
-...
      gene            110477..110953
                      /gene="ispF"
                      /locus_tag="BSU00910"
