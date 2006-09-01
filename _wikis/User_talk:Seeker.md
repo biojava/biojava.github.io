@@ -19,3 +19,15 @@ If I clearly understand, the **RichSequence** object is ment by
 **RichSequence** class. There is **getTaxon()** method in the
 **RichSequence** class. Thus, exectly this method should be used here
 instead of **getNCBITaxon()** method.
+
+------------------------------------------------------------------------
+
+<java> Set noteSet = rf.getNoteSet(); Iterator nit = noteSet.iterator();
+
+while (nit.hasNext()) {
+
+` if (fType.equals("CDS")) {`
+
+` }`
+
+} </java>
