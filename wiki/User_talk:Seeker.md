@@ -1,0 +1,6 @@
+---
+title: User talk:Seeker
+---
+
+I've possibly found some misprints in BioJavaX Documentation and in the
+source code.
