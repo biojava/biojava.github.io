@@ -17,29 +17,29 @@ Iwas working with sequence file in GenBank format. This file contained the follo
                      /mol_type="genomic DNA"
                      /strain="168"
                      /db_xref="taxon:224308"
-     gene            110477..110953
-                     /gene="ispF"
-                     /locus_tag="BSU00910"
-                     /db_xref="GeneID:936634"
-     CDS             110477..110953
-                     /gene="ispF"
-                     /locus_tag="BSU00910"
-                     /function="unknown"
-                     /note="yacN; catalyzes the conversion of
-                     4-diphosphocytidyl-2-C-methyl-D-erythritol 2-phosphate
-                     into 2-C-methyl-D-erythritol 2,4-cyclodiphosphate"
+     gene            4866..6782
+                     /gene="gyrB"
+                     /locus_tag="BSU00060"
+                     /note="synonym: novA"
+                     /db_xref="GeneID:939456"
+     CDS             4866..6782
+                     /gene="gyrB"
+                     /locus_tag="BSU00060"
+                     /EC_number="5.99.1.3"
+                     /function="initation of replication cycle and DNA
+                     elongation"
+                     /note="decatenates newly replicated chromosomal DNA and
+                     relaxes positive and negative DNA supercoiling"
                      /codon_start=1
                      /transl_table=11
-                     /product="2-C-methyl-D-erythritol 2,4-cyclodiphosphate
-                     synthase"
-                     /protein_id="NP_387972.1"
-                     /db_xref="GI:16077159"
-                     /db_xref="GOA:Q06756"
-                     /db_xref="UniProtKB/Swiss-Prot:Q06756"
-                     /db_xref="GeneID:936634"
-                     /translation="MFRIGQGFDVHQLVEGRPLIIGGIEIPYEKGLLGHSDADVLLHT
-                     VADACLGAVGEGDIGKHFPDTDPEFKDADSFKLLQHVWGIVKQKGYVLGNIDCTIIAQ
-                     KPKMLPYIEDMRKRIAEGLEADVSQVNVKATTTEKLGFTGRAEGIAAQATVLIQKG"
+                     /product="DNA topoisomerase IV subunit B"
+                     /protein_id="NP_387887.1"
+                     /db_xref="GI:16077074"
+                     /db_xref="GOA:P05652"
+                     /db_xref="UniProtKB/Swiss-Prot:P05652"
+                     /db_xref="GeneID:939456"
+                     /translation="MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWE
+                     IVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT"
  ...
 </code>
 
@@ -83,11 +83,11 @@ The output was as follows:
 
 <code>
  Function:
- 4-diphosphocytidyl-2-C-methyl-D-erythritol
- kinase
+ initation of replication cycle and DNA
+ elongation
  Note:
- catalyzes the phosphorylation of
- 4-diphosphocytidyl-2-C-methyl-D-erythritol in the
- nonmevalonate pathway of isoprenoid biosynthesis
- Translation:   MRILEKAPAKINLSLDVTRKRPDGYHEVEMIMTTIDLADRIELTELAEDEVRVSSHNRFVPDDQRNLAYQAAKLIKDRYNVKKGVSIMITKVIPVAAGLAGGSSDAAATLRGLNRLWNLNLSAETLAELGAEIGSDVSFCVYGGTALATGRGEKIKHISTPPHCWVILAKPTIGVSTAEVYRALKLDGIEHPDVQGMIEAIEEKSFQKMCSRLGNVLESVTLDMHPEVAMIKNQMKRFGADAVLMSGSGPTVFGLVQYESKVQRIYNGLRGFCDQVYAVRMIGEQNALD
+ decatenates newly replicated chromosomal DNA and
+ relaxes positive and negative DNA supercoiling
+ Translation:
+ MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWEIVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT               
 <\code>
