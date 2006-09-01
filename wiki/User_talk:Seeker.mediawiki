@@ -7,7 +7,9 @@
 If I clearly understand, the '''RichSequence''' object is ment by ''sequence''. But there is no '''getNCBITaxon()''' method in the '''RichSequence''' class. There is '''getTaxon()''' method in the '''RichSequence''' class. Thus, exectly this method should be used here instead of '''getNCBITaxon()''' method.
 
 ----
-Iwas working with sequence file in GenBank format. This file contained the following text fragment:
+I was working with the sequence file in GenBank format when I notised one irrational thing. 
+
+That file contained the following text fragment:
 
 <code>
  ...
@@ -93,7 +95,7 @@ The output was as follows:
  relaxes positive and negative DNA supercoiling
  Translation:
  MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWEIVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT               
-<\code>
+</code>
 
-As one can see from the output the '''getValue()''' method of the '''SimpleNote''' class returns String objects that contain ''new line symbols'' when its object represents '''function''' & '''note''' terms. 
-I consider this rather irrational. One can also see that there are no ''new line symbols'' in the case of '''translation''' term. This is well.
+As one can see from the output the '''getValue()''' method of the '''SimpleNote''' class returns String objects that contain ''new line symbols'' when its object represents '''function''' & '''note''' notes. 
+I consider this rather irrational. One can also see that there are no ''new line symbols'' in the case of '''translation''' note. This is well.
