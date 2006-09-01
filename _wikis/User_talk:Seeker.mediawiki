@@ -1,3 +1,3 @@
 I've noticed some misprints in BioJavaX Documentation and in the source code.
 
-[[BioJava:BioJavaXDocs#Writing_2|Here]]http://biojava.org/wiki/BioJava:BioJavaXDocs#Writing_2 it is said
+[[BioJava:BioJavaXDocs#Writing_2|Here]] in [[BioJava:BioJavaXDocs|BioJavaXDocs]] it is said that GenBank Field FEATURE can be outputted as follows: "...For the source feature, the db_xref and organism fields are added to the output by calling '''getNCBITaxon().getNCBITaxID()''' and '''getNCBITaxon().getDisplayName()''' on the sequence (the latter is chopped before the first bracket if necessary)...."
