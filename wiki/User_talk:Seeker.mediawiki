@@ -60,6 +60,9 @@ String function = "", note = "";
 
 while (nit.hasNext()) {
 
+  SimpleNote sn = (SimpleNote) nit.next();
+  String snTermName = sn.getTerm().getName(); 
+
   if (fType.equals("CDS")) {
 
     if (snTermName.equals("function")) {
@@ -91,3 +94,6 @@ The output was as follows:
  Translation:
  MEQQQNSYDENQIQVLEGLEAVRKRPGMYIGSTNSKGLHHLVWEIVDNSIDEALAGYCTDINIQIEKDNSITVVDNGRGIPVGIHEKMGRPAVEVIMT               
 <\code>
+
+As one can see from the output the '''getValue()''' method of the '''SimpleNote''' class returns String objects that contain ''new line symbols'' when its object represents '''function''' & '''note''' terms. 
+I consider this rather irrational. One can also see that there are no ''new line symbols'' in the case of '''translation''' term. This is well.
