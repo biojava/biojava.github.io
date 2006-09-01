@@ -2,5 +2,8 @@
 title: User talk:Seeker
 ---
 
-I've possibly found some misprints in BioJavaX Documentation and in the
-source code.
+I've noticed some misprints in BioJavaX Documentation and in the source
+code.
+
+[Here]<http://biojava.org/wiki/BioJava:BioJavaXDocs#Writing_2> it is
+said
