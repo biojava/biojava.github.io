@@ -26,7 +26,7 @@ Iwas working with sequence file in GenBank format. This file contained
 the following text:
 
 `
-  FEATURES             Location/Qualifiers
+  FEATURES           Location/Qualifiers
      source          1..4214630
                      /organism="Bacillus subtilis subsp. subtilis str. 168"
                      /mol_type="genomic DNA"
