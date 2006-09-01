@@ -36,4 +36,4 @@ page](User_talk:Seeker#I.27ve_noticed_some_misprints_in_BioJavaX_Documentation_a
 I think it may be interesting to contributors. Especially for BioJavaX
 coders.
 
-[Seeker](User:Seeker "wikilink")
+--[Seeker](User:Seeker "wikilink") 19:01, 1 September 2006 (EDT)
