@@ -24,6 +24,6 @@ Biojavax is currently only available from CVS (public or development server). Th
 
 Hello, colleagues!
 
-I've left some comments on my [[User_talk:Seeker#I.27ve_noticed_some_misprints_in_BioJavaX_Documentation_and_in_the_source_code.|discussion page]]. I think it may be interesting to contributors. Especially for BioJavaX coders.
+I've left some comments on my [[User_talk:Seeker#I.27ve_noticed_some_misprints_in_BioJavaX_Documentation_and_in_the_source_code.|discussion page]]. I think it may be interesting to contributors. Especially for BioJavaX developers.
 
 --[[User:Seeker|Seeker]] 19:01, 1 September 2006 (EDT)
