@@ -1222,16 +1222,16 @@ Table 8.11. UniProtFormat output field sources.
 |getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
 |-
 |OS	
-|getNCBITaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.
+|getTaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.
 |-
 |OC	
-|getNCBITaxon().getNameHierarchy().
+|getTaxon().getNameHierarchy().
 |-
 |OG	
 |getNoteSet(Terms.getOrganelleTerm())
 |-
 |OX	
-|getNCBITaxon().getNCBITaxID()
+|getTaxon().getNCBITaxID()
 |-
 |GN	
 |Gene names are written from getNoteSet(Terms.getGeneNameTerm()). Gene synonyms are written from getNoteSet(Terms.getGeneSynonymTerm()). Ordered locus names are written from getNoteSet(Terms.getOrderedLocusNameTerm()). ORF names are written from getNoteSet(Terms.getORFNameTerm()). As the values have a number and a colon prefixed, where the number refers to the sequence order of the current gene, these values are used to keep the correct names grouped together. This prefix is not included in the output.
@@ -1272,7 +1272,6 @@ Table 8.11. UniProtFormat output field sources.
 |SQ	
 |Sequence counts are generated, then sequence is read directly as it is a SymbolList.
 |}
-
 
 === INSDSeq (XML) ===
 
