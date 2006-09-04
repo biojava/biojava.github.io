@@ -1060,10 +1060,10 @@ Table 8.9. EMBLFormat output field sources.
 |getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
 |-
 |OS	
-|getNCBITaxon().getDisplayName()
+|getTaxon().getDisplayName()
 |-
 |OC	
-|getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy().
+|getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy().
 |-
 |OG	
 |getNoteSet(Terms.getOrganelleTerm())
