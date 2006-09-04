@@ -905,10 +905,10 @@ Table 8.7. GenBankFormat output field sources.
 |getNoteSet(Terms.getKeywordTerm()).
 |-
 |SOURCE	
-|getNCBITaxon().getDisplayName()
+|getTaxon().getDisplayName()
 |-
 |ORGANISM	
-|getNCBITaxon()getDisplayName(), chopped before the first bracket, and getNCBITaxon().getNameHierarchy()
+|getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy()
 |-
 |REFERENCE	
 |Each reference is obtained from getRankedDocRefs(). The coordinates of the reference are from the reference's getStart() and getEnd() methods.
@@ -932,7 +932,7 @@ Table 8.7. GenBankFormat output field sources.
 |All the comments returned by getComments() are joined together, separated by newlines.
 |-
 |FEATURES	
-|Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db_xref and organism fields are added to the output by calling getNCBITaxon().getNCBITaxID() and getNCBITaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format.
+|Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db_xref and organism fields are added to the output by calling getTaxon().getNCBITaxID() and getTaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format.
 |-
 |BASE	
 |Calculated from the sequence data.
