@@ -118,3 +118,8 @@ As one can see from the output the **getValue()** method of the
 symbols* when its object represents **function** & **note** notes. I
 consider this rather irrational. One can also see that there are no *new
 line symbols* in the case of **translation** note. This is well.
+
+------------------------------------------------------------------------
+
+I've fixed both the above problems today (4th Sept 2006).
+[Richard](User:Rholland "wikilink")
