@@ -27,7 +27,7 @@ A Beta release would show the likely API of a final release.
 Requirements:
 * Code fully compiles and passes JUnit tests.
 * All javadocs build and no warnings issued.
-* All demos and cook demos compile.
+* All demos and cookbook demos compile.
 * JARs, JavaDocs and source code posted to webserver (admin task).
 * Links to download and API updated (admin task).
 * Beta released announced on mail-list and news site.
