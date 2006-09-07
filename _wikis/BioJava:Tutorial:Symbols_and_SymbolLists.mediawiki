@@ -3,7 +3,6 @@
 This chapter covers the fundamentals of accessing biological sequence data from BioJava, and explains how BioJava's treatment of sequences differs from other libraries. This chapter refers to Java API defined in the packages <code>org.biojava.bio.symbol</code> and <code>org.biojava.bio.seq</code>. For a complete overview of the APIs provided by these packages, please consult the {{JavaDoc:Documentation}}. 
 
 
-'''NOTE:''' this chapter refers to the BioJava release 1.2. 
 
 == Symbols and Alphabets ==
 
@@ -75,7 +74,7 @@ SymbolList seq = new SimpleSymbolList(dnaToke, seqString);
 String seqString2 = dnaToke.tokenizeSymbolList(seq);
 System.out.println("Strings match: " + seqString2.equalsIgnoreCase(seqString));</pre>
 
-This low-level parsing mechanism is supplemented by a more sophisticated sequence Input/Output framework, defined in the package <code>org.biojava.bio.seq.io</code>. This uses pluggable file format converters, and can currently read and write in Fasta, EMBL, and GenBank formats. BioJava can also fetch data from services such as [http://biodas.org/ DAS], and [http://www.biocorba.org/ BioCorba], and access databases such as those used by the [http://www.ensembl.org/ Ensembl] project (additional packages are required to BioCorba and Ensembl support).
+This low-level parsing mechanism is supplemented by a more sophisticated sequence Input/Output framework, defined in the package <code>org.biojava.bio.seq.io</code>. This uses pluggable file format converters, and can currently read and write in Fasta, EMBL, and Genbank formats. BioJava can also fetch data from services such as DAS using [http://www.derkholm.net/thomas/dazzle Dazzle], and access databases such as Genbank and BioSQL as well those used by the [http://www.ensembl.org/ Ensembl] project (additional packages are required to support DAS and Ensembl).
 
 == What about the Sequence interface? ==
  
