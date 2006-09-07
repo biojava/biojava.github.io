@@ -13,8 +13,6 @@ the packages `org.biojava.bio.symbol` and `org.biojava.bio.seq`. For a
 complete overview of the APIs provided by these packages, please consult
 the .
 
-**NOTE:** this chapter refers to the BioJava release 1.2.
-
 Symbols and Alphabets
 ---------------------
 
@@ -163,12 +161,12 @@ called 'token' associated:
 This low-level parsing mechanism is supplemented by a more sophisticated
 sequence Input/Output framework, defined in the package
 `org.biojava.bio.seq.io`. This uses pluggable file format converters,
-and can currently read and write in Fasta, EMBL, and GenBank formats.
-BioJava can also fetch data from services such as
-[DAS](http://biodas.org/), and [BioCorba](http://www.biocorba.org/), and
-access databases such as those used by the
+and can currently read and write in Fasta, EMBL, and Genbank formats.
+BioJava can also fetch data from services such as DAS using
+[Dazzle](http://www.derkholm.net/thomas/dazzle), and access databases
+such as Genbank and BioSQL as well those used by the
 [Ensembl](http://www.ensembl.org/) project (additional packages are
-required to BioCorba and Ensembl support).
+required to support DAS and Ensembl).
 
 What about the Sequence interface?
 ----------------------------------
