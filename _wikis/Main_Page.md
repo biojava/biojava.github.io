@@ -49,6 +49,9 @@ post a request for an account.
 BioJava 1.5 Release Planning
 ----------------------------
 
+**NEW!** A beta release of biojava 1.5 is now
+[available](Biojava:Download "wikilink")
+
 Planning has begun for a new BioJava release. The [release
 plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
 be asking for a volunteer to be the [Release Czar](Czar "wikilink") to
