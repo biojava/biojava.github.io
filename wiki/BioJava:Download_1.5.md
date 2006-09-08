@@ -46,6 +46,7 @@ CVS access
 
 the CVS repository can be browsed at:
 <http://code.open-bio.org/cgi/viewcvs.cgi/biojava-live/?cvsroot=biojava>
+
 An RSS of biojava-live is
 [available](http://www.biojava.org/CVS2RSS/biojava-live.rss)
 

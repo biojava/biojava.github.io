@@ -25,8 +25,8 @@ The Jakarta-commons APIs are covered by the [http://www.biojava.org/download/bin
 
 the CVS repository can be browsed at:
 http://code.open-bio.org/cgi/viewcvs.cgi/biojava-live/?cvsroot=biojava
-An RSS of biojava-live is [http://www.biojava.org/CVS2RSS/biojava-live.rss available]
 
+An RSS of biojava-live is [http://www.biojava.org/CVS2RSS/biojava-live.rss available]
 
 == Getting older versions ==
 
