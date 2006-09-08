@@ -50,7 +50,7 @@ due to limited space. The actual commands should be on a single line:
 
 ### Windows from command line
 
-`set CLASSPATH C:\biojava.jar;C:\bytecode-0.92.jar;C:\commons-cli.jar;`  
+`set CLASSPATH C:\biojava.jar;C:\bytecode.jar;C:\commons-cli.jar;`  
 `                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
 `                        C:\commons-dbcp-1.1.jar;.`
 
