@@ -70,7 +70,7 @@ consult your Java vendor.
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the
 [tutorial](BioJava:Tutorial "wikilink"), [API
-documentation](http://www.biojava.org/docs/api/index.html) and the
+documentation](http://www.biojava.org/docs/api15b/index.html) and the
 [BioJava in anger](BioJava:Cookbook "wikilink") section . Finally, you
 can learn a lot about BioJava by trying the demo programs included in
 the source distribution (see below).
