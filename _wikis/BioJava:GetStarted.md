@@ -42,7 +42,7 @@ due to limited space. The actual commands should be on a single line:
 
 ### UNIX C-type shell (for example: versions of Mac OS X pre-10.3)
 
-`setenv CLASSPATH /home/thomas/biojava.jar:/home/thomas/bytecode-0.92.jar:`  
+`setenv CLASSPATH /home/thomas/biojava.jar:/home/thomas/bytecode.jar:`  
 `                        /home/thomas/commons-cli.jar:`  
 `                        /home/thomas/commons-collections-2.1.jar:`  
 `                        /home/thomas/commons-dbcp-1.1.jar:`  
