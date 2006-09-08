@@ -34,7 +34,7 @@ due to limited space. The actual commands should be on a single line:
 
 ### UNIX Bourne-type shells (the default with most Linux distributions and MacOS 10.3)
 
-`export CLASSPATH=/home/thomas/biojava.jar:/home/thomas/bytecode-0.92.jar:`  
+`export CLASSPATH=/home/thomas/biojava.jar:/home/thomas/bytecode.jar:`  
 `                        /home/thomas/commons-cli.jar:`  
 `                        /home/thomas/commons-collections-2.1.jar:`  
 `                        /home/thomas/commons-dbcp-1.1.jar:`  
