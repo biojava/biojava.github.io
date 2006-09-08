@@ -19,8 +19,8 @@ You can get the legacy release version of BioJava 1.3
 You can get the release version of BioJava 1.4
 [here](Biojava:Download 1.4 "wikilink").
 
-But if you can always get the latest release version go to the [download
-area](http://www.biojava.org/download).
+But if you can always get the latest release version go to the
+[Biojava:Download|download area].
 
 Installation
 ------------
