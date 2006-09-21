@@ -104,3 +104,7 @@ I consider this rather irrational. One can also see that there are no ''new line
 ----
 
 I've fixed both the above problems today (4th Sept 2006). [[User:Rholland|Richard]]
+
+----
+
+Thank you, Richard. This really works. --[[User:Seeker|Seeker]] 06:08, 21 September 2006 (EDT)
