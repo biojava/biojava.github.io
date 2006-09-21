@@ -123,3 +123,8 @@ line symbols* in the case of **translation** note. This is well.
 
 I've fixed both the above problems today (4th Sept 2006).
 [Richard](User:Rholland "wikilink")
+
+------------------------------------------------------------------------
+
+Thank you, Richard. This really
+works. --[Seeker](User:Seeker "wikilink") 06:08, 21 September 2006 (EDT)
