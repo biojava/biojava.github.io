@@ -169,11 +169,6 @@ How Do I....?
     results](BioJava:CookBook:Blast:Extract "wikilink")?
 -   [How do I parse a large file; Or, How do I make a custom
     SearchContentHandler](BioJava:CookBook:Blast:Echo "wikilink")?
--   Expert information on the BioJava SAX2 event based parsing framework
-    by Cambridge Antibody Technology. Contains a UML diagram. Warning,
-    this information may be a little dated now. (to be
-    continued --[Guedes](User:Guedes "wikilink") 16:30, 7 February 2006
-    (EST))
 
 ### Counts and Distributions
 
