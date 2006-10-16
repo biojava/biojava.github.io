@@ -30,6 +30,12 @@ projects please add them to the list.
     visualization capabilities for molecules, sequences, proteins,
     spectra etc.
 
+<!-- -->
+
+-   [PROMPT](http://www.webclu.bio.wzw.tum.de/prompt/): A free, open
+    source framework and application for the comparison and mapping of
+    protein sets. Uses BioJava for handling most input data formats.
+
 Publications
 ------------
 
@@ -38,17 +44,18 @@ other publications please add them.
 
 <biblio>
 
-1.  jacobs2000 pmid=10592251
-2.  schrieber2002 pmid=12016048
-3.  bussow2002 pmid=12493080
-4.  brown2003 pmid=15130816
-5.  aerts2003 pmid=12626717
-6.  aerts2004 pmid=15044242
-7.  dong2004 pmid=15215471
-8.  hajarnavis2004 pmid=15247332
-9.  finack2005 pmid=15572471
-10. gille2006 pmid=16469097
-11. hasan2006 [Hasan S, Daugelat S, Rao P.S S, Schreiber
+1.  schmidt2006 pmid=16817977
+2.  jacobs2000 pmid=10592251
+3.  schrieber2002 pmid=12016048
+4.  bussow2002 pmid=12493080
+5.  brown2003 pmid=15130816
+6.  aerts2003 pmid=12626717
+7.  aerts2004 pmid=15044242
+8.  dong2004 pmid=15215471
+9.  hajarnavis2004 pmid=15247332
+10. finack2005 pmid=15572471
+11. gille2006 pmid=16469097
+12. hasan2006 [Hasan S, Daugelat S, Rao P.S S, Schreiber
     M](http://compbiol.plosjournals.org/perlserv/?request=cite-builder&doi=10.1371/journal.pcbi.0020061.eor)
     Prioritizing genomic drug targets in pathogens. PLoS Comput Biol.
     2006 In press.
