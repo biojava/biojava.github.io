@@ -9,10 +9,13 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.bioclipse.net Bioclipse]: A free, open source, workbench for chemo- and bioinformatics with powerful editing and visualization capabilities for molecules, sequences, proteins, spectra etc.
 
+* [http://www.webclu.bio.wzw.tum.de/prompt/ PROMPT]: A free, open source framework and application for the comparison and mapping of protein sets. Uses BioJava for handling most input data formats.
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
 <biblio>
+#schmidt2006 pmid=16817977
 #jacobs2000 pmid=10592251
 #schrieber2002 pmid=12016048
 #bussow2002 pmid=12493080
