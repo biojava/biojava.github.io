@@ -26,7 +26,8 @@ BioJava has been used in the following publications. If you know of other public
 #hajarnavis2004 pmid=15247332
 #finack2005 pmid=15572471
 #gille2006 pmid=16469097
-#hasan2006 [http://compbiol.plosjournals.org/perlserv/?request=cite-builder&doi=10.1371/journal.pcbi.0020061.eor Hasan S, Daugelat S, Rao P.S S, Schreiber M] Prioritizing genomic drug targets in pathogens. PLoS Comput Biol. 2006 In press.
+#hasan2006 pmid=16789813
+#hasan2006 pmid=16990246
 </biblio>
 
 More biojava publications can be found in [http://scholar.google.com/scholar?q=biojava Google Scholar].
