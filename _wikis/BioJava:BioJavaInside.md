@@ -55,10 +55,8 @@ other publications please add them.
 9.  hajarnavis2004 pmid=15247332
 10. finack2005 pmid=15572471
 11. gille2006 pmid=16469097
-12. hasan2006 [Hasan S, Daugelat S, Rao P.S S, Schreiber
-    M](http://compbiol.plosjournals.org/perlserv/?request=cite-builder&doi=10.1371/journal.pcbi.0020061.eor)
-    Prioritizing genomic drug targets in pathogens. PLoS Comput Biol.
-    2006 In press.
+12. hasan2006 pmid=16789813
+13. hasan2006 pmid=16990246
 
 </biblio>
 
