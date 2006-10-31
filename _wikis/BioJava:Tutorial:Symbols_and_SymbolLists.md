@@ -28,7 +28,7 @@ characters has served us well to date, there are several issues which
 can present problems to the programmer:
 
 Validation: It is possible to pass *any* string to a routine which is expecting a biological sequence. Any validation has to be performed on an *ad hoc* basis.  
-Ambiguity: The meaning of each symbol is not necessarily clear. The 'T' which means thymidine in DNA is the same 'T' which is a threonine residue in a protein sequence  
+Ambiguity: The meaning of each symbol is not necessarily clear. The 'T' which means thymine in DNA is the same 'T' which is a threonine residue in a protein sequence  
 Limited alphabet: While there are obvious encodings for nucleic acid and sequence data as strings, the same approach does not always work well for other kinds of data generated in biological sequence analysis software  
 
 BioJava takes a rather different approach to sequence data. Instead of
