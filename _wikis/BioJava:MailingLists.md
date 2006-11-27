@@ -47,10 +47,8 @@ Post general issues to <biojava-dev@biojava.org>. You can also
 Bug Reports
 -----------
 
-Bugs in released code should be reported to the
-[biojava-l](mailto:biojava-l@biojava.org) list. Bugs in development
-(unreleased) code should be reported to the
-[biojava.org](mailto:biojava-dev@biojava.org)list.
+Bugs in released code should be reported via
+[BugZilla](http://bugzilla.open-bio.org/enter_bug.cgi?product=BioJava)
 
 All bug reports should contain:
 
