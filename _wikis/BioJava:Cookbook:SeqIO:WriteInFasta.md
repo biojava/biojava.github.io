@@ -41,7 +41,7 @@ SeqIOTools is in the package org.biojava.bio.seq.io
 Many readXXX() methods from SeqIOTools return a SequenceIterator that
 iterates over all the Sequences in a file. Most of the writeXXX()
 methods from SeqIOTools have a version of the methods that takes a
-SequenceIterator as and argument eg.
+SequenceIterator as an argument, e.g.
 
 <java>
 
