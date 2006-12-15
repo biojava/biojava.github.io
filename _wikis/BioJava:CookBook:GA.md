@@ -14,7 +14,7 @@ other encodings are possible. At each generation (iteration) a
 population of chromosomes is available. Like real chromsomes they mutate
 and recombine with some frequency at each generation. Critically, after
 each round of potential mutation and recombination the chromosomes that
-encode the best solution are favoured for replication. Thus, their is a
+encode the best solution are favoured for replication. Thus, there is a
 trend towards increasingly good solutions in the population.
 
 The example below demonstrates a very simple genetic algorithm
