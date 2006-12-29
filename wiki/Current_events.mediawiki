@@ -15,3 +15,5 @@
 [http://news.open-bio.org/ O|B|F news]
 
 [http://bioperl.org/news/ BioPerl news]
+
+[http://bioruby.org/news/ BioRuby news]
