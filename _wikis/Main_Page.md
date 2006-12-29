@@ -2,13 +2,6 @@
 title: Main Page
 ---
 
-Announcements
--------------
-
-<table>
-<rss>[http://biojava.org/news/feed|date](http://biojava.org/news/feed|date)</rss>
-
-</table>
 About BioJava
 -------------
 
