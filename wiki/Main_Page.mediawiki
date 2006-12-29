@@ -1,5 +1,7 @@
-==Welcome to BioJava==
-See the [http://biojava.open-bio.org/news BioJava news page] for BioJava news.
+==Announcements==
+<table>
+<rss>http://biojava.org/news/feed|date</rss>
+</table>
 
 == About BioJava ==
 
