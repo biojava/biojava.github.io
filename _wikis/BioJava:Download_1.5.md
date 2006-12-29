@@ -17,7 +17,9 @@ BioJava code
 ------------
 
 -   [Biojava-1.5-beta2 JAR
-    file](http://www.biojava.org/download/bj15b/bin/biojava-1.5-beta2.jar)
+    file](http://www.biojava.org/download/bj15b/bin/biojava-1.5-beta2.jar).
+    If your browser tries to open this directly right click the link and
+    select save as.
 -   [API
     documentation](http://www.biojava.org/download/bj15b/doc/doc.tar.gz)
 -   [Source
