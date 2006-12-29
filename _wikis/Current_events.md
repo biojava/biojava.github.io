@@ -5,9 +5,10 @@ title: Current events
 BioJava News
 ------------
 
-The BioJava News / Blog site is
-[here](http://biojava.open-bio.org/news/).
+<table>
+<rss>[http://biojava.org/news/feed|date](http://biojava.org/news/feed|date)</rss>
 
+</table>
 Related News Sites
 ------------------
 
