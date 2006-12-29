@@ -5,10 +5,9 @@ A complete download is available as one [http://www.biojava.org/download/bj15b/a
 
 == BioJava code ==
 
-* [http://www.biojava.org/download/bj15b/bin/biojava-1.5-beta2.jar Biojava-1.5-beta2 JAR file] 
+* [http://www.biojava.org/download/bj15b/bin/biojava-1.5-beta2.jar Biojava-1.5-beta2 JAR file]. If your browser tries to open this directly right click the link and select save as.
 * [http://www.biojava.org/download/bj15b/doc/doc.tar.gz API documentation] 
 * [http://www.biojava.org/download/bj15b/all/biojava-1.5-beta2.tar.gz Source code] is available as part of the complete download.
-
 
 == Required libraries ==
 
