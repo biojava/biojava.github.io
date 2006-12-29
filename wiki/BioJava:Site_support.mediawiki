@@ -1,0 +1,5 @@
+BioJava is a volunteer project currently supported by donated time. The hardware, bandwidth, and server support is all provided through volunteers and donations.
+
+If you are interested in supporting BioJava by volunteering your time, please join the [[BioJava:MailingLists|Mailing lists]] and introduce yourself and what you are interested in working on.
+
+Those interested in supporting BioJava financially please contact the [http://www.open-bio.org Open Bioinformatics Foundation].
