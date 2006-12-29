@@ -21,3 +21,5 @@ Related News Sites
 [O|B|F news](http://news.open-bio.org/)
 
 [BioPerl news](http://bioperl.org/news/)
+
+[BioRuby news](http://bioruby.org/news/)
