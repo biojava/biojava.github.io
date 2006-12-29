@@ -2,12 +2,13 @@
 title: Main Page
 ---
 
-Welcome to BioJava
-------------------
+Announcements
+-------------
 
-See the [BioJava news page](http://biojava.open-bio.org/news) for
-BioJava news.
+<table>
+<rss>[http://biojava.org/news/feed|date](http://biojava.org/news/feed|date)</rss>
 
+</table>
 About BioJava
 -------------
 
