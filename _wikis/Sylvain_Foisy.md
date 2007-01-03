@@ -7,7 +7,7 @@ tags:
 My name is Sylvain Foisy and I am a project manager for the [Laboratory
 in Genetics and Genomic Medicine of
 Inflammation](http://www.inflammgen.org) located in the Montréal Heart
-Institute in Montréal, Québec, Canada. My expertise in mainly Biology
+Institute in Montréal, Québec, Canada. My expertise is mainly Biology
 since I have a Ph. D. in molecular biology and too many years as a
 post-doc ;-). I am interested into creating new BioJava material dealing
 with protein structure and function.
