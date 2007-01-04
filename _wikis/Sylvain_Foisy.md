@@ -16,7 +16,7 @@ I first became interested in BioJava when converting from a benchworking
 biologist to a bio-informatician, turning a certain love of the machine
 from a hobby to a full-blown career. Having to learn a programming
 language and not having a lot of time to do so, I chose Java because it
-works well with my brain and they don't teach Perl around here! Jocking
+works well with my brain and they don't teach Perl around here! Jokeing
 aside, my main contribution so far had been in creating useful docs to
 go with the API for example in translating [BioJava in anger in
 french](BioJava:CookbookFrench "wikilink") and to put some more docs
