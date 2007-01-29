@@ -28,3 +28,11 @@ feature (best to do it as a string rather than as a Distribution in this
 case).
 
 --[Mark](User:Mark "wikilink") 23:33, 27 January 2007 (EST)
+
+Right now, I have a simple parser that reads the XML file for a given
+dbSNP and extracts some infos out of it. I want to make each dbSNP entry
+into a RichSequence (content still in flux). I have not yet settled into
+the finality of the object: possibly extracting frequencied in
+populations would be an nice thing to have?
+
+--[Foisys](User:Foisys "wikilink") 11:13, 29 January 2007 (EST)
