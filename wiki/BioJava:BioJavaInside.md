@@ -32,9 +32,9 @@ projects please add them to the list.
 
 <!-- -->
 
--   [PROMPT](http://www.webclu.bio.wzw.tum.de/prompt/): A free, open
-    source framework and application for the comparison and mapping of
-    protein sets. Uses BioJava for handling most input data formats.
+-   [PROMPT](http://webclu.bio.wzw.tum.de/prompt): A free, open source
+    framework and application for the comparison and mapping of protein
+    sets. Uses BioJava for handling most input data formats.
 
 Publications
 ------------
