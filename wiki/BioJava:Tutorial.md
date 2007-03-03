@@ -32,6 +32,8 @@ the JavaDoc API documentation
 -   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
 -   [Multi-Alignment using ClustalW and
     BioJava](BioJava:Tutorial:MultiAlignClustalW "wikilink")
+-   [Approaches to Web Development for
+    Bioinformatics](http://medicalcomputing.net/tools_dna1.php)
 
 The [BioJava in Anger](BioJava:Cookbook "wikilink") page offers
 cookbook-style tutorials about performing many common tasks in BioJava.
