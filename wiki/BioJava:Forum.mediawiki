@@ -16,3 +16,15 @@ Sounds interesting. How do you represent the SNP on the RichSequence? Is it a Fe
 Right now, I have a simple parser that reads the XML file for a given dbSNP and extracts some infos out of it. I want to make each dbSNP entry into a RichSequence (content still in flux). I have not yet settled into the finality of the object: possibly extracting frequencied in populations would be an nice thing to have?
 
 --[[User:Foisys|Foisys]] 11:13, 29 January 2007 (EST)
+
+
+For me this class would be particularly interesting.  In STRAP users
+can manually give a list of SNPs 
+[[http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=16322575 abstract]]
+which are then projected on the
+AA-Sequence, NT-Sequence or 3D-structure 
+[[http://www.proteinscience.org/cgi/content/abstract/15/1/208 publication]]
+Your class could help to get it
+from the databases automatically.
+
+--[[User:Christo|Christo]] 05:07, 10 March 2007 (EST)

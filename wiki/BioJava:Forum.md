@@ -36,3 +36,14 @@ the finality of the object: possibly extracting frequencied in
 populations would be an nice thing to have?
 
 --[Foisys](User:Foisys "wikilink") 11:13, 29 January 2007 (EST)
+
+For me this class would be particularly interesting. In STRAP users can
+manually give a list of SNPs
+[http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list\_uids=16322575
+abstract](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=16322575 abstract "wikilink")
+which are then projected on the AA-Sequence, NT-Sequence or 3D-structure
+[http://www.proteinscience.org/cgi/content/abstract/15/1/208
+publication](http://www.proteinscience.org/cgi/content/abstract/15/1/208 publication "wikilink")
+Your class could help to get it from the databases automatically.
+
+--[Christo](User:Christo "wikilink") 05:07, 10 March 2007 (EST)
