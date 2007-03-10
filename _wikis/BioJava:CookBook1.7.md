@@ -251,13 +251,13 @@ How Do I....?
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
 -   [Introduction to the STRAP
-    API](http://www.charite.de/bioinf/strap/Scripting.html)
+    API](http://3d-alignment.eu/Scripting.html)
 -   [STRAP/BioJava
     interoperability](http://www.charite.de/bioinf/strap/biojava.html)
 -   [How do I make a multiple sequence
     alignment](http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html)?
 -   [How can predict protein secondary
-    structure](http://www.charite.de/bioinf/strap/biojavaInAnger_SecondaryStructure_Predictor.html)?
+    structure](http://3d-alignment.eu/biojavaInAnger_SecondaryStructure_Predictor.html)?
 
 Disclaimer
 ----------
