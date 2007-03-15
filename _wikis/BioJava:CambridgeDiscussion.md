@@ -129,3 +129,10 @@ perform an 'audit' of the code base to get an idea of the quality.
 
 Could people with some experience of these tools make some
 suggestions? --[Mark](User:Mark "wikilink") 03:27, 15 March 2007 (EDT)
+
+BioJava publication
+-------------------
+
+The biojava 1.5 release should be accompanied by a applications note in
+Bioinformatics or similar. Matthew drew the short straw
+:) --[Mark](User:Mark "wikilink") 03:29, 15 March 2007 (EDT)
