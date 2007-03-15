@@ -49,3 +49,22 @@ Can a check for a JUnit test be automated?? --[[User:Mark|Mark]] 03:16, 15 March
 There was some discussion about biojava switching to subversion after the 1.5 release and possibly using Maven2 instead of Ant for building.
 
 Does someone want to organize this?? --[[User:Mark|Mark]] 03:16, 15 March 2007 (EDT)
+
+
+
+== Dropping the GUI API ==
+
+Developments in Java graphics probably make it such that the BioJava GUI API shouldn't be part of BioJava. There are now several ways to generate graphics depending on what the display is. Eg Swing for GUI, SVG for web, JSF/AJAX for dynamic web etc. There for the GUI package might best be a seperate project.
+
+In addition the GUI model has not been updated to make use of features in RichSequence. If it is not maintained it could be distributed as a seperate JAR that would be an optional download for those who need it.
+
+
+== User Survey ==
+
+It would be useful to perform a user survey to get an idea of what people want, what they use biojava for etc.
+Any volunteers to organise this??? --[[User:Mark|Mark]] 03:26, 15 March 2007 (EDT)
+
+== Code Audit ==
+
+There are now several tools that check the quality of code, coverage of unit tests, documentation etc. It was felt that it would be useful to perform an 'audit' of the code base to get an idea of the quality.
+Could people with some experience of these tools make some suggestions?
