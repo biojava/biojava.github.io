@@ -7,7 +7,8 @@ Background
 
 In Febuary 2007 several current and former BioJava core developers met
 at the EBI in Cambridge, UK to discuss future directions in BioJava. The
-following is a summary of what was discussed.
+following is a summary of what was
+discussed. --[Mark](User:Mark "wikilink") 03:16, 15 March 2007 (EDT)
 
 BioJava1.5
 ----------
@@ -43,3 +44,58 @@ should reduce them where appropriate.
 Suggestions of other exceptions that should be unchecked are welcome. It
 is simple to convert a checked to unchecked exception it is not possible
 to go the other way so we should properly discuss each example.
+
+Java 5 (JDK1.5)
+---------------
+
+It was decided that immediately after the release of BJ1.5 we should
+adopt and allow language features and API's from JDK1.5
+
+Bug fixes and regression testing
+--------------------------------
+
+The bugzilla system is an excellent way for us to track bugs. Where
+possible we should encourage bug reports to the mailing list to be
+entered in bugzilla as well to make sure they are not missed.
+
+To make sure bugs do not re-emerge it was suggested that JUnit tests be
+created for individual bugs. Given that each test is probably very
+simple it shouldn't be too much of a burden to create them. Netbeans and
+Eclipse have very good JUnit wizards to make this even simpler.
+
+I suggest that the tests could reside in a package like
+org.biojava.regression package. The tests could be named after the bug
+id, eg TestBug18675.java --[Mark](User:Mark "wikilink") 03:16, 15 March
+2007 (EDT)
+
+New Classes and API's
+---------------------
+
+New classes should be accompanied by <b>complete</b> javadocs of
+<b>all</b> public and protected methods, including @param, @exception
+and @return tags. Modern IDEs have good wizards to point out methods
+that are not properly documented.
+
+I would like to make this automated so that code checked into the
+repository is rejected or an email is sent out to indicate that docs are
+not complete. --[Mark](User:Mark "wikilink") 03:16, 15 March 2007 (EDT)
+
+New classes should have an accompanying JUnit test that covers
+<b>all</b> methods. People frequently miss equals(), hashcode(),
+compare() but these have behaivour contracts that require they are all
+in logical agreement. Strange and hard to debug behaivour arises if they
+are not tested properly. The toString() method should also be tested if
+it has been over-ridden because people start to rely on the value it
+produces.
+
+Can a check for a JUnit test be
+automated?? --[Mark](User:Mark "wikilink") 03:16, 15 March 2007 (EDT)
+
+Subversion and Maven
+--------------------
+
+There was some discussion about biojava switching to subversion after
+the 1.5 release and possibly using Maven2 instead of Ant for building.
+
+Does someone want to organize this?? --[Mark](User:Mark "wikilink")
+03:16, 15 March 2007 (EDT)
