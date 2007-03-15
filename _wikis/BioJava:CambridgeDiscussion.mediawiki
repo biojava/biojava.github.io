@@ -1,0 +1,17 @@
+== Background ==
+In Febuary 2007 several current and former BioJava core developers met at the EBI in Cambridge, UK to discuss future directions in BioJava. The following is a summary of what was discussed.
+
+
+== BioJava1.5 ==
+It was generally felt we should release as soon as possible! Although it is not bug free, completely documented/ tested etc it is probably still better than previous releases. Because we are encouraging people to use 1.5-beta2 instead of 1.4 it is pretty much the official version.
+
+== Exception Handling ==
+It was generally felt that where possible exceptions that are unlikely and that would only happen in situations that the developer might expect should be runtime exceptions and not checked exceptions. More generally, problems caused by bad programming should be runtime exceptions. Problems caused by the user doing something odd should be checked exceptions.
+
+An example is the ChangeVetoExceptions which will only occur if the developer has set up change listeners. This has been changed to a runtime (unchecked) exception in BJ1.5-beta2.
+
+Things like IllegalSymbolException are probably errors caused by the user. For example the user provides a Protein fasta file when the program expects DNA. A well constructed program could respond in a better way than just crashing with a stack trace. For example it could prompt for a different file.
+
+Checked exceptions create a development and learning burden and we should reduce them where appropriate.
+
+Suggestions of other exceptions that should be unchecked are welcome. It is simple to convert a checked to unchecked exception it is not possible to go the other way so we should properly discuss each example.
