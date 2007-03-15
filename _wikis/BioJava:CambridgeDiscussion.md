@@ -125,5 +125,7 @@ Code Audit
 
 There are now several tools that check the quality of code, coverage of
 unit tests, documentation etc. It was felt that it would be useful to
-perform an 'audit' of the code base to get an idea of the quality. Could
-people with some experience of these tools make some suggestions?
+perform an 'audit' of the code base to get an idea of the quality.
+
+Could people with some experience of these tools make some
+suggestions? --[Mark](User:Mark "wikilink") 03:27, 15 March 2007 (EDT)
