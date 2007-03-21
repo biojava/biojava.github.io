@@ -39,10 +39,9 @@ New classes should be accompanied by <b>complete</b> javadocs of <b>all</b> publ
 
 I would like to make this automated so that code checked into the repository is rejected or an email is sent out to indicate that docs are not complete. --[[User:Mark|Mark]] 03:16, 15 March 2007 (EDT)
 
-New classes should have an accompanying JUnit test that covers <b>all</b> methods. People frequently miss equals(), hashcode(), compare() but these have behaivour contracts that require they are all in logical agreement. Strange and hard to debug behaivour arises if they are not tested properly. The toString() method should also be tested if it has been over-ridden because people start to rely on the value it produces.
+New classes should have an accompanying JUnit test that covers <b>all</b> methods. People frequently miss equals(), hashcode(), compare() but these have behaviour contracts that require they are all in logical agreement. Strange and hard to debug behaviour arises if they are not tested properly. The toString() method should also be tested if it has been over-ridden because people start to rely on the value it produces.
 
 Can a check for a JUnit test be automated?? --[[User:Mark|Mark]] 03:16, 15 March 2007 (EDT)
-
 
 == Subversion and Maven ==
 

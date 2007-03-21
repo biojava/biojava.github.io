@@ -82,8 +82,8 @@ not complete. --[Mark](User:Mark "wikilink") 03:16, 15 March 2007 (EDT)
 
 New classes should have an accompanying JUnit test that covers
 <b>all</b> methods. People frequently miss equals(), hashcode(),
-compare() but these have behaivour contracts that require they are all
-in logical agreement. Strange and hard to debug behaivour arises if they
+compare() but these have behaviour contracts that require they are all
+in logical agreement. Strange and hard to debug behaviour arises if they
 are not tested properly. The toString() method should also be tested if
 it has been over-ridden because people start to rely on the value it
 produces.
