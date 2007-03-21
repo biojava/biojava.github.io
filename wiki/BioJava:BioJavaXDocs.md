@@ -1254,8 +1254,8 @@ The idea is that you do something like this (the example debugs the
 parsing of a FASTA file):
 
 <java> Namespace ns = RichObjectFactory.getDefaultNamespace();
-InputStream is = new FileInputStream("myFastaFile.fasta"); FASTAFormat
-format = new FASTAFormat();
+InputStream is = new FileInputStream("myFastaFile.fasta"); FastaFormat
+format = new FastaFormat();
 
 DebuggingRichSeqIOListener debug = new DebuggingRichSeqIOListener(is);
 BufferedReader br = new BufferedReader(new InputStreamReader(debug));
