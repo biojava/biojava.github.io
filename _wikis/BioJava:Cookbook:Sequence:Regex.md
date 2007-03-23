@@ -7,7 +7,7 @@ How can make a motif into a regular expression?
 
 One of the interesting things you can do with BioJava's MotifTools is to
 make a Sequence into a Java regular expression Pattern. You can then use
-this Pattern to search Strings for the existance of that Pattern. The
+this Pattern to search Strings for the existence of that Pattern. The
 generated Pattern can even be from an ambiguous sequence such as
 "acgytnwacrs"
 
