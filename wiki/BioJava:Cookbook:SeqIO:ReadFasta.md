@@ -21,7 +21,7 @@ org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 public class ReadFasta {
 
 ` /**`  
-`  * The programs takes two args the first is the file name of the Fasta file.`  
+`  * The program takes two args: the first is the file name of the Fasta file.`  
 `  * The second is the name of the Alphabet. Acceptable names are DNA RNA or PROTEIN.`  
 `  */`  
 ` public static void main(String[] args) {`
