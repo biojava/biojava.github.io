@@ -41,7 +41,8 @@ public class AmbiguitySearch {
 
 `           // Foreach match`  
 `           while( occurences.find() ) {`  
-`               System.out.println("Match: " +"\t"+ WorkingSequence +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
+`               System.out.println("Match: " +"\t"+ WorkingSequence `  
+`                               +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
 `           }`  
 `       }`  
 `       `  
