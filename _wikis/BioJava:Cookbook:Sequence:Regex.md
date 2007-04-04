@@ -6,13 +6,56 @@ How can make a motif into a regular expression?
 -----------------------------------------------
 
 One of the interesting things you can do with BioJava's MotifTools is to
-make a Sequence into a Java regular expression Pattern. You can then use
-this Pattern to search Strings for the existence of that Pattern. The
-generated Pattern can even be from an ambiguous sequence such as
-"acgytnwacrs"
+make a String into a regular expression Pattern. You can then use this
+Pattern to search a SymbolList object for the existence of that Pattern.
+The generated Pattern can even be from an ambiguous sequence such as
+"acgytnwacrs". To accomplish this task, BioJava contains a wrapper to
+Java's built-in regular expression functionality.
 
-The following example from Andy Hammer demonstrates how this can be used
-to search Sequences for Motifs.
+A simple program is implemented below:
+
+<java> // Biojava imports import org.biojava.bio.seq.\*; import
+org.biojava.bio.symbol.\*; import org.biojava.utils.regex.\*;
+
+public class AmbiguitySearch {
+
+`   public static void main(String[] args) {`  
+`       try {`  
+`           // Variables needed...`  
+`           Matcher occurences;`  
+`           FiniteAlphabet IUPAC = DNATools.getDNA();`  
+`           SymbolList WorkingSequence = DNATools.createDNA("tagagatagacgatagc");`  
+`       `  
+`           // Create pattern using pattern factory.`  
+`           Pattern pattern;`  
+`           PatternFactory FACTORY = PatternFactory.makeFactory(IUPAC);`  
+`           try{`  
+`               pattern = FACTORY.compile("wtagn");`  
+`           } catch(Exception e) {e.printStackTrace(); return;}`  
+`           System.out.println("Searching for: "+pattern.patternAsString());`  
+`       `  
+`           // Obtain iterator of matches.`  
+`           try {`  
+`               occurences = pattern.matcher( WorkingSequence );`  
+`           } catch(Exception e) {e.printStackTrace(); return;}`
+
+`           // Foreach match`  
+`           while( occurences.find() ) {`  
+`               System.out.println("Match: " +"\t"+ WorkingSequence +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
+`           }`  
+`       }`  
+`       `  
+`       catch (Exception ex) {`  
+`           ex.printStackTrace();`  
+`           System.exit(1);`  
+`       }`  
+`   }`
+
+} </java>
+
+Alternatively, the following example from Andy Hammer demonstrates how
+the java regular expression functionality can be used directly to search
+a String object for pattern matches.
 
 <java> /\*\*
 
