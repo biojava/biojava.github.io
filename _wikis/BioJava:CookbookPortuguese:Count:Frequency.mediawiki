@@ -1,5 +1,3 @@
-Translating...
-
 == Como eu calculo a frequencia de um simbolo em uma Sequence? ==
 
 Uma das classes mais úteis no BioJava é a classe Distribution. Esta classe é um mapa de frequencias referentes aos simbolos.
