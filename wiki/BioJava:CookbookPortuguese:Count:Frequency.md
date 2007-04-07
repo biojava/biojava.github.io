@@ -2,8 +2,6 @@
 title: BioJava:CookbookPortuguese:Count:Frequency
 ---
 
-Translating...
-
 Como eu calculo a frequencia de um simbolo em uma Sequence?
 -----------------------------------------------------------
 
