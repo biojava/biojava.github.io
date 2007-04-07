@@ -112,8 +112,8 @@ Busque informações no [http://scholar.google.com/scholar?q=biojava Google Scho
 ===Contabilizações e Distribuições===
 
 * [[BioJava:CookbookPortuguese:Count:Residues|Como eu posso contar os residuos em uma Sequence]]?
+* [[BioJava:CookbookPortuguese:Count:Frequency|Como posso calcular a frequencia de um simbolo em uma Sequence]]?
 <!--
-* [[BioJava:CookbookPortuguese:Count:Frequency|How do I calculate the frequency of a Symbol in a Sequence]]?
 * [[BioJava:CookbookPortuguese:Count:ToDistrib|How can I turn a Count into a Distribution]]?
 * [[BioJava:CookbookPortuguese:Distribution:RandomSeqs|How can I generate a random sequence from a Distribution]]?
 * [[BioJava:CookbookPortuguese:Distribution:Entropy|How can I find the amount of information or entropy in a Distribution]]?
