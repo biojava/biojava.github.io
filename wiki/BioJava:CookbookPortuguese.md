@@ -110,6 +110,8 @@ Como eu faço para....?
 
 -   [Como eu posso contar os residuos em uma
     Sequence](BioJava:CookbookPortuguese:Count:Residues "wikilink")?
+-   [Como posso calcular a frequencia de um simbolo em uma
+    Sequence](BioJava:CookbookPortuguese:Count:Frequency "wikilink")?
 
 ### Estrutura da Proteina
 
