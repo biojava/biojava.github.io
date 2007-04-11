@@ -23,8 +23,8 @@ I'll presents my tesis at July of 2006... good luck for me.. ":)
 
 ### My monografy
 
-**A WEB system to construct philogenetics trees from DNA sequences using
-Genetic Algorithms**
+**Constructing philogenetics trees from DNA sequences using Genetic
+Algorithms, using a Web interface**
 
 *A common process in Phylogenetic Systematics is the construction of
 cladograms - also known as Phylogenetic trees -, which represent the
