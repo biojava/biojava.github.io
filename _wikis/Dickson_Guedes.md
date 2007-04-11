@@ -23,7 +23,7 @@ I'll presents my tesis at July of 2006... good luck for me.. ":)
 
 ### My monografy
 
-**Title**: Constructing philogenetics trees from DNA sequences using
+**Title**: Constructing phylogenetics trees from DNA sequences using
 Genetic Algorithms, using a Web interface
 
 **Abstract**: *A common process in Phylogenetic Systematics is the
