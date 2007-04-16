@@ -1,3 +1,11 @@
+== NESCent Phyloinformatics and the Google Summer of Code ==
+
+BioJava is hosting a student from the [http://code.google.com/soc Google Summer of Code] who is planning on developing and extending the phyloinformatics APIs in BioJava. Boh Yun Lee aims to create parsers for the common phyloinformatics file formats (Nexus etc.), provide an object model for storing trees, and provide API methods for manipulating and querying those trees.
+
+The project is part of the [http://phylosoc.nescent.org/ NESCent Phyloinformatics] group of projects.
+
+Boh Yun will be [[Project:PhyloSOC07|documenting progress and discussing plans]] as the project progresses. Please feel free to chip in with your own comments and suggestions.
+
 == BioJava News ==
 
 <table>
