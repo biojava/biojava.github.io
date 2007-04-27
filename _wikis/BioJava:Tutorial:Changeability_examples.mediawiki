@@ -115,7 +115,7 @@ Now we will set up a probability distribution that can be sampled from to simula
 <pre>    wheelRoler = new UniformDistribution(rolls);
   }</pre>
 
-And there we close the static block. Everything is set up for a game of chance. 
+And there we close the static block. Everything is set up for a game of chance.
 
 == Applet for playing the game ==
 
