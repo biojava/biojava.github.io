@@ -12,7 +12,7 @@ Here are some examples of the type of output you can generate.
 Prerequisites are:
 
 * an upto date copy of biojava 
-* the programs in the demos directory 
+* the programs in the demos directory
 
 == Running the demos ==
 
