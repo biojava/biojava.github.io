@@ -43,7 +43,7 @@ Now we have the definition of the accessor methods.
   throws ChangeVetoException;
 }</pre>
 
-and that's it for the <code>Nameable</code> interface. 
+and that's it for the <code>Nameable</code> interface.
 
 == The simplest implementation - extend AbstractChangeable ==
 
