@@ -22,7 +22,7 @@ It is also worth noting, that the SAX events that the framework emits are consis
 == Benefits of using the framework ==
 
 * Allows you to focus on the objects you want to create, and forget about writing complex parsing code 
-* Allows you to make use of the output from more pieces of software. Because of the "concept-based" approach to the representation of data, many of the Content Handler classes you write can be re-used with the output of several different programs. 
+* Allows you to make use of the output from more pieces of software. Because of the "concept-based" approach to the representation of data, many of the Content Handler classes you write can be re-used with the output of several different programs.
 
 == Recipes ==
 
