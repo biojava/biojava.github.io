@@ -8,7 +8,7 @@ You can get the release version of BioJava 1.4 [[Biojava:Download 1.4|here]].
 
 But if you can always get the latest release version go to the [[Biojava:Download|download area]].
 
-You can also incorporte BioJava in to Sun Java's IDE NetBeans.[[Steps to integrate BioJava in NetBeans IDE]]
+You can also integrate BioJava with  Sun Java's IDE: NetBeans.[[How to integrate BioJava in NetBeans IDE]]
 
 == Installation ==
 
