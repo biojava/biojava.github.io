@@ -31,6 +31,7 @@ CHARACTER block)
 Day 3: Getting to know NEXUS parser(2) (TREE block)
 
 Day 4: Tree building practice w/ JGraphT
+(http://www.jgrapht.org/javadoc/)
 
 Day 5/6: Extend functions for NEXUS parser (parse a tree block and
 create tree by JGraphT)
