@@ -7,14 +7,37 @@ Google Summer of Code as part of the NESCent phyloinformatics group.
 
 **<APIs for BioJava: Project Plan>**
 
+*Week 0 (~ May 20th) :* Building project plan, Program set-up (Java,
+Eclipse and BioJava, JGraphT), Reading NEXUS paper, etc.
+
+------------------------------------------------------------------------
+
 **Part I : Development of basic I/O**
 
-*Week 1 Development of basic Input*
+------------------------------------------------------------------------
+
+***Week 1 (May 21st ~ May 27th) Development of basic Input***
 
 - Input: Nucleic acid sequences (practice w/ FASTA format and create API
 for NEXUS format)
 
 - Initialization: create objects for each sequence
+
+Day 1: Practice w/ FASTA parser
+
+Day 2: Getting to know NEXUS parser(1) (read and parse the TAXA,
+CHARACTER block)
+
+Day 3: Getting to know NEXUS parser(2) (TREE block)
+
+Day 4: Tree building practice w/ JGraphT
+
+Day 5/6: Extend functions for NEXUS parser (parse a tree block and
+create tree by JGraphT)
+
+Day 7: Other Blocks (if necessary)
+
+------------------------------------------------------------------------
 
 *Week 2 Development of basic Output*
 
