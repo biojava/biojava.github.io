@@ -12,6 +12,7 @@ This page will include all info and docs about our efforts in the 2007 Google Su
 '''Part I : Development of basic I/O'''
 ----
 
+
 '''''Week 1 (May 21st ~ May 27th) Development of basic Input'''''
 	
 - Input: Nucleic acid sequences (practice w/ FASTA format and create API for NEXUS format)
