@@ -4,7 +4,10 @@
 If you want an array of Atoms you can do something like this:
 
 <java>
+
+// get all Calpha atoms in the structure
 Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
+
 </java>
 
 The Structure object has a hierarchy of sub-objects:
@@ -19,10 +22,7 @@ Structure
                  Atom(s)
 </pre>
 
-
-
 Different Iterators allow you to iterate over Atoms or all Groups.
-
 
 <java>
 public static int getNrAtoms(Structure s){
@@ -39,7 +39,6 @@ public static int getNrAtoms(Structure s){
         return nrAtoms;
     }
 </java>
-
 
 <java>
         AtomIterator iter = new AtomIterator(structure) ;

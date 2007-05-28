@@ -6,7 +6,11 @@ title: BioJava:CookBook:PDB:atoms
 
 If you want an array of Atoms you can do something like this:
 
-<java> Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
+<java>
+
+// get all Calpha atoms in the structure Atom[] caAtoms =
+StructureTools.getAtomArray(structure,"CA");
+
 </java>
 
 The Structure object has a hierarchy of sub-objects:
