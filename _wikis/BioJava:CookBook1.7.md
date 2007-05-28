@@ -243,6 +243,8 @@ How Do I....?
 ### Protein Structure
 
 -   [How can I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
+-   [How can I access the atoms in a
+    structure?](BioJava:CookBook:PDB:atoms "wikilink")
 -   [How can I mutate a
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How to calculate a structure
