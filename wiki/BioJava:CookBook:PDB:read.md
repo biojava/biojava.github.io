@@ -20,13 +20,16 @@ title: BioJava:CookBook:PDB:read
 `    `  
 `    System.out.println(struc);`
 
-`    GroupIterator gi = new GroupIterator(struc);`  
-`    while (gi.hasNext()){`  
+`    GroupIterator gi = new GroupIterator(struc);`
+
+`    while (gi.hasNext()){`
+
 `          Group g = (Group) gi.next();`  
-`          Chain  c = g.getParent();`  
+`         `  
 `          if ( g instanceof AminoAcid ){`  
 `              AminoAcid aa = (AminoAcid)g;`  
 `              Map sec = aa.getSecStruc();`  
+`              Chain  c = g.getParent();`  
 `              System.out.println(c.getName() + " " + g + " " + sec);`  
 `          }                `  
 `    }`
