@@ -138,6 +138,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 
 * [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
+* [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on Atoms?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
 * [[BioJava:CookBook:PDB:align|How to calculate a structure superimposition?]]
 
