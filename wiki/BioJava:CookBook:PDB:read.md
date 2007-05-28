@@ -9,11 +9,28 @@ title: BioJava:CookBook:PDB:read
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  
   
-`PDBFileReader pdbreader = new PDBFileReader();`  
-  
+`PDBFileReader pdbreader = new PDBFileReader();`
+
+`// optional: the parser can read the secondary structure`  
+`// assignment from the PDB file header and add it to the amino acids`  
+`pdbread.setParseSecStruc(true);     `
+
 `try{`  
 `    Structure struc = pdbreader.getStructure(filename);`  
-`    System.out.println(struc);`  
+`    `  
+`    System.out.println(struc);`
+
+`    GroupIterator gi = new GroupIterator(struc);`  
+`    while (gi.hasNext()){`  
+`          Group g = (Group) gi.next();`  
+`          Chain  c = g.getParent();`  
+`          if ( g instanceof AminoAcid ){`  
+`              AminoAcid aa = (AminoAcid)g;`  
+`              Map sec = aa.getSecStruc();`  
+`              System.out.println(c.getName() + " " + g + " " + sec);`  
+`          }                `  
+`    }`
+
 `} catch (Exception e) {`  
 `    e.printStackTrace();`  
 `}`
