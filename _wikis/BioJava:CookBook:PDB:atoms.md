@@ -19,7 +19,7 @@ The Structure object has a hierarchy of sub-objects:
                      |
                      Atom(s)
 
-Different Iterators allow you to iterate over all Atoms or all Groups.
+Different Iterators allow you to iterate over Atoms or all Groups.
 
 <java> public static int getNrAtoms(Structure s){
 
