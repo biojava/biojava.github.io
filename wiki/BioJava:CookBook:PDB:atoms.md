@@ -4,15 +4,6 @@ title: BioJava:CookBook:PDB:atoms
 
 ### How can I access the atoms in a structure?
 
-If you want an array of Atoms you can do something like this:
-
-<java>
-
-// get all Calpha atoms in the structure Atom[] caAtoms =
-StructureTools.getAtomArray(structure,"CA");
-
-</java>
-
 The Structure object has a hierarchy of sub-objects:
 
     Structure
@@ -23,7 +14,18 @@ The Structure object has a hierarchy of sub-objects:
                      |
                      Atom(s)
 
-Different Iterators allow you to iterate over Atoms or all Groups.
+If you want to directly access an array of Atoms you can do something
+like this:
+
+<java>
+
+// get all Calpha atoms in the structure Atom[] caAtoms =
+StructureTools.getAtomArray(structure,"CA");
+
+</java>
+
+Another possibility is to use one of theIterators to iterate over Atoms
+or Groups.
 
 <java> public static int getNrAtoms(Structure s){
 
