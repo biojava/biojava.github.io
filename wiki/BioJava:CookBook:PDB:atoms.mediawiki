@@ -21,7 +21,7 @@ Structure
 
 
 
-Different Iterators allow you to iterate over all Atoms or all Groups.
+Different Iterators allow you to iterate over Atoms or all Groups.
 
 
 <java>
