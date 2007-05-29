@@ -5,8 +5,8 @@ title: BioJava:CookBook:PDB:align
 ### How can I calculate a structure alignment?
 
 The structure alignment algorithm contained in BioJava is based on a
-variation of the PSC++ algorithm provided by Peter Lackner (personal
-communication)
+variation of the PSC++ algorithm provided by Peter Lackner, Univ.
+Salzburg (personal communication)
 
 <java>
 
