@@ -23,30 +23,37 @@ for NEXUS format)
 
 - Initialization: create objects for each sequence
 
-Day 1: Practice w/ FASTA parser
+Day 1: Practice w/ FASTA parser -done
 
 Day 2: Getting to know NEXUS parser(1) (read and parse the TAXA,
-CHARACTER block)
+CHARACTER block) -done
 
-Day 3: Getting to know NEXUS parser(2) (TREE block)
+Day 3: Getting to know NEXUS parser(2) (TREE block) -still working, May
+29th
 
 Day 4: Tree building practice w/ JGraphT
-(http://www.jgrapht.org/javadoc/)
+(http://www.jgrapht.org/javadoc/) -done
 
 Day 5/6: Extend functions for NEXUS parser (parse a tree block and
-create tree by JGraphT)
-
-Day 7: Other Blocks (if necessary)
+create tree by JGraphT) -still working, May 29th
 
 ------------------------------------------------------------------------
 
-*Week 2 Development of basic Output*
-
-- Tree constructing practice with JGraphT
-(http://www.jgrapht.org/javadoc/ )
+***Week 2 Development of basic Output (May 28th ~ June 3rd)***
 
 - Output file creation in NEXUS format(converting tree object into NEXUS
 format)
+
+Day1 & 2 : Finish the NexusToJgraphT code
+
+Day3 : Nexus Tree code for Output(1) (create JgraphT object & Convert it
+to Nexus Tree Object)
+
+Day4 : Nexus Tree code for Output (2) (generating an output string)
+
+Day5 : Nexus Tree code for Output (3) (debugging)
+
+Day6 : Documentation
 
 **Part II: Distance method (multiple hit correction method)**
 
