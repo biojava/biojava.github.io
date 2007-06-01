@@ -128,7 +128,10 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 === Analyse structurale des protéines ===
 
 * [[BioJava:CookbookFrench:PDB:Read|Comment faire pour lire un fichier en format PDB?]]
+* Comment obtenir les informations sur les atmoes présent dans un fichier PDB?
+* Comment faire des calculs sur des Atomes présent dans un fichier PDB?
 * [[BioJava:CookbookFrench:PDB:Mutate|Comment puis-je modifié un résidu?]]
+* Comment faire pour calculer la superposition de deux Structures?
 
 === Alignements de s&eacute;quences et pr&eacute;diction de structures secondaires de prot&eacute;ines avec STRAP (par Christophe Gille) ===
 
