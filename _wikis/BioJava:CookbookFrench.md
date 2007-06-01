@@ -238,8 +238,13 @@ Comment faire pour ...?
 
 -   [Comment faire pour lire un fichier en format
     PDB?](BioJava:CookbookFrench:PDB:Read "wikilink")
+-   Comment obtenir les informations sur les atmoes présent dans un
+    fichier PDB?
+-   Comment faire des calculs sur des Atomes présent dans un fichier
+    PDB?
 -   [Comment puis-je modifié un
     résidu?](BioJava:CookbookFrench:PDB:Mutate "wikilink")
+-   Comment faire pour calculer la superposition de deux Structures?
 
 ### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
 
