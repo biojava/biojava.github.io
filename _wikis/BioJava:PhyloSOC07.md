@@ -28,14 +28,14 @@ Day 1: Practice w/ FASTA parser -done
 Day 2: Getting to know NEXUS parser(1) (read and parse the TAXA,
 CHARACTER block) -done
 
-Day 3: Getting to know NEXUS parser(2) (TREE block) -still working, May
-29th
+Day 3: Getting to know NEXUS parser(2) (TREE block) -done
 
 Day 4: Tree building practice w/ JGraphT
 (http://www.jgrapht.org/javadoc/) -done
 
 Day 5/6: Extend functions for NEXUS parser (parse a tree block and
-create tree by JGraphT) -still working, May 29th
+create tree by JGraphT) -still working, June 3rd (method:
+getTreeAsJgrapht)
 
 ------------------------------------------------------------------------
 
@@ -47,19 +47,43 @@ format)
 Day1 & 2 : Finish the NexusToJgraphT code
 
 Day3 : Nexus Tree code for Output(1) (create JgraphT object & Convert it
-to Nexus Tree Object)
+to Nexus Tree Object) -done (method: AddTree)
 
-Day4 : Nexus Tree code for Output (2) (generating an output string)
+Day4 : Nexus Tree code for Output (2) (generating an output string) -
+done (testing file: SampleAddTree.java)
 
-Day5 : Nexus Tree code for Output (3) (debugging)
+Day5 : Nexus Tree code for Output (3) (debugging) -done
 
-Day6 : Documentation
+Day6 : Documentation -done (getTree, addTree)
+
+------------------------------------------------------------------------
 
 **Part II: Distance method (multiple hit correction method)**
 
-*Week 3 Jukes-Cantor*
+------------------------------------------------------------------------
 
-*Week 4 Kimura's 2-parameter*
+***Week 3 Jukes-Cantor*** -Devoloping API for Jukes-Cantor method
+
+Day1: Method for Nexus Parser (getTreeAsJGraphT)
+
+Day2 :Jukes-Cantor method reveiw & algorithm study & write sample input
+file
+
+Day3: program development (1) code for pairwise comparison
+
+Day4: program development (2) calculate K( \# of nucleotide
+substitutions since the divergence) from the pairwise comparison result
+
+`    K = -(3/4)*ln(1-(4/3)*p),    p = prob. of two sequences to have different base at certain position`
+
+Day5: Documentaion & feedback for methods in PartI (getTree, AddTree,
+getTreeAsJgrapht)
+
+------------------------------------------------------------------------
+
+***Week 4 Kimura's 2-parameter***
+
+------------------------------------------------------------------------
 
 **Part III: Distance based phylogeny reconstruction**
 
