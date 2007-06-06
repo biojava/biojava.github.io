@@ -34,7 +34,7 @@ title: BioJava:CookBook:PDB:header
 
 </java>
 
-should give the following output:
+gives the following output:
 
     title: STRUCTURE OF BOVINE PANCREATIC TRYPSIN INHIBITOR. RESULTS OF JOINT NEUTRON AND X-RAY REFINEMENT OF CRYSTAL FORM /II$ 
     technique: NEUTRON DIFFRACTION, X-RAY DIFFRACTION 
