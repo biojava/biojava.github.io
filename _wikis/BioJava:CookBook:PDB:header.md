@@ -2,7 +2,7 @@
 title: BioJava:CookBook:PDB:header
 ---
 
-### How can I access the header information in a structure?
+### How can I access the header information of a PDB file?
 
 <java>
 
