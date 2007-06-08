@@ -2,46 +2,49 @@
 title: BioJava:Download 1.5
 ---
 
-This page offers downloads for the BioJava 1.5-beta2 release. BioJava
-1.5-beta2 runs only on Java 2 Standard Edition 1.4 (or later) platforms.
+This page offers downloads for the BioJava 1.5-beta3 release. BioJava
+1.5-beta3 runs only on Java 2 Standard Edition 1.4 (or later) platforms.
 
 Complete Download
 -----------------
 
 A complete download is available as one
-[gzip](http://www.biojava.org/download/bj15b/all/biojava-1.5-beta2.tar.gz)
-file. The file contains all binaries, required jars, docs, source, test,
-demos and apps.
+[tar](http://www.biojava.org/download/bj15b/all/bj1.5-b3-all.tar) file
+(16Mb). The file contains all binaries, required jars, docs, source,
+test, demos and apps as gzipped tar files.
 
-BioJava code
+BioJava binaries
+----------------
+
+A complete binary distribution is available as one large
+[gzip](http://www.biojava.org/download/bj15b/bin/bj1.5-b3-bin.tar.gz)
+file (3.5Mb). It contains the biojava.jar as well as the apps.jar,
+demos.jar and the supporting libraries.
+
+### Support libraries
+
+-   bytecode.jar: Required to run biojava
+-   commons-cli.jar: Only required to compile and use some of the demos
+-   commons-collections-2.1.jar: only required for some demos and BioSQL
+    access (and building biojava.jar)
+-   commons-dbcp-1.1.jar: Only required for legacy BioSQL access (and
+    building biojava.jar)
+-   commons-pool-1.1.jar: Only required for legacy BioSQL access (and
+    building biojava.jar)
+
+Source Files
 ------------
 
--   [Biojava-1.5-beta2 JAR
-    file](http://www.biojava.org/download/bj15b/bin/biojava-1.5-beta2.jar).
-    If your browser tries to open this directly right click the link and
-    select save as.
--   [API
-    documentation](http://www.biojava.org/download/bj15b/doc/doc.tar.gz)
--   [Source
-    code](http://www.biojava.org/download/bj15b/all/biojava-1.5-beta2.tar.gz)
-    is available as part of the complete download.
+The full source distribution is available as a
+[gzip](http://www.biojava.org/download/bj15b/src/bj1.5-b3-src.tar.gz)
+file (7.8Mb) that can be fully built using ant.
 
-Required libraries
-------------------
+Documentation
+-------------
 
--   [bytecode.jar](http://www.biojava.org/download/bj15b/bin/bytecode.jar)
--   [commons-cli.jar](http://www.biojava.org/download/bj15b/bin/commons-cli.jar)
-    Only required to compile and use some of the demos
--   [commons-collections-2.1.jar](http://www.biojava.org/download/bj15b/bin/commons-collections-2.1.jar)
-    only required for some demos and BioSQL access (and building
-    biojava.jar)
--   [commons-dbcp-1.1.jar](http://www.biojava.org/download/bj15b/bin/commons-dbcp-1.1.jar)
-    Only required for legacy BioSQL access (and building biojava.jar)
--   [commons-pool-1.1.jar](http://www.biojava.org/download/bj15b/bin/commons-pool-1.1.jar)
-    Only required for legacy BioSQL access (and building biojava.jar)
-
-The Jakarta-commons APIs are covered by the [Apache
-license](http://www.biojava.org/download/binaries/LICENSE.COMMONS).
+Documentation is available as a
+[gzip](http://www.biojava.org/download/bj15b/doc/bj1.5-b3-doc.tar.gz)
+file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
 CVS access
 ----------
