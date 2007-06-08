@@ -15,7 +15,7 @@ You can also maintain an up-to-date view of BioJava with [http://www.cvs.org/ CV
 If you wish to contribute your existing code or help maintain part of the BioJava code-base, then we can supply you with a read/write account. Sign up for the [http://www.biojava.org/mailman/listinfo/biojava-dev biojava-dev mailing list] and post a request for an account.
 
 ==BioJava 1.5 Release Planning==
-BioJava 1.5-Beta2 is now available from the [[Biojava:Download|download area]]. --[[User:Mark|Mark]] 01:39, 29 December 2006 (EST)
+BioJava 1.5-Beta3 is now available from the [[Biojava:Download|download area]]. --[[User:Mark|Mark]] 02:37, 8 June 2007 (EDT)
 
 Planning has begun for a new BioJava release. The [[Project:1.5ReleasePlan|release plan]] has been drawn up. Soon we will be asking for a volunteer to be the [[Czar|Release Czar]] to oversee the coordination of the release.
 

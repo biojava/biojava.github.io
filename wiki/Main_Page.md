@@ -45,9 +45,9 @@ request for an account.
 BioJava 1.5 Release Planning
 ----------------------------
 
-BioJava 1.5-Beta2 is now available from the [download
+BioJava 1.5-Beta3 is now available from the [download
 area](Biojava:Download "wikilink"). --[Mark](User:Mark "wikilink")
-01:39, 29 December 2006 (EST)
+02:37, 8 June 2007 (EDT)
 
 Planning has begun for a new BioJava release. The [release
 plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
