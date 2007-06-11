@@ -34,8 +34,7 @@ Day 4: Tree building practice w/ JGraphT
 (http://www.jgrapht.org/javadoc/) -done
 
 Day 5/6: Extend functions for NEXUS parser (parse a tree block and
-create tree by JGraphT) -still working, June 3rd (method:
-getTreeAsJgrapht)
+create tree by JGraphT) -done
 
 ------------------------------------------------------------------------
 
@@ -64,24 +63,42 @@ Day6 : Documentation -done (getTree, addTree)
 
 ***Week 3 Jukes-Cantor*** -Devoloping API for Jukes-Cantor method
 
-Day1: Method for Nexus Parser (getTreeAsJGraphT)
+Day1: Method for Nexus Parser -done(getTreeAsJGraphT)
 
 Day2 :Jukes-Cantor method reveiw & algorithm study & write sample input
-file
+file -done
 
-Day3: program development (1) code for pairwise comparison
+Day3: program development (1) code for pairwise comparison -done
 
 Day4: program development (2) calculate K( \# of nucleotide
-substitutions since the divergence) from the pairwise comparison result
+substitutions since the divergence) from the pairwise comparison
+result -done
 
 `    K = -(3/4)*ln(1-(4/3)*p),    p = prob. of two sequences to have different base at certain position`
 
 Day5: Documentaion & feedback for methods in PartI (getTree, AddTree,
-getTreeAsJgrapht)
+getTreeAsJgrapht) -done
 
 ------------------------------------------------------------------------
 
 ***Week 4 Kimura's 2-parameter***
+
+Day1: getting to know CVS and upload file
+
+Day2 : Kimura's 2-parameter model reveiw & write sample input file w/
+Nexus Parser
+
+Day3: program development: code for differenciate
+transition/transversion & Calculate K
+
+`    K = (1/2)*ln(1/(1-2p-q)) + (1/4)*ln(1/(1-2q)),`  
+`    `  
+`    p: proportion of diff. transition`  
+`    q: proportion of diff. transversion`
+
+Day4: feedback for Multiple correction methods (JukesCantor, Kimura)
+
+Day5: Reveiwing UPGMA & N-J method.
 
 ------------------------------------------------------------------------
 
