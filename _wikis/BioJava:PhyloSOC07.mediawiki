@@ -89,7 +89,6 @@ Day3: program development: code for differenciate transition/transversion & Calc
      p: proportion of diff. transition
      q: proportion of diff. transversion
 
-
 Day4: feedback for Multiple correction methods (JukesCantor, Kimura)
 
 Day5: Reviewing UPGMA & N-J method. 
