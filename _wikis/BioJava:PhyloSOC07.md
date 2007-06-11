@@ -65,7 +65,7 @@ Day6 : Documentation -done (getTree, addTree)
 
 Day1: Method for Nexus Parser -done(getTreeAsJGraphT)
 
-Day2 :Jukes-Cantor method reveiw & algorithm study & write sample input
+Day2 :Jukes-Cantor method review & algorithm study & write sample input
 file -done
 
 Day3: program development (1) code for pairwise comparison -done
@@ -98,7 +98,7 @@ transition/transversion & Calculate K
 
 Day4: feedback for Multiple correction methods (JukesCantor, Kimura)
 
-Day5: Reveiwing UPGMA & N-J method.
+Day5: Reviewing UPGMA & N-J method.
 
 ------------------------------------------------------------------------
 
