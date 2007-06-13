@@ -42,18 +42,6 @@ Sign up for the [biojava-dev mailing
 list](http://www.biojava.org/mailman/listinfo/biojava-dev) and post a
 request for an account.
 
-BioJava 1.5 Release Planning
-----------------------------
-
-BioJava 1.5-Beta3 is now available from the [download
-area](Biojava:Download "wikilink"). --[Mark](User:Mark "wikilink")
-02:37, 8 June 2007 (EDT)
-
-Planning has begun for a new BioJava release. The [release
-plan](Project:1.5ReleasePlan "wikilink") has been drawn up. Soon we will
-be asking for a volunteer to be the [Release Czar](Czar "wikilink") to
-oversee the coordination of the release.
-
 Bugs and Requests for enhancement
 ---------------------------------
 
