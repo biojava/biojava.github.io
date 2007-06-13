@@ -2,14 +2,14 @@
 title: BioJava:Download 1.5
 ---
 
-This page offers downloads for the BioJava 1.5-beta3 release. BioJava
-1.5-beta3 runs only on Java 2 Standard Edition 1.4 (or later) platforms.
+This page offers downloads for the BioJava 1.5 release. BioJava 1.5 runs
+on Java 2 Standard Edition 1.4.2 (or later) platforms.
 
 Complete Download
 -----------------
 
 A complete download is available as one
-[tar](http://www.biojava.org/download/bj15b/all/bj1.5-b3-all.tar) file
+[tar](http://www.biojava.org/download/bj15/all/BioJava1.5-all.tar) file
 (16Mb). The file contains all binaries, required jars, docs, source,
 test, demos and apps as gzipped tar files.
 
@@ -17,9 +17,14 @@ BioJava binaries
 ----------------
 
 A complete binary distribution is available as one large
-[gzip](http://www.biojava.org/download/bj15b/bin/bj1.5-b3-bin.tar.gz)
+[gzip](http://www.biojava.org/download/bj15/bin/BioJava1.5-bin.tar.gz)
 file (3.5Mb). It contains the biojava.jar as well as the apps.jar,
 demos.jar and the supporting libraries.
+
+The apps.jar contains some simple example apps built with biojava. The
+demos.jar contains some simple demo programs (some are a bit dated).
+Refer to the [cookbook](BioJava:Cookbook "wikilink") for more up to date
+examples.
 
 ### Support libraries
 
@@ -36,14 +41,14 @@ Source Files
 ------------
 
 The full source distribution is available as a
-[gzip](http://www.biojava.org/download/bj15b/src/bj1.5-b3-src.tar.gz)
-file (7.8Mb) that can be fully built using ant.
+[gzip](http://www.biojava.org/download/bj15/src/BioJava1.5-src.tar.gz)
+file (7.8Mb) that can be built using ant.
 
 Documentation
 -------------
 
 Documentation is available as a
-[gzip](http://www.biojava.org/download/bj15b/doc/bj1.5-b3-doc.tar.gz)
+[gzip](http://www.biojava.org/download/bj15/doc/BioJava1.5-doc.tar.gz)
 file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
 CVS access
@@ -62,6 +67,6 @@ Getting older versions
     [here](BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
     [here](BioJava:Download 1.3 "wikilink").
--   Other releases of BioJava can be found in the [download
+-   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 
