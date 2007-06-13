@@ -14,11 +14,6 @@ You can also maintain an up-to-date view of BioJava with [http://www.cvs.org/ CV
 
 If you wish to contribute your existing code or help maintain part of the BioJava code-base, then we can supply you with a read/write account. Sign up for the [http://www.biojava.org/mailman/listinfo/biojava-dev biojava-dev mailing list] and post a request for an account.
 
-==BioJava 1.5 Release Planning==
-BioJava 1.5-Beta3 is now available from the [[Biojava:Download|download area]]. --[[User:Mark|Mark]] 02:37, 8 June 2007 (EDT)
-
-Planning has begun for a new BioJava release. The [[Project:1.5ReleasePlan|release plan]] has been drawn up. Soon we will be asking for a volunteer to be the [[Czar|Release Czar]] to oversee the coordination of the release.
-
 == Bugs and Requests for enhancement ==
 BioJava probably contains the odd bug, who would have thought!! We make use of the [http://www.bugzilla.org Bugzilla] bug reporting and tracking system. You can use it to [http://bugzilla.open-bio.org/ submit] a new bug or request for enhancement or to [http://bugzilla.open-bio.org/ view] open bugs or known issues.
 
