@@ -12,10 +12,8 @@ Needleman-Wunsch est utilisé pour des alignements globaux alors que
 l'algorithme de Smith-Waterman a été développé pour les alignements
 locaux. L'exemple ci-dessous vous montre comment faire l'un ou l'autre
 grâce aux implémentations de chacun de ces algorithmes retrouvées dans
-le package `org.biojava.bio.alignment`. Ces classe ne sont pas
-disponibles dans la version 1.4; vous les retrouverez dans la version
-biojava-live disponible sur le [serveur CVS](http://cvs.biojava.org).
-Évidemment, ils se retrouveront dans la version 1.5 ;-)
+le package `org.biojava.bio.alignment`. Ces classes ne sont disponibles
+qu'á partir de la version 1.5.
 
 L'idée derrière ces approches est de maintenir un représentation
 matricielle d'un graphe d'édition, avec des fonctions d'insertion, de
