@@ -83,13 +83,13 @@ getTreeAsJgrapht) -done
 
 ***Week 4 Kimura's 2-parameter***
 
-Day1: getting to know CVS and upload file
+Day1: getting to know CVS and upload file -done
 
-Day2 : Kimura's 2-parameter model reveiw & write sample input file w/
-Nexus Parser
+Day2: Kimura's 2-parameter model reveiw & write sample input file w/
+Nexus Parser - done
 
 Day3: program development: code for differenciate
-transition/transversion & Calculate K
+transition/transversion & Calculate K - done
 
 `    K = (1/2)*ln(1/(1-2p-q)) + (1/4)*ln(1/(1-2q)),`  
 `    `  
@@ -104,7 +104,26 @@ Day5: Reviewing UPGMA & N-J method.
 
 **Part III: Distance based phylogeny reconstruction**
 
-*week5 UPGMA method & Neighbor-Joining method*
+------------------------------------------------------------------------
+
+***week5 UPGMA method & Neighbor-Joining method***
+
+Day1: code for UPGMA method(1) - building distance matrix (by
+JukesCantor or Kimura's 2-parameter)
+
+Day2: code for UPGMA method(2) - calculate branch length & build
+weighted sub-tree as JGraphT
+
+Day3: code for UPGMA method(3) - collapsing a pair and rebuild distance
+matrix
+
+Day4: code for N-J method(1) - build initial star tree & choose a pair
+minizimg total branch length
+
+Day5: code for N-J method(2) - collapse a pair & rebuild distance matrix
+& iterate
+
+Day6: Revising code (if necessary)
 
 [UPGMA]
 
@@ -133,6 +152,8 @@ Day5: Reviewing UPGMA & N-J method.
 6. next pair that gives smallest S is chosen
 
 7. repeat until complete
+
+------------------------------------------------------------------------
 
 *Week 6 Documentation for Part I & II & III* : (JavaDoc and BJ website)
 
