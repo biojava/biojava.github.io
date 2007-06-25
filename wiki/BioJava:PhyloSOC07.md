@@ -155,7 +155,8 @@ Day6: Revising code (if necessary)
 
 ------------------------------------------------------------------------
 
-*Week 6 Documentation for Part I & II & III* : (JavaDoc and BJ website)
+***Week 6 Documentation for Part I & II & III*** : (JavaDoc and BJ
+website)
 
 Day 1: N-J method (1)
 
