@@ -155,8 +155,23 @@ Day6: Revising code (if necessary)
 
 ''Week 6 Documentation for Part I & II & III'' : (JavaDoc and BJ website)
 
+Day 1:  N-J method (1)
+
+Day 2:  N-J method (2)
+
+Day 3: implementing CharactersBlock Parser for UPGMA/N-J method
+
+Day 4: Documentation (by format)
+
+Day 5: updating wiki page (specifying methods w/ sample codes) 
+
+
+----
 
 '''Part III : Maximum Parsimony'''
+
+----
+
 
 ''Week 7 & 8  Maxumum Parsimony Method''
 
