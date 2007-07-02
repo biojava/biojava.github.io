@@ -13,7 +13,14 @@ For a more complex example that includes a number of classes that
 interact with Jmol on a deeper level see [the SVN repository of
 SPICE](http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/)
 
-<java> package org.biojava.jmoltest;
+<java> /\*
+
+Jmol.jar needs to be in your classpath for this example to work. You can
+get it from <http://jmol.sourceforge.net>
+
+-   /
+
+package org.biojava.jmoltest;
 
 import java.awt.Container; import java.awt.Dimension; import
 java.awt.Graphics; import java.awt.Rectangle; import
