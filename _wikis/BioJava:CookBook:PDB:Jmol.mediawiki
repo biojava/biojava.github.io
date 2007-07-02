@@ -1,6 +1,6 @@
 ==How to interact with Jmol==
 
-Jmol is a popular open source 3D viewer written in Java. This example
+[http://jmol.sourceforge.net Jmol] is a popular open source 3D viewer written in Java. This example
 demonstrates how you can send a BioJava structure object to Jmol.
 
 For a more complex example that includes a number of classes that interact with Jmol on a deeper level see
@@ -37,11 +37,12 @@ public class SimpleJmolExample {
         try {
 
             PDBFileReader pdbr = new PDBFileReader();          
-            pdbr.setPath("/Users/ap3/WORK/PDB/20051205/");
+            pdbr.setPath("/Path/To/PDBFiles/");
 
             String pdbCode = "5pti";
 
             Structure struc = pdbr.getStructureById(pdbCode);
+
             SimpleJmolExample ex = new SimpleJmolExample();
             ex.setStructure(struc);
            
@@ -69,6 +70,9 @@ public class SimpleJmolExample {
         
         frame.setName(s.getPDBCode());
 
+        // actually this is very simple
+        // just convert the structure to a PDB file
+  
         String pdb = s.toPDB();
         //System.out.println(pdb1);
         structure = s;
@@ -76,7 +80,10 @@ public class SimpleJmolExample {
         
         // Jmol could also read the file directly from your file system
         //viewer.openFile("/Path/To/PDB/1tim.pdb");
-        
+  
+        // send the PDB file to Jmol.
+        // there are also other ways to interact with Jmol, but they require more
+        // code. See the link to SPICE above...
         viewer.openStringInline(pdb);
         viewer.evalString("select *; spacefill off; wireframe off; backbone 0.4;  ");
         viewer.evalString("color chain;  ");
