@@ -74,10 +74,10 @@ public class SimpleJmolExample {
         // just convert the structure to a PDB file
   
         String pdb = s.toPDB();
-        //System.out.println(pdb1);
+       
         structure = s;
         JmolSimpleViewer viewer = jmolPanel.getViewer();
-        
+
         // Jmol could also read the file directly from your file system
         //viewer.openFile("/Path/To/PDB/1tim.pdb");
   
