@@ -1,9 +1,141 @@
-==How to interact with Jmol?===
+==How to interact with Jmol==
 
-Jmol is a popular open source 3D viewer written in Java. 
+Jmol is a popular open source 3D viewer written in Java. This example
+demonstrates how you can send a BioJava structure object to Jmol.
+
+For a more complex example that includes a number of classes that interact with Jmol on a deeper level see
+[http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/ the SVN repository of SPICE]
+
+
 
 <java>
-</java>
+package org.biojava.jmoltest;
 
-For a more complex example, a number of different classes that interact deeply with Jmol can be found in 
-[http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/ the SVN repository of SPICE]
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import org.biojava.bio.structure.Structure;
+import org.biojava.bio.structure.io.PDBFileReader;
+import org.jmol.adapter.smarter.SmarterJmolAdapter;
+import org.jmol.api.JmolAdapter;
+import org.jmol.api.JmolSimpleViewer;
+
+
+public class SimpleJmolExample {
+    JmolSimpleViewer viewer;
+    Structure structure; 
+
+    JmolPanel jmolPanel;
+    JFrame frame ;
+
+    public static void main(String[] args){
+        try {
+
+            PDBFileReader pdbr = new PDBFileReader();          
+            pdbr.setPath("/Users/ap3/WORK/PDB/20051205/");
+
+            String pdbCode = "5pti";
+
+            Structure struc = pdbr.getStructureById(pdbCode);
+            SimpleJmolExample ex = new SimpleJmolExample();
+            ex.setStructure(struc);
+           
+            
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public SimpleJmolExample() {
+        frame = new JFrame();
+        frame.addWindowListener(new ApplicationCloser());
+        Container contentPane = frame.getContentPane();
+        jmolPanel = new JmolPanel();
+   
+        jmolPanel.setPreferredSize(new Dimension(200,200));
+        contentPane.add(jmolPanel);
+
+        frame.pack();
+        frame.setVisible(true); 
+
+    }
+    public void setStructure(Structure s) {
+        
+        frame.setName(s.getPDBCode());
+
+        String pdb = s.toPDB();
+        //System.out.println(pdb1);
+        structure = s;
+        JmolSimpleViewer viewer = jmolPanel.getViewer();
+        
+        // Jmol could also read the file directly from your file system
+        //viewer.openFile("/Path/To/PDB/1tim.pdb");
+        
+        viewer.openStringInline(pdb);
+        viewer.evalString("select *; spacefill off; wireframe off; backbone 0.4;  ");
+        viewer.evalString("color chain;  ");
+        this.viewer = viewer;
+
+    }
+
+    public void setTitle(String label){
+        frame.setTitle(label);
+    }
+
+    public JmolSimpleViewer getViewer(){
+
+        return jmolPanel.getViewer();
+    }
+
+
+    static class ApplicationCloser extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+            System.exit(0);
+        }
+    }
+
+    static class JmolPanel extends JPanel {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3661941083797644242L;
+        JmolSimpleViewer viewer;
+        JmolAdapter adapter;
+        JmolPanel() {
+            adapter = new SmarterJmolAdapter();
+            viewer = JmolSimpleViewer.allocateSimpleViewer(this, adapter);
+            
+        }
+
+        public JmolSimpleViewer getViewer() {
+            return viewer;
+        }
+
+        public void executeCmd(String rasmolScript){
+            viewer.evalString(rasmolScript);
+        }
+
+
+        final Dimension currentSize = new Dimension();
+        final Rectangle rectClip = new Rectangle();
+
+        public void paint(Graphics g) {
+            getSize(currentSize);
+            g.getClipBounds(rectClip);
+            viewer.renderScreenImage(g, currentSize, rectClip);
+        }
+    }
+
+}
+
+
+
+
+
+</java>
