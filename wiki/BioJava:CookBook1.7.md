@@ -253,6 +253,7 @@ How Do I....?
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How to calculate a structure
     superimposition?](BioJava:CookBook:PDB:align "wikilink")
+-   [How to interact with Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
 
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
