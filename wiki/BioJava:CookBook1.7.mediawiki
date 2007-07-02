@@ -142,6 +142,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on Atoms?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
 * [[BioJava:CookBook:PDB:align|How to calculate a structure superimposition?]]
+* [[BioJava:CookBook:PDB:Jmol|How to interact with Jmol?]]
 
 === Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille) ===
 
