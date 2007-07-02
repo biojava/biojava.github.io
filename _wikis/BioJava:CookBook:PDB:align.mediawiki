@@ -30,6 +30,13 @@ based on a variation of the PSC++ algorithm provided by Peter Lackner, Univ. Sal
           
             // step 2 : do the calculations
             sc.align(s1,s2);
+
+            // if you want more control over the alignment parameters
+            // use the StrucAligParameters
+            //StrucAligParameters params = new StrucAligParameters();
+            //params.setFragmentLength(8);      
+            //sc.align(s1,s2,params); 
+
           
             
             AlternativeAlignment[] aligs = sc.getAlignments();
