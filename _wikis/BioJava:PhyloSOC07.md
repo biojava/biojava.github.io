@@ -158,15 +158,17 @@ Day6: Revising code (if necessary)
 ***Week 6 Documentation for Part I & II & III*** : (JavaDoc and BJ
 website)
 
-Day 1: N-J method (1)
+Day 1: N-J method (1) -done
 
-Day 2: N-J method (2)
+Day 2: N-J method (2) -done
 
-Day 3: implementing CharactersBlock Parser for UPGMA/N-J method
+Day 3: implementing CharactersBlock Parser for UPGMA/N-J method - Still
+Working on as July 1st.
 
-Day 4: Documentation (by format)
+Day 4: Documentation (by format) -done
 
-Day 5: updating wiki page (specifying methods w/ sample codes)
+Day 5: updating wiki page (specifying methods w/ sample codes) - Waiting
+for uploading as July 1st.
 
 ------------------------------------------------------------------------
 
@@ -174,7 +176,28 @@ Day 5: updating wiki page (specifying methods w/ sample codes)
 
 ------------------------------------------------------------------------
 
-*Week 7 & 8 Maxumum Parsimony Method*
+***Week 7 Maximum Parsimony Method***
+
+Day 1: Implementing Taxa & CharactersBlock for
+UPGMA/N-J/MaximumParsimony methods
+
+Day 2: Revising AddTree method( for weighted tree)
+
+Day 3: Revising GetTreeAsJgrapht method( for weighted tree)
+
+Day 4: Code for Maximum Parsimony Method (1)
+
+Input: Read Nexus File & Extract MATRIX data (Align sequences & decide
+informative sites)
+
+Day 5: Code for Maximum Parsimony Method (2)
+
+Building Data Structure : decide all possible tree structures &
+initialize variables for those trees.
+
+------------------------------------------------------------------------
+
+***Week 8 Maximum Parsimony Method***
 
 1. aligning sequences
 
@@ -187,6 +210,8 @@ Day 5: updating wiki page (specifying methods w/ sample codes)
 5. for each tree type, add \# of changes for all sites
 
 6. find the tree with smallest number of changes
+
+------------------------------------------------------------------------
 
 **Part IV : Maximum Likelihood**
 
