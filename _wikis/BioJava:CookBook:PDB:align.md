@@ -33,9 +33,14 @@ Salzburg (personal communication)
 `           Structure s2 = pdbr.getStructureById(pdb2);                       `  
 `         `  
 `           // step 2 : do the calculations`  
-`           sc.align(s1,s2);`  
-`         `  
-`           `  
+`           sc.align(s1,s2);`
+
+`           // if you want more control over the alignment parameters`  
+`           // use the StrucAligParameters`  
+`           //StrucAligParameters params = new StrucAligParameters();`  
+`           //params.setFragmentLength(8);      `  
+`           //sc.align(s1,s2,params); `
+
 `           AlternativeAlignment[] aligs = sc.getAlignments();`  
 `           `  
 `           //cluster similar results together `  
