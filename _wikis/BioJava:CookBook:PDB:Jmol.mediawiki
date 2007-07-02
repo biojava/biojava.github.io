@@ -9,6 +9,12 @@ For a more complex example that includes a number of classes that interact with 
 
 
 <java>
+/* 
+
+Jmol.jar needs to be in your classpath for this example to work. 
+You can get it from http://jmol.sourceforge.net
+
+*/
 package org.biojava.jmoltest;
 
 import java.awt.Container;
