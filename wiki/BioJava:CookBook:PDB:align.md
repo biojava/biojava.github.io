@@ -51,9 +51,8 @@ Salzburg (personal communication)
 `          for (int i=0 ; i< aligs.length; i ++){`  
 `              AlternativeAlignment aa = aligs[i];`  
 `              System.out.println(aa);              `  
-`          }`  
-`           `  
-`                     `  
+`          }`
+
 `           // convert AlternativeAlignemnt 1 to PDB file, so it can be opened with a viewer of your choice`  
 `           //(e.g. Jmol, Rasmol)`  
 `           `  
@@ -77,3 +76,6 @@ Salzburg (personal communication)
 `       }`
 
 } </java>
+
+You can send the structure alignment for display to Jmol. see
+<BioJava:CookBook:PDB:Jmol> for more on this.
