@@ -7,7 +7,8 @@ How to interact with Jmol
 
 [Jmol](http://jmol.sourceforge.net) is a popular open source 3D viewer
 written in Java. This example demonstrates how you can send a BioJava
-structure object to Jmol.
+structure object to Jmol. This can be used e.g. to visualize a protein
+structure alignment as calculated with <BioJava:CookBook:PDB:align>
 
 For a more complex example that includes a number of classes that
 interact with Jmol on a deeper level see [the SVN repository of
