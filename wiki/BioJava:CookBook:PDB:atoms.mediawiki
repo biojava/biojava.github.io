@@ -1,7 +1,9 @@
 ===How can I access the atoms in a structure?===
 
+BioJava provides a flexible data structure for managing protein structural data. The Structure class
+is the main container. 
 
-The Structure object has a hierarchy of sub-objects:
+A Structure has a hierarchy of sub-objects:
 
 <pre>
 Structure
@@ -13,7 +15,7 @@ Structure
                  Atom(s)
 </pre>
 
-
+Different ways are provided how to access the data contained in a Structure.
 If you want to directly access an array of Atoms you can do something like this:
 
 <java>
@@ -24,7 +26,7 @@ Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
 </java>
 
 
-Another possibility is to use one of theIterators to iterate over Atoms or  Groups.
+Another possibility is to use one of the iterators to iterate over Atoms or Groups.
 
 <java>
 public static int getNrAtoms(Structure s){
