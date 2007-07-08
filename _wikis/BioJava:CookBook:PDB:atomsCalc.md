@@ -26,3 +26,6 @@ calculations.
 `   }`
 
 </java>
+
+Next: <BioJava:CookBook:PDB:header> - How to access the header
+information
