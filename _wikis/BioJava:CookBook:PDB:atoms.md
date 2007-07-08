@@ -57,4 +57,5 @@ or Groups.
 
 </java>
 
-<BioJava:CookBook:PDB:header>
+Next: <BioJava:CookBook:PDB:header> - How to access the header
+information
