@@ -45,3 +45,5 @@ more examples of how to access the Atoms please go to
 `}`
 
 </java>
+
+Next: <BioJava:CookBook:PDB:atoms> - How to access atoms.
