@@ -55,7 +55,7 @@ Salzburg (personal communication)
 `              System.out.println(aa);              `  
 `          }`
 
-`           // convert AlternativeAlignemnt 1 to PDB file, so it can be opened with a viewer of your choice`  
+`           // convert AlternativeAlignment 1 to PDB file, so it can be opened with a viewer of your choice`  
 `           //(e.g. Jmol, Rasmol)`  
 `           `  
 `           if ( aligs.length > 0) {`  
