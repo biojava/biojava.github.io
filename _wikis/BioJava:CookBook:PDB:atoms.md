@@ -57,5 +57,5 @@ or Groups.
 
 </java>
 
-Next: <BioJava:CookBook:PDB:header> - How to access the header
-information
+Next: <BioJava:CookBook:PDB:atomsCalc> - How to do calculations on
+atoms.
