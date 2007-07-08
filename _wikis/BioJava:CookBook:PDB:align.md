@@ -31,7 +31,9 @@ Salzburg (personal communication)
 `           `  
 `           Structure s1 = pdbr.getStructureById(pdb1);`  
 `           Structure s2 = pdbr.getStructureById(pdb2);                       `  
-`         `  
+`           // of course you do not have to use the full structures`  
+`           // you could also just use any set of atoms of your choice`
+
 `           // step 2 : do the calculations`  
 `           sc.align(s1,s2);`
 
