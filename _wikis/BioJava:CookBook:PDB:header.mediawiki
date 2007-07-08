@@ -40,3 +40,8 @@ modDate: 11-NOV-03
 idCode: 5PTI
 resolution: 1.8
 </pre>
+
+
+
+
+Next: [[BioJava:CookBook:PDB:align]] - How to align two protein structures
