@@ -20,3 +20,7 @@ public  double getPhi(Group a, Group b)
         return phi ;
     }
 </java>
+
+
+
+Next: [[BioJava:CookBook:PDB:header]] - How to access the header information
