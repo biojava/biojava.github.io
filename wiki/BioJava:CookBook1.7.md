@@ -245,10 +245,10 @@ How Do I....?
 -   [How can I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
 -   [How can I access the atoms in a
     structure?](BioJava:CookBook:PDB:atoms "wikilink")
+-   [How can I do calculations on
+    atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
 -   [How can I access the header information of a PDB
     file?](BioJava:CookBook:PDB:header "wikilink")
--   [How can I do calculations on
-    Atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
 -   [How can I mutate a
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How to calculate a structure
