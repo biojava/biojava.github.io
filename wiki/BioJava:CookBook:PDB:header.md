@@ -43,3 +43,5 @@ gives the following output:
     modDate: 11-NOV-03
     idCode: 5PTI
     resolution: 1.8
+
+Next: <BioJava:CookBook:PDB:align> - How to align two protein structures
