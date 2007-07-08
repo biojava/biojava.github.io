@@ -49,3 +49,6 @@ public static int getNrAtoms(Structure s){
             Calc.rotate(atom,rotationmatrix);
         }
 </java>
+
+
+[[BioJava:CookBook:PDB:header]]
