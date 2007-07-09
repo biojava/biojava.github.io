@@ -2,7 +2,8 @@
 title: BioJava:CookbookFrench:PDB:Align
 ---
 
-### Comment calculer un alignement de structures?
+Comment calculer un alignement de structures?
+---------------------------------------------
 
 BioJava vous permet de faire l'alignement de deux Structures grâce à un
 algorithme basé sur une variation d'un algorithme en C++ fourni par
