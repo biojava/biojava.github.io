@@ -162,8 +162,7 @@ Day 1: N-J method (1) -done
 
 Day 2: N-J method (2) -done
 
-Day 3: implementing CharactersBlock Parser for UPGMA/N-J method - Still
-Working on as July 1st.
+Day 3: implementing CharactersBlock Parser for UPGMA/N-J method - done
 
 Day 4: Documentation (by format) -done
 
@@ -179,18 +178,20 @@ for uploading as July 1st.
 ***Week 7 Maximum Parsimony Method***
 
 Day 1: Implementing Taxa & CharactersBlock for
-UPGMA/N-J/MaximumParsimony methods
+UPGMA/N-J/MaximumParsimony methods -done
 
-Day 2: Revising AddTree method( for weighted tree)
+Day 2: Revising AddTree method( for weighted tree) -done (currently
+being discussed as well)
 
-Day 3: Revising GetTreeAsJgrapht method( for weighted tree)
+Day 3: Revising GetTreeAsJgrapht method( for weighted tree) -done
+(currently being discussed as well)
 
-Day 4: Code for Maximum Parsimony Method (1)
+Day 4: Code for Maximum Parsimony Method (1) -done
 
 Input: Read Nexus File & Extract MATRIX data (Align sequences & decide
 informative sites)
 
-Day 5: Code for Maximum Parsimony Method (2)
+Day 5: Code for Maximum Parsimony Method (2) -to be worked out
 
 Building Data Structure : decide all possible tree structures &
 initialize variables for those trees.
@@ -198,6 +199,22 @@ initialize variables for those trees.
 ------------------------------------------------------------------------
 
 ***Week 8 Maximum Parsimony Method***
+
+Day 1: Code for Maximum Parsimony Method (2)
+
+Building Data Structure : decide all possible tree structures &
+initialize variables for those trees.
+
+Day 2: Code for Maximum Parsimony Method (3)
+
+iterate the calculation to dicide a tree
+
+Day 3: Revising AddTree & getTreeAsJGraphT method (to allow both
+weighted/unweighted tree)
+
+Day 4: Debugging for the non-symmetric tree structure (1)
+
+Day 5: Debugging for the non-symmetric tree structure (2)
 
 1. aligning sequences
 
