@@ -1,4 +1,4 @@
-===Comment faire des calculs sur des Atomes présent dans un fichier PDB?===
+== Comment faire des calculs sur des Atomes présent dans un fichier PDB? ==
 
 La classe Calc vous procure une s&eacute;rie de m&eacute;thodes permettant de faire divers calculs sur des Atomes.
 
