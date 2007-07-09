@@ -2,7 +2,8 @@
 title: BioJava:CookbookFrench:PDB:Header
 ---
 
-### Comment accéder aux informations contenues dans l'en-tête d'un fichier PDB?
+Comment accéder aux informations contenues dans l'en-tête d'un fichier PDB?
+---------------------------------------------------------------------------
 
 Tout comme un fichier GenBank ou EMBL, un fichier PDF contient dans son
 en-tête des éléments d'information souvent très utiles. La recette
