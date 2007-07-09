@@ -128,12 +128,12 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 === Analyse structurale des protéines ===
 
 * [[BioJava:CookbookFrench:PDB:Read|Comment faire pour lire un fichier en format PDB?]]
-* Comment obtenir les informations sur les atomes présent dans un fichier PDB?
-* Comment faire des calculs sur des Atomes présent dans un fichier PDB?
-* Comment accéder aux informations contenues dans l'en-tete d'un fichier PDB?
+* [[BioJava:CookbookFrench:PDB:Atom|Comment obtenir les informations sur les atomes présent dans un fichier PDB?]]
+* [[BioJava:CookbookFrench:PDB:AtomCalc|Comment faire des calculs sur des Atomes présent dans un fichier PDB?]]
+* [[BioJava:CookbookFrench:PDB:Header|Comment accéder aux informations contenues dans l'en-tete d'un fichier PDB?]]
 * [[BioJava:CookbookFrench:PDB:Mutate|Comment puis-je modifié un résidu?]]
-* Comment faire pour calculer la superposition de deux Structures?
-* Comment faire interagir une Structure avec Jmol?
+* [[BioJava:CookbookFrench:PDB:Align|Comment faire pour calculer la superposition de deux Structures?]]
+* [[BioJava:CookbookFrench:PDB:Jmol|Comment faire interagir une Structure avec Jmol?]]
 
 === Alignements de s&eacute;quences et pr&eacute;diction de structures secondaires de prot&eacute;ines avec STRAP (par Christophe Gille) ===
 
