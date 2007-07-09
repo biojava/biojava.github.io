@@ -1,4 +1,4 @@
-===Comment calculer un alignement de structures?===
+== Comment calculer un alignement de structures? ==
 
 BioJava vous permet de faire l'alignement de deux Structures gr&acirc;ce &agrave; un algorithme bas&eacute; sur une variation d'un algorithme en C++ fourni par Peter Lackner, Univ. de Salzburg
 (communication personnelle)
