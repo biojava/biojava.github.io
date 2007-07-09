@@ -1,4 +1,4 @@
-===Comment acc&eacute;der aux informations contenues dans l'en-t&ecirc;te d'un fichier PDB?===
+== Comment acc&eacute;der aux informations contenues dans l'en-t&ecirc;te d'un fichier PDB? ==
 
 Tout comme un fichier GenBank ou EMBL, un fichier PDF contient dans son en-t&ecirc;te des &eacute;l&eacute;ments d'information souvent tr&egrave;s utiles. La recette suivante vous permet d'y acc&eacute;der.
 
