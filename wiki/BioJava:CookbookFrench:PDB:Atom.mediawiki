@@ -1,4 +1,4 @@
-===Comment obtenir les informations sur les atomes présent dans un fichier PDB?===
+== Comment obtenir les informations sur les atomes présent dans un fichier PDB? ==
 
 BioJava poss&egrave;de un structure tr&egrave;s flexible pour g&eacute;rer des donn&eacute;es sructurales de prot&eacute;ines. La classe Structure vous procure le conteneur principal &agrave; partir du quel vous pouvez acc&eacute;der &agrave; toutes les donn&eacute;es.
 
