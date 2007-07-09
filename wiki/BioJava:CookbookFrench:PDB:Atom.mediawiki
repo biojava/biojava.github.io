@@ -1,0 +1,52 @@
+===Comment obtenir les informations sur les atomes présent dans un fichier PDB?===
+
+BioJava poss&egrave;de un structure tr&egrave;s flexible pour g&eacute;rer des donn&eacute;es sructurales de prot&eacute;ines. La classe Structure vous procure le conteneur principal &agrave; partir du quel vous pouvez acc&eacute;der &agrave; toutes les donn&eacute;es.
+
+Un objet Structure contient la hi&eacute;rarchie suivante de sous-objets:
+
+<pre>
+Structure
+        |
+        Chain(s)
+            |
+             Group(s)
+                 |
+                 Atom(s)
+</pre>
+
+Il existe diff&eacute;rentes mani&egrave;res d'acc&eacute;der aux donn&eacute;es contenues dans un objet Structure. Par exemple, si vous voulez obtenir directement un tableau d'Atomes, utilisez le code suivant:
+
+<java>
+
+// pour obtenir tous les atomes de type Calpha dans la structure
+Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
+
+</java>
+
+Une autre fa&ccedil;on de faire est d'utiliser des it&eacute;rateurs pour parcourir les Atoms et les Groups.
+
+<java>
+public static int getNrAtoms(Structure s){
+       
+        int nrAtoms = 0;
+        
+        Iterator iter = new GroupIterator(s);
+        
+        while ( iter.hasNext()){
+            Group g = (Group) iter.next();
+            nrAtoms += g.size();
+        }
+        
+        return nrAtoms;
+    }
+</java>
+
+Ou comme &ccedil;a:
+
+<java>
+        AtomIterator iter = new AtomIterator(structure) ;
+        while (iter.hasNext()) {
+            Atom atom = (Atom) iter.next() ;
+            Calc.rotate(atom,rotationmatrix);
+        }
+</java>
