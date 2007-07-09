@@ -9,23 +9,47 @@ La [*Protein Data Bank*](http://www.pdb.org) est la principale source de
 données struturales disponible sur l'Internet. Contrairement aux
 fichiers de type GenBank ou EMBL qui contiennent des donnés de séquence,
 les fichiers PDB contiennent plutôt des données de position d'atomes au
-sein d'une structure 3D. À partir de la version 1.4, BioJava est capable
-de lire ces fichiers &agrve; l'aide des classes du package
-org.biojava.bio.structure.io. Le code ci-dessous, introduit dans la
-portion appropriée de votre programme (;-)), vous montre la marche à
-suivre.
+sein d'une structure 3D. BioJava contient un modèle flexible permettant
+la gestion des données de structure contenues dans un fichier PDB.
+L'exemple ci-dessous montre comment faire la lecture d'un fichier PDB à
+partir d'un système de fichiers local et d'itérer sur les Groupes
+contenus dans ce fichier.
+
+L'accè aux informations de chaque Atome contenu dans le fichier se fait
+plutôt de cette manière.
 
 <java>
 
-`// PDBFileREader peut egalement lire les archives`  
-`// de type zip en entree`  
-`String filename =  "parcours/vers/fichier.entree" ;`  
+`// fonctionne egalement avec les fichiers`  
+`// compresses par zip`  
+`String filename =  "parcours/vers/pdbfile.ent" ;`  
   
 `PDBFileReader pdbreader = new PDBFileReader();`  
   
+`// optionel: le lecteur peut aussi lire les structure secondaires `  
+`// tel que decrites dans l'en-tet du fichier PDB pour les ajouter`  
+`// aux acides amines`  
+`pdbread.setParseSecStruc(true);     `  
+  
 `try{`  
 `    Structure struc = pdbreader.getStructure(filename);`  
+`    `  
 `    System.out.println(struc);`  
+  
+`    GroupIterator gi = new GroupIterator(struc);`  
+  
+`    while (gi.hasNext()){`  
+  
+`          Group g = (Group) gi.next();`  
+`         `  
+`          if ( g instanceof AminoAcid ){`  
+`              AminoAcid aa = (AminoAcid)g;`  
+`              Map sec = aa.getSecStruc();`  
+`              Chain  c = g.getParent();`  
+`              System.out.println(c.getName() + " " + g + " " + sec);`  
+`          }                `  
+`    }`  
+  
 `} catch (Exception e) {`  
 `    e.printStackTrace();`  
 `}`
