@@ -212,11 +212,13 @@ iterate the calculation to dicide a tree
 Day 3: Revising AddTree & getTreeAsJGraphT method (to allow both weighted/unweighted tree)
 
 
-Day 4: Debugging for the non-symmetric tree structure (1)
+Day 4: Debugging for non-symmetric tree structure (1)
 
-Day 5: Debugging for the non-symmetric tree structure (2)
+Day 5: Debugging for non-symmetric tree structure (2)
 
 
+
+<Algorithm>
 1. aligning sequences
 
 2. decide informative sites (2 or more differences)
