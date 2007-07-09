@@ -2,7 +2,8 @@
 title: BioJava:CookbookFrench:PDB:AtomCalc
 ---
 
-### Comment faire des calculs sur des Atomes présent dans un fichier PDB?
+Comment faire des calculs sur des Atomes présent dans un fichier PDB?
+---------------------------------------------------------------------
 
 La classe Calc vous procure une série de méthodes permettant de faire
 divers calculs sur des Atomes.
