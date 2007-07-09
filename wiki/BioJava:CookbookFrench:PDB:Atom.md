@@ -2,7 +2,8 @@
 title: BioJava:CookbookFrench:PDB:Atom
 ---
 
-### Comment obtenir les informations sur les atomes présent dans un fichier PDB?
+Comment obtenir les informations sur les atomes présent dans un fichier PDB?
+----------------------------------------------------------------------------
 
 BioJava possède un structure très flexible pour gérer des données
 sructurales de protéines. La classe Structure vous procure le conteneur
