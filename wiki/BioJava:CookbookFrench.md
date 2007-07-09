@@ -238,16 +238,18 @@ Comment faire pour ...?
 
 -   [Comment faire pour lire un fichier en format
     PDB?](BioJava:CookbookFrench:PDB:Read "wikilink")
--   Comment obtenir les informations sur les atomes présent dans un
-    fichier PDB?
--   Comment faire des calculs sur des Atomes présent dans un fichier
-    PDB?
--   Comment accéder aux informations contenues dans l'en-tete d'un
-    fichier PDB?
+-   [Comment obtenir les informations sur les atomes présent dans un
+    fichier PDB?](BioJava:CookbookFrench:PDB:Atom "wikilink")
+-   [Comment faire des calculs sur des Atomes présent dans un fichier
+    PDB?](BioJava:CookbookFrench:PDB:AtomCalc "wikilink")
+-   [Comment accéder aux informations contenues dans l'en-tete d'un
+    fichier PDB?](BioJava:CookbookFrench:PDB:Header "wikilink")
 -   [Comment puis-je modifié un
     résidu?](BioJava:CookbookFrench:PDB:Mutate "wikilink")
--   Comment faire pour calculer la superposition de deux Structures?
--   Comment faire interagir une Structure avec Jmol?
+-   [Comment faire pour calculer la superposition de deux
+    Structures?](BioJava:CookbookFrench:PDB:Align "wikilink")
+-   [Comment faire interagir une Structure avec
+    Jmol?](BioJava:CookbookFrench:PDB:Jmol "wikilink")
 
 ### Alignements de séquences et prédiction de structures secondaires de protéines avec STRAP (par Christophe Gille)
 
