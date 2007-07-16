@@ -200,21 +200,22 @@ initialize variables for those trees.
 
 ***Week 8 Maximum Parsimony Method***
 
-Day 1: Code for Maximum Parsimony Method (2)
+Day 1: Code for Maximum Parsimony Method (2) - done
 
 Building Data Structure : decide all possible tree structures &
 initialize variables for those trees.
 
-Day 2: Code for Maximum Parsimony Method (3)
+Day 2: Code for Maximum Parsimony Method (3) - still working on as 16th
+Jul.
 
 iterate the calculation to dicide a tree
 
 Day 3: Revising AddTree & getTreeAsJGraphT method (to allow both
-weighted/unweighted tree)
+weighted/unweighted tree) - done
 
-Day 4: Debugging for non-symmetric tree structure (1)
+Day 4: Debugging for non-symmetric tree structure (1) - to be worked out
 
-Day 5: Debugging for non-symmetric tree structure (2)
+Day 5: Debugging for non-symmetric tree structure (2) - to be worked out
 
 <Algorithm> 1. aligning sequences
 
@@ -230,9 +231,29 @@ Day 5: Debugging for non-symmetric tree structure (2)
 
 ------------------------------------------------------------------------
 
+*Week 9 Maximum Parsimony Method*
+
+Day 1: Debugging for AddTreeMethod (for the non-symmetric tree
+structure)
+
+Day 2: Debugging for AddTreeMethod (for the non-symmetric tree
+structure)
+
+Day 3: Maximum Parsimony Method - solve the problem w/ \# of trees
+
+Day 4: Maximum Parsimony Method - getting help for Jgrapht type array
+
+Day 5: Maximum Parsimony Method - finalize
+
+------------------------------------------------------------------------
+
 **Part IV : Maximum Likelihood**
 
-*Week 9 & 10 Maxumum Likelihood Method*
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+*Week 10 Maxumum Likelihood Method*
 
 1. aligning sequences
 
