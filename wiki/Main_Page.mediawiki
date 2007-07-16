@@ -21,7 +21,7 @@ BioJava probably contains the odd bug, who would have thought!! We make use of t
 
 === Cookbook ===
 
-The biojava project maintains a cookbook of examples that help you perform common tasks and get you started using biojava. The cookbook is affectionately known as [[BioJava:Cookbook|Biojava in Anger]]. A [[BioJava:CookbookFrench|French version]] is also available.
+The biojava project maintains a [[BioJava:Cookbook|cookbook of examples]] that help you perform common tasks and get you started using biojava. The cookbook is affectionately known as [[BioJava:Cookbook|Biojava in Anger]]. A [[BioJava:CookbookFrench|French version]] is also available.
 
 === API Documentation (JavaDocs) ===
 
