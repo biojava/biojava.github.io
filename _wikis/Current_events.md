@@ -2,6 +2,13 @@
 title: Current events
 ---
 
+BOSC 2007 Presentation
+----------------------
+
+For those of you who can't be in Vienna for Richard's biojava
+presentation for BOSC 2007. You can view the pdf
+[here](http://www.biojava.org/download/files/bosc2007.pdf).
+
 NESCent Phyloinformatics and the Google Summer of Code
 ------------------------------------------------------
 
