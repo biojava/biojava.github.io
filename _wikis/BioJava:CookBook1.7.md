@@ -169,6 +169,8 @@ How Do I....?
     results](BioJava:CookBook:Blast:Extract "wikilink")?
 -   [How do I parse a large file; Or, How do I make a custom
     SearchContentHandler](BioJava:CookBook:Blast:Echo "wikilink")?
+-   [How do I convert an XML BLAST result into HTML
+    page](BioJava:CookBook:Blast:XML "wikilink")?
 
 ### Counts and Distributions
 
