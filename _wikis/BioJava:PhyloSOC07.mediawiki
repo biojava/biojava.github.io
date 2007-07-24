@@ -256,6 +256,7 @@ Day 5: Maximum Parsimony Method -
 Day 1: Debugging AddTree Method & commit the source code
 
 Day 2: PHYLIP installation & learning how to use it
+(http://evolution.genetics.washington.edu/phylip.html)
 
 Day 3: Practicing PHYLIP with MP/ML/Bootstrap methods
 
