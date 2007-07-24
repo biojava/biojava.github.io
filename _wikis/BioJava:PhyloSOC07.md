@@ -228,7 +228,7 @@ Debugging for non-symmetric tree structure (2) - done
 
 ------------------------------------------------------------------------
 
-*Week 9 Maximum Parsimony Method*
+***Week 9 Maximum Parsimony Method***
 
 Day 1: Debugging for AddTreeMethod (for the non-symmetric tree
 structure) -done
@@ -246,7 +246,7 @@ Day 5: Maximum Parsimony Method -
 
 ------------------------------------------------------------------------
 
-*Week 10 Maximum Parsimony Method*
+***Week 10 Maximum Parsimony Method***
 
 ------------------------------------------------------------------------
 
