@@ -191,7 +191,7 @@ Day 4: Code for Maximum Parsimony Method (1) -done
 Input: Read Nexus File & Extract MATRIX data (Align sequences & decide
 informative sites)
 
-Day 5: Code for Maximum Parsimony Method (2) -to be worked out
+Day 5: Code for Maximum Parsimony Method (2) -changing plans
 
 Building Data Structure : decide all possible tree structures &
 initialize variables for those trees.
@@ -205,17 +205,14 @@ Day 1: Code for Maximum Parsimony Method (2) - done
 Building Data Structure : decide all possible tree structures &
 initialize variables for those trees.
 
-Day 2: Code for Maximum Parsimony Method (3) - still working on as 16th
-Jul.
-
-iterate the calculation to dicide a tree
+Day 2: Code for Maximum Parsimony Method (3) - changing plans iterate
+the calculation to dicide a tree
 
 Day 3: Revising AddTree & getTreeAsJGraphT method (to allow both
 weighted/unweighted tree) - done
 
-Day 4: Debugging for non-symmetric tree structure (1) - to be worked out
-
-Day 5: Debugging for non-symmetric tree structure (2) - to be worked out
+Day 4: Debugging for non-symmetric tree structure (1) - done Day 5:
+Debugging for non-symmetric tree structure (2) - done
 
 <Algorithm> 1. aligning sequences
 
@@ -234,26 +231,41 @@ Day 5: Debugging for non-symmetric tree structure (2) - to be worked out
 *Week 9 Maximum Parsimony Method*
 
 Day 1: Debugging for AddTreeMethod (for the non-symmetric tree
-structure)
+structure) -done
 
 Day 2: Debugging for AddTreeMethod (for the non-symmetric tree
-structure)
+structure) -done
 
 Day 3: Maximum Parsimony Method - solve the problem w/ \# of trees
 
 Day 4: Maximum Parsimony Method - getting help for Jgrapht type array
 
-Day 5: Maximum Parsimony Method - finalize
+Day 5: Maximum Parsimony Method -
+
+-   Plan for Maximum Parsimony Method has been changed!
 
 ------------------------------------------------------------------------
+
+*Week 10 Maximum Parsimony Method*
+
+------------------------------------------------------------------------
+
+Day 1: Debugging AddTree Method & commit the source code
+
+Day 2: PHYLIP installation & learning how to use it
+
+Day 3: Practicing PHYLIP with MP/ML/Bootstrap methods
+
+Day 4: Developing the wrapper for PHYLIP MP method (1) - parser
+
+Day 5: Developing the wrapper for PHYLIP MP method (2) - builing objects
+from the output
 
 **Part IV : Maximum Likelihood**
 
 ------------------------------------------------------------------------
 
-------------------------------------------------------------------------
-
-*Week 10 Maxumum Likelihood Method*
+*Week 11 Maxumum Likelihood Method*
 
 1. aligning sequences
 
