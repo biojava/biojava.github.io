@@ -368,6 +368,9 @@ Here is an example of such transformation stylesheet:
             <xsl:value-of select="$char"/>
           </font>
         </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$char"/>
+        </xsl:otherwise>
 
       </xsl:choose>
     </xsl:template>
