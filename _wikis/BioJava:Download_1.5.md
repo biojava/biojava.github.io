@@ -48,7 +48,7 @@ Documentation
 -------------
 
 Documentation is available as a
-[gzip](http://www.biojava.org/download/bj15/doc/BioJava1.5-doc.tar.gz)
+[gzip](http://www.biojava.org/download/bj15/doc/BioJava1.5-docs.tar.gz)
 file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
 CVS access
