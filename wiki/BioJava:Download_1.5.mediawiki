@@ -23,7 +23,7 @@ The full source distribution is available as a [http://www.biojava.org/download/
 
 == Documentation ==
 
-Documentation is available as a [http://www.biojava.org/download/bj15/doc/BioJava1.5-doc.tar.gz gzip] file (4.5Mb) that includes the javadocs for the API, demos and apps.
+Documentation is available as a [http://www.biojava.org/download/bj15/doc/BioJava1.5-docs.tar.gz gzip] file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
 == CVS access ==
 
