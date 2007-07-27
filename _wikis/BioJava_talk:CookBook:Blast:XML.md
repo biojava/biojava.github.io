@@ -16,3 +16,16 @@ resources?
 Just my own .02 cents and I am open to discuss this ;-)
 
 --[Foisys](User:Foisys "wikilink") 15:11, 23 July 2007 (EDT)
+
+The problem is that thre is no flexible xml -\> html generation in biojava...
+-----------------------------------------------------------------------------
+
+Hello! If someone is interested I could post how to make it using
+BioJava classes. The main problem is that the parser biojava uses is not
+made for html generation. There is a parser that one can use to parse a
+plain biojava result file and generate SAX event, so you can pass it to
+html generator. It works sloooow (IMHO) and not as flexible as to apply
+xsl. I'm looking for a way to do the same for FASTA format... any idea?
+Cheers,
+
+Dmitry
