@@ -29,3 +29,14 @@ xsl. I'm looking for a way to do the same for FASTA format... any idea?
 Cheers,
 
 Dmitry
+
+Hi again,
+
+I conceed the point so why not write a wrapper utility class to include
+in BioJava that would do just such a thing. With a lot of focus these
+days on using the Web as the frontend of apps, it would surely be a good
+thing to add ;-)
+
+Best regards
+
+--[Foisys](User:Foisys "wikilink") 15:45, 30 July 2007 (EDT)
