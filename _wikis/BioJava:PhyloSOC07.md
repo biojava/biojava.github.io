@@ -250,23 +250,36 @@ Day 5: Maximum Parsimony Method -
 
 ------------------------------------------------------------------------
 
-Day 1: Debugging AddTree Method & commit the source code
+Day 1: Debugging AddTree Method & commit the source code -done
 
-Day 2: PHYLIP installation & learning how to use it
+Day 2: PHYLIP installation & learning how to use it - done
 (http://evolution.genetics.washington.edu/phylip.html)
 
-Day 3: Practicing PHYLIP with MP/ML/Bootstrap methods
+Day 3: Practicing PHYLIP with MP/ML/Bootstrap methods - done
 
-Day 4: Developing the wrapper for PHYLIP MP method (1) - parser
+Day 4: Developing the wrapper for PHYLIP MP method (1) - parser (still
+working as 30th. Jul.)
 
 Day 5: Developing the wrapper for PHYLIP MP method (2) - builing objects
-from the output
+from the output (to be worked out)
 
 **Part IV : Maximum Likelihood**
 
 ------------------------------------------------------------------------
 
 *Week 11 Maxumum Likelihood Method*
+
+Day 1: Developing the wrapper for PHYLIP MP method (1) - parser
+
+Day 2: Developing the wrapper for PHYLIP MP method (2) - builing objects
+from the output
+
+Day 3: Developing the wrapper for PHYLIP ML method (1) - parser
+
+Day 4: Developing the wrapper for PHYLIP ML method (2) - builing objects
+from the output
+
+Day 5: Debugging
 
 1. aligning sequences
 
@@ -281,7 +294,7 @@ from the output
 
 **Part V : Phylogeny supporting method**
 
-*Week 11 Bootstrap method*
+*Week 12 Bootstrap method*
 
 1. replicate alignments
 
@@ -295,4 +308,4 @@ on the method
 3. count the number of replicates that each internal branch of the
 original tree is found
 
-*Week 12 Documenting: part IV & V*
+*Week 13 Documenting: part IV & V*
