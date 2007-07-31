@@ -27,3 +27,23 @@ I conceed the point so why not write a wrapper utility class to include in BioJa
 Best regards
 
 --[[User:Foisys|Foisys]] 15:45, 30 July 2007 (EDT)
+
+Well, if I understand you right you would like to have something like:
+
+blast/fasta result file --> 
+BioJava SAX events (as it is now) --> 
+XML (constructed from these events) -->
+HTML (through XSL from previous generated XML)
+
+The problem is that plain blast/fasta parsers are not bug free and always has issues with different versions.
+I spent few hours playing with FASTA parser trying to convert it into XML and found several ... bugs?
+I mean that I'm using newer version so the parser doesn't recognize several parameters and generates an exception.
+More. The only thing the biojava parser does is to separate alignments an wrap them into xml tags...
+
+I've been told not to spend too much time to this task, but when I have a time I'd like to do my best...
+
+You can see what I'm doing (well it's no a production yet, so definitely has many bugs and we haven't all the databases yet installed) at http://inb.bsc.es/gn6/
+
+Best regards,
+
+Dmitry
