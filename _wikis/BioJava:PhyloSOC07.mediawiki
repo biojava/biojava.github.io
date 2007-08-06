@@ -260,7 +260,7 @@ Day 2: PHYLIP installation & learning how to use it  - done
 
 Day 3: Practicing PHYLIP with MP/ML/Bootstrap methods - done
 
-Day 4: Developing the wrapper for PHYLIP MP method (1) - parser (still working as 30th. Jul.)
+Day 4: Developing the wrapper for PHYLIP MP method (1) - parser (done)
 
 Day 5: Developing the wrapper for PHYLIP MP method (2) - builing objects from the output (to be worked out)
 
@@ -281,20 +281,26 @@ Day 4: Developing the wrapper for PHYLIP ML method (2) - builing objects from th
 Day 5: Debugging
 
 
-1. aligning sequences
-
-2. define possible tree types
-
-3. for each tree, calculate 
-   L = multiply Pr(D|T) for every sites
-   Pr(D|T) = (prob. for the tree from certain ancestral base)
-
-4. find a tree with maximum likelihood
-
-
 '''Part V : Phylogeny supporting method'''
 
 ''Week 12 Bootstrap method''
+
+----
+
+''Week 11  Maxumum Likelihood Method''
+
+Day 1: Developing the wrapper for PHYLIP MP method (2) - execute() method <debugging>
+
+Day 2: Developing the wrapper for PHYLIP MP method (2) - execute() method <debugging>
+
+Day 3: Developing the wrapper for PHYLIP MP method (3) - builing objects from the output
+
+Day 4: Developing the wrapper for PHYLIP ML method (1) - parser
+
+Day 5: Developing the wrapper for PHYLIP ML method (2) - builing objects from the output
+
+Day 6: Debugging
+
 
 1. replicate alignments
 
