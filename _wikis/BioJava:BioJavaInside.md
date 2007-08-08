@@ -49,8 +49,8 @@ other publications please add them.
 
 <biblio>
 
-1.  schmidt2006 pmid=16817977
-2.  jacobs2000 pmid=10592251
+1.  jacobs2000 pmid=10592251
+2.  xie2000 pmid=12761070
 3.  schrieber2002 pmid=12016048
 4.  bussow2002 pmid=12493080
 5.  brown2003 pmid=15130816
@@ -59,11 +59,13 @@ other publications please add them.
 8.  dong2004 pmid=15215471
 9.  hajarnavis2004 pmid=15247332
 10. finack2005 pmid=15572471
-11. gille2006 pmid=16469097
-12. hasan2006 pmid=16789813
-13. hasan2006 pmid=16990246
-14. liang2006 pmid=17054788
-15. ross2006 pmid=16845480
+11. bindewald2006 pmid=16845037
+12. gille2006 pmid=16469097
+13. hasan2006 pmid=16789813
+14. hasan2006 pmid=16990246
+15. liang2006 pmid=17054788
+16. ross2006 pmid=16845480
+17. schmidt2006 pmid=16817977
 
 </biblio>
 
