@@ -38,7 +38,7 @@ projects please add them to the list.
 
 <!-- -->
 
--   <http://www.cytoscape.org> Cytoscape]: An open source bioinformatics
+-   [Cytoscape](http://www.cytoscape.org): An open source bioinformatics
     software platform for visualizing molecular interaction networks.
 
 Publications
