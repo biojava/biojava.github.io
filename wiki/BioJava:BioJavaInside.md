@@ -41,6 +41,11 @@ projects please add them to the list.
 -   [Cytoscape](http://www.cytoscape.org): An open source bioinformatics
     software platform for visualizing molecular interaction networks.
 
+<!-- -->
+
+-   [BioWeka](http://www.bioweka.org): An open source biological data
+    mining application.
+
 Publications
 ------------
 
