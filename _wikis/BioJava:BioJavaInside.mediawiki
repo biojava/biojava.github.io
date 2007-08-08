@@ -21,12 +21,16 @@ BioJava has been used in the following publications. If you know of other public
 #xie2000 pmid=12761070
 #schrieber2002 pmid=12016048
 #bussow2002 pmid=12493080
-#brown2003 pmid=15130816
 #aerts2003 pmid=12626717
+#brown2003 pmid=15130816
+#carbone2003 pmid=14594704 
+#sugawara2003 pmid=12824432 
 #aerts2004 pmid=15044242
 #dong2004 pmid=15215471
 #hajarnavis2004 pmid=15247332
+#down2005 pmid=15760844 
 #finack2005 pmid=15572471
+#prlic2005 pmid=16204122 
 #bindewald2006 pmid=16845037
 #gille2006 pmid=16469097
 #hasan2006 pmid=16789813
@@ -34,6 +38,8 @@ BioJava has been used in the following publications. If you know of other public
 #liang2006 pmid=17054788
 #ross2006 pmid=16845480
 #schmidt2006 pmid=16817977
+#down2007 pmid=17238282
+#gewehr2007 pmid=17237069 
 </biblio>
 
 More biojava publications can be found in [http://scholar.google.com/scholar?q=biojava Google Scholar].
