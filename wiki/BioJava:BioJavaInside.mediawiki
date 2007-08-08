@@ -19,6 +19,7 @@ The following projects make use of BioJava. If you know of other projects please
 BioJava has been used in the following publications. If you know of other publications please add them.
 
 <biblio>
+#hidalgo1998 pmid=9564045
 #jacobs2000 pmid=10592251
 #xie2000 pmid=12761070
 #schrieber2002 pmid=12016048
@@ -35,20 +36,41 @@ BioJava has been used in the following publications. If you know of other public
 #dong2004 pmid=15215471
 #down2004 pmid=15369604
 #hajarnavis2004 pmid=15247332
+#hertz-folwer2004 pmid=14681429
+#an2005 pmid=15610565 
 #carbone2005 pmid=15537809
 #down2005 pmid=15760844 
 #finack2005 pmid=15572471
-#prlic2005 pmid=16204122 
+#gorban2005 pmid=15984937
+#gouret2005 pmid=16083500 
+#kersey2005 pmid=15608201
+#pain2005 pmid=15640145
+#prlic2005 pmid=16204122
+#pudimat2005 pmid=15905283
+#spindel2005 pmid=16288651
 #bindewald2006 pmid=16845037
+#down2006 pmid=17002805
+#carter2006 pmid=16925840
 #gille2006 pmid=16469097
 #hasan2006 pmid=16789813
 #hasan2006 pmid=16990246
 #lee2006 pmid=16402215 
 #liang2006 pmid=17054788
+#lu2006 pmid=16260186
+#mcdonald2006 pmid=17000643
+#powel2006 pmid=16423288
 #ross2006 pmid=16845480
 #schmidt2006 pmid=16817977
+#vernicos2006 pmid=16837528
+#vizcaino2006 pmid=16872539
+#andreeva2007 pmid=17068077
+#bui2007 pmid=17288609
 #down2007 pmid=17238282
-#gewehr2007 pmid=17237069 
+#gewehr2007 pmid=17237069
+#hanekamp2007 pmid=17332025
+#makias2007 pmid=17400476
+#nikolajewa2007 pmid=17537825
+#spjuth2007 pmid=17316423 
 </biblio>
 
 More biojava publications can be found in [http://scholar.google.com/scholar?q=biojava Google Scholar].
