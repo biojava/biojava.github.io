@@ -11,6 +11,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://webclu.bio.wzw.tum.de/prompt PROMPT]: A free, open source framework and application for the comparison and mapping of protein sets. Uses BioJava for handling most input data formats.
 
+* http://www.cytoscape.org Cytoscape]: An open source bioinformatics software platform for visualizing molecular interaction networks.
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
