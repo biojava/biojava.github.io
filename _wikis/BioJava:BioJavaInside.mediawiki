@@ -13,6 +13,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.cytoscape.org Cytoscape]: An open source bioinformatics software platform for visualizing molecular interaction networks.
 
+* [http://www.bioweka.org BioWeka]: An open source biological data mining application.
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
