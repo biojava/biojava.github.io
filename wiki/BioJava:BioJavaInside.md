@@ -36,6 +36,11 @@ projects please add them to the list.
     framework and application for the comparison and mapping of protein
     sets. Uses BioJava for handling most input data formats.
 
+<!-- -->
+
+-   <http://www.cytoscape.org> Cytoscape]: An open source bioinformatics
+    software platform for visualizing molecular interaction networks.
+
 Publications
 ------------
 
