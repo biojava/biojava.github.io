@@ -4,6 +4,9 @@ title: BioJava:CookBook:PDB:header
 
 ### How can I access the header information of a PDB file?
 
+new: BioJava in CVS now can parse the COMPND and SOURCE header files.
+more info to follow soon.
+
 <java>
 
 `   public static void main (String[] args){`  
