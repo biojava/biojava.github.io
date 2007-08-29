@@ -68,3 +68,5 @@ gives this output:
     chain: >I< length SEQRES: 0 length ATOM: 146 aminos: 0 hetatms: 0 nucleotides: 146
     chain: >J< length SEQRES: 0 length ATOM: 146 aminos: 0 hetatms: 0 nucleotides: 146
     chain: > < length SEQRES: 0 length ATOM: 19 aminos: 0 hetatms: 19 nucleotides: 0
+
+Next: <BioJava:CookBook:PDB:align> - How to align two protein structures
