@@ -19,7 +19,11 @@ more examples of how to access the Atoms please go to
 
 `// optional: the parser can read the secondary structure`  
 `// assignment from the PDB file header and add it to the amino acids`  
-`pdbread.setParseSecStruc(true);     `
+`pdbread.setParseSecStruc(true);`
+
+`// align the SEQRES and ATOM records, default = true  `  
+`pdbreader.setAlignSeqRes(true);`  
+` `
 
 `try{`  
 `    Structure struc = pdbreader.getStructure(filename);`  
