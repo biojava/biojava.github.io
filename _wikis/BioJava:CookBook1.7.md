@@ -251,6 +251,8 @@ How Do I....?
     atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
 -   [How can I access the header information of a PDB
     file?](BioJava:CookBook:PDB:header "wikilink")
+-   [How does BioJava deal with SEQRES and ATOM
+    groups?](BioJava:CookBook:PDB:seqres "wikilink")
 -   [How can I mutate a
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How to calculate a structure
