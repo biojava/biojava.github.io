@@ -14,6 +14,12 @@ optional and can be enabled or disabled by using the
 PDBFileReader.setAlignSeqRes() method. By default this alignment will be
 calculated.
 
+Access to the ATOM groups is possible via Chain.getAtomGroups(); Access
+to the SEQRES groups is possible via Chain.getSeqResGroups(); Groups
+derived from SEQRES groups will be empty (i.e. they will not contain
+Atoms), unless they could be mapped to the ATOM records, in which case
+the full ATOM information can be accessed.
+
 Example: <java>
 
 public static void main(String[] args){
@@ -29,7 +35,7 @@ public static void main(String[] args){
 `       try{`  
 `           Structure struc = pdbreader.getStructureById(code);`  
 `           `  
-`           System.out.println("The SEQRES and ATOM information is available via chains:");`
+`           System.out.println("The SEQRES and ATOM information is available via the chains:");`
 
 `           int modelnr = 0 ; // also is 0 if structure is an XRAY structure.`
 
