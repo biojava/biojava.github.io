@@ -57,4 +57,5 @@ gives the following output:
     Compound: 4 HISTONE H2B Chains: ChainId: D H Engineered: YES Mutation: YES OrganismScientific: XENOPUS LAEVIS OrganismCommon: AFRICAN CLAWED FROG ExpressionSystem: ESCHERICHIA COLI Fragment: HISTONE H2B 
     Compound: 5 PALINDROMIC 146 BP DNA REPEAT 8/9 FROM HUMAN X- CHROMOSOME ALPHA SATELLITE DNA Chains: ChainId: I J Engineered: YES Synthetic: YES 
 
-Next: <BioJava:CookBook:PDB:align> - How to align two protein structures
+Next: <BioJava:CookBook:PDB:seqres> - How to deal with SEQRES and ATOM
+records
