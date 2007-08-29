@@ -8,7 +8,8 @@ BioJava provides a flexible data model for managing protein structural
 data. The example below shows how to read a PDB file from your file
 system and iterate over the Groups that are contained in the file. For
 more examples of how to access the Atoms please go to
-<BioJava:CookBook:PDB:atoms>
+<BioJava:CookBook:PDB:atoms>. For more info on how the parser deals with
+SEQRES and ATOM records please see <BioJava:CookBook:PDB:seqres>
 
 <java>
 
@@ -21,7 +22,7 @@ more examples of how to access the Atoms please go to
 `// assignment from the PDB file header and add it to the amino acids`  
 `pdbread.setParseSecStruc(true);`
 
-`// align the SEQRES and ATOM records, default = true  `  
+`// align the SEQRES and ATOM records, default = true   `  
 `pdbreader.setAlignSeqRes(true);`  
 ` `
 
