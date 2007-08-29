@@ -318,5 +318,9 @@ original tree is found
 
 *Week 13 Documenting: part IV & V*
 
-[documentation for the methods
-[1](http://biojava.org/wiki/BioJava:PhyloSOC07_doc)]
+'''
+
+[documentation for the methods [1](http://biojava.org/wiki/BioJava:PhyloSOC07_doc)]
+-----------------------------------------------------------------------------------
+
+'''
