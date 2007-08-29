@@ -13,7 +13,7 @@ be accessed from structure.getCompounds().
 `       String code =  "1aoi";`
 
 `       PDBFileReader pdbreader = new PDBFileReader();`  
-`       pdbreader.setPath("/Users/andreas/WORK/PDB/");`  
+`       pdbreader.setPath("/Path/To/PDBFiles/");`  
 `       pdbreader.setParseSecStruc(true);`  
 `       pdbreader.setAlignSeqRes(true);`  
 `       pdbreader.setAutoFetch(true);`
