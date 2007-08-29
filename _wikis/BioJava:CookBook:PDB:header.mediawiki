@@ -57,5 +57,4 @@ Compound: 5 PALINDROMIC 146 BP DNA REPEAT 8/9 FROM HUMAN X- CHROMOSOME ALPHA SAT
 
 
 
-
-Next: [[BioJava:CookBook:PDB:align]] - How to align two protein structures
+Next: [[BioJava:CookBook:PDB:seqres]] - How to deal with SEQRES and ATOM records
