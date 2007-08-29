@@ -60,6 +60,27 @@ the CVS repository can be browsed at:
 An RSS of biojava-live is
 [available](http://www.biojava.org/CVS2RSS/biojava-live.rss)
 
+To obtain an anonymous CVS checkout do the following:
+
+`  cvs -d :pserver:cvs@code.open-bio.org:/home/repository/biojava login`
+
+-   When prompted, the password is 'cvs'
+-   Each project CVS repository can have many different packages
+    available for download. You may need to browse the web interface for
+    a bit to determine the packages of interest. After a successful
+    login you may "checkout" the project package you are interested in.
+
+The following command should be executed as one line.
+
+`  cvs -d :pserver:cvs@code.open-bio.org:/home/repository/biojava checkout biojava-live`
+
+-   The login and checkout procedure should only have to be done once.
+    To update the source directories in the future it should be possible
+    just to enter the top level directory and issue the following
+    command:
+
+`  cvs update -dP`
+
 Getting older versions
 ----------------------
 
