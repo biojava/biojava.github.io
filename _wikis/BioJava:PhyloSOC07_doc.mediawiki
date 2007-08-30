@@ -342,9 +342,69 @@ As an extension of JC model, evolutionary distance in kimura's model is calculat
 
 
 ----
+'''UPGMA'''
+
+''The UPGMA is the simplest method of tree construction. It was originally developed for constructing taxonomic phenograms, i.e. trees that reflect the phenotypic similarities between OTUs, but it can also be used to construct phylogenetic trees if the rates of evolution are approximately constant among the different lineages. For this purpose the number of observed nucleotide or amino-acid substitutions can be used. UPGMA employs a sequential clustering algorithm, in which local topological relationships are identifeid in order of similarity, and the phylogenetic tree is build in a stepwise manner. We first identify from among all the OTUs the two OTUs that are most similar to each other and then treat these as a new single OTU. Such a OTU is referred to as a composite OTU. Subsequently from among the new group of OTUs we identify the pair with the highest similarity, and so on, until we are left with only two OTUs. (http://www.icp.ucl.ac.be/~opperd/private/upgma.html)'' 
+
+These are the steps in the actual code.
+
+     1. finding shortest distance within distance matrix
+     2. calculate branch lengths as distance/2
+     3. build a sub-tree for that pair
+     4. collapse a pair (changes distance into 0)
+     5. repeat process expanding/combining trees 
 
 
+     <sample code>
+     import java.io.*;
+     import java.lang.*;
+     import java.util.*;
+          
+     import org.biojavax.bio.phylo.io.nexus.*;
+     import org.jgrapht.*;
+     import org.jgrapht.graph.*;
+          
+     public class SampleUPGMA{
+          	
+          public static void main(String [] args) throws Exception {
+                    
+          if(args.length != 1) {
+               System.out.println("Usage: java SamleUPGMA [nexus file name]");
+               return;
+          }
+                    
+          String current_block_name;
+               
+          File inputFile = new File(args[0]);
+          NexusFileBuilder builder = new NexusFileBuilder();
+          NexusFileFormat.parseFile(builder, inputFile);
+          NexusFile parsedFile = builder.getNexusFile();
+          WeightedGraph<String, DefaultWeightedEdge> a =  new SimpleWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+               	
+                    
+          TaxaBlock t = new TaxaBlock();
+          CharactersBlock ch = new CharactersBlock();
+                    
+          //You can then iterate the blocks in the NEXUS file like this:
+               	
+          for (Iterator i = parsedFile.blockIterator(); i.hasNext();) {
+                         		
+               NexusBlock block = (NexusBlock)i.next();
+               current_block_name = block.getBlockName();
+               			
+               if(current_block_name.equals("TAXA")){
+                    t = (TaxaBlock)block;
+               }else if(current_block_name.equals("CHARACTERS")){
+                    ch = (CharactersBlock)block;
+               }
+          }
+                    
+          System.out.println("By UPGMA Method: \n");
+          a = DistanceBasedTreeMethod.Upgma(t, ch);
+          } // end of main
+     }
 
+ 
 ----
 '''ParsimonyTreeMethod.java(biojavax\bio\phylo\ParsimonyTreeMethod.java)'''
 
