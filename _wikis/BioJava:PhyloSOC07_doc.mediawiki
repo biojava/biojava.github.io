@@ -219,7 +219,7 @@ getTreeAsJGraphT is a method which converts a tree from  NewickString type to th
 '''getTreeAsJGraphT (Weighted Tree)'''
 
 
-This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is used''' here as in the addTree method for weighted tree.
+This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is used here as in the addTree method for weighted tree.
 
      <Sample Code>
                     
@@ -275,7 +275,7 @@ According to the model of Jukes and Cantor [9] each base in the DNA sequence has
 
 As you can see in the sample code, you need to use two string variables as parameters.(You can easily extract this sequence string from the nexus CharactersBlock.java) Then, the method returns their corrected distance as a (double) number. 
 
-     //package NexParser;
+     <sample code>
                                                         
      import java.io.*;
      import java.lang.*;
@@ -297,6 +297,44 @@ As you can see in the sample code, you need to use two string variables as param
           } // end of main
      }
 
+
+----
+'''Kimura's 2-parameter'''
+
+''Note that this(Jukes-Cantor model) still does not correct for differences in the rates of transition and transversion. To do this you can use what is called the Kimura 2-parameter correction. This was a method established by Kimura (1980; J.Mol.Evol. 16:111-120) where the rates of transitions are assumed to be alpha and the rates of transversions are beta.''
+
+As an extension of JC model, evolutionary distance in kimura's model is calculated by the following equation.
+
+
+    K = (1/2)*ln(1/(1-2p-q)) + (1/4)*ln(1/(1-2q)),
+    
+    p: proportion of diff. transition
+    q: proportion of diff. transversion
+
+
+
+     <sample code>
+                                             
+     import java.io.*;
+     import java.lang.*;
+     import java.util.*;
+          
+     import org.biojavax.bio.phylo.io.nexus.*;
+          
+     public class SampleKimuraTwoParameter{
+	
+          public static void main(String [] args) throws Exception {	
+               	
+          String t1 = "ACATA GAGGG TACCT CTAAG";
+          String t2 = "ACTTA GAGGC TACCT CTACG";
+          double Kd;
+               
+          Kd = MultipleHitCorrection.KimuraTwoParameter(t1, t2);
+          System.out.println("Result: "+ Kd);
+          
+          } // end of main
+          
+     }
 
 
 ----
