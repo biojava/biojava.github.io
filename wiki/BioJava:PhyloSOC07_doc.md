@@ -11,21 +11,17 @@ title: BioJava:PhyloSOC07 doc
 
 **getTree**
 
-`    public Object getTree(final String label)`  
-`          `  
-`    Returns a tree for given label`  
-`                               `  
-`        `**`Parameter:`**` `  
-`                                           `  
-`              label - the label to select.`  
-`                                                   `  
-`        `**`Returns:`**` `  
-`                                         `  
-`              A selected tree by the label.`
+getTree method takes in a label from the user and returns a tree that
+matches the label. For example, if you want to get a tree labeled as
+"mammalian" from the TreesBlock t, you can use this method as follows.
+
+`    Object mytree = t.getTree("mammalian");`
+
+From the parsed TreesBlock t, getTree() look up for a specific
+"mammalian" tree and returns it as an Object variable.
 
 `    `<Sample Code>  
-`    //package NexParser;`  
-`     `  
+`                   `  
 `    import java.io.*;`  
 `    import java.lang.*;`  
 `    import java.util.*;`  
@@ -48,6 +44,8 @@ title: BioJava:PhyloSOC07 doc
 `            // add a tree w/ label "sample" and NewickTreeString (1,(2,3))`  
 `                                                               `  
 `            sample = sample_tree.getTree("sample");`  
+`            System.out.println(sample.toString());`  
+`                                      `  
 `       } // end of main `  
 `    }                          `
 
@@ -55,14 +53,12 @@ title: BioJava:PhyloSOC07 doc
 
 **addTree (Unweighted Tree)**
 
-`    public void addTree(final String label, UndirectedGraph`<String, DefaultEdge>` treegraph)`  
-`                              `  
-`         Add a tree, converting unweighted graph (JGraphT) to NewickString`  
-`                                                         `  
-`              `**`Parameter:`**  
-`                                                 `  
-`                   label     -  the label to add`  
-`                   treegraph -  the treegraph (in JGraphT format) to convert.`
+addTree is a method to register a new tree to the TreesBlock
+(specifically, to the Map of trees). Especially, addTree method for an
+unweighted tree takes in a tree label as well as a tree graph, that is
+represented as undirectedGraph (unweighted, as well) in JGraphT. From
+this sample code, you can see how to generate a unweighted(undirected)
+graph in terms of JGraphT and how to call a addTree method.
 
 `    `<Sample Code>  
 `    //package NexParser;`  
@@ -100,9 +96,7 @@ title: BioJava:PhyloSOC07 doc
 `              jg.addEdge(v2,v3);`  
 `              jg.addEdge(v2,v5);`  
 `              jg.addEdge(v5,v4);`  
-`                                       `  
-`              System.out.println(jg.toString());`  
-`                                       `  
+`                                                                              `  
 `              sample_tree.addTree(label, jg);`  
 `                                       `  
 `          } // end of main`  
@@ -114,14 +108,10 @@ title: BioJava:PhyloSOC07 doc
 
 **addTree (Weighted Tree)**
 
-`    public void addTree(final String label, WeightedGraph`<String, DefaultWeightedEdge>` treegraph)`  
-`         `  
-`         Add a tree, converting weighted graph (JGraphT) to NewickString`  
-`                                               `  
-`              `**`Parameter:`**  
-`                                                          `  
-`                   label      -  the label to add`  
-`                   treegraph -  the treegraph (in JGraphT format) to convert.`
+The only differnce between weighted and unweithed version of addTree
+methods is that they use different graph type. For a weighted tree, you
+should generate a graph as a WeightedGraph as in the following sample
+code, then use if for a addTree method.
 
 `    `<Sample Code>  
 `                   `  
@@ -174,8 +164,7 @@ title: BioJava:PhyloSOC07 doc
 `              jg.setEdgeWeight(jg.getEdge(v2,v7), 6.0); `  
 `              jg.setEdgeWeight(jg.getEdge(v7,v5), 7.0);`  
 `                                           `  
-`              System.out.println(jg.toString());`  
-`                                                 `  
+`                                                   `  
 `              sample_tree.addTree(label, jg);  `  
 `                                   `  
 `         } // end of main`  
@@ -185,16 +174,14 @@ title: BioJava:PhyloSOC07 doc
 
 **getTreeAsJGraphT (Unweighted Tree)**
 
-`    public UndirectedGraph`<String, DefaultEdge>` getTreeAsJGraphT(final String label)`  
-`         Get given (NewieckString) tree by label, converts it to unweighted graph (JGraphT).`  
-`                        `  
-`              `**`Parameter:`**  
-`                        `  
-`                   Label  - label for selecting tree from a Map`  
-`                        `  
-`              `**`Returns:`**  
-`                        `  
-`                   converted tree as undirectedGraph`<String, DefaultEdge>
+getTreeAsJGraphT is a method which converts a tree from NewickString
+type to the graph type in JGraphT. Whereas the Nexus File uses
+NewickString type for their tree representation, this method converts
+such NewickString into the graph Object in JGraphT. In that JGraphT has
+variable tree manipulation methods, this method can be useful when
+JGraphT is finally included in the BioJava package. getTreeAsJGraphT
+method also has two different version, each for unweighted and weighted
+tree.
 
 `    `<Sample Code>  
 `    //package NexParser;`  
@@ -234,17 +221,8 @@ title: BioJava:PhyloSOC07 doc
 
 **getTreeAsJGraphT (Weighted Tree)**
 
-`    public WeightedGraph`<String, DefaultWeightedEdge>` getTreeAsWeightedJGraphT(final String label) `  
-`                   `  
-`         Get given (NewieckString) tree by label, converts it to weighted graph (JGraphT).`  
-`                   `  
-`              `**`Parameter:`**  
-`                        `  
-`                   Label  - label for selecting tree from a Map`  
-`                        `  
-`              `**`Returns:`**  
-`                        `  
-`                   converted tree as WeightedGraph`<String, DefaultWeightedEdge>
+This is a weighted tree version of getTreeAsJGraphT method.
+WeightedGraph is used here as in the addTree method for weighted tree.
 
 `    `<Sample Code>  
 `                   `  
