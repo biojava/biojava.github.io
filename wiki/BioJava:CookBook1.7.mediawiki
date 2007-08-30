@@ -24,6 +24,8 @@ This is a powerpoint presentation on the [http://www.biojava.org/docs/bj_in_ange
 
 == Publications ==
 
+A list of publications is available from [[BioJava:BioJavaInside]].
+
 Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar] for papers using BioJava.
 
 == How Do I....? ==
