@@ -265,8 +265,14 @@ WeightedGraph is used here as in the addTree method for weighted tree.
 
 ------------------------------------------------------------------------
 
+------------------------------------------------------------------------
+
 **DistanceBasedTreeMethod.java(biojavax\\bio\\phylo\\DistanceBasedTreeMethod.java)**
 
 ------------------------------------------------------------------------
 
+------------------------------------------------------------------------
+
 **ParsimonyTreeMethod.java(biojavax\\bio\\phylo\\ParsimonyTreeMethod.java)**
+
+------------------------------------------------------------------------
