@@ -312,7 +312,6 @@ As an extension of JC model, evolutionary distance in kimura's model is calculat
     q: proportion of diff. transversion
 
 
-
      <sample code>
                                              
      import java.io.*;
@@ -320,11 +319,11 @@ As an extension of JC model, evolutionary distance in kimura's model is calculat
      import java.util.*;
           
      import org.biojavax.bio.phylo.io.nexus.*;
-          
+                                                     
      public class SampleKimuraTwoParameter{
-	
+                                                                    	
           public static void main(String [] args) throws Exception {	
-                                                                                                                                             
+                                                                                                                                                                                               
           String t1 = "ACATA GAGGG TACCT CTAAG";
           String t2 = "ACTTA GAGGC TACCT CTACG";
           double Kd;
