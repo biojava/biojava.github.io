@@ -259,4 +259,22 @@ This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is use
 
 
 
+
+
 ----
+'''MultipleHitCorrection.java(biojavax\bio\phylo\MultipleHitCorrection.java)'''
+
+
+
+
+
+
+----
+
+'''DistanceBasedTreeMethod.java(biojavax\bio\phylo\DistanceBasedTreeMethod.java)'''
+
+
+
+
+----
+'''ParsimonyTreeMethod.java(biojavax\bio\phylo\ParsimonyTreeMethod.java)'''
