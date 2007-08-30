@@ -17,6 +17,8 @@ matches the label. For example, if you want to get a tree labeled as
 
 `    Object mytree = t.getTree("mammalian");`
 
+'''
+
 From the parsed TreesBlock t, getTree() look up for a specific
 "mammalian" tree and returns it as an Object variable.
 
@@ -222,7 +224,8 @@ tree.
 **getTreeAsJGraphT (Weighted Tree)**
 
 This is a weighted tree version of getTreeAsJGraphT method.
-WeightedGraph is used here as in the addTree method for weighted tree.
+WeightedGraph is used''' here as in the addTree method for weighted
+tree.
 
 `    `<Sample Code>  
 `                   `  
@@ -263,7 +266,22 @@ WeightedGraph is used here as in the addTree method for weighted tree.
 
 **MultipleHitCorrection.java(biojavax\\bio\\phylo\\MultipleHitCorrection.java)**
 
+*As the time of divergence between two sequences increases the
+probability of a second substitution at any one nucleotide site
+increases and the increase in the count of differences is slowed. This
+makes these counts not a desirable measure of distance. In some way,
+this slow down must be accounted for. The solution to this problem was
+first noted by Jukes and Cantor (1969; Evol.of Protein Molecules,
+Academic Press)*
+
 ------------------------------------------------------------------------
+
+**JukesCantor**
+
+According to the model of Jukes and Cantor [9] each base in the DNA
+sequence has an equal chance of mutating, and when it does, it is
+replaced by some other nucleotide uniformly. Here is the equation used
+in this method.
 
 ------------------------------------------------------------------------
 
