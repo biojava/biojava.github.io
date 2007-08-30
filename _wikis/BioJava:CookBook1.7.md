@@ -57,6 +57,8 @@ have given a few times.
 Publications
 ------------
 
+A list of publications is available from <BioJava:BioJavaInside>.
+
 Click here to search [Google
 Scholar](http://scholar.google.com/scholar?q=biojava) for papers using
 BioJava.
