@@ -337,11 +337,11 @@ calculated by the following equation.
 `    import java.util.*;`  
 `         `  
 `    import org.biojavax.bio.phylo.io.nexus.*;`  
-`         `  
+`                                                    `  
 `    public class SampleKimuraTwoParameter{`  
-`   `  
+`                                                                       `  
 `         public static void main(String [] args) throws Exception {    `  
-`                                                                                                                                            `  
+`                                                                                                                                                                                              `  
 `         String t1 = "ACATA GAGGG TACCT CTAAG";`  
 `         String t2 = "ACTTA GAGGC TACCT CTACG";`  
 `         double Kd;`  
