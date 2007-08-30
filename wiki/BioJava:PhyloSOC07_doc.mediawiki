@@ -11,7 +11,7 @@ getTree method takes in a label from the user and returns a tree that matches th
                        
 
      Object mytree = t.getTree("mammalian");
-
+'''
 
 From the parsed TreesBlock t, getTree() look up for a specific "mammalian" tree and returns it as an Object variable.  
 
@@ -219,7 +219,7 @@ getTreeAsJGraphT is a method which converts a tree from  NewickString type to th
 '''getTreeAsJGraphT (Weighted Tree)'''
 
 
-This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is used here as in the addTree method for weighted tree.
+This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is used''' here as in the addTree method for weighted tree.
 
      <Sample Code>
                     
@@ -264,8 +264,12 @@ This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is use
 '''MultipleHitCorrection.java(biojavax\bio\phylo\MultipleHitCorrection.java)'''
 
 
-----
+''As the time of divergence between two sequences increases the probability of a second substitution at any one nucleotide site increases and the increase in the count of differences is slowed. This makes these counts not a desirable measure of distance. In some way, this slow down must be accounted for. The solution to this problem was first noted by Jukes and Cantor (1969; Evol.of Protein Molecules, Academic Press)''
 
+----
+'''JukesCantor'''
+
+According to the model of Jukes and Cantor [9] each base in the DNA sequence has an equal chance of mutating, and when it does, it is replaced by some other nucleotide uniformly. Here is the equation used in this method.
 
 
 
