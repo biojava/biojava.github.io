@@ -271,6 +271,31 @@ This is a weighted tree version of getTreeAsJGraphT method. WeightedGraph is use
 
 According to the model of Jukes and Cantor [9] each base in the DNA sequence has an equal chance of mutating, and when it does, it is replaced by some other nucleotide uniformly. Here is the equation used in this method.
 
+     K = -(3/4)*ln(1-(4/3)*p),    p = prob. of two sequences to have different base at certain position
+
+As you can see in the sample code, you need to use two string variables as parameters. Then, the method returns their corrected distance as a (double) number. 
+
+     //package NexParser;
+                                                        
+     import java.io.*;
+     import java.lang.*;
+     import java.util.*;
+                    
+     import org.biojavax.bio.phylo.io.nexus.*;
+               
+     public class SampleJukesCantor{
+          	
+          public static void main(String [] args) throws Exception {	
+               	
+          String t1 = "ACATA GAGGG TACCT CTAAG";
+          String t2 = "ACTTA GAGGC TACCT CTACG";
+          double Kd;
+               
+          Kd = MultipleHitCorrection.JukesCantor(t1, t2);
+          System.out.println("Result: "+ Kd);
+          
+          } // end of main
+     }
 
 
 
