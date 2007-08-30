@@ -286,8 +286,9 @@ in this method.
 `    K = -(3/4)*ln(1-(4/3)*p),    p = prob. of two sequences to have different base at certain position`
 
 As you can see in the sample code, you need to use two string variables
-as parameters. Then, the method returns their corrected distance as a
-(double) number.
+as parameters.(You can easily extract this sequence string from the
+nexus CharactersBlock.java) Then, the method returns their corrected
+distance as a (double) number.
 
 `    //package NexParser;`  
 `                                                       `  
