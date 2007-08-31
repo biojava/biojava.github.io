@@ -244,6 +244,8 @@ Comment faire pour ...?
     PDB?](BioJava:CookbookFrench:PDB:AtomCalc "wikilink")
 -   [Comment accéder aux informations contenues dans l'en-tete d'un
     fichier PDB?](BioJava:CookbookFrench:PDB:Header "wikilink")
+-   [Comment utiliser les information des groupes SEQRES et ATOM avec
+    BioJava?](BioJava:CookbookFrench:PDB:Seqres "wikilink")
 -   [Comment puis-je modifié un
     résidu?](BioJava:CookbookFrench:PDB:Mutate "wikilink")
 -   [Comment faire pour calculer la superposition de deux
