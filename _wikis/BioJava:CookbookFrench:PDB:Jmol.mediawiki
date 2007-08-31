@@ -34,7 +34,6 @@ public static void main(String[] args){
 
 D'autres exemples plus complexes des interactions possibles entre BioJava et Jmol se trouve [http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/ dans le repertoire SVN de SPICE].
 
-
 <java>
 /* 
 
