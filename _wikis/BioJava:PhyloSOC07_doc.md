@@ -526,15 +526,16 @@ as parameters to get a reconstructed tree as a graph.
 
 ------------------------------------------------------------------------
 
-Implementing Parsimony was a very big hurdle that I bumped into during
-the project. Because of its exponentially growing complexity,
-implementing, it has been decided to modify the plan. Instead of
-implementing the whole algorithm, it has been decided to build a wrapper
-class which connects BioJava to the external program, PHYLIP, which
-already provides parsimony methods. For that, ExternalProcess class was
-used. (org.biojava.utils.process.ExternalProcess) However,
-unfortunately, it couldn't been completed within a GSoC project periods
-and remained as a further work to be done. The current status of
-Parsimony wrapper class is at the executing dnapars program in Phylip
-package. It is needed to be work for extracting the output results from
-Phylip and interpreting them.
+Implementing Parsimony was a very big hurdle that I bumped into. Because
+of its exponentially growing complexity, it has been decided to change
+the plan from the direct implemention to the indirect one. In other
+words, instead of implementing the actual algorithm, it has been decided
+to build a wrapper class which connects BioJava to the external program,
+PHYLIP, that already provides parsimony method. For that,
+ExternalProcess class in BioJava was used.
+org.biojava.utils.process.ExternalProcess)
+
+However, this method hasn't been completed yet and is currently being
+worked on . Up until now, it runs with external process, especilly
+dnapars program in Phylip package, and the extracting output &
+interpreting them are the further steps to be worked on.
