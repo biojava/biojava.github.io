@@ -8,9 +8,45 @@ Comment faire interagir un objet de type Structure avec Jmol?
 [Jmol](http://jmol.sourceforge.net) est un logiciel Java de
 visualisation de structure 3D de plus en plus populaire. L'exemple qui
 suit fait la démonstration de la procédure à suivre pour faire suivre
-une structure BioJava vers Jmol. Un exemple plus complexe des
-interactions possibles entre BioJava et Jmol se trouve [dans le
-repertoire SVN de
+une structure BioJava vers Jmol. Il est alors possible par exemple de
+visualiser un alignement structurel de protéines selon cette
+[recette](BioJava:CookbookFrench:PDB:Align "wikilink").
+
+La classe BiojavaJmol permet l'affichage très simple d'un objet de type
+Structure, si JMol se trouve dans votre classpath.
+
+<java> public static void main(String[] args){
+
+`       try {`
+
+`           PDBFileReader pdbr = new PDBFileReader();   `  
+`           `  
+`           pdbr.setPath("/Path/To/PDBFiles/");`
+
+`           String pdbCode = "5pti";`
+
+`           Structure struc = pdbr.getStructureById(pdbCode);`
+
+`           BiojavaJmol jmolPanel = new BiojavaJmol();`  
+`           `  
+`           jmolPanel.setStructure(struc);`  
+`           `  
+`           // send some RASMOL style commands to Jmol`  
+`           jmolPanel.evalString("select * ; color chain;");`  
+`           jmolPanel.evalString("select *; spacefill off; wireframe off; backbone 0.4;  ");`
+
+`       } catch (Exception e){`  
+`           e.printStackTrace();`  
+`       }`  
+`   }`
+
+</java>
+
+Un exemple plus long
+--------------------
+
+D'autres exemples plus complexes des interactions possibles entre
+BioJava et Jmol se trouve [dans le repertoire SVN de
 SPICE](http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/).
 
 <java> /\*
