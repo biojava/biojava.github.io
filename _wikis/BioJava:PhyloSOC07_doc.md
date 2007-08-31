@@ -437,15 +437,15 @@ These are the steps in the actual code.
 
 **Neighbor-Joining Method**
 
-''Neighbor-joining (Saitou and Nei, 1987) is a method that is related to
+*Neighbor-joining (Saitou and Nei, 1987) is a method that is related to
 the cluster method but does not require the data to be ultrametric. In
 other words it does not require that all lineages have diverged by
 eaqual amounts. The method is especially suited for datasets comprising
 lineages with largely varying rates of evolution. It can be used in
 combination with methods that allow correction for superimposed
-substitutions.
+substitutions.*
 
-The neighbor-joining method is a special case of the star decomposition
+*The neighbor-joining method is a special case of the star decomposition
 method. In contrast to cluster analysis neighbor-joining keeps track of
 nodes on a tree rather than taxa or clusters of taxa. The raw data are
 provided as a distance matrix and the initial tree is a star tree. Then
@@ -458,7 +458,7 @@ terminal nodes with their respective branches are removed from the tree.
 This pruning process converts the newly added common ancestor into a
 terminal node on a tree of reduced size. At each stage in the process
 two terminal nodes are replaced by one new node. The process is complete
-when two nodes remain, separated by a single branch. (from wikipedia)''
+when two nodes remain, separated by a single branch. (from wikipedia)*
 
 Here is the actual step for the implementation.
 
@@ -525,3 +525,16 @@ as parameters to get a reconstructed tree as a graph.
 **ParsimonyTreeMethod.java(biojavax\\bio\\phylo\\ParsimonyTreeMethod.java)**
 
 ------------------------------------------------------------------------
+
+Implementing Parsimony was a very big hurdle that I bumped into during
+the project. Because of its exponentially growing complexity,
+implementing, it has been decided to modify the plan. Instead of
+implementing the whole algorithm, it has been decided to build a wrapper
+class which connects BioJava to the external program, PHYLIP, which
+already provides parsimony methods. For that, ExternalProcess class was
+used. (org.biojava.utils.process.ExternalProcess) However,
+unfortunately, it couldn't been completed within a GSoC project periods
+and remained as a further work to be done. The current status of
+Parsimony wrapper class is at the executing dnapars program in Phylip
+package. It is needed to be work for extracting the output results from
+Phylip and interpreting them.
