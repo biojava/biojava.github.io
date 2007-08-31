@@ -435,6 +435,93 @@ These are the steps in the actual code.
 
 ------------------------------------------------------------------------
 
+**Neighbor-Joining Method**
+
+''Neighbor-joining (Saitou and Nei, 1987) is a method that is related to
+the cluster method but does not require the data to be ultrametric. In
+other words it does not require that all lineages have diverged by
+eaqual amounts. The method is especially suited for datasets comprising
+lineages with largely varying rates of evolution. It can be used in
+combination with methods that allow correction for superimposed
+substitutions.
+
+The neighbor-joining method is a special case of the star decomposition
+method. In contrast to cluster analysis neighbor-joining keeps track of
+nodes on a tree rather than taxa or clusters of taxa. The raw data are
+provided as a distance matrix and the initial tree is a star tree. Then
+a modified distance matrix is constructed in which the separation
+between each pair of nodes is adjusted on the basis of their average
+divergeance from all other nodes. The tree is constructed by linking the
+least-distant pair of nodes in this modified matrix. When two nodes are
+linked, their common ancestral node is added to the tree and the
+terminal nodes with their respective branches are removed from the tree.
+This pruning process converts the newly added common ancestor into a
+terminal node on a tree of reduced size. At each stage in the process
+two terminal nodes are replaced by one new node. The process is complete
+when two nodes remain, separated by a single branch. (from wikipedia)''
+
+Here is the actual step for the implementation.
+
+`    1. S = total branch length of tree`  
+`    2. separate pair of taxa from all others`  
+`    3. choose pair of taxa that minimizes S`  
+`    4. build a sub-tree for that pair`  
+`    5. collapse pair as distance and recalculate distance matrix`  
+`    6. next pair that gives smallest S is chosen`  
+`    7. repeat until complete`
+
+As in the UPGMA method, you need to extract CharactersBlock & TaxaBlock
+from the Nexus File. Then, you can call this method using those blocks
+as parameters to get a reconstructed tree as a graph.
+
+`    `<sample code>  
+`              `  
+`    import org.jgrapht.*;`  
+`    import org.jgrapht.graph.*;`  
+`                   `  
+`                   `  
+`    public class SampleNJ{`  
+`                       `  
+`         public static void main(String [] args) throws Exception {`  
+`                   `  
+`         if(args.length != 1) {`  
+`              System.out.println("Usage: java SampleNJ [nexus file name]");`  
+`              return;`  
+`         }`  
+`               `  
+`         String current_block_name;`  
+`               `  
+`         File inputFile = new File(args[0]);`  
+`         NexusFileBuilder builder = new NexusFileBuilder();`  
+`         NexusFileFormat.parseFile(builder, inputFile);`  
+`         NexusFile parsedFile = builder.getNexusFile();`  
+`         WeightedGraph`<String, DefaultWeightedEdge>` a =  new SimpleWeightedGraph`<String, DefaultWeightedEdge>`(DefaultWeightedEdge.class);`  
+`               `  
+`              `  
+`         TaxaBlock t = new TaxaBlock();`  
+`         CharactersBlock ch = new CharactersBlock();`  
+`              `  
+`         //You can then iterate the blocks in the NEXUS file like this:`  
+`           `  
+`         for (Iterator i = parsedFile.blockIterator(); i.hasNext();) {`  
+`                        `  
+`              NexusBlock block = (NexusBlock)i.next();`  
+`              current_block_name = block.getBlockName();`  
+`                       `  
+`              if(current_block_name.equals("TAXA")){`  
+`                   t = (TaxaBlock)block;`  
+`              }else if(current_block_name.equals("CHARACTERS")){`  
+`                   ch = (CharactersBlock)block;`  
+`              }`  
+`         }`  
+`         `  
+`         System.out.println("By Neighbor-Joining Method: \n");`  
+`         a = DistanceBasedTreeMethod.NeighborJoining(t, ch);`  
+`         } // end of main`  
+`    }`  
+
+------------------------------------------------------------------------
+
 **ParsimonyTreeMethod.java(biojavax\\bio\\phylo\\ParsimonyTreeMethod.java)**
 
 ------------------------------------------------------------------------
