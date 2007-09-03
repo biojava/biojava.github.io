@@ -51,6 +51,15 @@ Documentation is available as a
 [gzip](http://www.biojava.org/download/bj15/doc/BioJava1.5-docs.tar.gz)
 file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
+Latest builds
+-------------
+
+To get the very latest version of BioJava that is automatically built
+from the latest CVS version, please go
+[here](http://www.spice-3d.org/cruise/). Also available is the nightly
+[BioJava
+javadoc](http://www.spice-3d.org/public-files/javadoc/biojava/index.html)
+
 CVS access
 ----------
 
