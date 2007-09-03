@@ -25,6 +25,11 @@ The full source distribution is available as a [http://www.biojava.org/download/
 
 Documentation is available as a [http://www.biojava.org/download/bj15/doc/BioJava1.5-docs.tar.gz gzip] file (4.5Mb) that includes the javadocs for the API, demos and apps.
 
+== Latest builds ==
+
+To get the very latest version of BioJava that is automatically built from the latest
+CVS version, please go [http://www.spice-3d.org/cruise/ here]. Also available is the nightly [http://www.spice-3d.org/public-files/javadoc/biojava/index.html BioJava javadoc]
+
 == CVS access ==
 
 the CVS repository can be browsed at:
@@ -32,13 +37,9 @@ http://code.open-bio.org/cgi/viewcvs.cgi/biojava-live/?cvsroot=biojava
 
 An RSS of biojava-live is [http://www.biojava.org/CVS2RSS/biojava-live.rss available]
 
-
 To obtain an anonymous CVS checkout do the following:
 
-
    cvs -d :pserver:cvs@code.open-bio.org:/home/repository/biojava login
-
-
 
 * When prompted, the password is 'cvs'
 * Each project CVS repository can have many different packages available for download. You may need to browse the web interface for a bit to determine the packages of interest. After a successful login you may "checkout" the project package you are interested in. 
