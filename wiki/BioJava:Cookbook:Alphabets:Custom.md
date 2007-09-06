@@ -7,15 +7,15 @@ How do I make a custom Alphabet from custom Symbols?
 
 This example demonstrates the creation of a 'binary' alphabet that will
 have two
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html),
+[Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html),
 zero and one. The custom made
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+[Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
 and
-[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+[Alphabet](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html)
 can then be used to make
-[SymbolList](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolList.html),
-[Sequences](http://www.biojava.org/docs/api14/org/biojava/bio/seq/Sequence.html),
-[Distributions](http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html),
+[SymbolList](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html),
+[Sequences](http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html),
+[Distributions](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
 etc.
 
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
@@ -46,7 +46,7 @@ public class Binary {
 `     System.out.println(sym.getName());`  
 `   }`
 
-`   //it is usual to register newly creates Alphabets with the AlphabetManager`  
+`   //it is usual to register newly created Alphabets with the AlphabetManager`  
 `   AlphabetManager.registerAlphabet(binary.getName(), binary);`
 
 `   /*`  
