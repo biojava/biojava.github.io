@@ -133,9 +133,6 @@ Action plan
 
 1.  Please modify this page as you see fit in order to flesh out details
     and/or make new points.
-
-<!-- -->
-
-1.  Tentative Singapore meeting to get the ball rolling on the final
+2.  Tentative Singapore meeting to get the ball rolling on the final
     design and initial coding front.
 
