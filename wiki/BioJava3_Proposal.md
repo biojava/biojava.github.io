@@ -45,19 +45,21 @@ Proposal
 <!-- -->
 
 -   We would take full advantage of Java 6, including generics,
-    annotations, the built-in property change support. Everything would
-    be a bean - absolutely everything.
+    (@)annotations, the built-in property change support. Everything
+    would be a bean - absolutely everything.
 
 <!-- -->
 
--   We would aim to be fully J2EE compliant, with the majority of
+-   We would aim to be fully Java EE compliant, with the majority of
     components fully reusable as a bean in any other application, just
     like Spring's components are.
 
 <!-- -->
 
 -   We would write a JUnit test for every single class, writing the test
-    first then the class afterwards. We would also write documentation
+    first then the class afterwards. If other test frameworks are out
+    there we could investigate these too - one suggestion is
+    [TestNG](http://testng.org/doc/). We would also write documentation
     for every single class with additional full documentation for each
     separate jar.
 
