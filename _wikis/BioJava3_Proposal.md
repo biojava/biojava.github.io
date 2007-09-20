@@ -107,3 +107,32 @@ Action plan
 2.  Tentative Singapore meeting to get the ball rolling on the final
     design and initial coding front.
 
+Categories of Improvement
+-------------------------
+
+Initally suggested by Andreas this attempts to group the currently
+recognized *issues* surrounding Biojava.
+
+### Category A
+
+How to work with core concepts of BioJava:
+
+-   How to get an Alphabet
+-   How to make a Sequence Object from a String or make a Sequence
+    Object back into a String
+
+### Category B
+
+Functionality; taking on concepts/practices from *Category A* and
+applying them to a bioinformatics problem.
+
+-   How to parse a Blast output
+-   How to read sequences from a Fasta file
+-   How to read a GenBank, SwissProt or EMBL file
+-   How to generate a global or local alignment with the
+    Needleman-Wunsch or the Smith-Waterman-algorithm
+-   How to read a protein structure - PDB file
+-   How to export a sequence to fasta
+-   How to view a sequence in a gui
+-   How to parse a Fasta database search output file
+
