@@ -89,12 +89,12 @@ Data structure
     e.g. Genbank Record to FASTA Record. They allow sensible defaults to
     be provided where one format does not supply enough info to satisfy
     the minimum requirements of another. Some kind of bean conversion
-    system based on RDF would be suitable for this.
+    system based on RDF would be suitable for this. One possible
+    candidate would be [Dozer](http://dozer.sourceforge.net/).
 -   A set of tools for converting flat data (e.g. sequence strings,
     taxononmy strings) into BioJava-like objects (e.g. SymbolLists,
     NCBITaxon). These BioJava-like objects could then be used for more
-    advanced applications. One possible candidate would be
-    [Dozer](http://dozer.sourceforge.net/).
+    advanced applications.
 -   A set of tools for manipulating the BioJava-like objects.
 
 Action plan
