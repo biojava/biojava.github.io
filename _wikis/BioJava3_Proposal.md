@@ -37,18 +37,22 @@ Proposal
     sub-projects within an umbrella BioJava3 project. Each jar would
     provide tools for a specific purpose. Additional jars would provide
     cross-purpose tools such as format converters or text-to-object
-    interfaces.
+    interfaces. Possibly built using [Maven](http://maven.apache.org/)
+    instead of [Ant](http://ant.apache.org/).
 -   Although starting from scratch, much existing code could be reused
     or refactored to suit the new design.
--   We would take full advantage of Java 6, including generics,
+-   We would take full advantage of [Java
+    6](http://java.sun.com/javase/6/), including generics,
     (@)annotations, the built-in property change support. Everything
     would be a bean - absolutely everything.
--   We would aim to be fully Java EE compliant, with the majority of
-    components fully reusable as a bean in any other application, just
-    like Spring's components are.
--   We would write a JUnit test for every single class, writing the test
-    first then the class afterwards. If other test frameworks are out
-    there we could investigate these too - one suggestion is
+-   We would aim to be fully [Java EE](http://java.sun.com/javaee/)
+    compliant, with the majority of components fully reusable as a bean
+    in any other application, just like
+    [Spring](http://www.springframework.org/)'s components are.
+-   We would write a [JUnit](http://junit.sourceforge.net/) test for
+    every single class, writing the test first then the class
+    afterwards. If other test frameworks are out there we could
+    investigate these too - one suggestion is
     [TestNG](http://testng.org/doc/). We would also write documentation
     for every single class with additional full documentation for each
     separate jar.
@@ -57,9 +61,6 @@ Proposal
 -   We should make it able to focus on any aspect the user requires and
     keep its efficiency, removing its dependency on everything being
     sequence-related.
-
-<!-- -->
-
 -   SymbolLists and Alphabets to be rethought as these are the most
     common stumbling block.
 
