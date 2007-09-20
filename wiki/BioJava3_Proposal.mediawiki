@@ -43,7 +43,7 @@ It is suggested that development stop on the existing BioJava/BioJavaX/BioJava2 
 
 ==Categories of Improvement==
 
-Initally suggested by Andreas this attempts to group the currently recognized ''issues'' surrounding Biojava.
+Initally suggested by Andreas this attempts to group the currently recognized ''issues'' surrounding Biojava. See also [[UsageAnalysis]].
 
 ===Category A===
 
