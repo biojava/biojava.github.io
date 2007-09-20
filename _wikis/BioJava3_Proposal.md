@@ -111,7 +111,8 @@ Categories of Improvement
 -------------------------
 
 Initally suggested by Andreas this attempts to group the currently
-recognized *issues* surrounding Biojava.
+recognized *issues* surrounding Biojava. See also
+[UsageAnalysis](UsageAnalysis "wikilink").
 
 ### Category A
 
