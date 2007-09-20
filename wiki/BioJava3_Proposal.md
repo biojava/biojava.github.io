@@ -33,48 +33,27 @@ Proposal
 
 -   Analyse how BioJava is being used by the community. See the
     [UsageAnalysis](UsageAnalysis "wikilink") page.
-
-<!-- -->
-
 -   To start from scratch, creating a number of smaller jars as
     sub-projects within an umbrella BioJava3 project. Each jar would
     provide tools for a specific purpose. Additional jars would provide
     cross-purpose tools such as format converters or text-to-object
     interfaces.
-
-<!-- -->
-
 -   Although starting from scratch, much existing code could be reused
     or refactored to suit the new design.
-
-<!-- -->
-
 -   We would take full advantage of Java 6, including generics,
     (@)annotations, the built-in property change support. Everything
     would be a bean - absolutely everything.
-
-<!-- -->
-
 -   We would aim to be fully Java EE compliant, with the majority of
     components fully reusable as a bean in any other application, just
     like Spring's components are.
-
-<!-- -->
-
 -   We would write a JUnit test for every single class, writing the test
     first then the class afterwards. If other test frameworks are out
     there we could investigate these too - one suggestion is
     [TestNG](http://testng.org/doc/). We would also write documentation
     for every single class with additional full documentation for each
     separate jar.
-
-<!-- -->
-
 -   We would adhere rigidly to a common coding style and heavily comment
     the code.
-
-<!-- -->
-
 -   We should make it able to focus on any aspect the user requires and
     keep its efficiency, removing its dependency on everything being
     sequence-related.
@@ -92,22 +71,13 @@ Data structure
     etc. etc.. It has a RecordFormat which reads/writes Records to/from
     the RecordSource. It provides an iterator over Records which match a
     given RecordSearch.
-
-<!-- -->
-
 -   A RecordFormat is version-specific to the format, as are the Record
     objects it produces.
-
-<!-- -->
-
 -   RecordSearch defines search criteria to be applied to a RecordSource
     (or group thereof). It provides an iterator which returns all the
     combined Records from all RecordSources the RecordSearch was applied
     to. It uses RDF or something similar to map fields between different
     kinds of Records and the search parameters.
-
-<!-- -->
-
 -   Record is a piece of data in any format, as a bean. It should be as
     lightweight as possible - lazyloading of all non-key data would be
     ideal. Each different kind of Record has an object structure
@@ -115,31 +85,24 @@ Data structure
     Record objects should be structured internally in almost exactly the
     same way as the Genbank file. This allows minimal loss of
     information and maximum flexibility.
-
-<!-- -->
-
 -   RecordConverters convert Record objects between different formats,
     e.g. Genbank Record to FASTA Record. They allow sensible defaults to
     be provided where one format does not supply enough info to satisfy
     the minimum requirements of another. Some kind of bean conversion
     system based on RDF would be suitable for this.
-
-<!-- -->
-
 -   A set of tools for converting flat data (e.g. sequence strings,
     taxononmy strings) into BioJava-like objects (e.g. SymbolLists,
     NCBITaxon). These BioJava-like objects could then be used for more
-    advanced applications.
-
-<!-- -->
-
+    advanced applications. One possible candidate would be
+    [Dozer](http://dozer.sourceforge.net/).
 -   A set of tools for manipulating the BioJava-like objects.
 
 Action plan
 -----------
 
-1.  Please modify this page as you see fit in order to flesh out details
-    and/or make new points.
+1.  Please modify this page and the [Talk
+    page](Talk:BioJava3_Proposal "wikilink") as you see fit in order to
+    flesh out details and/or make new points.
 2.  Tentative Singapore meeting to get the ball rolling on the final
     design and initial coding front.
 
