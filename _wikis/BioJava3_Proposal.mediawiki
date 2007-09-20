@@ -14,7 +14,10 @@ It is suggested that development stop on the existing BioJava/BioJavaX/BioJava2 
 * The only database support is for BioSQL, which uses Hibernate but not in a fully flexible manner (i.e. cannot connect to more than one db at a time).
 * It is sequence-focused. Users have moved on.
 
+
 ==Proposal==
+
+* Analyse how BioJava is being used by the community. See the [[UsageAnalysis]] page.
 
 * To start from scratch, creating a number of smaller jars as sub-projects within an umbrella BioJava3 project. Each jar would provide tools for a specific purpose. Additional jars would provide cross-purpose tools such as format converters or text-to-object interfaces.
 
