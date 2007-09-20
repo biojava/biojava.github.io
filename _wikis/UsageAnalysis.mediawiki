@@ -16,18 +16,27 @@ on
 A look at the webstats from the last couple of months gives these top 10 Cookbook pages that
 have been accessed frequently. This list is ordered by nr. of  pageviews
 
-<pre>
-1. /wiki/BioJava:Cookbook:Alphabets
-2. /wiki/BioJava:CookBook:Blast:Parser
-3. /wiki/BioJava:Cookbook:SeqIO:ReadFasta
-4. /wiki/BioJava:Cookbook:SeqIO:ReadGES
-5. /wiki/BioJava:CookBook:DP:PairWise2
-6. /wiki/BioJava:CookBook:PDB:read
-7. /wiki/BioJava:Cookbook:Sequence
-8. /wiki/BioJava:Cookbook:SeqIO:WriteInFasta
-9. /wiki/BioJava:CookBook:Interfaces:ViewInGUI
-10. /wiki/BioJava:CookBook:Fasta:Parse
-</pre>
+
+1. [[BioJava:Cookbook:Alphabets]]
+
+2. [[BioJava:CookBook:Blast:Parser]]
+
+3. [[BioJava:Cookbook:SeqIO:ReadFasta]]
+
+4. [[BioJava:Cookbook:SeqIO:ReadGES]]
+
+5. [[BioJava:CookBook:DP:PairWise2]]
+
+6. [[BioJava:CookBook:PDB:read]]
+
+7. [[BioJava:Cookbook:Sequence]]
+
+8. [[BioJava:Cookbook:SeqIO:WriteInFasta]]
+
+9. [[BioJava:CookBook:Interfaces:ViewInGUI]]
+
+10. [[BioJava:CookBook:Fasta:Parser]]
+
 
 = Interpretation =
 
