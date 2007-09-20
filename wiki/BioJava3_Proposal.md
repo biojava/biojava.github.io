@@ -31,6 +31,11 @@ Reasoning
 Proposal
 --------
 
+-   Analyse how BioJava is being used by the community. See the
+    [UsageAnalysis](UsageAnalysis "wikilink") page.
+
+<!-- -->
+
 -   To start from scratch, creating a number of smaller jars as
     sub-projects within an umbrella BioJava3 project. Each jar would
     provide tools for a specific purpose. Additional jars would provide
