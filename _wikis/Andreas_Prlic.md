@@ -9,4 +9,8 @@ API to biojava. Other projects he is working on include e.g.
 for protein sequence and structure annotations, based on the Distributed
 Annotation System.
 
+[Nightly builds of BioJava](http://www.spice-3d.org/cruise/) can be
+accessed from his CruiseControl page at
+[<http://www.spice-3d.org/cruise/>](http://www.spice-3d.org/cruise/).
+
 <Category:People>
