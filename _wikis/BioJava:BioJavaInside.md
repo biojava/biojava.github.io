@@ -46,6 +46,10 @@ projects please add them to the list.
 -   [BioWeka](http://www.bioweka.org): An open source biological data
     mining application.
 
+<!-- -->
+
+-   [Geneious](http://www.biomatters.com): A molecular biology toolkit.
+
 Publications
 ------------
 
