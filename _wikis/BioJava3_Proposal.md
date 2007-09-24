@@ -8,8 +8,8 @@ Executive Summary
 It is suggested that development stop on the existing
 BioJava/BioJavaX/BioJava2 aggregation and start afresh as BioJava3.
 
-Reasoning
----------
+General reasoning
+-----------------
 
 -   The existing code is disorganised, poorly commented, and hard to
     maintain due to the use of numerous different coding styles.
@@ -106,6 +106,42 @@ Action plan
     flesh out details and/or make new points.
 2.  Tentative Singapore meeting to get the ball rolling on the final
     design and initial coding front.
+
+Previous work on the subject
+----------------------------
+
+1.  Michael Heuer's
+    [proposal](http://www3.shore.net/~heuermh/static-alphabet-generics.tar.gz)
+    for static generic symbols/symbol lists.
+2.  Matthew Pocock's [BioJava2
+    proposals](http://www.derkholm.net/svn/repos/bjv2).
+
+Major problem areas
+-------------------
+
+1.  The singleton symbol model is hard to use and understand. It needs
+    simplification.
+2.  Strand is specified on feature and not on location. This is not
+    biologically logical.
+3.  Sequence and Feature objects are tightly bound - Features can't
+    exist without also loading and assigning the appropriate Sequence
+    object. This slows things down and uses memory.
+4.  In general, most operations require a Sequence object underlying
+    whatever object you are manipulating. At the time BioJava was
+    designed and written, this was fine as most biologists were
+    interested in sequence manipulation. Now they have moved on and are
+    more interested in sequence meta-data such as features or protein
+    structures or microarray experiments or phylogenetics. To enforce
+    having to load the sequence for every feature in a region of
+    interest before doing even basic analysis is wasteful of resources,
+    and illogical. BioJava needs to lose the Sequence-centric view of
+    the world.
+5.  Interfaces that have already been deprecated in the 1.5 release need
+    removing entirely. Many of them are heavily used within the existing
+    code base, e.g. Sequence. To remove them would require a rewrite of
+    almost the entire codebase anyway, and also a rewrite of most client
+    code (e.g. to use RichSequence as the default replacement for
+    Sequence, which would no longer exist).
 
 Categories of Improvement
 -------------------------
