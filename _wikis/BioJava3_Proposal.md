@@ -142,6 +142,11 @@ Major problem areas
     almost the entire codebase anyway, and also a rewrite of most client
     code (e.g. to use RichSequence as the default replacement for
     Sequence, which would no longer exist).
+6.  The code base doesn't take advantage of the possibility of threading
+    for multiple CPU's. Dual core cpu's are now standard on everything.
+    Quad cores are common on servers. If code is threaded the JVM can
+    easily make use of these extra cores. Additionally many parts of the
+    code base are currently not thread safe.
 
 Categories of Improvement
 -------------------------
