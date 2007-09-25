@@ -147,6 +147,16 @@ Major problem areas
     Quad cores are common on servers. If code is threaded the JVM can
     easily make use of these extra cores. Additionally many parts of the
     code base are currently not thread safe.
+7.  Most of the code is not bean-like and therefore cannot easily be
+    used in any of the modern Java EE frameworks such as Spring or
+    Hibernate.
+8.  Equals, compareTo and hashCode methods are inconsistent and often
+    inaccurate, e.g. customised to suit a certain behaviour pattern
+    (e.g. the BJX extensions assume that nulls are allowable for the
+    purposes of Hibernate, whereas really they shouldn't be and
+    Hibernate doesn't need them either). Changing these would change the
+    behaviour of the object model particularly when it comes to
+    collections and maps.
 
 Categories of Improvement
 -------------------------
