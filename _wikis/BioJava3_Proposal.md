@@ -157,6 +157,11 @@ Major problem areas
     Hibernate doesn't need them either). Changing these would change the
     behaviour of the object model particularly when it comes to
     collections and maps.
+9.  Localisation causes mistranslation of strings from lower to upper
+    case. For instance, in Turkish, the lower and upper case i/I do not
+    match those in the English localisation. This causes protein
+    sequences to be mistranslated or misrepresented. BioJava needs to be
+    modified to take this into account.
 
 Categories of Improvement
 -------------------------
