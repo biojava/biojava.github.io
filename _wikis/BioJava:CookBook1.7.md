@@ -260,6 +260,8 @@ How Do I....?
 -   [How to calculate a structure
     superimposition?](BioJava:CookBook:PDB:align "wikilink")
 -   [How to interact with Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
+-   [How to serialize to a
+    database?](BioJava:CookBook:PDB:hibernate "wikilink")
 
 ### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
 
