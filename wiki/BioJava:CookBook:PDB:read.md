@@ -51,4 +51,7 @@ SEQRES and ATOM records please see <BioJava:CookBook:PDB:seqres>
 
 </java>
 
+To learn how to serialize a Structure object to a database see
+<BioJava:CookBook:PDB:hibernate>
+
 Next: <BioJava:CookBook:PDB:atoms> - How to access atoms.
