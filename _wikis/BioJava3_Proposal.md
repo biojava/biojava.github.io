@@ -63,6 +63,9 @@ Proposal
     sequence-related.
 -   SymbolLists and Alphabets to be rethought as these are the most
     common stumbling block.
+-   Make methods parallel-aware and take advantage of this when
+    possible, and provide a global variable to specify how much
+    parallelisation can take place.
 
 Data structure
 --------------
