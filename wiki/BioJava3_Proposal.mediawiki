@@ -25,6 +25,7 @@ It is suggested that development stop on the existing BioJava/BioJavaX/BioJava2 
 * We would adhere rigidly to a common coding style and heavily comment the code.
 * We should make it able to focus on any aspect the user requires and keep its efficiency, removing its dependency on everything being sequence-related.
 * SymbolLists and Alphabets to be rethought as these are the most common stumbling block.
+* Make methods parallel-aware and take advantage of this when possible, and provide a global variable to specify how much parallelisation can take place.
 
 ==Data structure==
 
