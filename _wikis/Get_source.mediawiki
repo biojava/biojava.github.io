@@ -1,4 +1,4 @@
-=BioJava starting to use SVN=
+==BioJava starting to use SVN==
 
 
 Over the next weeks (until Christmas) Biojava will finally move from CVS to Subversion (svn) as
