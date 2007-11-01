@@ -3,7 +3,7 @@ title: Get source
 ---
 
 BioJava starting to use SVN
-===========================
+---------------------------
 
 Over the next weeks (until Christmas) Biojava will finally move from CVS
 to Subversion (svn) as the source code repository. This is happening in
