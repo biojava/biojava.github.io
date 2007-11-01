@@ -45,15 +45,15 @@ waiting for CVS freeze first.
 === how future checkouts might look like ===
 
 It is not yet fully set in stone, but the current plan is to use SVN via ssh. 
-This means a future  BioJava checkout might look like this:
+This means a future BioJava checkout (for a developer) might look like this:
 
  svn co svn+ssh://somewhere.open-bio.org/path/not/sure/biojava-live/trunk ./biojava-live
 
-after initial checkout, you can change into this directory and execute SVN commands without the URL. For example:
+after initial checkout, you can change into the local ./biojava-live directory and execute SVN commands without the URL. For example:
 
  svn update
  svn commit -m "comments for this commit"
  svn add myfile.java
 
 
-We will also provide anonymouse checkouts and a browsable interface to the repository
+We will also continue to provide anonymous checkouts and a browsable interface to the repository
