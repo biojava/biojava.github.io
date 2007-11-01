@@ -12,7 +12,7 @@ Over the next weeks we will
 
 A) Test the migration procedure to ensure nothing gets lost
 
-B) We will declare a CVS freeze at a certain date (giving you enough time to commit all your latest changes to CVS)
+B) We will declare a CVS freeze at a certain date (giving you enough time to commit all your latest changes to CVS). At this point we will also do a quick BioJava release (version 1.5.1)
 
 C) After the freeze the final svn migration will happen
 
