@@ -58,6 +58,7 @@ It is suggested that development stop on the existing BioJava/BioJavaX/BioJava2 
 #Most of the code is not bean-like and therefore cannot easily be used in any of the modern Java EE frameworks such as Spring or Hibernate.
 #Equals, compareTo and hashCode methods are inconsistent and often inaccurate, e.g. customised to suit a certain behaviour pattern (e.g. the BJX extensions assume that nulls are allowable for the purposes of Hibernate, whereas really they shouldn't be and Hibernate doesn't need them either). Changing these would change the behaviour of the object model particularly when it comes to collections and maps.
 #Localisation causes mistranslation of strings from lower to upper case. For instance, in Turkish, the lower and upper case i/I do not match those in the English localisation. This causes protein sequences to be mistranslated or misrepresented. BioJava needs to be modified to take this into account.
+#BioSQL interaction is good but there are still issues - particularly to do with case conventions for naming things such as alphabets. A BioSQL mini-hackathon has been suggested as one way to nail down exactly how BioSQL should be used, right down to details like this, so that all projects may be able to fully interact without knowledge of which tool was used to write the data to BioSQL.
 
 ==Categories of Improvement==
 
