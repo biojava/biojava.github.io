@@ -165,6 +165,12 @@ Major problem areas
     match those in the English localisation. This causes protein
     sequences to be mistranslated or misrepresented. BioJava needs to be
     modified to take this into account.
+10. BioSQL interaction is good but there are still issues - particularly
+    to do with case conventions for naming things such as alphabets. A
+    BioSQL mini-hackathon has been suggested as one way to nail down
+    exactly how BioSQL should be used, right down to details like this,
+    so that all projects may be able to fully interact without knowledge
+    of which tool was used to write the data to BioSQL.
 
 Categories of Improvement
 -------------------------
