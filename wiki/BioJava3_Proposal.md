@@ -171,6 +171,17 @@ Major problem areas
     exactly how BioSQL should be used, right down to details like this,
     so that all projects may be able to fully interact without knowledge
     of which tool was used to write the data to BioSQL.
+11. Gapped sequences and alignments need closer attention. Currently
+    there are two ways - a SimpleSymbolList with '-' symbols, or a
+    SimpleGappedSymbolList with proper block definitions and coordinate
+    translation and access to the ungapped sequence. The MSF alignment
+    parser uses the former which is counter-intuitive as programmers
+    reading alignments would expect simple access to the ungapped
+    sequence. There is no easy way to translate between them if you need
+    the more advanced features such as coordinate translation from
+    gapped to ungapped sequence. By allowing gap symbols directly in
+    SimpleSymbolList, it is impossible programmatically to enforce
+    whether a method accepts gapped or ungapped sequences.
 
 Categories of Improvement
 -------------------------
