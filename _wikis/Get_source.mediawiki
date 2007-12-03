@@ -55,7 +55,7 @@ after initial checkout, you can change into the local ./biojava-live directory a
  svn commit -m "comments for this commit"
  svn add myfile.java
 
-If your local user account is different from the one one the open-bio server you can edit
+If your local user name is different from the one one the open-bio server you can edit
 
  ~/.ssh/config
 
