@@ -70,7 +70,7 @@ directory and execute SVN commands without the URL. For example:
 `svn commit -m "comments for this commit"`  
 `svn add myfile.java`
 
-If your local user account is different from the one one the open-bio
+If your local user name is different from the one one the open-bio
 server you can edit
 
 `~/.ssh/config`
