@@ -70,5 +70,15 @@ directory and execute SVN commands without the URL. For example:
 `svn commit -m "comments for this commit"`  
 `svn add myfile.java`
 
+If your local user account is different from the one one the open-bio
+server you can edit
+
+`~/.ssh/config`
+
+and add
+
+`host dev.open-bio.org`  
+`user blablabla`
+
 We will also continue to provide anonymous checkouts and a browsable
 interface to the repository
