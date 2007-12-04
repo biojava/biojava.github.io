@@ -42,7 +42,7 @@ This procedure will be used for the conversion: (a hack of cvs2svn)
 
 Thanks to George Hartzell for doing the actual conversion.
 
-==== Problems found during testing phase ===
+#### Problems found during testing phase
 
 These six files caused problems:
 
@@ -60,11 +60,19 @@ Here's a reference that discusses the issue:
 
 ` `[`http://cvs2svn.tigris.org/faq.html#atticprob`](http://cvs2svn.tigris.org/faq.html#atticprob)
 
-` To resolve this problems the files in the Attic subdirectory are getting removed and not being imported to SVN`
+To resolve this problems the files in the Attic subdirectory are getting
+removed and not being imported to SVN
 
 Upper case / lower case problems.
 
-`There are a few files in the repository that have a upper case / lower case file name clash with another file.`
+There are a few files in the repository that have a upper case / lower
+case file name clash with another file. To resolve this they are going
+to be renamed.
+
+    /biojava-live/branches/mattandtom/src/org/biocorba 
+    /biojava-live/branches/mattandtom/src/org/biojava/bridge/biocorba 
+    /biojava-draft/biojava-live/tags/biojava/src/org/biocorba 
+    /biojava-live/tags/biojava/src/org/biojava/bridge/biocorba
 
 ### CVS freeze
 
