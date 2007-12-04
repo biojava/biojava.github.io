@@ -42,6 +42,30 @@ This procedure will be used for the conversion: (a hack of cvs2svn)
 
 Thanks to George Hartzell for doing the actual conversion.
 
+==== Problems found during testing phase ===
+
+These six files caused problems:
+
+      ERROR: A CVS repository cannot contain both biojava/biojava-live/demos/ssaha/ResultPrinter.java,v and biojava/biojava-live/demos/ssaha/Attic/ResultPrinter.java,v
+      ERROR: A CVS repository cannot contain both biojava/biojava-live/demos/ssaha/SSAHASeq.java,v and biojava/biojava-live/demos/ssaha/Attic/SSAHASeq.java,v
+      ERROR: A CVS repository cannot contain both biojava/biojava-live/demos/ssaha/CreateDNAFastaHashTable.java,v and biojava/biojava-live/demos/ssaha/Attic/CreateDNAFastaHashTable.java,v
+      ERROR: A CVS repository cannot contain both biojava/biojava-live/demos/ssaha/SSAHA.java,v and biojava/biojava-live/demos/ssaha/Attic/SSAHA.java,v
+      ERROR: A CVS repository cannot contain both biojava/biojava-live/demos/ssaha/CreateEmblHashTable.java,v and biojava/biojava-live/demos/ssaha/Attic/CreateEmblHashTable.java,v
+      ERROR: A CVS repository cannot contain both
+      biojava/biojava-live/src/org/biojava/bio/annodb/IndexedAnnotationDB.java,v
+      and
+      biojava/biojava-live/src/org/biojava/bio/annodb/Attic/IndexedAnnotationDB.java,v
+
+Here's a reference that discusses the issue:
+
+` `[`http://cvs2svn.tigris.org/faq.html#atticprob`](http://cvs2svn.tigris.org/faq.html#atticprob)
+
+` To resolve this problems the files in the Attic subdirectory are getting removed and not being imported to SVN`
+
+Upper case / lower case problems.
+
+`There are a few files in the repository that have a upper case / lower case file name clash with another file.`
+
 ### CVS freeze
 
 The date for the final CVS freeze will be announced at least 2 weeks
