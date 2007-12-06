@@ -86,9 +86,9 @@ this seems to be a bug in SVN:
 
 ### CVS freeze
 
-The date for the final CVS freeze will be announced at least 2 weeks
-before the freeze. This should give enough time for all developers to
-commit their current developments.
+The date for the final CVS freeze will be announced several days before
+the freeze. Early warnings on the biojava mailing lists should give
+enough time for all developers to commit their current developments.
 
 After the CVS freeze we will also do a (minor) BioJava release. This
 will be BioJava version 1.5.1
