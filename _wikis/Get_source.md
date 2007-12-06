@@ -42,7 +42,15 @@ This procedure will be used for the conversion: (a hack of cvs2svn)
 
 Thanks to George Hartzell for doing the actual conversion.
 
+To test the svn dump [statsvn](http://www.statsvn.org/) is being run on
+the whole repository. This allows to check if the whole history has been
+reported correctly and if there are any problems within the repository.
+
 #### Problems found during testing phase
+
+A few problems have been found so far:
+
+##### Attic files
 
 These six files caused problems:
 
@@ -63,7 +71,7 @@ Here's a reference that discusses the issue:
 To resolve this problems the files in the Attic subdirectory are getting
 removed and not being imported to SVN
 
-Upper case / lower case problems.
+##### Upper case / lower case problems
 
 There are a few files in the repository that have a upper case / lower
 case file name clash with another file. To resolve this they are going
@@ -73,6 +81,8 @@ to be renamed.
     /biojava-live/branches/mattandtom/src/org/biojava/bridge/biocorba 
     /biojava-draft/biojava-live/tags/biojava/src/org/biocorba 
     /biojava-live/tags/biojava/src/org/biojava/bridge/biocorba
+
+##### Escape characters in log statements
 
 svn log -v --xml at the moment still gives this error message:
 
