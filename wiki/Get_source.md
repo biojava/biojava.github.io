@@ -133,5 +133,8 @@ and add
 `host dev.open-bio.org`  
 `user blablabla`
 
+see also the [SVN developers page in the OBF
+wiki](http://www.open-bio.org/wiki/SVN-Developers)
+
 We will also continue to provide anonymous checkouts and a browsable
 interface to the repository
