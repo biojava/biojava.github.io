@@ -31,7 +31,7 @@ This procedure will be used for the conversion: (a hack of cvs2svn)
 
 Thanks to George Hartzell for doing the actual conversion.
 
-To test the svn dump [http://www.statsvn.org/ statsvn] is being run on the whole repository. This allows to check if the history has been convertedcorrectly and if there are any problems within the repository.
+To test the svn dump [http://www.statsvn.org/ statsvn] is being run on the whole repository. This allows to check if the history has been converted correctly and if there are any problems within the repository.
 
 
 
