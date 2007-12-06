@@ -74,6 +74,16 @@ to be renamed.
     /biojava-draft/biojava-live/tags/biojava/src/org/biocorba 
     /biojava-live/tags/biojava/src/org/biojava/bridge/biocorba
 
+svn log -v --xml at the moment still gives this error message:
+
+svn log: An invalid XML character (Unicode: 0x1b) was found in the
+element content of the document.
+
+this seems to be a bug in SVN:
+<http://subversion.tigris.org/issues/show_bug.cgi?id=2866>
+
+`TODO: currently working on removing the escape characters from the repository`
+
 ### CVS freeze
 
 The date for the final CVS freeze will be announced at least 2 weeks
