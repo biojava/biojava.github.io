@@ -44,7 +44,7 @@ Thanks to George Hartzell for doing the actual conversion.
 
 To test the svn dump [statsvn](http://www.statsvn.org/) is being run on
 the whole repository. This allows to check if the history has been
-convertedcorrectly and if there are any problems within the repository.
+converted correctly and if there are any problems within the repository.
 
 #### Problems found during testing phase
 
