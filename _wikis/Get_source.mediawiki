@@ -75,7 +75,7 @@ To resolve this they are going to be renamed.
 
 ===== Escape characters in log statements =====
 
-svn log -v --xml at the moment still gives this error message:
+svn log -v --xml gives this error message:
 
 svn log: An invalid XML character (Unicode: 0x1b) was found in the element content of the document.
 
