@@ -82,8 +82,8 @@ svn log: An invalid XML character (Unicode: 0x1b) was found in the element conte
 this seems to be a bug in SVN:
 http://subversion.tigris.org/issues/show_bug.cgi?id=2866
 
-
- TODO: currently working on removing the escape characters from the repository
+after manually removing the 2 escape characters from the log statements
+svn log -v --xml works fine.
 
 === CVS freeze ===
 
