@@ -92,7 +92,8 @@ element content of the document.
 this seems to be a bug in SVN:
 <http://subversion.tigris.org/issues/show_bug.cgi?id=2866>
 
-`TODO: currently working on removing the escape characters from the repository`
+after manually removing the 2 escape characters from the log statements
+svn log -v --xml works fine.
 
 ### CVS freeze
 
