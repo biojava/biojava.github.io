@@ -33,6 +33,18 @@ be announced closer to the migration date.
 Progress Status
 ---------------
 
+### CVS freeze
+
+The freeze of the CVS has been declared for **Wednesday December 12th,
+2007**. Please commit any code to CVS before that date.
+
+In the days after the repository will be migrated to subversion (SVN) .
+From then on all future development will be happening in the new SVN
+repository. All code (+ history) will be available via SVN.
+
+After the CVS freeze we will also do a (minor) BioJava release. This
+will be BioJava version 1.5.1
+
 ### Testing the migration procedure
 
 The testing phase has finished.
@@ -94,19 +106,6 @@ this seems to be a bug in SVN:
 
 after manually removing the 2 escape characters from the log statements
 svn log -v --xml works fine.
-
-### CVS freeze
-
-The date for the final CVS freeze will be announced several days before
-the freeze. Early warnings on the biojava mailing lists should give
-enough time for all developers to commit their current developments.
-
-After the CVS freeze we will also do a (minor) BioJava release. This
-will be BioJava version 1.5.1
-
-### Final migration to SVN
-
-waiting for CVS freeze first.
 
 ### how future checkouts might look like
 
