@@ -35,7 +35,7 @@ Progress Status
 
 ### Testing the migration procedure
 
-currently ongoing.
+The testing phase has finished.
 
 This procedure will be used for the conversion: (a hack of cvs2svn)
 [1](http://hoopajoo.net/misc/converting_to_svn.html)
@@ -48,7 +48,7 @@ converted correctly and if there are any problems within the repository.
 
 #### Problems found during testing phase
 
-A few problems have been found so far:
+A few problems have been found:
 
 ##### Attic files
 
