@@ -24,7 +24,8 @@ Detailed instructions for how to check out and commit code to svn will be announ
 ==Progress Status==
 
 === Testing the migration procedure ===
-currently ongoing.
+
+The testing phase has finished. 
 
 This procedure will be used for the conversion: (a hack of cvs2svn)
 [http://hoopajoo.net/misc/converting_to_svn.html]
@@ -37,7 +38,7 @@ To test the svn dump [http://www.statsvn.org/ statsvn] is being run on the whole
 
 ==== Problems found during testing phase ====
 
-A few problems have been found so far:
+A few problems have been found:
 
 ===== Attic files =====
 These six files caused problems:
