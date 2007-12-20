@@ -32,7 +32,7 @@ Announcing
 
 You can now read BioJava in Anger in
 [French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
-Foisy; mise à jour / updated : 31 Aug 2007).
+Foisy; mise à jour / updated : 20 Dec 2007).
 
 You can also read Biojava in Anger in
 [Portuguese](Biojava:CookbookPortuguese "wikilink") (Translated by
