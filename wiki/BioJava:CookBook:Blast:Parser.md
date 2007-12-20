@@ -42,6 +42,9 @@ public class BlastParser {
 `     //make a BlastLikeSAXParser`  
 `     BlastLikeSAXParser parser = new BlastLikeSAXParser();`
 
+`     // try to parse, even if the blast version is not recognized.`  
+`     parser.setModeLazy();`
+
 `     //make the SAX event adapter that will pass events to a Handler.`  
 `     SeqSimilarityAdapter adapter = new SeqSimilarityAdapter();`
 
