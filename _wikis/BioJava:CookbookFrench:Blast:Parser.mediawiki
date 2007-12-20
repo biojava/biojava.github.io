@@ -36,6 +36,11 @@ public class BlastParser {
       //construire un BlastLikeSAXParser
       BlastLikeSAXParser parser = new BlastLikeSAXParser();
 
+      // La méthode setModeLazy() relache la procedure de lecture
+      // afin de permettre la lecture des rapports BLAST
+      // meme lorsque BLAST a change son format de sortie
+      parser.setModeLazy();
+
       //construire un adaptateur pour SAX event qui les passera a un Handler.
       SeqSimilarityAdapter adapter = new SeqSimilarityAdapter();
 
