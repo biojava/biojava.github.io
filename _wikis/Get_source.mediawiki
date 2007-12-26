@@ -7,7 +7,7 @@ and tags and the history of the files has been imported into the new repository.
 === How SVN checkouts work ===
 
 
-== developer checkout == 
+== Developer checkout == 
 For a developer the SVN checkout will look like this:
 
  svn co svn+ssh://dev.open-bio.org:/home/svn-repositories/biojava/biojava-svn/biojava-live/trunk/  ./biojava-live
