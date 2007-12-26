@@ -5,16 +5,11 @@ title: Get source
 BioJava starting to use SVN
 ---------------------------
 
-Over the next weeks (until Christmas) BioJava will finally move the
-version control system from CVS to Subversion (svn). This is happening
-in parallel to the other open-bio projects. We will ensure that nothing
-gets lost during this migration. This means that all Biojava modules,
-branches and tags and the history of the files will be imported into the
-new repository.
+BioJava has moved the version control system from CVS to Subversion
+(svn). All Biojava modules, branches and tags and the history of the
+files has been imported into the new repository.
 
 ### Steps during the migration process
-
-Over the next weeks we will
 
 A) Test the migration procedure to ensure nothing gets lost
 
@@ -26,9 +21,6 @@ C) After the freeze the final svn migration will happen
 
 D) from that moment on all future Biojava development will happen via
 svn, CVS will remain frozen.
-
-Detailed instructions for how to check out and commit code to svn will
-be announced closer to the migration date.
 
 Progress Status
 ---------------
