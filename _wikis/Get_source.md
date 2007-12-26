@@ -3,7 +3,7 @@ title: Get source
 ---
 
 BioJava now using SVN
----------------------
+=====================
 
 BioJava has moved the version control system from CVS to Subversion
 (svn). All Biojava modules, branches and tags and the history of the
