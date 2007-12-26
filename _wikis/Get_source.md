@@ -41,8 +41,7 @@ See also the [SVN developers page in the OBF
 wiki](http://www.open-bio.org/wiki/SVN-Developers)
 
 If you are working with Eclipse see how to configure a svn+ssh://
-connection: [http://subclipse.tigris.org/faq.html\#svn-ssh
-subclipse](http://subclipse.tigris.org/faq.html#svn-ssh_subclipse "wikilink")
+connection: [subclipse](http://subclipse.tigris.org/faq.html#svn-ssh)
 
 Anonymous checkout
 ------------------
