@@ -1,4 +1,4 @@
-==BioJava now using SVN==
+=BioJava now using SVN=
 
 BioJava has moved the version control system from 
 CVS to Subversion (svn).  All Biojava modules, branches 
