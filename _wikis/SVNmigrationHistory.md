@@ -2,6 +2,8 @@
 title: SVNmigrationHistory
 ---
 
+back to [CVS\_to\_SVN\_Migration](CVS_to_SVN_Migration "wikilink")
+
 ### Steps during the migration process
 
 A) Test the migration procedure to ensure nothing gets lost
