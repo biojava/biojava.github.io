@@ -111,9 +111,7 @@ svn log -v --xml works fine.
 
 For a developer the CVS checkout will look like this:
 
-svn co
-svn+ssh://dev.open-bio.org:/home/svn-repositories/biojava/biojava-svn/biojava-live/trunk/
-./biojava-live
+`svn co svn+ssh://dev.open-bio.org:/home/svn-repositories/biojava/biojava-svn/biojava-live/trunk/  ./biojava-live`
 
 after initial checkout, you can change into the local ./biojava-live
 directory and execute SVN commands without the URL. For example:
