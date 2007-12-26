@@ -42,4 +42,5 @@ checkout will become available soon.
 History of the update procedure
 -------------------------------
 
-[SVNmigrationHistory](SVNmigrationHistory "wikilink")
+for more detailed documentation about the procedure used for the CVS to
+SVN migration see [SVNmigrationHistory](SVNmigrationHistory "wikilink")
