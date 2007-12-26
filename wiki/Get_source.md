@@ -11,7 +11,7 @@ files has been imported into the new repository.
 
 ### How SVN checkouts work
 
-developer checkout
+Developer checkout
 ------------------
 
 For a developer the SVN checkout will look like this:
