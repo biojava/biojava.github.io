@@ -33,4 +33,6 @@ Information how to obtain an anomymous checkout will become available soon.
 
 
 == History of the update procedure ==
+
+for more detailed documentation about the procedure used for the CVS to SVN migration see
 [[SVNmigrationHistory]]
