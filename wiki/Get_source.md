@@ -9,9 +9,12 @@ BioJava has moved the version control system from CVS to Subversion
 (svn). All Biojava modules, branches and tags and the history of the
 files has been imported into the new repository.
 
-### how future checkouts will work
+### How SVN checkouts work
 
-For a developer the CVS checkout will look like this:
+developer checkout
+------------------
+
+For a developer the SVN checkout will look like this:
 
 `svn co svn+ssh://dev.open-bio.org:/home/svn-repositories/biojava/biojava-svn/biojava-live/trunk/  ./biojava-live`
 
@@ -34,6 +37,9 @@ and add
 
 see also the [SVN developers page in the OBF
 wiki](http://www.open-bio.org/wiki/SVN-Developers)
+
+Anonymous checkout
+------------------
 
 We will also continue to provide anonymous checkouts and a browsable
 interface to the repository. Information how to obtain an anomymous
