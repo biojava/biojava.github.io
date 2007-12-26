@@ -31,7 +31,7 @@ and add
 === Links ===
 See also the [http://www.open-bio.org/wiki/SVN-Developers SVN developers page in the OBF wiki]
 
-If you are working with Eclipse see how to configure a svn+ssh:// connection: [[http://subclipse.tigris.org/faq.html#svn-ssh subclipse]]
+If you are working with Eclipse see how to configure a svn+ssh:// connection: [http://subclipse.tigris.org/faq.html#svn-ssh subclipse]
 
 == Anonymous checkout ==
 
