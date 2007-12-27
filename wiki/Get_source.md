@@ -17,7 +17,7 @@ Developer checkout
 this is still under development and will be confirmed soon: For a
 developer the SVN checkout will look like this:
 
-`svn co svn+ssh://dev.open-bio.org/home/svn/biojava/biojava-live/trunk/  ./biojava-live`
+`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/  ./biojava-live`
 
 after initial checkout, you can change into the local ./biojava-live
 directory and execute SVN commands without the URL. For example:
