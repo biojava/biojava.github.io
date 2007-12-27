@@ -30,7 +30,7 @@ and add
  user blablabla
 
 
-=== SVN and multiple operating systems ===
+=== SVN and EOL  ===
 
 Unlike CVS, Subversion does automatically convert End Of Line characters, which can cause problems
 across different operating systems. To work around this SVN is providing the 
@@ -103,8 +103,6 @@ INSTALL = svn:mime-type=text/plain;svn:eol-style=native
 README = svn:mime-type=text/plain;svn:eol-style=native
 
 </pre>
-
-
 
 === Links ===
 See also the [http://www.open-bio.org/wiki/SVN-Developers SVN developers page in the OBF wiki]
