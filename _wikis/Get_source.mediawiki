@@ -32,7 +32,7 @@ and add
 
 === SVN and EOL  ===
 
-Unlike CVS, Subversion does automatically convert End Of Line characters, which can cause problems
+Unlike CVS, Subversion does not automatically convert End Of Line characters, which can cause problems
 across different operating systems. To work around this SVN is providing the 
 [http://svnbook.red-bean.com/en/1.1/ch07s02.html#svn-ch-7-sect-2.3.5 eol-style property].
 
