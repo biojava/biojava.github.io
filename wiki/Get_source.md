@@ -36,7 +36,7 @@ and add
 `host dev.open-bio.org`  
 `user blablabla`
 
-### SVN and multiple operating systems
+### SVN and EOL
 
 Unlike CVS, Subversion does automatically convert End Of Line
 characters, which can cause problems across different operating systems.
