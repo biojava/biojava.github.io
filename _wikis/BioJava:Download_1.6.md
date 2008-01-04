@@ -34,8 +34,8 @@ file (3.3Mb).
 Documentation
 -------------
 
-Documentation is available as a
-[1](http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar) file
+Documentation is available via
+[biojava-doc.jar](http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar)
 (10Mb) that includes the javadocs for the API, demos and apps.
 
 Getting older versions
