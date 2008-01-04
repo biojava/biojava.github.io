@@ -5,6 +5,10 @@ title: BioJava:Download 1.5
 This page offers downloads for the BioJava 1.5 release. BioJava 1.5 runs
 on Java 2 Standard Edition 1.4.2 (or later) platforms.
 
+A release candidate for the next verision of BioJava (1.6) is available
+from <BioJava:Download_1.6>. This is the first BioJava release running
+with Java 1.5 (or later).
+
 Complete Download
 -----------------
 
