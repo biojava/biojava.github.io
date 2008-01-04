@@ -34,8 +34,8 @@ the [Getting started](Project:GetStarted "wikilink") page.
 
 You can also maintain an up-to-date view of BioJava using CVS.
 Additionally, we provide an [anonymous CVS](http://cvs.biojava.org/)
-server. Shortly BioJava will migrate to an SVN (subversion) based
-server.
+server. Shortly BioJava will migrate to an [SVN (subversion) based
+server](CVS_to_SVN_Migration "wikilink").
 
 If you wish to contribute your existing code or help maintain part of
 the BioJava code-base, then we can supply you with a read/write account.
