@@ -19,8 +19,7 @@ A  binary distribution is available as [http://www.biojava.org/download/bj16/rc1
 
 == Documentation ==
 
-Documentation is available as a [http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar] file (10Mb) that includes the javadocs for the API, demos and apps.
-
+Documentation is available via [http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar biojava-doc.jar] (10Mb) that includes the javadocs for the API, demos and apps.
 
 == Getting older versions ==
 
