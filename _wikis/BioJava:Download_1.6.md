@@ -41,6 +41,9 @@ Documentation is available via
 [biojava-doc.jar](http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar)
 (10Mb) that includes the javadocs for the API, demos and apps.
 
+You can also browse the documentation at [biojava 1.6
+api](http://www.biojava.org/docs/api16/)
+
 Getting older versions
 ----------------------
 
