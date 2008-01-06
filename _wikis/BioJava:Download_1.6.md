@@ -2,11 +2,12 @@
 title: BioJava:Download 1.6
 ---
 
-This page offers downloads for the BioJava 1.6 release candidate 1.
-BioJava 1.6 runs on Java 1.5 or later.
+This page offers downloads for the <b>BioJava 1.6 release candidate
+1</b>.
 
-If you want to use the current stable release, or you require Java 1.4.2
-then please download [ release 1.5](BioJava:Download 1.5 "wikilink")
+BioJava 1.6 requires on <b>Java 1.5</b> or later. If you want to use the
+current stable release, or you require Java 1.4.2 then please download [
+release 1.5](BioJava:Download 1.5 "wikilink")
 
 Complete Download
 -----------------
@@ -41,7 +42,7 @@ Documentation is available via
 [biojava-doc.jar](http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar)
 (10Mb) that includes the javadocs for the API, demos and apps.
 
-You can also browse the documentation at [biojava 1.6
+You can also browse the documentation at [BioJava 1.6
 api](http://www.biojava.org/docs/api16/)
 
 Getting older versions
