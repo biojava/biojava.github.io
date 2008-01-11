@@ -17,6 +17,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.biomatters.com Geneious]: A molecular biology toolkit.
 
+* [http://www.proteomecommons.org/dev/masssieve/index.html MassSieve]: An open source application to analyze mass spec proteomics data.
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
