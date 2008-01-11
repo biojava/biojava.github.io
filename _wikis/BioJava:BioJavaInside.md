@@ -50,6 +50,11 @@ projects please add them to the list.
 
 -   [Geneious](http://www.biomatters.com): A molecular biology toolkit.
 
+<!-- -->
+
+-   [MassSieve](http://www.proteomecommons.org/dev/masssieve/index.html):
+    An open source application to analyze mass spec proteomics data.
+
 Publications
 ------------
 
