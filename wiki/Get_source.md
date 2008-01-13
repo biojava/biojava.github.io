@@ -118,12 +118,48 @@ wiki](http://www.open-bio.org/wiki/SVN-Developers)
 If you are working with Eclipse see how to configure a svn+ssh://
 connection: [subclipse](http://subclipse.tigris.org/faq.html#svn-ssh)
 
-Anonymous checkout
-------------------
+Downloading and updating code via Anonymous SVN
+-----------------------------------------------
 
-We will also continue to provide anonymous checkouts and a browsable
-interface to the repository. Information how to obtain an anomymous
-checkout will become available soon.
+The code.open-bio.org server also offers up read-only copies of source
+code repositories via anonymous SVN. A list of code repositories
+available via SVN can be seen here:
+<http://code.open-bio.org/svnweb/index.cgi>
+
+Example Usage:
+
+To see what SVN modules the BioJava project is making available, try
+this command:
+
+`svn list `[`svn://code.open-bio.org/biojava`](svn://code.open-bio.org/biojava)
+
+### Checking out the latest BioJava development code
+
+The following example shows how to obtain the latest BioJava codebase
+snapshot using anonymous SVN, it will check out the latest copy of
+biojava-live/ from the "SVN trunk" and will locally store it in a
+directory named "biojava-live" on your system:
+
+`svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk`](svn://code.open-bio.org/biojava/biojava-live/trunk)` biojava-live`
+
+### Troubleshooting Anonymous SVN
+
+If you encounter an error while using the SVN client or SVN Web
+interface, the likely cause is that our server is in the middle of
+replicating the repository from the primary source. While the mirror and
+replication process occurs, it is not unusual for SVN client
+functionality to break temporarily.
+
+The final step of our codebase replication process is to explicitly
+re-verify the health and status of each repository, this process takes a
+few moments but while it occurs the repository is "locked" and
+unavailable for access.
+
+`   * Anonymous SVN repositories are updated/mirrored hourly from the primary developer server`  
+`   * Anonymous SVN repositories are verified and repaired (if necessary) every 20 minutes `
+
+If a SVN client error occurs for longer than 20 minutes, please report
+this to: support@helpdesk.open-bio.org
 
 History of the update procedure
 -------------------------------
