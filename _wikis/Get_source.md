@@ -12,10 +12,9 @@ history of the files has been imported into the new repository.
 Downloading and updating code via Anonymous SVN
 -----------------------------------------------
 
-The code.open-bio.org server also offers up read-only copies of source
-code repositories via anonymous SVN. A list of code repositories
-available via SVN can be seen here:
-<http://code.open-bio.org/svnweb/index.cgi>
+The code.open-bio.org server offers up read-only copies of source code
+repositories via anonymous SVN. A list of code repositories available
+via SVN can be seen here: <http://code.open-bio.org/svnweb/index.cgi>
 
 Example Usage:
 
