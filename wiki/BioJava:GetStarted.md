@@ -81,9 +81,8 @@ Building your own
 If you want to modify BioJava, you can obtain a copy of the source code
 from the [Source directory](http://www.biojava.org/download/source) of
 the download area. Source releases are distributed in .tar.gz format.
-You can also obtain up-to-the-minute source code via an
-[<http://biojava.org/wiki/CVS_to_SVN_Migration>| anonymous SVN
-checkout].
+You can also obtain up-to-the-minute source code via an [ anonymous SVN
+checkout](CVS_to_SVN_Migration "wikilink").
 
 BioJava is built using the *ant* build tool, a Java-specific equivalent
 of the common Make utilities. Please download and install the latest
