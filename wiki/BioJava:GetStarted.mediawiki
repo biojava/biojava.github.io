@@ -48,7 +48,7 @@ You can now compile and run BioJava programs using the ''javac'' and ''java'' co
 
 ==  Building your own ==
 
-If you want to modify BioJava, you can obtain a copy of the source code from the [http://www.biojava.org/download/source Source directory] of the download area. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute source code from [http://cvs.biojava.org anonymous CVS].
+If you want to modify BioJava, you can obtain a copy of the source code from the [http://www.biojava.org/download/source Source directory] of the download area. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute source code via an [http://biojava.org/wiki/CVS_to_SVN_Migration| anonymous SVN checkout].
 
 BioJava is built using the ''ant'' build tool, a Java-specific equivalent of the common Make utilities. Please download and install the latest version of ''ant'' (currently 1.6.1). It is available [http://ant.apache.org here].
 
