@@ -32,10 +32,10 @@ BioJava releases can be obtained from our
 installing the library, and building source releases, can be found on
 the [Getting started](Project:GetStarted "wikilink") page.
 
-You can also maintain an up-to-date view of BioJava using CVS.
-Additionally, we provide an [anonymous CVS](http://cvs.biojava.org/)
-server. Shortly BioJava will migrate to an [SVN (subversion) based
-server](CVS_to_SVN_Migration "wikilink").
+You can also maintain an up-to-date view of BioJava using Subversion.
+You can obtain an [anonymous checkout](CVS_to_SVN_Migration "wikilink")
+of biojava or [browse the SVN
+repository](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk).
 
 If you wish to contribute your existing code or help maintain part of
 the BioJava code-base, then we can supply you with a read/write account.
