@@ -37,6 +37,8 @@ You can also maintain an up-to-date view of BioJava using Subversion.
 You can obtain an [anonymous checkout](CVS_to_SVN_Migration "wikilink")
 of biojava or [browse the SVN
 repository](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk).
+Automated builds from the latest subversion checkouts are available from
+<http://www.spice-3d.org/cruise/>
 
 If you wish to contribute your existing code or help maintain part of
 the BioJava code-base, then we can supply you with a read/write account.
