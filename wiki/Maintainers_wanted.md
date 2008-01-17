@@ -2,9 +2,6 @@
 title: Maintainers wanted
 ---
 
-Maintainers wanted
-==================
-
 We are currently looking for maintainer(s) for the following
 sub-packages
 
