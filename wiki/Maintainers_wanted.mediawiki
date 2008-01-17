@@ -1,0 +1,20 @@
+=Maintainers wanted=
+
+We are currently looking for maintainer(s) for the following sub-packages
+
+
+
+==BLAST parsers==
+
+The BioJava [[BioJava:CookBook:Blast:Parser|BLAST parser modules]] are among the most frequently used bits of BioJava.
+It is possible to parse a large variety of BLAST-family output files, but the framework is not complete.
+We are looking for a motivated individual who wants to take over the leadership over these modules, interact with a large 
+user community and claim responsibility for maintaining and further developing these modules. 
+
+Among the currently open tasks are:
+ * add support for PSI-blast parsing
+ * support parsing of result files with multiple queries
+ * support XML-output parsing
+ * refactor the blast packages to provide more understandable package names. (for Biojava-v3)
+
+==IO packages==
