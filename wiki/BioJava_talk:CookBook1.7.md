@@ -24,3 +24,11 @@ Hi- That's the link that I have put in the french version:
 My suggestion is to create a page where some representative apps created
 using BioJava could be showcased. --[Foisys](User:Foisys "wikilink")
 15:58, 6 February 2006 (EST)
+
+What do people think about the links to STRAP here? this are links out
+to their web site. No content in this wiki is provided and it does not
+feel like the BioJava cookbook page is the right place for this. Perhaps
+this should better be moved to the [applications that are based on
+biojava
+page](BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
+18:39, 21 January 2008 (EST)
