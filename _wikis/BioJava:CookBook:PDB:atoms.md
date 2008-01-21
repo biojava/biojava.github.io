@@ -5,7 +5,9 @@ title: BioJava:CookBook:PDB:atoms
 ### How can I access the atoms in a structure?
 
 BioJava provides a flexible data structure for managing protein
-structural data. The Structure class is the main container.
+structural data. The [Structure
+class](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html)
+is the main container.
 
 A Structure has a hierarchy of sub-objects:
 
@@ -18,8 +20,11 @@ A Structure has a hierarchy of sub-objects:
                      Atom(s)
 
 Different ways are provided how to access the data contained in a
-Structure. If you want to directly access an array of Atoms you can do
-something like this:
+[Structure](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html).
+If you want to directly access an array of
+[Atoms](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Atom.html)
+you can use the
+[StructureTools](http://www.biojava.org/docs/api16/org/biojava/bio/structure/StructureTools.html)
 
 <java>
 
@@ -28,8 +33,10 @@ StructureTools.getAtomArray(structure,"CA");
 
 </java>
 
-Another possibility is to use one of the iterators to iterate over Atoms
-or Groups.
+Another possibility is to use one of the iterators to iterate over
+[Atoms](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Atom.html)
+or
+[Groups](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Group.html).
 
 <java> public static int getNrAtoms(Structure s){
 
