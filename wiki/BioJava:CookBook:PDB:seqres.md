@@ -11,9 +11,8 @@ studied. The ATOM records provide the coordinates for those residues
 that were possible to observe. In order to join this information,
 Biojava aligns the SEQRES and the ATOM records for each chain. This is
 optional and can be enabled or disabled by using the
-[<http://www.biojava.org/docs/api16/org/biojava/bio/structure/io/PDBFileReader.html#setAignSeqRes>()
-PDBFileReader.setAlignSeqRes()] method. By default this alignment will
-be calculated.
+[PDBFileReader.setAlignSeqRes()](http://www.biojava.org/docs/api16/org/biojava/bio/structure/io/PDBFileReader.html#setAignSeqRes(boolean))
+method. By default this alignment will be calculated.
 
 Access to the ATOM groups is possible via
 [<http://www.biojava.org/docs/api16/org/biojava/bio/structure/Chain.html#getAtomGroups>()
