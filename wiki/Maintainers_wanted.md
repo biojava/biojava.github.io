@@ -12,7 +12,7 @@ The BioJava [BLAST parser
 modules](BioJava:CookBook:Blast:Parser "wikilink") are among the most
 frequently used bits of BioJava. It is possible to parse a large variety
 of BLAST-family output files, but the framework is not complete. We are
-looking for a motivated individual who wants to take over the leadership
+looking for a motivated individual who want to take over the leadership
 over these modules, interact with a large user community and claim
 responsibility for maintaining and further developing these modules.
 
