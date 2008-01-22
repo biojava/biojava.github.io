@@ -11,17 +11,16 @@ studied. The ATOM records provide the coordinates for those residues
 that were possible to observe. In order to join this information,
 Biojava aligns the SEQRES and the ATOM records for each chain. This is
 optional and can be enabled or disabled by using the
-[PDBFileReader.setAlignSeqRes()](http://www.biojava.org/docs/api16/org/biojava/bio/structure/io/PDBFileReader.html#setAignSeqRes(boolean))
+[PDBFileReader.setAlignSeqRes()](http://www.biojava.org/docs/api16/org/biojava/bio/structure/io/PDBFileReader.html)
 method. By default this alignment will be calculated.
 
 Access to the ATOM groups is possible via
-[<http://www.biojava.org/docs/api16/org/biojava/bio/structure/Chain.html#getAtomGroups>()
-Chain.getAtomGroups()]. Access to the SEQRES groups is possible via
-[<http://www.biojava.org/docs/api16/org/biojava/bio/structure/Chain.html#getSeqResGroups>()
-Chain.getSeqResGroups()]. Groups derived from SEQRES groups will be
-empty (i.e. they will not contain Atoms), unless they could be mapped to
-the ATOM records, in which case the full ATOM information can be
-accessed.
+[Chain.getAtomGroups()](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Chain.html).
+Access to the SEQRES groups is possible via
+[Chain.getSeqResGroups()](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Chain.html).
+Groups derived from SEQRES groups will be empty (i.e. they will not
+contain Atoms), unless they could be mapped to the ATOM records, in
+which case the full ATOM information can be accessed.
 
 Example: <java>
 
