@@ -5,9 +5,9 @@ title: BioJava:CookBook:PDB:atoms
 ### How can I access the atoms in a structure?
 
 BioJava provides a flexible data structure for managing protein
-structural data. The [Structure
-class](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html)
-is the main container.
+structural data. The
+[Structure](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html)
+class is the main container.
 
 A Structure has a hierarchy of sub-objects:
 
