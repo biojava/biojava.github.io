@@ -7,7 +7,7 @@ title: BioJava:CookBook:PDB:header
 new: BioJava in CVS now can parse the COMPND and SOURCE header files.
 Thanks to Jules Jacobsen (EBI) for providing the patch. The contained
 information is availabe via the [Compound
-class](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Compund.html)
+class](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Compound.html)
 that can be accessed from
 [<http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html#getCompounds>()
 structure.getCompounds()].
