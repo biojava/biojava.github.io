@@ -40,8 +40,8 @@ schema.
 
 Among the currently open tasks are:
 
-`* Update the cookbook `[ `IO`
-`examples`](http://biojava.org/wiki/BioJava:CookBook#Sequence_I.2FO "wikilink")` to use the org.biojavax packages.`  
+`* Update the cookbook `[`IO`
+`examples`](BioJava:CookBook#Sequence_I.2FO "wikilink")` to use the org.biojavax packages.`  
 `* Provide more cookbook examples.`  
 `* Add support for DDBJ format.`  
 `* Run profilers to increase the speed of the parsers.`  
