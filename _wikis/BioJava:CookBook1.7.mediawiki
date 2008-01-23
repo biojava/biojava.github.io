@@ -10,7 +10,7 @@ These demos are tested with BioJava 1.3 and Java 1.4
 
 == Announcing ==
 
-You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 20 Dec 2007).
+You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 23 Jan 2008).
 
 You can also read Biojava in Anger in [[Biojava:CookbookPortuguese|Portuguese]] (Translated by Dickson Guedes)
 
