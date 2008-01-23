@@ -19,3 +19,7 @@ What do people think about the links to STRAP here?
 this are links out to their web site. No content in this wiki is provided and it does not feel like the BioJava cookbook page
 is the right place for this. Perhaps this should better be moved
 to the [[BioJava:BioJavaInside|applications that are based on biojava page]]? --[[User:Andreas|Andreas]] 18:39, 21 January 2008 (EST)
+
+Hi gang ;-) Andreas has a good point. The goals of the cookbook is to show people how to use BioJava to create their own solutions. STRAP is good stuff but it goes beyond BioJava and stands on its own. I vote yea on this.
+
+Another point: I saw that Andreas has added links to the javadocs on some cookbook examples. I have not modified the french version yet but I think that this is a good thing for all pages. Should we make this SOP for cookbook recipes? I volunteer for the french cookbook but I would appreciate some help if I dive into the english version... --[[User:Foisys|Foisys]] 10:45, 23 January 2008 (EST)
