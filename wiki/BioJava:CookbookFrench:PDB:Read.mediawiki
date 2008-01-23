@@ -1,6 +1,6 @@
 == Comment faire pour lire un fichier de type PDB? ==
 
-La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. BioJava contient un mod&egrave;le flexible permettant la gestion des donn&eacute;es de structure contenues dans un fichier PDB. L'exemple ci-dessous montre comment faire la lecture d'un fichier PDB &agrave; partir d'un syst&egrave;me de fichiers local et d'it&eacute;rer sur les Groupes contenus dans ce fichier.
+La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. BioJava contient un mod&egrave;le flexible permettant la gestion des donn&eacute;es de structure contenues dans un fichier PDB. L'exemple ci-dessous montre comment faire la lecture d'un fichier PDB &agrave; partir d'un syst&egrave;me de fichiers local, obtenir un objet de type Structure et d'it&eacute;rer sur les Groupes contenus dans ce fichier.
 
 L'acc&egrave; aux informations de chaque Atome contenu dans le fichier se fait plut&ocirc;t de cette mani&egrave;re.
 

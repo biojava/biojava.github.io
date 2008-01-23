@@ -12,8 +12,8 @@ les fichiers PDB contiennent plutôt des données de position d'atomes au
 sein d'une structure 3D. BioJava contient un modèle flexible permettant
 la gestion des données de structure contenues dans un fichier PDB.
 L'exemple ci-dessous montre comment faire la lecture d'un fichier PDB à
-partir d'un système de fichiers local et d'itérer sur les Groupes
-contenus dans ce fichier.
+partir d'un système de fichiers local, obtenir un objet de type
+Structure et d'itérer sur les Groupes contenus dans ce fichier.
 
 L'accè aux informations de chaque Atome contenu dans le fichier se fait
 plutôt de cette manière.
