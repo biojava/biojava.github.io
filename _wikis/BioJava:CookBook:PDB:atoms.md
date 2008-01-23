@@ -6,7 +6,7 @@ title: BioJava:CookBook:PDB:atoms
 
 BioJava provides a flexible data structure for managing protein
 structural data. The
-[Structure](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html)
+[Structure](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html)
 class is the main container.
 
 A Structure has a hierarchy of sub-objects:
@@ -20,11 +20,11 @@ A Structure has a hierarchy of sub-objects:
                      Atom(s)
 
 Different ways are provided how to access the data contained in a
-[Structure](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html).
+[Structure](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html).
 If you want to directly access an array of
-[Atoms](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Atom.html)
+[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
 you can use the
-[StructureTools](http://www.biojava.org/docs/api16/org/biojava/bio/structure/StructureTools.html)
+[StructureTools](http://www.biojava.org/docs/api/org/biojava/bio/structure/StructureTools.html)
 
 <java>
 
@@ -34,9 +34,9 @@ StructureTools.getAtomArray(structure,"CA");
 </java>
 
 Another possibility is to use one of the iterators to iterate over
-[Atoms](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Atom.html)
+[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
 or
-[Groups](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Group.html).
+[Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html).
 
 <java> public static int getNrAtoms(Structure s){
 
