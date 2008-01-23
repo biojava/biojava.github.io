@@ -20,3 +20,5 @@ public  double getPhi(Group a, Group b)
         return phi ;
     }
 </java>
+
+BioJava possède également une classe utilisant un algorithm de superposition de structure protéique. Pour en savoir plus, consultez cette [[BioJava:CookbookFrench:PDB:Align | page]].
