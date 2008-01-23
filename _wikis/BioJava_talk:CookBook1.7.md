@@ -38,8 +38,7 @@ show people how to use BioJava to create their own solutions. STRAP is
 good stuff but it goes beyond BioJava and stands on its own. I vote yea
 on this.
 
-Links to Javadoc
-----------------
+### Links to Javadoc
 
 Another point: I saw that Andreas has added links to the javadocs on
 some cookbook examples. I have not modified the french version yet but I
@@ -57,3 +56,15 @@ will always point to the latest version of the BioJava api, so all wiki
 links should use that rather than
 .../docs/api16/ --[Andreas](User:Andreas "wikilink") 10:50, 23 January
 2008 (EST)
+
+Good point ;-). I'll start using this from now
+on. --[Foisys](User:Foisys "wikilink") 11:50, 23 January 2008 (EST)
+
+### Cookbook SOP
+
+While we are at it, should we start thinking about a SOP for writing
+recipes? I know that I have tried to stick to a common style for the
+french version (like classes in italic) but it would be nice if we
+worked toward some kind of
+standard... --[Foisys](User:Foisys "wikilink") 11:50, 23 January 2008
+(EST)
