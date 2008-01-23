@@ -38,6 +38,9 @@ show people how to use BioJava to create their own solutions. STRAP is
 good stuff but it goes beyond BioJava and stands on its own. I vote yea
 on this.
 
+Links to Javadoc
+----------------
+
 Another point: I saw that Andreas has added links to the javadocs on
 some cookbook examples. I have not modified the french version yet but I
 think that this is a good thing for all pages. Should we make this SOP
@@ -46,8 +49,11 @@ appreciate some help if I dive into the english
 version... --[Foisys](User:Foisys "wikilink") 10:45, 23 January 2008
 (EST)
 
-only thing that worries me about this is that if we have a new release
-of biojava, the javadoc location changes. i will check if it is possible
-to create a symbolic link to always use the latest javadoc that is on
-the server... --[Andreas](User:Andreas "wikilink") 10:50, 23 January
+Only thing that worries me is that if we have a new release of biojava,
+the javadoc location changes. I just created a symbolic link on the web
+server. from now on
+[<http://www.biojava.org/docs/api/>](http://www.biojava.org/docs/api/)
+will always point to the latest version of the BioJava api, so all wiki
+links should use that rather than
+.../docs/api16/ --[Andreas](User:Andreas "wikilink") 10:50, 23 January
 2008 (EST)
