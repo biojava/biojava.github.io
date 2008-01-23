@@ -5,7 +5,7 @@ title: BioJava:CookBook:PDB:atomsCalc
 ### How can I do calculations with Atoms?
 
 The
-[Calc](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Calc.html)
+[Calc](http://www.biojava.org/docs/api/org/biojava/bio/structure/Calc.html)
 class provides a set of methods that can be used for calculations.
 
 <java> public double getPhi(Group a, Group b)
