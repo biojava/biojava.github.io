@@ -27,3 +27,7 @@ divers calculs sur des Atomes.
 `   }`
 
 </java>
+
+BioJava possède également une classe utilisant un algorithm de
+superposition de structure protéique. Pour en savoir plus, consultez
+cette [ page](BioJava:CookbookFrench:PDB:Align "wikilink").
