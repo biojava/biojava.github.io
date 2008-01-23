@@ -6,8 +6,10 @@ Comment obtenir les informations sur les atomes présent dans un fichier PDB?
 ----------------------------------------------------------------------------
 
 BioJava possède un structure très flexible pour gérer des données
-sructurales de protéines. La classe Structure vous procure le conteneur
-principal à partir du quel vous pouvez accéder à toutes les données.
+sructurales de protéines. La classe Structure
+([javadocs](http://www.biojava.org/docs/api16/org/biojava/bio/structure/Structure.html))
+vous procure le conteneur principal à partir du quel vous pouvez accéder
+à toutes les données.
 
 Un objet Structure contient la hiérarchie suivante de sous-objets:
 
