@@ -45,3 +45,9 @@ for cookbook recipes? I volunteer for the french cookbook but I would
 appreciate some help if I dive into the english
 version... --[Foisys](User:Foisys "wikilink") 10:45, 23 January 2008
 (EST)
+
+only thing that worries me about this is that if we have a new release
+of biojava, the javadoc location changes. i will check if it is possible
+to create a symbolic link to always use the latest javadoc that is on
+the server... --[Andreas](User:Andreas "wikilink") 10:50, 23 January
+2008 (EST)
