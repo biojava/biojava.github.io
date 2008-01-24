@@ -13,11 +13,15 @@ of MacOS X include a suitable Java implementation as standard. Java is
 also available on many other platforms: if in doubt, contact your
 vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the legacy release version of BioJava 1.4
-[here](Biojava:Download 1.4 "wikilink"); or
+You can get the latest version [BioJava 1.6-rc1 (requires Java
+1.5+)](Biojava:Download "wikilink") from the [download
+area](Biojava:Download "wikilink") .
 
-You can get the latest release version (BioJava 1.5) from the [download
-area](Biojava:Download "wikilink").
+You can get the release version of [BioJava 1.5 (requires Java
+1.4+)](Biojava:Download 1.5 "wikilink") ; or
+
+You can get the legacy release version of BioJava 1.4
+[here](Biojava:Download 1.4 "wikilink");
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
