@@ -25,6 +25,8 @@ My suggestion is to create a page where some representative apps created
 using BioJava could be showcased. --[Foisys](User:Foisys "wikilink")
 15:58, 6 February 2006 (EST)
 
+### Links to other projects
+
 What do people think about the links to STRAP here? this are links out
 to their web site. No content in this wiki is provided and it does not
 feel like the BioJava cookbook page is the right place for this. Perhaps
@@ -36,7 +38,13 @@ page](BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
 Hi gang ;-) Andreas has a good point. The goals of the cookbook is to
 show people how to use BioJava to create their own solutions. STRAP is
 good stuff but it goes beyond BioJava and stands on its own. I vote yea
-on this.
+on this. --[Foisys](User:Foisys "wikilink") 11:50, 23 January 2008 (EST)
+
+Ok, I moved the link to Strap to the <BioJava:BioJavaInside> page, which
+lists Applications that are based on BioJava and references scientific
+articles. If you want to provide a link to your BioJava based tool,
+please do it there. --[Andreas](User:Andreas "wikilink") 13:51, 24
+January 2008 (EST)
 
 ### Links to Javadoc
 
