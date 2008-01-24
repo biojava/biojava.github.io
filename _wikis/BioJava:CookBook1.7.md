@@ -263,17 +263,6 @@ How Do I....?
 -   [How to serialize to a
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
 
-### Protein Alignments and Secondary Structure Prediction with STRAP (by Christophe Gille)
-
--   [Introduction to the STRAP
-    API](http://3d-alignment.eu/Scripting.html)
--   [STRAP/BioJava
-    interoperability](http://www.charite.de/bioinf/strap/biojava.html)
--   [How do I make a multiple sequence
-    alignment](http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html)?
--   [How can predict protein secondary
-    structure](http://3d-alignment.eu/biojavaInAnger_SecondaryStructure_Predictor.html)?
-
 Disclaimer
 ----------
 
