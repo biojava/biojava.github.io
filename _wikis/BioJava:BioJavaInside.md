@@ -55,6 +55,11 @@ projects please add them to the list.
 -   [MassSieve](http://www.proteomecommons.org/dev/masssieve/index.html):
     An open source application to analyze mass spec proteomics data.
 
+<!-- -->
+
+-   [Strap](http://www.charite.de/bioinf/strap/): A tool for multiple
+    sequence alignment and sequence based structure alignment.
+
 Publications
 ------------
 
