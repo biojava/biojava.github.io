@@ -136,12 +136,6 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:PDB:Align|Comment faire pour calculer la superposition de deux Structures?]]
 * [[BioJava:CookbookFrench:PDB:Jmol|Comment faire interagir une Structure avec Jmol?]]
 
-=== Alignements de s&eacute;quences et pr&eacute;diction de structures secondaires de prot&eacute;ines avec STRAP (par Christophe Gille) ===
-
-* [http://www.charite.de/bioinf/strap/Scripting.html Introduction &agrave; l'API de STRAP.] Note: en anglais seulement 
-* [http://www.charite.de/bioinf/strap/biojava.html Interactions STRAP / BioJava] Note: en anglais seulement 
-* [http://www.charite.de/bioinf/strap/biojavaInAnger_SequenceAligner.html Comment faire un alignement multiple de s&eacute;quences?] Note: en anglais seulement
-* [http://www.charite.de/bioinf/strap/biojavaInAnger_SecondaryStructure_Predictor.html Comment pr&eacute;dire la structure secondaire d'une prot&eacute;ine?] Note: en anglais seulement
 
 == D&eacute;saveu de responsabilit&eacute; ==
 
