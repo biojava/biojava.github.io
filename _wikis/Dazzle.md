@@ -2,7 +2,7 @@
 title: Dazzle
 ---
 
-Dazzle is a [DAS](bp:DAS "wikilink") server library.
+Dazzle is a [DAS](http://www.biodas.org) server library.
 
 Dazzle is a general purpose server for the Distributed Annotation System
 (DAS) protocol. It is implemented as a Java servlet, using the BioJava
@@ -11,9 +11,14 @@ to provide access to a range of databases. Several general-purpose
 plugins are included in the package, and it it straightforward to
 develop new plugins to connect to your own databases.
 
-The code and repository have relocated to [Thomas
-Down](Thomas Down "wikilink")'s
-[site](http://www.derkholm.net/thomas/dazzle/).
+Dazzle has been developed at the Wellcome Trust Sanger Institute by
+[Thomas Down](Thomas_Down "wikilink").
+
+DAS Extensions
+--------------
+
+Dazzle provides support for the DAS extensions that are available in the
+[DAS 1.53E specification](http://www.dasregistry.org/spec_1.53E.jsp)
 
 Getting Dazzle
 --------------
