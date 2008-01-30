@@ -11,6 +11,12 @@ assumed: read the specification for more information.
 
 These instructions apply to release 1.01 of Dazzle.
 
+Eclipse
+-------
+
+For instruction how to write a Dazzle plugin using Eclipse see
+<Dazzle:eclipse>
+
 Prerequisites
 -------------
 
