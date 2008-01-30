@@ -4,14 +4,12 @@ Dazzle is a general purpose server for the Distributed Annotation System (DAS) p
 
 Dazzle has been developed at the Wellcome Trust Sanger Institute by [[Thomas_Down|Thomas Down]].
 
-
 == DAS Extensions==
 Dazzle provides support for the DAS extensions that are available in the [http://www.dasregistry.org/spec_1.53E.jsp DAS 1.53E specification]
 
 ==Getting Dazzle==
 
 Dazzle can be downloaded from [[Dazzle:download]].
-
 
 ==Installation and Configuration==
 For installation and configuration instructions, please see the [[Dazzle:deployment]] guide.
