@@ -238,13 +238,17 @@ page](http://www.biodas.org/servers/LDAS.html) for instructions on
 creating a Bio::DB::GFF database and populating it with annotation data.
 
 The Ldas plugin has class name
-org.biojava.servlets.dazzle.datasource.LdasDataSource. The following
-properties are available: Name Datatype Description name string The
-display name of the datasource description string A textual description
-of the datasource version string The version of the database being
-served. stylesheet string Filename of a DAS stylesheet to associate with
-this datasource mapMaster string URL of a DAS reference server. dbURL
-string A JDBC-style URL specifying which database to use (e.g
-jdbc:mysql://localhost/dicty). dbUser string The username to use when
-connecting to the database. dbPass string The password to use when
-connecting to the database (may be an empty string).
+
+<java>org.biojava.servlets.dazzle.datasource.LdasDataSource</java>
+
+The following properties are available:
+
+    Name    Datatype    Description
+    name    string  The display name of the datasource
+    description     string  A textual description of the datasource
+    version     string  The version of the database being served.
+    stylesheet  string  Filename of a DAS stylesheet to associate with this datasource
+    mapMaster   string  URL of a DAS reference server.
+    dbURL   string  A JDBC-style URL specifying which database to use (e.g jdbc:mysql://localhost/dicty).
+    dbUser  string  The username to use when connecting to the database.
+    dbPass  string  The password to use when connecting to the database (may be an empty string).
