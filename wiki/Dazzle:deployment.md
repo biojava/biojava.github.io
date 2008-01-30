@@ -232,8 +232,9 @@ connector can be download from MySQL AB.. It should be possible to use
 the Ldas plugin with other relational databases, but this has not been
 tested -- contact the author if in doubt.
 
-See the LDAS installation page for instructions on creating a
-Bio::DB::GFF database and populating it with annotation data.
+See the [LDAS installation
+page](http://www.biodas.org/servers/LDAS.html) for instructions on
+creating a Bio::DB::GFF database and populating it with annotation data.
 
 The Ldas plugin has class name
 org.biojava.servlets.dazzle.datasource.LdasDataSource. The following
