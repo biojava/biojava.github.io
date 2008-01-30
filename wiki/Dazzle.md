@@ -23,8 +23,13 @@ Dazzle provides support for the DAS extensions that are available in the
 Getting Dazzle
 --------------
 
-Dazzle can be downloaded from <Dazzle:download>. For installation and
-configuration instructions, please see the <Dazzle:deployment> guide.
+Dazzle can be downloaded from <Dazzle:download>.
+
+Installation and Configuration
+------------------------------
+
+For installation and configuration instructions, please see the
+<Dazzle:deployment> guide.
 
 If you want to follow Dazzle development, you can obtain up-to-date
 source code via Subversion from
