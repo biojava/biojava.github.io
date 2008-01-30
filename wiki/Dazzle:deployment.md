@@ -210,13 +210,14 @@ The Ldas plugin
 ---------------
 
 The Ldas plugin is an annotation datasource which reads from a
-Bio::DB::GFF format database, and is largely compatible with the LDAS
-DAS server. This plugin is useful for existing LDAS users who want to
-consolidate on a single general purpose DAS server. It's also a good
-choice for serving straightforward sets of features which are too large
-to serve up using the GFF plugin, but don't already have their own
-database. Currently, there is only an Ldas annotation plugin. An
-equivalent for reference servers is possible in the future.
+Bio::DB::GFF format database, and is largely compatible with the [LDAS
+DAS server](http://www.biodas.org/servers/). This plugin is useful for
+existing LDAS users who want to consolidate on a single general purpose
+DAS server. It's also a good choice for serving straightforward sets of
+features which are too large to serve up using the GFF plugin, but don't
+already have their own database. Currently, there is only an Ldas
+annotation plugin. An equivalent for reference servers is possible in
+the future.
 
 The Ldas plugin is included as standard with Dazzle 1.01 or later. But
 to use it, you will need to add several extra JAR files to your
