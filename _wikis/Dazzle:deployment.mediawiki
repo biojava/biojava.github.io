@@ -4,6 +4,9 @@ This document describes the steps required to install and start the [[Dazzle|Daz
 
 These instructions apply to release 1.01 of Dazzle.
 
+==Eclipse==
+For instruction how to write a Dazzle plugin using Eclipse see [[Dazzle:eclipse]]
+
 ==Prerequisites==
 
 Dazzle requires a runtime environment for the Java 2 platform, standard edition (J2SE) version 1.5 or later. It also requires a servlet container complying with the servlets 2.3 specification (a servlet container is a Java-aware web server). Dazzle was developed using the Tomcat 5.x servlet container, and this is recommended. It has also been tested successfully using Resin.
