@@ -6,8 +6,8 @@ Deploying the Dazzle servlet
 ============================
 
 This document describes the steps required to install and start the
-Dazzle server. Some knowledge of the DAS system is assumed: read the
-specification for more information.
+[Dazzle](Dazzle "wikilink") server. Some knowledge of the DAS system is
+assumed: read the specification for more information.
 
 These instructions apply to release 1.01 of Dazzle.
 
