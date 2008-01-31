@@ -42,7 +42,10 @@ Configure the dependencies of "mydazzle".
 
 `->right mouse click ->preferences -> Java Build Path `  
 `   ->Projects`  
-`    select Dazzle and biojava-live`
+`    select Dazzle and biojava-live`  
+`   ->Libraries`  
+`    add the .jar files from Dazzle/dazzle-weball/WEB-INF/lib`  
+`    (but not dazzle.jar, that one is being take care of by the J2EE dependency`
 
 Step 3 copy files
 -----------------
