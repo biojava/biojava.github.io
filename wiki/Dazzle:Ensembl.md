@@ -117,29 +117,27 @@ has historically been popular with Ensembl users
 To serve a new dataset, create a MySQL database and add one or more
 tables matching the following schema:
 
-CREATE TABLE my\_feature (
-
-` contig_id    varchar(40) NOT NULL default '', `  
-` start        int(10) NOT NULL default '0',`  
-` end          int(10) NOT NULL default '0', `  
-` strand       int(2) NOT NULL default '0', `  
-` id           varchar(40) NOT NULL default '', `  
-` score        double(16,4) NOT NULL default '0.0000', `  
-` gff_feature  varchar(40) default NULL, `  
-` gff_source   varchar(40) default NULL,`  
-` name         varchar(40) default NULL, `  
-` hstart       int(11) NOT NULL default '0',`  
-` hend         int(11) NOT NULL default '0',`  
-` hid          varchar(40) NOT NULL default'',`  
-` evalue       varchar(40) default NULL,`  
-` perc_id      int(10) default NULL, `  
-` phase        int(11) NOT NULL default '0', `  
-` end_phase    int(11) NOT NULL default '0',`  
-` `  
-` KEY id_contig(contig_id), `  
-` KEY id_pos(id,start,end) `
-
-);
+    CREATE TABLE my_feature ( 
+      contig_id    varchar(40) NOT NULL default '', 
+      start        int(10) NOT NULL default '0',
+      end          int(10) NOT NULL default '0', 
+      strand       int(2) NOT NULL default '0', 
+      id           varchar(40) NOT NULL default '', 
+      score        double(16,4) NOT NULL default '0.0000', 
+      gff_feature  varchar(40) default NULL, 
+      gff_source   varchar(40) default NULL,
+      name         varchar(40) default NULL, 
+      hstart       int(11) NOT NULL default '0',
+      hend         int(11) NOT NULL default '0',
+      hid          varchar(40) NOT NULL default'',
+      evalue       varchar(40) default NULL,
+      perc_id      int(10) default NULL, 
+      phase        int(11) NOT NULL default '0', 
+      end_phase    int(11) NOT NULL default '0',
+      
+      KEY id_contig(contig_id), 
+      KEY id_pos(id,start,end) 
+    ); 
 
 A single database can contain many datasets, each in its own table. Each
 dataset is served by a separate instance of the GenericSeqFeatureSource
@@ -149,33 +147,13 @@ up a large number of datasets.
 
 The most important columns are:
 
-contig\_id
-
-`   The name of the sequence to which a feature is attached (may actually be a contig, clone, or chromosome name).`
-
-start
-
-`   The minimum sequence position covered by the feature`
-
-end
-
-`   The maximum position covered by the feature`
-
-strand
-
-`   The strand of the feature (should be -1, 0, or 1).`
-
-id
-
-`   A unique ID for each feature`
-
-gff\_feature
-
-`   The "type" of the feature`
-
-gff\_source
-
-`   The "source" of the feature (e.g. the name of the program which performed the analysis)`
+    contig_id    The name of the sequence to which a feature is attached (may actually be a contig, clone, or chromosome name).
+    start    The minimum sequence position covered by the feature
+    end    The maximum position covered by the feature
+    strand    The strand of the feature (should be -1, 0, or 1).
+    id    A unique ID for each feature
+    gff_feature    The "type" of the feature
+    gff_source    The "source" of the feature (e.g. the name of the program which performed the analysis)
 
 For many purposes, the remaining fields can be left with their default
 values.

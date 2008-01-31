@@ -71,7 +71,7 @@ You could then try viewing the data source in a DAS client.
 The GenericSeqFeatureSource plugin is a general-purpose Dazzle plugin which allows features to be served up from an SQL database. The current version does not depend directly on any Ensembl code or databases, but it is distributed alongside the ensembl-das plugins described above, and has historically been popular with Ensembl users
 
 To serve a new dataset, create a MySQL database and add one or more tables matching the following schema:
-
+<pre>
 CREATE TABLE my_feature ( 
   contig_id    varchar(40) NOT NULL default '', 
   start        int(10) NOT NULL default '0',
@@ -93,25 +93,21 @@ CREATE TABLE my_feature (
   KEY id_contig(contig_id), 
   KEY id_pos(id,start,end) 
 ); 
+</pre>
 
 A single database can contain many datasets, each in its own table. Each dataset is served by a separate instance of the GenericSeqFeatureSource plugin, but they can share a single pool of database connections, therefore reducing the load on your database server if you want to serve up a large number of datasets.
 
 The most important columns are:
 
-contig_id
-    The name of the sequence to which a feature is attached (may actually be a contig, clone, or chromosome name).
-start
-    The minimum sequence position covered by the feature
-end
-    The maximum position covered by the feature
-strand
-    The strand of the feature (should be -1, 0, or 1).
-id
-    A unique ID for each feature
-gff_feature
-    The "type" of the feature
-gff_source
-    The "source" of the feature (e.g. the name of the program which performed the analysis)
+<pre>
+contig_id    The name of the sequence to which a feature is attached (may actually be a contig, clone, or chromosome name).
+start    The minimum sequence position covered by the feature
+end    The maximum position covered by the feature
+strand    The strand of the feature (should be -1, 0, or 1).
+id    A unique ID for each feature
+gff_feature    The "type" of the feature
+gff_source    The "source" of the feature (e.g. the name of the program which performed the analysis)
+</pre>
 
 For many purposes, the remaining fields can be left with their default values.
 
