@@ -1,5 +1,8 @@
 ===Dazzle & plugin installation in Eclipse===
 
+
+Instructions how to run Dazzle in Eclipse using the Web Standard Tools.
+
 == required plugins ==
 To run Dazzle in Eclipse make sure you have the following eclipse plugins installed:
 
