@@ -4,7 +4,8 @@ title: Dazzle:eclipse
 
 ### Dazzle & plugin installation in Eclipse
 
-Instructions how to run Dazzle in Eclipse using the Web Standard Tools.
+Instructions how to run [Dazzle](Dazzle "wikilink") in Eclipse using the
+Web Standard Tools.
 
 required plugins
 ----------------
