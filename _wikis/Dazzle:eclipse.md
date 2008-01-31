@@ -36,13 +36,13 @@ Step 3 configure new project
 
 Configure the dependencies of "mydazzle".
 
-`->right mouse click ->preferences -> J2EE dependencies`  
+`->right mouse click ->preferences -> J2EE Module Dependencies`  
 `select Dazzle, biojava-live`  
 `add the .jar files from biojava-live/`
 
 `->right mouse click ->preferences -> Java Build Path `  
 `   ->Projects`  
-`    select Dazzle and biojava-live`  
+`    select Dazzle and biojava-live`
 
 Step 3 copy files
 -----------------
