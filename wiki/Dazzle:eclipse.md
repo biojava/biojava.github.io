@@ -2,7 +2,7 @@
 title: Dazzle:eclipse
 ---
 
-### Dazzle installation in Eclipse
+### Dazzle & plugin installation in Eclipse
 
 required plugins
 ----------------
