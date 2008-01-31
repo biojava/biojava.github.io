@@ -1,4 +1,4 @@
-===Dazzle installation in Eclipse===
+===Dazzle & plugin installation in Eclipse===
 
 == required plugins ==
 To run Dazzle in Eclipse make sure you have the following eclipse plugins installed:
