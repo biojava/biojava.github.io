@@ -28,14 +28,11 @@ Configure the dependencies of "mydazzle".
     ->Projects
      select Dazzle and biojava-live
  
-
 == Step 3 copy files ==
 
 Copy the files from the Dazzle/dazzle-webapp subdirectory into you Dynamic web project / WebContent/
 
 Copy the Dazzle/dazzle-webapp/WEB-INF/web.xml to your Dynamic web project / WebContent/WEB-INF/web.xml
-
-
 
 == Step 5 start dynamic web project ==
 
