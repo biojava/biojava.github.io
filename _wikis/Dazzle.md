@@ -34,3 +34,8 @@ For installation and configuration instructions, please see the
 If you want to follow Dazzle development, you can obtain up-to-date
 source code via Subversion from
 [<http://www.derkholm.net/svn/repos/dazzle/>](http://www.derkholm.net/svn/repos/dazzle/).
+
+Deploying and Ensembl DAS reference server
+------------------------------------------
+
+see the [instructions here](Dazzle:Ensembl "wikilink").
