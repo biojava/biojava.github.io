@@ -79,7 +79,7 @@ Configuring datasources
 Dazzle relies on small datasource plugins to supply sequence and feature
 data, and also to customize the DAS messages. Each Dazzle installation
 includes one or more data sources. These are defined in an XML
-configuration file, dazzlecfg.xml. A typical example is shown below:
+configuration file, **dazzlecfg.xml**. A typical example is shown below:
 
     <?xml version="1.0" ?>
 
