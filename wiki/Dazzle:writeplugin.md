@@ -76,12 +76,14 @@ and to enable this in Dazzle we add the following lines to
         <string name="version" value="1.0" />
       </datasource>
 
-Start your Dazzle instance and if you called the servlet e.g. dazzleDemo
+Start your Dazzle instance. If you don't know how you should do that,
+please see <Dazzle:deployment>. If you called your servlet e.g.
+dazzleDemo
 
 [`http://localhost:8080/dazzleDemo/myplugin/features?segment=123`](http://localhost:8080/dazzleDemo/myplugin/features?segment=123)
 
-should give you a very simple response, but no features. (we did not
-return any, did we?)
+should give you now a very simple response, which will not contain
+features. (we did not return any, did we?)
 
 Check your server logs it should say something like
 
