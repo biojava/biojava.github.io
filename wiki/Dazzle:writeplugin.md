@@ -11,6 +11,9 @@ command, using the GFFFeatureSource interface. There are also other
 plugin mechanisms in Dazzle, but for the moment let's only consider this
 one.
 
+The GFFFeatureSource interface
+------------------------------
+
 The Interface that needs to be implemented is the
 [GFFFeatureSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeatureSource.java)
 interface.
@@ -28,6 +31,9 @@ objects that contain the data that should be transported.
 When Dazzle gets a DAS - Features request for your DAS source, it will
 call this getFeatures method in order to obtain the data and then return
 it as DAS-XML.
+
+The AbstractGFFFeatureSource class
+----------------------------------
 
 For full DAS-specification support a couple of more methods are
 required, but they do not need to worry us right now, since there is a
