@@ -128,8 +128,9 @@ public class MyPlugin extends AbstractGFFFeatureSource {
 `       `  
 `       gff.setName("the name of my feature");`  
 `       gff.setMethod("the dazzle plugin tutorial");`  
-`       gff.setLink("`[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)`");`
-
+`       gff.setLink("`[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)`");`  
+`       gff.setNote("the note field contains the actual annotation!");`  
+`       `  
 `       // see the documentation for GFFFeature for all possible fields`  
 `               `  
 `       features.add(gff);`  
@@ -160,12 +161,12 @@ Now will give this response:
 `       `
 
 <NOTE>
+the note field contains the actual annotation!
+
 </NOTE>
 `       `<LINK href="http://www.biojava.org/wiki/Dazzle:writeplugin">[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)</LINK>  
 `     `</FEATURE>  
 `   `</SEGMENT>  
 ` `</GFF>
 
-</DASGFF>
-
-</xml>
+</DASGFF> </xml>
