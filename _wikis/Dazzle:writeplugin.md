@@ -303,7 +303,7 @@ DazzleReferenceSource{
 `    * `  
 `    */`  
 `   public Sequence getSequence(String ref) throws NoSuchElementException, DataSourceException {`  
-`       String seq =  "SEQUENCE";`  
+`       String seq =  "ECNEUQESECNEUQESECNEUQESECNEUQESECNEUQES";`  
 `       `  
 `       try {`  
 `           Sequence prot = ProteinTools.createProteinSequence(seq, ref);`  
