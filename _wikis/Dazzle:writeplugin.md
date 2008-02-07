@@ -334,3 +334,11 @@ now returns: <xml>
 ` `</ENTRY_POINTS>
 
 </DASEP> </xml>
+
+### The DAS SEQUENCE command
+
+The entry points command showed us that we could use "123" as a
+reference (a chromosomal region, or a database accession code) for a
+request.
+
+[`http://localhost:8080/dazzleDemo/myplugin/sequence?segment=123`](http://localhost:8080/dazzleDemo/myplugin/sequence?segment=123)
