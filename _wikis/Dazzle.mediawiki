@@ -21,7 +21,7 @@ If you want to follow Dazzle development, you can obtain up-to-date source code 
 
 ==Available Plugins==
 
-There are a number of [[Dazzle:plugins|ready made plugins]] availabele that can be set up with simply configuring dazzlecfg.xml correctly.
+There are a number of [[Dazzle:plugins|ready made plugins]] available that can be set up with simply configuring dazzlecfg.xml correctly.
 See [[Dazzle:plugins]] for more details on this. For instructions how to write your own plugin go to [[Dazzle:writeplugin]]
 
 == DAS Extensions==
