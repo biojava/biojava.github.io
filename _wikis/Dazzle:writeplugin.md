@@ -15,8 +15,10 @@ interface.
 
 What this means is that the DAS source provides a method called
 
-`getFeatures(String reference)`
+`GFFFeature getFeatures(String reference);`
 
-that returns an array of
-[GFFFeature.java](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeature.java)
+This method accepts a String as an argument, that represents either the
+chromosomal region or the accession code that is requested. It returns
+an array of
+[GFFFeature](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeature.java)
 objects that contain the data that should be transported.
