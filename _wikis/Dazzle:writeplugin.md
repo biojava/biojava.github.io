@@ -88,3 +88,54 @@ features. (we did not return any, did we?)
 Check your server logs it should say something like
 
 `got a features request for 123`
+
+If you see that, you mastered the first step!
+
+Adding Features
+---------------
+
+So fare our response does not contain features. Let's add one:
+
+<java> package org.dazzle;
+
+import java.util.ArrayList; import java.util.List; import
+org.biojava.servlets.dazzle.datasource.AbstractGFFFeatureSource; import
+org.biojava.servlets.dazzle.datasource.DataSourceException; import
+org.biojava.servlets.dazzle.datasource.GFFFeature;
+
+public class MyPlugin extends AbstractGFFFeatureSource {
+
+`   public GFFFeature[] getFeatures(String reference) `  
+`   throws DataSourceException{`  
+`       System.out.println("got a features request for " + reference);`  
+`       `  
+`       List`<GFFFeature>` features = new ArrayList`<GFFFeature>`();`  
+`       `  
+`       // This is up to YOU:`  
+`       // get your data from somewhere, e.g. a database, parse a flat file`  
+`       // whatever you like.`  
+`       // then with your data we fill the GFFFeature objects`  
+`       `  
+`       // GFFFeature is a simple Java-bean`  
+`       GFFFeature gff = new GFFFeature();`  
+`       `  
+`       gff.setType("annotation type");`  
+`       gff.setLabel("the annotation label");`  
+`       // start and end are strings to support e.g. PDB -file residue `  
+`       // numbering, which can contain insertion codes`  
+`       gff.setStart("123"); `  
+`       gff.setEnd("234");`  
+`       `  
+`       gff.setName("the name of my feature");`  
+`       gff.setMethod("the dazzle plugin tutorial");`  
+`       gff.setLink("`[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)`");`
+
+`       // see the documentation for GFFFeature for all possible fields`  
+`               `  
+`       features.add(gff);`  
+`           `  
+`       // and we return our features `  
+`       return (GFFFeature[]) features.toArray(new GFFFeature[features.size()]);`  
+`   }`
+
+} </java>
