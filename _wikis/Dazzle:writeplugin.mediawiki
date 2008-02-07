@@ -1,9 +1,10 @@
 =How to write your own Dazzle plugin=
 
-
 Each Dazzle plugin has to implement certain interfaces.
 Here we will show how to implement a Dazzle plugin that supports the DAS - features command, using the GFFFeatureSource interface. There are also other plugin mechanisms in Dazzle, but for the moment let's only consider this one.
 
+== Required knowledge ==
+For this turorial to be useful, you should already know how to [[Dazzle:deploy|deploy the Dazzle]]
 
 == The GFFFeatureSource interface ==
 The Interface that needs to be implemented is the [http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeatureSource.java GFFFeatureSource] interface.
@@ -42,11 +43,9 @@ public class MyPlugin extends AbstractGFFFeatureSource {
 
 and to enable this in Dazzle we add the following lines to '''dazzlecfg.xml''' :
 <pre>
-
  <datasource id="myplugin" jclass="org.dazzle.MyPlugin">
     <string name="name" value="My 1st Plugin" />
     <string name="description" value="a demo for how to write a Dazzle plugin" />
     <string name="version" value="1.0" />
   </datasource>
-
 </pre>
