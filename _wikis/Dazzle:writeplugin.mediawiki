@@ -50,7 +50,50 @@ and to enable this in Dazzle we add the following lines to '''dazzlecfg.xml''' :
   </datasource>
 </pre>
 
-Start your Dazzle instance. If you don't know how you should do that, please see [[Dazzle:deployment]]. If you called your servlet e.g. dazzleDemo 
+=== DAS - DSN request ===
+Start your Dazzle instance. If you don't know how you should do that, please see [[Dazzle:deployment]]. Once Dazzle is running 
+you can do the DAS - dsn (data source names) command, which lists all available datasources.
+
+ http://localhost:8080/dazzleDemo/dsn
+
+You should get this response if you called your servlet dazzleDemo and your [[Dazzle:deployment|basic Dazzle installation]] is correct:
+ 
+<xml>
+<?xml version='1.0' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="das.xsl"?>
+<!DOCTYPE DASDSN SYSTEM 'dasdsn.dtd' >
+<DASDSN>
+  <DSN>
+    <SOURCE id="myplugin" version="1.0">My 1st Plugin</SOURCE>
+    <MAPMASTER>http://localhost:8088/dazzleDemo/myplugin/</MAPMASTER>
+    <DESCRIPTION>a demo for how to write a Dazzle plugin</DESCRIPTION>
+  </DSN>
+
+  <DSN>
+    <SOURCE id="test" version="default">Test seqs</SOURCE>
+    <MAPMASTER>http://localhost:8088/dazzleDemo/test/</MAPMASTER>
+    <DESCRIPTION>Test set for promoter-finding software</DESCRIPTION>
+  </DSN>
+
+  <DSN>
+    <SOURCE id="tss" version="default">TSS</SOURCE>
+    <MAPMASTER>http://localhost:8080/das/test/</MAPMASTER>
+    <DESCRIPTION>Transcription start sites</DESCRIPTION>
+  </DSN>
+
+  <DSN>
+    <SOURCE id="uniprot_snps" version="default">uniprot_snps</SOURCE>
+    <MAPMASTER>http://localhost:8088/dazzleDemo/uniprot_snps/</MAPMASTER>
+    <DESCRIPTION>some snps on a uniprot sequence</DESCRIPTION>
+  </DSN>
+
+</DASDSN>
+</xml>
+
+=== The DAS features command ===
+
+Now you can also do a first DAS - features command:
+
  http://localhost:8080/dazzleDemo/myplugin/features?segment=123
 
 should give you now a very simple response, which will not contain features. (we did not return any, did we?)
