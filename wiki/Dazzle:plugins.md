@@ -38,15 +38,17 @@ released soon.
 
 The GFF plugin has class name
 org.biojava.servlets.dazzle.datasource.GFFAnnotationSource. The
-following properties are available: Name Datatype Description name
-string The display name of the datasource description string A textual
-description of the datasource version string The version of the database
-being served. Individual sequences are served with version numbers
-copies from the reference server. stylesheet string Filename of a DAS
-stylesheet to associate with this datasource mapMaster string URL of a
-DAS reference server. fileName string Name of a GFF file which is read
-at startup. dotVersions boolean Interpret sequence names contains a '.'
-character as id.version.
+following properties are available:
+
+    Name        Datatype    Description
+
+    name        string      The display name of the datasource
+    description     string      A textual description of the datasource
+    version     string      The version of the database being served. Individual sequences are served with version numbers copies from the reference server.
+    stylesheet  string      Filename of a DAS stylesheet to associate with this datasource
+    mapMaster   string      URL of a DAS reference server.
+    fileName    string      Name of a GFF file which is read at startup.
+    dotVersions     boolean     Interpret sequence names contains a '.' character as id.version.
 
 The Ldas plugin
 ---------------
