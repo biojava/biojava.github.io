@@ -44,4 +44,29 @@ Your plugin simply needs to extend
 A minimal plugin
 ----------------
 
-A minimal plugin for Dazzle looks like this:
+A minimal plugin for Dazzle looks like this: let's call the file below
+MyPlugin.java <java> package org.dazzle;
+
+import org.biojava.servlets.dazzle.datasource.AbstractGFFFeatureSource;
+import org.biojava.servlets.dazzle.datasource.DataSourceException;
+import org.biojava.servlets.dazzle.datasource.GFFFeature;
+
+public class MyPlugin extends AbstractGFFFeatureSource {
+
+`   public GFFFeature[] getFeatures(String reference) `  
+`   throws DataSourceException{`  
+`       System.out.println("got a features request for " + reference);`  
+`       return new GFFFeature[0];`  
+`   }`
+
+} </java>
+
+and to enable this in Dazzle we add the following lines to
+**dazzlecfg.xml** :
+
+
+     <datasource id="myplugin" jclass="org.dazzle.MyPlugin">
+        <string name="name" value="My 1st Plugin" />
+        <string name="description" value="a demo for how to write a Dazzle plugin" />
+        <string name="version" value="1.0" />
+      </datasource>
