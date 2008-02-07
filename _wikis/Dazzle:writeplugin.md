@@ -14,8 +14,8 @@ one.
 Required knowledge
 ------------------
 
-For this turorial to be useful, you should already know how to [deploy
-the Dazzle](Dazzle:deploy "wikilink")
+For this turorial to be useful, you should already know how to
+[deployment deploy Dazzle](Dazzle:deploy "wikilink")
 
 The GFFFeatureSource interface
 ------------------------------
