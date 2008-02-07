@@ -85,6 +85,12 @@ datasources.
 
 [`http://localhost:8080/dazzleDemo/dsn`](http://localhost:8080/dazzleDemo/dsn)
 
+note: Dazzle provides XSL stylesheets for a nice display of the XML
+response in your browser. To view the raw XML source code in the Firefox
+browser, add view-source: in front of the URL.
+
+[`view-source:http://localhost:8080/dazzleDemo/dsn`](view-source:http://localhost:8080/dazzleDemo/dsn)
+
 You should get this response if you called your servlet dazzleDemo and
 your [basic Dazzle installation](Dazzle:deployment "wikilink") is
 correct:
