@@ -7,8 +7,9 @@ Dazzle plugins
 
 The following plugins are already provided within
 [Dazzle](Dazzle "wikilink") and can be used to set up a DAS source very
-quickly by configuring dazzlecfg.xml. For more info on how to configure
-Dazzle see <Dazzle:deployment>
+quickly by configuring **dazzlecfg.xml**. For more info on how to
+configure Dazzle see <Dazzle:deployment>. For information on how to
+write your own Dazzle plugin see <Dazzle:writeplugin>
 
 The EMBL-file plugin
 --------------------
