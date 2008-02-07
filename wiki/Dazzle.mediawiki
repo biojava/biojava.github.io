@@ -22,7 +22,7 @@ see the [[Dazzle:Ensembl|instructions here]].
 ==Available Plugins==
 
 There are a number of [[Dazzle:plugins|ready made plugins]] availabele that can be set up with simply configuring dazzlecfg.xml correctly.
-See [[Dazzle:plugins]] for more details on this.
+See [[Dazzle:plugins]] for more details on this. For instructions how to write your own plugin go to [[Dazzle:writeplugin]]
 
 == DAS Extensions==
 Dazzle provides support for the DAS extensions that are available in the [http://www.dasregistry.org/spec_1.53E.jsp DAS 1.53E specification]
