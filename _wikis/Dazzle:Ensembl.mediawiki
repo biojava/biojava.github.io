@@ -1,6 +1,6 @@
 =Deploying an ensembl-das reference server=
 
-This document describes the steps required to install a DAS reference server serving human genome data from an Ensembl-format SQL database. Ensembl-DAS is implemented as a plugin for the Dazzle server framework. If you are not familiar with Dazzle, it is recommended that you read the Dazzle deployment guide first.
+This document describes the steps required to install a DAS reference server serving human genome data from an Ensembl-format SQL database. Ensembl-DAS is implemented as a plugin for the Dazzle server framework. If you are not familiar with Dazzle, it is recommended that you read the [[Dazzle:deployment|Dazzle deployment]] guide first.
 
 ==Prerequisites==
 
