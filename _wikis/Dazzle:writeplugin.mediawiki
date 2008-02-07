@@ -4,7 +4,7 @@ Each Dazzle plugin has to implement certain interfaces.
 Here we will show how to implement a Dazzle plugin that supports the DAS - features command, using the GFFFeatureSource interface. There are also other plugin mechanisms in Dazzle, but for the moment let's only consider this one.
 
 == Required knowledge ==
-For this turorial to be useful, you should already know how to [[Dazzle:deploy|deployment deploy Dazzle]]
+For this turorial you should already know how to [[Dazzle:deployment|deploy Dazzle]]
 
 == The GFFFeatureSource interface ==
 The Interface that needs to be implemented is the [http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeatureSource.java GFFFeatureSource] interface.
@@ -49,3 +49,11 @@ and to enable this in Dazzle we add the following lines to '''dazzlecfg.xml''' :
     <string name="version" value="1.0" />
   </datasource>
 </pre>
+
+Start your Dazzle instance and if you called the servlet e.g. dazzleDemo 
+ http://localhost:8080/dazzleDemo/myplugin/features?segment=123
+
+should give you a very simple response, but no features. (we did not return any, did we?)
+
+Check your server logs it should say something like 
+ got a features request for 123
