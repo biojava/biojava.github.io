@@ -5,7 +5,8 @@ title: Dazzle
 Dazzle
 ======
 
-Dazzle is an easy to use [DAS](http://www.biodas.org) server.
+Dazzle is an easy to use server for the Distributed Annotation System
+([DAS](http://www.biodas.org)).
 
 Dazzle is a general purpose server for the Distributed Annotation System
 (DAS) protocol. It is implemented as a Java servlet, using the BioJava
