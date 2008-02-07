@@ -24,3 +24,13 @@ chromosomal region or the accession code that is requested. It returns
 an array of
 [GFFFeature](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/GFFFeature.java)
 objects that contain the data that should be transported.
+
+When Dazzle gets a DAS - Features request for your DAS source, it will
+call this getFeatures method in order to obtain the data and then return
+it as DAS-XML.
+
+For full DAS-specification support a couple of more methods are
+required, but they do not need to worry us right now, since there is a
+utility class available that contains most of the required code already.
+Your plugin simply needs to extend
+[AbstractGFFFeatureSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/AbstractGFFFeatureSource.java).
