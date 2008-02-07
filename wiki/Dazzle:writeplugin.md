@@ -170,3 +170,10 @@ the note field contains the actual annotation!
 ` `</GFF>
 
 </DASGFF> </xml>
+
+Adding more DAS commands
+------------------------
+
+No we can already expose our annotations via the DAS - features command.
+Our next step is to make this DAS source a sequence -reference source.
+For this we need to implement the interface DazzleReferenceSource.
