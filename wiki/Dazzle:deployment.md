@@ -175,6 +175,6 @@ report.
 Ready made plugins
 ------------------
 
-A number of plugins are already available to quickly set up a DAS source
-without having to write any code. See <Dazzle:plugins> for an overview
-of these plugins
+A number of plugins are available to quickly set up a DAS source without
+having to write any code. See <Dazzle:plugins> for an overview of these
+plugins
