@@ -65,13 +65,13 @@ You should get this response if you called your servlet dazzleDemo and your [[Da
 <DASDSN>
   <DSN>
     <SOURCE id="myplugin" version="1.0">My 1st Plugin</SOURCE>
-    <MAPMASTER>http://localhost:8088/dazzleDemo/myplugin/</MAPMASTER>
+    <MAPMASTER>http://localhost:8080/dazzleDemo/myplugin/</MAPMASTER>
     <DESCRIPTION>a demo for how to write a Dazzle plugin</DESCRIPTION>
   </DSN>
 
   <DSN>
     <SOURCE id="test" version="default">Test seqs</SOURCE>
-    <MAPMASTER>http://localhost:8088/dazzleDemo/test/</MAPMASTER>
+    <MAPMASTER>http://localhost:8080/dazzleDemo/test/</MAPMASTER>
     <DESCRIPTION>Test set for promoter-finding software</DESCRIPTION>
   </DSN>
 
@@ -83,7 +83,7 @@ You should get this response if you called your servlet dazzleDemo and your [[Da
 
   <DSN>
     <SOURCE id="uniprot_snps" version="default">uniprot_snps</SOURCE>
-    <MAPMASTER>http://localhost:8088/dazzleDemo/uniprot_snps/</MAPMASTER>
+    <MAPMASTER>http://localhost:8080/dazzleDemo/uniprot_snps/</MAPMASTER>
     <DESCRIPTION>some snps on a uniprot sequence</DESCRIPTION>
   </DSN>
 
