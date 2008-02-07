@@ -5,11 +5,11 @@ title: Dazzle:writeplugin
 How to write your own Dazzle plugin
 ===================================
 
-Each Dazzle plugin has to implement certain interfaces. Here we will
-show how to implement a Dazzle plugin that supports the DAS - features
-command, using the GFFFeatureSource interface. There are also other
-plugin mechanisms in Dazzle, but for the moment let's only consider this
-one.
+Each plugin for [Dazzle](Dazzle "wikilink") has to implement certain
+interfaces. Here we will show how to implement a Dazzle plugin that
+supports the DAS - features command, using the GFFFeatureSource
+interface. There are also other plugin mechanisms in Dazzle, but for the
+moment let's only consider this one.
 
 Required knowledge
 ------------------
