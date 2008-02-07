@@ -37,8 +37,10 @@ sophisticated \`general purpose' annotation datasource should be
 released soon.
 
 The GFF plugin has class name
-org.biojava.servlets.dazzle.datasource.GFFAnnotationSource. The
-following properties are available:
+
+`org.biojava.servlets.dazzle.datasource.GFFAnnotationSource `
+
+The following properties are available:
 
     Name        Datatype    Description
 
