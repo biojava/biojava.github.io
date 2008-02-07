@@ -342,3 +342,21 @@ reference (a chromosomal region, or a database accession code) for a
 request.
 
 [`http://localhost:8080/dazzleDemo/myplugin/sequence?segment=123`](http://localhost:8080/dazzleDemo/myplugin/sequence?segment=123)
+
+gives the response: <xml>
+
+<?xml version='1.0' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="das.xsl"?>
+<!DOCTYPE DASSEQUENCE SYSTEM 'dassequence.dtd' >
+<DASSEQUENCE>
+
+` `<SEQUENCE id="123" version="" start="1" stop="40" moltype="Protein">
+
+ECNEUQESECNEUQESECNEUQESECNEUQESECNEUQES
+
+` `</SEQUENCE>
+
+</DASSEQUENCE> </xml>
+
+Congratulations! at this point you have set up our first DAS - reference
+server!
