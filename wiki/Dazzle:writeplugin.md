@@ -76,9 +76,67 @@ and to enable this in Dazzle we add the following lines to
         <string name="version" value="1.0" />
       </datasource>
 
+### DAS - DSN request
+
 Start your Dazzle instance. If you don't know how you should do that,
-please see <Dazzle:deployment>. If you called your servlet e.g.
-dazzleDemo
+please see <Dazzle:deployment>. Once Dazzle is running you can do the
+DAS - dsn (data source names) command, which lists all available
+datasources.
+
+[`http://localhost:8080/dazzleDemo/dsn`](http://localhost:8080/dazzleDemo/dsn)
+
+You should get this response if you called your servlet dazzleDemo and
+your [basic Dazzle installation](Dazzle:deployment "wikilink") is
+correct:
+
+<xml>
+
+<?xml version='1.0' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="das.xsl"?>
+<!DOCTYPE DASDSN SYSTEM 'dasdsn.dtd' >
+<DASDSN>
+
+` `<DSN>  
+`   `
+
+    My 1st Plugin
+
+`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/myplugin/`](http://localhost:8088/dazzleDemo/myplugin/)</MAPMASTER>  
+`   `<DESCRIPTION>`a demo for how to write a Dazzle plugin`</DESCRIPTION>  
+` `</DSN>
+
+` `<DSN>  
+`   `
+
+    Test seqs
+
+`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/test/`](http://localhost:8088/dazzleDemo/test/)</MAPMASTER>  
+`   `<DESCRIPTION>`Test set for promoter-finding software`</DESCRIPTION>  
+` `</DSN>
+
+` `<DSN>  
+`   `
+
+    TSS
+
+`   `<MAPMASTER>[`http://localhost:8080/das/test/`](http://localhost:8080/das/test/)</MAPMASTER>  
+`   `<DESCRIPTION>`Transcription start sites`</DESCRIPTION>  
+` `</DSN>
+
+` `<DSN>  
+`   `
+
+    uniprot_snps
+
+`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/uniprot_snps/`](http://localhost:8088/dazzleDemo/uniprot_snps/)</MAPMASTER>  
+`   `<DESCRIPTION>`some snps on a uniprot sequence`</DESCRIPTION>  
+` `</DSN>
+
+</DASDSN> </xml>
+
+### The DAS features command
+
+Now you can also do a first DAS - features command:
 
 [`http://localhost:8080/dazzleDemo/myplugin/features?segment=123`](http://localhost:8080/dazzleDemo/myplugin/features?segment=123)
 
