@@ -30,6 +30,9 @@ Installation and Configuration
 For installation and configuration instructions, please see the
 <Dazzle:deployment> guide.
 
+For learning how to write your own Dazzle plugins, please see the
+<Dazzle:writeplugin> tutorial.
+
 If you want to follow Dazzle development, you can obtain up-to-date
 source code via Subversion from
 [<http://www.derkholm.net/svn/repos/dazzle/>](http://www.derkholm.net/svn/repos/dazzle/).
