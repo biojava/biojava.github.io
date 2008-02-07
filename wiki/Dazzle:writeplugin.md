@@ -40,3 +40,8 @@ required, but they do not need to worry us right now, since there is a
 utility class available that contains most of the required code already.
 Your plugin simply needs to extend
 [AbstractGFFFeatureSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/AbstractGFFFeatureSource.java).
+
+A minimal plugin
+----------------
+
+A minimal plugin for Dazzle looks like this:
