@@ -314,3 +314,23 @@ DazzleReferenceSource{
 `   }`
 
 } </java>
+
+### The DAS entry\_points command
+
+If we forgot which reference points we annotated, we can do a DAS -
+entry\_points request:
+
+[`http://localhost:8080/dazzleDemo/myplugin/entry_points`](http://localhost:8080/dazzleDemo/myplugin/entry_points)
+
+now returns: <xml>
+
+<?xml version='1.0' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="das.xsl"?>
+<!DOCTYPE DASEP SYSTEM 'dasep.dtd' >
+<DASEP>
+
+` `<ENTRY_POINTS href="http://localhost:8088/dazzleDemo/myplugin/entry_points" version="1.0">  
+`   `<SEGMENT id="123" size="-1" subparts="no" />  
+` `</ENTRY_POINTS>
+
+</DASEP> </xml>
