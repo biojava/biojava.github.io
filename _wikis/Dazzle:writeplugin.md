@@ -11,6 +11,12 @@ command, using the GFFFeatureSource interface. There are also other
 plugin mechanisms in Dazzle, but for the moment let's only consider this
 one.
 
+Required knowledge
+------------------
+
+For this turorial to be useful, you should already know how to [deploy
+the Dazzle](Dazzle:deploy "wikilink")
+
 The GFFFeatureSource interface
 ------------------------------
 
@@ -63,7 +69,6 @@ public class MyPlugin extends AbstractGFFFeatureSource {
 
 and to enable this in Dazzle we add the following lines to
 **dazzlecfg.xml** :
-
 
      <datasource id="myplugin" jclass="org.dazzle.MyPlugin">
         <string name="name" value="My 1st Plugin" />
