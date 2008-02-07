@@ -43,7 +43,8 @@ Available Plugins
 
 There are a number of [ready made plugins](Dazzle:plugins "wikilink")
 availabele that can be set up with simply configuring dazzlecfg.xml
-correctly. See <Dazzle:plugins> for more details on this.
+correctly. See <Dazzle:plugins> for more details on this. For
+instructions how to write your own plugin go to <Dazzle:writeplugin>
 
 DAS Extensions
 --------------
