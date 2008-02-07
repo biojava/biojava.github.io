@@ -16,7 +16,8 @@ The EMBL-file plugin
 The EMBL-file plugin provides a DAS reference datasource backed by a
 standard EMBL-format flatfile. It is included in the basic Dazzle
 package, with classname
-org.biojava.servlets.dazzle.datasource.EmblDataSource.
+
+`org.biojava.servlets.dazzle.datasource.EmblDataSource.`
 
 Properties of the EMBL plugin: Name Datatype Description name string The
 display name of the datasource description string A textual description
