@@ -15,11 +15,9 @@ For installation and configuration instructions, please see the [[Dazzle:deploym
 
 For learning how to write your own Dazzle plugins, please see the [[Dazzle:writeplugin]] tutorial.
 
+For learning how to deploy an Ensembl DAS reference server see the [[Dazzle:Ensembl|instructions here]].
+
 If you want to follow Dazzle development, you can obtain up-to-date source code via Subversion from [http://www.derkholm.net/svn/repos/dazzle/ http://www.derkholm.net/svn/repos/dazzle/].
-
-==Deploying an Ensembl DAS reference server ==
-
-see the [[Dazzle:Ensembl|instructions here]].
 
 ==Available Plugins==
 
