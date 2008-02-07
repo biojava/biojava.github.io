@@ -233,9 +233,10 @@ Adding more DAS commands
 ------------------------
 
 No we can already expose our annotations via the DAS - features command.
-Our next step is to make this DAS source a sequence -reference source.
-For this we need to implement the interface
-[DazzleReferenceSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/DazzleReferenceSource.java).
+Our next step is to make this DAS source a reference source for sequence
+annotations. For this we need to implement the interface
+[DazzleReferenceSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/DazzleReferenceSource.java),
+which adds support for 2 new DAS commands - entry\_points and sequence.
 
 <java> package org.dazzle;
 
