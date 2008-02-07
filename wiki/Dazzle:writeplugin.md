@@ -101,7 +101,7 @@ correct:
 
     My 1st Plugin
 
-`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/myplugin/`](http://localhost:8088/dazzleDemo/myplugin/)</MAPMASTER>  
+`   `<MAPMASTER>[`http://localhost:8080/dazzleDemo/myplugin/`](http://localhost:8080/dazzleDemo/myplugin/)</MAPMASTER>  
 `   `<DESCRIPTION>`a demo for how to write a Dazzle plugin`</DESCRIPTION>  
 ` `</DSN>
 
@@ -110,7 +110,7 @@ correct:
 
     Test seqs
 
-`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/test/`](http://localhost:8088/dazzleDemo/test/)</MAPMASTER>  
+`   `<MAPMASTER>[`http://localhost:8080/dazzleDemo/test/`](http://localhost:8080/dazzleDemo/test/)</MAPMASTER>  
 `   `<DESCRIPTION>`Test set for promoter-finding software`</DESCRIPTION>  
 ` `</DSN>
 
@@ -128,7 +128,7 @@ correct:
 
     uniprot_snps
 
-`   `<MAPMASTER>[`http://localhost:8088/dazzleDemo/uniprot_snps/`](http://localhost:8088/dazzleDemo/uniprot_snps/)</MAPMASTER>  
+`   `<MAPMASTER>[`http://localhost:8080/dazzleDemo/uniprot_snps/`](http://localhost:8080/dazzleDemo/uniprot_snps/)</MAPMASTER>  
 `   `<DESCRIPTION>`some snps on a uniprot sequence`</DESCRIPTION>  
 ` `</DSN>
 
