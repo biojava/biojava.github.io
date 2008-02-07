@@ -14,8 +14,8 @@ one.
 Required knowledge
 ------------------
 
-For this turorial to be useful, you should already know how to
-[deployment deploy Dazzle](Dazzle:deploy "wikilink")
+For this turorial you should already know how to [deploy
+Dazzle](Dazzle:deployment "wikilink")
 
 The GFFFeatureSource interface
 ------------------------------
@@ -75,3 +75,14 @@ and to enable this in Dazzle we add the following lines to
         <string name="description" value="a demo for how to write a Dazzle plugin" />
         <string name="version" value="1.0" />
       </datasource>
+
+Start your Dazzle instance and if you called the servlet e.g. dazzleDemo
+
+[`http://localhost:8080/dazzleDemo/myplugin/features?segment=123`](http://localhost:8080/dazzleDemo/myplugin/features?segment=123)
+
+should give you a very simple response, but no features. (we did not
+return any, did we?)
+
+Check your server logs it should say something like
+
+`got a features request for 123`
