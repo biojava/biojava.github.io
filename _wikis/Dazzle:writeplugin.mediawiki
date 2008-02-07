@@ -19,3 +19,7 @@ data and then return it as DAS-XML.
 
 == The AbstractGFFFeatureSource class ==
 For full DAS-specification support a couple of more methods are required, but they do not need to worry us right now, since there is a utility class available that contains most of the required code already. Your plugin simply needs to extend [http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/AbstractGFFFeatureSource.java AbstractGFFFeatureSource].
+
+== A minimal plugin ==
+
+A minimal plugin for Dazzle looks like this:
