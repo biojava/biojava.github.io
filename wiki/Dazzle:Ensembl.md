@@ -26,7 +26,7 @@ interested in -- currently, no other databases are used.
 
 `   * A Java 2 runtime environment, version 1.4 or later`  
 `   * A Java servlet container. We recommend Tomcat 5.0.`  
-`   * A recent snapshot of BioJava (or the upcoming 1.4 release).`  
+`   * A recent snapshot of BioJava.`  
 `   * Dazzle 1.00 or later`  
 `   * The biojava-ensembl bridge code`  
 `   * A Java database driver for MySQL, available from MySQL AB`
