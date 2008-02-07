@@ -178,3 +178,81 @@ No we can already expose our annotations via the DAS - features command.
 Our next step is to make this DAS source a sequence -reference source.
 For this we need to implement the interface
 [DazzleReferenceSource](http://www.derkholm.net/svn/repos/dazzle/trunk/src/org/biojava/servlets/dazzle/datasource/DazzleReferenceSource.java).
+
+<java> package org.dazzle;
+
+import java.util.ArrayList; import java.util.List; import
+java.util.NoSuchElementException; import java.util.Set; import
+java.util.TreeSet; import org.biojava.bio.seq.ProteinTools; import
+org.biojava.bio.seq.Sequence; import
+org.biojava.bio.symbol.IllegalSymbolException; import
+org.biojava.servlets.dazzle.datasource.AbstractGFFFeatureSource; import
+org.biojava.servlets.dazzle.datasource.DataSourceException; import
+org.biojava.servlets.dazzle.datasource.DazzleReferenceSource; import
+org.biojava.servlets.dazzle.datasource.GFFFeature;
+
+public class MyPlugin extends AbstractGFFFeatureSource implements
+DazzleReferenceSource{
+
+`   public GFFFeature[] getFeatures(String reference) `  
+`   throws DataSourceException{`  
+`       System.out.println("got a features request for " + reference);`  
+`       `  
+`       List`<GFFFeature>` features = new ArrayList`<GFFFeature>`();`  
+`       `  
+`       // This is up to YOU:`  
+`       // get your data from somewhere, e.g. a database, parse a flat file`  
+`       // whatever you like.`  
+`       // then with your data we fill the GFFFeature objects`  
+`       `  
+`       // GFFFeature is a simple Java-bean`  
+`       GFFFeature gff = new GFFFeature();`  
+`       `  
+`       gff.setType("annotation type");`  
+`       gff.setLabel("the annotation label");`  
+`       // start and end are strings to support e.g. PDB -file residue `  
+`       // numbering, which can contain insertion codes`  
+`       gff.setStart("123"); `  
+`       gff.setEnd("234");`  
+`       `  
+`       gff.setName("the name of my feature");`  
+`       gff.setMethod("the dazzle plugin tutorial");`  
+`       gff.setLink("`[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)`");`  
+`       gff.setNote("the note field contains the actual annotation!");`  
+`       `  
+`       // see the documentation for GFFFeature for all possible fields`  
+`               `  
+`       features.add(gff);`  
+`           `  
+`       // and we return our features `  
+`       return (GFFFeature[]) features.toArray(new GFFFeature[features.size()]);`  
+`   }`
+
+`   /** This method deals with the DAS -entry points command.`  
+`    * @return a set containing the references to the entry points`  
+`    */ `  
+`   public Set getEntryPoints() {`  
+`       Set`<String>` s = new TreeSet`<String>` ();`  
+`       // this example has only one feature.`  
+`       // for your real data you might want to add a SQL query here.`  
+`       s.add("123");`  
+`       return s;`  
+`   }`
+
+`   /** This method deals with the DAS - sequence command.`  
+`    * `  
+`    * @return a biojava Sequence object`  
+`    * `  
+`    */`  
+`   public Sequence getSequence(String ref) throws NoSuchElementException, DataSourceException {`  
+`       String seq =  "SEQUENCE";`  
+`       `  
+`       try {`  
+`           Sequence prot = ProteinTools.createProteinSequence(seq, ref);`  
+`           return prot;`  
+`       } catch ( IllegalSymbolException e){`  
+`           throw new DataSourceException(e.getMessage());`  
+`       }       `  
+`   }`
+
+} </java>
