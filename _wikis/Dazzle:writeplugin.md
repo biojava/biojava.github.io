@@ -139,3 +139,33 @@ public class MyPlugin extends AbstractGFFFeatureSource {
 `   }`
 
 } </java>
+
+Now will give this response:
+
+<xml>
+
+<?xml version='1.0' standalone='no' ?>
+<?xml-stylesheet type="text/xsl" href="das.xsl"?>
+<!DOCTYPE DASGFF SYSTEM 'dasgff.dtd' >
+<DASGFF>
+
+` `<GFF version="1.0" href="http://localhost:8088/dazzleDemo/myplugin/features?segment=123">  
+`   `<SEGMENT id="123" version="" start="1" stop="-1">  
+`     `<FEATURE id="__dazzle__annotation type_the name of my feature_123_234" label="the annotation label">  
+`       `<TYPE id="annotation type">`annotation type`</TYPE>  
+`       `<METHOD id="the dazzle plugin tutorial">`the dazzle plugin tutorial`</METHOD>  
+`       `<START>`123`</START>  
+`       `<END>`234`</END>  
+`       `<SCORE>`-`</SCORE>  
+`       `
+
+<NOTE>
+</NOTE>
+`       `<LINK href="http://www.biojava.org/wiki/Dazzle:writeplugin">[`http://www.biojava.org/wiki/Dazzle:writeplugin`](http://www.biojava.org/wiki/Dazzle:writeplugin)</LINK>  
+`     `</FEATURE>  
+`   `</SEGMENT>  
+` `</GFF>
+
+</DASGFF>
+
+</xml>
