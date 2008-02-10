@@ -1794,7 +1794,7 @@ straightforward:
 `   // get the next note`  
 `   Note n = (Note)i.next();`  
 `   // read it`  
-`   String key = n.getKey().getName();`  
+`   String key = n.getTerm().getName();`  
 `   String value = n.getValue();`  
 `   int rank = n.getRank();`  
 `   // print the qualifier out in key=value (rank) format`  
