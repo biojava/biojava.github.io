@@ -778,7 +778,7 @@ Description lines are always output in one of two forms:
 ><namespace>|<accession>.<version>|<name> <description>
 </code>
 
-In the case that the accession number and the name are identicle then the <code><name></name> is omitted.
+In the case that the accession number and the name are identicle then the <code><name></code> is omitted.
 
 The first form is used if the identifier of the sequence object is not null, otherwise the second form is used. In both cases, the description is only output if it is not null.
 
