@@ -860,1683 +860,1620 @@ Description lines are always output in one of two forms:
 ><namespace>|<accession>.<version>|<name> <description>
 `
 
-The first form is used if the identifier of the sequence object is not
-null, otherwise the second form is used. In both cases, the description
-is only output if it is not null.
+In the case that the accession number and the name are identicle then
+the `<name></name> is omitted.
+
+The first form is used if the identifier of the sequence object is not null, otherwise the second form is used. In both cases, the description is only output if it is not null.
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.5. FastaFormat output field sources.
 
-| FASTA Info type | Method used to get info                          |
-|-----------------|--------------------------------------------------|
-| identifier      | getIdentifier()                                  |
-| namespace       | getNamespace()                                   |
-| accession       | getAccession()                                   |
-| version         | getVersion()                                     |
-| name            | getName()                                        |
-| description     | getDescription()                                 |
-| <sequence data> | Sequence is read directly as it is a SymbolList. |
+{|border="1" cellpadding="2"
+!width="200"|FASTA Info type
+!width="400"|Method used to get info
+|-
+|identifier 
+|getIdentifier()
+|-
+|namespace  
+|getNamespace()
+|-
+|accession  
+|getAccession()
+|-
+|version    
+|getVersion()
+|-
+|name   
+|getName()
+|-
+|description    
+|getDescription()
+|-
+|<sequence data>    
+|Sequence is read directly as it is a SymbolList.
+|}
 
-### GenBank
+=== GenBank ===
 
-GenbankFormat reads and writes GenBank files, and understands almost all
-permutations of the location descriptors found in the feature tables.
+GenbankFormat reads and writes GenBank files, and understands almost all permutations of the location descriptors found in the feature tables.
 
-#### Reading
+==== Reading ====
 
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.6. GenBankFormat input field destinations.
+{|border="1" cellpadding="2"
+!width="200"|GenBank Field
+!width="400"|How is it processed?
+|-
+|LOCUS  
+|setName(), addSequenceProperty(Terms.getStrandedTerm()), setCircular(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDateUpdatedTerm()), and setDivision().
+|-
+|DEFINITION 
+|setDescription()
+|-
+|ACCESSION  
+|The first one is passed to setAccession(). Subsequent entries are passed to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|VERSION    
+|The section before the full stop "." is passed to setAccession(). If it differs from the first accession on the ACCESSION line, then the first accession on the ACCESSION line becomes an additional accession, whilst the accession from the VERSION line becomes the primary accession. The section after the full stop is passed to setVersion(). The GI number is passed to setIdentifier().
+|-
+|KEYWORDS   
+|The line is split up into individual keywords, each of which is passed to addSequenceProperty(Terms.getKeywordTerm()).
+|-
+|SOURCE 
+|Ignored.
+|-
+|ORGANISM   
+|Ignored.
+|-
+|REFERENCE  
+|The coordinates of the reference end up as start and end coordinates of a SimpleRankedDocRef object which is attached to the sequence by calling setRankedDocRef().
+|-
+|AUTHORS    
+|The value is parsed into a set of DocRefAuthor objects using DocRefAuthor.Tools. The resulting set becomes part of the DocRef object which is wrapped using a SimpleRankedDocRef and attached to the sequence.
+|-
+|TITLE  
+|The title is passed to the current DocRef object using setTitle().
+|-
+|JOURNAL    
+|The journal is passed to the current DocRef object using setLocation().
+|-
+|PUBMED 
+|A RankedCrossRef object is created pointing to Terms.PUBMED_KEY as the database, and using this value as the accession with a version of 0. It is attached to the sequence using setRankedCrossRef(). If no MEDLINE line is found, this is also associated with the current reference by using setCrossRef() on the DocRef object.
+|-
+|MEDLINE    
+|Behaves similarly to PUBMED, but with a database name of Terms.MEDLINE_KEY. It takes precedence over PUBMED and will always be used for the DocRef cross-reference.
+|-
+|REMARK 
+|Added to the current reference by calling setRemark() on the DocRef object.
+|-
+|COMMENT    
+|setComment()
+|-
+|FEATURES   
+|Each feature is started by calling startFeature(). The source is Terms.getGenBankTerm() whereas the type is obtained from RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the feature name. Qualifiers are added by using addFeatureProperty() with the term key created by RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the qualifier name. There are two special cases of qualifier: db_xref, and organism. Neither end up being stored as qualifiers. A database cross-reference is created for db_xref qualifiers and added to the feature using addRankedCrossRef(), except when the feature type is source and the database name (before the colon) is taxon, in which case the taxon ID is used in conjunction with the organism qualifier to determine the NCBITaxon for this sequence, and passed to the sequence using setTaxon(). Location strings are run through GenBankLocationParser to generate RichLocation instances to attach to the feature.
+|-
+|BASE   
+|Ignored.
+|-
+|ORIGIN 
+|The sequence is read and passed to addSymbols().
+|}
 
-| GenBank Field | How is it processed?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| LOCUS         | setName(), addSequenceProperty(Terms.getStrandedTerm()), setCircular(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDateUpdatedTerm()), and setDivision().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| DEFINITION    | setDescription()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ACCESSION     | The first one is passed to setAccession(). Subsequent entries are passed to addSequenceProperty(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| VERSION       | The section before the full stop "." is passed to setAccession(). If it differs from the first accession on the ACCESSION line, then the first accession on the ACCESSION line becomes an additional accession, whilst the accession from the VERSION line becomes the primary accession. The section after the full stop is passed to setVersion(). The GI number is passed to setIdentifier().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| KEYWORDS      | The line is split up into individual keywords, each of which is passed to addSequenceProperty(Terms.getKeywordTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| SOURCE        | Ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ORGANISM      | Ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| REFERENCE     | The coordinates of the reference end up as start and end coordinates of a SimpleRankedDocRef object which is attached to the sequence by calling setRankedDocRef().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| AUTHORS       | The value is parsed into a set of DocRefAuthor objects using DocRefAuthor.Tools. The resulting set becomes part of the DocRef object which is wrapped using a SimpleRankedDocRef and attached to the sequence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| TITLE         | The title is passed to the current DocRef object using setTitle().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| JOURNAL       | The journal is passed to the current DocRef object using setLocation().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| PUBMED        | A RankedCrossRef object is created pointing to Terms.PUBMED\_KEY as the database, and using this value as the accession with a version of 0. It is attached to the sequence using setRankedCrossRef(). If no MEDLINE line is found, this is also associated with the current reference by using setCrossRef() on the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| MEDLINE       | Behaves similarly to PUBMED, but with a database name of Terms.MEDLINE\_KEY. It takes precedence over PUBMED and will always be used for the DocRef cross-reference.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| REMARK        | Added to the current reference by calling setRemark() on the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| COMMENT       | setComment()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| FEATURES      | Each feature is started by calling startFeature(). The source is Terms.getGenBankTerm() whereas the type is obtained from RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the feature name. Qualifiers are added by using addFeatureProperty() with the term key created by RichObjectFactory.getDefaultOntology().getOrCreateTerm() using the qualifier name. There are two special cases of qualifier: db\_xref, and organism. Neither end up being stored as qualifiers. A database cross-reference is created for db\_xref qualifiers and added to the feature using addRankedCrossRef(), except when the feature type is source and the database name (before the colon) is taxon, in which case the taxon ID is used in conjunction with the organism qualifier to determine the NCBITaxon for this sequence, and passed to the sequence using setTaxon(). Location strings are run through GenBankLocationParser to generate RichLocation instances to attach to the feature. |
-| BASE          | Ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ORIGIN        | The sequence is read and passed to addSymbols().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
-#### Writing
+==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.7. GenBankFormat output field sources.
 
-| GenBank Field    | How is it outputted?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| LOCUS            | getName(), length(), getNoteSet(Terms.getStrandedTerm()), getNoteSet(Terms.getMolTypeTerm()), getCircular(), getDivision(), and getNoteSet(Terms.getDateUpdatedTerm())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| DEFINITION       | getDescription()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ACCESSION        | getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| VERSION          | getAccession(), getIdentifier() and getVersion()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| KEYWORDS         | getNoteSet(Terms.getKeywordTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| SOURCE           | getTaxon().getDisplayName()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| ORGANISM         | getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| REFERENCE        | Each reference is obtained from getRankedDocRefs(). The coordinates of the reference are from the reference's getStart() and getEnd() methods.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| AUTHORS          | The author string is from the reference's getAuthors() method.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| TITLE            | The title is from the reference's getTitle().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| JOURNAL          | The journal information is from the reference's getLocation().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| PUBMED / MEDLINE | The cross reference returned by getCrossRef() on the reference provides the database name and accession used here.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| REMARK           | getRemark() on the current reference object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| COMMENT          | All the comments returned by getComments() are joined together, separated by newlines.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| FEATURES         | Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db\_xref and organism fields are added to the output by calling getTaxon().getNCBITaxID() and getTaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db\_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format. |
-| BASE             | Calculated from the sequence data.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ORIGIN           | The sequence is read directly as it is a SymbolList..                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+{|border="1" cellpadding="2"
+!width="200"|GenBank Field
+!width="400"|How is it outputted?
+|-
+|LOCUS  
+|getName(), length(), getNoteSet(Terms.getStrandedTerm()), getNoteSet(Terms.getMolTypeTerm()), getCircular(), getDivision(), and getNoteSet(Terms.getDateUpdatedTerm())
+|-
+|DEFINITION 
+|getDescription()
+|-
+|ACCESSION  
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|VERSION    
+|getAccession(), getIdentifier() and getVersion()
+|-
+|KEYWORDS   
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|SOURCE 
+|getTaxon().getDisplayName()
+|-
+|ORGANISM   
+|getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy()
+|-
+|REFERENCE  
+|Each reference is obtained from getRankedDocRefs(). The coordinates of the reference are from the reference's getStart() and getEnd() methods.
+|-
+|AUTHORS    
+|The author string is from the reference's getAuthors() method.
+|-
+|TITLE  
+|The title is from the reference's getTitle().
+|-
+|JOURNAL    
+|The journal information is from the reference's getLocation().
+|-
+|PUBMED / MEDLINE   
+|The cross reference returned by getCrossRef() on the reference provides the database name and accession used here.
+|-
+|REMARK 
+|getRemark() on the current reference object.
+|-
+|COMMENT    
+|All the comments returned by getComments() are joined together, separated by newlines.
+|-
+|FEATURES   
+|Each feature is output in turn by iterating through getFeatureSet(). For the source feature, the db_xref and organism fields are added to the output by calling getTaxon().getNCBITaxID() and getTaxon().getDisplayName() on the sequence (the latter is chopped before the first bracket if necessary). For all features, extra db_xref qualifiers are output for each cross-reference returned by calling getRankedCrossRefs() on the feature. The other qualifiers for the features are the contents of the feature's annotation, provided by getNoteSet() on the feature. GenBankLocationParser is used to convert the feature's getLocation() output into the correct text format.
+|-
+|BASE   
+|Calculated from the sequence data.
+|-
+|ORIGIN 
+|The sequence is read directly as it is a SymbolList..
+|}
 
-### EMBL
+=== EMBL ===
 
-EMBLFormat reads and writes EMBL files, and understands almost all
-permutations of the location descriptors found in the feature tables.
+EMBLFormat reads and writes EMBL files, and understands almost all permutations of the location descriptors found in the feature tables.
 
-In version 87 of EMBL, the format for the ID line changed. The parser
-will understand files with both 87 and pre-87 ID lines, but by default
-will write out files using the new 87 ID line format. If you wish to
-write files using the pre-87 ID line format, you must call the
-writeSequence() method directly and specify the EMBL\_PRE87\_FORMAT
-format.
+In version 87 of EMBL, the format for the ID line changed. The parser will understand files with both 87 and pre-87 ID lines, but by default will write out files using the new 87 ID line format. If you wish to write files using the pre-87 ID line format, you must call the writeSequence() method directly and specify the EMBL_PRE87_FORMAT format.
 
-#### Reading
+==== Reading ====
 
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.8. EMBLFormat input field destinations.
 
-| EMBL Field | How is it processed?                                                                                                                                                                                                                                                                                                                                                                          |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ID         | setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular(), addSequenceProperty(Terms.getGenomicTerm()), addSequenceProperty(Terms.getDataClassTerm()) (87 only)                                                                                                                                                                                                    |
-| AC         | First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                                                                                |
-| SV         | If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion(). If the version line is unparseable, it is stored using addSequenceProperty(Terms.getVersionLine()) instead. |
-| DE         | setDescription()                                                                                                                                                                                                                                                                                                                                                                              |
-| DT         | For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()).                                                                                                                                             |
-| DR         | Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().                                                                               |
-| OS         | Ignored.                                                                                                                                                                                                                                                                                                                                                                                      |
-| OC         | Ignored.                                                                                                                                                                                                                                                                                                                                                                                      |
-| OG         | addSequenceProperty(Terms.getOrganelleTerm())                                                                                                                                                                                                                                                                                                                                                 |
-| RN         | The number of the reference becomes the rank of the RankedDocRef object later.                                                                                                                                                                                                                                                                                                                |
-| RP         | The values on this line become the start and end of the RankedDocRef object later.                                                                                                                                                                                                                                                                                                            |
-| RX         | Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.                |
-| RA         | Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.                                                                                                                                                                                                                                                                                                 |
-| RG         | Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.                                                                                                                                                                                                                      |
-| RT         | The title for setTitle() on the DocRef object.                                                                                                                                                                                                                                                                                                                                                |
-| RL         | The location for the setLocation() method on the DocRef object.                                                                                                                                                                                                                                                                                                                               |
-| RC         | Used for setRemark() on the DocRef object.                                                                                                                                                                                                                                                                                                                                                    |
-| KW         | Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())                                                                                                                                                                                                                                                                                                              |
-| CC         | setComment()                                                                                                                                                                                                                                                                                                                                                                                  |
-| FH         | Ignored.                                                                                                                                                                                                                                                                                                                                                                                      |
-| FT         | As per the GenBankFormat - please see the section on GenBank parsing.                                                                                                                                                                                                                                                                                                                         |
-| CO         | Causes an exception as contigs are not supported.                                                                                                                                                                                                                                                                                                                                             |
-| AH         | Causes an exception as TPAs are not supported.                                                                                                                                                                                                                                                                                                                                                |
-| SQ         | Sequence data is passed to addSymbols().                                                                                                                                                                                                                                                                                                                                                      |
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it processed?
+|-
+|ID 
+|setName(), addSequenceProperty(Terms.getMolTypeTerm()), setDivision(), setCircular(), addSequenceProperty(Terms.getGenomicTerm()), addSequenceProperty(Terms.getDataClassTerm()) (87 only)
+|-
+|AC 
+|First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|SV 
+|If the accession (before the full stop ".") is different from the first accession on the AC line, then this accession becomes the primary accession, and the first accession on the AC line becomes an additional accession. Everything after the full stop goes to setVersion(). If the version line is unparseable, it is stored using addSequenceProperty(Terms.getVersionLine()) instead.
+|-
+|DE 
+|setDescription()
+|-
+|DT 
+|For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()).
+|-
+|DR 
+|Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
+|-
+|OS 
+|Ignored.
+|-
+|OC 
+|Ignored.
+|-
+|OG 
+|addSequenceProperty(Terms.getOrganelleTerm())
+|-
+|RN 
+|The number of the reference becomes the rank of the RankedDocRef object later.
+|-
+|RP 
+|The values on this line become the start and end of the RankedDocRef object later.
+|-
+|RX 
+|Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
+|-
+|RA 
+|Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
+|-
+|RG 
+|Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
+|-
+|RT 
+|The title for setTitle() on the DocRef object.
+|-
+|RL 
+|The location for the setLocation() method on the DocRef object.
+|-
+|RC 
+|Used for setRemark() on the DocRef object.
+|-
+|KW 
+|Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
+|-
+|CC 
+|setComment()
+|-
+|FH 
+|Ignored.
+|-
+|FT 
+|As per the GenBankFormat - please see the section on GenBank parsing.
+|-
+|CO 
+|Causes an exception as contigs are not supported.
+|-
+|AH 
+|Causes an exception as TPAs are not supported.
+|-
+|SQ 
+|Sequence data is passed to addSymbols().
+|}
 
-#### Writing
+
+==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.9. EMBLFormat output field sources.
 
-| EMBL Field | How is it outputted?                                                                                                                                                                                                                                                                            |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ID         | getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular(), getNoteSet(Terms.getGenomicTerm()), getNoteSet(Terms.getDataClassTerm()) (87 only)                                                                                                                                 |
-| AC         | getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                             |
-| SV         | getAccession() and getVersion(), or addSequenceProperty(Terms.getVersionLine()) if present.                                                                                                                                                                                                     |
-| DE         | getDescription()                                                                                                                                                                                                                                                                                |
-| DT         | For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). If date created is null, then the update date is duplicated and used here as well. |
-| DR         | getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.                                                                                                                                                                                    |
-| OS         | getTaxon().getDisplayName()                                                                                                                                                                                                                                                                     |
-| OC         | getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy().                                                                                                                                                                                                |
-| OG         | getNoteSet(Terms.getOrganelleTerm())                                                                                                                                                                                                                                                            |
-| RN         | Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.                                                                                                                                                                             |
-| RP         | The start and end coordinates of the RankedDocRef object.                                                                                                                                                                                                                                       |
-| RX         | The getCrossRef() output from the DocRef object.                                                                                                                                                                                                                                                |
-| RA         | The getAuthors() output from the DocRef object, with the consortiums removed.                                                                                                                                                                                                                   |
-| RG         | The getAuthors() output from the DocRef object, with all except consortiums removed.                                                                                                                                                                                                            |
-| RT         | The getTitle() from the DocRef.                                                                                                                                                                                                                                                                 |
-| RL         | The getLocation() from the DocRef.                                                                                                                                                                                                                                                              |
-| RC         | The getRemark() from the DocRef.                                                                                                                                                                                                                                                                |
-| KW         | getNoteSet(Terms.getKeywordTerm()).                                                                                                                                                                                                                                                             |
-| CC         | One comment section per entry in getComments().                                                                                                                                                                                                                                                 |
-| FH         | No fields necessary here.                                                                                                                                                                                                                                                                       |
-| FT         | As per the GenBankFormat - please see the section on GenBank parsing.                                                                                                                                                                                                                           |
-| CO         | Never generated.                                                                                                                                                                                                                                                                                |
-| AH         | Never generated.                                                                                                                                                                                                                                                                                |
-| SQ         | Sequence counts are generated, then sequence is read directly as it is a SymbolList.                                                                                                                                                                                                            |
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it outputted?
+|-
+|ID 
+|getName(), getNoteSet(Terms.getMolTypeTerm()), getDivision(), getCircular(), getNoteSet(Terms.getGenomicTerm()), getNoteSet(Terms.getDataClassTerm()) (87 only)
+|-
+|AC 
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|SV 
+|getAccession() and getVersion(), or addSequenceProperty(Terms.getVersionLine()) if present.
+|-
+|DE 
+|getDescription()
+|-
+|DT 
+|For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). If date created is null, then the update date is duplicated and used here as well.
+|-
+|DR 
+|getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
+|-
+|OS 
+|getTaxon().getDisplayName()
+|-
+|OC 
+|getTaxon()getDisplayName(), chopped before the first bracket, and getTaxon().getNameHierarchy().
+|-
+|OG 
+|getNoteSet(Terms.getOrganelleTerm())
+|-
+|RN 
+|Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
+|-
+|RP 
+|The start and end coordinates of the RankedDocRef object.
+|-
+|RX 
+|The getCrossRef() output from the DocRef object.
+|-
+|RA 
+|The getAuthors() output from the DocRef object, with the consortiums removed.
+|-
+|RG 
+|The getAuthors() output from the DocRef object, with all except consortiums removed.
+|-
+|RT 
+|The getTitle() from the DocRef.
+|-
+|RL 
+|The getLocation() from the DocRef.
+|-
+|RC 
+|The getRemark() from the DocRef.
+|-
+|KW 
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|CC 
+|One comment section per entry in getComments().
+|-
+|FH 
+|No fields necessary here.
+|-
+|FT 
+|As per the GenBankFormat - please see the section on GenBank parsing.
+|-
+|CO 
+|Never generated.
+|-
+|AH 
+|Never generated.
+|-
+|SQ 
+|Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+|}
 
-### UniProt
+=== UniProt ===
 
 UniProtFormat reads and writes UniProt files.
 
-#### Reading
+==== Reading ====
 
 The fields are passed into the RichSeqIOListener as follows:
 
 Table 8.10. UniProtFormat input field destinations.
 
-| EMBL Field | How is it processed?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ID         | setName(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDataClassTerm()), setDivision()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| AC         | First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| DE         | setDescription()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| DT         | For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last sequence updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()). For last annotation updated date: addSequenceProperty(Terms.getDateAnnotatedTerm()) and addSequenceProperty(Terms.getRelAnnotatedTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| DR         | Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| OS         | First named species is used as the scientific name to construct an NCBITaxon object, along with the tax ID from the OX line, and passed to setTaxon(). The second name, if present, is the common name. Subsequent names are synonyms.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| OC         | Ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| OX         | See details for the OS line.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| OG         | addSequenceProperty(Terms.getOrganelleTerm())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| GN         | Gene names are passed to addSequenceProperty(Terms.getGeneNameTerm()). Gene synonyms are passed to addSequenceProperty(Terms.getGeneSynonymTerm()). Ordered locus names are passed to addSequenceProperty(Terms.getOrderedLocusNameTerm()). ORF names are passed to addSequenceProperty(Terms.getORFNameTerm()). The values have a number and a colon prefixed, where the number refers to the sequence order of the current gene.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| RN         | The number of the reference becomes the rank of the RankedDocRef object later.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| RP         | The whole value is passed to setRemark(). If it contains the words 'SEQUENCE OF', then the sequence position is parsed out and becomes the start and end of the RankedDocRef object later.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| RX         | Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| RA         | Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| RG         | Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| RT         | The title for setTitle() on the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| RL         | The location for the setLocation() method on the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| RC         | Comments are key-value pairs. Species comments are passed to addSequenceProperty(Terms.getSpeciesTerm()). Strain comments are passed to addSequenceProperty(Terms.getStrainTerm()). Tissue comments are passed to addSequenceProperty(Terms.getTissueTerm()). Transposon comments are passed to addSequenceProperty(Terms.getTransposonTerm()). Plasmid comments are passed to addSequenceProperty(Terms.getPlasmidTerm()). The values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef.                                                                                                                                                                                                                                                                                                                                                                                             |
-| KW         | Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| CC         | If the comment is parseable using UniProtCommentParser then the value is passed to setComment(). Otherwise, it is assumed to be the copyright message that comes with UniProt records, and is passed to addSequenceProperty(Terms.getCopyrightTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| FT         | Each feature encountered triggers a call to startFeature(), and calls endFeature() on completion. The location is parsed out using UniProtLocationParser. The source term is Terms.getUniProtTerm(), whereas the type term is a term from RichObjectFactory.getDefaultOntology().getOrCreateTerm() equivalent to the name of the feature. The feature description is stored using addFeatureProperty(Terms.getFeatureDescTerm()). Subsequent lines beginning with '/' are added as qualifiers. The only qualifier with a predefined term is 'FTId', which is represented by Terms.getFTIdTerm(). All others encountered have terms generated from RichObjectFactory.getDefaultOntology().getOrCreateTerm() with names equivalent to the name of the qualifier. Qualifiers are added using addFeatureProperty(). UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set. |
-| SQ         | Sequence data is passed to addSymbols().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it processed?
+|-
+|ID 
+|setName(), addSequenceProperty(Terms.getMolTypeTerm()), addSequenceProperty(Terms.getDataClassTerm()), setDivision()
+|-
+|AC 
+|First accession goes to setAccession(), all others to addSequenceProperty(Terms.getAdditionalAccessionTerm()).
+|-
+|DE 
+|setDescription()
+|-
+|DT 
+|For creation date: addSequenceProperty(Terms.getDateCreatedTerm()) and addSequenceProperty(Terms.getRelCreatedTerm()). For last sequence updated date: addSequenceProperty(Terms.getDateUpdatedTerm()) and addSequenceProperty(Terms.getRelUpdatedTerm()). For last annotation updated date: addSequenceProperty(Terms.getDateAnnotatedTerm()) and addSequenceProperty(Terms.getRelAnnotatedTerm()).
+|-
+|DR 
+|Each record is split into a database name, primary accession, and additional accessions. A CrossRef object is constructed from these first two pieces, and annotated with additional accessions using Terms.getAdditionalAccessionTerm(). The whole thing is then given a rank and sent to setRankedCrossRef().
+|-
+|OS 
+|First named species is used as the scientific name to construct an NCBITaxon object, along with the tax ID from the OX line, and passed to setTaxon(). The second name, if present, is the common name. Subsequent names are synonyms.
+|-
+|OC 
+|Ignored.
+|-
+|OX 
+|See details for the OS line.
+|-
+|OG 
+|addSequenceProperty(Terms.getOrganelleTerm())
+|-
+|GN 
+|Gene names are passed to addSequenceProperty(Terms.getGeneNameTerm()). Gene synonyms are passed to addSequenceProperty(Terms.getGeneSynonymTerm()). Ordered locus names are passed to addSequenceProperty(Terms.getOrderedLocusNameTerm()). ORF names are passed to addSequenceProperty(Terms.getORFNameTerm()). The values have a number and a colon prefixed, where the number refers to the sequence order of the current gene.
+|-
+|RN 
+|The number of the reference becomes the rank of the RankedDocRef object later.
+|-
+|RP 
+|The whole value is passed to setRemark(). If it contains the words 'SEQUENCE OF', then the sequence position is parsed out and becomes the start and end of the RankedDocRef object later.
+|-
+|RX 
+|Each of these is parsed and the database name and primary accession are used to construct a CrossRef object. All CrossRef objects are ranked and added to the sequence setRankedCrossRef(), and one of them will be added to the current reference using setCrossRef(). The one that is chosen will be MEDLINE, or PUBMED if not present, or DOI if PUBMED not present either.
+|-
+|RA 
+|Parsed using DocRefAuthor.Tools.parse() and becomes the set of authors for the DocRef object.
+|-
+|RG 
+|Parsed using DocRefAuthor.Tools.parse(), and each consortium is flagged using the setConsortium() method before being added to the set of authors for the DocRef object.
+|-
+|RT 
+|The title for setTitle() on the DocRef object.
+|-
+|RL 
+|The location for the setLocation() method on the DocRef object.
+|-
+|RC 
+|Comments are key-value pairs. Species comments are passed to addSequenceProperty(Terms.getSpeciesTerm()). Strain comments are passed to addSequenceProperty(Terms.getStrainTerm()). Tissue comments are passed to addSequenceProperty(Terms.getTissueTerm()). Transposon comments are passed to addSequenceProperty(Terms.getTransposonTerm()). Plasmid comments are passed to addSequenceProperty(Terms.getPlasmidTerm()). The values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef.
+|-
+|KW 
+|Each keyword is sent individually to addSequenceProperty(Terms.getKeywordTerm())
+|-
+|CC 
+|If the comment is parseable using UniProtCommentParser then the value is passed to setComment(). Otherwise, it is assumed to be the copyright message that comes with UniProt records, and is passed to addSequenceProperty(Terms.getCopyrightTerm()).
+|-
+|FT 
+|Each feature encountered triggers a call to startFeature(), and calls endFeature() on completion. The location is parsed out using UniProtLocationParser. The source term is Terms.getUniProtTerm(), whereas the type term is a term from RichObjectFactory.getDefaultOntology().getOrCreateTerm() equivalent to the name of the feature. The feature description is stored using addFeatureProperty(Terms.getFeatureDescTerm()). Subsequent lines beginning with '/' are added as qualifiers. The only qualifier with a predefined term is 'FTId', which is represented by Terms.getFTIdTerm(). All others encountered have terms generated from RichObjectFactory.getDefaultOntology().getOrCreateTerm() with names equivalent to the name of the qualifier. Qualifiers are added using addFeatureProperty(). UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
+|-
+|SQ 
+|Sequence data is passed to addSymbols().
+|}
 
-#### Writing
+
+==== Writing ====
 
 The fields are read from the RichSequence object as follows:
 
 Table 8.11. UniProtFormat output field sources.
 
-| EMBL Field | How is it outputted?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ID         | getName(), getNoteSet(Terms.getMolTypeTerm()), getNoteSet(Terms.getDataClassTerm()), getDivision()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| AC         | getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| DE         | getDescription()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| DT         | For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). For last annotation date: getNoteSet(Terms.getDateAnnotatedTerm()) and getNoteSetTerms.getRelAnnotatedTerm()). If date created or date annotated is null, then the update date is duplicated and used here as well.                                                                                                                                                        |
-| DR         | getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| OS         | getTaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| OC         | getTaxon().getNameHierarchy().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| OG         | getNoteSet(Terms.getOrganelleTerm())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| OX         | getTaxon().getNCBITaxID()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| GN         | Gene names are written from getNoteSet(Terms.getGeneNameTerm()). Gene synonyms are written from getNoteSet(Terms.getGeneSynonymTerm()). Ordered locus names are written from getNoteSet(Terms.getOrderedLocusNameTerm()). ORF names are written from getNoteSet(Terms.getORFNameTerm()). As the values have a number and a colon prefixed, where the number refers to the sequence order of the current gene, these values are used to keep the correct names grouped together. This prefix is not included in the output.                                                              |
-| RN         | Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| RP         | The getRemark() from the DocRef.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| RX         | The getCrossRef() output from the DocRef object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| RA         | The getAuthors() output from the DocRef object, with the consortiums removed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| RG         | The getAuthors() output from the DocRef object, with all except consortiums removed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| RT         | The getTitle() from the DocRef.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| RL         | The getLocation() from the DocRef.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| RC         | Comments are key-value pairs. Species comments are from getNoteSet(Terms.getSpeciesTerm()). Strain comments are from getNoteSet(Terms.getStrainTerm()). Tissue comments are from getNoteSet(Terms.getTissueTerm()). Transposon comments are from getNoteSet(Terms.getTransposonTerm()). Plasmid comments are from getNoteSet(Terms.getPlasmidTerm()). As the values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef, this is used to match the appropriate comments with each reference. This prefix is not included in the output. |
-| KW         | getNoteSet(Terms.getKeywordTerm()).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| CC         | One comment section per entry in getComments().                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| FT         | Each feature is written out using UniProtLocationParser to construct the location string from the feature's getLocation() output, with the feature name being the getType() of the feature and the description being getNoteSet(Terms.getFeatureDescTerm()) on the feature. The FTId, if present in the feature from getNoteSet(Terms.getFTIdTerm()), is written out underneath. No other qualifiers are written out. UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.                                           |
-| SQ         | Sequence counts are generated, then sequence is read directly as it is a SymbolList.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+{|border="1" cellpadding="2"
+!width="200"|EMBL Field
+!width="400"|How is it outputted?
+|-
+|ID 
+|getName(), getNoteSet(Terms.getMolTypeTerm()), getNoteSet(Terms.getDataClassTerm()), getDivision()
+|-
+|AC 
+|getAccession(), and getNoteSet(Terms.getAdditionalAccessionTerm()).
+|-
+|DE 
+|getDescription()
+|-
+|DT 
+|For creation date: getNoteSet(Terms.getDateCreatedTerm()) and getNoteSet(Terms.getRelCreatedTerm()). For last updated date: getNoteSet(Terms.getDateUpdatedTerm()) and getNoteSetTerms.getRelUpdatedTerm()). For last annotation date: getNoteSet(Terms.getDateAnnotatedTerm()) and getNoteSetTerms.getRelAnnotatedTerm()). If date created or date annotated is null, then the update date is duplicated and used here as well.
+|-
+|DR 
+|getRankedCrossRef(), using getNoteSet(Terms.getAdditionalAccessionTerm()) to generate additional accessions.
+|-
+|OS 
+|getTaxon().getDisplayName() followed by all synonyms from getNames(NCBITaxon.SYNONYM) in brackets.
+|-
+|OC 
+|getTaxon().getNameHierarchy().
+|-
+|OG 
+|getNoteSet(Terms.getOrganelleTerm())
+|-
+|OX 
+|getTaxon().getNCBITaxID()
+|-
+|GN 
+|Gene names are written from getNoteSet(Terms.getGeneNameTerm()). Gene synonyms are written from getNoteSet(Terms.getGeneSynonymTerm()). Ordered locus names are written from getNoteSet(Terms.getOrderedLocusNameTerm()). ORF names are written from getNoteSet(Terms.getORFNameTerm()). As the values have a number and a colon prefixed, where the number refers to the sequence order of the current gene, these values are used to keep the correct names grouped together. This prefix is not included in the output.
+|-
+|RN 
+|Each reference returned by getRankedDocRefs() is iterated over. The rank of the RankedDocRef object is output here.
+|-
+|RP 
+|The getRemark() from the DocRef.
+|-
+|RX 
+|The getCrossRef() output from the DocRef object.
+|-
+|RA 
+|The getAuthors() output from the DocRef object, with the consortiums removed.
+|-
+|RG 
+|The getAuthors() output from the DocRef object, with all except consortiums removed.
+|-
+|RT 
+|The getTitle() from the DocRef.
+|-
+|RL 
+|The getLocation() from the DocRef.
+|-
+|RC 
+|Comments are key-value pairs. Species comments are from getNoteSet(Terms.getSpeciesTerm()). Strain comments are from getNoteSet(Terms.getStrainTerm()). Tissue comments are from getNoteSet(Terms.getTissueTerm()). Transposon comments are from getNoteSet(Terms.getTransposonTerm()). Plasmid comments are from getNoteSet(Terms.getPlasmidTerm()). As the values have a number and a colon prefixed, where the number refers to the rank of the current RankedDocRef, this is used to match the appropriate comments with each reference. This prefix is not included in the output.
+|-
+|KW 
+|getNoteSet(Terms.getKeywordTerm()).
+|-
+|CC 
+|One comment section per entry in getComments().
+|-
+|FT 
+|Each feature is written out using UniProtLocationParser to construct the location string from the feature's getLocation() output, with the feature name being the getType() of the feature and the description being getNoteSet(Terms.getFeatureDescTerm()) on the feature. The FTId, if present in the feature from getNoteSet(Terms.getFTIdTerm()), is written out underneath. No other qualifiers are written out. UniProt uses its own unique set of feature names. No attempt is made to translate other feature names to/from this set.
+|-
+|SQ 
+|Sequence counts are generated, then sequence is read directly as it is a SymbolList.
+|}
 
-### INSDSeq (XML)
+=== INSDSeq (XML) ===
 
-For parsing files that conform to
-<http://www.ebi.ac.uk/embl/Documentation/DTD/INSDSeq_v1.3.dtd.txt>.
+For parsing files that conform to http://www.ebi.ac.uk/embl/Documentation/DTD/INSDSeq_v1.3.dtd.txt.
 
-INSDSeqFormat is similar to the GenBank flat-file format in the way it
-organises information. Data will end up in the same places and using the
-same annotation terms. There are no additional annotation terms involved
-which are not also present in the GenBank flat-file format.
+INSDSeqFormat is similar to the GenBank flat-file format in the way it organises information. Data will end up in the same places and using the same annotation terms. There are no additional annotation terms involved which are not also present in the GenBank flat-file format.
 
-### EMBLxml (XML)
+=== EMBLxml (XML) ===
 
-For parsing files that conform to
-<http://www.ebi.ac.uk/embl/Documentation/DTD/EMBL_dtd.txt>.
+For parsing files that conform to http://www.ebi.ac.uk/embl/Documentation/DTD/EMBL_dtd.txt.
 
-EMBLxmlFormat is very similar to the EMBL flat-file format. Data will be
-parsed in much the same way and end up in the same locations. There are
-no additional annotation terms involved which are not also present in
-the EMBL flat-file format.
+EMBLxmlFormat is very similar to the EMBL flat-file format. Data will be parsed in much the same way and end up in the same locations. There are no additional annotation terms involved which are not also present in the EMBL flat-file format.
 
-The only major difference between EMBL flat-file and EMBL XML is the
-location tags. In XML, they are highly structured. The parser gets round
-this complexity by constructing Genbank-style location strings out of
-the XML hierarchies. These strings are then passed to
-GenbankLocationParser for parsing into RichLocation objects. On output,
-the location tags are constructed directly from the RichLocation
-objects.
+The only major difference between EMBL flat-file and EMBL XML is the location tags. In XML, they are highly structured. The parser gets round this complexity by constructing Genbank-style location strings out of the XML hierarchies. These strings are then passed to GenbankLocationParser for parsing into RichLocation objects. On output, the location tags are constructed directly from the RichLocation objects.
 
-### UniProtXML (XML)
+=== UniProtXML (XML) ===
 
-For parsing files that conform to
-<http://www.ebi.uniprot.org/support/docs/uniprot.xsd>.
+For parsing files that conform to http://www.ebi.uniprot.org/support/docs/uniprot.xsd.
 
-UniProtXMLFormat is very complex. The parser attempts to treat it in the
-same way as normal UniProt data, and information will end up in the same
-locations.
+UniProtXMLFormat is very complex. The parser attempts to treat it in the same way as normal UniProt data, and information will end up in the same locations.
 
-Throughout the format, evidence attributes (not tags) are ignored. There
-is simply no way to fit them into the BioJavaX object model.
+Throughout the format, evidence attributes (not tags) are ignored. There is simply no way to fit them into the BioJavaX object model.
 
-Like the UniProt flat-file format, locations are passed through the
-UniProtLocationParser. Fuzziness may not be correctly interpreted as
-frequently not enough information is supplied to be able to construct
-the mininum requirements of a Position object. You may see exceptions
-being thrown on files which attempt to specify fuzziness without
-relation to a specific base or range of bases.
+Like the UniProt flat-file format, locations are passed through the UniProtLocationParser. Fuzziness may not be correctly interpreted as frequently not enough information is supplied to be able to construct the mininum requirements of a Position object. You may see exceptions being thrown on files which attempt to specify fuzziness without relation to a specific base or range of bases.
 
-Comments are parsed and converted into flat-file UniProt comments using
-the UniProtCommentParser, and converted back again when outputting in
-this format. This allows for greater interoperability between the two
-formats, and also allows the UniProt XML comment data to be stored in
-the plain-text format expected by databases such as BioSQL. Some
-comments have been renamed in UniProt XML as opposed to the flat-file
-format. These comments will be parsed and converted to use the flat-file
-naming convention inside BioJavaX, but when they are output again, they
-will go back to their correct UniProt XML names. This is to increase
-interoperability between the two UniProt formats.
+Comments are parsed and converted into flat-file UniProt comments using the UniProtCommentParser, and converted back again when outputting in this format. This allows for greater interoperability between the two formats, and also allows the UniProt XML comment data to be stored in the plain-text format expected by databases such as BioSQL. Some comments have been renamed in UniProt XML as opposed to the flat-file format. These comments will be parsed and converted to use the flat-file naming convention inside BioJavaX, but when they are output again, they will go back to their correct UniProt XML names. This is to increase interoperability between the two UniProt formats.
 
-UniProt XML uses its own unique set of feature names, different even
-from the flat-file UniProt format. No attempt is made to translate other
-feature names to/from this set.
+UniProt XML uses its own unique set of feature names, different even from the flat-file UniProt format. No attempt is made to translate other feature names to/from this set.
 
-The UniProt XML format has no concept of a sequence description.
-However, it does have a protein tag which describes the structure of the
-sequence. This is parsed into a single protein description string and
-used as the value for setDescription(). Each part of the protein
-description is enclosed in square brackets and prefixed by the word
-'Contains' for domains, and 'Includes' for components. Attempting to
-write a sequence that has a description which does not conform to this
-standard may produce interesting results.
+The UniProt XML format has no concept of a sequence description. However, it does have a protein tag which describes the structure of the sequence. This is parsed into a single protein description string and used as the value for setDescription(). Each part of the protein description is enclosed in square brackets and prefixed by the word 'Contains' for domains, and 'Includes' for components. Attempting to write a sequence that has a description which does not conform to this standard may produce interesting results.
 
-Keywords in UniProt XML have identifier numbers associated with them. A
-special ontology, Terms.getUniprotKWOnto(), is used to store these
-keywords and their identifiers as they are encountered over time. If a
-keyword is encountered with an unknown identifier during output, then
-the word 'UNKNOWN' is output in place of the identifier.
+Keywords in UniProt XML have identifier numbers associated with them. A special ontology, Terms.getUniprotKWOnto(), is used to store these keywords and their identifiers as they are encountered over time. If a keyword is encountered with an unknown identifier during output, then the word 'UNKNOWN' is output in place of the identifier.
 
-The secondary/tertiary/additional accessions for database
-cross-references in UniProt XML have hard-coded names which depend on
-the position of the accession and the name of the database. If the
-database name does not match one of the known ones, or an unexpected
-accession is found, then the name used will be
-Terms.getAdditionalAccessionTerm().
+The secondary/tertiary/additional accessions for database cross-references in UniProt XML have hard-coded names which depend on the position of the accession and the name of the database. If the database name does not match one of the known ones, or an unexpected accession is found, then the name used will be Terms.getAdditionalAccessionTerm().
 
-A number of additional annotation terms are used by UniProt XML. These
-are:
+A number of additional annotation terms are used by UniProt XML. These are:
 
 Table 8.12. Additional UniProtXMLFormat annotation terms.
+{|border="1" cellpadding="2"
+!width="200"|Terms
+!width="400"|Usage
+|-
+|Terms.getProteinTypeTerm() 
+|Used to store the type attribute from the protein tag.
+|-
+|Terms.getEvidenceCategoryTerm()    
+|Used to store the category attribute of the evidence tag.
+|-
+|Terms.getEvidenceTypeTerm()    
+|Used to store the type attribute of the evidence tag.
+|-
+|Terms.getEvidenceDateTerm()    
+|Used to store the date attribute of the evidence tag.
+|-
+|Terms.getEvidenceAttrTerm()    
+|Used to store the attribute attribute of the evidence tag.
+|-
+|Terms.getFeatureRefTerm()  
+|Used to store the ref attribute of the feature tag.
+|-
+|Terms.getFeatureOriginalTerm() 
+|Used to store the value of the original sub-tag of the feature tag.
+|-
+|Terms.getFeatureVariationTerm()    
+|Used to store the value of the variation sub-tag of the feature tag.
+|-
+|Terms.getFeatureStatusTerm()   
+|Used to store the status attribute of the feature tag.
+|-
+|Terms.getLocationSequenceTerm()    
+|Used to store the seq attribute of the location sub-tag of the feature tag.
+|}
 
-| Terms                           | Usage                                                                       |
-|---------------------------------|-----------------------------------------------------------------------------|
-| Terms.getProteinTypeTerm()      | Used to store the type attribute from the protein tag.                      |
-| Terms.getEvidenceCategoryTerm() | Used to store the category attribute of the evidence tag.                   |
-| Terms.getEvidenceTypeTerm()     | Used to store the type attribute of the evidence tag.                       |
-| Terms.getEvidenceDateTerm()     | Used to store the date attribute of the evidence tag.                       |
-| Terms.getEvidenceAttrTerm()     | Used to store the attribute attribute of the evidence tag.                  |
-| Terms.getFeatureRefTerm()       | Used to store the ref attribute of the feature tag.                         |
-| Terms.getFeatureOriginalTerm()  | Used to store the value of the original sub-tag of the feature tag.         |
-| Terms.getFeatureVariationTerm() | Used to store the value of the variation sub-tag of the feature tag.        |
-| Terms.getFeatureStatusTerm()    | Used to store the status attribute of the feature tag.                      |
-| Terms.getLocationSequenceTerm() | Used to store the seq attribute of the location sub-tag of the feature tag. |
+=== New formats ===
 
-### New formats
+If you want to add a new format, the best thing to do is to extend RichSequenceFormat.BasicFormat and go from there. In order to make your class work with the automatic format-guesser (RichSequence.IOTools.readFile()) you'll need to implement canRead() and guessSymbolTokenization(), and add a static initializer block to your class, similar to this:
 
-If you want to add a new format, the best thing to do is to extend
-RichSequenceFormat.BasicFormat and go from there. In order to make your
-class work with the automatic format-guesser
-(RichSequence.IOTools.readFile()) you'll need to implement canRead() and
-guessSymbolTokenization(), and add a static initializer block to your
-class, similar to this:
+<java>
+public class MyFormat extends RichSequenceFormat.BasicFormat {
+    static {
+        RichSequence.IOTools.registerFormat(MyFormat.class);
+    }
 
-<java> public class MyFormat extends RichSequenceFormat.BasicFormat {
+    // implement the rest of the class here ...
+}
+</java>
 
-`   static {`  
-`       RichSequence.IOTools.registerFormat(MyFormat.class);`  
-`   }`
+=== NCBI Taxonomy data ===
 
-`   // implement the rest of the class here ...`
+The NCBI taxonomy loader operates outside the standed file parsing framework, as it is not dealing with a single file and does not generate sequence objects. Instead, it provides separate functions for reading the nodes.dmp and names.dmp files line-by-line, and returning the corresponding NCBITaxon object for each line of the file. An example to load the taxonomy data follows:
 
-} </java>
-
-### NCBI Taxonomy data
-
-The NCBI taxonomy loader operates outside the standed file parsing
-framework, as it is not dealing with a single file and does not generate
-sequence objects. Instead, it provides separate functions for reading
-the nodes.dmp and names.dmp files line-by-line, and returning the
-corresponding NCBITaxon object for each line of the file. An example to
-load the taxonomy data follows:
-
-<java> NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader();
+<java>
+NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader();
 BufferedReader nodes = new BufferedReader(new FileReader("nodes.dmp"));
 BufferedReader names = new BufferedReader(new FileReader("names.dmp"));
+        
+NCBITaxon t;
+while ((t=l.readNode(nodes))!=null);  // read all the nodes first
+while ((t=l.readName(names))!=null);  // then read all the names 
 
-NCBITaxon t; while ((t=l.readNode(nodes))!=null); // read all the nodes
-first while ((t=l.readName(names))!=null); // then read all the names
+// if your LRU cache is big enough, it'll now hold fully-populated instances 
+// of all the taxon objects. Not much use unless you're using a database!
+</java>
 
-// if your LRU cache is big enough, it'll now hold fully-populated
-instances // of all the taxon objects. Not much use unless you're using
-a database! </java>
+Note that this is most effective when using BioJavaX with Hibernate to persist data to the database. You do not need to do anything apart from wrap the above code in a transaction, and it will be persisted for you.
 
-Note that this is most effective when using BioJavaX with Hibernate to
-persist data to the database. You do not need to do anything apart from
-wrap the above code in a transaction, and it will be persisted for you.
+Note that you may have trouble with duplicate NCBITaxon objects or names going missing if you have an LRU cache in RichObjectFactory that is too small. This issue is avoided altogether when using the BioSQLRichObjectFactory.
 
-Note that you may have trouble with duplicate NCBITaxon objects or names
-going missing if you have an LRU cache in RichObjectFactory that is too
-small. This issue is avoided altogether when using the
-BioSQLRichObjectFactory.
 
-### When File Parsers Go Wrong
+=== When File Parsers Go Wrong ===
 
-Sometimes you'll come across a file that is not strictly in the correct
-format, or you may even uncover a bug in one of the parsers. We always
-appreciate feedback in these cases, including the input file in question
-and a full stack trace. However, sometimes you may want to find the
-problem yourself, or even attempt to fix it! So we have produced the
-DebuggingRichSeqIOListener for this purpose.
+Sometimes you'll come across a file that is not strictly in the correct format, or you may even uncover a bug in one of the parsers. We always appreciate feedback in these cases, including the input file in question and a full stack trace. However, sometimes you may want to find the problem yourself, or even attempt to fix it! So we have produced the DebuggingRichSeqIOListener for this purpose.
 
-The DebuggingRichSeqIOListener is a class that acts both as a
-BufferedInputStream, so it can be passed to a RichSequenceFormat for
-reading data, and as a RichSeqIOListener, so that it can be passed to
-the same RichSequenceFormat to listen to the sequence generation events.
-It dumps all input out to STDOUT as it reads it, and notifies every
-sequence generation event to STDOUT as it is received. This way you can
-see exactly at which points in the file the events are being generated,
-the data the format was working on at the time the event was generated,
-and if an exception happens, it will appear immediately after the
-section of the file that was in error.
+The DebuggingRichSeqIOListener is a class that acts both as a BufferedInputStream, so it can be passed to a RichSequenceFormat for reading data, and as a RichSeqIOListener, so that it can be passed to the same RichSequenceFormat to listen to the sequence generation events. It dumps all input out to STDOUT as it reads it, and notifies every sequence generation event to STDOUT as it is received. This way you can see exactly at which points in the file the events are being generated, the data the format was working on at the time the event was generated, and if an exception happens, it will appear immediately after the section of the file that was in error.
 
-The idea is that you do something like this (the example debugs the
-parsing of a FASTA file):
+The idea is that you do something like this (the example debugs the parsing of a FASTA file):
 
-<java> Namespace ns = RichObjectFactory.getDefaultNamespace();
-InputStream is = new FileInputStream("myFastaFile.fasta"); FastaFormat
-format = new FastaFormat();
+<java>
+Namespace ns = RichObjectFactory.getDefaultNamespace();
+InputStream is = new FileInputStream("myFastaFile.fasta");
+FastaFormat format = new FastaFormat();
 
 DebuggingRichSeqIOListener debug = new DebuggingRichSeqIOListener(is);
 BufferedReader br = new BufferedReader(new InputStreamReader(debug));
 
 SymbolTokenization symParser = format.guessSymbolTokenization(debug);
 
-format.readRichSequence(br, symParser, debug, ns); </java>
+format.readRichSequence(br, symParser, debug, ns);
+</java>
 
-Note that you will often get bits of file repeated in the output, as the
-format runs backwards and forwards through the file between markers it
-has set. This is perfectly normal although it may look a little strange.
+Note that you will often get bits of file repeated in the output, as the format runs backwards and forwards through the file between markers it has set. This is perfectly normal although it may look a little strange.
 
-When reporting problems with file parsing, it would be very useful if
-you could run the above code on your chosen input file and chosen
-RichSequenceFormat, and send us a copy of the output along with the
-stacktrace and input file.
+When reporting problems with file parsing, it would be very useful if you could run the above code on your chosen input file and chosen RichSequenceFormat, and send us a copy of the output along with the stacktrace and input file.
 
-Creative file parsing with RichSeqIOListener.
----------------------------------------------
+== Creative file parsing with RichSeqIOListener. ==
+ 
+=== Using RichSeqIOListeners directly ===
 
-### Using RichSeqIOListeners directly
+In order to do creative file parsing, you need to start using very low level BioJava APIs. This involves setting up a RichSeqIOListener and allowing it to communicate directly with the RichSequenceFormat instances that parse files. You have to choose whether you want just to listen to data as it is read from the file, or whether you want to use these events to construct a RichSequence object.
 
-In order to do creative file parsing, you need to start using very low
-level BioJava APIs. This involves setting up a RichSeqIOListener and
-allowing it to communicate directly with the RichSequenceFormat
-instances that parse files. You have to choose whether you want just to
-listen to data as it is read from the file, or whether you want to use
-these events to construct a RichSequence object.
+==== Listening to events only ====
 
-#### Listening to events only
+You need to write a class which implements RichSeqIOListener. The easiest way to do this is to extend RichSeqIOAdapter, which is a very simple implementation which ignores everything and returns dummy empty features whenever getCurrentFeature() is called.
 
-You need to write a class which implements RichSeqIOListener. The
-easiest way to do this is to extend RichSeqIOAdapter, which is a very
-simple implementation which ignores everything and returns dummy empty
-features whenever getCurrentFeature() is called.
+You can then use your class like this (see the earlier section on RichStreamReader for how to construct the various other objects required):
 
-You can then use your class like this (see the earlier section on
-RichStreamReader for how to construct the various other objects
-required):
-
-<java> BufferedReader input = ...; // your input file Namespace ns =
-...; // the namespace to read sequences into SymbolTokenization st =
-...; // the tokenization used to parse sequence data
+<java>
+BufferedReader input = ...;       // your input file
+Namespace ns = ...;               // the namespace to read sequences into 
+SymbolTokenization st = ...;      // the tokenization used to parse sequence data
 
 RichSeqIOListener listener = ...; // your custom listener object
 
-boolean moreSeqsAvailable = true; // assume there is at least one
-sequence in the file while (moreSeqsAvailable) {
+boolean moreSeqsAvailable = true; // assume there is at least one sequence in the file
+while (moreSeqsAvailable) {
+     moreSeqsAvailable = format.readRichSequence(input, st, listener, ns);
+     // your listener will have received all the information for the current sequence by this stage
+}
+</java>
 
-`    moreSeqsAvailable = format.readRichSequence(input, st, listener, ns);`  
-`    // your listener will have received all the information for the current sequence by this stage`
+==== Constructing sequences from events ====
 
-} </java>
+You need to write a class which implements both RichSeqIOListener and RichSequenceBuilder. Again you could just extend RichSeqIOAdapter, and implement the extra methods required by RichSequenceBuilder to make it fully functional. You will obviously need to store information passed to your instance as parsing goes along, in order to be able to construct the sequence objects when makeRichSequence() is called at the end.
 
-#### Constructing sequences from events
+Your RichSequenceBuilder is now fully compatible with the RichStreamReader framework outlined earlier in this document, but you will also need to create a RichSequenceBuilderFactory implementation to work with it. The simplest form of such a factory (assuming a custom builder named CustomRichSequenceBuilder) looks like this:
 
-You need to write a class which implements both RichSeqIOListener and
-RichSequenceBuilder. Again you could just extend RichSeqIOAdapter, and
-implement the extra methods required by RichSequenceBuilder to make it
-fully functional. You will obviously need to store information passed to
-your instance as parsing goes along, in order to be able to construct
-the sequence objects when makeRichSequence() is called at the end.
+<java>
+public class CustomRichSequenceBuilderFactory implements RichSequenceBuilderFactory {
+    public CustomRichSequenceBuilderFactory() {}
+    public SequenceBuilder makeSequenceBuilder() {
+        return new CustomRichSequenceBuilder();
+    }
+}
+</java>
 
-Your RichSequenceBuilder is now fully compatible with the
-RichStreamReader framework outlined earlier in this document, but you
-will also need to create a RichSequenceBuilderFactory implementation to
-work with it. The simplest form of such a factory (assuming a custom
-builder named CustomRichSequenceBuilder) looks like this:
+=== Parsing only specific fields ===
 
-<java> public class CustomRichSequenceBuilderFactory implements
-RichSequenceBuilderFactory {
+The basic RichSeqIOAdapter class ignores all data passed to it. This is the simplest form of a RichSeqIOListener. Building from this base, you can construct specialist RichSeqIOListener implementations that perform very specific tasks very efficiently. For instance, a listener that counts all the sequences in a file would look like this:
 
-`   public CustomRichSequenceBuilderFactory() {}`  
-`   public SequenceBuilder makeSequenceBuilder() {`  
-`       return new CustomRichSequenceBuilder();`  
-`   }`
+<java>
+public class MyListener extends RichSeqIOAdapter {
+    private int seqCount;
+    public MyListener() { 
+        super();
+        this.seqCount = 0;
+    }
+    public void startSequence() { this.seqCount++; }
+    public void getSeqCount() { return this.seqCount; }
+}
+</java>
 
-} </java>
+You could then call getSeqCount() on this class after parsing a file to find out exactly how many sequences it contained.
 
-### Parsing only specific fields
+== Publication cross-references. ==
 
-The basic RichSeqIOAdapter class ignores all data passed to it. This is
-the simplest form of a RichSeqIOListener. Building from this base, you
-can construct specialist RichSeqIOListener implementations that perform
-very specific tasks very efficiently. For instance, a listener that
-counts all the sequences in a file would look like this:
+=== Everything is a 'journal article' ===
 
-<java> public class MyListener extends RichSeqIOAdapter {
+Owing to the way in which BioSQL stores publication cross-references, there is no way to distinguish between different types of publication. This is mirrored in the BioJavaX object model in the DocRef interface.
 
-`   private int seqCount;`  
-`   public MyListener() { `  
-`       super();`  
-`       this.seqCount = 0;`  
-`   }`  
-`   public void startSequence() { this.seqCount++; }`  
-`   public void getSeqCount() { return this.seqCount; }`
+As journal articles are the most common type of publication cross-reference, everything is assumed by BioJavaX to be a journal article.
 
-} </java>
+BioJavaX makes no attempt to parse information out from textual publication location descriptions (eg. the LOCATION line in GenBank files). Likewise, when it encounters XML publication location descriptions (such as those found in UniProtXML) it merely concatenates all the data together into a single string. When writing out in XML format it always uses the plain-text option wherever possible unless forced to use the journal-article specific option by an XML DTD. These descriptions are stored using setLocation() on the DocRef object.
 
-You could then call getSeqCount() on this class after parsing a file to
-find out exactly how many sequences it contained.
+The only piece of information which it attempts to parse (other than the title) is the author data. It parses each author into a DocRefAuthor, and stores a set of these with each DocRef object. Tools are provided in DocRefAuthor.Tools for converting these sets to/from a single string for use in situations such as the AUTHOR tag in GenBank files, or when persisting to a BioSQL database.
 
-Publication cross-references.
------------------------------
+DocRef instances must be wrapped in a RankedDocRef before they can be associated with a sequence via addRankedDocRef(). The usual default rank is 0.
 
-### Everything is a 'journal article'
+=== Editors and consortiums as authors ===
 
-Owing to the way in which BioSQL stores publication cross-references,
-there is no way to distinguish between different types of publication.
-This is mirrored in the BioJavaX object model in the DocRef interface.
+When dealing in plain text, authors who are editors are suffixed with " (ed.)". Authors who are consortiums are suffixed with " (consortium)". The DocRefAuthor.Tools parses these suffixes (in any order) and uses setEditor() and setConsortium() on the DocRefAuthor object to indicate what it found. When converting DocRefAuthor objects to plain text it will also append these suffixes as necessary.
 
-As journal articles are the most common type of publication
-cross-reference, everything is assumed by BioJavaX to be a journal
-article.
+== Database cross-references. ==
 
-BioJavaX makes no attempt to parse information out from textual
-publication location descriptions (eg. the LOCATION line in GenBank
-files). Likewise, when it encounters XML publication location
-descriptions (such as those found in UniProtXML) it merely concatenates
-all the data together into a single string. When writing out in XML
-format it always uses the plain-text option wherever possible unless
-forced to use the journal-article specific option by an XML DTD. These
-descriptions are stored using setLocation() on the DocRef object.
+=== Database names ===
 
-The only piece of information which it attempts to parse (other than the
-title) is the author data. It parses each author into a DocRefAuthor,
-and stores a set of these with each DocRef object. Tools are provided in
-DocRefAuthor.Tools for converting these sets to/from a single string for
-use in situations such as the AUTHOR tag in GenBank files, or when
-persisting to a BioSQL database.
+Cross-references to other databases are defined as CrossRef objects. To associate a cross-reference with a particular sequence, you need to assign it a rank before adding it to the sequence using addRankedCrossRef(). To do this, wrap it in a RankedCrossRef object.
 
-DocRef instances must be wrapped in a RankedDocRef before they can be
-associated with a sequence via addRankedDocRef(). The usual default rank
-is 0.
+Database names are case-sensitive. When using cross-references, be very aware of this. The various file parsers do not make much effort to convert the database names they find to a single case policy, as several of the formats insist on different ones.
 
-### Editors and consortiums as authors
+If you will be persisting lots of new data regularly to your datbase, keep an eye on this. Some kind of SQL script to do a periodic tidy-up might be handy. If you come up with one and feel it would be useful for others too, please feel free to send it in and we'll add it below.
 
-When dealing in plain text, authors who are editors are suffixed with "
-(ed.)". Authors who are consortiums are suffixed with " (consortium)".
-The DocRefAuthor.Tools parses these suffixes (in any order) and uses
-setEditor() and setConsortium() on the DocRefAuthor object to indicate
-what it found. When converting DocRefAuthor objects to plain text it
-will also append these suffixes as necessary.
+Common database names can be found as constants (eg. PUBMED_KEY) in RichSequence.Terms.
 
-Database cross-references.
---------------------------
+=== Accessions and versions ===
 
-### Database names
+All database cross-references have at least one accession, which is the primary accession for that reference. The version is also compulsory, although often it is just left as zero. Only primary accessions have explicitly separate versions - secondary or tertiary accessions, if they have versions at all, will have the versions included in the accession itself.
 
-Cross-references to other databases are defined as CrossRef objects. To
-associate a cross-reference with a particular sequence, you need to
-assign it a rank before adding it to the sequence using
-addRankedCrossRef(). To do this, wrap it in a RankedCrossRef object.
+Secondary, ternary, quaternary etc. accessions are stored as annotations on the cross-reference. These secondary accession annotations must all have the key RichSequence.Terms.getAdditionalAccessionTerm() if they are to be understood across all parts of BioJavaX.
 
-Database names are case-sensitive. When using cross-references, be very
-aware of this. The various file parsers do not make much effort to
-convert the database names they find to a single case policy, as several
-of the formats insist on different ones.
+== Working with RichLocation objects. ==
 
-If you will be persisting lots of new data regularly to your datbase,
-keep an eye on this. Some kind of SQL script to do a periodic tidy-up
-might be handy. If you come up with one and feel it would be useful for
-others too, please feel free to send it in and we'll add it below.
+=== Working with locations ===
 
-Common database names can be found as constants (eg. PUBMED\_KEY) in
-RichSequence.Terms.
+In BioJavaX, all locations are instances of classes which implement the RichLocation interface. These are very complex objects, so need to be used with care.
 
-### Accessions and versions
+All locations use Position objects to define their end points. Position objects have a start coordinate, and for fuzzy ones an end coordinate too along with a symbol indicating what kind of range the two points encompass (eg. the "." or "^" symbols from GenBank-style locations). If the start or end coordinate of a fuzzy position is fuzzy in itself (eg. "<" or ">" from GenBank-style locations), then flags can be set on the object to indicate this.
 
-All database cross-references have at least one accession, which is the
-primary accession for that reference. The version is also compulsory,
-although often it is just left as zero. Only primary accessions have
-explicitly separate versions - secondary or tertiary accessions, if they
-have versions at all, will have the versions included in the accession
-itself.
+Locations have ranks which are used to sort them. If persisted to a database, the location will be flattened out into a set of simple locations, ordered by their rank in ascending order. The complex location constructed from these when retrieving them from the database will have its members in the same order. It is important then to monitor the ranks in your locations and make sure they are in the correct order before persisting them. Note that the locations produced by the UniProtLocationParser and GenbankLocationParser will always be correctly ranked ready for persisting to a database.
 
-Secondary, ternary, quaternary etc. accessions are stored as annotations
-on the cross-reference. These secondary accession annotations must all
-have the key RichSequence.Terms.getAdditionalAccessionTerm() if they are
-to be understood across all parts of BioJavaX.
-
-Working with RichLocation objects.
-----------------------------------
-
-### Working with locations
-
-In BioJavaX, all locations are instances of classes which implement the
-RichLocation interface. These are very complex objects, so need to be
-used with care.
-
-All locations use Position objects to define their end points. Position
-objects have a start coordinate, and for fuzzy ones an end coordinate
-too along with a symbol indicating what kind of range the two points
-encompass (eg. the "." or "^" symbols from GenBank-style locations). If
-the start or end coordinate of a fuzzy position is fuzzy in itself (eg.
-"\<" or "\>" from GenBank-style locations), then flags can be set on the
-object to indicate this.
-
-Locations have ranks which are used to sort them. If persisted to a
-database, the location will be flattened out into a set of simple
-locations, ordered by their rank in ascending order. The complex
-location constructed from these when retrieving them from the database
-will have its members in the same order. It is important then to monitor
-the ranks in your locations and make sure they are in the correct order
-before persisting them. Note that the locations produced by the
-UniProtLocationParser and GenbankLocationParser will always be correctly
-ranked ready for persisting to a database.
-
-The simplest kind of location describes a single point or range between
-two points on a sequence, with optional fuzziness at either end. This is
-implemented by the SimpleRichLocation class.
+The simplest kind of location describes a single point or range between two points on a sequence, with optional fuzziness at either end. This is implemented by the SimpleRichLocation class.
 
 This example describes the GenBank-style location string "56":
 
-<java> Position pos = new SimplePosition(56); // the 0 is an arbitrary
-value for the rank of this location RichLocation loc = new
-SimpleRichLocation(pos,0); </java>
+<java>
+Position pos = new SimplePosition(56);  
+// the 0 is an arbitrary value for the rank of this location
+RichLocation loc = new SimpleRichLocation(pos,0);   
+</java>
 
-This example describes the GenBank-style location string
-"(23^34)..57\>":
+This example describes the GenBank-style location string "(23^34)..57>":
 
-<java> // two falses = not fuzzy at all Position min = new
-SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
-= fuzzy end Position max = new SimplePosition(false,true,57); // the 0
-is an arbitrary value for the rank of this location RichLocation loc =
-new SimpleRichLocation(min,max,0); </java>
+<java>
+// two falses = not fuzzy at all
+Position min = new SimplePosition(false,false,23,34,"^"); 
+// false = non-fuzzy start, true = fuzzy end
+Position max = new SimplePosition(false,true,57);         
+// the 0 is an arbitrary value for the rank of this location
+RichLocation loc = new SimpleRichLocation(min,max,0);     
+</java>
 
-This example describes the GenBank-style location string
-"complement((23^34)..57\>)":
+This example describes the GenBank-style location string "complement((23^34)..57>)":
 
-<java> // two falses = not fuzzy at all Position min = new
-SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
-= fuzzy end Position max = new SimplePosition(false,true,57);
-RichLocation loc = new
-SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND); </java>
+<java>
+// two falses = not fuzzy at all
+Position min = new SimplePosition(false,false,23,34,"^"); 
+// false = non-fuzzy start, true = fuzzy end
+Position max = new SimplePosition(false,true,57);         
+RichLocation loc = new SimpleRichLocation(min,max,0,Strand.NEGATIVE_STRAND); 
+</java>
 
-This example describes the GenBank-style location string
-"A12345.3:complement((23^34)..57\>)":
+This example describes the GenBank-style location string "A12345.3:complement((23^34)..57>)":
 
-<java> // version 3 of accession A12345 in the GenBank database CrossRef
-cr = new SimpleCrossRef("GenBank","A12345",3); // two falses = not fuzzy
-at all Position min = new SimplePosition(false,false,23,34,"^"); //
-false = non-fuzzy start, true = fuzzy end Position max = new
-SimplePosition(false,true,57); RichLocation loc = new
-SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr); </java>
+<java>
+// version 3 of accession A12345 in the GenBank database
+CrossRef cr = new SimpleCrossRef("GenBank","A12345",3);   
+// two falses = not fuzzy at all
+Position min = new SimplePosition(false,false,23,34,"^"); 
+// false = non-fuzzy start, true = fuzzy end
+Position max = new SimplePosition(false,true,57);         
+RichLocation loc = new SimpleRichLocation(min,max,Strand.NEGATIVE_STRAND,cr);
+</java>
 
-If you require locations that cover more than one range, you must use
-the RichLocation.Tools methods to help you. If you don't, you run a
-serious risk of making nonsense locations that will give unpredictable
-results.
+If you require locations that cover more than one range, you must use the RichLocation.Tools methods to help you. If you don't, you run a serious risk of making nonsense locations that will give unpredictable results.
 
-A complex location is constructed from a collection of RichLocation
-instances. Any member of the collection which is already a complex
-location is flattened out into its member SimpleRichLocation objects
-first (see later section on flattening locations) before the new
-location is constructed. The construction process attempts to minimise
-the number of these simple locations by merging the ones that overlap.
-Therefore the total number of member locations (blocks) in the resulting
-complex location may be less than the number of locations you originally
-passed in as input.
+A complex location is constructed from a collection of RichLocation instances. Any member of the collection which is already a complex location is flattened out into its member SimpleRichLocation objects first (see later section on flattening locations) before the new location is constructed. The construction process attempts to minimise the number of these simple locations by merging the ones that overlap. Therefore the total number of member locations (blocks) in the resulting complex location may be less than the number of locations you originally passed in as input.
 
-To construct a complex location from a set of existing RichLocation
-instances, follow this example:
+To construct a complex location from a set of existing RichLocation instances, follow this example:
 
-<java> RichLocation first = ...; // some arbitrary location RichLocation
-second = ...; // some other location Collection members =
-Arrays.asList(new RichLocation[]{first,second}); RichLocation combined =
-RichLocation.Tools.construct(members); </java>
+<java>
+RichLocation first = ...;   // some arbitrary location
+RichLocation second = ...;  // some other location
+Collection members = Arrays.asList(new RichLocation[]{first,second});
+RichLocation combined = RichLocation.Tools.construct(members);
+</java>
 
-The construct() method will return one of four different types of
-RichLocation objects, depending on the members passed in:
+The construct() method will return one of four different types of RichLocation objects, depending on the members passed in:
 
 Table 12.1. RichLocation.Tools.construct() result types.
+{|border="1" cellpadding="2"
+!width="200"|Type of Location objects
+!width="400"|Use
+|-
+|EmptyRichLocation  
+|If the input collection was empty, or only contained a single entry which was an instance of EmptyRichLocation itself.
+|-
+|SimpleRichLocation 
+|If all the members in the input collection overlap and are on the same strand of the same sequence, the result will be a single location covering the entire overlapping range.
+|-
+|CompoundRichLocation   
+|If all the members in the input collection are on the same strand of the same sequence, but after merging overlapping locations there are still gaps, then a CompoundRichLocation is returned containing one SimpleRichLocation per merged region. All the members are guaranteed to be on the same strand of the same sequence. The strand and cross-ref of the location returned will be consistent with its members. The min and max of the location will correspond to the min and max of all the members combined.
+|-
+|MultiSourceCompoundRichLocation    
+|As per CompoundRichLocation, but members may appear on different strands or even different (remote) sequences. The min, max, strand and cross-ref of the location returned are meaningless, and should not be used. You should instead interrogate each member location (block) for this information as required.
+|}
 
-| Type of Location objects        | Use                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| EmptyRichLocation               | If the input collection was empty, or only contained a single entry which was an instance of EmptyRichLocation itself.                                                                                                                                                                                                                                                                                                                                                                                                  |
-| SimpleRichLocation              | If all the members in the input collection overlap and are on the same strand of the same sequence, the result will be a single location covering the entire overlapping range.                                                                                                                                                                                                                                                                                                                                         |
-| CompoundRichLocation            | If all the members in the input collection are on the same strand of the same sequence, but after merging overlapping locations there are still gaps, then a CompoundRichLocation is returned containing one SimpleRichLocation per merged region. All the members are guaranteed to be on the same strand of the same sequence. The strand and cross-ref of the location returned will be consistent with its members. The min and max of the location will correspond to the min and max of all the members combined. |
-| MultiSourceCompoundRichLocation | As per CompoundRichLocation, but members may appear on different strands or even different (remote) sequences. The min, max, strand and cross-ref of the location returned are meaningless, and should not be used. You should instead interrogate each member location (block) for this information as required.                                                                                                                                                                                                       |
+=== Strandedness. ===
 
-### Strandedness.
+All SimpleRichLocation and CompoundRichLocation objects have a strand assigned to them. The various strands available are defined as constants in RichLocation.Strand. If two locations have different strands, then they will never be found together in the same CompoundRichLocation, but they may occur together in a MultiSourceCompoundRichLocation.
 
-All SimpleRichLocation and CompoundRichLocation objects have a strand
-assigned to them. The various strands available are defined as constants
-in RichLocation.Strand. If two locations have different strands, then
-they will never be found together in the same CompoundRichLocation, but
-they may occur together in a MultiSourceCompoundRichLocation.
+In all cases, location coordinates are given w.r.t. the 5' end of the positive strand, with the first base numbered as 1. This is to make overlap, union, and intersection calculations easier.
 
-In all cases, location coordinates are given w.r.t. the 5' end of the
-positive strand, with the first base numbered as 1. This is to make
-overlap, union, and intersection calculations easier.
+=== Remote locations. ===
 
-### Remote locations.
+Locations are generally sequence-agnostic until they are applied to a specific sequence, usually through a feature. However, some locations specifically refer to an individual sequence, and are assigned a CrossRef instance to indicate this. These are remote locations. A null value indicates that the location is not remote.
 
-Locations are generally sequence-agnostic until they are applied to a
-specific sequence, usually through a feature. However, some locations
-specifically refer to an individual sequence, and are assigned a
-CrossRef instance to indicate this. These are remote locations. A null
-value indicates that the location is not remote.
+The sequences backing remote locations are retrieved using a CrossReferenceResolver, the default one being supplied by RichObjectFactory.getDefaultCrossReferenceResolver(). You can override the use of this default either by changing the default in the RichObjectFactory, or calling setCrossReferenceResolver() directly on the location object. The default one does not look up remote sequences at all, and always returns null for sequence objects, and InfinitelyAmbiguousSymbolList instances for symbol list requests. The one supplied for use with Hibernate does attempt to look sequences up in the underlying database, but if it cannot find them it will exhibit similar behaviour.
 
-The sequences backing remote locations are retrieved using a
-CrossReferenceResolver, the default one being supplied by
-RichObjectFactory.getDefaultCrossReferenceResolver(). You can override
-the use of this default either by changing the default in the
-RichObjectFactory, or calling setCrossReferenceResolver() directly on
-the location object. The default one does not look up remote sequences
-at all, and always returns null for sequence objects, and
-InfinitelyAmbiguousSymbolList instances for symbol list requests. The
-one supplied for use with Hibernate does attempt to look sequences up in
-the underlying database, but if it cannot find them it will exhibit
-similar behaviour.
+The job of this resolver is to obtain sequence data for the remote sequence. If the resolver cannot locate the sequence, the location may throw an exception when any operation requiring the services of the resolver is attempted.
 
-The job of this resolver is to obtain sequence data for the remote
-sequence. If the resolver cannot locate the sequence, the location may
-throw an exception when any operation requiring the services of the
-resolver is attempted.
+If you are using a database with BioJavaX and that sequence is to be found in the same database, then make sure that the database name given to the CrossRef instance is the same as the namespace of the sequence in your database, and that the accessions and versions are the same.
 
-If you are using a database with BioJavaX and that sequence is to be
-found in the same database, then make sure that the database name given
-to the CrossRef instance is the same as the namespace of the sequence in
-your database, and that the accessions and versions are the same.
+=== Resolving fuzziness. ===
 
-### Resolving fuzziness.
+Fuzziness is all well and good until you try and work out whether one sequence overlaps another, or try and store the location in a database like BioSQL that has no concept of fuzziness. In these kinds of situation, you have to resolve the fuzziness to a specific coordinate before you can use it.
 
-Fuzziness is all well and good until you try and work out whether one
-sequence overlaps another, or try and store the location in a database
-like BioSQL that has no concept of fuzziness. In these kinds of
-situation, you have to resolve the fuzziness to a specific coordinate
-before you can use it.
+Locations will resolve positions as necessary using the position resolver supplied by RichObjectFactory.getDefaultPositionResolver(). You can replace this default resolver for all locations by using the appropriate methods in RichObjectFactory, or you can change it for this location only by calling setPositionResolver() on the location object. A number of useful ones are provided as sub-classes of the PositionResolver interface.
 
-Locations will resolve positions as necessary using the position
-resolver supplied by RichObjectFactory.getDefaultPositionResolver(). You
-can replace this default resolver for all locations by using the
-appropriate methods in RichObjectFactory, or you can change it for this
-location only by calling setPositionResolver() on the location object. A
-number of useful ones are provided as sub-classes of the
-PositionResolver interface.
+=== Translation. ===
 
-### Translation.
+Locations can be moved left or right by a fixed number of bases by using the translate() method. This method returns a new location with all members offset by the value specified. A negative offset will move locations towards the 5' end of the positive strand, whilst a positive offset will move them towards the 3' end.
 
-Locations can be moved left or right by a fixed number of bases by using
-the translate() method. This method returns a new location with all
-members offset by the value specified. A negative offset will move
-locations towards the 5' end of the positive strand, whilst a positive
-offset will move them towards the 3' end.
+=== Empty locations. ===
 
-### Empty locations.
+The empty location is represented by a singleton instance of EmptyRichLocation, available as a constant as RichLocation.EMPTY_LOCATION.
 
-The empty location is represented by a singleton instance of
-EmptyRichLocation, available as a constant as
-RichLocation.EMPTY\_LOCATION.
+=== Circular locations ===
 
-### Circular locations
+Locations are circular if a call is made to setCircularLength() with a value greater than zero. The value indicates the length of the circular sequence that this location overlays. This is important when it comes to calculating overlaps, unions and other operations where the wrap-around point for the coordinates must be known.
 
-Locations are circular if a call is made to setCircularLength() with a
-value greater than zero. The value indicates the length of the circular
-sequence that this location overlays. This is important when it comes to
-calculating overlaps, unions and other operations where the wrap-around
-point for the coordinates must be known.
+A circular location cannot be applied to a non-circular sequence. Neither can it be applied to a circular sequence with a length that is not the same as the one returned by the getCircularLength() method of the location.
 
-A circular location cannot be applied to a non-circular sequence.
-Neither can it be applied to a circular sequence with a length that is
-not the same as the one returned by the getCircularLength() method of
-the location.
+The concept of circularity is not understood by BioSQL, so this information will be lost if you persist it to a database.
 
-The concept of circularity is not understood by BioSQL, so this
-information will be lost if you persist it to a database.
+=== Union ===
 
-### Union
+The union of any two locations X and Y that do not overlap (see section on overlapping locations), or that overlap but on different strands, is simply a complex location with X and Y as members.
 
-The union of any two locations X and Y that do not overlap (see section
-on overlapping locations), or that overlap but on different strands, is
-simply a complex location with X and Y as members.
+The union of two linear locations X and Y that overlap on the same strand is a single simple location that covers the entire area from X.min to Y.max.
 
-The union of two linear locations X and Y that overlap on the same
-strand is a single simple location that covers the entire area from
-X.min to Y.max.
+The union of circular location X with any other location Y that overlaps on the same strand is a single simple location that covers the region from the 5' most of X.min and Y.min to the 3' most of X.max and Y.max w.r.t. the positive strand.
 
-The union of circular location X with any other location Y that overlaps
-on the same strand is a single simple location that covers the region
-from the 5' most of X.min and Y.min to the 3' most of X.max and Y.max
-w.r.t. the positive strand.
+Complex locations will perform the above steps on each pair of member locations in turn, and the union will be the combination set of all unique locations that these pair-wise intersections produce. Any overlapping locations on the same strand within this set will be merged into single, larger locations.
 
-Complex locations will perform the above steps on each pair of member
-locations in turn, and the union will be the combination set of all
-unique locations that these pair-wise intersections produce. Any
-overlapping locations on the same strand within this set will be merged
-into single, larger locations.
+=== Intersection ===
 
-### Intersection
+Locations never intersect if they do not overlap (see section on overlapping locations). The intersection operation will return the empty location.
 
-Locations never intersect if they do not overlap (see section on
-overlapping locations). The intersection operation will return the empty
-location.
+If two linear locations X and Y overlap each other on the same strand, then the intersection is a single simple location covering the overlapping region.
 
-If two linear locations X and Y overlap each other on the same strand,
-then the intersection is a single simple location covering the
-overlapping region.
+If any two locations X and Y overlap each other on different strands, then the intersection is a complex location containing only the portions of X and Y that overlap each other.
 
-If any two locations X and Y overlap each other on different strands,
-then the intersection is a complex location containing only the portions
-of X and Y that overlap each other.
+If a circular location X overlaps any other location Y on the same strand, then the resulting single simple circular location will cover the region from the 3' most of X.min and Y.min to the 5' most of X.max and Y.max w.r.t. the positive strand.
 
-If a circular location X overlaps any other location Y on the same
-strand, then the resulting single simple circular location will cover
-the region from the 3' most of X.min and Y.min to the 5' most of X.max
-and Y.max w.r.t. the positive strand.
+Complex locations will perform the above steps on each pair of member locations in turn, and the intersection will be the set of all unique locations that these pair-wise intersections produce. Any overlapping locations on the same strand within this set will be merged into single, larger locations.
 
-Complex locations will perform the above steps on each pair of member
-locations in turn, and the intersection will be the set of all unique
-locations that these pair-wise intersections produce. Any overlapping
-locations on the same strand within this set will be merged into single,
-larger locations.
+=== Overlaps. ===
 
-### Overlaps.
+Locations never overlap locations which are on a different remote sequence. However, locations on opposite strands may overlap each other.
 
-Locations never overlap locations which are on a different remote
-sequence. However, locations on opposite strands may overlap each other.
+Circular locations of different circular lengths never overlap each other. Circular locations never overlap linear locations.
 
-Circular locations of different circular lengths never overlap each
-other. Circular locations never overlap linear locations.
+Complex locations test each individual member in turn for overlap. The empty location never overlaps anything.
 
-Complex locations test each individual member in turn for overlap. The
-empty location never overlaps anything.
+Linear locations X and Y overlap iff X.min <= Y.max and X.max >= Y.min.
 
-Linear locations X and Y overlap iff X.min \<= Y.max and X.max \>=
-Y.min.
+Circular locations (of the same circular length) X and Y overlap iff X.min <= Y.max-N and X.max >= Y.min-N where N is some multiple of the circular length of either location.
 
-Circular locations (of the same circular length) X and Y overlap iff
-X.min \<= Y.max-N and X.max \>= Y.min-N where N is some multiple of the
-circular length of either location.
+=== Contains ===
 
-### Contains
+There are two types of contains operation - one tests the presence of a particular point coordinate, the other tests whether this location entirely encompasses another location.
 
-There are two types of contains operation - one tests the presence of a
-particular point coordinate, the other tests whether this location
-entirely encompasses another location.
+Complex locations make the test against each member in turn. The empty location never will never contain anything.
 
-Complex locations make the test against each member in turn. The empty
-location never will never contain anything.
+==== Point coordinates. ====
 
-#### Point coordinates.
+For linear locations, a location contains a point if that point falls on or between the min and max of this location. If the min or max of this location is fuzzy, it is resolved into a single point first before the test is made.
 
-For linear locations, a location contains a point if that point falls on
-or between the min and max of this location. If the min or max of this
-location is fuzzy, it is resolved into a single point first before the
-test is made.
+For circular locations, the point is defined to be contained by a location if the point +/- some multiple of the circular length of the location lies between the min and max of the location.
 
-For circular locations, the point is defined to be contained by a
-location if the point +/- some multiple of the circular length of the
-location lies between the min and max of the location.
+==== Other locations. ====
 
-#### Other locations.
+Locations never contain locations which are on a different strand or remote sequence.
 
-Locations never contain locations which are on a different strand or
-remote sequence.
+A linear location X contains another linear location Y iff X.min <= Y.min and X.max >= Y.max.
 
-A linear location X contains another linear location Y iff X.min \<=
-Y.min and X.max \>= Y.max.
+A circular location X contains any other location Y iff X.min <= Y.min-N and X.max >= Y.max-N where N is some multiple of the circular length of the location X.
 
-A circular location X contains any other location Y iff X.min \<=
-Y.min-N and X.max \>= Y.max-N where N is some multiple of the circular
-length of the location X.
+=== Obtaining the symbols for a location. ===
 
-### Obtaining the symbols for a location.
+The symbols for a location are obtained by calling symbols() on the location object and passing in the reference sequence which the location must be applied to. If the location contains coordinates that are outside the range of the reference sequence, an exception will be thrown.
 
-The symbols for a location are obtained by calling symbols() on the
-location object and passing in the reference sequence which the location
-must be applied to. If the location contains coordinates that are
-outside the range of the reference sequence, an exception will be
-thrown.
+The location will iterate through each of its members (or just itself if it is a SimpleRichLocation) and concatenate the results of calling symbols() on each of them in turn. The concatenated sequence is then returned. This means that the order of the members is important. It will always be the same as the order in which the members were specified to RichLocation.Tools.construct(), if that was the way you put this location together.
 
-The location will iterate through each of its members (or just itself if
-it is a SimpleRichLocation) and concatenate the results of calling
-symbols() on each of them in turn. The concatenated sequence is then
-returned. This means that the order of the members is important. It will
-always be the same as the order in which the members were specified to
-RichLocation.Tools.construct(), if that was the way you put this
-location together.
+Where it comes across a remote location that refers to a sequence other than the one passed in for reference, the CrossReferenceResolver of that location is used to obtain the remote sequence. The default CrossReferenceResolver, DummyCrossReferenceResolver, will return a number of ambiguity symbols equivalent to the length of the remote location. The Hibernate version, BioSQLCrossReferenceResolver, will return the actual sequence from the database, but otherwise will behave the same way if the remote sequence cannot be found.
 
-Where it comes across a remote location that refers to a sequence other
-than the one passed in for reference, the CrossReferenceResolver of that
-location is used to obtain the remote sequence. The default
-CrossReferenceResolver, DummyCrossReferenceResolver, will return a
-number of ambiguity symbols equivalent to the length of the remote
-location. The Hibernate version, BioSQLCrossReferenceResolver, will
-return the actual sequence from the database, but otherwise will behave
-the same way if the remote sequence cannot be found.
+The sequences of locations on the negative strand will be reverse complemented before concatenation to the results. Hence it is important that you construct complex locations on the negative strand with the member locations appearing in order from 3' to 5' end of the positive strand if you want the symbols() call to return sensible results.
 
-The sequences of locations on the negative strand will be reverse
-complemented before concatenation to the results. Hence it is important
-that you construct complex locations on the negative strand with the
-member locations appearing in order from 3' to 5' end of the positive
-strand if you want the symbols() call to return sensible results.
+== Features ==
 
-Features
---------
-
-### Adding features to a RichSequence.
+=== Adding features to a RichSequence. ===
 
 The best way to create a new feature is like this:
 
-<java> // create a feature template Feature.Template templ = new
-RichFeature.Template(); // assign the feature template a location, type,
-and source templ.location = ...; templ.typeTerm = ...; templ.sourceTerm
-= ...; // assign the rest of the necessary stuff templ.annotation = new
-SimpleRichAnnotation(); templ.featureRelationshipSet = new TreeSet();
-templ.rankedCrossRefs = new TreeSet(); // get a sequence from somewhere
-RichSequence rs = ...; // make a new feature on that sequence
-RichFeature feat = rs.createFeature(RichFeature.Template()); </java>
+<java>
+// create a feature template
+Feature.Template templ = new RichFeature.Template();           
+// assign the feature template a location, type, and source
+templ.location = ...;                                          
+templ.typeTerm = ...;
+templ.sourceTerm = ...;  
+// assign the rest of the necessary stuff
+templ.annotation = new SimpleRichAnnotation();                 
+templ.featureRelationshipSet = new TreeSet();
+templ.rankedCrossRefs = new TreeSet();
+// get a sequence from somewhere
+RichSequence rs = ...;                                         
+// make a new feature on that sequence
+RichFeature feat = rs.createFeature(RichFeature.Template());   
+</java>
 
-Alternatively, you can start with a completely empty dummy feature and
-just customise the bits you need:
+Alternatively, you can start with a completely empty dummy feature and just customise the bits you need:
 
-<java> // get a sequence RichSequence rs = ...; // make an empty feature
-RichFeature feat = RichFeature.Tools.makeEmptyFeature(); // associate
-sequence with feature feat.setParent(rs): // associate feature with
-sequence rs.getFeatureSet().add(feat);
+<java>
+// get a sequence
+RichSequence rs = ...;                                     
+// make an empty feature
+RichFeature feat = RichFeature.Tools.makeEmptyFeature();   
+// associate sequence with feature
+feat.setParent(rs):                                        
+// associate feature with sequence
+rs.getFeatureSet().add(feat);                              
 
-// customise the feature here, eg. location, type, source etc. </java>
+// customise the feature here, eg. location, type, source etc.
+</java>
 
-### Qualifiers as annotations.
+=== Qualifiers as annotations. ===
 
-All feature qualifiers are stored as annotations. Qualifier annotations
-have a ComparableTerm as key, and a String as the value. Multiple
-qualifiers with the same term are allowed but only if the values are
-distinct. Use the rank of the annotation to preserve order.
+All feature qualifiers are stored as annotations. Qualifier annotations have a ComparableTerm as key, and a String as the value. Multiple qualifiers with the same term are allowed but only if the values are distinct. Use the rank of the annotation to preserve order.
 
-To go through all the qualifiers on a particular feature is quite
-straightforward:
+To go through all the qualifiers on a particular feature is quite straightforward:
 
-<java> RichFeature feat = ...; // get the feature from somewhere for
-(Iterator i = feat.getNoteSet().iterator(); i.hasNext; ) {
+<java>
+RichFeature feat = ...; // get the feature from somewhere
+for (Iterator i = feat.getNoteSet().iterator(); i.hasNext; ) {
+    // get the next note
+    Note n = (Note)i.next();
+    // read it
+    String key = n.getTerm().getName();
+    String value = n.getValue();
+    int rank = n.getRank();
+    // print the qualifier out in key=value (rank) format
+    System.out.println(key+"="+value+" ("+rank+")"); 
+}
+</java>
 
-`   // get the next note`  
-`   Note n = (Note)i.next();`  
-`   // read it`  
-`   String key = n.getTerm().getName();`  
-`   String value = n.getValue();`  
-`   int rank = n.getRank();`  
-`   // print the qualifier out in key=value (rank) format`  
-`   System.out.println(key+"="+value+" ("+rank+")"); `
+=== Obtaining the symbols for a feature. ===
 
-} </java>
+The symbols for a feature are simply the result of a delegated call to the symbols() method of the feature's Location object, using the feature's parent object as the reference sequence for the location. See the section on locations in this document for details on how the symbols are obtained.
 
-### Obtaining the symbols for a feature.
+== Relationships between features. ==
 
-The symbols for a feature are simply the result of a delegated call to
-the symbols() method of the feature's Location object, using the
-feature's parent object as the reference sequence for the location. See
-the section on locations in this document for details on how the symbols
-are obtained.
+=== Relating two features. ===
 
-Relationships between features.
--------------------------------
+Two features can be related to each other by using a RichFeatureRelationship object to construct the link.
 
-### Relating two features.
+Relationships have compulsory ranks. Use 0 if you don't want to bother with this.
 
-Two features can be related to each other by using a
-RichFeatureRelationship object to construct the link.
+The following code snippet defines a new term "contains" in the default ontology, then creates a relationship that states that feature A (the parent) contains feature B (the child):
 
-Relationships have compulsory ranks. Use 0 if you don't want to bother
-with this.
+<java>
+ComparableTerm contains = RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains");
+...
+RichFeature parent = ...; // get feature A from somewhere 
+RichFeature child = ...; // get feature B from somewhere
+RichFeatureRelationship relationship = new RichFeatureRelationship(parent,child,contains,0);
+parent.addFeatureRelationship(relationship); // add the relationship to the parent
+...
+parent.removeFeatureRelationship(relationship); // you can always take it away again later
+</java>
 
-The following code snippet defines a new term "contains" in the default
-ontology, then creates a relationship that states that feature A (the
-parent) contains feature B (the child):
+=== Querying the relationship. ===
 
-<java> ComparableTerm contains =
-RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains"); ...
-RichFeature parent = ...; // get feature A from somewhere RichFeature
-child = ...; // get feature B from somewhere RichFeatureRelationship
-relationship = new RichFeatureRelationship(parent,child,contains,0);
-parent.addFeatureRelationship(relationship); // add the relationship to
-the parent ... parent.removeFeatureRelationship(relationship); // you
-can always take it away again later </java>
+Features are aware of all relationships in which they are the parent feature.
 
-### Querying the relationship.
+The following code snippet prints out all the relationships to child features within a parent feature:
 
-Features are aware of all relationships in which they are the parent
-feature.
+<java>
+RichFeature feature = ...; // get a feature from somewhere
+for (Iterator i = feature.getFeatureRelationshipSet().iterator(); i.hasNext(); ) {
+     RichFeatureRelationship fr = (RichFeatureRelationship)i.next();
+     RichFeature parent = fr.getObject(); // parent == feature
+     RichFeature child = fr.getSubject(); 
+     ComparableTerm relationship = fr.getTerm();
+     // print out the relationship (eg. "A contains B");
+     System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());
+}
+</java>
 
-The following code snippet prints out all the relationships to child
-features within a parent feature:
+== Annotations and Comments. ==
 
-<java> RichFeature feature = ...; // get a feature from somewhere for
-(Iterator i = feature.getFeatureRelationshipSet().iterator();
-i.hasNext(); ) {
+=== Annotations. ===
 
-`    RichFeatureRelationship fr = (RichFeatureRelationship)i.next();`  
-`    RichFeature parent = fr.getObject(); // parent == feature`  
-`    RichFeature child = fr.getSubject(); `  
-`    ComparableTerm relationship = fr.getTerm();`  
-`    // print out the relationship (eg. "A contains B");`  
-`    System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());`
+The original BioJava allowed annotations to take the form of any object as the key, with any other object as the value. BioJavaX restricts this significantly in order to make life easier when dealing with databases. The new requirement, for RichAnnotation objects, is that the keys are all instances of ComparableTerm, and the values are all instances of String.
 
-} </java>
+Anything which is annotatable (eg. BioEntry, RichFeature, etc.) will implement RichAnnotatable. You can then use getAnnotation() to obtain the RichAnnotation object and start annotating with it.
 
-Annotations and Comments.
--------------------------
+To obtain the ComparableTerm objects to use as keys, the simplest method is to call RichObjectFactory.getDefaultOntology().getOrCreateTerm("myterm").
 
-### Annotations.
+=== Comments. ===
 
-The original BioJava allowed annotations to take the form of any object
-as the key, with any other object as the value. BioJavaX restricts this
-significantly in order to make life easier when dealing with databases.
-The new requirement, for RichAnnotation objects, is that the keys are
-all instances of ComparableTerm, and the values are all instances of
-String.
-
-Anything which is annotatable (eg. BioEntry, RichFeature, etc.) will
-implement RichAnnotatable. You can then use getAnnotation() to obtain
-the RichAnnotation object and start annotating with it.
-
-To obtain the ComparableTerm objects to use as keys, the simplest method
-is to call
-RichObjectFactory.getDefaultOntology().getOrCreateTerm("myterm").
-
-### Comments.
-
-Sequences can have free-text comments (in the form of a String instance
-wrapped in a Comment instance) associated with them. Each comment is
-ranked. Duplicate comments with identical text and rank will be ignored.
-The number of comments allowed is unlimited.
+Sequences can have free-text comments (in the form of a String instance wrapped in a Comment instance) associated with them. Each comment is ranked. Duplicate comments with identical text and rank will be ignored. The number of comments allowed is unlimited.
 
 To add a comment, call addComment() on the sequence object.
 
-### UniProt structured comments.
+=== UniProt structured comments. ===
 
-When parsing UniProt and UniProtXML files, comments take on a structured
-form. This is represented in text form by special formatting, but in
-order to parse this information out succesfully (particularly important
-when writing UniProtXML) a separate parser is required to transform the
-structured text into a usable object.
+When parsing UniProt and UniProtXML files, comments take on a structured form. This is represented in text form by special formatting, but in order to parse this information out succesfully (particularly important when writing UniProtXML) a separate parser is required to transform the structured text into a usable object.
 
-This parser is the UniProtCommentParser. It has two main methods,
-parseComment() for converting structured text into an object, and
-generate() for converting the object back into structured text. The
-'object' is actually the parser itself, which has a number of methods
-for accessing information from the parsed comment, or setting
-information to be written out next time generate() is called.
+This parser is the UniProtCommentParser. It has two main methods, parseComment() for converting structured text into an object, and generate() for converting the object back into structured text. The 'object' is actually the parser itself, which has a number of methods for accessing information from the parsed comment, or setting information to be written out next time generate() is called.
 
-Namespaces.
------------
+== Namespaces. ==
 
-### Obtaining Namespace instances.
+=== Obtaining Namespace instances. ===
 
-All sequences in BioJavaX must belong to a namespace, by being
-associated with an instance of the Namespace interface. This is in line
-with BioSQL.
+All sequences in BioJavaX must belong to a namespace, by being associated with an instance of the Namespace interface. This is in line with BioSQL.
 
 A default namespace is provided by the RichObjectFactory:
 
-<java> // get the default namespace Namespace defaultNS =
-RichObjectFactory.getDefaultNamespace(); ... // make a custom namespace
+<java>
+// get the default namespace
+Namespace defaultNS = RichObjectFactory.getDefaultNamespace(); 
+...
+// make a custom namespace
 Namespace customNS = (Namespace)RichObjectFactory.getObject(
+                                                  SimpleNamespace.class, new Object[]{"myNameSpace"}); 
+...
+// load a namespace from BioSQL, or create it if it doesn't exist yet
+Namespace biosqlNS = (Namespace)BioSQLRichObjectFactory.getObject(
+                                                        SimpleNamespace.class, new Object[]{"myBioSQLNameSpace"});
+...
+// change the default namespace to "bloggs"
+RichObjectFactory.setDefaultNamespaceName("bloggs");
+</java>
 
-`                                                 SimpleNamespace.class, new Object[]{"myNameSpace"}); `
+== NCBI Taxonomy. ==
 
-... // load a namespace from BioSQL, or create it if it doesn't exist
-yet Namespace biosqlNS = (Namespace)BioSQLRichObjectFactory.getObject(
+=== Traversing from child to parent. ===
 
-`                                                       SimpleNamespace.class, new Object[]{"myBioSQLNameSpace"});`
+<java>
+NCBITaxon child = ...;  // some taxon object you want the parent of
+Integer parentNCBITaxID = new Integer(child.getParentNCBITaxID());
+NCBITaxon parent = (NCBITaxon)RichObjectFactory.getObject(SimpleNCBITaxon.class,new Object[]{parentNCBITaxID});
+</java>
 
-... // change the default namespace to "bloggs"
-RichObjectFactory.setDefaultNamespaceName("bloggs"); </java>
-
-NCBI Taxonomy.
---------------
-
-### Traversing from child to parent.
-
-<java> NCBITaxon child = ...; // some taxon object you want the parent
-of Integer parentNCBITaxID = new Integer(child.getParentNCBITaxID());
-NCBITaxon parent =
-(NCBITaxon)RichObjectFactory.getObject(SimpleNCBITaxon.class,new
-Object[]{parentNCBITaxID}); </java>
-
-### Traversing from parent to child.
+=== Traversing from parent to child. ===
 
 This cannot be done using the BioJavaX API.
 
-But, you can do it using HQL if you are reading your taxonomy
-information from a database. See the section on BioSQL and Hibernate for
-details about setting BioJavaX for use with a database. The query you
-are looking for is this:
+But, you can do it using HQL if you are reading your taxonomy information from a database. See the section on BioSQL and Hibernate for details about setting BioJavaX for use with a database. The query you are looking for is this:
 
-<java> NCBITaxon parent = ...; // some taxon object you want to get the
-immediate children of Query q = session.createQuery("from Taxon where
-parentNCBITaxID = :parentNCBITaxID");
-q.setInteger("parentNCBITaxID",parent.getNCBITaxID()); List children =
-q.list(); // children will now contain all the child taxon objects
+<java>
+NCBITaxon parent = ...;    // some taxon object you want to get the immediate children of
+Query q = session.createQuery("from Taxon where parentNCBITaxID = :parentNCBITaxID");
+q.setInteger("parentNCBITaxID",parent.getNCBITaxID());
+List children = q.list();  // children will now contain all the child taxon objects
 </java>
 
-### Finding taxons by name.
+=== Finding taxons by name. ===
 
 This also cannot be done using the BioJavaX API.
 
-Again, you can do it using HQL if you are reading your taxonomy
-information from a database. The query you are looking for is this:
+Again, you can do it using HQL if you are reading your taxonomy information from a database. The query you are looking for is this:
 
-<java> Query q = session.createQuery("from Taxon as taxon join
-taxon.nameSet as taxonName "+
+<java>
+Query q = session.createQuery("from Taxon as taxon join taxon.nameSet as taxonName "+
+                                 "where taxonName.nameClass=:nameClass and taxonName.name=:name");
+q.setString("nameClass",NCBITaxon.SCIENTIFIC);
+q.setString("name","Homo sapiens");
+List taxons = q.list();  // taxons will now contain all matching taxon objects
+</java>
 
-`                                "where taxonName.nameClass=:nameClass and taxonName.name=:name");`
+== BioEntry and RichSequence Databases ==
 
-q.setString("nameClass",NCBITaxon.SCIENTIFIC); q.setString("name","Homo
-sapiens"); List taxons = q.list(); // taxons will now contain all
-matching taxon objects </java>
+BioJavaX allows both BioEntry and RichSequence objects to be collected together in a single group. BioEntry objects can be collected together inside implementations of BioEntryDB, whilst RichSequence objects can be collected inside implementations of RichSequenceDB (which extends BioEntryDB). These are both very similar to the existing SequenceDB interface in BioJava, and in fact RichSequenceDB extends SequenceDB and therefore can be used as a drop-in replacement.
 
-BioEntry and RichSequence Databases
------------------------------------
+An abstract implementation of each of these interfaces is provided, along with a simple hash-based implementation.
 
-BioJavaX allows both BioEntry and RichSequence objects to be collected
-together in a single group. BioEntry objects can be collected together
-inside implementations of BioEntryDB, whilst RichSequence objects can be
-collected inside implementations of RichSequenceDB (which extends
-BioEntryDB). These are both very similar to the existing SequenceDB
-interface in BioJava, and in fact RichSequenceDB extends SequenceDB and
-therefore can be used as a drop-in replacement.
+The idea of a collection such as this is to provide a wrapper to some kind of behind-the-scenes database. The hash-based implementations, HashBioEntryDB and HashRichSequenceDB, simply provide an in-memory database where sequences are stored in a HashMap, whereas the GenbankRichSequenceDB implementation is a read-only implementation which downloads and parses Genbank records on-demand from the NCBI website.
 
-An abstract implementation of each of these interfaces is provided,
-along with a simple hash-based implementation.
+There is also a pair of convenience implementations called BioSQLBioEntryDB and BioSQLRichSequenceDB which wrap a Hibernate session connected to a BioSQL database and allow BioEntry and RichSequence objects to be read from, added to and deleted from BioSQL. See the relevant section in the chapter on BioSQL and Hibernate for details.
 
-The idea of a collection such as this is to provide a wrapper to some
-kind of behind-the-scenes database. The hash-based implementations,
-HashBioEntryDB and HashRichSequenceDB, simply provide an in-memory
-database where sequences are stored in a HashMap, whereas the
-GenbankRichSequenceDB implementation is a read-only implementation which
-downloads and parses Genbank records on-demand from the NCBI website.
+== BioSQL and Hibernate. ==
 
-There is also a pair of convenience implementations called
-BioSQLBioEntryDB and BioSQLRichSequenceDB which wrap a Hibernate session
-connected to a BioSQL database and allow BioEntry and RichSequence
-objects to be read from, added to and deleted from BioSQL. See the
-relevant section in the chapter on BioSQL and Hibernate for details.
+=== Introduction to Hibernate. ===
 
-BioSQL and Hibernate.
----------------------
+BioJavaX uses Hibernate to manage persistence of BioJavaX objects to/from a database.
 
-### Introduction to Hibernate.
+Hibernate works by parsing a set of mapping files that tell it how to translate between objects/fields and tables/columns. It tracks changes, writes and executes all the SQL required, and does its best to keep everything consistent and efficient so that your application never needs to talk directly to the database. It also enforces all primary/foreign-key relations between objects.
 
-BioJavaX uses Hibernate to manage persistence of BioJavaX objects
-to/from a database.
+Hibernate revolves around the use of JavaBeans. A single JavaBean usually represents a single table. This is the case in BioJavaX. Each column of the table is represented by a field with a standard getter/setter pair of methods within the bean. Hibernate uses these get/set methods to load and save the values to and from the database. Foreign-keys are represented by defining the field as an instance of the bean representing the foreign table. One-to-many relationships are made by defining the field as an instance of a Collection, where each member of the collection is the bean representing the foreign table.
 
-Hibernate works by parsing a set of mapping files that tell it how to
-translate between objects/fields and tables/columns. It tracks changes,
-writes and executes all the SQL required, and does its best to keep
-everything consistent and efficient so that your application never needs
-to talk directly to the database. It also enforces all
-primary/foreign-key relations between objects.
+BioJavaX contains virtually no query code, and provides no API for querying the database. This is because the API is the object model. You do not need to have anything more than a Hibernate session to be able to read and write BioJavaX objects directly to the database.
 
-Hibernate revolves around the use of JavaBeans. A single JavaBean
-usually represents a single table. This is the case in BioJavaX. Each
-column of the table is represented by a field with a standard
-getter/setter pair of methods within the bean. Hibernate uses these
-get/set methods to load and save the values to and from the database.
-Foreign-keys are represented by defining the field as an instance of the
-bean representing the foreign table. One-to-many relationships are made
-by defining the field as an instance of a Collection, where each member
-of the collection is the bean representing the foreign table.
+Mapping files are provided only for BioSQL, as this is the database schema that BioJavaX was designed to imitate, but there is no reason why mapping files could not be created for other database schemas. Please feel free to contribute them if you do so.
 
-BioJavaX contains virtually no query code, and provides no API for
-querying the database. This is because the API is the object model. You
-do not need to have anything more than a Hibernate session to be able to
-read and write BioJavaX objects directly to the database.
+The BioSQL mapping files use lazy-loading extensively. This means that data usually will not get loaded until you try to access it using the appropriate getter/setter method of the object. You can change this behaviour by editing the mapping files.
 
-Mapping files are provided only for BioSQL, as this is the database
-schema that BioJavaX was designed to imitate, but there is no reason why
-mapping files could not be created for other database schemas. Please
-feel free to contribute them if you do so.
+Queries are constructed not using SQL but using the Hibernate Query Language, or HQL. You can find out more about HQL and the Hibernate project at their website: http://www.hibernate.org/
 
-The BioSQL mapping files use lazy-loading extensively. This means that
-data usually will not get loaded until you try to access it using the
-appropriate getter/setter method of the object. You can change this
-behaviour by editing the mapping files.
+=== Hibernate object-relational mappings. ===
 
-Queries are constructed not using SQL but using the Hibernate Query
-Language, or HQL. You can find out more about HQL and the Hibernate
-project at their website: <http://www.hibernate.org/>
-
-### Hibernate object-relational mappings.
-
-The following table describes which object in BioJavaX ends up in which
-table in BioSQL. The first column is the name of the BioSQL table, the
-second is the mapping name to be used in HQL to query the table, and the
-third column is the class of object you will get when the query returns
-results:
+The following table describes which object in BioJavaX ends up in which table in BioSQL. The first column is the name of the BioSQL table, the second is the mapping name to be used in HQL to query the table, and the third column is the class of object you will get when the query returns results:
 
 Table 19.1. Hibernate object-relational mappings.
+{|border="1" cellpadding="2"
+!width="200"|BioSQL Table Name
+!width="200"|HQL Name to use
+!width="200"|Type of returned object
+|-
+|biodatabase    
+|Namespace  
+|SimpleNamespace
+|-
+|taxon  
+|Taxon  
+|SimpleNCBITaxon
+|-
+|bioentry   
+|BioEntry   
+|SimpleBioEntry
+|-
+|taxon_name 
+|(use properties of NCBITaxon)  
+|SimpleNCBITaxonName
+|-
+|biosequence (including the sequence data)  
+|Sequence   
+|SimpleRichSequence
+|-
+|biosequence (excluding the sequence data)  
+|ThinSequence   
+|ThinRichSequence
+|-
+|bioentry_relationship  
+|BioEntryRelationship   
+|SimpleBioEntryRelationship
+|-
+|comment    
+|Comment    
+|SimpleComment
+|-
+|dbxref 
+|CrossRef   
+|SimpleCrossRef
+|-
+|bioentry_dbxref    
+|(use properties of BioEntry)   
+|SimpleRankedCrossRef
+|-
+|reference  
+|DocRef 
+|SimpleDocRef
+|-
+|bioentry_reference 
+|(use properties of BioEntry)   
+|SimpleRankedDocRef
+|-
+|dbxref_qualifer_value  
+|(use properties of CrossRef)   
+|SimpleNote
+|-
+|bioentry_qualifier_value   
+|(use properties of BioEntry)   
+|SimpleNote
+|-
+|ontology   
+|Ontology   
+|ComparableOntology
+|-
+|term   
+|Term   
+|ComparableTerm
+|-
+|term_relationship  
+|Triple 
+|ComparableTriple
+|-
+|term_synonym   
+|(use properties of Term)   
+|String
+|-
+|term_dbxref    
+|(use properties of Term)   
+|SimpleRankedCrossRef
+|-
+|seqfeature 
+|Feature    
+|SimpleRichFeature
+|-
+|seqfeature_qualifier_value 
+|(use properties of Feature)    
+|SimpleNote
+|-
+|seqfeature_dbxref  
+|(use properties of Feature)    
+|SimpleRankedCrossRef
+|-
+|seqfeature_relationship    
+|FeatureRelationship    
+|SimpleRichFeatureRelationship
+|-
+|location   
+|Location   
+|SimpleRichLocation, CompoundRichLocation, or EmptyRichLocation
+|-
+|location_qualifier_value   
+|(use properties of Location)   
+|SimpleNote
+|-
+|seqfeature_path    
+|nil    
+|nil
+|-
+|bioentry_path  
+|nil    
+|nil
+|-
+|term_path  
+|nil    
+|nil
+|}
 
-| BioSQL Table Name                         | HQL Name to use               | Type of returned object                                        |
-|-------------------------------------------|-------------------------------|----------------------------------------------------------------|
-| biodatabase                               | Namespace                     | SimpleNamespace                                                |
-| taxon                                     | Taxon                         | SimpleNCBITaxon                                                |
-| bioentry                                  | BioEntry                      | SimpleBioEntry                                                 |
-| taxon\_name                               | (use properties of NCBITaxon) | SimpleNCBITaxonName                                            |
-| biosequence (including the sequence data) | Sequence                      | SimpleRichSequence                                             |
-| biosequence (excluding the sequence data) | ThinSequence                  | ThinRichSequence                                               |
-| bioentry\_relationship                    | BioEntryRelationship          | SimpleBioEntryRelationship                                     |
-| comment                                   | Comment                       | SimpleComment                                                  |
-| dbxref                                    | CrossRef                      | SimpleCrossRef                                                 |
-| bioentry\_dbxref                          | (use properties of BioEntry)  | SimpleRankedCrossRef                                           |
-| reference                                 | DocRef                        | SimpleDocRef                                                   |
-| bioentry\_reference                       | (use properties of BioEntry)  | SimpleRankedDocRef                                             |
-| dbxref\_qualifer\_value                   | (use properties of CrossRef)  | SimpleNote                                                     |
-| bioentry\_qualifier\_value                | (use properties of BioEntry)  | SimpleNote                                                     |
-| ontology                                  | Ontology                      | ComparableOntology                                             |
-| term                                      | Term                          | ComparableTerm                                                 |
-| term\_relationship                        | Triple                        | ComparableTriple                                               |
-| term\_synonym                             | (use properties of Term)      | String                                                         |
-| term\_dbxref                              | (use properties of Term)      | SimpleRankedCrossRef                                           |
-| seqfeature                                | Feature                       | SimpleRichFeature                                              |
-| seqfeature\_qualifier\_value              | (use properties of Feature)   | SimpleNote                                                     |
-| seqfeature\_dbxref                        | (use properties of Feature)   | SimpleRankedCrossRef                                           |
-| seqfeature\_relationship                  | FeatureRelationship           | SimpleRichFeatureRelationship                                  |
-| location                                  | Location                      | SimpleRichLocation, CompoundRichLocation, or EmptyRichLocation |
-| location\_qualifier\_value                | (use properties of Location)  | SimpleNote                                                     |
-| seqfeature\_path                          | nil                           | nil                                                            |
-| bioentry\_path                            | nil                           | nil                                                            |
-| term\_path                                | nil                           | nil                                                            |
 
-### Configuring your application to use Hibernate and BioSQL.
+=== Configuring your application to use Hibernate and BioSQL. ===
 
 To use Hibernate with your application, you need to do five things:
 
-1.  Install Hibernate.
-2.  Copy and configure the Hibernate mapping files for your database.
-3.  Create a Hibernate session and connect it to BioJavaX.
-4.  Open a transaction.
-5.  Read/write objects from the database.
-6.  End the transaction.
-7.  Close the Hibernate session.
+<ol>
+<li>Install Hibernate.</li>
+<li>Copy and configure the Hibernate mapping files for your database.</li>
+<li>Create a Hibernate session and connect it to BioJavaX.</li>
+<li>Open a transaction.</li>
+<li>Read/write objects from the database.</li>
+<li>End the transaction.</li>
+<li>Close the Hibernate session.</li>
+</ol>
 
-#### Installing Hibernate.
+==== Installing Hibernate. ====
 
-Hibernate consists of a number of JAR files, downloadable from their
-website at <http://www.hibernate.org/>. You should add these JAR files
-to your classpath. You will also need to download the JAR file for your
-database's JDBC driver, and add that to your classpath too.
+Hibernate consists of a number of JAR files, downloadable from their website at http://www.hibernate.org/. You should add these JAR files to your classpath. You will also need to download the JAR file for your database's JDBC driver, and add that to your classpath too.
 
-Note for Oracle users: the mapping files supplied for Oracle BioSQL are
-designed to work only with Oracle 9i or better database and Oracle 9i or
-better JDBC drivers.
+Note for Oracle users: the mapping files supplied for Oracle BioSQL are designed to work only with Oracle 9i or better database and Oracle 9i or better JDBC drivers.
 
-#### Copying and configuring the mapping files.
+==== Copying and configuring the mapping files. ====
 
-BioJavaX is supplied with four sets of mapping files, all of which
-define the mapping between BioJavaX objects and a BioSQL database. The
-four sets are for Oracle, PostGreSQL, MySQL, and HSQLDB.
+BioJavaX is supplied with four sets of mapping files, all of which define the mapping between BioJavaX objects and a BioSQL database. The four sets are for Oracle, PostGreSQL, MySQL, and HSQLDB.
 
-You will find the mapping files in the source package
-org.biojavax.bio.seq.db.biosql.\*. Choose the set you want and copy them
-to one of the following places:
+You will find the mapping files in the source package org.biojavax.bio.seq.db.biosql.*. Choose the set you want and copy them to one of the following places:
 
--   The root of your .jar file if your application is compiled as a JAR.
--   The current working directory of your application.
+<ul>
+  <li>The root of your .jar file if your application is compiled as a JAR.</li>
+  <li>The current working directory of your application.</li>
+</ul>
 
-To configure Hibernate, you must edit the copy you made of the
-hibernate.cfg.xml file. Near the top is a section that looks like this:
+To configure Hibernate, you must edit the copy you made of the hibernate.cfg.xml file. Near the top is a section that looks like this:
 
 <xml>
-<property name="connection.datasource">java:comp/env/jdbc/YOUR\_JNDI\_DATASOURCE\_GOES\_HERE</property>
+<property name="connection.datasource">java:comp/env/jdbc/YOUR_JNDI_DATASOURCE_GOES_HERE</property>
+        
+<!-- OR... (for testing only)...
+<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+<property name="connection.url">jdbc:oracle:thin:@MYSERVER:MYPORT:MYSID</property>
+<property name="connection.username">MYUSER</property>
+<property name="connection.password">MYPASSWORD</property>
+<property name="connection.pool_size">20</property>
+-->
+</xml>
+The exact details will vary according to which database you are using.
 
-</xml> The exact details will vary according to which database you are
-using.
+You will see that the default way of using Hibernate is through a JNDI datasource, usually supplied by a servlet container such as Tomcat. In this case, you should modify the connection.datasource parameter to reflect the name of your JNDI datasource.
 
-You will see that the default way of using Hibernate is through a JNDI
-datasource, usually supplied by a servlet container such as Tomcat. In
-this case, you should modify the connection.datasource parameter to
-reflect the name of your JNDI datasource.
+If you are not using JNDI, then comment that line out and uncomment the section marked 'testing only'. This section allows you to configure Hibernate to use a JDBC connection to talk to your database. Please read more about this at http://www.hibernate.org/ if you intend to use JDBC directly, as there are several caveats regarding connection pooling that must be taken into consideration. The configuration shown above is recommended only for development, and is not suitable either for production code or for performance testing.
 
-If you are not using JNDI, then comment that line out and uncomment the
-section marked 'testing only'. This section allows you to configure
-Hibernate to use a JDBC connection to talk to your database. Please read
-more about this at <http://www.hibernate.org/> if you intend to use JDBC
-directly, as there are several caveats regarding connection pooling that
-must be taken into consideration. The configuration shown above is
-recommended only for development, and is not suitable either for
-production code or for performance testing.
+==== Opening and closing sessions. ====
 
-#### Opening and closing sessions.
+Hibernate deals in sessions, which must be opened before a database can be used, and closed again at the end in order to bring the database back into a consistent state. Hibernate will attempt to clean-up automatically if you forget to close the session, but it is better to be safe than sorry and close it explicitly.
 
-Hibernate deals in sessions, which must be opened before a database can
-be used, and closed again at the end in order to bring the database back
-into a consistent state. Hibernate will attempt to clean-up
-automatically if you forget to close the session, but it is better to be
-safe than sorry and close it explicitly.
+BioJavaX must be told about the session in order to be able to use it to manage database singleton objects such as namespaces or taxon definitions. If you fail to connect the session to BioJavaX, you will almost certainly end up with 'unique constraint violation' exceptions being thrown left, right and centre. So be careful!
 
-BioJavaX must be told about the session in order to be able to use it to
-manage database singleton objects such as namespaces or taxon
-definitions. If you fail to connect the session to BioJavaX, you will
-almost certainly end up with 'unique constraint violation' exceptions
-being thrown left, right and centre. So be careful!
-
-You must connect the session to BioJavaX before doing any operations
-with it at all. It should usually be the first or very nearly the first
-line in your code.
+You must connect the session to BioJavaX before doing any operations with it at all. It should usually be the first or very nearly the first line in your code.
 
 To open a Hibernate session and connect it to BioJavaX:
 
-<java> // load Hibernate config SessionFactory sessionFactory = new
-Configuration().configure().buildSessionFactory(); // open the session
-Session session = sessionFactory.openSession(); // connect it to
-BioJavaX RichObjectFactory.connectToBioSQL(session); </java>
+<java>
+// load Hibernate config
+SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();  
+// open the session
+Session session = sessionFactory.openSession();                                         
+// connect it to BioJavaX
+RichObjectFactory.connectToBioSQL(session);                                          
+</java>
 
 To close the Hibernate session:
 
-<java> session.close(); </java>
-
-Note that the line that loads the Hibernate configuration only needs to
-be done once, regardless of how many sessions you open, as long as you
-keep a reference to your sessionFactory somewhere handy.
-
-#### Transactions.
-
-If you are going to be writing objects to the database, you must use
-transactions. If you are only reading from the database, then
-transactions are recommended but not compulsory. It's probably safest to
-use them anyway then you needn't worry about it.
-
-A transaction defines a unit of work. BioJavaX never commits or rolls
-back anything, so this is left entirely up to the user to decide when to
-do so. Transactions are opened with a single line of code, and rolled
-back or committed with another single line of code. You'd usually use
-them in a construct such as this:
-
-<java> Transaction tx = session.beginTransaction(); // begin the
-transaction try {
-
-`   // do some stuff with BioJavaX objects here.`  
-`   ...`  
-`   tx.commit();          // commit the transaction if all went well`
-
-} catch (Exception e) {
-
-`   tx.rollback();        // roll back the transaction if something went wrong`  
-`   e.printStackTrace();  // tell the user what went wrong`
-
-} </java>
-
-Once a transaction object has been committed or rolled back you cannot
-use it any more and must open a new one.
-
-#### Complete example.
-
-This example iterates through every namespace it can find in the
-database, and prints the names out. It also prints out the names of all
-the sequences in each namespace, whether they be BioEntry or
-RichSequence instances. If it finds any sequences where the name is
-equal to 'bloggs', it changes their description to "XYZ". It then
-commits any changes it has made and exits.
-
-This example shows just how easy it is to read and write to the
-database. No SQL required!
-
-<java> SessionFactory sessionFactory = new
-Configuration().configure().buildSessionFactory(); Session session =
-sessionFactory.openSession();
-RichObjectFactory.connectToBioSQL(session);
-
-Transaction tx = session.beginTransaction(); try {
-
-`   // print out all the namespaces in the database`
-
-`   Query q = session.createQuery("from Namespace");`  
-`   List namespaces = q.list();               // retrieve all the namespaces from the db`  
-`   for (Iterator i = namespaces.iterator(); i.hasNext(); ) {`  
-`       Namespace ns = (Namespace)i.next();`  
-`       System.out.println(ns.getName());     // print out the name of the namespace`
-
-`       // print out all the sequences in the namespace`  
-`       Query sq = session.createQuery("from BioEntry where namespace= :nsp");`  
-`       // set the named parameter "nsp" to ns`  
-`       sq.setParameter("nsp",ns);`  
-`       List sequences = sq.list();`
-
-`       for (Iterator j = sequences.iterator(); j.hasNext(); ) {`  
-`           BioEntry be = (BioEntry)j.next();        // RichSequences are BioEntrys too`  
-`           System.out.println("   "+be.getName());  // print out the name of the sequence`
-
-`           // if the sequence is called bloggs, change its description to XYZ`
-
-`           if (be.getName().equals("bloggs")) {`  
-`               be.setDescription("XYZ");`  
-`           }`  
-`       }`
-
-`   }`
-
-`   // commit and tidy up`  
-`   tx.commit();         `  
-`   System.out.println("Changes committed.");`
-
-`   // all sequences called bloggs now have a description "XYZ" in the database`
-
-} catch (Exception e) {
-
-`   tx.rollback();       `  
-`   System.out.println("Changes rolled back.");`  
-`   e.printStackTrace(); `
-
-}
-
-session.close(); </java>
-
-### Flattened locations.
-
-BioSQL does not have a concept of hierarchical locations. It allows
-multiple locations per feature, but it does not allow locations to have
-sub-locations or references to other locations. This means that the
-hierarchical location model allowed in BioJavaX must be flattened out
-into a one-level collection of simple locations before it can be
-persisted.
-
-This flattening is done by RichLocation.Tools.flatten(). It only takes
-place at the point the user tries to save the location to the database,
-at which point not only does the database copy get flattened, but the
-in-memory one does too. The flattened location will logically represent
-the exact same area as the hierarchical original, but it will be
-constructed differently. The symbols returned by both the original and
-the flattened locations should be identical, as would the results of any
-union, intersection, contains, or overlaps operation.
-
-The circularity of locations will be lost altogether when persisted to
-BioSQL.
-
-### Persisting objects.
-
-Any object created by using methods from RichObjectFactory will
-automatically attach itself to the database and persist when the
-transaction is committed.
-
-Any object you create directly yourself must be explicitly attached to
-the database using the appropriate Hibernate mapping name from the table
-earlier in this chapter. If the object you persist has properties that
-are other mappable objects, they will be persisted too in a cascading
-fashion.
-
-For example, to persist a RichSequence object that you have just
-created, do this (inside a transaction):
-
-<java> RichSequence rs = ...; // some sequence you've made
-session.saveOrUpdate("Sequence",rs); // persist the sequence </java>
-
-Nothing will actually get saved to the database until you commit the
-transaction. If you rollback the transaction or exit without committing
-first, all changes will be lost.
-
-### Loading objects.
-
-Loading objects involves having to learn some HQL. The simplest cases
-are very easy, however it can get quite complex quite quickly. The thing
-you have to remember is that you are querying objects, not the database.
-As such, your results may include objects that have been persisted but
-not committed.
-
-The simplest HQL query is the equivalent of a SQL select \* from
-sometable. This is how you use it to select all namespaces from the
-database:
-
-<java> Query q = session.createQuery("from Namespace"); List namespaces
-= q.list(); // namespaces now contains all the Namespace objects in the
-database </java>
-
-To set constraints your query should refer to object parameters, not
-table columns. The following query selects the namespace that is called
-'bloggs':
-
-<java> Query q = session.createQuery("from Namespace where name=:name");
-q.setString("name","bloggs"); List namespaces = q.list(); // should only
-contain one Namespace object. Empty if none found. Namespace ns =
-(Namespace)q.uniqueResult(); // alternative notation for queries with
-single-row results </java>
-
-You don't have to worry about foreign keys, and can just join objects
-directly without specifying which field to use. This query returns all
-RichSequence objects that have a comment that contains the word
-"rubbish" with a rank of 0:
-
-<java> Query q = session.createQuery(
-
-`         "select rs from Sequence as rs join Comment as c where c.comment like :comment and rank=:rank");`
-
-q.setString("comment","%rubbish%"); // % symbol means match any string
-q.setInteger("rank",0); List sequences = q.list(); // a list of all
-matching RichSequence objects. </java>
-
-This query demonstrates the (unique) case of BioEntry and RichSequence
-being represented as a single Hibernate mapping, hence no join required
-to access fields from either table:
-
-<java> Query q = session.createQuery("from Sequence where
-length\>:length and name=:name"); q.setInteger("length",200);
-q.setString("name","joe"); List sequences = q.list(); </java>
-
-This query demonstrates how you can use other BioJavaX objects in the
-where clause without having to do any work at all. It returns all
-sequences that belong in a particular namespace:
-
-<java> Namespace ns = ...; // get a namespace from somewhere, eg.
-RichObjectFactory.getDefaultNamespace() Query q =
-session.createQuery("from Sequence where namespace=:namespace");
-q.setParameter("namespace",ns); // plug the namespace object right in!
-List sequences = q.list(); </java>
-
-There's no way this tutorial could ever hope to teach you all about HQL!
-The best thing to do is go to the Hibernate website and read up on it
-there: <http://www.hibernate.org/>.
-
-### Loading individual values from objects.
-
-You might not always want to retrieve lists of objects from the
-database. This query retrieves the names of sequences:
-
-<java> Query q = session.createQuery("select name from Sequence"); List
-names = q.list(); // list will contain String instances containing the
-names </java>
-
-This one returns all the lengths of sequences, which are integers. Note
-the use of sequenceLength, which is the object parameter, and not length
-which is the database table column name:
-
-<java> Query q = session.createQuery("select sequenceLength from
-Sequence"); List lengths = q.list(); // list will contain Integer
-instances containing the lengths </java>
-
-### Deleting objects.
-
-Objects can be removed from the database by calling:
-
-<java> session.delete(obj); // where obj is some persistent object
+<java>
+session.close();
 </java>
 
-Only when the transaction is committed will they actually be deleted. If
-the transaction is rolled back, the objects will come back to life.
+Note that the line that loads the Hibernate configuration only needs to be done once, regardless of how many sessions you open, as long as you keep a reference to your sessionFactory somewhere handy.
 
-### Auto-generating the BioSQL schema.
+==== Transactions. ====
 
-One nice side-effect of the Hibernate mappings is that they are able to
-completely regenerate the database schema required to support their
-functionality. Whilst this does not usually create a schema that is
-identical to the one you started with, it will function in the same way
-and produce the same results, and can be handy for development or
-testing purposes only.
+If you are going to be writing objects to the database, you must use transactions. If you are only reading from the database, then transactions are recommended but not compulsory. It's probably safest to use them anyway then you needn't worry about it.
 
-It is not recommended that the generated scripts be used for production
-databases without some manual checking and fine-tuning, and it is most
-certainly not recommended to use the generated scripts in place of any
-'official' schema generation scripts such as those that are provided by
-the BioSQL project.
+A transaction defines a unit of work. BioJavaX never commits or rolls back anything, so this is left entirely up to the user to decide when to do so. Transactions are opened with a single line of code, and rolled back or committed with another single line of code. You'd usually use them in a construct such as this:
 
-Here is the code to generate the DDL from the Hibernate mappings. It
-will be printed to standard output (usually the screen):
+<java>
+Transaction tx = session.beginTransaction();  // begin the transaction
+try {
+    // do some stuff with BioJavaX objects here.
+    ...
+    tx.commit();          // commit the transaction if all went well
+} catch (Exception e) {
+    tx.rollback();        // roll back the transaction if something went wrong
+    e.printStackTrace();  // tell the user what went wrong
+}
+</java>
 
-<java> Configuration cfg = new Configuration().configure(); new
-SchemaExport(cfg).create(true, false); </java>
+Once a transaction object has been committed or rolled back you cannot use it any more and must open a new one.
 
-### Reading/writing objects as XML.
+==== Complete example. ====
 
-There is a bug in Hibernate which prevents this function from working
-100% correctly (bug details
-[here](http://opensource.atlassian.com/projects/hibernate/browse/HHH-796)),
-however the code is supplied as an example for when the bug is fixed.
+This example iterates through every namespace it can find in the database, and prints the names out. It also prints out the names of all the sequences in each namespace, whether they be BioEntry or RichSequence instances. If it finds any sequences where the name is equal to 'bloggs', it changes their description to "XYZ". It then commits any changes it has made and exits.
 
-The snippet below will query the database for all DocRef objects, then
-output an XML representation of them to standard out:
+This example shows just how easy it is to read and write to the database. No SQL required!
 
-<java> Document doc = DocumentHelper.createDocument(); Element root =
-doc.addElement("myRootNode"); // some arbitrary name for the XML root
-node
+<java>
+SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();  
+Session session = sessionFactory.openSession();                                     
+RichObjectFactory.connectToBioSQL(session);
 
-Session dom4jSession = session.getSession(EntityMode.DOM4J);
+Transaction tx = session.beginTransaction();
+try {
 
-Query q = dom4jSession.createQuery("from DocRef"); List results =
-q.list(); for (Iterator i = results.iterator(); i.hasNext(); ) {
+    // print out all the namespaces in the database
 
-`   Element rs = (Element)i.next();`  
-`   root.add(rs)`
+    Query q = session.createQuery("from Namespace");
+    List namespaces = q.list();               // retrieve all the namespaces from the db
+    for (Iterator i = namespaces.iterator(); i.hasNext(); ) {
+        Namespace ns = (Namespace)i.next();
+        System.out.println(ns.getName());     // print out the name of the namespace
 
+        // print out all the sequences in the namespace
+        Query sq = session.createQuery("from BioEntry where namespace= :nsp");
+        // set the named parameter "nsp" to ns
+        sq.setParameter("nsp",ns);
+        List sequences = sq.list();
+
+        for (Iterator j = sequences.iterator(); j.hasNext(); ) {
+            BioEntry be = (BioEntry)j.next();        // RichSequences are BioEntrys too
+            System.out.println("   "+be.getName());  // print out the name of the sequence
+
+            // if the sequence is called bloggs, change its description to XYZ
+
+            if (be.getName().equals("bloggs")) {
+                be.setDescription("XYZ");
+            }
+        }
+
+    }
+
+    // commit and tidy up
+    tx.commit();         
+    System.out.println("Changes committed.");
+
+    // all sequences called bloggs now have a description "XYZ" in the database
+
+} catch (Exception e) {
+    tx.rollback();       
+    System.out.println("Changes rolled back.");
+    e.printStackTrace(); 
 }
 
 session.close();
+</java>
 
-// Pretty print the document to System.out OutputFormat format =
-OutputFormat.createPrettyPrint(); XMLWriter writer = new
-XMLWriter(System.out, format);// writer.write(doc); </java>
+=== Flattened locations. ===
+
+BioSQL does not have a concept of hierarchical locations. It allows multiple locations per feature, but it does not allow locations to have sub-locations or references to other locations. This means that the hierarchical location model allowed in BioJavaX must be flattened out into a one-level collection of simple locations before it can be persisted.
+
+This flattening is done by RichLocation.Tools.flatten(). It only takes place at the point the user tries to save the location to the database, at which point not only does the database copy get flattened, but the in-memory one does too. The flattened location will logically represent the exact same area as the hierarchical original, but it will be constructed differently. The symbols returned by both the original and the flattened locations should be identical, as would the results of any union, intersection, contains, or overlaps operation.
+
+The circularity of locations will be lost altogether when persisted to BioSQL.
+
+=== Persisting objects. ===
+
+Any object created by using methods from RichObjectFactory will automatically attach itself to the database and persist when the transaction is committed.
+
+Any object you create directly yourself must be explicitly attached to the database using the appropriate Hibernate mapping name from the table earlier in this chapter. If the object you persist has properties that are other mappable objects, they will be persisted too in a cascading fashion.
+
+For example, to persist a RichSequence object that you have just created, do this (inside a transaction):
+
+<java>
+RichSequence rs = ...;                // some sequence you've made
+session.saveOrUpdate("Sequence",rs);  // persist the sequence
+</java>
+
+Nothing will actually get saved to the database until you commit the transaction. If you rollback the transaction or exit without committing first, all changes will be lost.
+
+=== Loading objects. ===
+
+Loading objects involves having to learn some HQL. The simplest cases are very easy, however it can get quite complex quite quickly. The thing you have to remember is that you are querying objects, not the database. As such, your results may include objects that have been persisted but not committed.
+
+The simplest HQL query is the equivalent of a SQL select * from sometable. This is how you use it to select all namespaces from the database:
+
+<java>
+Query q = session.createQuery("from Namespace");
+List namespaces = q.list();  // namespaces now contains all the Namespace objects in the database
+</java>
+
+To set constraints your query should refer to object parameters, not table columns. The following query selects the namespace that is called 'bloggs':
+
+<java>
+Query q = session.createQuery("from Namespace where name=:name");
+q.setString("name","bloggs");
+List namespaces = q.list();                  // should only contain one Namespace object. Empty if none found.
+Namespace ns = (Namespace)q.uniqueResult();  // alternative notation for queries with single-row results
+</java>
+
+You don't have to worry about foreign keys, and can just join objects directly without specifying which field to use. This query returns all RichSequence objects that have a comment that contains the word "rubbish" with a rank of 0:
+
+<java>
+Query q = session.createQuery(
+          "select rs from Sequence as rs join Comment as c where c.comment like :comment and rank=:rank");
+q.setString("comment","%rubbish%");  // % symbol means match any string
+q.setInteger("rank",0);
+List sequences = q.list();           // a list of all matching RichSequence objects.
+</java>
+
+This query demonstrates the (unique) case of BioEntry and RichSequence being represented as a single Hibernate mapping, hence no join required to access fields from either table:
+
+<java>
+Query q = session.createQuery("from Sequence where length>:length and name=:name");
+q.setInteger("length",200);
+q.setString("name","joe");
+List sequences = q.list();
+</java>
+
+This query demonstrates how you can use other BioJavaX objects in the where clause without having to do any work at all. It returns all sequences that belong in a particular namespace:
+
+<java>
+Namespace ns = ...;   // get a namespace from somewhere, eg. RichObjectFactory.getDefaultNamespace()
+Query q = session.createQuery("from Sequence where namespace=:namespace");
+q.setParameter("namespace",ns);   // plug the namespace object right in!
+List sequences = q.list();
+</java>
+
+There's no way this tutorial could ever hope to teach you all about HQL! The best thing to do is go to the Hibernate website and read up on it there: http://www.hibernate.org/.
+
+=== Loading individual values from objects. ===
+
+You might not always want to retrieve lists of objects from the database. This query retrieves the names of sequences:
+
+<java>
+Query q = session.createQuery("select name from Sequence");
+List names = q.list();  // list will contain String instances containing the names
+</java>
+
+This one returns all the lengths of sequences, which are integers. Note the use of sequenceLength, which is the object parameter, and not length which is the database table column name:
+
+<java>
+Query q = session.createQuery("select sequenceLength from Sequence");
+List lengths = q.list();  // list will contain Integer instances containing the lengths
+</java>
+
+=== Deleting objects. ===
+
+Objects can be removed from the database by calling:
+
+<java>
+session.delete(obj); // where obj is some persistent object
+</java>
+
+Only when the transaction is committed will they actually be deleted. If the transaction is rolled back, the objects will come back to life.
+
+=== Auto-generating the BioSQL schema. ===
+
+One nice side-effect of the Hibernate mappings is that they are able to completely regenerate the database schema required to support their functionality. Whilst this does not usually create a schema that is identical to the one you started with, it will function in the same way and produce the same results, and can be handy for development or testing purposes only.
+
+It is not recommended that the generated scripts be used for production databases without some manual checking and fine-tuning, and it is most certainly not recommended to use the generated scripts in place of any 'official' schema generation scripts such as those that are provided by the BioSQL project.
+
+Here is the code to generate the DDL from the Hibernate mappings. It will be printed to standard output (usually the screen):
+
+<java>
+Configuration cfg = new Configuration().configure();
+new SchemaExport(cfg).create(true, false);
+</java>
+
+=== Reading/writing objects as XML. ===
+
+There is a bug in Hibernate which prevents this function from working 100% correctly (bug details [http://opensource.atlassian.com/projects/hibernate/browse/HHH-796 here]), however the code is supplied as an example for when the bug is fixed.
+
+The snippet below will query the database for all DocRef objects, then output an XML representation of them to standard out:
+
+<java>
+Document doc = DocumentHelper.createDocument();        
+Element root = doc.addElement("myRootNode");    // some arbitrary name for the XML root node
+
+Session dom4jSession = session.getSession(EntityMode.DOM4J);
+       
+Query q = dom4jSession.createQuery("from DocRef");
+List results = q.list();
+for (Iterator i = results.iterator(); i.hasNext(); ) {
+    Element rs = (Element)i.next();
+    root.add(rs)
+}
+
+session.close();
+        
+// Pretty print the document to System.out
+OutputFormat format = OutputFormat.createPrettyPrint();
+XMLWriter writer = new XMLWriter(System.out, format);// 
+writer.write(doc);
+</java>
 
 Reading them back and saving them to the database is similar:
 
-<java> // open an XML document with some kind of org.dom4j.io.SAXReader
-Document doc = ...; // use the node-name from the class tag of
-DocRef.hbm.xml mapping file List results = doc.selectNodes("//docref");
-
-Transaction tx = session.beginTransaction(); Session dom4jSession =
-session.getSession(EntityMode.DOM4J);
-
+<java>
+// open an XML document with some kind of org.dom4j.io.SAXReader
+Document doc = ...;                          
+// use the node-name from the class tag of DocRef.hbm.xml mapping file
+List results = doc.selectNodes("//docref");  
+        
+Transaction tx = session.beginTransaction();
+Session dom4jSession = session.getSession(EntityMode.DOM4J);
+       
 for (Iterator i = results.iterator(); i.hasNext(); ) {
-
-`   Object rs = (Object)i.next();`  
-`   dom4jSession.saveOrUpdate("DocRef",rs);`
-
+    Object rs = (Object)i.next();
+    dom4jSession.saveOrUpdate("DocRef",rs);
 }
+        
+tx.commit();
+session.close();
+</java>
 
-tx.commit(); session.close(); </java>
+=== BioEntryDB and RichSequenceDB convenience wrappers ===
 
-### BioEntryDB and RichSequenceDB convenience wrappers
+BioJavaX supplies two convenience wrappers for the Hibernate+BioSQL combination which allow simple read/write access of BioEntry and RichSequence objects directly to/from a BioSQL database. They are designed for convenience not flexibility, so it is always best to use the full method outlined in the rest of this chapter, but if you are in a hurry then these should work just fine.
 
-BioJavaX supplies two convenience wrappers for the Hibernate+BioSQL
-combination which allow simple read/write access of BioEntry and
-RichSequence objects directly to/from a BioSQL database. They are
-designed for convenience not flexibility, so it is always best to use
-the full method outlined in the rest of this chapter, but if you are in
-a hurry then these should work just fine.
+These two wrappers depend on your database having unique values in the name column of the BioEntry table. If this is not the case, then they will not work for you and you should use the full method instead.
 
-These two wrappers depend on your database having unique values in the
-name column of the BioEntry table. If this is not the case, then they
-will not work for you and you should use the full method instead.
+If you use BioSQLBioEntryDB then the objects you get from the database are BioEntry objects and will not have the sequence data attached to them. This may increase performance if you are dealing with large sequences and do not need the sequence data. BioSQLRichSequenceDB loads RichSequence objects which means that sequence data comes along for the ride.
 
-If you use BioSQLBioEntryDB then the objects you get from the database
-are BioEntry objects and will not have the sequence data attached to
-them. This may increase performance if you are dealing with large
-sequences and do not need the sequence data. BioSQLRichSequenceDB loads
-RichSequence objects which means that sequence data comes along for the
-ride.
+The wrappers allow sequences to be read from, added to and deleted from the database in a single command. The easiest way to demonstrate this is by a code example in which a sequence is read from the database, another sequence is added, and a third is deleted:
 
-The wrappers allow sequences to be read from, added to and deleted from
-the database in a single command. The easiest way to demonstrate this is
-by a code example in which a sequence is read from the database, another
-sequence is added, and a third is deleted:
-
-<java> Session sess = ...; // connect to BioSQL using Hibernate and
-establish a session RichObjectFactory.connectToBioSQL(sess); // bind
-BioJavaX to the Hibernate session
+<java>
+Session sess = ...;    // connect to BioSQL using Hibernate and establish a session
+RichObjectFactory.connectToBioSQL(sess);    // bind BioJavaX to the Hibernate session
 
 // create the RichSequenceDB wrapper around the Hibernate session
-RichSequenceDB db = new BioSQLRichSequenceDB(sess);
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);   
 
-RichSequence seq1 = db.getRichSequence("joe"); // load the sequence
-where name='joe'
+RichSequence seq1 = db.getRichSequence("joe");    // load the sequence where name='joe'
 
-RichSequence seq2 = ...; // create a sequence somehow
-db.addRichSequence(seq2); // add it to the database
+RichSequence seq2 = ...;     // create a sequence somehow
+db.addRichSequence(seq2);    // add it to the database
 
-db.removeRichSequence("bloggs"); // delete the sequence where
-name='bloggs'
+db.removeRichSequence("bloggs");    // delete the sequence where name='bloggs'
 
-sess.close(); // disconnect from the database </java>
+sess.close();    // disconnect from the database
+</java>
 
-The code above is non-transactional, but it can be made to be
-transactional by doing something like this (based on the example in the
-JavaDocs for the Session object in Hibernate):
+The code above is non-transactional, but it can be made to be transactional by doing something like this (based on the example in the JavaDocs for the Session object in Hibernate):
 
-<java> Session sess = ...; // connect to BioSQL using Hibernate and
-establish a session RichObjectFactory.connectToBioSQL(sess); // bind
-BioJavaX to the Hibernate session
+<java>
+Session sess = ...;    // connect to BioSQL using Hibernate and establish a session
+RichObjectFactory.connectToBioSQL(sess);    // bind BioJavaX to the Hibernate session
 
 // create the RichSequenceDB wrapper around the Hibernate session
-RichSequenceDB db = new BioSQLRichSequenceDB(sess);
+RichSequenceDB db = new BioSQLRichSequenceDB(sess);    
 
-Transaction tx; try {
+Transaction tx;
+try {
+   tx = sess.beginTransaction();    // begin the transaction
 
-`  tx = sess.beginTransaction();    // begin the transaction`
+   // do some work inside the transaction, eg. db.addRichSequence(seq)
 
-`  // do some work inside the transaction, eg. db.addRichSequence(seq)`
-
-`  tx.commit();    // commit the transaction`
-
+   tx.commit();    // commit the transaction
 } catch (Exception e) {
-
-`  if (tx!=null) tx.rollback();    // rollback in case of error`  
-`  throw e;`
-
+   if (tx!=null) tx.rollback();    // rollback in case of error
+   throw e;
 } finally {
+   sess.close();    // disconnect from the database
+}
+</java>
 
-`  sess.close();    // disconnect from the database`
-
-} </java>
-
-### `BioSQLFeatureFilter`
+=== <code>BioSQLFeatureFilter` ===
 
 You can apply any FeatureFilter to a BioSQLRichSequenceDB instance using
 the filter() method, just like you could in the existing SequenceDB
