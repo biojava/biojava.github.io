@@ -4,8 +4,6 @@ BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [h
 
 BioJava is used in several real-world [[Project:BioJavaInside|bioinformatics applications]] and has been used for bioinformatics analysis in a number of [[Project:BioJavaInside|published studies]].
 
-<script type="text/javascript" src="http://www.ohloh.net/projects/6798/widgets/project_thin_badge"></script>
-
 == Getting BioJava ==
 
 BioJava is distributed under the terms of the GNU [http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html Lesser GPL V2.1]. This means that you can use the libraries without your software being forced under either the LGPL or [http://www.gnu.org/licenses/gpl.html GPL]. LGPL is not GPL. 

@@ -19,8 +19,6 @@ applications](Project:BioJavaInside "wikilink") and has been used for
 bioinformatics analysis in a number of [published
 studies](Project:BioJavaInside "wikilink").
 
-<script type="text/javascript" src="http://www.ohloh.net/projects/6798/widgets/project_thin_badge">
-</script>
 Getting BioJava
 ---------------
 
