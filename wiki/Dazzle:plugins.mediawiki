@@ -38,6 +38,17 @@ fileName 	string 		Name of a GFF file which is read at startup.
 dotVersions 	boolean 	Interpret sequence names contains a '.' character as id.version.
 </pre>
 
+=== Attributes ===
+The following attributes in the GFF file can be used:
+<pre>
+Atttribute 	field
+id		the feature ID
+href: 		the LINK href
+</pre>
+
+
+=== Example ===
+
 ==The Ldas plugin==
 
 The Ldas plugin is an annotation datasource which reads from a Bio::DB::GFF format database, and is largely compatible with the [http://www.biodas.org/servers/ LDAS DAS server]. This plugin is useful for existing LDAS users who want to consolidate on a single general purpose DAS server. It's also a good choice for serving straightforward sets of features which are too large to serve up using the GFF plugin, but don't already have their own database. Currently, there is only an Ldas annotation plugin. An equivalent for reference servers is possible in the future.
