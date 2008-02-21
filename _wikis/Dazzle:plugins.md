@@ -54,6 +54,16 @@ The following properties are available:
     fileName    string      Name of a GFF file which is read at startup.
     dotVersions     boolean     Interpret sequence names contains a '.' character as id.version.
 
+### Attributes
+
+The following attributes in the GFF file can be used:
+
+    Atttribute  field
+    id      the feature ID
+    href:       the LINK href
+
+### Example
+
 The Ldas plugin
 ---------------
 
