@@ -32,10 +32,11 @@ The GFF plugin
 --------------
 
 The GFF plugin is a very lightweight annotation datasource, backed by a
-GFF version 2 file. It is very easy to set up, but has some limitations
-(no complex features, no links out to external data). A more
-sophisticated \`general purpose' annotation datasource should be
-released soon.
+[GFF version
+2](http://www.sanger.ac.uk/Software/formats/GFF/GFF_Spec.shtml) file. It
+is very easy to set up, but has some limitations (no complex features,
+no links out to external data). A more sophisticated \`general purpose'
+annotation datasource should be released soon.
 
 The GFF plugin has class name
 
