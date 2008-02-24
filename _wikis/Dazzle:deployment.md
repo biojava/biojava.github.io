@@ -81,31 +81,32 @@ data, and also to customize the DAS messages. Each Dazzle installation
 includes one or more data sources. These are defined in an XML
 configuration file, **dazzlecfg.xml**. A typical example is shown below:
 
-    <?xml version="1.0" ?>
+<xml>
 
-    <!-- Sample Dazzle configuration file -->
+<?xml version="1.0" ?>
+<dazzle xmlns="http://www.biojava.org/2000/dazzle">
 
-    <dazzle xmlns="http://www.biojava.org/2000/dazzle">
-      <datasource id="test" jclass="org.biojava.servlets.dazzle.datasource.EmblDataSource">
-        <string name="name" value="Test seqs" />
-        <string name="description" value="Evalutation sequences for promoter-finding software" />
-        <string name="version" value="1.0" />
-        <string name="fileName" value="test.embl" />
+` `<datasource id="test" jclass="org.biojava.servlets.dazzle.datasource.EmblDataSource">  
+`   `<string name="name" value="Test seqs" />  
+`   `<string name="description" value="Evalutation sequences for promoter-finding software" />  
+`   `<string name="version" value="1.0" />  
+`   `<string name="fileName" value="test.embl" />
 
-        <string name="stylesheet" value="test.style" />
-      </datasource>
+`   `<string name="stylesheet" value="test.style" />  
+` `</datasource>
 
-      <datasource id="tss" jclass="org.biojava.servlets.dazzle.datasource.GFFAnnotationSource">
-        <string name="name" value="TSS" />
-        <string name="description" value="Transcription start sites for fickett set" />
-        <string name="version" value="1.0" />
-        <string name="fileName" value="fickett-tss.gff" />
-        <boolean name="dotVersions" value="true" />
-        <string name="mapMaster" value="http://my-server:8080/das/test/" />
+` `<datasource id="tss" jclass="org.biojava.servlets.dazzle.datasource.GFFAnnotationSource">  
+`   `<string name="name" value="TSS" />  
+`   `<string name="description" value="Transcription start sites for fickett set" />  
+`   `<string name="version" value="1.0" />  
+`   `<string name="fileName" value="fickett-tss.gff" />  
+`   `<boolean name="dotVersions" value="true" />  
+`   `<string name="mapMaster" value="http://my-server:8080/das/test/" />
 
-        <string name="stylesheet" value="tss.style" />
-      </datasource>
-    </dazzle>
+`   `<string name="stylesheet" value="tss.style" />  
+` `</datasource>
+
+</dazzle> </xml>
 
 Each datasource element has two required attributes: a unique ID, and
 the fully-qualified Java class-name of the plugin. The datasource

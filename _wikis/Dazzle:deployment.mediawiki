@@ -47,7 +47,7 @@ The current Dazzle sourcecode is available from the BioJava Subversion repositor
 
 Dazzle relies on small datasource plugins to supply sequence and feature data, and also to customize the DAS messages. Each Dazzle installation includes one or more data sources. These are defined in an XML configuration file, '''dazzlecfg.xml'''. A typical example is shown below:
 
-<pre>
+<xml>
 <?xml version="1.0" ?>
 
 <!-- Sample Dazzle configuration file -->
@@ -73,7 +73,7 @@ Dazzle relies on small datasource plugins to supply sequence and feature data, a
     <string name="stylesheet" value="tss.style" />
   </datasource>
 </dazzle>
-</pre>
+</xml>
 
 Each datasource element has two required attributes: a unique ID, and the fully-qualified Java class-name of the plugin. The datasource element can contain any number of property elements, which set some property of the plugin. Property elements are always named after the data-type of the property to be set, and have two attributes: name and value. The set of properties recognized by a given plugin should be listed in the plugin documentation. (NOTE: The format of the property elements may change in a future release to match the SOAP encoding rules).
 
