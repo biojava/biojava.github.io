@@ -117,12 +117,15 @@ The UniProt plugin
 A Uniprot file can be easily used to set up a reference and annotation
 server. add the following config in your dazzlecfg.xml file:
 
-      <datasource id="myUniProtSource" jclass="org.biojava.servlets.dazzle.datasource.UniProtDataSource">
-        <string name="name" value="myUniProtSource" />
-        <string name="description" value="some data on a uniprot sequence" />
-        <string name="version" value="default" />
-        <string name="fileName" value="example.up" />
-      </datasource>
+<xml>
+<datasource id="myUniProtSource" jclass="org.biojava.servlets.dazzle.datasource.UniProtDataSource">
+
+`   `<string name="name" value="myUniProtSource" />  
+`   `<string name="description" value="some data on a uniprot sequence" />  
+`   `<string name="version" value="default" />  
+`   `<string name="fileName" value="example.up" />
+
+</datasource> </xml>
 
 the example.up file is the uniprot file contains the data.
 
