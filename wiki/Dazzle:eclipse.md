@@ -62,3 +62,7 @@ Step 5 start dynamic web project
 Right mouse click on the dynamic web project-\> run on server.
 
 This will start your project on the server
+
+To create a new plugin, simply edit the Java source code in your dynamic
+web project. Don't forget to also include your new DAS source in the
+<b>dazzlecfg.xml</b> file.
