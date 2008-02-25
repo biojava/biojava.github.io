@@ -60,6 +60,11 @@ Compromises and Unfinished bits
     suggested, but none have been identified. Please amend this document
     with the names of any good ones you know.
 
+[Jalopy <http://jalopy.sourceforge.net/>] - can be used as Eclipse
+plugin, or Ant task.  
+[Cobertura <http://cobertura.sf.net>] - can be used to assess JUnit test
+coverage.
+
 Priorities
 ----------
 
