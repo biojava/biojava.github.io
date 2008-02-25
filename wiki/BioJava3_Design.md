@@ -63,7 +63,9 @@ Compromises and Unfinished bits
 [Jalopy <http://jalopy.sourceforge.net/>] - can be used as Eclipse
 plugin, or Ant task.  
 [Cobertura <http://cobertura.sf.net>] - can be used to assess JUnit test
-coverage.
+coverage.  
+[FindBugs <http://findbugs.sf.net>] - does static analysis of code (also
+runnable as Eclipse plugin or Ant task.
 
 Priorities
 ----------
