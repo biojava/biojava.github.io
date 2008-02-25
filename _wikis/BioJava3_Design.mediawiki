@@ -26,6 +26,9 @@ This document was based on comments made on the following pages:
 * TestNG was suggested instead of JUnit, but knowledge of this tool is not so widespread and this may impact on quality of testing.
 * A tool for analysing comment coverage and coding style was suggested, but none have been identified. Please amend this document with the names of any good ones you know.
 
+[Jalopy http://jalopy.sourceforge.net/] - can be used as Eclipse plugin, or Ant task.<br/>
+[Cobertura http://cobertura.sf.net] - can be used to assess JUnit test coverage.
+
 ==Priorities==
 Andreas' very useful Usage Analysis page shows the most frequently requested documentation. In the absence of any real usage statistics, we must assume that the things people most often want to read about are the things that people most often use. (It could also be said that the things that people most read about are the things that work least well in the present code... but we shall ignore that for now...).
 
