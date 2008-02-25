@@ -56,6 +56,9 @@ tracking system. You can use it to
 enhancement or to [view](http://bugzilla.open-bio.org/) open bugs or
 known issues.
 
+We are currently working on a design proposal for a new version of
+BioJava. You can read it [here](BioJava3_Design "wikilink").
+
 Documentation
 -------------
 

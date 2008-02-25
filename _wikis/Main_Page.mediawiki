@@ -18,6 +18,8 @@ If you wish to contribute your existing code or help maintain part of the BioJav
 == Bugs and Requests for enhancement ==
 BioJava probably contains the odd bug, who would have thought!! We make use of the [http://www.bugzilla.org Bugzilla] bug reporting and tracking system. You can use it to [http://bugzilla.open-bio.org/ submit] a new bug or request for enhancement or to [http://bugzilla.open-bio.org/ view] open bugs or known issues.
 
+We are currently working on a design proposal for a new version of BioJava. You can read it [[BioJava3_Design|here]].
+
 == Documentation ==
 
 === Cookbook ===
