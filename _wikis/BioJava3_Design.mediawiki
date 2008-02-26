@@ -21,6 +21,7 @@ This document was based on comments made on the following pages:
 * Separation of functionality - don't make sequences load features, and don't make features load their sequence by default. This saves memory and allows work to be done independently on the specific parts of interest.
 * Always ALWAYS correctly implement equals, compareTo, hashCode, and Serializable wherever possible.
 * Any general-use methods to be exposed via SPI (e.g. getTopBlastHit()).
+* The source code license will be the GNU Lesser General Public License (LGPL) "version 2.1 or any later version".
 
 ==Compromises and Unfinished bits==
 * TestNG was suggested instead of JUnit, but knowledge of this tool is not so widespread and this may impact on quality of testing.
