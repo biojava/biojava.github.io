@@ -50,6 +50,8 @@ Basic principles
     Serializable wherever possible.
 -   Any general-use methods to be exposed via SPI (e.g.
     getTopBlastHit()).
+-   The source code license will be the GNU Lesser General Public
+    License (LGPL) "version 2.1 or any later version".
 
 Compromises and Unfinished bits
 -------------------------------
