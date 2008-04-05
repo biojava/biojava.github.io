@@ -41,16 +41,17 @@ GAStoppingCriteria. The actual implementations used are interchangeable.
 Further, the 'chromosome(s)' of the Organisms in a Population are just
 BioJava SymbolLists and any Alphabet could be used to encode a solution.
 
-The org.biojavax.ga package is available with biojava-live from CVS. It
-will also be bundled with the core biojava distribution in version 1.5
-when released. The code requires Java 1.4
+As biojavax is already available, you can already use the GA package.
+However, the example below requires the GA package as it is currently
+available only in SVN. So please check it out anonymously to experiment
+with this example (have a look on the download section). It will also be
+bundled with the next biojava distribution in version 1.7 when released.
 
 ### GADemo.java
 
-<java> package GA;
-
-import java.util.Iterator; import org.biojava.bio.dist.Distribution;
-import org.biojava.bio.dist.DistributionTools; import
+<java> import java.util.Iterator; import
+org.biojava.bio.dist.Distribution; import
+org.biojava.bio.dist.DistributionTools; import
 org.biojava.bio.dist.UniformDistribution; import
 org.biojava.bio.symbol.SimpleSymbolList; import
 org.biojava.bio.symbol.SymbolList; import
@@ -73,133 +74,137 @@ org.biojavax.ga.functions.SimpleCrossOverFunction;
 
 `* `
 
-Demos a very Simple GA. It will run until one organism contains
-
-`* a chromosome that is 75% ones`
+`* Demos a very Simple GA. It will run until one organism contains a chromosome`  
+`* that is 75% ones`  
+`* `
 
 `*`  
 `* @author Mark Schreiber`  
-`* @version 1.0`  
+`* @author Susanne Merz`  
+`* @author Andreas Dräger`  
+`* @version 1.1`  
 `*/`
 
-public class GADemo{
+public class GADemo {
 
-` public static void main(String[] args) throws Exception{`  
-`   //print the header`  
-`   System.out.println("gen,average_fitness,best_fitness");`
+`   public static void main(String[] args) throws Exception {`  
+`       // print the header`  
+`       System.out.println("gen,average_fitness,best_fitness");`
 
-`   //a uniform Distribution over the binary Alphabet`  
-`   Distribution bin_dist = new UniformDistribution(GATools.getBinaryAlphabet());`
+`       // a uniform Distribution over the binary Alphabet`  
+`       Distribution bin_dist = new UniformDistribution(GATools.getBinaryAlphabet());`
 
-`   //initialize the population`  
-`   Population pop = new SimplePopulation("demo population");`
+`       // initialize the population`  
+`       Population pop = new SimplePopulation("demo population");`
 
-`   //add 100 organisms`  
-`   for(int i = 0; i < 100; i++){`  
-`     Organism o = new SimpleOrganism("organism"+i);`
+`       // add 100 organisms`  
+`       for (int i = 0; i < 100; i++) {`  
+`           Organism o = new SimpleOrganism("organism" + i);`
 
-`     //make 1 random chromosome for each organism`  
-`     SymbolList[] ch = new SymbolList[1];`  
-`     //the symbols are randomly sampled from bin_dist`  
-`     ch[0] = new SimpleSymbolList(DistributionTools.generateSequence(`  
-`         "", bin_dist, 100));`
+`           // make 1 random chromosome for each organism`  
+`           SymbolList[] ch = new SymbolList[1];`  
+`           // the symbols are randomly sampled from bin_dist`  
+`           ch[0] = new SimpleSymbolList(DistributionTools.generateSequence("",`  
+`               bin_dist, 100));`
 
-`     //set the organisms chromosome to be ch`  
-`     o.setChromosomes(ch);`
+`           // set the organisms chromosome to be ch`  
+`           o.setChromosomes(ch);`
 
-`     //add to organism to the population pop`  
-`     pop.addOrganism(o);`  
+`           // add to organism to the population pop`  
+`           pop.addOrganism(o);`  
+`       }`
+
+`       // created a SelectionFunction`  
+`       SelectionFunction sf = new ProportionalSelection();`
+
+`       // create a new CrossOverFunction`  
+`       CrossOverFunction cf = new SimpleCrossOverFunction();`  
+`       // set the max number of cross overs per chromosome`  
+`       cf.setMaxCrossOvers(1);`  
+`       // set a uniform cross over probability of 0.01`  
+`       cf.setCrossOverProbs(new double[] {0.01});`
+
+`       // create a new MutationFunction`  
+`       MutationFunction mf = new SimpleMutationFunction();`  
+`       // set a uniform MutationProbability of 0.0001`  
+`       mf.setMutationProbs(new double[] {0.0001});`  
+`       // set the mutation spectrum of the function to be a standard`  
+`       // mutation distribution over the binary Alphabet`  
+`       mf.setMutationSpectrum(GATools.standardMutationDistribution(GATools`  
+`           .getBinaryAlphabet()));`
+
+`       // make a GeneticAlgorithm with the above functions`  
+`       GeneticAlgorithm genAlg = new SimpleGeneticAlgorithm(pop, mf, cf, sf);`  
+`       // set its FitnessFunction`  
+`       genAlg.setFitnessFunction(new DemoFitness());`  
+`       // run the Algorithm until the criteria of DemoStopping are met`  
+`       genAlg.run(new DemoStopping());`  
 `   }`
 
-`   //created a SelectionFunction`  
-`   SelectionFunction sf = new ProportionalSelection();`  
-`   //set its FitnessFunction`  
-`   sf.setFitnessFunction(new DemoFitness());`
+`   /**`  
+`    * Basic implementation of GAStopping Criteria`  
+`    */`  
+`   static class DemoStopping implements GAStoppingCriteria {`
 
-`   //create a new CrossOverFunction`  
-`   CrossOverFunction cf = new SimpleCrossOverFunction();`  
-`   //set the max number of cross overs per chromosome`  
-`   cf.setMaxCrossOvers(1);`  
-`   //set a uniform cross over probability of 0.01`  
-`   cf.setCrossOverProbs(new double[]{0.01});`
+`       /**`  
+`        * Determines when to stop the Algorithm`  
+`        */`  
+`       public boolean stop(GeneticAlgorithm genAlg) {`  
+`           System.out.print(genAlg.getGeneration() + ",");`  
+`           Population pop = genAlg.getPopulation();`  
+`           int i;`  
+`           double totalFit = 0.0;`
 
-`   //create a new MutationFunction`  
-`   MutationFunction mf = new SimpleMutationFunction();`  
-`   //set a uniform MutationProbability of 0.0001`  
-`   mf.setMutationProbs(new double[]{0.0001});`  
-`   //set the mutation spectrum of the function to be a standard`  
-`   //mutation distribution over the binary Alphabet`  
-`   mf.setMutationSpectrum(`  
-`       GATools.standardMutationDistribution(GATools.getBinaryAlphabet()));`
+`           FitnessFunction ff = genAlg.getFitnessFunction();`
 
-`   //make a GeneticAlgorithm with the above functions`  
-`   GeneticAlgorithm genAlg = new SimpleGeneticAlgorithm(pop, mf, cf, sf);`  
-`   //run the Algorithm until the criteria of DemoStopping are met`  
-`   genAlg.run(new DemoStopping());`  
-` }`
+`           double fit[] = {0.0};`  
+`           double bestFitness[] = {0.0};`
 
-` /**`  
-`  * Basic implementation of GAStopping Criteria`  
-`  *`  
-`  */`  
-` static class DemoStopping implements GAStoppingCriteria{`
+`           for (Iterator it = pop.organisms(); it.hasNext();) {`  
+`               Organism o = (Organism) it.next();`  
+`               fit = ff.fitness(o, pop, genAlg);`  
+`               for (i = 0; i < fit.length; i++) {`  
+`                   bestFitness[i] = Math.max(fit[i], bestFitness[i]);`  
+`                   totalFit += fit[i];`  
+`               }`  
+`           }`
+
+`           // print the average fitness`  
+`           System.out.print((totalFit / (double) pop.size()) + ",");`  
+`           // print the best fitness`  
+`           System.out.println(bestFitness[0]);`
+
+`           // fitness is 75.0 so stop the algorithm`  
+`           boolean good = false;`  
+`           for (i = 0; (i < bestFitness.length) && !good; i++) {`  
+`               if (bestFitness[i] >= 75.0) {`  
+`                   good = true;`  
+`                   System.out.println("Organism found with Fitness of 75%");`  
+`               }`  
+`           }`  
+`           // organism is fit enough, continue the algorithm`  
+`           return good;`  
+`       }`  
+`   }`
 
 `   /**`  
-`    * Determines when to stop the Algorithm`  
+`    * A fitness function bases on the most "one" rich chromosome in the organism.`  
 `    */`  
-`   public boolean stop (GeneticAlgorithm genAlg){`  
-`     System.out.print(genAlg.getGeneration()+",");`  
-`     Population pop = genAlg.getPopulation();`  
-`     double totalFit = 0.0;`
+`   static class DemoFitness implements FitnessFunction {`  
+`       public double[] fitness(Organism o, Population p, GeneticAlgorithm genAlg) {`  
+`           double bestfit[] = {0.0};`
 
-`     FitnessFunction ff = genAlg.getSelectionFunction().getFitnessFunction();`
+`           for (int i = 0; i < o.getChromosomes().length; i++) {`  
+`               SymbolList csome = o.getChromosomes()[i];`  
+`               double fit = 0.0;`  
+`               for (int j = 1; j <= csome.length(); j++) {`  
+`                   if (csome.symbolAt(j) == GATools.one()) fit++;`  
+`               }`  
+`               bestfit[0] = Math.max(fit, bestfit[0]);`  
+`           }`
 
-`     double fit = 0.0;`  
-`     double bestFitness = 0.0;`
-
-`     for (Iterator it = pop.organisms(); it.hasNext(); ) {`  
-`       Organism o = (Organism)it.next();`  
-`       fit = ff.fitness(o, pop, genAlg);`  
-`       bestFitness = Math.max(fit, bestFitness);`  
-`       totalFit += fit;`  
-`     }`
-
-`     //print the average fitness`  
-`     System.out.print((totalFit/ (double) pop.size())+",");`  
-`     //print the best fitness`  
-`     System.out.println(bestFitness);`
-
-`     //fitness is 75.0 so stop the algorithm`  
-`     if(bestFitness >= 75.0){`  
-`       System.out.println("Organism found with Fitness of 75%");`  
-`       return true;`  
-`     }`
-
-`     //no organism is fit enough, continue the algorithm`  
-`     return false;`  
-`   }`  
-` }`
-
-` /**`  
-`  * A fitness function bases on the most "one" rich chromosome in the organism.`  
-`  *`  
-`  */`  
-` static class DemoFitness implements FitnessFunction{`  
-`   public double fitness(Organism o, Population p, GeneticAlgorithm genAlg){`  
-`     double bestfit = 0.0;`
-
-`     for (int i = 0; i < o.getChromosomes().length; i++) {`  
-`       SymbolList csome = o.getChromosomes()[i];`  
-`       double fit = 0.0;`  
-`       for(int j = 1; j <= csome.length(); j++){`  
-`         if(csome.symbolAt(j) == GATools.one())`  
-`           fit++;`  
+`           return bestfit;`  
 `       }`  
-`       bestfit = Math.max(fit, bestfit);`  
-`     }`
-
-`     return bestfit;`  
-`   }`  
-` }`
+`   }`
 
 } </java>
