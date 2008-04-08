@@ -26,7 +26,11 @@ General reasoning
 -   The only database support is for BioSQL, which uses Hibernate but
     not in a fully flexible manner (i.e. cannot connect to more than one
     db at a time).
--   It is sequence-focused. Users have moved on.
+-   It is very sequence-centric. Users have moved on. BioJava3 should
+    embrace other datatypes. Most bioinformatics now deals with
+    multi-dimensional feature vectors (data matrices). While one or more
+    of these dimensions might be sequence there should be no need for
+    everything to be tied to sequence.
 
 Proposal
 --------
