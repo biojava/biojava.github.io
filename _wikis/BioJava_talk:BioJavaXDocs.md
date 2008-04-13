@@ -2,6 +2,14 @@
 title: BioJava talk:BioJavaXDocs
 ---
 
+This page is getting a bit long. perhaps it would make sense to split it
+into several sub-pages? - examples might better fit into the Cookbook
+section.
+
+--[Andreas](User:Andreas "wikilink") 11:04, 13 April 2008 (EDT)
+
+------------------------------------------------------------------------
+
 Where is UML diagram for classes?
 
 Hi,
