@@ -2,27 +2,26 @@
 title: BioJava:Download 1.6
 ---
 
-This page offers downloads for the <b>BioJava 1.6 release candidate
-1</b>.
+This page offers downloads for the <b>BioJava 1.6 release</b>.
 
-BioJava 1.6 requires on <b>Java 1.5</b> or later. If you want to use the
-current stable release, or you require Java 1.4.2 then please download [
-release 1.5](BioJava:Download 1.5 "wikilink")
+BioJava 1.6 requires on <b>Java 1.5</b> or later. If you require Java
+1.4.2 then please download the previous [ release
+1.5](BioJava:Download 1.5 "wikilink")
 
 Complete Download
 -----------------
 
 A complete download is available as the
-[biojava-all.jar](http://www.biojava.org/download/bj16/rc1/all/biojava-all.jar)
-file (23Mb). The file contains all binaries, required jars, docs,
+[biojava-all.jar](http://www.biojava.org/download/bj16/all/biojava-all.jar)
+file (18Mb). The file contains all binaries, required jars, docs,
 source, test, demos and apps as gzipped tar files.
 
 BioJava binaries
 ----------------
 
 A binary distribution is available as
-[biojava.jar](http://www.biojava.org/download/bj16/rc1/bin/biojava.jar)
-file (3.3Mb).
+[biojava.jar](http://www.biojava.org/download/bj16/bin/biojava.jar) file
+(3.3Mb).
 
 ### Support libraries
 
@@ -39,8 +38,8 @@ Documentation
 -------------
 
 Documentation is available via
-[biojava-doc.jar](http://www.biojava.org/download/bj16/rc1//doc/biojava-doc.jar)
-(10Mb) that includes the javadocs for the API, demos and apps.
+[biojava-doc.jar](http://www.biojava.org/download/bj16/doc/biojava-doc.jar)
+(11Mb) that includes the javadocs for the API, demos and apps.
 
 You can also browse the documentation at [BioJava 1.6
 api](http://www.biojava.org/docs/api16/)
