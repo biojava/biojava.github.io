@@ -4,10 +4,8 @@ title: BioJava:Tutorial
 
 The following tutorials are currently available - more are always
 welcome! While reading these, you will probably also want to refer to
-the JavaDoc API documentation
-([1.3](http://www.biojava.org/docs/api/index.html),
-[1.4](http://www.biojava.org/docs/api14/index.html),
-[1.5](http://www.biojava.org/docs/api15/index.html)).
+the JavaDoc API documentation ([latest biojava
+1.6](http://www.biojava.org/docs/api/index.html)).
 
 -   Sequence basics
     -   [Symbols and
