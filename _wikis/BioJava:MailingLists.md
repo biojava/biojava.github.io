@@ -63,4 +63,4 @@ Search the mail archives
 ------------------------
 
 To search any of the O|B|F email archives click
-[here](http://search.open-bio.org/cgi-bin/mail-search.cgi).
+[here](http://search.open-bio.org).
