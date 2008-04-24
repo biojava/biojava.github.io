@@ -2,6 +2,8 @@
 title: BioJava:Cookbook:Sequence:ExtractGeneRegions
 ---
 
+<java>
+
 `  public Sequence sequenceJustFeatues(Sequence seq, String featureName)`  
 `        throws Exception {`
 
@@ -53,3 +55,5 @@ title: BioJava:Cookbook:Sequence:ExtractGeneRegions
 `     }`  
 `     return loccollection;`  
 `  }`
+
+</java>

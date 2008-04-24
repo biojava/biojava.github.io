@@ -1,3 +1,4 @@
+<java>
    public Sequence sequenceJustFeatues(Sequence seq, String featureName)
          throws Exception {
 
@@ -52,3 +53,4 @@
       }
       return loccollection;
    }
+</java>
