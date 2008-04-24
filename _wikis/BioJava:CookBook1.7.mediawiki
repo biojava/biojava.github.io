@@ -53,6 +53,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[Biojava:Cookbook:Sequence:ChangeName|Sequences are immutable so how can I change it's name]]?
 * [[Biojava:Cookbook:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
 * [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
+* [[Biojava:Cookbook:Sequence:ExtractGeneRegions|How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS']]?
 
 === Translation ===
 
