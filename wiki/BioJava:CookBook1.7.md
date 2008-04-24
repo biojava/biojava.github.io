@@ -103,6 +103,9 @@ How Do I....?
     SymbolList](Biojava:Cookbook:Sequence:Edit "wikilink")?
 -   [How can I make a sequence motif into a regular
     expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
+-   [How can I extract all regions beeing marked (or not) with a special
+    feature (e.g. 'gene' or
+    'CDS'](Biojava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
 
 ### Translation
 
