@@ -21,10 +21,3 @@ title: User talk:Foisys
     regards. --[Foisys](User:Foisys "wikilink") 10:24, 17 August 2006
     (EDT)
 
-<!-- -->
-
--   Hi Sylvain, I am trying to contact you about a biojava paper, but
-    could not reach you. could you drop me an email at
-    andreas.prlic@gmail.com?
-    thanks, --[Andreas](User:Andreas "wikilink") 13:26, 7 May 2008 (UTC)
-
