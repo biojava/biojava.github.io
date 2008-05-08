@@ -1,5 +1,3 @@
 * Just to let you know, we have had some problems on the othe Bio* wiki sites with spammers.  You should go ahead and create a <TT>Index.php</TT> page, then protect it for sysops only ([http://bioperl.org Bioperl] and [http://biopython.org Biopython] both resorted to this).  Also, the Bioperl and Biopython wikis have set up a Blacklist page which is supposed to cut down on the amount of spam.  Don't know if you have that here. --[[User:Cjfields|Cjfields]] 15:36, 11 August 2006 (EDT)
 
 * I would be more than willing to do so! Jason S. got me admin priviliges on the BioJava site but I can't seem to be able to find it and his email address that I have is not responding anymore... I would need a small how-to on how to do what you propose though. Best regards. --[[User:Foisys|Foisys]] 10:24, 17 August 2006 (EDT)
-
-* Hi Sylvain, I am trying to contact you about a biojava paper, but could not reach you. could you drop me an email at andreas.prlic@gmail.com? thanks, --[[User:Andreas|Andreas]] 13:26, 7 May 2008 (UTC)
