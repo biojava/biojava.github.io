@@ -1,3 +1,7 @@
-I got involved with BioJava through working with [[User:Mark|Mark Schreiber]] on the [http://www.dengueinfo.org/ dengueinfo] project, which required BioJava to be able to work seamlessly with [http://biosql.org/ BioSQL] databases. As this was not completely possible in version 1.4, we produced the BioJavaX extensions to be release in version 1.5 that allow BioJava to use the Hibernate framework for accessing BioSQL. 
+My career in bioinformatics started at [http://www.agresearch.co.nz/ AgResearch] in New Zealand, then moving to the [http://www.gis.a-star.edu.sg/ Genome Institute of Singapore].
 
-I currently work at the [http://www.ebi.ac.uk/ EBI] at Hinxton on the [http://www.biomart.org BioMart] team.
+I used BioJava for a while but got seriously involved after working with [[User:Mark|Mark Schreiber]] on the [http://www.dengueinfo.org/ DengueInfo] project in Singapore, which required BioJava to be able to work seamlessly with [http://biosql.org/ BioSQL] databases. As this was not completely possible in version 1.4, we produced the BioJavaX extensions released in version 1.5 that allow BioJava to use the Hibernate framework for accessing BioSQL. 
+
+I spent the next couple of years after Singapore working at the [http://www.ebi.ac.uk/ EBI] at Hinxton on the [http://www.biomart.org BioMart] team. In Summer 2007 I mentored a student for the Google Summer of Code, Boh-Yun Lee, who worked on some phyloinformatics modules for us. The GSoC'07 project was organised by [http://www.nescent.org/ NESCent].
+
+I am now self-employed, and working on the designs for BioJava 3.
