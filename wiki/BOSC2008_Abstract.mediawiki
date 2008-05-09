@@ -93,6 +93,7 @@ BioJava is a mature Open Source project that provides a framework for processing
 
 The second sentence needs further revision, an additional clause perhaps.
 
+
 '''Paper:'''
 
 Full-length abstracts are limited to one page with one inch (2.5 cm) margins on the top, sides, and bottom.  The full-length abstract should include the title, authors, and affiliations.
