@@ -106,6 +106,9 @@ latest BioJava release (version 1.6, released on 13 Apr 2008) which
 provides improvements in the packages for phylogenetic trees, processing
 PDB files, and genetic algorithms.
 
+The second sentence needs further revision, an additional clause
+perhaps.
+
 **Paper:**
 
 Full-length abstracts are limited to one page with one inch (2.5 cm)
