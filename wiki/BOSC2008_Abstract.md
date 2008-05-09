@@ -83,7 +83,7 @@ Lightning Talks ?
 
 **Keywords:**
 
-open-bio biojava bioperl biosql sequence alphabet feature annotation
+OBF open-bio biojava bioperl biosql sequence alphabet feature annotation
 alignment protein structure phylogenetic trees
 
 **Abstract:**
