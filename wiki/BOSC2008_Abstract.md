@@ -170,3 +170,33 @@ started to develop a mmcif parser
 
 by Andreas.Prlic (Using name ‘andreas’) on 2008-04-28 07:27 (11 days
 ago)
+
+**Version 1.6 release announcement to biojava-dev and biojava-l**
+
+Date: Sun, 13 Apr 2008 19:02:41 +0100  
+From: Andreas Prlic  
+To: biojava-dev at biojava.org, biojava-l at biojava.org  
+Subject: [Biojava-dev] biojava 1.6 released  
+ Biojava 1.6 has been released and is available from <http://>
+biojava.org/wiki/BioJava:Download
+
+Biojava 1.6 offers more functionality and stability over the previous
+official releases. BioJava now depends on Java 1.5+. We highly recommend
+you to upgrade as soon as possible.
+
+In detail, the phylo package org.biojavax.bio.phylo was improved and
+expanded by our GSOC'07 student Boh-Yun Lee. It now contains fully-
+functional Nexus and Phylip parsers, and tools for calculating UPGMA and
+Neighbour Joining, Jukes-Kantor and Kimura Two Parameter, and MP. It
+uses JGraphT to represent parsed trees.
+
+The PDB file parser was improved by Jules Jacobsen for better dealing
+with PDB header records. Andreas Draeger provided several patches for
+improving the Genetic Algorithm modules. Additionally this release
+contains numerous bug fixes and documentation improvements.
+
+Thanks to the entire biojava community for making this possible!
+
+Happy Biojava-ing,
+
+Andreas
