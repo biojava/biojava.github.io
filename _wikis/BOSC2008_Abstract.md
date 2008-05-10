@@ -227,7 +227,7 @@ Statsvn lists the files that were addded in the first commit:
             * org/biojava/stats/svm/tools: ClassifierExample.java (new 387), Classify.java (new 80), SVM_Light.java (new 199), Train.java (new 90), TrainRegression.java (new 86)
             * org/biojava/utils/xml: XMLDispatcher.java (new), XMLPeerBuilder.java (new), XMLPeerFactory.java (new)
 
-**Last commit**
+**Latest commit**
 
 started to develop a mmcif parser
 

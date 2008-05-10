@@ -206,7 +206,7 @@ Statsvn lists the files that were addded in the first commit:
 
 
 
-'''Last commit'''
+'''Latest commit'''
 
 started to develop a mmcif parser
 
