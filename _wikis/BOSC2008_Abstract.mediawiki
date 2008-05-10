@@ -160,8 +160,20 @@ also compare with:
 
 BioJava StatSVN: [http://www.spice-3d.org/statsvn/stats/ http://www.spice-3d.org/statsvn/stats/]
 
+top 10 authors:
 
-
+<pre>
+mrp  	114161 (25.5%)
+thomasd 82637 (18.5%)
+holland 58798 (13.1%)
+kdj 	43546 (9.7%)
+andreas 40727 (9.1%)
+mark_s 	36616 (8.2%)
+dhuen 	25610 (5.7%)
+gcox 	5954 (1.3%)
+birney 	4087 (0.9%)
+draeger 3994 (0.9%)
+</pre>
 
 '''First commit'''
 
