@@ -212,6 +212,21 @@ by birney on 2000-01-26 15:53 (over 8 years ago)
 Interesting to find out what happened before this administrative commit,
 as there were 6539 lines of code already.
 
+Statsvn lists the files that were addded in the first commit:
+
+        4087 lines of code changed in:
+
+            * org/biojava/bio: BioError.java (new 92), BioException.java (new 88)
+            * org/biojava/bio/alignment: AbstractCursor.java (new), AbstractState.java (new 1), AbstractTrainer.java (new), Alignment.java (new 29), AmbiguityState.java (new), BaumWelchSampler.java (new), BaumWelchTrainer.java (new), Column.java (new), ComplementaryState.java (new), DNAState.java (new), DNAWeightMatrix.java (new), DP.java (new 10), DPCursor.java (new), DoubleAlphabet.java (new), EmissionState.java (new), FlatModel.java (new), IllegalTransitionException.java (new), MarkovModel.java (new), MarkovModelWrapper.java (new), MatrixCursor.java (new), ModelInState.java (new), ModelTrainer.java (new), SimpleAlignment.java (new 77), SimpleMarkovModel.java (new 3), SimpleModelInState.java (new), SimpleModelTrainer.java (new), SimpleState.java (new), SimpleStateLabeledSequence.java (new), SimpleStateTrainer.java (new), SimpleTransitionTrainer.java (new), SimpleWeightMatrix.java (new), SmallCursor.java (new), State.java (new), StateFactory.java (new), StateLabeledSequence.java (new), StateTrainer.java (new), StateWrapper.java (new), StoppingCriteria.java (new), SuffixTree.java (new 35), TrainerTransition.java (new), TrainingAlgorithm.java (new), Transition.java (new), TransitionTrainer.java (new), WMAsMM.java (new), WeightMatrix.java (new), WeightMatrixAnnotator.java (new 23), XmlMarkovModel.java (new)
+            * org/biojava/bio/gui: BarLogoPainter.java (new 85), DNAStyle.java (new 84), LogoPainter.java (new 45), PlainStyle.java (new 56), ResidueStyle.java (new), StateLogo.java (new 7), TextLogoPainter.java (new 209)
+            * org/biojava/bio/program: Meme.java (new 151)
+            * org/biojava/bio/seq: AbstractAlphabet.java (new), AllSymbolsAlphabet.java (new), Alphabet.java (new 4), Annotatable.java (new 1), Annotation.java (new 2), Annotator.java (new 5), CompoundLocation.java (new 2), Feature.java (new 66), FeatureFactory.java (new), FeatureFilter.java (new 81), FeatureHolder.java (new 34), FixedWidthParser.java (new), HashSequenceDB.java (new 1), IllegalResidueException.java (new), Location.java (new 7), NameParser.java (new), PointLocation.java (new 2), RangeLocation.java (new), Residue.java (new), ResidueList.java (new), ResidueParser.java (new), SeqException.java (new), Sequence.java (new 63), SequenceDB.java (new), SequenceFactory.java (new 28), SequenceIterator.java (new 33), SimpleAlphabet.java (new), SimpleAnnotation.java (new), SimpleFeature.java (new 14), SimpleFeatureFactory.java (new), SimpleFeatureHolder.java (new 65), SimpleResidue.java (new 1), SimpleResidueList.java (new 2), SimpleSequence.java (new 1), SimpleSequenceFactory.java (new), SymbolParser.java (new)
+            * org/biojava/bio/seq/io: DefaultDescriptionReader.java (new), EmblFormat.java (new 60), FastaDescriptionReader.java (new), FastaFormat.java (new 109), SequenceFormat.java (new 37), StreamReader.java (new 93), StreamWriter.java (new 50)
+            * org/biojava/bio/seq/tools: AlphabetManager.java (new 1), DNATools.java (new)
+            * org/biojava/stats/svm: LinearKernel.java (new 37), ListSumKernel.java (new 74), PolynomialKernel.java (new 89), RadialBaseKernel.java (new 67), SMORegressionTrainer.java (new 429), SMOTrainer.java (new 283), SVMKernel.java (new 39), SVMModel.java (new), SVMRegressionModel.java (new 170), SigmoidKernel.java (new 83), SparseVector.java (new 113), TrainingContext.java (new 31), TrainingEvent.java (new 39), TrainingListener.java (new 34)
+            * org/biojava/stats/svm/tools: ClassifierExample.java (new 387), Classify.java (new 80), SVM_Light.java (new 199), Train.java (new 90), TrainRegression.java (new 86)
+            * org/biojava/utils/xml: XMLDispatcher.java (new), XMLPeerBuilder.java (new), XMLPeerFactory.java (new)
+
 **Last commit**
 
 started to develop a mmcif parser
