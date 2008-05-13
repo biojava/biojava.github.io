@@ -2,23 +2,22 @@
 title: BioJava:Cookbook:SeqIO:ReadGESBiojavax
 ---
 
-How Do I read a sequence file (in whatever format) with the new Biojavax extension?
+How do I read a sequence file (in whatever format) with the new Biojavax extension?
 -----------------------------------------------------------------------------------
 
 Since its inception, Biojava has been able to read files in the most
 popular file formats used in bio-informatics. Since Biojava 1.5 and the
-inclusion of the Biojavax extension, the way of reading files has
-changed somewhat. Although you can still read sequence files using the
+addition of the Biojavax extension, the way of reading files has changed
+somewhat. Although you can still read sequence files using the
 **SeqIOTools** class, it has been marked deprecated and is now replaced
 by the **RichSequenceIO.Tools** class. This class keeps the mapping of
 the information found in a given file format, allowing better
-correspondance to BioSQL databases. The Biojavax extension also allows
-for easier parser creation if you need to read a new file format.
-
-But for most users, this is a rather remote thing. So, how is it
-different? Actually, it is not that different ;-)
-**RichSequenceIO.Tools** allows you to read files (DNA, RNA or protein)
-in the following format:
+correspondance to BioSQL databases. It also enforce the use of
+namespaces. The Biojavax extension also allows for easy parser creation
+if you need to read a new file format. But for most users, this is a
+rather remote thing. So, how is it different? Actually, it is not that
+different ;-) **RichSequenceIO.Tools** allows you to read files (DNA,
+RNA or protein) in the following format:
 
 -   EMBL (native or XML)
 -   FASTA
@@ -26,7 +25,7 @@ in the following format:
 -   INSDseq
 -   UniProt (native or XML)
 
-This class also has a methode, *readFile*, that can read a file while
+This class also has a method, *readFile*, that can read a file while
 guessing its format.
 
 <java> import java.io.BufferedReader; import java.io.FileReader;
