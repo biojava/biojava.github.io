@@ -10,52 +10,84 @@
 ===Author(s) Information===
 
 ====Author #1====
-'''Name:'''
+'''Name:'''  Michael Heuer
 
-'''Organization:'''
+'''Organization:'''  Harbinger Partners, Inc.
 
-'''Country:'''
-
-'''Email:'''
-
-====Author #2====
-'''Name:'''
-
-'''Organization:'''
-
-'''Country:'''
+'''Country:'''  USA
 
 '''Email:'''
-
-====Author #3====
-'''Name:'''
-
-'''Organization:'''
-
-'''Country:'''
-
-'''Email:'''
-
-====Author #4====
-'''Name:'''
-
-'''Organization:'''
-
-'''Country:'''
-
-'''Email:'''
-
-====Author #5====
-'''Name:'''
-
-'''Organization:'''
-
-'''Country:'''
-
-'''Email:'''
-
 
 '''Additional Authors:'''
+
+Richard Holland
+
+Eagle Genomics Ltd.
+
+UK
+
+
+Thomas Down
+
+Wellcome Trust/Cancer Research UK Gurdon Institute
+
+UK
+
+
+Matthew Pocock
+
+University Newcastle Upon Tyne
+
+UK
+
+
+Andreas Prlic
+
+Wellcome Trust Sanger Institute
+
+UK
+
+
+David Huen
+
+University of Cambridge
+
+UK
+
+
+Keith James
+
+Wellcome Trust Sanger Institute
+
+UK
+
+
+Sylvain Foisy
+
+Laboratory in Genetics and Genomic Medicine of Inflammation
+
+Canada
+
+
+Andreas Dräger
+
+Eberhard Karls University Tübingen
+
+Germany
+
+
+Andy Yates
+
+European Bioinformatics Institute (EMBL-EBI)
+
+UK
+
+
+Mark Schreiber
+
+Novartis Institute for Tropical Diseases
+
+Singapore
 
 
 ===Contact Author===
@@ -71,8 +103,6 @@
 
 Bio * Open Source Project Updates
 
-Lightning Talks  ?
-
 
 ===Content===
 
@@ -83,32 +113,78 @@ OBF open-bio biojava bioperl biosql sequence alphabet feature annotation alignme
 
 '''Abstract:'''
 
-The small Abstract text should be a summary, while the longer abstract should provide more details, including the open-source license requirement details.
+BioJava is a mature free and open-source project that provides a framework for processing biological data.
 
 
-Copied from BioJavaBioinformatics.odt [http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-paper?rev=4751] abstract summary with minor revision:
+BioJava provides tools/packages/modules/components
 
-BioJava is a mature Open Source project that provides a framework for processing of biological data.  BioJava provides tools for parsing common file formats, manipulating sequences and 3D structures. Powerful analysis and statistical routines enable the rapid bioinformatics application development in the Java programming language [http://java.sun.com [http://java.sun.com]]. Here we present the latest BioJava release (version 1.6, released on 13 Apr 2008) which provides improvements in the packages for phylogenetic trees, processing PDB files, and genetic algorithms.
+for parsing common file formats,
+
+for manipulating sequences and 3D structures,
+
+and powerful analysis and statistical routines.
 
 
-The second sentence needs further revision, an additional clause perhaps.
+Here we present the latest BioJava release (version 1.6, released on 13 Apr 2008) which provides improvements in the packages for phylogenetic trees, processing PDB files, and genetic algorithms.
 
 
 '''Paper:'''
 
-Full-length abstracts are limited to one page with one inch (2.5 cm) margins on the top, sides, and bottom.  The full-length abstract should include the title, authors, and affiliations.
-
-I have added myself to the author's list from the application note near the end.  Hopefully this is reasonable to the other authors.
-
-
 BioJava Project Update
 
 
-Holland, R.C.G.<sup>1</sup>, Down, T.<sup>2</sup>, Pocock, M.<sup>3</sup>, Prlic, A.<sup>4</sup>, Huen D.<sup>5</sup>, James K.<sup>4</sup>, Foisy, S.<sup>6</sup>, Dräger, A.<sup>7</sup>, Yates, A.<sup>1</sup>, Heuer M.<sup>8</sup>, and Schreiber, M.J.<sup>9</sup>
+Holland, R.C.G.<sup>1</sup>, Down, T.<sup>2</sup>, Pocock, M.<sup>3</sup>, Prlic, A.<sup>4</sup>, Huen D.<sup>5</sup>, James K.<sup>4</sup>, Foisy, S.<sup>6</sup>, Dräger, A.<sup>7</sup>, Yates, A.<sup>8</sup>, Heuer M.<sup>9</sup>, and Schreiber, M.J.<sup>10</sup>
 
 
-<sup>1</sup> European Bioinformatics Institute (EMBL-EBI), Genome Campus, Hinxton, Cambridgeshire CB10 1SD, UK <sup>2</sup> Wellcome Trust/Cancer Research UK Gurdon Institute, Cambridge CB2 1QN, UK <sup>3</sup> University Newcaste Upon Tyne, Newcastle Upon Tyne, NE1 7RU, UK <sup>4</sup> Wellcome Trust Sanger Institute, Genome Campus, Hinxton, Cambridgeshire CB10 1SA, UK <sup>5</sup> Department of Genetics, University of Cambridge, Cambridge CB2 3EH, UK <sup>6</sup> Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal, Canada. <sup>7</sup> Eberhard Karls University Tübingen, Center for Bioinformatics (ZBIT), Germany <sup>8</sup> Harbinger Partners, Inc., St. Paul, Minnesota, USA <sup>9</sup> Novartis Institute for Tropical Diseases, 10 Biopolis Road, Chromos #05-01, Singapore 138670
+<sup>1</sup> Eagle Genomics Ltd., Cambridge, UK <sup>2</sup> Wellcome Trust/Cancer Research UK Gurdon Institute, Cambridge CB2 1QN, UK <sup>3</sup> University Newcaste Upon Tyne, Newcastle Upon Tyne, NE1 7RU, UK <sup>4</sup> Wellcome Trust Sanger Institute, Genome Campus, Hinxton, Cambridgeshire CB10 1SA, UK <sup>5</sup> Department of Genetics, University of Cambridge, Cambridge CB2 3EH, UK <sup>6</sup> Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal, Canada. <sup>7</sup> Eberhard Karls University Tübingen, Center for Bioinformatics (ZBIT), Germany <sup>8</sup> European Bioinformatics Institute (EMBL-EBI), Genome Campus, Hinxton, Cambridgeshire CB10 1SD, UK <sup>9</sup> Harbinger Partners, Inc., St. Paul, Minnesota, USA <sup>10</sup> Novartis Institute for Tropical Diseases, 10 Biopolis Road, Chromos #05-01, Singapore 138670
 
+
+BioJava was conceived in 1999 by Thomas Down and Matthew Pocock as an API to simplify bioinformatics software development using Java (Pocock et al., 2000). It has since then evolved to become a fully-featured framework with modules for performing many common bioinformatics tasks.
+
+
+As a free and open-source project, BioJava is developed by volunteers coordinated by the Open Bioinformatics Foundation (OBF) and is one of several Bio* toolkits (Mangalam, 2002).
+
+...48 contributors via commits, X mailing list subscribers, X wiki contributors.
+
+All code is distributed under version 2.1 of the GNU Lesser General Public License (LGPL) license (Free Software Foundation, Inc., 1999).
+
+
+BioJava has been used in a number of real-world applications, including Bioclipse (Spjuth et al., 2007), BioWeka (Gewehr et al., 2007), Cytoscape (Shannon et al., 2003), and Taverna (Hull et al, 2006), and over 50 published studies.  A list of these can be found on the BioJava website.
+
+
+...version 1.6.
+
+
+...docs/wiki.
+
+
+...what it means to be a mature FOSS project.
+
+
+====References====
+
+Needs cleanup.
+
+Hull D, Wolstencroft K, Stevens R, Goble C, Pocock MR, Li P, Oinn T.
+Taverna: a tool for building and running workflows of services.
+Nucleic Acids Res. 2006 Jul 1;34(Web Server issue):W729-32.
+
+Spjuth O, Helmus T, Willighagen EL, Kuhn S, Eklund M, Wagener J, Murray-Rust P, Steinbeck C, Wikberg JE.
+Bioclipse: an open source workbench for chemo- and bioinformatics. BMC Bioinformatics. 2007 Feb 22;8:59.
+
+Shannon P, Markiel A, Ozier O, Baliga NS, Wang JT, Ramage D, Amin N, Schwikowski B, Ideker T.
+Cytoscape: a software environment for integrated models of biomolecular interaction networks.
+Genome Research 2003 Nov; 13(11):2498-504
+
+BioWeka—extending the Weka framework for bioinformatics
+Jan E. Gewehr *,{dagger}, Martin Szugat {dagger} and Ralf Zimmer 
+Bioinformatics 2007 23(5):651-653; doi:10.1093/bioinformatics/btl671
+
+Free Software Foundation, Inc. (1999) GNU Lesser General Public License, version 2.1, http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html, accessed 10 May 2008
+
+Mangalam, H. (2002) The Bio* toolkits – a brief overview. Brief Bioinform., 3, 396-302
+
+Pocock, M, Down, T, Hubbard, T (2000) BioJava: Open Source Components for Bioinformatics. ACM SIGBIO Newsletter 20(2), 10-12
 
 
 ==Notes==
@@ -220,3 +296,12 @@ There is a BioJava group on LinkedIn:
 Developers of the BioJava open-source bioinformatics project.
 
 Not sure how to link to it though.
+
+
+'''Wiki edits for later'''
+
+Clarify reference to LGPL.
+
+Update references to "open source" with "free and open source".  Link to FOSS page on wikipedia?
+
+DengueInfo link on BioJavaInside is broken.
