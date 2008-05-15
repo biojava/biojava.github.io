@@ -121,6 +121,9 @@ for manipulating sequences and 3D structures,
 
 and powerful analysis and statistical routines.
 
+BioJava is available freely under the terms of version 2.1 of the GNU
+Lesser General Public License (LGPL) from <http://biojava.org/>.
+
 Here we present the latest BioJava release (version 1.6, released on 13
 Apr 2008) which provides improvements in the packages for phylogenetic
 trees, processing PDB files, and genetic algorithms.
@@ -156,25 +159,57 @@ framework with modules for performing many common bioinformatics tasks.
 
 As a free and open-source project, BioJava is developed by volunteers
 coordinated by the Open Bioinformatics Foundation (OBF) and is one of
-several Bio\* toolkits (Mangalam, 2002).
-
-...48 contributors via commits, X mailing list subscribers, X wiki
-contributors.
-
-All code is distributed under version 2.1 of the GNU Lesser General
-Public License (LGPL) license (Free Software Foundation, Inc., 1999).
+several Bio\* toolkits (Mangalam, 2002). Over the past eight years, the
+BioJava has brought together nearly fifty different code contributors,
+hundreds of mailing list subscribers, and several wiki contributors. All
+code is distributed under version 2.1 of the GNU Lesser General Public
+License (LGPL) license (Free Software Foundation, Inc., 1999). All wiki
+documentation is made available online under version 1.2 of the GNU Free
+Documentation License (Free Software Foundation, Inc., 2000).
 
 BioJava has been used in a number of real-world applications, including
 Bioclipse (Spjuth et al., 2007), BioWeka (Gewehr et al., 2007),
-Cytoscape (Shannon et al., 2003), and Taverna (Hull et al, 2006), and
-over 50 published studies. A list of these can be found on the BioJava
-website.
+Cytoscape (Shannon et al., 2003), and Taverna (Oinn et al., 2004), and
+been referenced in over 50 published studies. A list of these can be
+found on the BioJava website.
 
-...version 1.6.
+The latest BioJava release (version 1.6, released on 13 Apr 2008) offers
+more functionality and stability over the previous official releases.
+The phylogenomics package was improved and expanded by our 2007 Google
+Summer of Code (GSOC'07) student Boh-Yun Lee. It now contains
+fully-functional Nexus and Phylip parsers, and tools for calculating
+UPGMA and Neighbour Joining, Jukes-Kantor and Kimura Two Parameter, and
+MP. The PDB file parser was improved by Jules Jacobsen for better
+dealing with PDB header records. Andreas Dräger provided several patches
+for improving the Genetic Algorithm modules. The version 1.6 release
+also contains numerous bug fixes and documentation improvements.
 
-...docs/wiki.
+As a mature project, BioJava faces several challenges:
 
-...what it means to be a mature FOSS project.
+how one deals with a large established code base
+
+what happens when committers move on, get married, have kids, etc.
+
+how difficult it is to deprecate and remove existing code
+
+evolutionary vs. revolutionary changes [1]
+
+the "second system" problem [2]
+
+To this end...
+
+the BioJava3 use case & refactoring/redesign criteria gathering process
+
+At least one prior attempt, while technically sufficient, was unable to
+garner community support.
+
+<http://biojava.org/wiki/BioJava3_Proposal>
+
+<http://biojava.org/wiki/Talk:BioJava3_Proposal>
+
+<http://biojava.org/wiki/BioJava3_Design>
+
+<http://www.derkholm.net/svn/repos/bjv2/website/docs/index.html>
 
 #### References
 
@@ -183,6 +218,13 @@ Needs cleanup.
 Hull D, Wolstencroft K, Stevens R, Goble C, Pocock MR, Li P, Oinn T.
 Taverna: a tool for building and running workflows of services. Nucleic
 Acids Res. 2006 Jul 1;34(Web Server issue):W729-32.
+
+or
+
+Oinn,T., Addis,M., Ferris,J., Marvin,D., Greenwood,M., Carver,T.,
+Pocock,M.R., Wipat,A. and Li,P. (2004) Taverna: a tool for the
+composition and enactment of bioinformatics workflows. Bioinformatics,
+20, 3045–3054.
 
 Spjuth O, Helmus T, Willighagen EL, Kuhn S, Eklund M, Wagener J,
 Murray-Rust P, Steinbeck C, Wikberg JE. Bioclipse: an open source
@@ -197,6 +239,10 @@ integrated models of biomolecular interaction networks. Genome Research
 BioWeka—extending the Weka framework for bioinformatics Jan E.
 Gewehr \*,{dagger}, Martin Szugat {dagger} and Ralf Zimmer
 Bioinformatics 2007 23(5):651-653; <doi:10.1093/bioinformatics/btl671>
+
+Free Software Foundation, Inc. (2000) GNU Free Documentation License,
+version 1.2, <http://www.gnu.org/licenses/fdl-1.2.html>, accessed 10 May
+2008
 
 Free Software Foundation, Inc. (1999) GNU Lesser General Public License,
 version 2.1, <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>,
@@ -320,3 +366,7 @@ Update references to "open source" with "free and open source". Link to
 FOSS page on wikipedia?
 
 DengueInfo link on BioJavaInside is broken.
+
+BioJava in Anger is now on the wiki (so under FDL?) but has a separate
+vague Copyright section, see
+<http://biojava.org/wiki/BioJava:CookBook#Copyright>
