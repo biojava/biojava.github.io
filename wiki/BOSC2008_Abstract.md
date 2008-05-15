@@ -211,6 +211,10 @@ garner community support.
 
 <http://www.derkholm.net/svn/repos/bjv2/website/docs/index.html>
 
+<http://incubator.apache.org/learn/rules-for-revolutionaries.html>
+
+<http://www.joelonsoftware.com/articles/fog0000000069.html>
+
 #### References
 
 Needs cleanup.
