@@ -63,8 +63,13 @@ UK
 
 Sylvain Foisy
 
-Laboratory in Genetics and Genomic Medicine of Inflammation Montreal
-Heart Institute Montrea, Québec Canada
+Laboratory in Genetics and Genomic Medicine of Inflammation
+
+Montreal Heart Institute
+
+Montreal, Québec
+
+Canada
 
 Andreas Dräger
 
