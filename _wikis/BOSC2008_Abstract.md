@@ -140,13 +140,14 @@ Trust/Cancer Research UK Gurdon Institute, Cambridge CB2 1QN, UK
 7RU, UK <sup>4</sup> Wellcome Trust Sanger Institute, Genome Campus,
 Hinxton, Cambridgeshire CB10 1SA, UK <sup>5</sup> Department of
 Genetics, University of Cambridge, Cambridge CB2 3EH, UK <sup>6</sup>
-Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal,
-Canada. <sup>7</sup> Eberhard Karls University Tübingen, Center for
-Bioinformatics (ZBIT), Germany <sup>8</sup> European Bioinformatics
-Institute (EMBL-EBI), Genome Campus, Hinxton, Cambridgeshire CB10 1SD,
-UK <sup>9</sup> Harbinger Partners, Inc., St. Paul, Minnesota, USA
-<sup>10</sup> Novartis Institute for Tropical Diseases, 10 Biopolis
-Road, Chromos \#05-01, Singapore 138670
+Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal
+Heart Institute, Montreal, Québec, Canada. <sup>7</sup> Eberhard Karls
+University Tübingen, Center for Bioinformatics (ZBIT), Germany
+<sup>8</sup> European Bioinformatics Institute (EMBL-EBI), Genome
+Campus, Hinxton, Cambridgeshire CB10 1SD, UK <sup>9</sup> Harbinger
+Partners, Inc., St. Paul, Minnesota, USA <sup>10</sup> Novartis
+Institute for Tropical Diseases, 10 Biopolis Road, Chromos \#05-01,
+Singapore 138670
 
 BioJava was conceived in 1999 by Thomas Down and Matthew Pocock as an
 API to simplify bioinformatics software development using Java (Pocock
