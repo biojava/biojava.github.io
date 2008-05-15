@@ -116,7 +116,7 @@ OBF open-bio biojava bioperl biosql sequence alphabet feature annotation alignme
 
 '''Abstract:'''
 
-BioJava is a mature free and open-source project that provides a framework for processing biological data.  BioJava contains powerful analysis and statistical routines, packages for parsing common file formats, and packages for manipulating sequences and 3D structures.  BioJava is available freely under the terms of version 2.1 of the GNU Lesser General Public License (LGPL) from http://biojava.org/.  Here we present the latest BioJava release (version 1.6, released on 13 Apr 2008) which provides improvements in the packages for phylogenetic trees, processing PDB files, and genetic algorithms.
+BioJava is a mature free and open-source project that provides a framework for processing biological data.  BioJava contains powerful analysis and statistical routines, tools for parsing common file formats, and packages for manipulating sequences and 3D structures.  BioJava is available freely under the terms of version 2.1 of the GNU Lesser General Public License (LGPL) from http://biojava.org/.  Here we present the latest BioJava release (version 1.6, released on 13 Apr 2008) which provides improvements in the packages for phylogenetic trees, processing PDB files, and genetic algorithms.
 
 
 '''Paper:'''
@@ -145,39 +145,24 @@ The latest BioJava release (version 1.6, released on 13 Apr 2008) offers more fu
 The BioJava website is http://biojava.org/. The version 1.6 release can be downloaded from http://biojava.org/wiki/BioJava:Download.
 
 
-====References====
+'''References'''
 
-Needs cleanup.
+Free Software Foundation, Inc. (1999) GNU Lesser General Public License, version 2.1, http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html, accessed 10 May 2008.
 
-Hull D, Wolstencroft K, Stevens R, Goble C, Pocock MR, Li P, Oinn T.
-Taverna: a tool for building and running workflows of services.
-Nucleic Acids Res. 2006 Jul 1;34(Web Server issue):W729-32.
+Free Software Foundation, Inc. (2000) GNU Free Documentation License, version 1.2, http://www.gnu.org/licenses/fdl-1.2.html, accessed 10 May 2008.
 
-or
+Gewehr JE, Szugat M, Zimmer R. (2007) BioWeka—extending the Weka framework for bioinformatics Bioinformatics 2007 23(5):651-653.
 
-Oinn,T., Addis,M., Ferris,J., Marvin,D., Greenwood,M., Carver,T.,
-Pocock,M.R., Wipat,A. and Li,P. (2004) Taverna: a tool for the
-composition and enactment of bioinformatics workflows.
-Bioinformatics, 20, 3045–3054.
+Mangalam H. (2002) The Bio* toolkits – a brief overview. Brief Bioinform., 3, 396-302.
 
-Spjuth O, Helmus T, Willighagen EL, Kuhn S, Eklund M, Wagener J, Murray-Rust P, Steinbeck C, Wikberg JE.
-Bioclipse: an open source workbench for chemo- and bioinformatics. BMC Bioinformatics. 2007 Feb 22;8:59.
+Oinn T, Addis M, Ferris J, Marvin D, Greenwood M, Carver T, Pocock MR, Wipat A, Li P. (2004) Taverna: a tool for the composition and enactment of bioinformatics workflows. Bioinformatics, 20, 3045–3054.
 
-Shannon P, Markiel A, Ozier O, Baliga NS, Wang JT, Ramage D, Amin N, Schwikowski B, Ideker T.
-Cytoscape: a software environment for integrated models of biomolecular interaction networks.
-Genome Research 2003 Nov; 13(11):2498-504
+Pocock M, Down T, Hubbard T. (2000) BioJava: Open Source Components for Bioinformatics. ACM SIGBIO Newsletter 20(2), 10-12.
 
-BioWeka—extending the Weka framework for bioinformatics
-Jan E. Gewehr *,{dagger}, Martin Szugat {dagger} and Ralf Zimmer 
-Bioinformatics 2007 23(5):651-653; doi:10.1093/bioinformatics/btl671
+Shannon P, Markiel A, Ozier O, Baliga NS, Wang JT, Ramage D, Amin N, Schwikowski B, Ideker T. (2003) Cytoscape: a software environment for integrated models of biomolecular interaction networks. Genome Research 2003 Nov; 13(11):2498-504.
 
-Free Software Foundation, Inc. (2000) GNU Free Documentation License, version 1.2, http://www.gnu.org/licenses/fdl-1.2.html, accessed 10 May 2008
+Spjuth O, Helmus T, Willighagen EL, Kuhn S, Eklund M, Wagener J, Murray-Rust P, Steinbeck C, Wikberg JE. (2007) Bioclipse: an open source workbench for chemo- and bioinformatics. BMC Bioinformatics. 2007 Feb 22;8:59.
 
-Free Software Foundation, Inc. (1999) GNU Lesser General Public License, version 2.1, http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html, accessed 10 May 2008
-
-Mangalam, H. (2002) The Bio* toolkits – a brief overview. Brief Bioinform., 3, 396-302
-
-Pocock, M, Down, T, Hubbard, T (2000) BioJava: Open Source Components for Bioinformatics. ACM SIGBIO Newsletter 20(2), 10-12
 
 ==Notes==
 
