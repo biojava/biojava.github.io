@@ -150,15 +150,15 @@ et al., 2000). It has since then evolved to become a fully-featured
 framework with modules for performing many common bioinformatics tasks.
 
 As a free and open-source project, BioJava is developed by volunteers
-coordinated by the Open Bioinformatics Foundation (OBF) and is one of
-several Bio\* toolkits (Mangalam, 2002). Over the past eight years, the
-BioJava has brought together nearly fifty different code contributors,
-hundreds of mailing list subscribers, and several wiki contributors. All
-code and related documentation is distributed under version 2.1 of the
-GNU Lesser General Public License (LGPL) license (Free Software
-Foundation, Inc., 1999). All wiki documentation is made available online
-under version 1.2 of the GNU Free Documentation License (Free Software
-Foundation, Inc., 2000).
+coordinated by the Open Bioinformatics Foundation (O|B|F,
+<http://open-bio.org/>) and is one of several Bio\* toolkits (Mangalam,
+2002). Over the past eight years, the BioJava has brought together
+nearly fifty different code contributors, hundreds of mailing list
+subscribers, and several wiki contributors. All code and related
+documentation is distributed under version 2.1 of the GNU Lesser General
+Public License (LGPL) license (Free Software Foundation, Inc., 1999).
+All wiki documentation is made available online under version 1.2 of the
+GNU Free Documentation License (Free Software Foundation, Inc., 2000).
 
 BioJava has been used in a number of real-world applications, including
 Bioclipse (Spjuth et al., 2007), BioWeka (Gewehr et al., 2007),
