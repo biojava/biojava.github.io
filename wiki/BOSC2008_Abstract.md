@@ -5,6 +5,10 @@ title: BOSC2008 Abstract
 BOSC2008 Abstract
 -----------------
 
+The abstract was submitted as appears below. A link to the submitted PDF
+will be added here later this afternoon. Please send an email to the
+biojava-dev mailing list with any further changes to be made.
+
 ### General information
 
 **Paper Title:** BioJava Project Update
@@ -105,8 +109,8 @@ Bio \* Open Source Project Updates
 
 **Keywords:**
 
-OBF open-bio biojava bioperl biosql sequence alphabet feature annotation
-alignment protein structure phylogenetic trees
+OBF O|B|F open-bio biojava bioperl biosql sequence alphabet feature
+annotation alignment protein structure phylogenetic trees
 
 **Abstract:**
 
