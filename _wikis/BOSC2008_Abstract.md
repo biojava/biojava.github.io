@@ -111,21 +111,13 @@ alignment protein structure phylogenetic trees
 **Abstract:**
 
 BioJava is a mature free and open-source project that provides a
-framework for processing biological data.
-
-BioJava provides tools/packages/modules/components
-
-for parsing common file formats,
-
-for manipulating sequences and 3D structures,
-
-and powerful analysis and statistical routines.
-
+framework for processing biological data. BioJava contains powerful
+analysis and statistical routines, packages for parsing common file
+formats, and packages for manipulating sequences and 3D structures.
 BioJava is available freely under the terms of version 2.1 of the GNU
-Lesser General Public License (LGPL) from <http://biojava.org/>.
-
-Here we present the latest BioJava release (version 1.6, released on 13
-Apr 2008) which provides improvements in the packages for phylogenetic
+Lesser General Public License (LGPL) from <http://biojava.org/>. Here we
+present the latest BioJava release (version 1.6, released on 13 Apr
+2008) which provides improvements in the packages for phylogenetic
 trees, processing PDB files, and genetic algorithms.
 
 **Paper:**
@@ -162,16 +154,17 @@ coordinated by the Open Bioinformatics Foundation (OBF) and is one of
 several Bio\* toolkits (Mangalam, 2002). Over the past eight years, the
 BioJava has brought together nearly fifty different code contributors,
 hundreds of mailing list subscribers, and several wiki contributors. All
-code is distributed under version 2.1 of the GNU Lesser General Public
-License (LGPL) license (Free Software Foundation, Inc., 1999). All wiki
-documentation is made available online under version 1.2 of the GNU Free
-Documentation License (Free Software Foundation, Inc., 2000).
+code and related documentation is distributed under version 2.1 of the
+GNU Lesser General Public License (LGPL) license (Free Software
+Foundation, Inc., 1999). All wiki documentation is made available online
+under version 1.2 of the GNU Free Documentation License (Free Software
+Foundation, Inc., 2000).
 
 BioJava has been used in a number of real-world applications, including
 Bioclipse (Spjuth et al., 2007), BioWeka (Gewehr et al., 2007),
 Cytoscape (Shannon et al., 2003), and Taverna (Oinn et al., 2004), and
-been referenced in over 50 published studies. A list of these can be
-found on the BioJava website.
+has been referenced in over fifty published studies. A list of these can
+be found on the BioJava website.
 
 The latest BioJava release (version 1.6, released on 13 Apr 2008) offers
 more functionality and stability over the previous official releases.
@@ -181,39 +174,11 @@ fully-functional Nexus and Phylip parsers, and tools for calculating
 UPGMA and Neighbour Joining, Jukes-Kantor and Kimura Two Parameter, and
 MP. The PDB file parser was improved by Jules Jacobsen for better
 dealing with PDB header records. Andreas Dräger provided several patches
-for improving the Genetic Algorithm modules. The version 1.6 release
+for improving the genetic algorithm packages. The version 1.6 release
 also contains numerous bug fixes and documentation improvements.
 
-As a mature project, BioJava faces several challenges:
-
-how one deals with a large established code base
-
-what happens when committers move on, get married, have kids, etc.
-
-how difficult it is to deprecate and remove existing code
-
-evolutionary vs. revolutionary changes [1]
-
-the "second system" problem [2]
-
-To this end...
-
-the BioJava3 use case & refactoring/redesign criteria gathering process
-
-At least one prior attempt, while technically sufficient, was unable to
-garner community support.
-
-<http://biojava.org/wiki/BioJava3_Proposal>
-
-<http://biojava.org/wiki/Talk:BioJava3_Proposal>
-
-<http://biojava.org/wiki/BioJava3_Design>
-
-<http://www.derkholm.net/svn/repos/bjv2/website/docs/index.html>
-
-<http://incubator.apache.org/learn/rules-for-revolutionaries.html>
-
-<http://www.joelonsoftware.com/articles/fog0000000069.html>
+The BioJava website is <http://biojava.org/>. The version 1.6 release
+can be downloaded from <http://biojava.org/wiki/BioJava:Download>.
 
 #### References
 
@@ -260,6 +225,26 @@ for Bioinformatics. ACM SIGBIO Newsletter 20(2), 10-12
 
 Notes
 -----
+
+**Save for talk**
+
+As a mature project, BioJava faces several challenges:
+
+how one deals with a large established code base
+
+what happens when committers move on, get married, have kids, etc.
+
+how difficult it is to deprecate and remove existing code
+
+the BioJava3 use case & refactoring/redesign criteria gathering process
+
+evolutionary vs. revolutionary changes
+
+<http://incubator.apache.org/learn/rules-for-revolutionaries.html>
+
+the "second system" problem
+
+<http://www.joelonsoftware.com/articles/fog0000000069.html>
 
 **Version 1.6 release announcement to biojava-dev and biojava-l**
 
