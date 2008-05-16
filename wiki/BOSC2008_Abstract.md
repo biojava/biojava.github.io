@@ -5,9 +5,12 @@ title: BOSC2008 Abstract
 BOSC2008 Abstract
 -----------------
 
-The abstract was submitted as appears below. A link to the submitted PDF
-will be added here later this afternoon. Please send an email to the
+The abstract was submitted as appears below. Please send an email to the
 biojava-dev mailing list with any further changes to be made.
+
+[BOSC2008\_Abstract.odt](http://shore.net/~heuermh/BOSC2008_Abstract.odt)
+
+[BOSC2008\_Abstract.pdf](http://shore.net/~heuermh/BOSC2008_Abstract.pdf)
 
 ### General information
 
