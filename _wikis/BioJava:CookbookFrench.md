@@ -109,7 +109,7 @@ Comment faire pour ...?
     utilisant la base de données *Amino Acid
     Index*?](BioJava:CookbookFrench:Proteomics:AAindex "wikilink")
 
-### Entrée/Sortie des objets Sequence
+### Entrée/Sortie des fichiers de séquence
 
 -   [Comment écrire des Sequences en format Fasta (ou tout autre
     format)?](BioJava:CookbookFrench:SeqIO:WriteInFasta "wikilink")
@@ -117,6 +117,8 @@ Comment faire pour ...?
     Fasta?](BioJava:CookbookFrench:SeqIO:ReadFasta "wikilink")
 -   [Comment lire un fichier en format
     GenBank/EMBL/SwissProt?](BioJava:CookbookFrench:SeqIO:ReadGES "wikilink")
+-   [Comment lire un fichier en format GenBank/EMBL/SwissProt avec
+    Biojavax?](BioJava:CookbookFrench:SeqIO:ReadGESBiojavax "wikilink")
 -   [Comment extraire les séquence en format GenBank/EMBL/Swissprot et
     les écrire en format
     Fasta?](BioJava:CookbookFrench:SeqIO:GBToFasta "wikilink")
