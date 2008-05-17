@@ -11,7 +11,7 @@ l'ajout de l'extension Biojavax, la façon de faire pour lire les
 fichiers a quelque peu changer. Vous pouvez toujours utiliser la classe
 **SeqIOTools** mais elle est maintenant marquée comme obsolète et a été
 remplacé par la classe **RichSequenceIO.Tools**. Cette nouvelle classe
-crée des objets de la classe**RichSequence** qui préservent mieux le
+crée des objets de la classe **RichSequence** qui préservent mieux le
 contenu en information des différents formats afin de s'hormoniser avec
 les bases de données se conformant à BioSQL; cette classe inaugure
 également l'utilisation des *namespaces*. L'extension Biojavax permet
