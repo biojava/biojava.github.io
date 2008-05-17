@@ -2,8 +2,8 @@
 title: BioJava:CookbookFrench:SeqIO:ReadGESBiojavax
 ---
 
-Comment faire pour lire une fichier de séquence, quel que soit son format avec Biojavax?
-----------------------------------------------------------------------------------------
+Comment faire pour lire une fichier de séquence, quel que soit son format, avec Biojavax?
+-----------------------------------------------------------------------------------------
 
 Depuis le début de son développement, Biojava permet la lecture de
 fichiers de séquence écrit dans divers formats. Depuis Biojava 1.5 et
