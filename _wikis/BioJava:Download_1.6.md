@@ -14,14 +14,15 @@ Complete Download
 A complete download is available as the
 [biojava-all.jar](http://www.biojava.org/download/bj16/all/biojava-1.6-all.jar)
 file (18Mb). The file contains all binaries, required jars, docs,
-source, test, demos and apps as gzipped tar files.
+source, test, demos and apps as gzipped tar files. For some browsers,
+right click and select "Save Link As".
 
 BioJava binaries
 ----------------
 
 A binary distribution is available as
 [biojava.jar](http://www.biojava.org/download/bj16/bin/biojava.jar) file
-(3.3Mb).
+(3.3Mb). For some browsers, right click and select "Save Link As".
 
 ### Support libraries
 
@@ -39,7 +40,8 @@ Documentation
 
 Documentation is available via
 [biojava-doc.jar](http://www.biojava.org/download/bj16/doc/biojava-doc.jar)
-(11Mb) that includes the javadocs for the API, demos and apps.
+(11Mb) that includes the javadocs for the API, demos and apps. For some
+browsers, right click and select "Save Link As".
 
 You can also browse the documentation at [BioJava 1.6
 api](http://www.biojava.org/docs/api16/)
