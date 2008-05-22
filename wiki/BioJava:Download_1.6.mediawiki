@@ -4,7 +4,7 @@ BioJava 1.6 requires on <b>Java 1.5</b> or later. If you require Java 1.4.2 then
 
 
 == Complete Download ==
-A complete download is available as the [http://www.biojava.org/download/bj16/all/biojava-1.6-all.jar biojava-all.jar] file (18Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
+A complete download is available as the [http://www.biojava.org/download/bj16/all/biojava-1.6-all.jar biojava-1.6-all.jar] file (24Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
 
 == BioJava binaries ==
 
