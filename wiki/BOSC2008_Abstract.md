@@ -344,6 +344,12 @@ Developers of the BioJava open-source bioinformatics project.
 
 Not sure how to link to it though.
 
+To join the BioJava linkedin group: You need to be a linkedin member.
+You then need to find the group and ask to join. I then get notified and
+asked to approve it, which I will if your name sounds vaguely familiar :
+) You don't need to be a contributor just a user or interested
+party. --[Mark](User:Mark "wikilink") 14:39, 22 May 2008 (UTC)
+
 **Wiki edits for later**
 
 Clarify reference to LGPL.
@@ -356,3 +362,7 @@ DengueInfo link on BioJavaInside is broken.
 BioJava in Anger is now on the wiki (so under FDL?) but has a separate
 vague Copyright section, see
 <http://biojava.org/wiki/BioJava:CookBook#Copyright>
+
+This copyright section is a direct copy from the old BioJava in Anger
+page. This means the statement is outdated and can probably be
+removed. --[Mark](User:Mark "wikilink") 14:39, 22 May 2008 (UTC)
