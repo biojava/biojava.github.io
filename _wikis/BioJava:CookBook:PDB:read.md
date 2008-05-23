@@ -30,10 +30,10 @@ parser deals with SEQRES and ATOM records please see
 `pdbread.setParseSecStruc(true);`
 
 `// align the SEQRES and ATOM records, default = true   `  
-`// slows the parsing speed slightly down, so if speed matters, turn it off.`  
+`// slows the parsing speed slightly down, so if speed matters turn it off.`  
 `pdbreader.setAlignSeqRes(true);`  
 ` `  
-`// parse the C-alpha atoms onlym default = false`  
+`// parse the C-alpha atoms only, default = false`  
 `pdbpars.setParseCAOnly(false);`
 
 `// download missing PDB files automatically from EBI ftp server, default = false`  
