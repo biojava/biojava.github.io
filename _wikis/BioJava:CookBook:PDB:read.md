@@ -30,6 +30,7 @@ parser deals with SEQRES and ATOM records please see
 `pdbread.setParseSecStruc(true);`
 
 `// align the SEQRES and ATOM records, default = true   `  
+`// slows the parsing speed slightly down, so if speed matters, turn it off.`  
 `pdbreader.setAlignSeqRes(true);`  
 ` `  
 `// parse the C-alpha atoms onlym default = false`  
