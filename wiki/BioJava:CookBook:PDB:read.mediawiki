@@ -20,6 +20,7 @@ see  [[BioJava:CookBook:PDB:seqres]]
  pdbread.setParseSecStruc(true);
 
  // align the SEQRES and ATOM records, default = true   
+ // slows the parsing speed slightly down, so if speed matters, turn it off.
  pdbreader.setAlignSeqRes(true);
   
  // parse the C-alpha atoms onlym default = false
