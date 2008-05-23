@@ -23,13 +23,20 @@ parser deals with SEQRES and ATOM records please see
   
 `PDBFileReader pdbreader = new PDBFileReader();`
 
-`// optional: the parser can read the secondary structure`  
+`// the following parameters are optional: `
+
+`//the parser can read the secondary structure`  
 `// assignment from the PDB file header and add it to the amino acids`  
 `pdbread.setParseSecStruc(true);`
 
 `// align the SEQRES and ATOM records, default = true   `  
 `pdbreader.setAlignSeqRes(true);`  
-` `
+` `  
+`// parse the C-alpha atoms onlym default = false`  
+`pdbpars.setParseCAOnly(false);`
+
+`// download missing PDB files automatically from EBI ftp server, default = false`  
+`pdbreader.setAutoFetch(false);`
 
 `try{`  
 `    Structure struc = pdbreader.getStructure(filename);`  
