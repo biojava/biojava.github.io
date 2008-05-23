@@ -77,6 +77,7 @@ BioJava has been used in the following publications. If you know of other public
 #makias2007 pmid=17400476
 #nikolajewa2007 pmid=17537825
 #spjuth2007 pmid=17316423 
+#zajac2008 pmid=18061398
 </biblio>
 
 More biojava publications can be found in [http://scholar.google.com/scholar?q=biojava Google Scholar].
