@@ -49,5 +49,3 @@ for the alignment and the path that has been choosen.
 If you have a PDB installation that contains all PDB files in a single
 directory you can configure the System property PDB\_DIR to point to
 this directory. (e.g. at startup specify -DPDB\_DIR=path/to/PDB/files )
-
-![](DistanceMatrix.png "DistanceMatrix.png")
