@@ -147,10 +147,10 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:PDB:header|How can I access the header information of a PDB file?]]
 * [[BioJava:CookBook:PDB:seqres|How does BioJava deal with SEQRES and ATOM groups?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
-* [[BioJava:CookBook:PDB:align|How to calculate a structure superimposition?]]
-* [[BioJava:CookBook:PDB:alignGUI|How to use a simple GUI to calculate a superimposition?]]
-* [[BioJava:CookBook:PDB:Jmol|How to interact with Jmol?]]
-* [[BioJava:CookBook:PDB:hibernate|How to serialize to a database?]]
+* [[BioJava:CookBook:PDB:align|How can I calculate a structure superimposition?]]
+* [[BioJava:CookBook:PDB:alignGUI|How can I use a simple GUI to calculate a superimposition?]]
+* [[BioJava:CookBook:PDB:Jmol|How can I interact with Jmol?]]
+* [[BioJava:CookBook:PDB:hibernate|How can I serialize to a database?]]
 
 == Disclaimer ==
 
