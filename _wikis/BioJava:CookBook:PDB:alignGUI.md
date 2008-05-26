@@ -19,12 +19,12 @@ public static void main(String[] args){
 In the user interface specify 2 PDB files (and optionally chain IDs)
 that should be superimposed.
 
-![](AlignmentGui.jpg "AlignmentGui.jpg")
+![](AlignmentGui.png "AlignmentGui.png")
 
 After pressing the \*Submit\* button, the alignment is calculated. A new
 frame pops up that shows the alternative solutions for this alignment:
 
-![](AltAligFrame.jpg "AltAligFrame.jpg")
+![](AltAligFrame.png "AltAligFrame.png")
 
 The columns in this table are:
 
@@ -37,7 +37,7 @@ The columns in this table are:
 The \*Show in Jmol\* button allows to display this alternative alignment
 in Jmol, if it can be found on the classpath.
 
-![](AlignmentJmol.jpg "AlignmentJmol.jpg")
+![](AlignmentJmol.png "AlignmentJmol.png")
 
 The \*Distance Matrix\* button shows the distance matrix that is used
 for the alignment and the path that has been choosen.
@@ -47,3 +47,5 @@ for the alignment and the path that has been choosen.
 If you have a PDB installation that contains all PDB files in a single
 directory you can configure the System property PDB\_DIR to point to
 this directory. (e.g. at startup specify -DPDB\_DIR=path/to/PDB/files )
+
+![](DistanceMatrix.png "DistanceMatrix.png")
