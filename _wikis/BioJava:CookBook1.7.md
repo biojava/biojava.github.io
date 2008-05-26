@@ -264,6 +264,8 @@ How Do I....?
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How to calculate a structure
     superimposition?](BioJava:CookBook:PDB:align "wikilink")
+-   [How to use a simple GUI to calculate a
+    superimposition?](BioJava:CookBook:PDB:alignGUI "wikilink")
 -   [How to interact with Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
 -   [How to serialize to a
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
