@@ -58,7 +58,8 @@ internally for the alignment and the path that has been choosen.
 
 ![](DistanceMatrix.png "DistanceMatrix.png")
 
-### Configure PDB installation (Optional)
+Configure PDB installation (Optional)
+-------------------------------------
 
 If you have a PDB installation that contains all PDB files in a single
 directory you can configure the System property PDB\_DIR to point to
