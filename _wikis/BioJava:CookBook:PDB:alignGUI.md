@@ -6,7 +6,8 @@ A simple GUI for protein structure alignment
 ============================================
 
 BioJava (in SVN) contains a simple GUI for easier working with protein
-structure alignments. The following code launches the user interface:
+structure alignments (<BioJava:CookBook:PDB:align>). The following code
+launches the user interface:
 
 <java> import org.biojava.bio.structure.gui.\*;
 
