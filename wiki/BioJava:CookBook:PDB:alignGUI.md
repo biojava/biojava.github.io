@@ -55,7 +55,7 @@ interact with Jmol see <BioJava:CookBook:PDB:Jmol>.
 Internals of the algorithm
 --------------------------
 
-The \*Distance Matrix\* button shows the distance matrix that is used
+The **Distance Matrix** button shows the distance matrix that is used
 internally for the alignment and the path that has been choosen.
 
 ![](DistanceMatrix.png "DistanceMatrix.png")
