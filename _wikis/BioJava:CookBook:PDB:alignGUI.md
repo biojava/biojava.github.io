@@ -42,6 +42,8 @@ in Jmol, if it can be found on the classpath.
 The \*Distance Matrix\* button shows the distance matrix that is used
 for the alignment and the path that has been choosen.
 
+![](DistanceMatrix.png "DistanceMatrix.png")
+
 ### Configure PDB installation (Optional)
 
 If you have a PDB installation that contains all PDB files in a single
