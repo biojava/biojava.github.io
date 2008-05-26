@@ -16,7 +16,7 @@ In the user interface specify 2 PDB files (and optionally chain IDs) that should
 
 [[Image:AlignmentGui.png]]
 
-After pressing the *Submit* button, the alignment is calculated. A new frame pops up that shows the alternative solutions for this alignment:
+After pressing the '''Submit''' button, the alignment is calculated. A new frame pops up that shows the alternative solutions for this alignment:
 
 == Alternative Solutions ==
 [[Image:AltAligFrame.png]]

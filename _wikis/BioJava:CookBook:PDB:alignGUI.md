@@ -25,7 +25,7 @@ that should be superimposed.
 
 ![](AlignmentGui.png "AlignmentGui.png")
 
-After pressing the \*Submit\* button, the alignment is calculated. A new
+After pressing the **Submit** button, the alignment is calculated. A new
 frame pops up that shows the alternative solutions for this alignment:
 
 Alternative Solutions
