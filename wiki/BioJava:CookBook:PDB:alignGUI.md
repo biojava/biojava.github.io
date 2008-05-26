@@ -46,7 +46,8 @@ Display in Jmol
 The \*Show in Jmol\* button allows to display this alternative alignment
 in Jmol, if it can be found on the classpath. If you don;t have Jmol
 installed, please get it from
-[<http://www.jmol.org>](http://www.jmol.org).
+[<http://www.jmol.org>](http://www.jmol.org). For more details on how to
+interact with Jmol see <BioJava:CookBook:PDB:Jmol>.
 
 ![](AlignmentJmol.png "AlignmentJmol.png")
 
