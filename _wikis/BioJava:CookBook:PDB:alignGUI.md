@@ -16,6 +16,9 @@ public static void main(String[] args){
 
 } </java>
 
+The AlignmentGui
+----------------
+
 In the user interface specify 2 PDB files (and optionally chain IDs)
 that should be superimposed.
 
@@ -23,6 +26,9 @@ that should be superimposed.
 
 After pressing the \*Submit\* button, the alignment is calculated. A new
 frame pops up that shows the alternative solutions for this alignment:
+
+Alternative Solutions
+---------------------
 
 ![](AltAligFrame.png "AltAligFrame.png")
 
@@ -34,13 +40,21 @@ The columns in this table are:
     rms   root mean sqare
     gaps  number of gaps in the alignment
 
+Display in Jmol
+---------------
+
 The \*Show in Jmol\* button allows to display this alternative alignment
-in Jmol, if it can be found on the classpath.
+in Jmol, if it can be found on the classpath. If you don;t have Jmol
+installed, please get it from
+[<http://www.jmol.org>](http://www.jmol.org).
 
 ![](AlignmentJmol.png "AlignmentJmol.png")
 
+Internals of the algorithm
+--------------------------
+
 The \*Distance Matrix\* button shows the distance matrix that is used
-for the alignment and the path that has been choosen.
+internally for the alignment and the path that has been choosen.
 
 ![](DistanceMatrix.png "DistanceMatrix.png")
 
