@@ -262,12 +262,13 @@ How Do I....?
     groups?](BioJava:CookBook:PDB:seqres "wikilink")
 -   [How can I mutate a
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
--   [How to calculate a structure
+-   [How can I calculate a structure
     superimposition?](BioJava:CookBook:PDB:align "wikilink")
--   [How to use a simple GUI to calculate a
+-   [How can I use a simple GUI to calculate a
     superimposition?](BioJava:CookBook:PDB:alignGUI "wikilink")
--   [How to interact with Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
--   [How to serialize to a
+-   [How can I interact with
+    Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
+-   [How can I serialize to a
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
 
 Disclaimer
