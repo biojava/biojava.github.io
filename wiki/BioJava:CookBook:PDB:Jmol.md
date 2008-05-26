@@ -40,6 +40,9 @@ if Jmol is on the classpath.
 
 </java>
 
+An example for how to use BiojavaJmol to display a protein structure
+alignment can be found at <BioJava:CookBook:PDB:alignGUI>.
+
 Longer Example
 ==============
 
