@@ -1,6 +1,6 @@
 == About BioJava ==
 
-BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [http://www.java.sun.com Java] framework for processing biological data. It include objects for manipulating biological sequences, file parsers, [http://biodas.org/ DAS] client and server suport, access to [http://www.biosql.org/ BioSQL] and [http://www.ensembl.org Ensembl] databases, tools for making sequence analysis GUIs and powerful analysis and statistical routines including a dynamic programming toolkit.
+BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [http://www.java.sun.com Java] framework for processing biological data. It include objects for manipulating biological sequences, file parsers, [http://biodas.org/ DAS] client and server support, access to [[biosql:Main_Page|BioSQL]] and [http://www.ensembl.org Ensembl] databases, tools for making sequence analysis GUIs and powerful analysis and statistical routines including a dynamic programming toolkit.
 
 
 
