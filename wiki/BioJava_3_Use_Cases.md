@@ -15,4 +15,5 @@ Use cases
 -   Is it possible to write the sequence to any object instead of
     writing it to a PrintStream?
 
+`           // existing method`  
 `           genbankFormat.writeSequence(richSequence, printStream);`
