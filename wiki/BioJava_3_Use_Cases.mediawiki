@@ -5,4 +5,5 @@ This page will contain a bunch of use-cases which will drive development for Bio
 * Multiple GenBank sequences inside a single file (ftp://bio-mirror.net/biomirror/genbank/gbbct1.seq.gz) can be easily indexed.
 * Is it possible to write the sequence to any object instead of writing it to a PrintStream?
 
+            // existing method
             genbankFormat.writeSequence(richSequence, printStream);
