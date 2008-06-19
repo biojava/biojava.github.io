@@ -8,3 +8,11 @@ wish!
 
 Use cases
 ---------
+
+-   Multiple GenBank sequences inside a single file
+    (ftp://bio-mirror.net/biomirror/genbank/gbbct1.seq.gz) can be easily
+    indexed.
+-   Is it possible to write the sequence to any object instead of
+    writing it to a PrintStream?
+
+`           genbankFormat.writeSequence(richSequence, printStream);`
