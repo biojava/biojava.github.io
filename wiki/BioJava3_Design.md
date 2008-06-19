@@ -186,3 +186,9 @@ Module structure
     -   Phylogenetics
     -   etc. etc. etc.
 
+Use cases
+---------
+
+It is planned to document BioJava in parallel with development. To do
+this, we want to drive development from a set of [ use
+cases](BioJava 3 Use Cases "wikilink").
