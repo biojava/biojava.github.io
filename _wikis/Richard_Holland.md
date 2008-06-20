@@ -24,4 +24,8 @@ student for the Google Summer of Code, Boh-Yun Lee, who worked on some
 phyloinformatics modules for us. The GSoC'07 project was organised by
 [NESCent](http://www.nescent.org/).
 
-I am now self-employed, and working on the designs for BioJava 3.
+I am now self-employed as part of a new biotech startup in Cambridge,
+[Eagle Genomics](http://www.eaglegenomics.com/), and in my spare time am
+working on BioJava 3.
+
+You can contact me at richard at uwc dot net.
