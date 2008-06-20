@@ -15,7 +15,7 @@ The following tutorials are currently available - more are always welcome! While
 * [[BioJava:Tutorial:Installing BioSQL|Installing BioSQL]]
 * [[BioJava:Tutorial:MultiAlignClustalW|Multi-Alignment using ClustalW and BioJava]]
 * [http://medicalcomputing.net/tools_dna1.php Approaches to Web Development for Bioinformatics]
-The [[BioJava:Cookbook|BioJava in Anger]] page offers cookbook-style tutorials about performing many common tasks in BioJava. 
+The [[BioJava:CookBook|BioJava in Anger]] page offers cookbook-style tutorials about performing many common tasks in BioJava. 
 
 Additionally, a number of small demo programs can be found in the <code>demos</code> directory of the BioJava source distribution.
 
