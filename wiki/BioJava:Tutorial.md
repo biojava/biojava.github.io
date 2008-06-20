@@ -34,7 +34,7 @@ the JavaDoc API documentation ([latest biojava
 -   [Approaches to Web Development for
     Bioinformatics](http://medicalcomputing.net/tools_dna1.php)
 
-The [BioJava in Anger](BioJava:Cookbook "wikilink") page offers
+The [BioJava in Anger](BioJava:CookBook "wikilink") page offers
 cookbook-style tutorials about performing many common tasks in BioJava.
 
 Additionally, a number of small demo programs can be found in the
