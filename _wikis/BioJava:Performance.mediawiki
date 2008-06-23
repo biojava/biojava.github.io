@@ -9,6 +9,8 @@ Read all chromosomes from Drosophila and print out their sizes:
 
 [http://www.biojava.org/download/performance/biojava-test.jnlp Run Example] (download includes the 47MB file containing the genome sequence).
 
+Results:
+
 {| class="wikitable"
 |-
 ! System
