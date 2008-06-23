@@ -40,9 +40,9 @@ Example](http://www.biojava.org/download/performance/biojava-structure-example1.
 
 Results:
 
-| System                    | Speed   |
-|---------------------------|---------|
-| Average Linux workstation | 4 sec.  |
-| Old PowerBook G4          | 26 sec. |
+| System                    | Speed   | Memory    |
+|---------------------------|---------|-----------|
+| Average Linux workstation | 4 sec.  | \< 100 MB |
+| Old PowerBook G4          | 26 sec. | \< 100 MB |
 
 
