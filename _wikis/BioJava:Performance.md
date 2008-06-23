@@ -33,7 +33,7 @@ Calculate a protein structure alignment for Myoglobin (PDB code: 2jho)
 and Hemoglobin (PDB code: 2hhb). The matches to the 4 chains in
 Hemoglobin are identified as different alternate solutions.
 
-View Source
+[View Source](BioJava:Performance:AlignMyoHemo "wikilink")
 
 [Run
 Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
