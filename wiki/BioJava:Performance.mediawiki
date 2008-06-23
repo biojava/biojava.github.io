@@ -8,3 +8,20 @@ Read all chromosomes from Drosophila and print out their sizes:
 [[BioJava:Performance:ReadDrosophila|View Source]]
 
 [http://www.biojava.org/download/performance/biojava-test.jnlp Run Example] (download includes the 47MB file containing the genome sequence).
+
+
+
+{| class="wikitable"
+|-
+! System
+! Speed
+! Memory
+|-
+| Average Linux workstation
+| 16 sec.
+| 95 MB
+|-
+| Old PowerBook G4
+| 87 sec.
+| 81 MB
+|}
