@@ -2,8 +2,8 @@
 title: BioJava:Performance
 ---
 
-A few example of the performance provided by BioJava
-====================================================
+Performance possible with BioJava
+=================================
 
 All tests can be run using [Java Web
 Start](http://java.sun.com/products/javawebstart/)
