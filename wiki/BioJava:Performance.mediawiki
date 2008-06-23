@@ -26,6 +26,31 @@ Results:
 | 81 MB
 |}
 
+== Reverse complement of DNA sequence ==
+
+[[BioJava:Performance:ReverseComplement|View Source]]
+
+Run Example
+
+Results:
+
+
+{| class="wikitable"
+|-
+! System
+! Speed
+! Memory
+|-
+| Average Linux workstation
+| 
+| 
+|-
+| Old PowerBook G4
+| 
+| 
+|}
+
+
 == Calculate structure alignment of Myoglobin and Haemoglobin ==
 
 Calculate a protein structure alignment for Myoglobin (PDB code: 2jho) and Haemoglobin (PDB code: 2hhb).
