@@ -26,6 +26,20 @@ Results:
 | Average Linux workstation | 16 sec. | 95 MB  |
 | Old PowerBook G4          | 87 sec. | 81 MB  |
 
+Reverse complement of DNA sequence
+----------------------------------
+
+[View Source](BioJava:Performance:ReverseComplement "wikilink")
+
+Run Example
+
+Results:
+
+| System                    | Speed | Memory |
+|---------------------------|-------|--------|
+| Average Linux workstation |       |        |
+| Old PowerBook G4          |       |        |
+
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
 
