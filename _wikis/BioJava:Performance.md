@@ -26,4 +26,5 @@ Results:
 | Average Linux workstation | 16 sec. | 95 MB  |
 | Old PowerBook G4          | 87 sec. | 81 MB  |
 
-
+Calculate structure alignment of Myoglobin and Hemoglobine
+----------------------------------------------------------
