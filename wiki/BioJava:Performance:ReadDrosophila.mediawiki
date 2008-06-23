@@ -1,6 +1,6 @@
 = Read Drosophila Genome =
 
-This source code is run in the example that reads the Drosophila genome and prints out the size of each chromosome:
+This source code is run in the [[BioJava:Performance|example that reads the Drosophila genome]] and prints out the size of each chromosome:
 
 <java>
 import java.io.*;
