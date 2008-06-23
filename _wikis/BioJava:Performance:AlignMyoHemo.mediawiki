@@ -4,10 +4,10 @@ This source code is run in the [[BioJava:Performance|example that calculates the
 See [[BioJava:CookBook:PDB:align]] for more information on how to calculate protein structure alignments.
 <java>
 
-			Structure s1 = getStructureFromFile(fileName1);
-			Structure s2 = getStructureFromFile(fileName2);
+Structure s1 = getStructureFromFile(fileName1);
+Structure s2 = getStructureFromFile(fileName2);
 			
-			StructurePairAligner aligner = new StructurePairAligner();
+StructurePairAligner aligner = new StructurePairAligner();
 
-			aligner.align(s1, s2);
+aligner.align(s1, s2);
 </java>
