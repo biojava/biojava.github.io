@@ -7,7 +7,8 @@ title: BioJava:CookBook:PDB:align
 The structure alignment algorithm contained in BioJava is based on a
 variation of the PSC++ algorithm provided by Peter Lackner, Univ.
 Salzburg (personal communication). The algorithm is calculating a
-distance matrix based, rigid body protein structure superimposition.
+distance matrix based, rigid body protein structure superimposition. See
+a JavaWebStart example of how it works at <BioJava:Performance>
 
 <java>
 
