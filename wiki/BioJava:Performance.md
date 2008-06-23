@@ -2,8 +2,8 @@
 title: BioJava:Performance
 ---
 
-Performance possible with BioJava
-=================================
+BioJava performance examples
+============================
 
 All tests can be run using [Java Web
 Start](http://java.sun.com/products/javawebstart/)
@@ -34,6 +34,15 @@ and Hemoglobin (PDB code: 2hhb).
 
 View Source
 
-Run Example (download includes Jmol for visualisation)
+[Run
+Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
+(download includes Jmol for visualization)
 
 Results:
+
+| System                    | Speed |     |
+|---------------------------|-------|-----|
+| Average Linux workstation |       |     |
+| Old PowerBook G4          |       |     |
+
+
