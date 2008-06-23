@@ -1,4 +1,4 @@
-= A few example of the performance provided by BioJava =
+= Performance possible with BioJava =
 
 All tests can be run using [http://java.sun.com/products/javawebstart/ Java Web Start]
 
