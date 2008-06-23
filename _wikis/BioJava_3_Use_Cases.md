@@ -31,3 +31,19 @@ returning FASTA sequences as results', for example. Please also do leave
 your name and contact email address so we can contact you for
 clarification and more detail if we need to. --
 **[Richard](User:Rholland "wikilink") 20/6/08***
+
+-   I have a protein sequence of unknown function and want to identify
+    similar sequences in public databases. (Blast, PsiBlast)
+-   For the matches that I find I want to access the UniProt records to
+    obtain all possible information. (Read UniProt)
+-   Align the original protein sequence against the best hits in high
+    quality and find regions of similarity.(Needleman Wunsch, Swith
+    waterman)
+-   If the protein structure is known for one of the homologues try to
+    extend the search by finding similar protein structures in the PDB.
+    (structure alignment)
+-   Create a multiple sequences alignment and multiple structure
+    alignment for the found matches. derive a profile from this for this
+    protein family and search for distant members in the sequences
+    databases. (psi blast)
+
