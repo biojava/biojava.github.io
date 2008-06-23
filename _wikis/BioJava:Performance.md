@@ -26,5 +26,14 @@ Results:
 | Average Linux workstation | 16 sec. | 95 MB  |
 | Old PowerBook G4          | 87 sec. | 81 MB  |
 
-Calculate structure alignment of Myoglobin and Hemoglobine
-----------------------------------------------------------
+Calculate structure alignment of Myoglobin and Hemoglobin
+---------------------------------------------------------
+
+Calculate a protein structure alignment for Myoglobin (PDB code: 2jho)
+and Hemoglobin (PDB code: 2hhb).
+
+View Source
+
+Run Example (download includes Jmol for visualisation)
+
+Results:
