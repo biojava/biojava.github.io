@@ -1,4 +1,4 @@
-= Performance possible with BioJava =
+= BioJava performance examples=
 
 All tests can be run using [http://java.sun.com/products/javawebstart/ Java Web Start]
 
@@ -32,6 +32,22 @@ Calculate a protein structure alignment for Myoglobin (PDB code: 2jho) and Hemog
 
 View Source
 
-Run Example (download includes Jmol for visualisation)
+[http://www.biojava.org/download/performance/biojava-structure-example1.jnlp Run Example] (download includes Jmol for visualization)
 
 Results:
+
+
+{| class="wikitable"
+|-
+! System
+! Speed
+! 
+|-
+| Average Linux workstation
+| 
+| 
+|-
+| Old PowerBook G4
+| 
+| 
+|}
