@@ -36,13 +36,13 @@ View Source
 
 [Run
 Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
-(download includes Jmol for visualization)
+(5MB download includes Jmol for visualization)
 
 Results:
 
-| System                    | Speed |     |
-|---------------------------|-------|-----|
-| Average Linux workstation |       |     |
-| Old PowerBook G4          |       |     |
+| System                    | Speed   |
+|---------------------------|---------|
+| Average Linux workstation | 4 sec.  |
+| Old PowerBook G4          | 26 sec. |
 
 

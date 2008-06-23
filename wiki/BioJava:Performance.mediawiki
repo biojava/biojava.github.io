@@ -32,7 +32,7 @@ Calculate a protein structure alignment for Myoglobin (PDB code: 2jho) and Hemog
 
 View Source
 
-[http://www.biojava.org/download/performance/biojava-structure-example1.jnlp Run Example] (download includes Jmol for visualization)
+[http://www.biojava.org/download/performance/biojava-structure-example1.jnlp Run Example] (5MB download includes Jmol for visualization)
 
 Results:
 
@@ -41,13 +41,10 @@ Results:
 |-
 ! System
 ! Speed
-! 
 |-
 | Average Linux workstation
-| 
-| 
+| 4 sec.
 |-
 | Old PowerBook G4
-| 
-| 
+| 26 sec.
 |}
