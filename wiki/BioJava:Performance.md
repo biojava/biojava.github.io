@@ -13,6 +13,8 @@ Read all chromosomes from Drosophila
 
 Read all chromosomes from Drosophila and print out their sizes:
 
-[View Source](BioJava:Performance:ReadDrosophila "wikilink") [Run
+[View Source](BioJava:Performance:ReadDrosophila "wikilink")
+
+[Run
 Example](http://www.biojava.org/download/performance/biojava-test.jnlp)
 (download includes the 47MB file containing the genome sequence).

@@ -6,4 +6,5 @@ All tests can be run using [http://java.sun.com/products/javawebstart/ Java Web 
 Read all chromosomes from Drosophila and print out their sizes:
 
 [[BioJava:Performance:ReadDrosophila|View Source]]
+
 [http://www.biojava.org/download/performance/biojava-test.jnlp Run Example] (download includes the 47MB file containing the genome sequence).
