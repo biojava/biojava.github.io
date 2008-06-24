@@ -1,3 +1,7 @@
+== BOSC 2008 ==
+
+Michael will present BioJava at this year's ISMB in Toronto. See the [[BOSC2008_Abstract]].
+
 == BOSC 2007 Presentation ==
 
 For those of you who can't be in Vienna for Richard's biojava presentation for BOSC 2007. You can view the pdf [http://www.biojava.org/download/files/bosc2007.pdf here].
