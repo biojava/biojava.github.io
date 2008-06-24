@@ -5,9 +5,9 @@ All tests can be run using [http://java.sun.com/products/javawebstart/ Java Web 
 == Read all chromosomes from Drosophila ==
 Read all chromosomes from Drosophila and print out their sizes:
 
-[[BioJava:Performance:ReadDrosophila|View Source]]
-
 [http://www.biojava.org/download/performance/biojava-test.jnlp Run Example] (download includes the 47MB file containing the genome sequence).
+
+[[BioJava:Performance:ReadDrosophila|View Source]]
 
 Results:
 
@@ -30,7 +30,7 @@ Results:
 
 [[BioJava:Performance:ReverseComplement|View Source]]
 
-Run Example
+[http://www.biojava.org/download/performance/biojava-revcomp.jnlp Run Example]
 
 Results:
 
@@ -56,9 +56,9 @@ Results:
 Calculate a protein structure alignment for Myoglobin (PDB code: 2jho) and Haemoglobin (PDB code: 2hhb).
 The matches to the 4 chains in Haemoglobin are identified as different alternate solutions.
 
-[[BioJava:Performance:AlignMyoHemo|View Source]]
-
 [http://www.biojava.org/download/performance/biojava-structure-example1.jnlp Run Example] (5MB download includes Jmol for visualization)
+
+[[BioJava:Performance:AlignMyoHemo|View Source]]
 
 Results:
 
