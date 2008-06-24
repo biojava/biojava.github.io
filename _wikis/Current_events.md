@@ -40,6 +40,13 @@ Happy Biojava-ing,
 
 Andreas
 
+Migration from CVS to Subversion
+--------------------------------
+
+(Jan. 2008) BioJava has moved the source repository from CVS to
+Subversion (SVN). See
+[CVS\_to\_SVN\_Migration](CVS_to_SVN_Migration "wikilink")
+
 BOSC 2007 Presentation
 ----------------------
 
