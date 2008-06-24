@@ -21,10 +21,10 @@ Example](http://www.biojava.org/download/performance/biojava-test.jnlp)
 
 Results:
 
-| System                    | Speed   | Memory |
-|---------------------------|---------|--------|
-| Average Linux workstation | 16 sec. | 95 MB  |
-| Old PowerBook G4          | 87 sec. | 81 MB  |
+| System                                       | Speed   | Memory |
+|----------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
+| Old PowerBook G4                             | 87 sec. | 81 MB  |
 
 Reverse complement of DNA sequence
 ----------------------------------
@@ -65,9 +65,9 @@ Example](http://www.biojava.org/download/performance/biojava-structure-example1.
 
 Results:
 
-| System                    | Speed   | Memory    |
-|---------------------------|---------|-----------|
-| Average Linux workstation | 4 sec.  | \< 100 MB |
-| Old PowerBook G4          | 26 sec. | \< 100 MB |
+| System                                       | Speed   | Memory    |
+|----------------------------------------------|---------|-----------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 4 sec.  | \< 100 MB |
+| Old PowerBook G4                             | 26 sec. | \< 100 MB |
 
 
