@@ -26,7 +26,8 @@ Results:
 | 81 MB
 |}
 
-The same example using the BioJavaX code:
+
+The same example using the new BioJavaX code base (parses headers more thoroughly):
 
 [http://www.biojava.org/download/performance/biojava-testX.jnlp Run Example] (download includes the 47MB file containing the genome sequence).
 
@@ -42,11 +43,11 @@ Results:
 |-
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz
 | 16 sec.
-| 95 MB
+| 116 MB
 |-
 | Old PowerBook G4
-| 87 sec.
-| 81 MB
+| 79 sec.
+| 108 MB
 |}
 
 == Reverse complement of DNA sequence ==
