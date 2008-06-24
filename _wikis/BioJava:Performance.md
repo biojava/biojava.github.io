@@ -26,6 +26,22 @@ Results:
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
 | Old PowerBook G4                             | 87 sec. | 81 MB  |
 
+The same example using the BioJavaX code:
+
+[Run
+Example](http://www.biojava.org/download/performance/biojava-testX.jnlp)
+(download includes the 47MB file containing the genome sequence).
+
+[View
+Source](http://code.open-bio.org/svnweb/index.cgi/biojava/view/biojava-live/trunk/demos/performance/ReadFastaX2.java)
+
+Results:
+
+| System                                       | Speed   | Memory |
+|----------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
+| Old PowerBook G4                             | 87 sec. | 81 MB  |
+
 Reverse complement of DNA sequence
 ----------------------------------
 
