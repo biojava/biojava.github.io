@@ -17,7 +17,7 @@ Results:
 ! Speed
 ! Memory
 |-
-| Average Linux workstation
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz
 | 16 sec.
 | 95 MB
 |-
@@ -73,7 +73,7 @@ Results:
 ! Speed
 ! Memory
 |-
-| Average Linux workstation
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz
 | 4 sec.
 | < 100 MB
 |-
