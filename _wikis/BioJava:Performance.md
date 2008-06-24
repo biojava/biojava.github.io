@@ -26,7 +26,8 @@ Results:
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
 | Old PowerBook G4                             | 87 sec. | 81 MB  |
 
-The same example using the BioJavaX code:
+The same example using the new BioJavaX code base (parses headers more
+thoroughly):
 
 [Run
 Example](http://www.biojava.org/download/performance/biojava-testX.jnlp)
@@ -39,8 +40,8 @@ Results:
 
 | System                                       | Speed   | Memory |
 |----------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
-| Old PowerBook G4                             | 87 sec. | 81 MB  |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 116 MB |
+| Old PowerBook G4                             | 79 sec. | 108 MB |
 
 Reverse complement of DNA sequence
 ----------------------------------
