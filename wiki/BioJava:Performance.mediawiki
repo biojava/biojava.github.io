@@ -40,15 +40,14 @@ for each sequence: write the id, description, and the reverse-complement sequenc
 
 Results:
 
-
 {| class="wikitable"
 |-
 ! System
 ! Speed
 ! Memory
 |-
-| Average Linux workstation
-| 
+| Intel(R) Pentium(R) Dual  CPU  E2160  @ 1.80GHz
+| 1.1 sec
 | 
 |-
 | Old PowerBook G4
