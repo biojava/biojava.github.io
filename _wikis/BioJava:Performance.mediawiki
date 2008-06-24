@@ -28,9 +28,9 @@ Results:
 
 == Reverse complement of DNA sequence ==
 
-[[BioJava:Performance:ReverseComplement|View Source]]
-
 [http://www.biojava.org/download/performance/biojava-revcomp.jnlp Run Example]
+
+[[BioJava:Performance:ReverseComplement|View Source]]
 
 Results:
 
@@ -49,7 +49,6 @@ Results:
 | 
 | 
 |}
-
 
 == Calculate structure alignment of Myoglobin and Haemoglobin ==
 
