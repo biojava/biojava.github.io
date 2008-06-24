@@ -45,10 +45,10 @@ Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
 
 Results:
 
-| System                    | Speed | Memory |
-|---------------------------|-------|--------|
-| Average Linux workstation |       |        |
-| Old PowerBook G4          |       |        |
+| System                                       | Speed   | Memory |
+|----------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 1.1 sec |        |
+| Old PowerBook G4                             |         |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
