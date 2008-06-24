@@ -75,7 +75,7 @@ Results:
 | 
 |-
 | Old PowerBook G4
-| 
+| 4.4 sec
 | 
 |}
 
