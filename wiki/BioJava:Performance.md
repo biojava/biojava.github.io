@@ -29,6 +29,15 @@ Results:
 Reverse complement of DNA sequence
 ----------------------------------
 
+Read DNA sequence and write their reverse complement. This is based on
+the benchmark provided
+at:[<http://shootout.alioth.debian.org/gp4/benchmark.php?test=revcomp&lang=all>](http://shootout.alioth.debian.org/gp4/benchmark.php?test=revcomp&lang=all)
+
+read line-by-line a redirected FASTA format file.
+
+for each sequence: write the id, description, and the reverse-complement
+sequence in FASTA format
+
 [Run
 Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
 
