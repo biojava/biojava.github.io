@@ -29,10 +29,10 @@ Results:
 Reverse complement of DNA sequence
 ----------------------------------
 
-[View Source](BioJava:Performance:ReverseComplement "wikilink")
-
 [Run
 Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
+
+[View Source](BioJava:Performance:ReverseComplement "wikilink")
 
 Results:
 
