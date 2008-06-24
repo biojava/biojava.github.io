@@ -65,7 +65,7 @@ Results:
 | System                                       | Speed   | Memory |
 |----------------------------------------------|---------|--------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 1.1 sec |        |
-| Old PowerBook G4                             |         |        |
+| Old PowerBook G4                             | 4.4 sec |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
