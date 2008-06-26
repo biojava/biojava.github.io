@@ -17,3 +17,6 @@ calculate alignments of
  * It identifies short fragments in two protein structures that have similar intra-molecular distances. 
  * The pairs of fragments are then compared and if possible, joined to longer fragments.
  * Finally the fragments are undergoing a refinement procedure in order to extend them to full size alignments.
+
+
+[[CookBook:PDB:align|Back to the CookBook]]
