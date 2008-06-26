@@ -19,4 +19,4 @@ calculate alignments of
  * Finally the fragments are undergoing a refinement procedure in order to extend them to full size alignments.
 
 
-[[CookBook:PDB:align|Back to the CookBook]]
+[[BioJava:CookBook:PDB:align|Back to the CookBook]]
