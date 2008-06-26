@@ -87,4 +87,14 @@ Results:
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 4 sec.  | \< 100 MB |
 | Old PowerBook G4                             | 26 sec. | \< 100 MB |
 
+Calculate a Sequence Alignment using Swith Waterman
+---------------------------------------------------
 
+Calculate a sequence alignment of two sequences (Corynebacterium renale
+plasmid pCR2, Pantoea agglomerans plasmid pPA3.0).
+
+Run Example
+
+[View Source](BioJava:Performance:AlignSW "wikilink")
+
+Results:
