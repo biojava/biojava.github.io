@@ -8,6 +8,9 @@ BioJava performance examples
 All tests can be run using [Java Web
 Start](http://java.sun.com/products/javawebstart/)
 
+The full source code for all examples is available from [the SVN
+repository](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/demos/performance)
+
 Read all chromosomes from Drosophila
 ------------------------------------
 
