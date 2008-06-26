@@ -98,3 +98,10 @@ Run Example
 [View Source](BioJava:Performance:AlignSW "wikilink")
 
 Results:
+
+| System                                       | Speed | Memory |
+|----------------------------------------------|-------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz |       |        |
+| Old PowerBook G4                             |       |        |
+
+
