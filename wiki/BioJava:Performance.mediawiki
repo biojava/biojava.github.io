@@ -114,3 +114,19 @@ Run Example
 [[BioJava:Performance:AlignSW|View Source]]
 
 Results:
+
+
+{| class="wikitable"
+|-
+! System
+! Speed
+! Memory
+|-
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz
+| 
+| 
+|-
+| Old PowerBook G4
+| 
+| 
+|}
