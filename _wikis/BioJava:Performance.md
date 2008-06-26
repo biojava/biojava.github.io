@@ -65,7 +65,7 @@ Results:
 | System                                       | Speed   | Memory |
 |----------------------------------------------|---------|--------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 1.1 sec |        |
-| Old PowerBook G4                             | 4.4 sec |        |
+| 1.33 Ghz PowerPC G4                          | 4.4 sec |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
@@ -85,7 +85,7 @@ Results:
 | System                                       | Speed   | Memory    |
 |----------------------------------------------|---------|-----------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 4 sec.  | \< 100 MB |
-| Old PowerBook G4                             | 26 sec. | \< 100 MB |
+| 1.33 Ghz PowerPC G4                          | 26 sec. | \< 100 MB |
 
 Calculate a Sequence Alignment using Swith Waterman
 ---------------------------------------------------
@@ -100,9 +100,9 @@ Example](http://www.biojava.org/download/performance/biojava-testSW.jnlp)
 
 Results:
 
-| System                                       | Speed | Memory |
-|----------------------------------------------|-------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 5 sec | 232 MB |
-| Old PowerBook G4                             |       |        |
+| System                                       | Speed  | Memory |
+|----------------------------------------------|--------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 5 sec  | 232 MB |
+| 1.33 Ghz PowerPC G4                          | 23 sec | 248 MB |
 
 
