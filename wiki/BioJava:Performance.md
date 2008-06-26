@@ -102,7 +102,7 @@ Results:
 
 | System                                       | Speed | Memory |
 |----------------------------------------------|-------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz |       |        |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 5 sec | 232 MB |
 | Old PowerBook G4                             |       |        |
 
 
