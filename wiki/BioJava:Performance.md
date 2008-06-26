@@ -93,7 +93,8 @@ Calculate a Sequence Alignment using Swith Waterman
 Calculate a sequence alignment of two sequences (Corynebacterium renale
 plasmid pCR2, Pantoea agglomerans plasmid pPA3.0).
 
-Run Example
+[Run
+Example](http://www.biojava.org/download/performance/biojava-testSW.jnlp)
 
 [View Source](BioJava:Performance:AlignSW "wikilink")
 
