@@ -74,7 +74,7 @@ Results:
 | 1.1 sec
 | 
 |-
-| Old PowerBook G4
+| 1.33 Ghz PowerPC G4
 | 4.4 sec
 | 
 |}
@@ -100,7 +100,7 @@ Results:
 | 4 sec.
 | < 100 MB
 |-
-| Old PowerBook G4
+| 1.33 Ghz PowerPC G4
 | 26 sec.
 | < 100 MB
 |}
@@ -127,7 +127,7 @@ Results:
 | 5 sec
 | 232 MB
 |-
-| Old PowerBook G4
-| 
-| 
+| 1.33 Ghz PowerPC G4
+| 23 sec
+| 248 MB
 |}
