@@ -2,6 +2,8 @@
 
 All tests can be run using [http://java.sun.com/products/javawebstart/ Java Web Start]
 
+The full source code for all examples is available from [http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/demos/performance the SVN repository]
+
 == Read all chromosomes from Drosophila ==
 Read all chromosomes from Drosophila and print out their sizes:
 
