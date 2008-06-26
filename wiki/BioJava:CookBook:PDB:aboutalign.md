@@ -30,3 +30,5 @@ code](http://code.open-bio.org/svnweb/index.cgi/biojava/view/biojava-live/trunk/
 `* It identifies short fragments in two protein structures that have similar intra-molecular distances. `  
 `* The pairs of fragments are then compared and if possible, joined to longer fragments.`  
 `* Finally the fragments are undergoing a refinement procedure in order to extend them to full size alignments.`
+
+[Back to the CookBook](CookBook:PDB:align "wikilink")
