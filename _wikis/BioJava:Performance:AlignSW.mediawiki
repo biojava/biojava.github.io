@@ -1,3 +1,5 @@
+This is the source code for the [[BioJava::Performance|Smith Waterman performance example]].
+
 <java>
 /*
  * Jun 25, 2008 Copyright (c) ZBiT, University of T&uuml;bingen, Germany
