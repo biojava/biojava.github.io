@@ -12,6 +12,10 @@ Lackner, Univ. Salzburg (personal communication). The
 distance matrix based, rigid body protein structure superimposition. See
 a JavaWebStart example of how it works at <BioJava:Performance>
 
+[Run WebStart
+Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
+(5MB download includes Jmol for visualization)
+
 <java>
 
 ` public static void main(String[] args){`
