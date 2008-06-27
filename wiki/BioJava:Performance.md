@@ -107,6 +107,6 @@ Results:
 | System                                       | Speed  | Memory |
 |----------------------------------------------|--------|--------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 5 sec  | 129 MB |
-| 1.33 Ghz PowerPC G4                          | 23 sec | 248 MB |
+| 1.33 Ghz PowerPC G4                          | 20 sec | 153 MB |
 
 
