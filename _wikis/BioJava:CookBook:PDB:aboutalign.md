@@ -19,7 +19,8 @@ calculate alignments of
 `* whole structures, `  
 `* single chains`  
 `* any set of atoms`  
-`* it provides alternative solutions`
+`* it provides alternative solutions`  
+`* alternative solutions are clustered to groups of similar alignment`
 
 How does it work?
 -----------------
