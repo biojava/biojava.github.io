@@ -9,6 +9,7 @@ calculate alignments of
  * single chains
  * any set of atoms
  * it provides alternative solutions
+ * alternative solutions are clustered to groups of similar alignment
 
 == How does it work? ==
 
