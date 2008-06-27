@@ -130,6 +130,6 @@ Results:
 | 129 MB
 |-
 | 1.33 Ghz PowerPC G4
-| 23 sec
-| 248 MB
+| 20 sec
+| 153 MB
 |}
