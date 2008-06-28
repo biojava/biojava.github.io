@@ -10,7 +10,7 @@ it into Biojava at some point can be found at his personal development
 site, dishevelled. org (http://dishevelled.org/).
 
 Michael presented Biojava at BOSC 2005, Biojava spinoff project StAX
-(http://stax.sf.net) in a lightning talk at BOSC 2005, and may be
+(http://stax.sf.net) in a lightning talk at BOSC 2005, and will be
 presenting Biojava at BOSC 2008. See
 [BOSC2008\_Abstract](BOSC2008_Abstract "wikilink").
 
