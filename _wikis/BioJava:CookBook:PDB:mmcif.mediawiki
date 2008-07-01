@@ -1,6 +1,6 @@
 === How do I read a .mmcif file? ===
 
-[http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format to PDB files [[#westbrook2000]],[[#westbrook2003]]
+[http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format to PDB files [[#westbrook2000|1]],[[#westbrook2003|2]]
 
 == References ==
 <biblio>
