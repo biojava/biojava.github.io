@@ -118,6 +118,10 @@ Results:
 | 5 sec.
 | < 100 MB
 |-
+| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)
+| 8 sec
+| < 100 MB
+|-
 | 1.33 Ghz PowerPC G4
 | 26 sec.
 | < 100 MB
