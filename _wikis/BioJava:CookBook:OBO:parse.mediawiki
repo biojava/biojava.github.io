@@ -2,7 +2,7 @@
 
 BioJava now contains a parser for [http://www.geneontology.org/GO.format.obo-1_2.shtml .OBO files]. The BioJava parser is re-using parts of the parser contained in the [http://wiki.geneontology.org/index.php/OBO-Edit OBO-Edit software package],but does not require to have the obo-edit library and user interface installed in order to parse the files. Thanks to the OBO-Edit developers for giving permission to re-use part of their source code.
 
-This code will be released with the next biojava release. To use it at the moment you will require a recent build from SVN.
+This code will be released with the next biojava release. To use it at the moment you will require a [[Autobuild_events|recent build from SVN]].
 
 <java>
 @since 1.7
