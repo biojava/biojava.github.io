@@ -1,10 +1,40 @@
 === How do I read a .mmcif file? ===
 
 [http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format to PDB files ( [[#westbrook2000|1]],[[#westbrook2003|2]] ).
-It is not entirely easy to write a parser for it, as such BioJava solves this problem for you. The mmcif files are parsed into the same BioJava data structure as the [[BioJava::CookBook:PDB:read]]
+It is not entirely easy to write a parser for it, as such BioJava solves this problem for you. The mmcif files are parsed into the same BioJava data structure as the [[BioJava:CookBook:PDB:read|PDB files]].
+
+This code will be released with the next biojava release. To use it at the moment you will require a [[Autobuild_events|recent build from SVN]].
 
 <java>
+@since 1.7
+public static void main(String[] args){
+
+		String fileName = args[0];
+ 		
+		InputStream inStream =  new FileInputStream(fileName);
+		
+		MMcifParser parser = new SimpleMMcifParser();
+
+		SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();
+
+		// The Consumer builds up the BioJava - structure object.
+                // you could also hook in your own and build up you own data model.          
+		parser.addMMcifConsumer(consumer);
+
+		try {
+			parser.parse(new BufferedReader(new InputStreamReader(inStream)));
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+
+                // now get the protein structure.
+		Structure cifStructure = consumer.getStructure();
+                      
+}
+
 </java>
+
+For more info on how to work with the BioJava structure data model see [[BioJava:CookBook:PDB:atoms]].
 
 == References ==
 <biblio>
