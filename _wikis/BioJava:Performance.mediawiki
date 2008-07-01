@@ -114,6 +114,10 @@ Results:
 | 4 sec.
 | < 100 MB
 |-
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6)
+| 5 sec.
+| < 100 MB
+|-
 | 1.33 Ghz PowerPC G4
 | 26 sec.
 | < 100 MB
