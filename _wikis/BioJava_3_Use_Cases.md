@@ -4,8 +4,17 @@ title: BioJava 3 Use Cases
 
 This page will contain a bunch of
 [use-cases](http://en.wikipedia.org/wiki/Use_case) which will drive
-development for BioJava 3. Please add them below - as simple or as
-complex as you wish!
+development for BioJava 3. Please add them below - Where possible please
+follow the template.
+
+Use cases should describe a task or goal that will be performed.
+Typically the task will be performed by a user with the assistance of an
+application (or a component of an application). The goal of the BioJava
+developers will be to make sure the new BioJava API is sufficient to
+allow such a application to be built. They will also endevour to provide
+a reference example to both demonstrate how such a task can be
+implemented and to show that the API is sufficient to implement the
+task.
 
 Use case template
 =================
