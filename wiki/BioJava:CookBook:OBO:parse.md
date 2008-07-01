@@ -5,7 +5,7 @@ title: BioJava:CookBook:OBO:parse
 How to parse an Ontology (OBO) file
 ===================================
 
-BioJava now contains a parse for .OBO files. The BioJava parser is
+BioJava now contains a parser for .OBO files. The BioJava parser is
 re-using parts of the parser contained in the OBO-Edit software
 package,but does not require to have the obo-edit library and user
 interface installed in order to parse the files. Thanks to the OBO-Edit
