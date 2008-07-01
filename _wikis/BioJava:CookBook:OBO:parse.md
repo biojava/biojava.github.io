@@ -7,11 +7,11 @@ How to parse an Ontology (OBO) file
 
 BioJava now contains a parser for [.OBO
 files](http://www.geneontology.org/GO.format.obo-1_2.shtml). The BioJava
-parser is re-using parts of the parser contained in the OBO-Edit
-software package,but does not require to have the obo-edit library and
-user interface installed in order to parse the files. Thanks to the
-OBO-Edit developers for giving permission to re-use part of their source
-code.
+parser is re-using parts of the parser contained in the [OBO-Edit
+software package](http://wiki.geneontology.org/index.php/OBO-Edit),but
+does not require to have the obo-edit library and user interface
+installed in order to parse the files. Thanks to the OBO-Edit developers
+for giving permission to re-use part of their source code.
 
 This code will be released with the next biojava release. To use it at
 the moment you will require a recent build from SVN.
