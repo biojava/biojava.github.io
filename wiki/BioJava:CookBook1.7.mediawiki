@@ -142,7 +142,7 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 === Protein Structure ===
 
 * [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
-* [[BioJava:CookBool:PDB:mmcif|How can I read an .mmcif file?]]
+* [[BioJava:CookBool:PDB:mmcif|How can I read a .mmcif file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
 * [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on atoms?]]
 * [[BioJava:CookBook:PDB:header|How can I access the header information of a PDB file?]]
