@@ -67,10 +67,11 @@ Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
 
 Results:
 
-| System                                       | Speed   | Memory |
-|----------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 1.1 sec |        |
-| 1.33 Ghz PowerPC G4                          | 4.4 sec |        |
+| System                                                                  | Speed   | Memory |
+|-------------------------------------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 1.1 sec |        |
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. |        |
+| 1.33 Ghz PowerPC G4                                                     | 4.4 sec |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
