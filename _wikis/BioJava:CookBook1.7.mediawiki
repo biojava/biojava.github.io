@@ -152,6 +152,9 @@ Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar
 * [[BioJava:CookBook:PDB:Jmol|How can I interact with Jmol?]]
 * [[BioJava:CookBook:PDB:hibernate|How can I serialize to a database?]]
 
+=== Ontologies ===
+* [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
+
 == Disclaimer ==
 
 This code is generously donated by people who probably have better things to do. Where possible we test it but errors may have crept in. As such, all code and advice here in has no warranty or guarantee of any sort. You didn't pay for it and if you use it we are not responsible for anything that goes wrong. Be a good programmer and test it yourself before unleashing it on your corporate database.
