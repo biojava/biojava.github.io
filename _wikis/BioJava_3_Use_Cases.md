@@ -2,9 +2,10 @@
 title: BioJava 3 Use Cases
 ---
 
-This page will contain a bunch of use-cases which will drive development
-for BioJava 3. Please add them below - as simple or as complex as you
-wish!
+This page will contain a bunch of
+[use-cases](http://en.wikipedia.org/wiki/Use_case) which will drive
+development for BioJava 3. Please add them below - as simple or as
+complex as you wish!
 
 Use cases
 ---------
