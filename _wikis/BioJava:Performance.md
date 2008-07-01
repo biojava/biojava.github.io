@@ -28,6 +28,7 @@ Results:
 |-------------------------------------------------------------------------|---------|--------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 95 MB  |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
+| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 16 sec  | 81 MB  |
 | 1.33 Ghz PowerPC G4                                                     | 87 sec. | 81 MB  |
 
 The same example using the new BioJavaX code base (parses headers more
@@ -46,6 +47,7 @@ Results:
 |-------------------------------------------------------------------------|---------|--------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 116 MB |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
+| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 14 sec  | 199 MB |
 | 1.33 Ghz PowerPC G4                                                     | 79 sec. | 108 MB |
 
 Reverse complement of DNA sequence
