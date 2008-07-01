@@ -1,0 +1,10 @@
+=== How do I read a .mmcif file? ===
+
+[http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format
+
+
+== References ==
+<biblio>
+#westbrook2003 pmid=12647386
+#westbrook2000 pmid=10842738
+</biblio>
