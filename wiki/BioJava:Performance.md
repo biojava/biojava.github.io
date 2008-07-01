@@ -88,10 +88,11 @@ Example](http://www.biojava.org/download/performance/biojava-structure-example1.
 
 Results:
 
-| System                                       | Speed   | Memory    |
-|----------------------------------------------|---------|-----------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 4 sec.  | \< 100 MB |
-| 1.33 Ghz PowerPC G4                          | 26 sec. | \< 100 MB |
+| System                                                                  | Speed   | Memory    |
+|-------------------------------------------------------------------------|---------|-----------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 4 sec.  | \< 100 MB |
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 5 sec.  | \< 100 MB |
+| 1.33 Ghz PowerPC G4                                                     | 26 sec. | \< 100 MB |
 
 Calculate a Sequence Alignment using Swith Waterman
 ---------------------------------------------------
