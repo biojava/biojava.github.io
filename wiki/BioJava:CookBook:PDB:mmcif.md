@@ -6,7 +6,7 @@ title: BioJava:CookBook:PDB:mmcif
 
 [mmcif](http://ndbserver.rutgers.edu/mmcif/index.html) is an alternative
 file format to PDB files
-[\#westbrook2000](#westbrook2000 "wikilink"),[\#westbrook2003](#westbrook2003 "wikilink")
+[1](#westbrook2000 "wikilink"),[2](#westbrook2003 "wikilink")
 
 References
 ----------
