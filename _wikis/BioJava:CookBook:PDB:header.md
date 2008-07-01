@@ -4,14 +4,14 @@ title: BioJava:CookBook:PDB:header
 
 ### How can I access the header information of a PDB file?
 
-new: since v1.6 BioJava can parse the COMPND and SOURCE header files.
-Thanks to Jules Jacobsen (EBI) for providing the patch. The contained
-information is availabe via the
+BioJava can parse the COMPND and SOURCE header files. Thanks to Jules
+Jacobsen (EBI) for providing the patch. The contained information is
+availabe via the
 [Compound](http://www.biojava.org/docs/api/org/biojava/bio/structure/Compound.html)
 class that can be accessed from
 [structure.getCompounds()](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html).
 
-<java> public static void main(String[] args){
+<java> @since 1.6 public static void main(String[] args){
 
 `       String code =  "1aoi";`
 
