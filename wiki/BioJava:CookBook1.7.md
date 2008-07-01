@@ -271,6 +271,11 @@ How Do I....?
 -   [How can I serialize to a
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
 
+### Ontologies
+
+-   [How can I parse an OBO
+    file?](BioJava:CookBook:OBO:parse "wikilink")
+
 Disclaimer
 ----------
 
