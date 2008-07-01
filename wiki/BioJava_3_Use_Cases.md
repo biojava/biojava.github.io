@@ -7,6 +7,35 @@ This page will contain a bunch of
 development for BioJava 3. Please add them below - as simple or as
 complex as you wish!
 
+Use case template
+=================
+
+Copied from the use case template found in [Wikipedia use case
+article](http://en.wikipedia.org/wiki/Use_case)
+
+-   '''Use case name '''
+-   '''Version '''
+-   '''Goal '''
+-   '''Summary '''
+-   '''Actors '''
+-   '''Preconditions '''
+-   '''Triggers '''
+-   '''Basic course of events '''
+-   '''Alternative paths '''
+-   '''Postconditions '''
+-   '''Business rules '''
+-   '''Notes '''
+-   '''Author and date '''
+
+*A use case should:*
+
+-   Describe what the system shall do for the actor to achieve a
+    particular goal.
+-   Include no implementation-specific language.
+-   Be at the appropriate level of detail.
+-   Not include detail regarding user interfaces and screens. This is
+    done in user-interface design.
+
 Use cases
 ---------
 
