@@ -26,10 +26,10 @@ Results:
 
 | System                                                                  | Speed   | Memory |
 |-------------------------------------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 95 MB  |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 16 sec. | 95 MB  |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
 | Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 16 sec  | 81 MB  |
-| 1.33 Ghz PowerPC G4                                                     | 87 sec. | 81 MB  |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 87 sec. | 81 MB  |
 
 The same example using the new BioJavaX code base (parses headers more
 thoroughly):
@@ -45,10 +45,10 @@ Results:
 
 | System                                                                  | Speed   | Memory |
 |-------------------------------------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 116 MB |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 16 sec. | 116 MB |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
 | Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 14 sec  | 199 MB |
-| 1.33 Ghz PowerPC G4                                                     | 79 sec. | 108 MB |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 79 sec. | 108 MB |
 
 Reverse complement of DNA sequence
 ----------------------------------
@@ -71,10 +71,10 @@ Results:
 
 | System                                                                  | Speed     | Memory |
 |-------------------------------------------------------------------------|-----------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 1.1 sec   |        |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 1.1 sec   |        |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 1.5 sec.  |        |
 | Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 1.52 sec. |        |
-| 1.33 Ghz PowerPC G4                                                     | 4.4 sec   |        |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 4.4 sec   |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
@@ -93,10 +93,10 @@ Results:
 
 | System                                                                  | Speed   | Memory    |
 |-------------------------------------------------------------------------|---------|-----------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 4 sec.  | \< 100 MB |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 4 sec.  | \< 100 MB |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 5 sec.  | \< 100 MB |
 | Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 8 sec   | \< 100 MB |
-| 1.33 Ghz PowerPC G4                                                     | 26 sec. | \< 100 MB |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 26 sec. | \< 100 MB |
 
 Calculate a Sequence Alignment using Swith Waterman
 ---------------------------------------------------
@@ -114,9 +114,9 @@ Results:
 
 | System                                                                  | Speed  | Memory |
 |-------------------------------------------------------------------------|--------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 5 sec  | 129 MB |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 5 sec  | 129 MB |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 6 sec  | 130 MB |
 | Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 4 sec  | 120 MB |
-| 1.33 Ghz PowerPC G4                                                     | 20 sec | 153 MB |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 20 sec | 153 MB |
 
 
