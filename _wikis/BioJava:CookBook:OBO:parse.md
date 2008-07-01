@@ -11,7 +11,10 @@ package,but does not require to have the obo-edit library and user
 interface installed in order to parse the files. Thanks to the OBO-Edit
 developers for giving permission to re-use part of their source code.
 
-<java> public static void main (String[] args) {
+This code will be released with the next biojava release. To use it at
+the moment you will require a recent build from SVN.
+
+<java> @since 1.7 public static void main (String[] args) {
 
 `       String fileName = args[0];`
 
