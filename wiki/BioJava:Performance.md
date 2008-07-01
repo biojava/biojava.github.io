@@ -24,10 +24,11 @@ Example](http://www.biojava.org/download/performance/biojava-test.jnlp)
 
 Results:
 
-| System                                       | Speed   | Memory |
-|----------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 95 MB  |
-| 1.33 Ghz PowerPC G4                          | 87 sec. | 81 MB  |
+| System                                                                  | Speed   | Memory |
+|-------------------------------------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 95 MB  |
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
+| 1.33 Ghz PowerPC G4                                                     | 87 sec. | 81 MB  |
 
 The same example using the new BioJavaX code base (parses headers more
 thoroughly):
@@ -41,10 +42,11 @@ Source](http://code.open-bio.org/svnweb/index.cgi/biojava/view/biojava-live/trun
 
 Results:
 
-| System                                       | Speed   | Memory |
-|----------------------------------------------|---------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz | 16 sec. | 116 MB |
-| 1.33 Ghz PowerPC G4                          | 79 sec. | 108 MB |
+| System                                                                  | Speed   | Memory |
+|-------------------------------------------------------------------------|---------|--------|
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 16 sec. | 116 MB |
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | XX sec. | XX MB  |
+| 1.33 Ghz PowerPC G4                                                     | 79 sec. | 108 MB |
 
 Reverse complement of DNA sequence
 ----------------------------------
