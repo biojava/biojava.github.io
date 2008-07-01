@@ -3,19 +3,32 @@ This page will contain a bunch of [http://en.wikipedia.org/wiki/Use_case use-cas
 = Use case template =
 Copied from the use case template found in [http://en.wikipedia.org/wiki/Use_case Wikipedia use case article]
 
-* '''Use case name '''
-* '''Version '''
-* '''Goal '''
-* '''Summary '''
-* '''Actors '''
-* '''Preconditions '''
-* '''Triggers '''
-* '''Basic course of events '''
-* '''Alternative paths '''
-* '''Postconditions '''
-* '''Business rules '''
-* '''Notes '''
-* '''Author and date '''
+* '''Use case name '''A use case name provides a unique identifier for the use case. It should be written in verb-noun format (e.g., Borrow Books, Withdraw Cash), should describe an achievable goal (e.g., Register User is better than Registering User) and should be sufficient for the end user to understand what the use case is about.
+* '''Version '''Often a version section is needed to inform the reader of the stage a use case has reached. The initial use case developed for business analysis and scoping may well be very different from the evolved version of that use case when the software is being developed. Older versions of the use case may still be current documents, because they may be valuable to different user groups.
+* '''Goal '''Without a goal a use case is useless. There is no need for a use case when there is no need for any actor to achieve a goal. A goal briefly describes what the user intends to achieve with this use case.
+* '''Summary '''A summary section is used to capture the essence of a use case before the main body is complete. It provides a quick overview, which is intended to save the reader from having to read the full contents of a use case to understand what the use case is about. Ideally, a summary is just a few sentences or a paragraph in length and includes the goal and principal actor.
+* '''Actors '''An actor is someone or something outside the system that either acts on the system – a primary actor – or is acted on by the system – a secondary actor. An actor may be a person, a device, another system or sub-system, or time. Actors represent the different roles that something outside has in its relationship with the system whose functional requirements are being specified. An individual in the real world can be represented by several actors if they have several different roles and goals in regards to a system.These interact with system and do some action on that.
+* '''Preconditions '''A preconditions section defines all the conditions that must be true (i.e., describes the state of the system) for the trigger (see below) to meaningfully cause the initiation of the use case. That is, if the system is not in the state described in the preconditions, the behavior of the use case is indeterminate.
+
+Note that the preconditions are not the same thing as the "trigger" (see below): the mere fact that the preconditions are met does NOT initiate the use case.
+* '''Triggers '''A 'triggers' section describes the event that causes the use case to be initiated. This event can be external, temporal or internal. If the trigger is not a simple true "event" (e.g., the customer presses a button), but instead "when a set of conditions are met", there will need to be a triggering process that continually (or periodically) runs to test whether the "trigger conditions" are met: the "triggering event" is a signal from the trigger process that the conditions are now met.
+* '''Basic course of events '''At a minimum, each use case should convey a primary scenario, or typical course of events, also called "basic flow" or "happy flow". The main basic course of events is often conveyed as a set of usually numbered steps. For example:
+
+#The system prompts the user to log on. 
+#The user enters his name and password. 
+#The system verifies the logon information. 
+#The system logs user on to system. 
+
+* '''Alternative paths '''Use cases may contain secondary paths or alternative scenarios, which are variations on the main theme. Each tested rule may lead to an alternate path and when there are many rules the permutation of paths increases rapidly, which can lead to very complex documents. Sometimes it is better to use conditional logic or activity diagrams to describe use case with many rules and conditions.
+
+
+* '''Postconditions '''The post-conditions section describes what the change in state of the system will be after the use case completes. Post-conditions are guaranteed to be true when the use case ends.
+
+
+* '''Business rules '''Business rules are written (or unwritten) rules or policies or conventions that an application must comply with.
+
+* '''Notes '''Useful information that doesn't fit under any other specific heading
+* '''Author and date '''This section should list when a version of the use case was created and who documented it.
 
 ''A use case should:''
 
