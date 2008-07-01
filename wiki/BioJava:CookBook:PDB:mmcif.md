@@ -5,7 +5,8 @@ title: BioJava:CookBook:PDB:mmcif
 ### How do I read a .mmcif file?
 
 [mmcif](http://ndbserver.rutgers.edu/mmcif/index.html) is an alternative
-file format
+file format to PDB files
+[\#westbrook2000](#westbrook2000 "wikilink"),[\#westbrook2003](#westbrook2003 "wikilink")
 
 References
 ----------
