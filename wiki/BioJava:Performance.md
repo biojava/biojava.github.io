@@ -92,6 +92,7 @@ Results:
 |-------------------------------------------------------------------------|---------|-----------|
 | Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz                            | 4 sec.  | \< 100 MB |
 | Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 5 sec.  | \< 100 MB |
+| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 8 sec   | \< 100 MB |
 | 1.33 Ghz PowerPC G4                                                     | 26 sec. | \< 100 MB |
 
 Calculate a Sequence Alignment using Swith Waterman
