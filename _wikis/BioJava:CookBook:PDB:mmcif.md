@@ -9,7 +9,12 @@ file format to PDB files (
 [1](#westbrook2000 "wikilink"),[2](#westbrook2003 "wikilink") ). It is
 not entirely easy to write a parser for it, as such BioJava solves this
 problem for you. The mmcif files are parsed into the same BioJava data
-structure as the [PDB files](BioJava:CookBook:PDB:read "wikilink").
+structure as the [PDB files](BioJava:CookBook:PDB:read "wikilink"). The
+example below demonstrates how to load the content into the BioJava data
+model for protein structures. The design of the source code allows you
+to also hook in your own data model. For this you will require to
+implement the [MMcifConsumer
+interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
 This code will be released with the next biojava release. To use it at
 the moment you will require a [recent build from
