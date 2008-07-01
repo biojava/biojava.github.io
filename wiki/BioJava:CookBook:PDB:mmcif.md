@@ -13,7 +13,7 @@ References
 
 <biblio>
 
-1.  westbrook2003 pmid=12647386
-2.  westbrook2000 pmid=10842738
+1.  westbrook2000 pmid=10842738
+2.  westbrook2003 pmid=12647386
 
 </biblio>

@@ -4,6 +4,6 @@
 
 == References ==
 <biblio>
-#westbrook2003 pmid=12647386
 #westbrook2000 pmid=10842738
+#westbrook2003 pmid=12647386
 </biblio>
