@@ -259,6 +259,9 @@ Comment faire pour ...?
     venir...)](BioJava:CookbookFrench:PDB:AlignGui "wikilink")
 -   [Comment faire interagir une Structure avec
     Jmol?](BioJava:CookbookFrench:PDB:Jmol "wikilink")
+-   [Comment faire pour obtenir les informations des éléments PDB
+    contenues dans une base de données locale? (À
+    venir)](BioJava:CookbookFrench:PDB:Hibernate "wikilink")
 
 ### Utilisation des ontologies avec BioJava
 
