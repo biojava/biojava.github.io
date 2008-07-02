@@ -136,6 +136,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:PDB:Seqres|Comment utiliser les information des groupes SEQRES et ATOM avec BioJava?]]
 * [[BioJava:CookbookFrench:PDB:Mutate|Comment puis-je modifié un résidu?]]
 * [[BioJava:CookbookFrench:PDB:Align|Comment faire pour calculer la superposition de deux Structures?]]
+* [[BioJava:CookbookFrench:PDB:AlignGui|Comment faire une interface gaphique simple pour calculer la superposition de deux Structures? (À venir...)]]
 * [[BioJava:CookbookFrench:PDB:Jmol|Comment faire interagir une Structure avec Jmol?]]
 
 === Utilisation des ontologies avec BioJava ===
