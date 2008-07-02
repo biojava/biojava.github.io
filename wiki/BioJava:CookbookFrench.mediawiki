@@ -138,6 +138,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:PDB:Align|Comment faire pour calculer la superposition de deux Structures?]]
 * [[BioJava:CookbookFrench:PDB:AlignGui|Comment faire une interface graphique simple pour calculer la superposition de deux Structures? (À venir...)]]
 * [[BioJava:CookbookFrench:PDB:Jmol|Comment faire interagir une Structure avec Jmol?]]
+* [[BioJava:CookbookFrench:PDB:Hibernate|Comment faire pour obtenir les informations des éléments PDB contenues dans une base de données locale? (À venir)]]
 
 === Utilisation des ontologies avec BioJava ===
 
