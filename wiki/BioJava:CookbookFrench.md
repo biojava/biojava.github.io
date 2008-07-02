@@ -240,6 +240,8 @@ Comment faire pour ...?
 
 -   [Comment faire pour lire un fichier en format
     PDB?](BioJava:CookbookFrench:PDB:Read "wikilink")
+-   [Comment faire pour lire un fichier en format MMCIF? (À
+    venir...)](BioJava:CookbookFrench:PDB:Mmcif "wikilink")
 -   [Comment obtenir les informations sur les atomes présent dans un
     fichier PDB?](BioJava:CookbookFrench:PDB:Atom "wikilink")
 -   [Comment faire des calculs sur des Atomes présent dans un fichier
