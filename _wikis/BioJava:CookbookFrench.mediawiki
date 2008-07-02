@@ -129,6 +129,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 === Analyse structurale des protéines ===
 
 * [[BioJava:CookbookFrench:PDB:Read|Comment faire pour lire un fichier en format PDB?]]
+* [[BioJava:CookbookFrench:PDB:Mmcif|Comment faire pour lire un fichier en format MMCIF? (À venir...)]]
 * [[BioJava:CookbookFrench:PDB:Atom|Comment obtenir les informations sur les atomes présent dans un fichier PDB?]]
 * [[BioJava:CookbookFrench:PDB:AtomCalc|Comment faire des calculs sur des Atomes présent dans un fichier PDB?]]
 * [[BioJava:CookbookFrench:PDB:Header|Comment accéder aux informations contenues dans l'en-tete d'un fichier PDB?]]
