@@ -254,7 +254,7 @@ Comment faire pour ...?
     résidu?](BioJava:CookbookFrench:PDB:Mutate "wikilink")
 -   [Comment faire pour calculer la superposition de deux
     Structures?](BioJava:CookbookFrench:PDB:Align "wikilink")
--   [Comment faire une interface gaphique simple pour calculer la
+-   [Comment faire une interface graphique simple pour calculer la
     superposition de deux Structures? (À
     venir...)](BioJava:CookbookFrench:PDB:AlignGui "wikilink")
 -   [Comment faire interagir une Structure avec
