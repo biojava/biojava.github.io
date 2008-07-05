@@ -102,7 +102,8 @@ Comment faire pour ...?
     lectures?](BioJava:CookbookFrench:Translation:SixFrame "wikilink")
 -   [Comment obtenir les acides aminés codés par un codon ambigu dans le
     code à une
-    lettre?](BioJava:CookbookFrench:Translation:OneLetterAmbi "wikilink")
+    lettre?](BioJava:CookbookFrench:Translation:OneLetterAmbi "wikilink")(À
+    venir...)
 
 ### Protéomique
 
