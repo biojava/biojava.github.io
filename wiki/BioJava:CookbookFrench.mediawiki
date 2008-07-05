@@ -48,7 +48,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:Translation:Single|Comment traduire une seul codon en son acide aminé correspondant?]]
 * [[BioJava:CookbookFrench:Translation:NonStandard|Comment utiliser un code génétique non-standard?]]
 * [[BioJava:CookbookFrench:Translation:SixFrame|Comment traduire une Sequence dans ses 6 cadres de lectures?]]
-* [[BioJava:CookbookFrench:Translation:OneLetterAmbi|Comment obtenir les acides amin&eacute;s codés par un codon ambigu dans le code &agrave; une lettre?]]
+* [[BioJava:CookbookFrench:Translation:OneLetterAmbi|Comment obtenir les acides amin&eacute;s codés par un codon ambigu dans le code &agrave; une lettre?]](À venir...)
 
 === Protéomique ===
 
