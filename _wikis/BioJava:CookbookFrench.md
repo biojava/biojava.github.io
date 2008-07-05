@@ -101,9 +101,8 @@ Comment faire pour ...?
 -   [Comment traduire une Sequence dans ses 6 cadres de
     lectures?](BioJava:CookbookFrench:Translation:SixFrame "wikilink")
 -   [Comment obtenir les acides aminés codés par un codon ambigu dans le
-    code à une
-    lettre?](BioJava:CookbookFrench:Translation:OneLetterAmbi "wikilink")(À
-    venir...)
+    code à une lettre? (À
+    venir...)](BioJava:CookbookFrench:Translation:OneLetterAmbi "wikilink")
 
 ### Protéomique
 
