@@ -47,3 +47,13 @@ publication](http://www.proteinscience.org/cgi/content/abstract/15/1/208 publica
 Your class could help to get it from the databases automatically.
 
 --[Christo](User:Christo "wikilink") 05:07, 10 March 2007 (EST)
+
+### Data retrival tools for BioJava
+
+It would be very useful to include tools to retrieve data from different
+databases, in particular from NCBI. Some tools programmed in Java
+[1](http://eutils.ncbi.nlm.nih.gov/entrez/query/static/esoap_java_help.html)
+already exist, but it would be great to embed them in BioJava, along
+with the tools required to parse the data retrieved.
+
+--[Ghislain](User:Gbonamy "wikilink") 22:19, 6 July 2008 (UTC)
