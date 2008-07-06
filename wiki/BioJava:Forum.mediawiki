@@ -28,3 +28,9 @@ Your class could help to get it
 from the databases automatically.
 
 --[[User:Christo|Christo]] 05:07, 10 March 2007 (EST)
+
+=== Data retrival tools for BioJava ===
+
+It would be very useful to include tools to retrieve data from different databases, in particular from NCBI. Some tools programmed in Java [http://eutils.ncbi.nlm.nih.gov/entrez/query/static/esoap_java_help.html] already exist, but it would be great to embed them in BioJava, along with the tools required to parse the data retrieved.
+
+--[[User:Gbonamy|Ghislain]] 22:19, 6 July 2008 (UTC)
