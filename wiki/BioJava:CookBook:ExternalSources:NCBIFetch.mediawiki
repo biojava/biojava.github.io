@@ -35,6 +35,6 @@ public class NCBIFileReader {
 	be.printStackTrace();
 	System.exit(-1);
       }
-}
+   }
 }
 </java>
