@@ -233,6 +233,8 @@ Comment faire pour ...?
     anglais seulement
 -   [Comment ajouter, voir et éliminer des objets Séquences d'une base
     de données BioSQL?](BioJava:CookbookFrench:BioSQL:Manage "wikilink")
+-   [Comment récupérer des séquences directement du
+    NCBI?](BioJava:CookbookFrench:ExternalSources:NCBIFetch "wikilink")
 
 ### Algorithmes génétiques
 

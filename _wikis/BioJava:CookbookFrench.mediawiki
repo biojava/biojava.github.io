@@ -122,6 +122,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookBook:BioSQL:SetupPostGre|Comment créer une base de données avec BioSQL et PostgreSQL?]] Note: en anglais seulement
 * [[BioJava:CookBook:BioSQL:SetupOracle|Comment créer une base de données avec BioSQL et Oracle?]] Note: en anglais seulement
 * [[BioJava:CookbookFrench:BioSQL:Manage|Comment ajouter, voir et &eacute;liminer des objets Séquences d'une base de données BioSQL?]]
+* [[BioJava:CookbookFrench:ExternalSources:NCBIFetch|Comment récupérer des séquences directement du NCBI?]]
 
 === Algorithmes g&eacute;n&eacute;tiques ===
 
