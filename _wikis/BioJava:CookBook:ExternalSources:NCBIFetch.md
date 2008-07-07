@@ -49,6 +49,7 @@ public class NCBIFileReader {
 `     catch(BioException be){`  
 `   be.printStackTrace();`  
 `   System.exit(-1);`  
-`     }`
+`     }`  
+`  }`
 
-} } </java>
+} </java>
