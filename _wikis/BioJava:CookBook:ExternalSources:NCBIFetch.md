@@ -2,8 +2,8 @@
 title: BioJava:CookBook:ExternalSources:NCBIFetch
 ---
 
-How do I get a DNA, RNA or Protein Alphabet?
---------------------------------------------
+How do I get a sequence from NCBI?
+----------------------------------
 
 Besides building your very own database-driven sequence repository, most
 users will need to fetch sequences from public datasources. A primary
