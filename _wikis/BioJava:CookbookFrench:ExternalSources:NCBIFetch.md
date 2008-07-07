@@ -2,8 +2,8 @@
 title: BioJava:CookbookFrench:ExternalSources:NCBIFetch
 ---
 
-How do I get a sequence from NCBI?
-----------------------------------
+Comment faire pour obtenir une séquence directement du NCBI?
+------------------------------------------------------------
 
 Il n'est évidemment pas toujours souhaitable de construire sa propre
 base de données de séquences et, pour la plupart des utilisateurs,
