@@ -239,13 +239,15 @@ How Do I....?
 ### BioSQL and Sequence Databases
 
 -   [How do I set up BioSQL with
-    PostgreSQL](BioJava:CookBook:BioSQL:SetupPostGre "wikilink")? (by
+    PostgreSQL?](BioJava:CookBook:BioSQL:SetupPostGre "wikilink") (by
     [David Huen](User:David "wikilink"))
 -   [How do I set up BioSQL with
-    Oracle](BioJava:CookBook:BioSQL:SetupOracle "wikilink")? (by
+    Oracle?](BioJava:CookBook:BioSQL:SetupOracle "wikilink") (by
     [Richard Holland](User:Richard "wikilink"))
 -   [How do I add, view and remove Sequence Objects from a BioSQL
-    DB](BioJava:CookBook:BioSQL:Manage "wikilink")?
+    DB?](BioJava:CookBook:BioSQL:Manage "wikilink")
+-   [How can I get a sequence straight from
+    NCBI?](BioJava:CookBook:ExternalSources:NCBIFetch "wikilink")
 
 ### Genetic Algorithms
 
