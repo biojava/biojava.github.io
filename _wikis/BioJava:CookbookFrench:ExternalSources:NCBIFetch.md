@@ -8,10 +8,10 @@ Comment faire pour obtenir une séquence directement du NCBI?
 Il n'est évidemment pas toujours souhaitable de construire sa propre
 base de données de séquences et, pour la plupart des utilisateurs,
 l'accès aux sources publiques de données est suffisant. Une des sources
-les plus importantes de données de séquence est bien entendue le NCBI
-[1](http://www.ncbi.nlm.nih.gov). Depuis le début, Biojava est capable
-d'aller chercher des séquences directement au NCBI en utilisant un
-ensemble de classes et de méthodes, qui ont maintenant été adaptés au
+les plus importantes de données de séquence est bien entendue le
+[NCBI](http://www.ncbi.nlm.nih.gov). Depuis le début, Biojava est
+capable d'aller chercher des séquences directement au NCBI en utilisant
+un ensemble de classes et de méthodes, qui ont maintenant été adaptés au
 modèle de séquence développé par l'extension Biojavax.
 
 L'exemple qui suit est un point de départ pour vous permettre d'explorer
