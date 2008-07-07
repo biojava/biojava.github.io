@@ -57,3 +57,14 @@ already exist, but it would be great to embed them in BioJava, along
 with the tools required to parse the data retrieved.
 
 --[Ghislain](User:Gbonamy "wikilink") 22:19, 6 July 2008 (UTC)
+
+Hi Ghislain,
+
+I had this [ little
+example](BioJava:CookBook:ExternalSources:NCBIFetch "wikilink") ready
+for a while because I had this same exact problem so many years ago ;-)
+There is also a package to get info from Ensembl (biojava-ensembl) from
+Thomas Down but I do not know what is its status right now. Thomas: can
+you give us an update on this?
+
+--[Foisys](User:Foisys "wikilink") 12:35, 7 July 2008 (UTC)
