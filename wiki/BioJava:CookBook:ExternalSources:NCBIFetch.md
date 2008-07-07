@@ -7,7 +7,7 @@ How do I get a sequence from NCBI?
 
 Besides building your very own database-driven sequence repository, most
 users will need to fetch sequences from public datasources. A primary
-source of sequence information is [1](http://www.ncbi.nlm.nih.gov|NCBI).
+source of sequence information is NCBI[1](http://www.ncbi.nlm.nih.gov).
 From its very beginning, Biojava was able to get sequences from NCBI
 with wrapper objects and methods. Most recently, the implementation of
 the Biojavax extension brought forth some changes (for example,
