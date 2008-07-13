@@ -34,6 +34,8 @@ A binary distribution is available as
     building biojava.jar)
 -   commons-pool-1.1.jar: Only required for legacy BioSQL access (and
     building biojava.jar)
+-   jgrapht-jdk1.5.jar: Only required for NEXUS file parsing (and
+    building biojava.jar)
 
 Documentation
 -------------
