@@ -12,7 +12,5 @@ site, dishevelled. org (http://dishevelled.org/).
 Michael presented Biojava at BOSC 2005, Biojava spinoff project StAX
 (http://stax.sf.net) in a lightning talk at BOSC 2005, and will be
 presenting Biojava at BOSC 2008. See
-[BOSC2008\_Abstract](BOSC2008_Abstract "wikilink").
-
-Links to the actual presentions will be added here and elsewhere on the
-wiki when I can find them.
+[BOSC2008\_Abstract](BOSC2008_Abstract "wikilink") and
+[BOSC2008\_Presentation](BOSC2008_Presentation "wikilink").
