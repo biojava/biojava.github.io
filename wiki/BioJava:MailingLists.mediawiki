@@ -1,3 +1,27 @@
+= BioJava Mailing Lists =
+
+BioJava has two main mailing lists :
+ 
+ * [http://www.biojava.org/mailman/listinfo/biojava-l biojava-l]
+
+ * [http://www.biojava.org/mailman/listinfo/biojava-dev biojava-dev]
+
+In order to avoid SPAM both lists only accept postings from list members. Anybody can become a list member, so please subscribe before you post. If you send without being subscribed your mail might get stuck in the moderation loop, which can cause several weeks of delay (no fun to read through all that spam).
+
+== biojava-l general discussion list ==
+This list is intended for general discussion, advice, questions, offers of help, announcements, expressions of appreciation, bugs found in release code and requests for features.
+
+ * To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-l sign up] for the list.
+ * Post general issues to [mailto:biojava-l@biojava.org biojava-l@biojava.org].
+ * You can also [http://www.biojava.org/pipermail/biojava-l view] the archive.
+
+== biojava-dev developers list ==
+This list is intended for more technical discussions about API design, bugs in CVS development code, performance issues and things that might not be of interest to the more casual user.
+
+ * To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-dev sign up] for the list.
+ * Post general issues to [mailto:biojava-dev@biojava.org biojava-dev@biojava.org].
+ * You can also [http://www.biojava.org/pipermail/biojava-dev view] the archive.
+
 == List rules ==
 * Post in text format only. If you post in HTML or RTF the antispam software is likely to quarenteen your email for at least a week.
 * Don't attach files. They will also cause the spam filter to kick in. You will also cause problems to people with low bandwidth connections (some of us check this list on the road).
@@ -5,21 +29,6 @@
 * Job vacancies can be posted but only if relevant to the list, i.e they should be aimed at bioinformatics or genomics java programmers. If you are not sure ask one of the [[Core  Team|core team]] first.
 * Never spam!
 * Off topic issues should be kept to a minimum. The subjectline should be pre-pended with [Off Topic] or similar
-
-== biojava-l general discussion list ==
-This list is intended for general discussion, advice, questions, offers of help, announcements, expressions of appreciation, bugs found in release code and requests for features.
-
-To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-l sign up] for the list.
-Post general issues to [mailto:biojava-l@biojava.org biojava-l@biojava.org].
-You can also [http://www.biojava.org/pipermail/biojava-l view] the archive.
-
-
-== biojava-dev developers list ==
-This list is intended for more technical discussions about API design, bugs in CVS development code, performance issues and things that might not be of interest to the more casual user.
-
-To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-dev sign up] for the list.
-Post general issues to [mailto:biojava-dev@biojava.org biojava-dev@biojava.org].
-You can also [http://www.biojava.org/pipermail/biojava-dev view] the archive.
 
 == Bug Reports ==
 Bugs in released code should be reported via [http://bugzilla.open-bio.org/enter_bug.cgi?product=BioJava BugZilla]
