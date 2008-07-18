@@ -9,7 +9,7 @@ Download the presentation:
 
 [bosc2008.pdf](http://shore.net/~heuermh/bosc2008.pdf)
 
-The talk is scheduled for 2:50 pm on Day 1 of the conference (Friday, 18
+The talk is scheduled for 3:00 pm on Day 1 of the conference (Friday, 18
 July).
 
 See
