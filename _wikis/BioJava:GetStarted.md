@@ -17,7 +17,7 @@ You can get the latest version [BioJava 1.6 (requires Java
 1.5+)](Biojava:Download "wikilink") from the [download
 area](Biojava:Download "wikilink") .
 
-You can get the release version of [BioJava 1.5 (requires Java
+You can get the legacy version of [BioJava 1.5 (requires Java
 1.4+)](Biojava:Download 1.5 "wikilink") ; or
 
 You can get the legacy release version of BioJava 1.4

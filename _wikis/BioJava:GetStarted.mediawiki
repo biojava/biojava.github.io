@@ -4,7 +4,7 @@ BioJava will run on any computer with a Java virtual machine complying to the Ja
 
 You can get the latest version [[Biojava:Download|BioJava 1.6 (requires Java 1.5+)]] from the [[Biojava:Download|download area]] . 
 
-You can get the release version of [[Biojava:Download 1.5|BioJava 1.5 (requires Java 1.4+)]] ;  or
+You can get the legacy version of [[Biojava:Download 1.5|BioJava 1.5 (requires Java 1.4+)]] ;  or
 
 You can get the legacy release version of BioJava 1.4 [[Biojava:Download 1.4|here]];
 
