@@ -9,9 +9,17 @@ Download the presentation:
 
 [bosc2008.pdf](http://shore.net/~heuermh/bosc2008.pdf)
 
-The talk is scheduled for 3:00 pm on Day 1 of the conference (Friday, 18
-July).
+#### Questions & Answers
 
-See
+Q:
 
-<http://www.open-bio.org/wiki/BOSC_2008_schedule>
+What web site did you use for the code base statistics and project cost
+estimate (slide 3 in the presentation)?
+
+A:
+
+The project statistics are generated and presented by Ohloh.net.
+
+Biojava has a project page at
+
+<http://www.ohloh.net/projects/biojava>
