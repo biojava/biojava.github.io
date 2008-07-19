@@ -19,3 +19,27 @@ The project statistics are generated and presented by Ohloh.net.
 Biojava has a project page at
 
 http://www.ohloh.net/projects/biojava
+
+
+====Birds of a Feather (BOF) Session====
+
+Ed Lee:
+
+Bio Object Layer, a layer on top of chado database.  Proposal for GMOD, will post ideas on the GMOD wiki.
+
+
+Tiago Antão:
+
+Make Biojava API scripting-language and/or domain-specific language friendly.
+
+
+Michael Heuer:
+
+Consider goal of Processing (programming for artists) -- can the same be done for biologists?
+
+http://processing.org
+
+
+Travis Banks:
+
+Make the list of simple things (in anger examples) a bit more flexible; "more forgiving".
