@@ -2,11 +2,11 @@
 title: Current events
 ---
 
-BOSC 2008
----------
+BOSC 2008 Presentation
+----------------------
 
-[Michael](User:Heuermh "wikilink") will present BioJava at this year's
-ISMB in Toronto. See the
+[Michael](User:Heuermh "wikilink") presented BioJava at this year's ISMB
+in Toronto. For the presentation and discussion see
 [BOSC2008\_Presentation](BOSC2008_Presentation "wikilink").
 
 BioJava 1.6 released
