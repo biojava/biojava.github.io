@@ -1,6 +1,6 @@
-== BOSC 2008 ==
+== BOSC 2008 Presentation ==
 
-[[User:Heuermh|Michael]] will present BioJava at this year's ISMB in Toronto. See the [[BOSC2008_Presentation]].
+[[User:Heuermh|Michael]] presented BioJava at this year's ISMB in Toronto. For the presentation and discussion see [[BOSC2008_Presentation]].
 
 == BioJava 1.6 released ==
 
