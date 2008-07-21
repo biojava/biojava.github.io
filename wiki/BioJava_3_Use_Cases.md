@@ -146,4 +146,7 @@ clarification and more detail if we need to. --
     alignment for the found matches. derive a profile from this for this
     protein family and search for distant members in the sequences
     databases. (psi blast)
+-   Persist Sequences from various sources (including Ensemble) locally
+    and make use of source-specific annotations referencing gene
+    ontology annotations.
 
