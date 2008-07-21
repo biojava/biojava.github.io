@@ -48,3 +48,4 @@ Copied from the use case template found in [http://en.wikipedia.org/wiki/Use_cas
 * Align the original protein sequence against the best hits in high quality and find regions of similarity.(Needleman Wunsch, Swith waterman)
 * If the protein structure is known for one of the homologues try to extend the search by finding similar protein structures in the PDB. (structure alignment)
 * Create a multiple sequences alignment and multiple structure alignment for the found matches. derive a profile from this for this protein family and search for distant members in the sequences databases. (psi blast)
+* Persist Sequences from various sources (including Ensemble) locally and make use of source-specific annotations referencing gene ontology annotations.
