@@ -150,3 +150,55 @@ clarification and more detail if we need to. --
     and make use of source-specific annotations referencing gene
     ontology annotations.
 
+### Relational Database for ArrayExpress and GEO data
+
+-   **Use case name:** Array Database
+-   **Version:** 1.0
+-   **Goal:** Take selected entries from ArrayExpress and GEO and store
+    them in a relational database.
+-   **Summary:** Array Express and GEO contain public microarray
+    expression data. It would be desirable to extract experiments of
+    interest (for example cancer) and parse these into a unified (or
+    approximately unified) object model that can be stored in a relation
+    database.
+-   **Actors:** The user. The Database Loader system and the Database
+    Searcher system.
+-   **Preconditions:** The database loader has preselected a subset of
+    Array Express and or GEO. The Database searcher will have a query
+    that can be expressed in SQL or some other ORM language (eg a JPA
+    query).
+-   '''Triggers: ''' The loader is triggered by a user loading flatfiles
+    or XML from ArrayExpress or GEO. A query is triggered when a user
+    presents a query to the system.
+-   '''Basic course of events: '''
+
+1.  The user points the loader to a file or set of GEO/ ArrayExpress
+    files.
+2.  The Loader System parses those files into an object model.
+3.  The The object model is persisted to the DB.
+
+<!-- -->
+
+1.  The user expresses a query to the Query System (possibly in a
+    program that interprets the query as an ORM query language).
+2.  The Query System generates objects to represent the results of the
+    query that can be displayed to the user via a web interface or GUI
+    (or if the user is a programmer then they will use the objects
+    directly).
+
+-   **Alternative paths:**
+
+Records that cannot be understood should be skipped/ rolled back and
+errors logged however parsing should not halt due to a 'bad record'.
+
+-   '''Postconditions: '''If any records are successfully loaded then
+    the DB will commit.
+-   '''Business rules: '''Objects generated must be bean-like so they
+    can be used in J2EE apps as well as serialize to XML for
+    Web-Services. End users may be presented with wrappers that restrict
+    access to setter methods to ensure immutability however these
+    wrappers should be backed with beans.
+-   '''Notes: '''
+-   '''Author and date: '''--[Mark](User:Mark "wikilink") 00:54, 22 July
+    2008 (UTC).
+
