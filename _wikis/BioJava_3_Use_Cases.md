@@ -17,7 +17,7 @@ implemented and to show that the API is sufficient to implement the
 task.
 
 Very brief notes from the Biojava BOF session at BOSC 2008 are up at
-[BOSC Presentation](http://biojava.org/wiki/BOSC2008_Presentation).
+[BOSC Presentation](BOSC2008_Presentation "wikilink").
 
 Use case template
 =================
