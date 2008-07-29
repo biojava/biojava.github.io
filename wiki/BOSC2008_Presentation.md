@@ -7,7 +7,7 @@ BOSC2008 Presentation
 
 Download the presentation:
 
-[bosc2008.pdf](http://shore.net/~heuermh/bosc2008.pdf)
+[bosc2008.pdf](http://www.biojava.org/download/files/bosc2008.pdf)
 
 #### Questions & Answers
 
@@ -23,6 +23,8 @@ The project statistics are generated and presented by Ohloh.net.
 Biojava has a project page at
 
 <http://www.ohloh.net/projects/biojava>
+
+The presentation has been updated with this link.
 
 #### Birds of a Feather (BOF) Session
 
