@@ -16,6 +16,9 @@ a reference example to both demonstrate how such a task can be
 implemented and to show that the API is sufficient to implement the
 task.
 
+Very brief notes from the Biojava BOF session at BOSC 2008 are up at
+[BOSC Presentation](http://biojava.org/wiki/BOSC2008_Presentation).
+
 Use case template
 =================
 
