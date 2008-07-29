@@ -2,7 +2,7 @@ This page will contain a bunch of [http://en.wikipedia.org/wiki/Use_case use-cas
 
 Use cases should describe a task or goal that will be performed. Typically the task will be performed by a user with the assistance of an application (or a component of an application). The goal of the BioJava developers will be to make sure the new BioJava API is sufficient to allow such a application to be built. They will also endevour to provide a reference example to both demonstrate how such a task can be implemented and to show that the API is sufficient to implement the task.
 
-Very brief notes from the Biojava BOF session at BOSC 2008 are up at [http://biojava.org/wiki/BOSC2008_Presentation BOSC Presentation].
+Very brief notes from the Biojava BOF session at BOSC 2008 are up at [[BOSC2008_Presentation|BOSC Presentation]].
 
 = Use case template =
 Copied from the use case template found in [http://en.wikipedia.org/wiki/Use_case Wikipedia use case article]
