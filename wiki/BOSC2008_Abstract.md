@@ -20,92 +20,6 @@ biojava-dev mailing list with any further changes to be made.
 
 ### Author(s) Information
 
-#### Author \#1
-
-**Name:** Michael Heuer
-
-**Organization:** Harbinger Partners, Inc.
-
-**Country:** USA
-
-**Email:**
-
-**Additional Authors:**
-
-Richard Holland
-
-Eagle Genomics Ltd.
-
-UK
-
-Thomas Down
-
-Wellcome Trust/Cancer Research UK Gurdon Institute
-
-UK
-
-Matthew Pocock
-
-University Newcastle Upon Tyne
-
-UK
-
-Andreas Prlic
-
-Wellcome Trust Sanger Institute
-
-UK
-
-David Huen
-
-University of Cambridge
-
-UK
-
-Keith James
-
-Wellcome Trust Sanger Institute
-
-UK
-
-Sylvain Foisy
-
-Laboratory in Genetics and Genomic Medicine of Inflammation
-
-Montreal Heart Institute
-
-Montreal, Québec
-
-Canada
-
-Andreas Dräger
-
-Eberhard Karls University Tübingen
-
-Center for Bioinformatics Tübingen (ZBIT)
-
-Germany
-
-Andy Yates
-
-European Bioinformatics Institute (EMBL-EBI)
-
-UK
-
-Mark Schreiber
-
-Novartis Institute for Tropical Diseases
-
-Singapore
-
-### Contact Author
-
-**Contact Author:** Author \#1
-
-**Alternate Email:** xxx
-
-**Telephone:** xxx
-
 ### Technical Areas
 
 Bio \* Open Source Project Updates
@@ -132,26 +46,6 @@ trees, processing PDB files, and genetic algorithms.
 **Paper:**
 
 BioJava Project Update
-
-Holland, R.C.G.<sup>1</sup>, Down, T.<sup>2</sup>, Pocock,
-M.<sup>3</sup>, Prlic, A.<sup>4</sup>, Huen D.<sup>5</sup>, James
-K.<sup>4</sup>, Foisy, S.<sup>6</sup>, Dräger, A.<sup>7</sup>, Yates,
-A.<sup>8</sup>, Heuer M.<sup>9</sup>, and Schreiber, M.J.<sup>10</sup>
-
-<sup>1</sup> Eagle Genomics Ltd., Cambridge, UK <sup>2</sup> Wellcome
-Trust/Cancer Research UK Gurdon Institute, Cambridge CB2 1QN, UK
-<sup>3</sup> University Newcaste Upon Tyne, Newcastle Upon Tyne, NE1
-7RU, UK <sup>4</sup> Wellcome Trust Sanger Institute, Genome Campus,
-Hinxton, Cambridgeshire CB10 1SA, UK <sup>5</sup> Department of
-Genetics, University of Cambridge, Cambridge CB2 3EH, UK <sup>6</sup>
-Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal
-Heart Institute, Montreal, Québec, Canada. <sup>7</sup> Eberhard Karls
-University Tübingen, Center for Bioinformatics (ZBIT), Germany
-<sup>8</sup> European Bioinformatics Institute (EMBL-EBI), Genome
-Campus, Hinxton, Cambridgeshire CB10 1SD, UK <sup>9</sup> Harbinger
-Partners, Inc., St. Paul, Minnesota, USA <sup>10</sup> Novartis
-Institute for Tropical Diseases, 10 Biopolis Road, Chromos \#05-01,
-Singapore 138670
 
 BioJava was conceived in 1999 by Thomas Down and Matthew Pocock as an
 API to simplify bioinformatics software development using Java (Pocock
