@@ -35,6 +35,9 @@ dynamic programming toolkit.
 </td>
 </tr>
 </table>
+
+------------------------------------------------------------------------
+
 Please cite:
 
 [BioJava: an Open-Source Framework for
