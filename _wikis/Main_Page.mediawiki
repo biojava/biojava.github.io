@@ -32,3 +32,9 @@ BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [h
 
 </tr>
 </table>
+
+Please cite:
+
+[http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref BioJava: an Open-Source Framework for Bioinformatics] <br/>
+<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S. Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i><br/>
+Bioinformatics 2008; doi: [http://dx.doi.org/10.1093/bioinformatics/btn397 10.1093/bioinformatics/btn397]
