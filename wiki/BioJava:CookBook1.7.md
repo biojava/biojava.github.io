@@ -52,22 +52,6 @@ How about simplified
 [Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
-Presentations
--------------
-
-This is a powerpoint presentation on the [BioJava core API (version
-1.4)](http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt) that I
-have given a few times.
-
-Publications
-------------
-
-A list of publications is available from <BioJava:BioJavaInside>.
-
-Click here to search [Google
-Scholar](http://scholar.google.com/scholar?q=biojava) for papers using
-BioJava.
-
 How Do I....?
 -------------
 
