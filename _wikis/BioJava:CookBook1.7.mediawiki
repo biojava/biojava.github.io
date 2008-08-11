@@ -4,9 +4,13 @@ BioJava can be both big and intimidating. For those of us who are in a hurry the
 
 The page was inspired by various programming cookbooks and follows a "How do I...?" type approach. Each "How do I?" is linked to some example code that does what you want and sometimes more. Basically if you find the code you want and copy and paste it into your program you should be up and running quickly. I have endeavoured to over document the code to make it more obvious what I am doing so some of the code might look a bit bloated.
 
-'BioJava in Anger' is maintained by [[User:Mark|Mark Schreiber]]. If you have any suggestions, questions or comments contact the [mailto:biojava-l@biojava.org biojava mailing list]. To subscribe to this list go [http://biojava.org/mailman/listinfo/biojava-l here]
+If you have any suggestions, questions or comments contact the [mailto:biojava-l@biojava.org biojava mailing list]. To subscribe to this list go [http://biojava.org/mailman/listinfo/biojava-l here]
 
-These demos are tested with BioJava 1.3 and Java 1.4
+If you re-use code from the cookbook please cite:
+
+[http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref BioJava: an Open-Source Framework for Bioinformatics] <br/>
+<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S. Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i><br/>
+Bioinformatics 2008; doi: [http://dx.doi.org/10.1093/bioinformatics/btn397 10.1093/bioinformatics/btn397]
 
 == Announcing ==
 

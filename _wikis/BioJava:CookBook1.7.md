@@ -19,13 +19,18 @@ up and running quickly. I have endeavoured to over document the code to
 make it more obvious what I am doing so some of the code might look a
 bit bloated.
 
-'BioJava in Anger' is maintained by [Mark
-Schreiber](User:Mark "wikilink"). If you have any suggestions, questions
-or comments contact the [biojava mailing
-list](mailto:biojava-l@biojava.org). To subscribe to this list go
-[here](http://biojava.org/mailman/listinfo/biojava-l)
+If you have any suggestions, questions or comments contact the [biojava
+mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
+go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
-These demos are tested with BioJava 1.3 and Java 1.4
+If you re-use code from the cookbook please cite:
+
+[BioJava: an Open-Source Framework for
+Bioinformatics](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)  
+<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S.
+Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i>  
+Bioinformatics 2008; doi:
+[10.1093/bioinformatics/btn397](http://dx.doi.org/10.1093/bioinformatics/btn397)
 
 Announcing
 ----------
