@@ -22,16 +22,6 @@ You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_
 
 How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
 
-== Presentations ==
-
-This is a powerpoint presentation on the [http://www.biojava.org/docs/bj_in_anger/BioJavaAPI.ppt BioJava core API (version 1.4)] that I have given a few times.
-
-== Publications ==
-
-A list of publications is available from [[BioJava:BioJavaInside]].
-
-Click here to search [http://scholar.google.com/scholar?q=biojava Google Scholar] for papers using BioJava.
-
 == How Do I....? ==
 
 === Setup ===
