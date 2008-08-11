@@ -25,13 +25,6 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 If you re-use code from the cookbook please cite:
 
-[BioJava: an Open-Source Framework for
-Bioinformatics](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)  
-<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S.
-Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i>  
-Bioinformatics 2008; doi:
-[10.1093/bioinformatics/btn397](http://dx.doi.org/10.1093/bioinformatics/btn397)
-
 Announcing
 ----------
 
