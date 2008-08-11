@@ -1,8 +1,6 @@
 '''If you use BioJava in an application or publication please cite:'''
 
-[http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref BioJava: an Open-Source Framework for Bioinformatics] <br/>
-<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S. Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i><br/>
-Bioinformatics 2008; doi: [http://dx.doi.org/10.1093/bioinformatics/btn397 10.1093/bioinformatics/btn397]
+{{Reference}}
 
 == Projects ==
 The following projects make use of BioJava. If you know of other projects please add them to the list.
