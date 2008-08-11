@@ -2,6 +2,13 @@
 
 BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [http://www.java.sun.com Java] framework for processing biological data. It includes objects for manipulating biological sequences, file parsers, [http://biodas.org/ DAS] client and server support, access to [[biosql:Main_Page|BioSQL]] and [http://www.ensembl.org Ensembl] databases, tools for making sequence analysis GUIs and powerful analysis and statistical routines including a dynamic programming toolkit.
 
+'''Please cite:'''
+
+[http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref BioJava: an Open-Source Framework for Bioinformatics] <br/>
+<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S. Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i><br/>
+Bioinformatics 2008; doi: [http://dx.doi.org/10.1093/bioinformatics/btn397 10.1093/bioinformatics/btn397]
+
+
 <table style="width:100%; vertical-align: top">
 <tr style="vertical-align: top;">
 <td style="width: 25%; vertical-align: top;">
@@ -32,13 +39,3 @@ BioJava is an [[wp:Open source|open-source]] project dedicated to providing a [h
 
 </tr>
 </table>
-
-
-----
-
-
-Please cite:
-
-[http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref BioJava: an Open-Source Framework for Bioinformatics] <br/>
-<i>R.C.G. Holland; T. Down; M. Pocock; A. Prlic; D. Huen; K. James; S. Foisy; A. Drager; A. Yates; M. Heuer; M.J. Schreiber</i><br/>
-Bioinformatics 2008; doi: [http://dx.doi.org/10.1093/bioinformatics/btn397 10.1093/bioinformatics/btn397]
