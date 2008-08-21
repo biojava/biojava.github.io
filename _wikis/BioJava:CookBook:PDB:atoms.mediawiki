@@ -7,6 +7,8 @@ A Structure has a hierarchy of sub-objects:
 
 <pre>
 Structure
+   |
+   Model(s)
         |
         Chain(s)
             |

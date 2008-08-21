@@ -12,6 +12,8 @@ class is the main container.
 A Structure has a hierarchy of sub-objects:
 
     Structure
+       |
+       Model(s)
             |
             Chain(s)
                 |
