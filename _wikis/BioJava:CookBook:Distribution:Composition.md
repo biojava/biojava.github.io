@@ -7,7 +7,7 @@ Calculating the composition of a Sequence or collection of Sequences
 
 The following program is a full application that can determine the
 composition of one or more `SymbolList`s or `RichSequence` objects. The
-application can count words or any order (size) and can count them as
+application can count words of any order (size) and can count them as
 overlapping or non-overlapping words (eg triplets or codons).
 
 The program uses the Jakarta CLI library for processing command line
