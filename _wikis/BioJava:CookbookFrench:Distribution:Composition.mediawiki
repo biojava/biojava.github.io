@@ -1,7 +1,5 @@
 == Comment calculer la composition d'une ou plusieurs Sequences? ==
 
-'''Attention: cet exemple n&eacute;cessite Java 1.5 ainsi que les extensions biojavax retrouv&eacute;es dans la version CVS de BioJava.'''
-
 Le programme suivant est une d&eacute;monstration compl&egrave;te capable de calucler la composition d'une ou plusieurs <code>SymbolList</code>s ou <code>RichSequence</code>. Cette application peut compter les mots de n'importe quelle taille et peut le faire de mani&egrave;re &agrave; trouver le mots qui se recoupent ou non (triplets ou codons par exemple).
 
 Le programme utilise la librairie CLI pour le traitement des options de la ligne de commande et utilise les types g&eacute;n&eacute;riques pour la s&eacute;curit&eacute; des types. Il fait aussi la d&eacute;monstration de l'usage de l'architecture I/O BioJavax en incluant la particularisation capable d'ignorer certaines informations commes les caract&eacute;ristiques et les commentaires, sans importance pour la calcul de la composition. 
