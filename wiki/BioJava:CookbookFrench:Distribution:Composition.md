@@ -5,9 +5,6 @@ title: BioJava:CookbookFrench:Distribution:Composition
 Comment calculer la composition d'une ou plusieurs Sequences?
 -------------------------------------------------------------
 
-**Attention: cet exemple nécessite Java 1.5 ainsi que les extensions
-biojavax retrouvées dans la version CVS de BioJava.**
-
 Le programme suivant est une démonstration complète capable de calucler
 la composition d'une ou plusieurs `SymbolList`s ou `RichSequence`. Cette
 application peut compter les mots de n'importe quelle taille et peut le
