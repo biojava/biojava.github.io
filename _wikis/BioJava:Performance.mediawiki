@@ -96,6 +96,10 @@ Results:
 ! Speed
 ! Memory
 |-
+| Intel(R) Quad-Core Xeon @ 3GHz (Mac OS X 10.5.4, Java 6)
+| 765 milli sec.
+|
+|-
 | Intel(R) Pentium(R) Dual  CPU  E2160  @ 1.80GHz (Linux, Java 6)
 | 1.1 sec
 | 
