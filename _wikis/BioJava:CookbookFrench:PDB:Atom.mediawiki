@@ -6,12 +6,14 @@ Un objet Structure contient la hi&eacute;rarchie suivante de sous-objets:
 
 <pre>
 Structure
-        |
-        Chain(s)
+   |
+   Model(s)
+      |
+      Chain(s)
+         |
+         Group(s)
             |
-             Group(s)
-                 |
-                 Atom(s)
+            Atom(s)
 </pre>
 
 Il existe diff&eacute;rentes mani&egrave;res d'acc&eacute;der aux donn&eacute;es contenues dans un objet Structure. Par exemple, si vous voulez obtenir directement un tableau d'Atomes, utilisez le code suivant:
