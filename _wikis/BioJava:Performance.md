@@ -71,12 +71,13 @@ Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
 
 Results:
 
-| System                                                                  | Speed     | Memory |
-|-------------------------------------------------------------------------|-----------|--------|
-| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 1.1 sec   |        |
-| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 1.5 sec.  |        |
-| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 1.52 sec. |        |
-| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 4.4 sec   |        |
+| System                                                                  | Speed          | Memory |
+|-------------------------------------------------------------------------|----------------|--------|
+| Intel(R) Quad-Core Xeon @ 3GHz (Mac OS X 10.5.4, Java 6)                | 765 milli sec. |        |
+| Intel(R) Pentium(R) Dual CPU E2160 @ 1.80GHz (Linux, Java 6)            | 1.1 sec        |        |
+| Intel (R) Pentium (R) Dual CPU T2330 @ 1.60 GHz (Windows Vista, Java 6) | 1.5 sec.       |        |
+| Intel (R) Core 2 Duo @ 2.0GHz (Mac OS X 10.5.4, Java 6)                 | 1.52 sec.      |        |
+| 1.33 Ghz PowerPC G4 (Mac OS X 10.4.9, Java 5)                           | 4.4 sec        |        |
 
 Calculate structure alignment of Myoglobin and Haemoglobin
 ----------------------------------------------------------
