@@ -14,12 +14,14 @@ vous procure le conteneur principal à partir du quel vous pouvez accéder
 Un objet Structure contient la hiérarchie suivante de sous-objets:
 
     Structure
-            |
-            Chain(s)
+       |
+       Model(s)
+          |
+          Chain(s)
+             |
+             Group(s)
                 |
-                 Group(s)
-                     |
-                     Atom(s)
+                Atom(s)
 
 Il existe différentes manières d'accéder aux données contenues dans un
 objet Structure. Par exemple, si vous voulez obtenir directement un
