@@ -19,7 +19,7 @@ Results:
 ! Speed
 ! Memory
 |-
-| Intel(R) Quad-Core Xeon @ 3GHz (Mac OSX, Java 6)
+| Intel(R) Quad-Core Xeon @ 3GHz (Mac OS X 10.5.4, Java 6)
 | 9 sec.
 | 91 MB
 |-
