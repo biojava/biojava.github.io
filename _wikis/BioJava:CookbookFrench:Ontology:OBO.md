@@ -5,8 +5,8 @@ title: BioJava:CookbookFrench:Ontology:OBO
 Comment extraire l'information d'un fichier d'ontologie en format OBO?
 ======================================================================
 
-Dans le version de développement, BioJava contient mainteannt un parser
-pour les BioJava now contains a parser for [fichiers
+Dans le version de développement, BioJava contient maintenant un parser
+pour les [fichiers
 .OBO](http://www.geneontology.org/GO.format.obo-1_2.shtml). Ce parser
 ré-utilise des portions du parser contenu dans le [logiciel
 OBO-Edit](http://wiki.geneontology.org/index.php/OBO-Edit), mais la
