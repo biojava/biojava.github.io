@@ -1,6 +1,6 @@
 =Comment extraire l'information d'un fichier d'ontologie en format OBO?=
 
-Dans le version de développement, BioJava contient mainteannt un parser  pour les BioJava now contains a parser for [http://www.geneontology.org/GO.format.obo-1_2.shtml fichiers .OBO]. Ce parser ré-utilise des portions du parser contenu dans le [http://wiki.geneontology.org/index.php/OBO-Edit logiciel OBO-Edit], mais la librairie obo-edit et son interface graphique ne sont pas nécessaires pour extraire les infos d'un fichier .OBO. Un gros merci aux développeurs de OBO_Edit pour la permission de ré-utiliser en partie leur code source!
+Dans le version de développement, BioJava contient maintenant un parser  pour les [http://www.geneontology.org/GO.format.obo-1_2.shtml fichiers .OBO]. Ce parser ré-utilise des portions du parser contenu dans le [http://wiki.geneontology.org/index.php/OBO-Edit logiciel OBO-Edit], mais la librairie obo-edit et son interface graphique ne sont pas nécessaires pour extraire les infos d'un fichier .OBO. Un gros merci aux développeurs de OBO_Edit pour la permission de ré-utiliser en partie leur code source!
 
 Le code du parser sera dans la prochaine version de BioJava. Pour l'utiliser dans son état présent, il vous faudra utiliser la version du [[Autobuild_events|serveur SVN]].
 
