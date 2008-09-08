@@ -62,6 +62,11 @@ projects please add them to the list.
 -   [Strap](http://www.charite.de/bioinf/strap/): A tool for multiple
     sequence alignment and sequence based structure alignment.
 
+<!-- -->
+
+-   [Jstacs](http://www.jstacs.de): A Java framework for statistical
+    analysis and classification of biological sequences
+
 Publications
 ------------
 
