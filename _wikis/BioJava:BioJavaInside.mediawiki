@@ -25,6 +25,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.charite.de/bioinf/strap/ Strap]: A tool for multiple sequence alignment and sequence based structure alignment.
 
+* [http://www.jstacs.de Jstacs]: A Java framework for statistical analysis and classification of biological sequences
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
