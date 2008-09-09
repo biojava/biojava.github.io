@@ -26,16 +26,19 @@ A binary distribution is available as
 
 ### Support libraries
 
--   bytecode.jar: Required to run biojava
--   commons-cli.jar: Only required to compile and use some of the demos
--   commons-collections-2.1.jar: only required for some demos and BioSQL
-    access (and building biojava.jar)
--   commons-dbcp-1.1.jar: Only required for legacy BioSQL access (and
-    building biojava.jar)
--   commons-pool-1.1.jar: Only required for legacy BioSQL access (and
-    building biojava.jar)
--   jgrapht-jdk1.5.jar: Only required for NEXUS file parsing (and
-    building biojava.jar)
+-   [bytecode.jar](http://www.biojava.org/download/bj16/support-jars/bytecode.jar):
+    Required to run biojava
+-   [commons-cli.jar](http://www.biojava.org/download/bj16/support-jars/commons-cli.jar):
+    Only required to compile and use some of the demos
+-   [commons-collections-2.1.jar](http://www.biojava.org/download/bj16/support-jars/commons-collections-2.1.jar):
+    only required for some demos and BioSQL access (and building
+    biojava.jar)
+-   [commons-dbcp-1.1.jar](http://www.biojava.org/download/bj16/support-jars/commons-dbcp-1.1.jar):
+    Only required for legacy BioSQL access (and building biojava.jar)
+-   [commons-pool-1.1.jar](http://www.biojava.org/download/bj16/support-jars/commons-pool-1.1.jar):
+    Only required for legacy BioSQL access (and building biojava.jar)
+-   [jgrapht-jdk1.5.jar](http://www.biojava.org/download/bj16/support-jars/jgrapht-jdk1.5.jar):
+    Only required for NEXUS file parsing (and building biojava.jar)
 
 Documentation
 -------------
