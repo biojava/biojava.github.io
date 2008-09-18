@@ -60,3 +60,9 @@ DAS Extensions
 
 Dazzle provides support for the DAS extensions that are available in the
 [DAS 1.53E specification](http://www.dasregistry.org/spec_1.53E.jsp)
+
+DAS client
+----------
+
+The DAS client library Dasobert is available from
+[<http://www.spice-3d.org/dasobert/>](http://www.spice-3d.org/dasobert/)
