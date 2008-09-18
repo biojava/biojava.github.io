@@ -24,6 +24,12 @@ Getting Dazzle
 
 Dazzle can be downloaded from
 [<http://www.derkholm.net/svn/repos/dazzle/trunk>](http://www.derkholm.net/svn/repos/dazzle/trunk)
+using subversion and built using ant
+
+    svn checkout http://www.derkholm.net/svn/repos/dazzle/trunk ./dazzle
+    cd ./dazzle
+    ant clean
+    ant
 
 Installation and Configuration
 ------------------------------
