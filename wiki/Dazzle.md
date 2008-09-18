@@ -64,5 +64,6 @@ Dazzle provides support for the DAS extensions that are available in the
 DAS client
 ----------
 
-The DAS client library Dasobert is available from
+The BioJava based DAS client library
+[Dasobert](http://www.spice-3d.org/dasobert/) is available from
 [<http://www.spice-3d.org/dasobert/>](http://www.spice-3d.org/dasobert/)
