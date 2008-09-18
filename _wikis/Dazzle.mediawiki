@@ -8,7 +8,14 @@ Dazzle has been developed at the Wellcome Trust Sanger Institute by [[Thomas_Dow
 
 ==Getting Dazzle==
 
-Dazzle can be downloaded from [http://www.derkholm.net/svn/repos/dazzle/trunk http://www.derkholm.net/svn/repos/dazzle/trunk]
+Dazzle can be downloaded from [http://www.derkholm.net/svn/repos/dazzle/trunk http://www.derkholm.net/svn/repos/dazzle/trunk] using subversion and built using ant
+
+<pre>
+svn checkout http://www.derkholm.net/svn/repos/dazzle/trunk ./dazzle
+cd ./dazzle
+ant clean
+ant
+</pre>
 
 ==Installation and Configuration==
 For installation and configuration instructions, please see the [[Dazzle:deployment]] guide.
