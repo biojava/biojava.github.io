@@ -22,7 +22,8 @@ Dazzle has been developed at the Wellcome Trust Sanger Institute by
 Getting Dazzle
 --------------
 
-Dazzle can be downloaded from <Dazzle:download>.
+Dazzle can be downloaded from
+[<http://www.derkholm.net/svn/repos/dazzle/trunk>](http://www.derkholm.net/svn/repos/dazzle/trunk)
 
 Installation and Configuration
 ------------------------------
