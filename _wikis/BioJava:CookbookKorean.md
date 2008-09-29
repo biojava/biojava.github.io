@@ -155,16 +155,17 @@ How about simplified
 
 ### BLAST와 FASTA
 
--   [How do I set up a BLAST
-    parser](BioJava:CookBook:Blast:Parser "wikilink")?
--   [How do I set up a FASTA
-    parser](BioJava:CookBook:Fasta:Parser "wikilink")?
--   [How do I extract information from parsed
-    results](BioJava:CookBook:Blast:Extract "wikilink")?
--   [How do I parse a large file; Or, How do I make a custom
-    SearchContentHandler](BioJava:CookBook:Blast:Echo "wikilink")?
--   [How do I convert an XML BLAST result into HTML
-    page](BioJava:CookBook:Blast:XML "wikilink")?
+-   [어떻게 BLAST 파서를 설정
+    하나요](BioJava:CookBook:Blast:Parser "wikilink")?
+-   [어떻게 FASTA 파서를 설정
+    하나요](BioJava:CookBook:Fasta:Parser "wikilink")?
+-   [어떻게 파싱된 결과로 부터 정보를 추출
+    하나요](BioJava:CookBook:Blast:Extract "wikilink")?
+-   [어떻게 큰 파일을 파싱할 수 있나요;또는 어떻게 맞춤
+    SearchContentHandler를 만들 수
+    있나요](BioJava:CookBook:Blast:Echo "wikilink")?
+-   [어떻게 XML 형태의 BLAST 결과를 HTML 페이지로 만들 수
+    있나요](BioJava:CookBook:Blast:XML "wikilink")?
 
 ### 카운트와 배포
 

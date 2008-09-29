@@ -86,11 +86,11 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === BLAST와 FASTA ===
 
-* [[BioJava:CookBook:Blast:Parser|How do I set up a BLAST parser]]?
-* [[BioJava:CookBook:Fasta:Parser|How do I set up a FASTA parser]]?
-* [[BioJava:CookBook:Blast:Extract|How do I extract information from parsed results]]?
-* [[BioJava:CookBook:Blast:Echo|How do I parse a large file; Or, How do I make a custom SearchContentHandler]]?
-* [[BioJava:CookBook:Blast:XML|How do I convert an XML BLAST result into HTML page]]?
+* [[BioJava:CookBook:Blast:Parser|어떻게 BLAST 파서를 설정 하나요]]?
+* [[BioJava:CookBook:Fasta:Parser|어떻게 FASTA 파서를 설정 하나요]]?
+* [[BioJava:CookBook:Blast:Extract|어떻게 파싱된 결과로 부터 정보를 추출 하나요]]?
+* [[BioJava:CookBook:Blast:Echo|어떻게 큰 파일을 파싱할 수 있나요;또는 어떻게 맞춤  SearchContentHandler를 만들 수 있나요]]?
+* [[BioJava:CookBook:Blast:XML|어떻게 XML 형태의 BLAST 결과를 HTML 페이지로 만들 수 있나요]]?
 
 === 카운트와 배포 ===
 
