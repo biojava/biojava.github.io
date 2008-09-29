@@ -13,6 +13,6 @@
 * [[Biojava:Cookbook:Alphabets|어떻게 DNA, RNA 또는 Protein 알파벳을 얻을 수 있나요]]?
 * [[Biojava:Cookbook:Alphabets:Custom|어떻게 커스텀 심볼로 부터 커스텀 알파벳을 만들 수 있나요]]?
 * [[Biojava:Cookbook:Alphabets:CrossProduct|어떻게 코돈 알파벳과 같은 크로스프로덕트알파벳(CrossProductAlphabet)을 만들 수 있나요]]?
-* [[Biojava:Cookbook:Alphabets:Component|How do I break Symbols from CrossProduct Alphabets into their component Symbols]]?
-* [[Biojava:Cookbook:Alphabets:Cononical|How can I tell if two Alphabets or Symbols are equal]]?
-* [[Biojava:Cookbook:Alphabets:Ambiguous|How can I make an ambiguous Symbol like Y or R]]?
+* [[Biojava:Cookbook:Alphabets:Component|어떻게 컴포넌트 심볼의 크로스프로덕트(CrossProduct) 알파벳으로부터 분해 할 수 있나요]]?
+* [[Biojava:Cookbook:Alphabets:Cononical|어떻게 두 알파벳 또는 심볼이 같다고 말할 수 있나요]]?
+* [[Biojava:Cookbook:Alphabets:Ambiguous|어떻게 Y나 R과 같이 애매한 심볼을 만들 수 있나요]]?
