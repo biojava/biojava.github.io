@@ -136,11 +136,11 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === 단백질 구조 ===
 
-* [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
-* [[BioJava:CookBook:PDB:mmcif|How can I read a .mmcif file?]]
-* [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
-* [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on atoms?]]
-* [[BioJava:CookBook:PDB:header|How can I access the header information of a PDB file?]]
+* [[BioJava:CookBook:PDB:read|어떻게 PDB 파일을 읽을 수 있나요]]?
+* [[BioJava:CookBook:PDB:mmcif|어떻게 .mmcif 파일을 읽을 수 있나요]]?
+* [[BioJava:CookBook:PDB:atoms|어떻게 구조 파일의 원자에 접근할 수 있나요]]?
+* [[BioJava:CookBook:PDB:atomsCalc|어떻게 원자를 계산할 수 있나요]]?
+* [[BioJava:CookBook:PDB:header|어떻게 PDB 파일의 헤더 정보에 접근할 수 있나요]]?
 * [[BioJava:CookBook:PDB:seqres|How does BioJava deal with SEQRES and ATOM groups?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
 * [[BioJava:CookBook:PDB:align|How can I calculate a structure superimposition?]]
