@@ -265,8 +265,8 @@ How about simplified
 
 ### 온톨로지
 
--   [How can I parse an OBO
-    file?](BioJava:CookBook:OBO:parse "wikilink")
+-   [어떻게 OBO 파일을 파싱할 수
+    있나요](BioJava:CookBook:OBO:parse "wikilink")?
 
 Disclaimer
 ----------
