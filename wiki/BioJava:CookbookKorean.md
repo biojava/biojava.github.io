@@ -235,8 +235,8 @@ How about simplified
 
 ### 유전자 알고리즘
 
--   [How can I make a Genetic Algorithm with
-    BioJava](BioJava:CookBook:GA "wikilink")?
+-   [어떻게 BioJava를 가지고 유전자 알고리즘을 만들 수
+    있나요](BioJava:CookBook:GA "wikilink")?
 
 ### 단백질 구조
 
