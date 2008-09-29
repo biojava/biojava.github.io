@@ -46,9 +46,6 @@ How about simplified
 [Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
-발표
-----
-
 뭘 해야하나?
 ------------
 
