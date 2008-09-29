@@ -258,10 +258,10 @@ How about simplified
     superimposition?](BioJava:CookBook:PDB:align "wikilink")
 -   [How can I use a simple GUI to calculate a
     superimposition?](BioJava:CookBook:PDB:alignGUI "wikilink")
--   [How can I interact with
-    Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
--   [How can I serialize to a
-    database?](BioJava:CookBook:PDB:hibernate "wikilink")
+-   [어떻게 Jmol과 사용할 수
+    있나요](BioJava:CookBook:PDB:Jmol "wikilink")?
+-   [어떻게 데이터베이스로 직렬화 할 수
+    있나요](BioJava:CookBook:PDB:hibernate "wikilink")?
 
 ### 온톨로지
 
