@@ -26,10 +26,10 @@ BioJava In Anger - 바쁜 사람을 위한 튜토리얼 레시피북
 -   [어떻게 코돈 알파벳과 같은
     크로스프로덕트알파벳(CrossProductAlphabet)을 만들 수
     있나요](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")?
--   [How do I break Symbols from CrossProduct Alphabets into their
-    component Symbols](Biojava:Cookbook:Alphabets:Component "wikilink")?
--   [How can I tell if two Alphabets or Symbols are
-    equal](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
--   [How can I make an ambiguous Symbol like Y or
-    R](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")?
+-   [어떻게 컴포넌트 심볼의 크로스프로덕트(CrossProduct) 알파벳으로부터
+    분해 할 수 있나요](Biojava:Cookbook:Alphabets:Component "wikilink")?
+-   [어떻게 두 알파벳 또는 심볼이 같다고 말할 수
+    있나요](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
+-   [어떻게 Y나 R과 같이 애매한 심볼을 만들 수
+    있나요](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")?
 
