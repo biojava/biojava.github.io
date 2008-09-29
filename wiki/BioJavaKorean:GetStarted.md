@@ -33,7 +33,7 @@ To use BioJava, add the required JAR files to your CLASSPATH environment
 variable. The exact syntax varies between platforms. The text is wrapped
 due to limited space. The actual commands should be on a single line:
 
-### 유닉스 본 쉘 타입 (대부분의 리눅스 배포본이나 MacOS 10.3)
+### 유닉스 본 쉘 (대부분의 리눅스 배포본이나 MacOS 10.3)
 
 `export CLASSPATH=/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
 `                        /home/thomas/commons-cli.jar:`  
@@ -45,7 +45,7 @@ In some distributions of Biojava, you need to specify biojava.jar
 instead of biojava-live.jar in the above. We are working on resolving
 this.
 
-### 유닉스 C 쉘 타입 (예: Mac OS X pre-10.3 버전)
+### 유닉스 C 쉘 (예: Mac OS X pre-10.3 버전)
 
 `setenv CLASSPATH /home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
 `                        /home/thomas/commons-cli.jar:`  
