@@ -27,3 +27,107 @@
 * [[Biojava:Cookbook:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
 * [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
 * [[Biojava:Cookbook:Sequence:ExtractGeneRegions|How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS')]]?
+
+=== 번역 ===
+
+* [[Biojava:Cookbook:Translation|How do I translate a DNA or RNA Sequence or SymbolList to Protein]]?
+* [[Biojava:Cookbook:Translation:Single|How do I translate a single codon to a single amino acid]]?
+* [[Biojava:Cookbook:Translation:NonStandart|How do I use a non standard translation table]]?
+* [[Biojava:Cookbook:Translation:SixFrames|How do I translate a nucleotide sequence in all six frames]]?
+* [[Biojava:Cookbook:Translation:OneLetterAmbi|How do I retrieve the 1-Letter code of a translated sequence containing ambiguities]]?
+
+=== 프로테오믹스 ===
+
+* [[Biojava:Cookbook:Proteomics|How do I calculate the mass and pI of a peptide]]?
+* [[Biojava:Cookbook:Proteomics:AAindex|How do I analyze the symbol properties of an amino acid sequence using the Amino Acid Index database]]?
+
+=== 서열 입출력 ===
+
+* [[Biojava:Cookbook:SeqIO:WriteInFasta|How do I write Sequences in Fasta format]]?
+* [[Biojava:Cookbook:SeqIO:ReadFasta|How do I read in a Fasta file]]?
+* [[Biojava:Cookbook:SeqIO:ReadGES|How do I read a GenBank/EMBL/SwissProt file]]?
+* [[Biojava:Cookbook:SeqIO:ReadGESBiojavax|How do I read a sequence file with the Biojavax extension]]?
+* [[Biojava:Cookbook:SeqIO:GBtoFasta|How do I extract GenBank/EMBL/Swissprot sequences and write them as Fasta]]?
+* [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
+* [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
+
+=== 주석 ===
+
+* [[BioJava:Cookbook:Annotations:List|How do I list the Annotations in a Sequence]]?
+* [[BioJava:Cookbook:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
+
+=== 위치 정보와 특징 ===
+
+* [[BioJava:Cookbook:Locations:Point|How do I specify a PointLocation]]?
+* [[BioJava:Cookbook:Locations:Range|How do I specify a RangeLocation]]?
+* [[BioJava:Cookbook:Locations:Circular|How do CircularLocations work]]?
+* [[BioJava:Cookbook:Locations:Feature|How can I make a Feature]]?
+* [[BioJava:Cookbook:Locations:Filter|How can I filter Features by type]]?
+* [[BioJava:Cookbook:Locations:Remove|How can I remove features]]?
+
+=== BLAST와 FASTA ===
+
+* [[BioJava:CookBook:Blast:Parser|How do I set up a BLAST parser]]?
+* [[BioJava:CookBook:Fasta:Parser|How do I set up a FASTA parser]]?
+* [[BioJava:CookBook:Blast:Extract|How do I extract information from parsed results]]?
+* [[BioJava:CookBook:Blast:Echo|How do I parse a large file; Or, How do I make a custom SearchContentHandler]]?
+* [[BioJava:CookBook:Blast:XML|How do I convert an XML BLAST result into HTML page]]?
+
+=== 카운트와 배포 ===
+
+* [[BioJava:CookBook:Count:Residues|How do I count the residues in a Sequence]]?
+* [[BioJava:CookBook:Count:Frequency|How do I calculate the frequency of a Symbol in a Sequence]]?
+* [[BioJava:CookBook:Count:ToDistrib|How can I turn a Count into a Distribution]]?
+* [[BioJava:CookBook:Distribution:RandomSeqs|How can I generate a random sequence from a Distribution]]?
+* [[BioJava:CookBook:Distribution:Entropy|How can I find the amount of information or entropy in a Distribution]]?
+* [[BioJava:CookBook:Distribution:Emission|What is an easy way to tell if two Distributions have equal weights]]?
+* [[BioJava:CookBook:Distribution:Custom|How can I make an OrderNDistribution over a custom Alphabet]]?
+* [[BioJava:CookBook:Distribution:XML|How can I write a Distribution as XML]]?
+* [[BioJava:CookBook:Distribution:Gibbs|Using Distributions to make a Gibbs sampler]]
+* [[BioJava:CookBook:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
+* [[Biojava:CookBook:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
+
+
+=== 중요 행렬과 동적 프로그래밍 ===
+
+* [[BioJava:CookBook:DP:WeightMatrix|How do I use a WeightMatrix to find a motif]]?
+* [[BioJava:CookBook:DP:HMM|How do I make a HMMER like profile HMM]]?
+* |How do I set up a custom HMM? (Link to Tutorial?? --[[User:Guedes|Guedes]] 11:43, 8 February 2006 (EST) )
+* [[BioJava:CookBook:DP:PairWise|How do I generate a pair-wise alignment with a Hidden Markov Model]]?
+* [[BioJava:CookBook:DP:PairWise2|How do I generate a global or local alignment with the Needleman-Wunsch- or the Smith-Waterman-algorithm]]?
+
+=== 유저 인터페이스 ===
+
+* [[BioJava:CookBook:Interfaces:ViewAsTree|How can I visualize Annotations and Features as a tree]]?
+* [[BioJava:CookBook:Interfaces:ViewInGUI|How can I display a Sequence in a GUI]]?
+* [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
+* [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
+* [[BioJava:CookBook:Interfaces:ProteinPeptideFeatures|How can I display Protein Features / a Peptide Digest]]?
+
+=== BioSQL과 서열 데이터베이스 ===
+
+* [[BioJava:CookBook:BioSQL:SetupPostGre|How do I set up BioSQL with PostgreSQL?]] (by [[User:David|David Huen]])
+* [[BioJava:CookBook:BioSQL:SetupOracle|How do I set up BioSQL with Oracle?]] (by [[User:Richard|Richard Holland]])
+* [[BioJava:CookBook:BioSQL:Manage|How do I add, view and remove Sequence Objects from a BioSQL DB?]]
+* [[BioJava:CookBook:ExternalSources:NCBIFetch|How can I get a sequence straight from NCBI?]]
+
+=== 유전자 알고리즘 ===
+
+* [[BioJava:CookBook:GA|How can I make a Genetic Algorithm with BioJava]]?
+
+=== 단백질 구조 ===
+
+* [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
+* [[BioJava:CookBook:PDB:mmcif|How can I read a .mmcif file?]]
+* [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
+* [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on atoms?]]
+* [[BioJava:CookBook:PDB:header|How can I access the header information of a PDB file?]]
+* [[BioJava:CookBook:PDB:seqres|How does BioJava deal with SEQRES and ATOM groups?]]
+* [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
+* [[BioJava:CookBook:PDB:align|How can I calculate a structure superimposition?]]
+* [[BioJava:CookBook:PDB:alignGUI|How can I use a simple GUI to calculate a superimposition?]]
+* [[BioJava:CookBook:PDB:Jmol|How can I interact with Jmol?]]
+* [[BioJava:CookBook:PDB:hibernate|How can I serialize to a database?]]
+
+=== 온톨로지 ===
+* [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
