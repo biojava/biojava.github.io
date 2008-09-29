@@ -62,10 +62,10 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === 서열 입출력 ===
 
-* [[Biojava:Cookbook:SeqIO:WriteInFasta|How do I write Sequences in Fasta format]]?
-* [[Biojava:Cookbook:SeqIO:ReadFasta|How do I read in a Fasta file]]?
-* [[Biojava:Cookbook:SeqIO:ReadGES|How do I read a GenBank/EMBL/SwissProt file]]?
-* [[Biojava:Cookbook:SeqIO:ReadGESBiojavax|How do I read a sequence file with the Biojavax extension]]?
+* [[Biojava:Cookbook:SeqIO:WriteInFasta|어떻게 서열을 Fasta 형식으로 만들 수 있나요]]?
+* [[Biojava:Cookbook:SeqIO:ReadFasta|어떻게 Fasta 파일을 읽을 수 있나요]]?
+* [[Biojava:Cookbook:SeqIO:ReadGES|어떻게 GenBank/EMBL/SwissProt 파일을 읽을 수 있나요]]?
+* [[Biojava:Cookbook:SeqIO:ReadGESBiojavax|어떻게 Biojavax 확장을 가지고 서열 파일을 읽을 수 있나요]]?
 * [[Biojava:Cookbook:SeqIO:GBtoFasta|How do I extract GenBank/EMBL/Swissprot sequences and write them as Fasta]]?
 * [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
 * [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
