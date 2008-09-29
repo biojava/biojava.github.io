@@ -125,8 +125,8 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === BioSQL과 서열 데이터베이스 ===
 
-* [[BioJava:CookBook:BioSQL:SetupPostGre|How do I set up BioSQL with PostgreSQL?]] (by [[User:David|David Huen]])
-* [[BioJava:CookBook:BioSQL:SetupOracle|How do I set up BioSQL with Oracle?]] (by [[User:Richard|Richard Holland]])
+* [[BioJava:CookBook:BioSQL:SetupPostGre|어떻게 PostgreSQL을 가지고 BioSQL을 설정하나요]]? ([[User:David|David Huen]로 부터])
+* [[BioJava:CookBook:BioSQL:SetupOracle|어떻게 오라클을 가지고 BioSQL을 설정하나요]]? ([[User:Richard|Richard Holland]로 부터])
 * [[BioJava:CookBook:BioSQL:Manage|How do I add, view and remove Sequence Objects from a BioSQL DB?]]
 * [[BioJava:CookBook:ExternalSources:NCBIFetch|How can I get a sequence straight from NCBI?]]
 
