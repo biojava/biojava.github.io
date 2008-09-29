@@ -33,3 +33,23 @@ BioJava In Anger - 바쁜 사람을 위한 튜토리얼 레시피북
 -   [어떻게 Y나 R과 같이 애매한 심볼을 만들 수
     있나요](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")?
 
+### 기본적인 서열 조작하기
+
+-   [어떻게 하면 문자로 부터 서열 객체를 작성하거나 서열 객체를 문자로
+    되돌릴 수 있나요](Biojava:Cookbook:Sequence "wikilink")?
+-   [어떻게 서열 객체의 일부분을 가져올 수
+    있나요](Biojava:Cookbook:Sequence:SubSequence "wikilink")?
+-   [어떻게 DNA 서열을 RNA 서열로 전사할 수
+    있나요](Biojava:Cookbook:Sequence:Transcribe "wikilink")?
+-   [How do I reverse complement a DNA or RNA
+    Sequence](Biojava:Cookbook:Sequence:Reverse "wikilink")?
+-   [Sequences are immutable so how can I change it's
+    name](Biojava:Cookbook:Sequence:ChangeName "wikilink")?
+-   [How can I edit a Sequence or
+    SymbolList](Biojava:Cookbook:Sequence:Edit "wikilink")?
+-   [How can I make a sequence motif into a regular
+    expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
+-   [How can I extract all regions beeing marked (or not) with a special
+    feature (e.g. 'gene' or
+    'CDS')](Biojava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
+
