@@ -146,7 +146,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 * [[BioJava:CookBook:PDB:align|How can I calculate a structure superimposition?]]
 * [[BioJava:CookBook:PDB:alignGUI|How can I use a simple GUI to calculate a superimposition?]]
 * [[BioJava:CookBook:PDB:Jmol|어떻게 Jmol과 사용할 수 있나요]]?
-* [[BioJava:CookBook:PDB:hibernate|어떻게 데이터베이스로 직렬화 할 수 있나요]]?
+* [[BioJava:CookBook:PDB:hibernate|어떻게 데이터베이스로 부터 직렬화 할 수 있나요]]?
 
 === 온톨로지 ===
 * [[BioJava:CookBook:OBO:parse|어떻게 OBO 파일을 파싱할 수 있나요]]?
