@@ -53,7 +53,7 @@ How about simplified
 
 -   [Java는 어디에서 가져와야 하나요](http://java.sun.com/downloads/)?
 -   [BioJava는 어디서 다운로드해서 설치할 수
-    있나요](BioJava:GetStarted "wikilink")?
+    있나요](BioJavaKorean:GetStarted "wikilink")?
 
 ### 알파벳과 심볼
 

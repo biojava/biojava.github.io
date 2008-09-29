@@ -25,7 +25,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 ===셋업===
 * [http://java.sun.com/downloads/ Java는 어디에서 가져와야 하나요]?
-* [[BioJava:GetStarted|BioJava는 어디서 다운로드해서 설치할 수 있나요]]?
+* [[BioJavaKorean:GetStarted|BioJava는 어디서 다운로드해서 설치할 수 있나요]]?
 
 === 알파벳과 심볼 ===
 
