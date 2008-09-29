@@ -222,12 +222,12 @@ How about simplified
 
 ### BioSQL과 서열 데이터베이스
 
--   [How do I set up BioSQL with
-    PostgreSQL?](BioJava:CookBook:BioSQL:SetupPostGre "wikilink") (by
-    [David Huen](User:David "wikilink"))
--   [How do I set up BioSQL with
-    Oracle?](BioJava:CookBook:BioSQL:SetupOracle "wikilink") (by
-    [Richard Holland](User:Richard "wikilink"))
+-   [어떻게 PostgreSQL을 가지고 BioSQL을
+    설정하나요](BioJava:CookBook:BioSQL:SetupPostGre "wikilink")?
+    ([[User:David|David Huen]로 부터])
+-   [어떻게 오라클을 가지고 BioSQL을
+    설정하나요](BioJava:CookBook:BioSQL:SetupOracle "wikilink")?
+    ([[User:Richard|Richard Holland]로 부터])
 -   [How do I add, view and remove Sequence Objects from a BioSQL
     DB?](BioJava:CookBook:BioSQL:Manage "wikilink")
 -   [How can I get a sequence straight from
