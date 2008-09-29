@@ -46,8 +46,8 @@ How about simplified
 [Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
-뭘 해야하나?
-------------
+뭘 해야하나요?
+--------------
 
 ### 셋업
 
