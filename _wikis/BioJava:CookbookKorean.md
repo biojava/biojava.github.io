@@ -241,15 +241,16 @@ How about simplified
 
 ### 단백질 구조
 
--   [How can I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
--   [How can I read a .mmcif
-    file?](BioJava:CookBook:PDB:mmcif "wikilink")
--   [How can I access the atoms in a
-    structure?](BioJava:CookBook:PDB:atoms "wikilink")
--   [How can I do calculations on
-    atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
--   [How can I access the header information of a PDB
-    file?](BioJava:CookBook:PDB:header "wikilink")
+-   [어떻게 PDB 파일을 읽을 수
+    있나요](BioJava:CookBook:PDB:read "wikilink")?
+-   [어떻게 .mmcif 파일을 읽을 수
+    있나요](BioJava:CookBook:PDB:mmcif "wikilink")?
+-   [어떻게 구조 파일의 원자에 접근할 수
+    있나요](BioJava:CookBook:PDB:atoms "wikilink")?
+-   [어떻게 원자를 계산할 수
+    있나요](BioJava:CookBook:PDB:atomsCalc "wikilink")?
+-   [어떻게 PDB 파일의 헤더 정보에 접근할 수
+    있나요](BioJava:CookBook:PDB:header "wikilink")?
 -   [How does BioJava deal with SEQRES and ATOM
     groups?](BioJava:CookBook:PDB:seqres "wikilink")
 -   [How can I mutate a
