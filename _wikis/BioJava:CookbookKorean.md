@@ -61,11 +61,10 @@ How about simplified
     있나요](Biojava:Cookbook:Alphabets "wikilink")?
 -   [어떻게 커스텀 심볼로 부터 커스텀 알파벳을 만들 수
     있나요](Biojava:Cookbook:Alphabets:Custom "wikilink")?
--   [어떻게 코돈 알파벳과 같은
-    크로스프로덕트알파벳(CrossProductAlphabet)을 만들 수
+-   [어떻게 코돈 알파벳과 같은 CrossProductAlphabet을 만들 수
     있나요](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")?
--   [어떻게 컴포넌트 심볼의 크로스프로덕트(CrossProduct) 알파벳으로부터
-    분해 할 수 있나요](Biojava:Cookbook:Alphabets:Component "wikilink")?
+-   [어떻게 컴포넌트 심볼의 CrossProduct 알파벳으로부터 분해 할 수
+    있나요](Biojava:Cookbook:Alphabets:Component "wikilink")?
 -   [어떻게 두 알파벳 또는 심볼이 같다고 말할 수
     있나요](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
 -   [어떻게 Y나 R과 같이 애매한 심볼을 만들 수
