@@ -9,13 +9,13 @@ You can get the legacy release version of BioJava 1.4 here;
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow this link.
 
-== Installation ==
+== 설치 ==
 
 None of these .jar files need to be unpacked for normal use -- simply place them in a convenient directory.
 
 To use BioJava, add the required JAR files to your CLASSPATH environment variable. The exact syntax varies between platforms. The text is wrapped due to limited space. The actual commands should be on a single line:
 
-=== UNIX Bourne-type shells (the default with most Linux distributions and MacOS 10.3) ===
+=== 유닉스 본 쉘 타입 (대부분의 리눅스 배포본이나 MacOS 10.3) ===
 
  export CLASSPATH=/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
                          /home/thomas/commons-cli.jar:
@@ -25,7 +25,7 @@ To use BioJava, add the required JAR files to your CLASSPATH environment variabl
 
 In some distributions of Biojava, you need to specify biojava.jar instead of biojava-live.jar in the above. We are working on resolving this.
 
-=== UNIX C-type shell (for example: versions of Mac OS X pre-10.3)===
+=== 유닉스 C 쉘 타입 (예: Mac OS X pre-10.3 버전)===
 
  setenv CLASSPATH /home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
                          /home/thomas/commons-cli.jar:
@@ -35,7 +35,7 @@ In some distributions of Biojava, you need to specify biojava.jar instead of bio
 
 In some distributions of Biojava, you need to specify biojava.jar instead of biojava-live.jar in the above. We are working on resolving this.
 
-=== Windows from command line ===
+=== 윈도우즈 명령어 ===
 
  set CLASSPATH C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;
                          C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
@@ -43,7 +43,7 @@ In some distributions of Biojava, you need to specify biojava.jar instead of bio
 
 In some distributions of Biojava, you need to specify biojava.jar instead of biojava-live.jar in the above. We are working on resolving this.
 
-=== Windows autoexec.bat files ===
+=== 윈도우즈 autoexec.bat 파일 ===
 
  set CLASSPATH=C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;
                          C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
