@@ -131,3 +131,13 @@
 
 === 온톨로지 ===
 * [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
+
+== Disclaimer ==
+
+This code is generously donated by people who probably have better things to do. Where possible we test it but errors may have crept in. As such, all code and advice here in has no warranty or guarantee of any sort. You didn't pay for it and if you use it we are not responsible for anything that goes wrong. Be a good programmer and test it yourself before unleashing it on your corporate database.
+
+== Copyright ==
+
+The documentation on this site is the property of the people who contributed it. If you wish to use it in a publication please make a request through the [mailto:biojava-l@biojava.org biojava mailing list].
+
+The code is [[wp:Open source|open-source]]. A good definition of open-source can be found [http://www.opensource.org/docs/definition_plain.php here]. If you agree with that definition then you can use it.

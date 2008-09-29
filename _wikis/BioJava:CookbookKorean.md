@@ -229,3 +229,25 @@ BioJava In Anger - 바쁜 사람을 위한 튜토리얼 레시피북
 -   [How can I parse an OBO
     file?](BioJava:CookBook:OBO:parse "wikilink")
 
+Disclaimer
+----------
+
+This code is generously donated by people who probably have better
+things to do. Where possible we test it but errors may have crept in. As
+such, all code and advice here in has no warranty or guarantee of any
+sort. You didn't pay for it and if you use it we are not responsible for
+anything that goes wrong. Be a good programmer and test it yourself
+before unleashing it on your corporate database.
+
+Copyright
+---------
+
+The documentation on this site is the property of the people who
+contributed it. If you wish to use it in a publication please make a
+request through the [biojava mailing
+list](mailto:biojava-l@biojava.org).
+
+The code is [open-source](wp:Open source "wikilink"). A good definition
+of open-source can be found
+[here](http://www.opensource.org/docs/definition_plain.php). If you
+agree with that definition then you can use it.
