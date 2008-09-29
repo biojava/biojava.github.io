@@ -149,7 +149,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 * [[BioJava:CookBook:PDB:hibernate|How can I serialize to a database?]]
 
 === 온톨로지 ===
-* [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
+* [[BioJava:CookBook:OBO:parse|어떻게 OBO 파일을 파싱할 수 있나요]]?
 
 == Disclaimer ==
 
