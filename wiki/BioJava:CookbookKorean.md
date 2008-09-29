@@ -5,6 +5,46 @@ title: BioJava:CookbookKorean
 BioJava In Anger - 바쁜 사람을 위한 튜토리얼 레시피북
 -----------------------------------------------------
 
+BioJava can be both big and intimidating. For those of us who are in a
+hurry there really is a whole lot there to get your head around. This
+document is designed to help you develop BioJava programs that do 99% of
+common tasks without needing to read and understand 99% of the BioJava
+API.
+
+The page was inspired by various programming cookbooks and follows a
+"How do I...?" type approach. Each "How do I?" is linked to some example
+code that does what you want and sometimes more. Basically if you find
+the code you want and copy and paste it into your program you should be
+up and running quickly. I have endeavoured to over document the code to
+make it more obvious what I am doing so some of the code might look a
+bit bloated.
+
+If you have any suggestions, questions or comments contact the [biojava
+mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
+go [here](http://biojava.org/mailman/listinfo/biojava-l)
+
+If you re-use code from the cookbook please cite:
+
+Announcing
+----------
+
+You can now read BioJava in Anger in
+[French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
+Foisy; mise à jour / updated : 28 août 2008).
+
+You can also read Biojava in Anger in
+[Portuguese](Biojava:CookbookPortuguese "wikilink") (Translated by
+Dickson Guedes)
+
+You can also read BioJava in Anger in
+[Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
+(Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
+2004).
+
+How about simplified
+[Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
+(Translated by Wu Xin).
+
 발표
 ----
 
