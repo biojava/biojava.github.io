@@ -260,7 +260,7 @@ How about simplified
     superimposition?](BioJava:CookBook:PDB:alignGUI "wikilink")
 -   [어떻게 Jmol과 사용할 수
     있나요](BioJava:CookBook:PDB:Jmol "wikilink")?
--   [어떻게 데이터베이스로 직렬화 할 수
+-   [어떻게 데이터베이스로 부터 직렬화 할 수
     있나요](BioJava:CookBook:PDB:hibernate "wikilink")?
 
 ### 온톨로지
