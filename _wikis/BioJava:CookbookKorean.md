@@ -114,14 +114,14 @@ How about simplified
 
 ### 서열 입출력
 
--   [How do I write Sequences in Fasta
-    format](Biojava:Cookbook:SeqIO:WriteInFasta "wikilink")?
--   [How do I read in a Fasta
-    file](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
--   [How do I read a GenBank/EMBL/SwissProt
-    file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?
--   [How do I read a sequence file with the Biojavax
-    extension](Biojava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
+-   [어떻게 서열을 Fasta 형식으로 만들 수
+    있나요](Biojava:Cookbook:SeqIO:WriteInFasta "wikilink")?
+-   [어떻게 Fasta 파일을 읽을 수
+    있나요](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
+-   [어떻게 GenBank/EMBL/SwissProt 파일을 읽을 수
+    있나요](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?
+-   [어떻게 Biojavax 확장을 가지고 서열 파일을 읽을 수
+    있나요](Biojava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
 -   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
     Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
