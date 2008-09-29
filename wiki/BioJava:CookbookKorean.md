@@ -24,7 +24,7 @@ BioJava API에 대해서 모두 이해하지 않고서도 99%의 일반적인 Bi
 [여기에서](http://biojava.org/mailman/listinfo/biojava-l) 구독하시면
 됩니다.
 
-If you re-use code from the cookbook please cite:
+쿡북의 코드를 사용하기 원하시면 다음을 인용해 주세요:
 
 Announcing
 ----------
