@@ -13,7 +13,8 @@ BioJava에서의
 BioJava의
 [AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)에서
 이름으로 접근할 수 있다. [DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink") [[wp:protein|단백질] 알파벳은 또한 편리하게
+[RNA](wp:RNA "wikilink") [단백질](wp:protein "wikilink") 알파벳은 또한
+편리하게
 [DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
 [RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html),
 P[ProteinTools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html)
