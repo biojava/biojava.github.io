@@ -29,7 +29,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === 알파벳과 심볼 ===
 
-* [[Biojava:Cookbook:Alphabets|어떻게 DNA, RNA 또는 Protein 알파벳을 얻을 수 있나요]]?
+* [[Biojava:Cookbook:Alphabets|어떻게 DNA, RNA 또는 단백질 알파벳을 얻을 수 있나요]]?
 * [[Biojava:Cookbook:Alphabets:Custom|어떻게 커스텀 심볼로 부터 커스텀 알파벳을 만들 수 있나요]]?
 * [[Biojava:Cookbook:Alphabets:CrossProduct|어떻게 코돈 알파벳과 같은 CrossProductAlphabet을 만들 수 있나요]]?
 * [[Biojava:Cookbook:Alphabets:Component|어떻게 컴포넌트 심볼의 CrossProduct 알파벳으로부터 분해 할 수 있나요]]?
