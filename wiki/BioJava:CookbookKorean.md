@@ -57,7 +57,7 @@ How about simplified
 
 ### 알파벳과 심볼
 
--   [어떻게 DNA, RNA 또는 Protein 알파벳을 얻을 수
+-   [어떻게 DNA, RNA 또는 단백질 알파벳을 얻을 수
     있나요](Biojava:Cookbook:Alphabets "wikilink")?
 -   [어떻게 커스텀 심볼로 부터 커스텀 알파벳을 만들 수
     있나요](Biojava:Cookbook:Alphabets:Custom "wikilink")?
