@@ -92,12 +92,12 @@ How about simplified
 
 ### 번역
 
--   [How do I translate a DNA or RNA Sequence or SymbolList to
-    Protein](Biojava:Cookbook:Translation "wikilink")?
--   [How do I translate a single codon to a single amino
-    acid](Biojava:Cookbook:Translation:Single "wikilink")?
--   [How do I use a non standard translation
-    table](Biojava:Cookbook:Translation:NonStandart "wikilink")?
+-   [어떻게 DNA, RNA, SymbolList를 단백질로 번역할 수
+    있나요](Biojava:Cookbook:Translation "wikilink")?
+-   [어떻게 싱글 코돈을 싱글 아미노산으로 번역할 수
+    있나요](Biojava:Cookbook:Translation:Single "wikilink")?
+-   [어떻게 비 표준의 번역 테이블을 사용할 수
+    있나요](Biojava:Cookbook:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
     frames](Biojava:Cookbook:Translation:SixFrames "wikilink")?
 -   [How do I retrieve the 1-Letter code of a translated sequence
