@@ -78,12 +78,12 @@ How about simplified
     있나요](Biojava:Cookbook:Sequence:SubSequence "wikilink")?
 -   [어떻게 DNA 서열을 RNA 서열로 전사할 수
     있나요](Biojava:Cookbook:Sequence:Transcribe "wikilink")?
--   [How do I reverse complement a DNA or RNA
-    Sequence](Biojava:Cookbook:Sequence:Reverse "wikilink")?
+-   [어떻게 DNA나 RNA 서열의 reverse complement를 만들 수
+    있나요](Biojava:Cookbook:Sequence:Reverse "wikilink")?
 -   [Sequences are immutable so how can I change it's
     name](Biojava:Cookbook:Sequence:ChangeName "wikilink")?
--   [How can I edit a Sequence or
-    SymbolList](Biojava:Cookbook:Sequence:Edit "wikilink")?
+-   [어떻게 Sequence나 SymbolList를 편집할 수
+    있나요](Biojava:Cookbook:Sequence:Edit "wikilink")?
 -   [How can I make a sequence motif into a regular
     expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
 -   [How can I extract all regions beeing marked (or not) with a special
