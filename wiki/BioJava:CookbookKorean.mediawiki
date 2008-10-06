@@ -41,9 +41,9 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 * [[Biojava:Cookbook:Sequence|어떻게 하면 문자로 부터 서열 객체를 작성하거나 서열 객체를 문자로 되돌릴 수 있나요]]?
 * [[Biojava:Cookbook:Sequence:SubSequence|어떻게 서열 객체의 일부분을 가져올 수 있나요]]?
 * [[Biojava:Cookbook:Sequence:Transcribe|어떻게 DNA 서열을 RNA 서열로 전사할 수 있나요]]?
-* [[Biojava:Cookbook:Sequence:Reverse|How do I reverse complement a DNA or RNA Sequence]]?
+* [[Biojava:Cookbook:Sequence:Reverse|어떻게 DNA나 RNA 서열의 reverse complement를 만들 수 있나요]]?
 * [[Biojava:Cookbook:Sequence:ChangeName|Sequences are immutable so how can I change it's name]]?
-* [[Biojava:Cookbook:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
+* [[Biojava:Cookbook:Sequence:Edit|어떻게 Sequence나 SymbolList를 편집할 수 있나요]]?
 * [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
 * [[Biojava:Cookbook:Sequence:ExtractGeneRegions|How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS')]]?
 
