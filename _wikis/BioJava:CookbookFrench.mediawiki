@@ -144,7 +144,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Utilisation des ontologies avec BioJava ===
 
-* [[BioJava:CookbookFrench:Ontology:OBO|Comment faire pour lire une ontologie en format OBO? (À venir...)]]
+* [[BioJava:CookbookFrench:Ontology:OBO|Comment faire pour lire une ontologie en format OBO?]]
 
 == D&eacute;saveu de responsabilit&eacute; ==
 
