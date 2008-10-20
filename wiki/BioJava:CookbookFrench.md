@@ -270,8 +270,8 @@ Comment faire pour ...?
 
 ### Utilisation des ontologies avec BioJava
 
--   [Comment faire pour lire une ontologie en format OBO? (À
-    venir...)](BioJava:CookbookFrench:Ontology:OBO "wikilink")
+-   [Comment faire pour lire une ontologie en format
+    OBO?](BioJava:CookbookFrench:Ontology:OBO "wikilink")
 
 Désaveu de responsabilité
 -------------------------
