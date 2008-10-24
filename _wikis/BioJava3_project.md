@@ -54,3 +54,8 @@ Coding conventions
 -   [BioJava3\_logging](BioJava3_logging "wikilink") - How to use
     logging
 
+Links
+-----
+
+-   [BioJava3\_Proposal](BioJava3_Proposal "wikilink")
+
