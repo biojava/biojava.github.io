@@ -4,4 +4,4 @@ This is how far I (--[[User:Andreas|Andreas]] 03:42, 24 October 2008 (UTC)) got 
 
 * Checked out the project as a Java project
 
-* right click on the pom.xml and Run As -> Maven build ... install
+* right click on the pom.xml and Run As -> Maven install
