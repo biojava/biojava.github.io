@@ -23,7 +23,7 @@ this command:
 
 `svn list `[`svn://code.open-bio.org/biojava`](svn://code.open-bio.org/biojava)
 
-### Checking out the latest BioJava development code
+### Checking out the latest BioJava code
 
 The following example shows how to obtain the latest BioJava codebase
 snapshot using anonymous SVN, it will check out the latest copy of
