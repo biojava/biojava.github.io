@@ -14,5 +14,5 @@ October 2008 (UTC)) got so far:
 
 <!-- -->
 
--   right click on the pom.xml and Run As -\> Maven build ... install
+-   right click on the pom.xml and Run As -\> Maven install
 
