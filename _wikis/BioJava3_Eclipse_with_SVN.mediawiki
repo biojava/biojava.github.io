@@ -1,0 +1,1 @@
+I am using the [http://maven.apache.org/eclipse-plugin.html Maven] eclipse plugin.
