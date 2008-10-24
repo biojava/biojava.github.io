@@ -20,8 +20,10 @@ Check it out via
 
 `svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/biojava3/`
 
-If you just want to see what is going on anonymous checkout is possible
-via
+If you just want to see what is going on browse the code at
+[<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/branches/biojava3>](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/branches/biojava3)
+
+Anonymous checkout is possible at
 
 `svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/`](svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/)
 
