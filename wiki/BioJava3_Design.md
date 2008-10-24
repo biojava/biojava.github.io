@@ -6,7 +6,7 @@ Implementation
 --------------
 
 For information on the current status of the BioJava 3 implementation go
-to [BioJava3\_project]
+to [BioJava3\_project](BioJava3_project "wikilink")
 
 References
 ----------

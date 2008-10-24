@@ -1,5 +1,5 @@
 == Implementation ==
-For information on the current status of the BioJava 3 implementation go to [BioJava3_project]
+For information on the current status of the BioJava 3 implementation go to [[BioJava3_project]]
 
 ==References==
 This document was based on comments made on the following pages:
