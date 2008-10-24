@@ -30,8 +30,8 @@ Anonymous checkout is possible at
 Wanted
 ------
 
-We still need somebody to migrate/rewrite the Blast parsing framework
-from BioJava 1
+We need a volunteer to migrate/rewrite the Blast parsing framework from
+BioJava 1
 
 Mailing List
 ------------
