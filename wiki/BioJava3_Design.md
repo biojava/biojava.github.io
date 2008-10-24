@@ -2,6 +2,12 @@
 title: BioJava3 Design
 ---
 
+Implementation
+--------------
+
+For information on the current status of the BioJava 3 implementation go
+to [BioJava3\_project]
+
 References
 ----------
 
