@@ -25,5 +25,5 @@ All discussions are on [http://www.biojava.org/mailman/listinfo/biojava-dev http
 ==Coding conventions==
 
 * We are using Maven to build biojava 3
-* [[BioJava3_logging]] - How to use logging
 * [[BioJava3_license]] - All source code of BioJava 3 is under LGPL.
+* [[BioJava3_logging]] - How to use logging
