@@ -16,3 +16,8 @@ October 2008 (UTC)) got so far:
 
 -   right click on the pom.xml and Run As -\> Maven install
 
+<!-- -->
+
+-   at the moment it fails since 1.6 is required and my operating system
+    (osx 10.4.11) does not have that...
+
