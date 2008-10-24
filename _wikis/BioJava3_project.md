@@ -27,6 +27,12 @@ Anonymous checkout is possible at
 
 `svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/`](svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/)
 
+IDE specific instructions
+-------------------------
+
+-   [BioJava3\_eclipse](BioJava3_eclipse "wikilink") how to work with
+    BioJava3 using eclipse
+
 Wanted
 ------
 

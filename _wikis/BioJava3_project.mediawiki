@@ -16,6 +16,10 @@ Anonymous checkout is possible at
 
  svn co svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/
 
+== IDE specific instructions==
+
+* [[BioJava3_eclipse]] how to work with BioJava3 using eclipse
+
 ==Wanted==
 
 We need a volunteer to migrate/rewrite the Blast parsing framework from BioJava 1
