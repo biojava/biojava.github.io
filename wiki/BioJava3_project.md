@@ -41,8 +41,8 @@ Coding conventions
 ------------------
 
 -   We are using Maven to build biojava 3
--   [BioJava3\_logging](BioJava3_logging "wikilink") - How to use
-    logging
 -   [BioJava3\_license](BioJava3_license "wikilink") - All source code
     of BioJava 3 is under LGPL.
+-   [BioJava3\_logging](BioJava3_logging "wikilink") - How to use
+    logging
 
