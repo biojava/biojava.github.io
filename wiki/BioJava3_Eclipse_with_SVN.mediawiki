@@ -5,3 +5,5 @@ This is how far I (--[[User:Andreas|Andreas]] 03:42, 24 October 2008 (UTC)) got 
 * Checked out the project as a Java project
 
 * right click on the pom.xml and Run As -> Maven install
+
+* at the moment it fails since 1.6 is required and my operating system (osx 10.4.11) does not have that...
