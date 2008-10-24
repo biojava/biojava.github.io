@@ -1,0 +1,1 @@
+BioJava 3 is using the [[BioJava:License|standard BioJava license]]: LGPL v 2.1
