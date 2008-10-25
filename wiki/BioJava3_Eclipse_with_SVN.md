@@ -2,15 +2,31 @@
 title: BioJava3 Eclipse with SVN
 ---
 
-This is how far I (--[Andreas](User:Andreas "wikilink") 03:42, 24
-October 2008 (UTC)) got so far:
+Prerequisite
+------------
 
--   I am using the [Maven](http://maven.apache.org/eclipse-plugin.html)
-    eclipse plugin.
+-   Make sure you have a copy of the latest eclipse (Ganymed)
 
 <!-- -->
 
--   Checked out the project as a Java project
+-   Make sure you have Java 1.6 installed. (if you are on oSX 10.4.x
+    install [soylatte](http://landonf.bikemonkey.org/static/soylatte/)
+
+<!-- -->
+
+-   Install [Maven](http://maven.apache.org/eclipse-plugin.html) eclipse
+    plugin.
+
+<!-- -->
+
+-   Install the [subclipse](http://subclipse.tigris.org/) plugin for
+    subversion
+
+Installation
+------------
+
+-   Checked out [ the source for BioJava3](BioJava3_project "wikilink")
+    as a Java project (name it **biojava3**)
 
 <!-- -->
 
@@ -18,6 +34,6 @@ October 2008 (UTC)) got so far:
 
 <!-- -->
 
--   at the moment it fails since 1.6 is required and my operating system
-    (osx 10.4.11) does not have that...
+-   right click on the toplevel biojava3 project name and -\>Enable
+    dependecy management
 
