@@ -1,9 +1,17 @@
-This is how far I (--[[User:Andreas|Andreas]] 03:42, 24 October 2008 (UTC)) got so far:
+== Prerequisite ==
 
-* I am using the [http://maven.apache.org/eclipse-plugin.html Maven] eclipse plugin.
+* Make sure you have a copy of the latest eclipse (Ganymed)
 
-* Checked out the project as a Java project
+* Make sure you have Java 1.6 installed. (if you are on oSX 10.4.x install [http://landonf.bikemonkey.org/static/soylatte/ soylatte]
+
+* Install [http://maven.apache.org/eclipse-plugin.html Maven] eclipse plugin.
+
+* Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion
+
+== Installation ==
+
+* Checked out [[BioJava3_project| the source for BioJava3]] as a Java project  (name it '''biojava3''')
 
 * right click on the pom.xml and Run As -> Maven install
 
-* at the moment it fails since 1.6 is required and my operating system (osx 10.4.11) does not have that...
+* right click on the toplevel biojava3 project name and ->Enable dependecy management
