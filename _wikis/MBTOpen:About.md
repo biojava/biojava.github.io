@@ -90,4 +90,4 @@ Source Code and Downloads
 
 Source code and downloads will be available very soon.
 
---[Semblance](User:Semblance "wikilink") 04:33, 12 November 2008 (UTC)
+--[John Beaver](User:Semblance "wikilink") 04:33, 12 November 2008 (UTC)
