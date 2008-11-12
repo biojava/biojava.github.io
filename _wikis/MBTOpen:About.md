@@ -27,7 +27,7 @@ Toolkit, developed under its own grant by John Moreland and others at
 the [San Diego Supercomputer Center](http://www.sdsc.edu) (SDSC). The
 project was then taken under the umbrella of the [Protein
 Databank](http://www.pdb.org) (PDB). Several web-deployed applications
-were created and deployed to the main PDB website, as well as the
+have been created and deployed to the main PDB website, as well as the
 [IEDB](http://www.immuneepitope.org/home.do) website, and are being
 maintained both in their roles on the PDB website and as examples for
 developers of MBT Open projects. The PDB contributed the Molecular
