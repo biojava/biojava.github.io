@@ -59,7 +59,8 @@ Current Viewers Based on MBT Open
         and publication-quality image generation
     -   Ligand Explorer: a 3d protein viewer aimed at visualization and
         analysis of ligands
-    -   Simple Viewer: a 3d protein viewer aimed at visualization of
+    -   ![](SimpleViewerOverview.jpg "fig:SimpleViewerOverview.jpg")
+        Simple Viewer: a 3d protein viewer aimed at visualization of
         biological units and especially large repeated unit structures
         such as viral capsids
 -   Available at the [IEDB](http://www.immuneepitope.org/home.do):
@@ -70,3 +71,5 @@ Source Code and Downloads
 -------------------------
 
 Source code and downloads will be available very soon.
+
+--[Semblance](User:Semblance "wikilink") 04:33, 12 November 2008 (UTC)
