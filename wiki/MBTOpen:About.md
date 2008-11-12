@@ -60,14 +60,14 @@ Current Viewers Based on MBT Open
 
   
   
-![](ProteinWorkshopOverview.jpg "fig:ProteinWorkshopOverview.jpg")
+![](ProteinWorkshopOverview.png "fig:ProteinWorkshopOverview.png")
 
 -   -   Ligand Explorer: a 3d protein viewer aimed at visualization and
         analysis of ligands
 
   
   
-![](LigandExplorerOverview.jpg "fig:LigandExplorerOverview.jpg")
+![](LigandExplorerOverview.png "fig:LigandExplorerOverview.png")
 
 -   -   Simple Viewer: a 3d protein viewer aimed at visualization of
         biological units and especially large repeated unit structures
@@ -83,7 +83,7 @@ Current Viewers Based on MBT Open
 
   
   
-![](EpitopeViewerOverview.jpg "fig:EpitopeViewerOverview.jpg")
+![](EpitopeViewerOverview.png "fig:EpitopeViewerOverview.png")
 
 Source Code and Downloads
 -------------------------
