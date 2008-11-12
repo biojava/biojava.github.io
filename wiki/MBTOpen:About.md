@@ -96,4 +96,12 @@ License
 All MBT Open binaries and source code are released under the
 [LGPL](http://www.gnu.org/licenses/lgpl.html) version 3 license.
 
+Citations
+---------
+
+When citing MBT, please reference *J.L. Moreland, A.Gramada, O.V. Buzko,
+Qing Zhang and P.E. Bourne 2005 The Molecular Biology Toolkit (MBT): A
+Modular Platform for Developing Molecular Visualization Applications.
+BMC Bioinformatics, 6:21*
+
 --[John Beaver](User:Semblance "wikilink") 04:33, 12 November 2008 (UTC)
