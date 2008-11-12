@@ -49,7 +49,7 @@ following ways:
     analysis, with a robust plugin system to allow easy extension
 -   For the Bioinformatics computational researcher: Provide a forum and
     experimentation bed for 3d protein visualization techniques and
-    other structural biology computational themes
+    other computational structural biology themes
 
 Current Viewers Based on MBT Open
 ---------------------------------
