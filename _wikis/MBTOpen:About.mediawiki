@@ -32,6 +32,6 @@ Source code and downloads will be available very soon.
 
 == License ==
 
-The viewer binaries and source code are released under the [http://www.gnu.org/licenses/lgpl.html LGPL] version 3 license.
+All MBT Open binaries and source code are released under the [http://www.gnu.org/licenses/lgpl.html LGPL] version 3 license.
 
 --[[User:Semblance|John Beaver]] 04:33, 12 November 2008 (UTC)
