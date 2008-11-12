@@ -90,6 +90,11 @@ Source Code and Downloads
 
 Source code and downloads will be available very soon.
 
+How to Get Involved
+-------------------
+
+Contributors wanted! Instructions on how to get involved coming soon.
+
 License
 -------
 
