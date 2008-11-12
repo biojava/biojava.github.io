@@ -11,7 +11,7 @@ MBT Open originated from a mature library called the Molecular Biology Toolkit, 
 The MBT Open project seeks to contribute to the [[wp:Open source|open-source]] Bioinformatics community in the following ways:
 * For the Non-computational Biologist: Provide an easily configurable set of 3d protein visualization tools aimed at a variety of biological disciplines
 * For the Bioinformatics tool developer: Provide a state-of-the-art, cross-platform library for structural biology visualization and analysis, with a robust plugin system to allow easy extension
-* For the Bioinformatics computational researcher: Provide a forum and experimentation bed for 3d protein visualization techniques and other computational structural biology themes
+* For the Bioinformatics researcher: Provide a forum and experimentation bed for 3d protein visualization techniques and other computational structural biology themes
 
 == Current Applications Based on MBT Open ==
 
