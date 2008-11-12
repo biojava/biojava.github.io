@@ -13,7 +13,7 @@ The MBT Open project seeks to contribute to the [[wp:Open source|open-source]] B
 * For the Bioinformatics tool developer: Provide a state-of-the-art, cross-platform library for structural biology visualization and analysis, with a robust plugin system to allow easy extension
 * For the Bioinformatics computational researcher: Provide a forum and experimentation bed for 3d protein visualization techniques and other computational structural biology themes
 
-== Current Viewers Based on MBT Open ==
+== Current Applications Based on MBT Open ==
 
 * Available at the [http://www.rcsb.org RCSB PDB]:
 ** Protein Workshop: a 3d protein viewer aimed at general viewing and publication-quality image generation
