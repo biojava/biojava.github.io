@@ -59,7 +59,7 @@ Current Viewers Based on MBT Open
         and publication-quality image generation
     -   Ligand Explorer: a 3d protein viewer aimed at visualization and
         analysis of ligands
-    -   ![](SimpleViewerOverview.jpg "fig:SimpleViewerOverview.jpg")
+    -   ![](SimpleViewerOverview.png "fig:SimpleViewerOverview.png")
         Simple Viewer: a 3d protein viewer aimed at visualization of
         biological units and especially large repeated unit structures
         such as viral capsids
