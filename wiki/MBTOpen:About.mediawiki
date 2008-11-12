@@ -30,6 +30,10 @@ The MBT Open project seeks to contribute to the [[wp:Open source|open-source]] B
 
 Source code and downloads will be available very soon.
 
+== How to Get Involved ==
+
+Contributors wanted! Instructions on how to get involved coming soon.
+
 == License ==
 
 All MBT Open binaries and source code are released under the [http://www.gnu.org/licenses/lgpl.html LGPL] version 3 license.
