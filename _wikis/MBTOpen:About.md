@@ -55,14 +55,16 @@ Current Viewers Based on MBT Open
 ---------------------------------
 
 -   Available at the [RCSB PDB](http://www.rcsb.org):
-
-`  * Protein Workshop: a 3d protein viewer aimed at general viewing and publication-quality image generation`  
-`  * Ligand Explorer: a 3d protein viewer aimed at visualization and analysis of ligands`  
-`  * Simple Viewer: a 3d protein viewer aimed at visualization of biological units and especially large repeated unit structures such as viral capsids`
-
+    -   Protein Workshop: a 3d protein viewer aimed at general viewing
+        and publication-quality image generation
+    -   Ligand Explorer: a 3d protein viewer aimed at visualization and
+        analysis of ligands
+    -   Simple Viewer: a 3d protein viewer aimed at visualization of
+        biological units and especially large repeated unit structures
+        such as viral capsids
 -   Available at the [IEDB](http://www.immuneepitope.org/home.do):
-
-`  * Epitope Viewer: a 3d protein viewer aimed at visualization and analysis of immunologically relevant epitope information`
+    -   Epitope Viewer: a 3d protein viewer aimed at visualization and
+        analysis of immunologically relevant epitope information
 
 Source Code and Downloads
 -------------------------
