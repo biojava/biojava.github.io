@@ -51,8 +51,8 @@ following ways:
     experimentation bed for 3d protein visualization techniques and
     other computational structural biology themes
 
-Current Viewers Based on MBT Open
----------------------------------
+Current Applications Based on MBT Open
+--------------------------------------
 
 -   Available at the [RCSB PDB](http://www.rcsb.org):
     -   Protein Workshop: a 3d protein viewer aimed at general viewing
