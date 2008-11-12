@@ -47,7 +47,7 @@ following ways:
 -   For the Bioinformatics tool developer: Provide a state-of-the-art,
     cross-platform library for structural biology visualization and
     analysis, with a robust plugin system to allow easy extension
--   For the Bioinformatics computational researcher: Provide a forum and
+-   For the Bioinformatics researcher: Provide a forum and
     experimentation bed for 3d protein visualization techniques and
     other computational structural biology themes
 
