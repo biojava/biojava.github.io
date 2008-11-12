@@ -9,14 +9,15 @@ MBT Open is an [open-source](wp:Open source "wikilink"),
 [Java](http://www.java.sun.com)-based protein visualization and analysis
 toolkit. The toolkit builds upon BioJava to provide classes for
 efficiently loading, managing and manipulating protein structure and
-sequence data. The MBT Open also provides a rich set of graphical 3D and
-2D visualization components which can be easily "plugged together" to
-produce applications having sophisticated graphical user interfaces.
-Yet, with all of the GUI components provided in the toolkit, the core
-data i/o and manipulation classes may be used to write completely
-non-graphical applications (say, for implementing pure analysis codes,
-or, for producing a non-graphical "back end" for web-based
-applications).
+sequence data. The MBT Open excels especially in providing a rich set of
+state-of-the-art 3d-accellerated graphical visualization components, as
+well as 2D visualization components which can be easily "plugged
+together" to produce applications having sophisticated graphical user
+interfaces. Yet, with all of the GUI components provided in the toolkit,
+the core data i/o and manipulation classes may be used to write
+completely non-graphical applications (say, for implementing pure
+analysis codes, or, for producing a non-graphical "back end" for
+web-based applications).
 
 History
 -------
@@ -50,3 +51,20 @@ following ways:
     experimentation bed for 3d protein visualization techniques and
     other structural biology computational themes
 
+Current Viewers Based on MBT Open
+---------------------------------
+
+-   Available at the [RCSB PDB](http://www.rcsb.org):
+
+`  * Protein Workshop: a 3d protein viewer aimed at general viewing and publication-quality image generation`  
+`  * Ligand Explorer: a 3d protein viewer aimed at visualization and analysis of ligands`  
+`  * Simple Viewer: a 3d protein viewer aimed at visualization of biological units and especially large repeated unit structures such as viral capsids`
+
+-   Available at the [IEDB](http://www.immuneepitope.org/home.do):
+
+`  * Epitope Viewer: a 3d protein viewer aimed at visualization and analysis of immunologically relevant epitope information`
+
+Source Code and Downloads
+-------------------------
+
+Source code and downloads will be available very soon.
