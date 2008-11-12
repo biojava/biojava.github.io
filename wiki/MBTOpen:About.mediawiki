@@ -4,7 +4,7 @@ MBT Open is an [[wp:Open source|open-source]], [http://www.java.sun.com Java]-ba
 
 == History ==
 
-MBT Open originated from a mature library called the Molecular Biology Toolkit, developed under its own grant by John Moreland and others at the [http://www.sdsc.edu San Diego Supercomputer Center] (SDSC). The project was then taken under the umbrella of the [http://www.pdb.org Protein Databank] (PDB). Several web-deployed applications were created and deployed to the main PDB website, as well as the [http://www.immuneepitope.org/home.do IEDB] website, and are being maintained both in their roles on the PDB website and as examples for developers of MBT Open projects. The PDB contributed the Molecular Biology Toolkit code to the BioJava effort in 2008 in order to make it more accessible to a larger audience of developers and users.
+MBT Open originated from a mature library called the Molecular Biology Toolkit, developed under its own grant by John Moreland and others at the [http://www.sdsc.edu San Diego Supercomputer Center] (SDSC). The project was then taken under the umbrella of the [http://www.pdb.org Protein Databank] (PDB). Several web-deployed applications have been created and deployed to the main PDB website, as well as the [http://www.immuneepitope.org/home.do IEDB] website, and are being maintained both in their roles on the PDB website and as examples for developers of MBT Open projects. The PDB contributed the Molecular Biology Toolkit code to the BioJava effort in 2008 in order to make it more accessible to a larger audience of developers and users.
 
 == Goals ==
 
