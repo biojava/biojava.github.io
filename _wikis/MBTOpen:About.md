@@ -77,14 +77,6 @@ Current Applications Based on MBT Open
   
 ![](SimpleViewerOverview.png "fig:SimpleViewerOverview.png")
 
--   Available at the [IEDB](http://www.immuneepitope.org/home.do):
-    -   Epitope Viewer: a 3d protein viewer aimed at visualization and
-        analysis of immunologically relevant epitope information
-
-  
-  
-![](EpitopeViewerOverview.png "fig:EpitopeViewerOverview.png")
-
 Source Code and Downloads
 -------------------------
 
