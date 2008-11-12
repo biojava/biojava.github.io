@@ -17,7 +17,8 @@ The MBT Open project seeks to contribute to the [[wp:Open source|open-source]] B
 * Available at the [http://www.rcsb.org RCSB PDB]:
 ** Protein Workshop: a 3d protein viewer aimed at general viewing and publication-quality image generation
 ** Ligand Explorer: a 3d protein viewer aimed at visualization and analysis of ligands
-** [[Image:SimpleViewerOverview.png]] Simple Viewer: a 3d protein viewer aimed at visualization of biological units and especially large repeated unit structures such as viral capsids
+** Simple Viewer: a 3d protein viewer aimed at visualization of biological units and especially large repeated unit structures such as viral capsids
+::[[Image:SimpleViewerOverview.png]]
 * Available at the [http://www.immuneepitope.org/home.do IEDB]:
 ** Epitope Viewer: a 3d protein viewer aimed at visualization and analysis of immunologically relevant epitope information
 
