@@ -1,4 +1,4 @@
-== MBT Open ==
+== MBT Open == 
 
 MBT Open is an [[wp:Open source|open-source]], [http://www.java.sun.com Java]-based protein visualization and analysis toolkit. The toolkit builds upon BioJava to provide classes for efficiently loading, managing and manipulating protein structure and sequence data. The MBT Open excels especially in providing a rich set of state-of-the-art 3d-accellerated graphical visualization components, as well as 2D visualization components which can be easily "plugged together" to produce applications having sophisticated graphical user interfaces. Yet, with all of the GUI components provided in the toolkit, the core data i/o and manipulation classes may be used to write completely non-graphical applications (say, for implementing pure analysis codes, or, for producing a non-graphical "back end" for web-based applications).
 
