@@ -59,7 +59,7 @@ All the examples in this section require the biojava-dna module.
   Collections.reverse(mySeq.subList(2,4)); // Java Collections API.
     
   // Do the same, 1-indexed bio style?
-  Collections.reverse(mySeq.subList_bio(3,5));
+  Collections.reverse(((SymbolList)mySeq).subList_bio(3,5));
 
 === Editing the sequence ===
 
@@ -68,7 +68,7 @@ All the examples in this section require the biojava-dna module.
   mySeq.subList(1,3).clear();
   
   // Remove only 2nd base, bio-style.
-  mySeq.remove_bio(2);
+  ((SymbolList)mySeq).remove_bio(2);
   
   // Get another sequence and insert it after the 1st base.
   List<Symbol> otherSeq = SymbolListFormatter.parseSymbolList("GGGG");
