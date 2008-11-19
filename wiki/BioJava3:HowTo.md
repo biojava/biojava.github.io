@@ -18,8 +18,6 @@ All the examples in this section require the biojava-dna module.
 
 ### Construction and basic manipulation
 
-` import org.biojava.dna.DNATools; // Executes static methods to set up the DNA alphabet.`  
-` `  
 ` String mySeqString = "ATCGatcgATCG"; // Note that you can use mixed-case strings.`  
 ` List`<Symbol>` mySeq = SymbolListFormatter.parseSymbolList(mySeqString);`  
 ` `  
