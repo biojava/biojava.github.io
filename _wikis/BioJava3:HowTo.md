@@ -161,7 +161,7 @@ simpler for the most common use-cases.
 `   FASTA fasta = parser.next(); `  
 `   // fasta contains a complete FASTA record.`  
 ` }`  
-` reader.close();`
+` parser.close();`
 
 ### Converting the FASTA sequence into DNA sequence
 
@@ -177,7 +177,8 @@ simpler for the most common use-cases.
 
 ` ThingParser`<FASTA>` parser = ThingParserFactory.`  
 `   getWriteParser(FASTA.format, new File("/path/to/my/fasta.fa"), fasta);`  
-` parser.parseAll();`
+` parser.parseAll();`  
+` parser.close();`
 
 ### Writing a FASTA file (the hard way)
 
@@ -185,4 +186,4 @@ simpler for the most common use-cases.
 ` FASTAWriter writer = new FASTAFileWriter(new File("/path/to/new/fasta.fa"));`  
 ` ThingParser`<FASTA>` parser = new ThingParser`<FASTA>`(emitter, writer);`  
 ` parser.parseAll();`  
-` writer.close();`
+` parser.close();`
