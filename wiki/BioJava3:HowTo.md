@@ -176,8 +176,7 @@ simpler for the most common use-cases.
 
 ` ThingParser`<FASTA>` parser = ThingParserFactory.`  
 `   getWriteParser(FASTA.format, new File("/path/to/my/fasta.fa"), fasta);`  
-` parser.parseAll();`  
-` writer.close();`
+` parser.parseAll();`
 
 ### Writing a FASTA file (the hard way)
 
