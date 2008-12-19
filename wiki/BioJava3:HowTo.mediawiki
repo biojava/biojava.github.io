@@ -145,7 +145,7 @@ Convenience wrapper classes are provided to make the parsing process simpler for
     FASTA fasta = parser.next(); 
     // fasta contains a complete FASTA record.
   }
-  reader.close();
+  parser.close();
 
 === Converting the FASTA sequence into DNA sequence ===
 
@@ -162,6 +162,7 @@ Convenience wrapper classes are provided to make the parsing process simpler for
   ThingParser<FASTA> parser = ThingParserFactory.
     getWriteParser(FASTA.format, new File("/path/to/my/fasta.fa"), fasta);
   parser.parseAll();
+  parser.close();
 
 === Writing a FASTA file (the hard way) ===
 
@@ -169,4 +170,4 @@ Convenience wrapper classes are provided to make the parsing process simpler for
   FASTAWriter writer = new FASTAFileWriter(new File("/path/to/new/fasta.fa"));
   ThingParser<FASTA> parser = new ThingParser<FASTA>(emitter, writer);
   parser.parseAll();
-  writer.close();
+  parser.close();
