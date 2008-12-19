@@ -124,9 +124,19 @@ All the examples in this section require the biojava-dna module.
 
 The examples in this section require the biojava-fasta module. The examples that deal with converting to/from DNA sequences also require the biojava-dna module.
 
-At some point, convenience wrapper classes will be added to make the parsing process simpler for the most common use-cases.
+Convenience wrapper classes are provided to make the parsing process simpler for the most common use-cases.
 
-=== Parsing a FASTA file ===
+=== Parsing a FASTA file (the easy way) ===
+
+  ThingParser<FASTA> parser = ThingParserFactory.
+    getReadParser(FASTA.format, new File("/path/to/my/fasta.fa"));
+  while (parser.hasNext()) {
+    FASTA fasta = parser.next(); 
+    // fasta contains a complete FASTA record.
+  }
+  reader.close();
+
+=== Parsing a FASTA file (the hard way) ===
 
   FASTAReader reader = new FASTAFileReader(new File("/path/to/my/fasta.fa"));
   FASTABuilder builder = new FASTABuilder();
@@ -147,7 +157,14 @@ At some point, convenience wrapper classes will be added to make the parsing pro
   fasta.setDescription("My Description Line");
   fasta.setSequence(SymbolListFormatter.formatSymbols(mySeq));
 
-=== Writing a FASTA file ===
+=== Writing a FASTA file (the easy way) ===
+
+  ThingParser<FASTA> parser = ThingParserFactory.
+    getWriteParser(FASTA.format, new File("/path/to/my/fasta.fa"), fasta);
+  parser.parseAll();
+  writer.close();
+
+=== Writing a FASTA file (the hard way) ===
 
   FASTAEmitter emitter = new FASTAEmitter(fasta);
   FASTAWriter writer = new FASTAFileWriter(new File("/path/to/new/fasta.fa"));
