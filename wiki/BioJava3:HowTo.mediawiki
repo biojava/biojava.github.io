@@ -134,7 +134,6 @@ Convenience wrapper classes are provided to make the parsing process simpler for
     FASTA fasta = parser.next(); 
     // fasta contains a complete FASTA record.
   }
-  reader.close();
 
 === Parsing a FASTA file (the hard way) ===
 

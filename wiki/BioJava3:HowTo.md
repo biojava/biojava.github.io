@@ -149,8 +149,7 @@ simpler for the most common use-cases.
 ` while (parser.hasNext()) {`  
 `   FASTA fasta = parser.next(); `  
 `   // fasta contains a complete FASTA record.`  
-` }`  
-` reader.close();`
+` }`
 
 ### Parsing a FASTA file (the hard way)
 
