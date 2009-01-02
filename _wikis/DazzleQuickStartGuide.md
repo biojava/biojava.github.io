@@ -7,6 +7,8 @@ Steps required to set up dazzle with already available plugins:
 download container (apache tomcat 5.26)
 =======================================
 
+Go to
+
 download eclipse (EasyEclipse which has Web tools already).
 ===========================================================
 
