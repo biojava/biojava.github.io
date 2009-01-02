@@ -2,15 +2,15 @@
 title: DazzleQuickStartGuide
 ---
 
-Steps required to set up dazzle with already available plugins: =1)
-download container (apache tomcat 5.26)
+Steps required to set up dazzle with already available plugins:
+=download container (apache tomcat 5.26)
 
-2) download eclipse (EasyEclipse which has Web tools already). choose import, other, checkout projects from svn. click next (create new repository location).
-=============================================================================================================================================================
+download eclipse (EasyEclipse which has Web tools already). choose import, other, checkout projects from svn. click next (create new repository location).
+==========================================================================================================================================================
 
-3) get dazzle from svn
+get dazzle from svn
 
-4) configure dazzle.xml
-=======================
+configure dazzle.xml
+====================
 
-5) deploy using eclipse
+deploy using eclipse
