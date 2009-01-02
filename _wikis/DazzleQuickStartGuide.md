@@ -24,21 +24,29 @@ repository location). type in
 "<http://www.derkholm.net/svn/repos/dazzle/>" next select the trunk
 directory next leave the default "check out the project using the New
 Project Wizard" open web dir then select dynamic web project type in the
-name of your project "TutorialDazzleTest" finish click ok when it talks
-about standard resources right click on the project in the eclipse
-explorer window and select "build path" then "configure build path","add
-jars" then open the project in the popup that appears and a jars dir
-should be visible, then select all the jar files, then ok. (newer
-features require java 5.0 so we need to make sure the project is
-configured to use java 5.0 as standard). rigt click on the project and
-select properties then the J2EE tab, then select the jar files as before
-to be added to the project.
+name of your project as "das" finish click ok when it talks about
+standard resources right click on the project in the eclipse explorer
+window and select "build path" then "configure build path","add jars"
+then open the project in the popup that appears and a jars dir should be
+visible, then select all the jar files, then ok. (newer features require
+java 5.0 so we need to make sure the project is configured to use java
+5.0 as standard). rigt click on the project and select properties then
+the J2EE tab, then select the jar files as before to be added to the
+project.
 
 go to project properties again and select the source tab- then tick the
 resources foler and ok. now go to the dazzlecfg.xml file that you just
 moved into the webcontent folder and alter the "value" next to filename
 for all occurances and put a / in front e.g. change "test.embl" to
 "/test.embl"
+
+if you navigate to <http://localhost:8080/TutorialDazzleTest/> in a
+browser should now see a list of 3 das sources!!!???
+
+now type into the browser the url
+<http://localhost:8080/TutorialDazzleTest/dsn> right click on the web
+page and select "view page source" this will open a file containing the
+raw xml that is being returned from your dazzle server.
 
 get dazzle from svn
 ===================
