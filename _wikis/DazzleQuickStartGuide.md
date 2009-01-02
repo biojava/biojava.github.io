@@ -35,7 +35,10 @@ select properties then the J2EE tab, then select the jar files as before
 to be added to the project.
 
 go to project properties again and select the source tab- then tick the
-resources foler and ok.
+resources foler and ok. now go to the dazzlecfg.xml file that you just
+moved into the webcontent folder and alter the "value" next to filename
+for all occurances and put a / in front e.g. change "test.embl" to
+"/test.embl"
 
 get dazzle from svn
 ===================
