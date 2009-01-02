@@ -15,7 +15,13 @@ repository location). type in
 "<http://www.derkholm.net/svn/repos/dazzle/>" next select the trunk
 directory next leave the default "check out the project using the New
 Project Wizard" open web dir then select dynamic web project type in the
-name of your project "TutorialDazzleTest"
+name of your project "TutorialDazzleTest" finish click ok when it talks
+about standard resources right click on the project in the eclipse
+explorer window and select "build path" then "configure build path","add
+jars" then open the project in the popup that appears and a jars dir
+should be visible, then select all the jar files, then ok. (newer
+features require java 5.0 so we need to make sure the project is
+configured to use java 5.0 as standard).
 
 get dazzle from svn
 ===================
