@@ -9,9 +9,8 @@ addressed, and set a vision for the project where appropriate.
 Current Core
 ------------
 
--   [Mark Schreiber](Mark Schreiber "wikilink")
 -   [Richard Holland](Richard Holland "wikilink")
--   [Michael Heuer](Michael Heuer "wikilink")
+-   [Andreas Prlic](Richard Holland "wikilink")
 
 Alumni
 ------
@@ -25,6 +24,8 @@ the web.
 -   [Matthew Pocock](Matthew Pocock "wikilink")
 -   [Keith James](Keith James "wikilink")
 -   [David Huen](David Huen "wikilink")
+-   [Mark Schreiber](Mark Schreiber "wikilink")
+-   [Michael Heuer](Michael Heuer "wikilink")
 
 Becoming a Core Developer
 -------------------------
