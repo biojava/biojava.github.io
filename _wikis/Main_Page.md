@@ -14,6 +14,8 @@ support, access to [BioSQL](biosql:Main_Page "wikilink") and
 analysis GUIs and powerful analysis and statistical routines including a
 dynamic programming toolkit.
 
+BioJava is [licensed under LGPL 2.1](BioJava:License "wikilink").
+
 **Please cite:**
 
 <table style="width:100%; vertical-align: top">
