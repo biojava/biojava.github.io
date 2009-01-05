@@ -32,12 +32,10 @@ using subversion and built using ant:
     ant
 
 Note that the above download includes biojava, and some other JARs that
-you may find useful (and impossible to track down elsewhere). For this
-reason, you may need to type:
-
-    ant -lib jars
-
-instead of the "ant" given above.
+you may find useful (and impossible to track down elsewhere). By default
+it is using the jar files located in the jars subdirectory. If you have
+your own installation of biojava please copy it there or update the
+build.xml to point to your path.
 
 Installation and Configuration
 ------------------------------
