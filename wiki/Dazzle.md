@@ -24,12 +24,20 @@ Getting Dazzle
 
 Dazzle can be downloaded from
 [<http://www.derkholm.net/svn/repos/dazzle/trunk>](http://www.derkholm.net/svn/repos/dazzle/trunk)
-using subversion and built using ant
+using subversion and built using ant:
 
     svn checkout http://www.derkholm.net/svn/repos/dazzle/trunk ./dazzle
     cd ./dazzle
     ant clean
     ant
+
+Note that the above download includes biojava, and some other JARs that
+you may find useful (and impossible to track down elsewhere). For this
+reason, you may need to type:
+
+    ant -lib jars
+
+instead of the "ant" given above.
 
 Installation and Configuration
 ------------------------------
