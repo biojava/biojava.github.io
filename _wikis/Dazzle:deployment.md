@@ -147,7 +147,7 @@ extra resource files that are needed, you should package the webapp as a
 WAR file. WAR files are just normal Java ARchives (JAR files) which
 contain a WEB-INF directory and a web.xml file (as show in the directory
 tree, above). To create this file, change into the directory where you
-have been building your webapp, and type:
+have been building your webapp (dazzle/dazzle-webapp), and type:
 
 `   jar cf ../das.war * `
 
