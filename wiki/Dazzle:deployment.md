@@ -9,7 +9,9 @@ This document describes the steps required to install and start the
 [Dazzle](Dazzle "wikilink") server. Some knowledge of the DAS system is
 assumed: read [the
 specification](http://www.dasregistry.org/spec_1.53E.jsp) for more
-information.
+information. **NOTE:** If you already downloaded and built Dazzle
+according to the instructions [here](Dazzle "wikilink"), some of the
+following discussion is redundant**!**
 
 These instructions apply to release 1.01 of Dazzle.
 
