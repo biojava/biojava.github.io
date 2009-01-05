@@ -11,7 +11,7 @@ assumed: read [the
 specification](http://www.dasregistry.org/spec_1.53E.jsp) for more
 information. **NOTE:** If you already downloaded and built Dazzle
 according to the instructions [here](Dazzle "wikilink"), some of the
-following discussion is redundant**!**
+following discussion is redundant**!!!**
 
 These instructions apply to release 1.01 of Dazzle.
 
