@@ -136,8 +136,8 @@ sequences are annotated by this data source. Note that this must always
 be an absolute URL, even if the reference datasource is contained within
 the same Dazzle webapp.
 
-A list of plugins included in the standard Dazzle distribution is
-included at the end of this document.
+See <Dazzle:plugins> for an overview of plugins included in the standard
+Dazzle distribution.
 
 Packaging and deployment
 ------------------------
