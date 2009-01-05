@@ -10,8 +10,8 @@ This document describes the steps required to install and start the
 assumed: read [the
 specification](http://www.dasregistry.org/spec_1.53E.jsp) for more
 information. **NOTE:** If you already downloaded and built Dazzle
-according to the instructions [here](Dazzle "wikilink"), some of the
-following discussion is redundant**!!!**
+according to the instructions [here](Dazzle "wikilink"), the first few
+sections of the following discussion are redundant**!!!**
 
 These instructions apply to release 1.01 of Dazzle.
 
