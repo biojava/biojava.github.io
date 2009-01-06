@@ -7,13 +7,12 @@ Deploying the Dazzle servlet
 
 This document describes the steps required to install and start the
 [Dazzle](Dazzle "wikilink") server. Some knowledge of the DAS system is
-assumed: read [the
-specification](http://www.dasregistry.org/spec_1.53E.jsp) for more
-information. **NOTE:** If you already downloaded and built Dazzle
-according to the instructions [here](Dazzle "wikilink"), the first few
-sections of the following discussion are redundant**!!!**
-
-These instructions apply to release 1.01 of Dazzle.
+assumed (see the [DAS
+specification](http://www.dasregistry.org/spec_1.53E.jsp)), but the
+default settings should work fine. **NOTE:** If you already downloaded
+and built Dazzle according to the instructions
+[here](Dazzle "wikilink"), the first few sections of the following
+discussion are redundant**!!!**
 
 Eclipse
 -------
