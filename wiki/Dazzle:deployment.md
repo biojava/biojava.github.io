@@ -171,7 +171,7 @@ page can be customized by editing the welcome.html file in your webapp.
 
 If something goes wrong, most servlet containers will create a log file
 containing the details of the errors. In the case of Tomcat, the log
-file is usually called ${TOMCAT\_HOME}/logs/localhost\_log\_<data>.txt.
+file is usually called ${TOMCAT\_HOME}/logs/localhost\_log\_<date>.txt.
 For other containers, consult your vendor. If you need to submit a bug
 report, please locate the relevant log file and include it with your
 report.
