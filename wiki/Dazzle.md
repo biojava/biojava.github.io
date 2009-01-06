@@ -35,7 +35,8 @@ Note that the above download includes biojava, and some other JARs that
 you may find useful (and impossible to track down elsewhere). By default
 it is using the jar files located in the jars subdirectory. If you have
 your own installation of biojava please copy it there or update the
-build.xml to point to your path.
+build.xml to point to your path. Note that on your system you may need
+to use "ant -lib jars" instead of "ant" above.
 
 Installation and Configuration
 ------------------------------
