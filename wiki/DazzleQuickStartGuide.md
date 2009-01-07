@@ -12,21 +12,21 @@ usable by anyone with only a moderate knowledge of java and web
 development. It describes how to set up a basic dazzle instance with the
 default plugins available and test datasets included in the application.
 
-download container (apache tomcat 5.5.27)
+Download container (apache tomcat 5.5.27)
 -----------------------------------------
 
 Go to <http://tomcat.apache.org/download-55.cgi> and download tomcat by
 clicking on a link under the core catagory - windows installer if you
 are using windows or a tar.gz if you are using linux or macOSX
 
-download EasyEclipse (EasyEclipse server java version which has Web tools already).
+Download EasyEclipse (EasyEclipse server java version which has Web tools already).
 -----------------------------------------------------------------------------------
 
 Go to <http://www.easyeclipse.org/site/distributions/server-java.html>
 and select the download for your type of operating system e.g. windows
 or mac
 
-set up a server configuration in eclipse
+Set up a server configuration in eclipse
 ----------------------------------------
 
 -   right click on the servers tab at the bottom of eclipse.
@@ -71,15 +71,15 @@ to be added to the project.
 -   go to project properties again and select the source tab- then tick
     the resources folder and ok.
 
-configure dazzle.xml
---------------------
+Configure using dazzle.xml
+--------------------------
 
 -   now go to the dazzlecfg.xml file that you just moved into the
     webcontent folder and alter the "value" next to filename for all
     occurances and put a / in front e.g. change "test.embl" to
     "/test.embl"
 
-run using eclipse
+Run using eclipse
 -----------------
 
 -   Right click on the project in the window on the left and select "run
@@ -91,7 +91,7 @@ Alternatively:
 
 -   Right click on the "tomcat 5.5..." server in the servers tab in the
     bottom window of eclipse and choose start.
--   if you navigate to <http://localhost:8080/TutorialDazzleTest/> in a
+-   If you navigate to <http://localhost:8080/TutorialDazzleTest/> in a
     internet browser you should now see a list of das sources!!!???
 
 <!-- -->
@@ -102,7 +102,7 @@ Alternatively:
     open a file containing the raw xml that is being returned from your
     dazzle server.
 
-deploy using eclipse
+Deploy using eclipse
 --------------------
 
 -   Right click on the project in the left hand window and select
