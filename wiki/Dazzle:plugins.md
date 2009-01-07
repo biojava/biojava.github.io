@@ -2,9 +2,6 @@
 title: Dazzle:plugins
 ---
 
-Dazzle plugins
-==============
-
 The following plugins are already provided within
 [Dazzle](Dazzle "wikilink") and can be used to set up a DAS source very
 quickly by configuring **dazzlecfg.xml**. For more info on how to
