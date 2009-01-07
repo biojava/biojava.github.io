@@ -1,5 +1,3 @@
-=Deploying the Dazzle servlet=
-
 This document describes the steps required to install and start the [[Dazzle|Dazzle]] server. Some knowledge of the DAS system is assumed (see the [http://www.dasregistry.org/spec_1.53E.jsp DAS specification]), but the default settings should work fine. '''NOTE:''' If you already downloaded and built Dazzle according to the instructions [[Dazzle|here]], the first few sections of the following discussion are redundant'''!!!'''
 
 ==Eclipse==
