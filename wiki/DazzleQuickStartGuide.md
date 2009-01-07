@@ -93,5 +93,8 @@ deploy using eclipse
 --------------------
 
 -   Right click on the project in the left hand window and select
-    "export","web","WAR file","finish"
+    "export","web","WAR file","next", browse to a folder where you want
+    to put the war file, click "save" and then "finish". You can now
+    move this .war file into the webapp directory of any java compliant
+    webapp container such as tomcat or resin).
 
