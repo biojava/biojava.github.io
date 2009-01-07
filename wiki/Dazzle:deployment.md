@@ -2,9 +2,6 @@
 title: Dazzle:deployment
 ---
 
-Deploying the Dazzle servlet
-============================
-
 This document describes the steps required to install and start the
 [Dazzle](Dazzle "wikilink") server. Some knowledge of the DAS system is
 assumed (see the [DAS
