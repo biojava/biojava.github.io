@@ -5,10 +5,12 @@ title: DazzleQuickStartGuide
 Steps required to set up dazzle in eclipse with already available plugins
 =========================================================================
 
-download container (apache tomcat 5.26)
----------------------------------------
+download container (apache tomcat 5.5.27)
+-----------------------------------------
 
-Go to
+Go to <http://tomcat.apache.org/download-55.cgi> and download tomcat by
+clicking on a link under the core catagory - windows installer if you
+are using windows or a tar.gz if you are using linux or macOSX
 
 download EasyEclipse (EasyEclipse server java version which has Web tools already).
 -----------------------------------------------------------------------------------
