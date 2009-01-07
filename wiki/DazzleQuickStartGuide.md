@@ -5,6 +5,13 @@ title: DazzleQuickStartGuide
 Steps required to set up dazzle in eclipse with already available plugins
 =========================================================================
 
+Setting up dazzle in eclipse makes it easier to debug the application if
+configuration files are incorrect and makes it easy to test your das
+server in an integrated environment. This step by step guide should be
+usable by anyone with only a moderate knowledge of java and web
+development. It describes how to set up a basic dazzle instance with the
+default plugins available and test datasets included in the application.
+
 download container (apache tomcat 5.5.27)
 -----------------------------------------
 
