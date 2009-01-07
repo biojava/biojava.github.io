@@ -69,18 +69,25 @@ configure dazzle.xml
 run using eclipse
 =================
 
-Right click on the project in the window on the left and select "run as"
-then "run on server", "finish". Another window should appear with the
-url <http://localhost:8080/das/> at the top and a list of das sources.
-Right click on the "tomcat 5.5..." server in the servers tab in the
-bottom window of eclipse and choose start. Alternatively: if you
-navigate to <http://localhost:8080/TutorialDazzleTest/> in a internet
-browser you should now see a list of das sources!!!???
+-   Right click on the project in the window on the left and select "run
+    as" then "run on server", "finish". Another window should appear
+    with the url <http://localhost:8080/das/> at the top and a list of
+    das sources.
 
-now type into the browser the url
-<http://localhost:8080/TutorialDazzleTest/dsn> right click on the web
-page and select "view page source" this will open a file containing the
-raw xml that is being returned from your dazzle server.
+Alternatively:
+
+-   Right click on the "tomcat 5.5..." server in the servers tab in the
+    bottom window of eclipse and choose start.
+-   if you navigate to <http://localhost:8080/TutorialDazzleTest/> in a
+    internet browser you should now see a list of das sources!!!???
+
+<!-- -->
+
+-   now type into the browser the url
+    <http://localhost:8080/TutorialDazzleTest/dsn>
+-   right click on the web page and select "view page source" this will
+    open a file containing the raw xml that is being returned from your
+    dazzle server.
 
 deploy using eclipse
 ====================
