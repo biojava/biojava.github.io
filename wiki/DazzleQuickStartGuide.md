@@ -2,16 +2,16 @@
 title: DazzleQuickStartGuide
 ---
 
-Steps required to set up dazzle in eclipse with already available
-plugins:
+Steps required to set up dazzle in eclipse with already available plugins
+=========================================================================
 
 download container (apache tomcat 5.26)
-=======================================
+---------------------------------------
 
 Go to
 
 download eclipse (EasyEclipse which has Web tools already).
-===========================================================
+-----------------------------------------------------------
 
 set up a server configuration in eclipse
 ----------------------------------------
@@ -59,7 +59,7 @@ to be added to the project.
     the resources folder and ok.
 
 configure dazzle.xml
-====================
+--------------------
 
 -   now go to the dazzlecfg.xml file that you just moved into the
     webcontent folder and alter the "value" next to filename for all
@@ -67,7 +67,7 @@ configure dazzle.xml
     "/test.embl"
 
 run using eclipse
-=================
+-----------------
 
 -   Right click on the project in the window on the left and select "run
     as" then "run on server", "finish". Another window should appear
@@ -90,4 +90,8 @@ Alternatively:
     dazzle server.
 
 deploy using eclipse
-====================
+--------------------
+
+-   Right click on the project in the left hand window and select
+    "export","web","WAR file","finish"
+
