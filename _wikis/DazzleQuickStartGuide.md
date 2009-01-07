@@ -10,8 +10,8 @@ download container (apache tomcat 5.26)
 
 Go to
 
-download EasyEclipse (EasyEclipse which has Web tools already).
----------------------------------------------------------------
+download EasyEclipse (EasyEclipse server java version which has Web tools already).
+-----------------------------------------------------------------------------------
 
 Go to <http://www.easyeclipse.org/site/distributions/server-java.html>
 and select the download for your type of operating system e.g. windows
