@@ -31,7 +31,7 @@ Set up a server configuration in eclipse
 
 -   right click on the servers tab at the bottom of eclipse.
 -   click new, server.
--   browse to the tomcat 5.5.26 dir and select. then select the jvm1.60
+-   browse to the tomcat 5.5.27 dir and select. then select the jvm1.60
     from the dropdown menu below.
 
 next, next, ok.
