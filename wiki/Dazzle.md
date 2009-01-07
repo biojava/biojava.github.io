@@ -9,7 +9,7 @@ Dazzle is an easy to use server for the Distributed Annotation System
 ([DAS](http://www.biodas.org)).
 
 It is implemented as a Java servlet, using the BioJava APIs. Dazzle is a
-modular system which uses small "datasource" plugins to provide access
+modular system which uses small "datasource plugins" to provide access
 to a range of databases. Several [general-purpose
 plugins](Dazzle:plugins "wikilink") are included in the package, and it
 it straightforward to [ develop new
