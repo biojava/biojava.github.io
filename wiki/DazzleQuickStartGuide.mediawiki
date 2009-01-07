@@ -1,8 +1,8 @@
-Steps required to set up dazzle in eclipse with already available plugins:
-=download container (apache tomcat 5.26)=
+=Steps required to set up dazzle in eclipse with already available plugins=
+==download container (apache tomcat 5.26)==
 Go to
 
-=download eclipse (EasyEclipse which has Web tools already).=
+==download eclipse (EasyEclipse which has Web tools already).==
 ==set up a server configuration in eclipse==
 *right click on the servers tab at the bottom of eclipse.
 *click new, server.
@@ -28,9 +28,9 @@ Your das project should now be in eclipse.
 rigt click on the project and select properties then the J2EE tab, then select the jar files as before to be added to the project.
 
 *go to project properties again and select the source tab- then tick the resources folder and ok.
-=configure dazzle.xml=
+==configure dazzle.xml==
 *now go to the dazzlecfg.xml file that you just moved into the webcontent folder and alter the "value" next to filename for all occurances and put a / in front e.g. change "test.embl" to "/test.embl"
-=run using eclipse=
+==run using eclipse==
 *Right click on the project in the window on the left and select "run as" then "run on server", "finish". Another window should appear with the url http://localhost:8080/das/ at the top and a list of das sources.
 Alternatively:
 *Right click on the "tomcat 5.5..." server in the servers tab in the bottom window of eclipse and choose start.
@@ -39,4 +39,5 @@ Alternatively:
 *now type into the browser the url http://localhost:8080/TutorialDazzleTest/dsn
 *right click on the web page and select "view page source" this will open a file containing the raw xml that is being returned from your dazzle server.
 
-=deploy using eclipse=
+==deploy using eclipse==
+*Right click on the project in the left hand window and select "export","web","WAR file","finish"
