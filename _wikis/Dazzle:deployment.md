@@ -9,8 +9,8 @@ specification](http://www.dasregistry.org/spec_1.53E.jsp)), but the
 default settings should work fine. **NOTE:** If you already downloaded
 and built Dazzle according to the instructions
 [here](Dazzle "wikilink"), the first few sections of the following
-discussion are redundant and you should go to the configuring
-datasources section.
+discussion are redundant and you should go to the [\#Configuring
+datasources](#Configuring_datasources "wikilink") section.
 
 Eclipse
 -------
