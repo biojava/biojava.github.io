@@ -31,6 +31,17 @@ using subversion and built using ant:
     ant clean
     ant
 
+copy the all the .jar files from the dazzle/lib/ dir into
+dazzle/dazzle-webapp/WEB-INF/lib directory. Then copy the
+dazzle/ant-build/dazzle.jar into the same
+dazzle/dazzle-webapp/WEB-INF/lib directory.
+
+Edit the dazzlecfg.xml to put a "/" in front of filenames in the
+filename attributes values e.g.
+<string name="fileName" value="test.embl" /> should be changed to
+<string name="fileName" value="/test.embl" />, there are 3 instances of
+this in the default dazzlecfg.xml file.
+
 Note that the above download includes biojava, and some other JARs that
 you may find useful (and impossible to track down elsewhere). By default
 it is using the jar files located in the jars subdirectory. If you have
