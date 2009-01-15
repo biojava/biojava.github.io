@@ -125,4 +125,6 @@ follows:
 
 -   [Bonds and Nucleic Acid
     Identification/Classification](RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classification "wikilink")
+-   [Fragment (Secondary Structure)
+    Definition](RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition "wikilink")
 
