@@ -41,6 +41,10 @@ files and saving the current image to a file.
 A viewer that provides tools to manipulate and examine parts of the
 structure, as well as change the rendering styles.
 
+  
+  
+![](ProteinWorkshopOverview.png "fig:ProteinWorkshopOverview.png")
+
 #### RCSB Ligand Explorer
 
 This viewer explores relationships between ligands (or other non-protein
