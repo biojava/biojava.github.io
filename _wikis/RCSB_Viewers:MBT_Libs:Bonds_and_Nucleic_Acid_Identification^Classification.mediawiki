@@ -31,9 +31,9 @@
       MBT maintains a dictionary of known structures. This comes from a combined .cif file that is found at this ftp
       site:
     </p>
-    <code><a href="ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz">
-    	ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz</a>
-    </code>
+
+    	::ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz</a>
+ 
     <p>
       This file is loaded and broken apart by an external process - see the <span class="projectname">RCSB Excluded</span> 
       project, package

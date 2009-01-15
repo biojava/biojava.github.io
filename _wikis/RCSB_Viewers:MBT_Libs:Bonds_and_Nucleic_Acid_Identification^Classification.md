@@ -28,9 +28,8 @@ title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classificatio
 `     site:`  
 `   `
 
-`   ``<a href="ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz">
-        ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz</a>
-    `  
+`       ::`[`ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz`](ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz)</a>  
+  
 `   `
 
 `     This file is loaded and broken apart by an external process - see the `<span class="projectname">`RCSB Excluded`</span>` `  
