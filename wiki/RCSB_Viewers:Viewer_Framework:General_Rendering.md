@@ -14,7 +14,7 @@ Notes
 
     -   DisplayListGeometry -\> ScenePrimitive
     -   DisplayListRenderable -\> SubScene
-    -   DisplayLists -\> ??
+    -   DisplayLists -\> flat collection of all display lists objects.
 -   `     A further goal would be to factor out the GL specific parts of the code and allow the system to be`  
     `     switched to a different rendering engine.`  
     `   `
