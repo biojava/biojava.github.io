@@ -165,8 +165,10 @@ environment.
 Linux & Windows
 
 <dd>
-The MBT lib needs the JAI and vecmath jars to build - these are provided
-by default in the Mac JDK, but not on Linux and Windows. To add them:
+The MBT lib needs the *JAI* and *vecmath* jars to build - these are
+provided by default in the Mac JDK, but not on Linux and Windows.
+
+To add them:
 
 -   Right-click on the 'RCSB MBT Libs' project and select 'Build
     Path/Configure Build Path' from the drop-down.
