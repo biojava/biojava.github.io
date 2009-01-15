@@ -90,22 +90,20 @@ representation to a *multiple-framed* representation:
 This is simply a repeated structure for each *DocumentFrame*, with the
 addition of two more components:
 
--   A *Multiple Frame Controller* (not implemented this version.) This
-    component (would do) the following:
+:\*A *Multiple Frame Controller* (not implemented this version.) This
+component (would do) the following:
 
-<!-- -->
+:\*\*Create the *Document Frames* as they are requested.
 
--   -   Creates the *Document Frames* as they are requested.
-    -   Provides access to the *DocumentFrames*, as well as their
-        contained components.
-    -   Maintains 'active frame' status (most access requests will be
-        via the active frame.)
+:\*\*Provide access to the *DocumentFrames*, as well as their contained
+components.
 
-<!-- -->
+:\*\*Maintains 'active frame' status (most access requests will be via
+the active frame.)
 
--   ''Separated 'Other UI' '' - UI that is not tied to a document, or is
-    updated when the active *Document Frame* changes. An example would
-    be a control panel that is not in a document frame.
+:\*''Separated 'Other UI' '' - UI that is not tied to a document, or is
+updated when the active *Document Frame* changes. An example would be a
+control panel that is not in a document frame.
 
   
 An example multiple frame doc controller can be found in the *TestBed*
