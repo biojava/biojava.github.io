@@ -26,7 +26,7 @@
   </ul>
 ==Explanation==
 
-Picking is achieved by intercepting mouse movements and then initiating a redraw, after setting a flag, indicating that the requested draw is actually a pick request.</p>
+Picking is achieved by intercepting mouse movements and then initiating a redraw, after setting a flag, indicating that the requested draw is actually a pick request.
 
 The technique is based on a 'unique-color' mechanism, rather than a 'ray-pick' mechanism (See ''OpenGL Programming Guide, Sixth Ed. - Object Selection Using the Back Buffer'')
 
