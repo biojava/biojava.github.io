@@ -15,21 +15,15 @@
   </ul>
 ==Explanation==  
 
-  <em>Ndb</em> ids primarily come from .cif/.xml files, Pdb ids from .pdb files.  The identification schemes
-  are quite different.
+''Ndb'' ids primarily come from .cif/.xml files, Pdb ids from .pdb files.  The identification schemes are quite different.
   
-  Thus, the requirement to map from one to the other.  The <span class="classname">PdbToNdbConverter</span>
-  performs this conversion.
+Thus, the requirement to map from one to the other.  The PdbToNdbConverter performs this conversion.
   
-  <ul>
-    <li>
-      On loading XML files, the chain and residue ids are extracted in both Ndb and Pdb namespaces.
-    </li>
-    <li>
-      On loading PDB files, the Ndb ids are set to their corresponding Pdb ids, thus the mapping is essentially 1:1.
-    </li>
-  </ul>
-  
+
+*On loading XML files, the chain and residue ids are extracted in both Ndb and Pdb namespaces.
+
+*On loading PDB files, the Ndb ids are set to their corresponding Pdb ids, thus the mapping is essentially 1:1.
+
 
 The loaders create the ''PdbToNdbConverter'' as the last step from the lists of names extracted.  It is handed off to the ''StructureMap'', which then uses it throughout the rest of the application.
 
