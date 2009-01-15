@@ -82,28 +82,32 @@ better overall than the Pdb namespace.
 For an example of what I mean, look at the following .xml snippet.Scroll
 about halfway down the file, and you'll see something like...
 
-`
-&lt;PDBx:atom_site id="1249"&gt;
-&lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;
-&lt;PDBx:type_symbol&gt;C&lt;/PDBx:type_symbol&gt;
-&lt;PDBx:label_atom_id&gt;CG&lt;/PDBx:label_atom_id&gt;
-&lt;PDBx:label_alt_id xsi:nil="true" /&gt;
-&lt;PDBx:label_comp_id&gt;ARG&lt;/PDBx:label_comp_id&gt;
-&lt;PDBx:label_asym_id&gt;A&lt;/PDBx:label_asym_id&gt;             (--&gt; NDB chain ID)
-&lt;PDBx:label_entity_id&gt;1&lt;/PDBx:label_entity_id&gt;
-&lt;PDBx:label_seq_id&gt;165&lt;/PDBx:label_seq_id&gt;             (--&gt; NDB residue ID)
-&lt;PDBx:Cartn_x&gt;15.583&lt;/PDBx:Cartn_x&gt;
-&lt;PDBx:Cartn_y&gt;0.027&lt;/PDBx:Cartn_y&gt;
-&lt;PDBx:Cartn_z&gt;-10.746&lt;/PDBx:Cartn_z&gt;
-&lt;PDBx:occupancy&gt;1.00&lt;/PDBx:occupancy&gt;
-&lt;PDBx:B_iso_or_equiv&gt;26.76&lt;/PDBx:B_iso_or_equiv&gt;
-&lt;PDBx:auth_seq_id&gt;165&lt;/PDBx:auth_seq_id&gt;               (--&gt; PDB residue ID)
-&lt;PDBx:auth_comp_id&gt;ARG&lt;/PDBx:auth_comp_id&gt;
-&lt;PDBx:auth_asym_id&gt;E&lt;/PDBx:auth_asym_id&gt;               (--&gt; PDB chain ID)
-&lt;PDBx:auth_atom_id&gt;CG&lt;/PDBx:auth_atom_id&gt;
-&lt;PDBx:pdbx_PDB_model_num&gt;1&lt;/PDBx:pdbx_PDB_model_num&gt;
-&lt;/PDBx:atom_site&gt;
-`
+<!-- -->
+
+  
+  
+<code>
+
+\<PDBx:atom\_site id="1249"\>
+\<PDBx:group\_PDB\>ATOM\</PDBx:group\_PDB\>
+\<PDBx:type\_symbol\>C\</PDBx:type\_symbol\>
+\<PDBx:label\_atom\_id\>CG\</PDBx:label\_atom\_id\>
+\<PDBx:label\_alt\_id xsi:nil="true" /\>
+\<PDBx:label\_comp\_id\>ARG\</PDBx:label\_comp\_id\>
+\<PDBx:label\_asym\_id\>A\</PDBx:label\_asym\_id\> (--\> NDB chain ID)
+\<PDBx:label\_entity\_id\>1\</PDBx:label\_entity\_id\>
+\<PDBx:label\_seq\_id\>165\</PDBx:label\_seq\_id\> (--\> NDB residue ID)
+\<PDBx:Cartn\_x\>15.583\</PDBx:Cartn\_x\>
+\<PDBx:Cartn\_y\>0.027\</PDBx:Cartn\_y\>
+\<PDBx:Cartn\_z\>-10.746\</PDBx:Cartn\_z\>
+\<PDBx:occupancy\>1.00\</PDBx:occupancy\>
+\<PDBx:B\_iso\_or\_equiv\>26.76\</PDBx:B\_iso\_or\_equiv\>
+\<PDBx:auth\_seq\_id\>165\</PDBx:auth\_seq\_id\> (--\> PDB residue ID)
+\<PDBx:auth\_comp\_id\>ARG\</PDBx:auth\_comp\_id\>
+\<PDBx:auth\_asym\_id\>E\</PDBx:auth\_asym\_id\> (--\> PDB chain ID)
+\<PDBx:auth\_atom\_id\>CG\</PDBx:auth\_atom\_id\>
+\<PDBx:pdbx\_PDB\_model\_num\>1\</PDBx:pdbx\_PDB\_model\_num\>
+\</PDBx:atom\_site\> </code>
 
   
   
