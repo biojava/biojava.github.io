@@ -78,13 +78,11 @@ A viewer that takes up the entire mainframe (window), without any
 additional panels or other control mechanism. It simply displays the
 structure.
 
-</dd>
 <dd>
 A rudimentary menu is provided to open other structures, and a status
 bar is provided in the mainframe to echo the results of component hovers
 or other status information.
 
-</dd>
 <dt>
 RCSB Protein Workshop
 
@@ -92,7 +90,6 @@ RCSB Protein Workshop
 A viewer that provides a control panel, allowing view modifications such
 as rendering styles, colors, visibility, etc.
 
-</dd>
 <dt>
 RCSB Ligand Explorer
 
@@ -101,7 +98,6 @@ Displays a structure and ligand combination, in the same space. Various
 tools are provided in a control panel to explore relationships between
 the ligand and associated structure.
 
-</dd>
 <dt>
 RCSB PDB Kiosk
 
@@ -110,7 +106,6 @@ A unique 'outreach' viewer that displays a number of structures in
 sequence, animating between different aspects of views. A kind of
 'moving slideshow' presentation.
 
-</dd>
 </dl>
 Re-Architecture Effort
 ----------------------
