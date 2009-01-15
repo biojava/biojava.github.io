@@ -31,8 +31,6 @@ Non-protein chains present their own issues -
   
   From John Beaver (edited):
 
-  <blockquote>
-
   		Pdb and Ndb deal with one of the major legacy problems of the PDB data.
 
 		The old .pdb file format
@@ -107,5 +105,3 @@ Non-protein chains present their own issues -
 
 		Add to that the fact that data errors in all of the formats are not 
 		uncommon, which tends to further complicate the issue.
-
-  </blockquote>
