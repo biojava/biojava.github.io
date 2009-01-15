@@ -2,6 +2,9 @@
 title: RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition
 ---
 
+Notes
+-----
+
 -   `         If `<span class="methodname">`deriveFragments()`</span>` throws an exception, it tries a`  
     `         `<span class="methodname">`loadFragments()`</span>`, again. Might be just to`  
     `         clear everything out?`  
@@ -9,7 +12,8 @@ title: RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition
 -   `       In the loaders, conformation information is ignored. Fragments are `<em>`always`</em>` derived.`  
     `     `
 
-<!-- -->
+Relevent Classes
+----------------
 
 -   Structure
 -   StructureMap
@@ -21,6 +25,9 @@ title: RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition
 -   Range
 -   DerivedInformation
 -   Fragment
+
+Explanation
+-----------
 
 `     Look in the `<span class="projectname">`RCSB MBT Libs`</span>` project, in the source dir`  
 `     `<span class="foldername">`Structure Model`</span>`, package `<span class="packagename">`org.rcsb.mbt.model`</span>` for most`  
