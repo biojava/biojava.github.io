@@ -15,6 +15,7 @@ The current set of viewers that are based on the framework are as follows:
 ==== RCSB Simple Viewer ====
 
 A basic viewer with no UI, except a menubar that allows for loading of files and saving the current image to a file.
+::[[Image:SimpleViewerOverview.png]]
 
 ==== RCSB Protein Workshop ====
 
