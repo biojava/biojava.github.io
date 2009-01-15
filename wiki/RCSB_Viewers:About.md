@@ -124,5 +124,5 @@ follows:
 ### RCSB MBT Libs:
 
 -   [Bonds and Nucleic Acid
-    Identification/Classification](RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification/Classification "wikilink")
+    Identification/Classification](RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classification "wikilink")
 
