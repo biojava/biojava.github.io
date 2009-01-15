@@ -37,7 +37,8 @@ The component breakout, with a brief explanation of each is as follows:
 
 App/Master Controller  
 
-<dd>
+<!-- -->
+
   
 The *app* class (in the viewers, derived from *VFAppBase* from the
 *Viewer Framework* project) is the focal point of the application. The
