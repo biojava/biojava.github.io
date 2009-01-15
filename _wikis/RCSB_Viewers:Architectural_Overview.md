@@ -16,6 +16,9 @@ such as Microsoft's *C++/MFC*, *C\#/Forms (application)* framework,
 
 We also like to think in terms of *Model/View/Controller*, and we can
 blend the two notions as follows:''
+
+  
+  
 ![](MBTArchAMDtoMVC.png "fig:MBTArchAMDtoMVC.png")
 
 From here, it is easy to determine where most systems fit into the

@@ -10,7 +10,8 @@ a mainstream windowing system, such as Microsoft's ''C++/MFC'', ''C#/Forms (appl
 
 We also like to think in terms of ''Model/View/Controller'', and we can blend the two
 notions as follows:''
-[[Image:MBTArchAMDtoMVC.png]]
+
+::[[Image:MBTArchAMDtoMVC.png]]
 
 From here, it is easy to determine where most systems fit into the architecture, and how to
 extend it, gracefully.
