@@ -123,6 +123,6 @@ follows:
 
 ### RCSB MBT Libs:
 
--   [RCSB Viewers:MBT Libs:Bonds and Nucleic Acid
+-   [Bonds and Nucleic Acid
     Identification/Classification](RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification/Classification "wikilink")
 
