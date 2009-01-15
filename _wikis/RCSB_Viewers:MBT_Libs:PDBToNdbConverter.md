@@ -19,26 +19,25 @@ Explanation
 -----------
 
 ` `<em>`Ndb`</em>` ids primarily come from .cif/.xml files, Pdb ids from .pdb files.  The identification schemes`  
-` are quite different.`
-
+` are quite different.`  
+` `  
 ` Thus, the requirement to map from one to the other.  The `<span class="classname">`PdbToNdbConverter`</span>  
-` performs this conversion.`
+` performs this conversion.`  
+` `  
+` `
 
 -   `     On loading XML files, the chain and residue ids are extracted in both Ndb and Pdb namespaces.`  
     `   `
 -   `     On loading PDB files, the Ndb ids are set to their corresponding Pdb ids, thus the mapping is essentially 1:1.`  
     `   `
 
-` The loaders create`  
-` the `<span class="classname">`PdbToNdbConverter`</span>` as the last step from the lists of`  
-` names extracted.  It is handed off to the `<span class="classname">`StructureMap`</span>`, which then`  
-` uses it throughout the rest of the application.`
+The loaders create the *PdbToNdbConverter* as the last step from the
+lists of names extracted. It is handed off to the *StructureMap*, which
+then uses it throughout the rest of the application.
 
-` Non-protein chains present their own issues - `  
-` `
+Non-protein chains present their own issues -
 
-` From John Beaver (edited):`  
-` `
+From John Beaver (edited):
 
 > `       Pdb and Ndb deal with one of the major legacy problems of the PDB data.`  
 > `       `
