@@ -41,30 +41,31 @@ functionality provided in the MBT.</dd>
 </dl>
 
 ==Applications==
-<p>
+
 These are the actual implementing applications, currently consisting of the suite of 3d structure
 viewers:
 <dl>
 <dt>RCSB Simple Viewer
 <dd>
 A viewer that takes up the entire mainframe (window), without any additional panels or other control
-mechanism.  It simply displays the structure.</dd>
+mechanism.  It simply displays the structure.
 <dd>
 A rudimentary menu is provided to open other structures, and a status bar is provided in the mainframe
-to echo the results of component hovers or other status information.</dd>
+to echo the results of component hovers or other status information.
 <dt>RCSB Protein Workshop
 <dd>
 A viewer that provides a control panel, allowing view modifications such as rendering styles, colors,
-visibility, etc.</dd>
+visibility, etc.
 <dt>RCSB Ligand Explorer
 <dd>
 Displays a structure and ligand combination, in the same space.  Various tools are provided in a
-control panel to explore relationships between the ligand and associated structure.</dd>
+control panel to explore relationships between the ligand and associated structure.
 <dt>RCSB PDB Kiosk
 <dd>
 A unique 'outreach' viewer that displays a number of structures in sequence, animating between
-different aspects of views.  A kind of 'moving slideshow' presentation.</dd>
+different aspects of views.  A kind of 'moving slideshow' presentation.
 </dl>
+
 ==Re-Architecture Effort==
 <p>
 The MBT was created in 1998, using Java 1.0 constructs.  Since then, there have been many improvements
