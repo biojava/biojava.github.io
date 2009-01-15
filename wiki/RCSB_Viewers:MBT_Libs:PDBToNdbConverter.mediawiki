@@ -45,7 +45,7 @@ Non-protein chains present their own issues -
 
 <code>
 &lt;PDBx:atom_site id="1249"&gt;<br/>
-&lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;<br/>
+&nbsp;&nbsp;&lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;<br/>
 &lt;PDBx:type_symbol&gt;C&lt;/PDBx:type_symbol&gt;<br/>
 &lt;PDBx:label_atom_id&gt;CG&lt;/PDBx:label_atom_id&gt;<br/>
 &lt;PDBx:label_alt_id xsi:nil="true" /&gt;<br/>
