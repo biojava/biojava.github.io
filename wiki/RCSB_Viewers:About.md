@@ -5,9 +5,10 @@ title: RCSB Viewers:About
 About RCSB Viewers
 ------------------
 
-The *RCSB Viewers* suite of libraries provides the capability of
+The *RCSB Viewers* suite of frameworks provides the capability of
 creating 3-d viewing applications. The libraries are Java based, and
-rely on *JOGL* (Java *OpenGL*) to do the 3d rendering.
+rely on *JOGL* (Java *OpenGL*) to do the 3d rendering. Currently, there
+are four supported viewers implemented over the suite (see below.)
 
 History
 -------
