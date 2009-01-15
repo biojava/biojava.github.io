@@ -116,5 +116,6 @@ follows:
 
 -   [Architectural
     Overview](RCSB Viewers:Architectural Overview "wikilink")
+-   [Projects Overview](RCSB Viewers:Projects Overview "wikilink")
 -   [Source Division](RCSB Viewers:Source Division "wikilink")
 
