@@ -85,6 +85,11 @@ build unless you add the plug-in. To do that:
 Check Out the Viewers Projects
 
 <dd>
+WARNING: do NOT just check out the 'RCSB Viewers' entry - the projects
+will not get checked out properly (and you'll get all of the branches,
+tags, and trunk versions, to boot.)
+
+<dd>
 In the repository item, expand the 'RCSB Viewers' entry. You will see
 three subdirectories:
 

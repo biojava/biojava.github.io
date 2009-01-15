@@ -74,6 +74,8 @@ After installing, Eclipse will suggest you restart it.  Probably a good idea.</l
 
 <dt>Check Out the Viewers Projects
 <dd>
+WARNING: do NOT just check out the 'RCSB Viewers' entry - the projects will not get checked out properly (and you'll get all of the branches, tags, and trunk versions, to boot.)
+<dd>
 In the repository item, expand the 'RCSB Viewers' entry.  You will see three subdirectories:
 <ul>
 <li>branches</li>
