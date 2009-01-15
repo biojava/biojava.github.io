@@ -23,7 +23,7 @@ Under the 'Help' menu item, go to 'Software Updates'.</li>
 <li>
 Go to the 'Available Software' tab.</li>
 <li>
-Hit the 'Add' button.</li>
+Click the 'Add' button.</li>
 <li>
 Enter this URL in the prompt: <em>http://subclipse.tigris.org/</em></li>
 <li>
@@ -67,7 +67,7 @@ Click the 'Add' Button.</li>
 <li>
 In the prompt, enter: <em>http://beust.com/eclipse</em></li>
 <li>
-Expand the new entry and you will see 'TestNG'.  Check that and hit the Install button.</li>
+Expand the new entry and you will see 'TestNG'.  Check that and click the Install button.</li>
 <li>
 After installing, Eclipse will suggest you restart it.  Probably a good idea.</li>
 </ul>
@@ -86,7 +86,7 @@ For the latest stable release, expand 'tags' and the last entry in tags.
 <dd>
 For continuing development, either create a new branch or select the trunk, depending on your requirements.
 <dd>
-At this point, you will see the list of viewer projects.  Select them all, right click on the selection, and hit
+At this point, you will see the list of viewer projects.  Select them all, right click on the selection, and click
 'Check Out' from the dropdown.  This can take some time, depending on where you are and what OS you're using.
 Best to do it at night before you go to bed.
 </dl>
@@ -109,8 +109,8 @@ If you're having problems, make sure the following is set in the 'Build Path' co
 <em>all</em> the viewer projects:
 <ul>
 <li>In the 'Libraries' tab, <em>gluegen-rt.jar</em> and <em>jogl.jar</em> should be listed.
-If not, add them by hitting the 'Add Jars' button and expand the tree in the prompt box to
-'3rd Pary Libs/jogl' (ignore the versioned entries - they are there for backup purposes)
+If not, add them by clicking the 'Add Jars' button and expanding the tree in the prompt box to
+'3rd Pary Libs/jogl' (ignore the versioned entries - they are there for backup purposes),
  and selecting the jars.  Click 'Ok' and the new jar entries will appear in the list.</li>
 <li>In each one of these entries, the 'Native library location' setting should be set to:
  '3rd Party Libs/jogl/jnilibs' (expand the item to see the setting.)</li>
