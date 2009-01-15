@@ -1,3 +1,4 @@
+==Notes==
     <ul class="preface">
       <li>
 	      If <span class="methodname">deriveFragments()</span> throws an exception, it tries a
@@ -8,7 +9,7 @@
       	In the loaders, conformation information is ignored. Fragments are <em>always</em> derived.
       </li>
     </ul>
-    
+==Relevent Classes==
     <ul class="relevent-classes">
       <li>Structure</li>
       <li>StructureMap</li>
@@ -19,7 +20,7 @@
       <li>DerivedInformation</li>
       <li>Fragment</li>          
     </ul>
-    <p>
+==Explanation==
       Look in the <span class="projectname">RCSB MBT Libs</span> project, in the source dir
       <span class="foldername">Structure Model</span>, package <span class="packagename">org.rcsb.mbt.model</span> for most
       of this (unless otherwise specified).
