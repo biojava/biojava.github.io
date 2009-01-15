@@ -69,13 +69,14 @@ focus on non-protein chains/residues, if present in the molecule.
 Current Projects
 ----------------
 
-The current projects defined for the *RCSB Viewers* are:
+The current primary projects defined for the *RCSB Viewers* are:
 
 > RCSB MBT Libs  
 > this project contains the modules to define and carry the 'model',
 > defined as a set of structures. It has been mostly preserved directly
 > from the original *MBT Library* project. It also contains modules to
-> load files (currently only PDB and XML files are supported.)
+> load files (currently only PDB and XML files are supported.) It is
+> expected this will be replaced by *BioJava*.
 >
 > <!-- -->
 >
@@ -98,6 +99,10 @@ The current projects defined for the *RCSB Viewers* are:
 > RCSB Simple Viewer, RCSB Protein Workshop, RCSB Ligand Explorer, RCSB PDB Kiosk  
 > projects for the end viewer applications.
 >
+In addition, there are several minor projects for updating datasets,
+documentation, and tests. See the SVN repository for further
+information.
+
 Documentation
 -------------
 
