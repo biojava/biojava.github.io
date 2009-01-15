@@ -133,4 +133,5 @@ follows:
 
 -   [General
     Rendering](RCSB Viewers:Viewer Framework:General Rendering "wikilink")
+-   [Picking](RCSB Viewers:Viewer Framework:Picking "wikilink")
 
