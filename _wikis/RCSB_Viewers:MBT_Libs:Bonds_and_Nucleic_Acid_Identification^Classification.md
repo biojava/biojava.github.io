@@ -2,6 +2,9 @@
 title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classification
 ---
 
+Notes
+-----
+
 -   `         Bond records are ignored in the loaders.  Bonds are determined either through`  
     `         a dictionary lookup, or via calculation if the lookup fails.`  
     `       `
@@ -14,7 +17,8 @@ title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classificatio
     `       `
 -   `         See the `<em>`RCSB Excluded`</em>` project, `<em>`CL Tools`</em>` directory for more information.`
 
-<!-- -->
+Relevent Classes
+----------------
 
 -   Bond - definition class
 -   BondFactory - Creates the bonds (static)
@@ -23,6 +27,9 @@ title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classificatio
 -   Octree - for calculating bonds
 -   OctreeAtomItem - for Octree
 -   OctreeDataItem - for Octree
+
+Explanation
+-----------
 
 `     MBT maintains a dictionary of known structures. This comes from a combined .cif file that is found at this ftp`  
 `     site:`  
