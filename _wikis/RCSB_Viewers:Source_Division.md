@@ -8,8 +8,8 @@ namespaces, but when we get a lot of packages, things can become a bit
 blurry.
 
 Note that <em>source division</em> simply describes how the source is
-divided up, not specifically any architectural divisions (although there
-is some corollary - see below.
+divided up, not specifically any architectural divisions (although,
+naturally, they do parallel - see below where they diverge.)
 
 Approach
 --------
