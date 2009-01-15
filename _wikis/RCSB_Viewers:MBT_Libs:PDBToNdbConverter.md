@@ -40,37 +40,31 @@ Non-protein chains present their own issues -
 
 ` From John Beaver (edited):`
 
-> `       Pdb and Ndb deal with one of the major legacy problems of the PDB data.`  
-> `       `
+> `       Pdb and Ndb deal with one of the major legacy problems of the PDB data.`
 >
 > `       The old .pdb file format`  
 > `       has been around for a very long time. It's simple, and it's what most `  
 > `       people who don't use the website use. It has several technical `  
 > `       limitations, but the data matches the `  
-> `       original author submission very closely.`  
-> `       `
+> `       original author submission very closely.`
 >
 > `       This is a problem. Very commonly, a small molecule or `  
 > `       DNA strand will have the same chain ID as a protein chain, for example. `  
 > `       This can cause problems when the viewer is deciding where to draw `  
-> `       ribbons and bonds.`  
-> `       `
+> `       ribbons and bonds.`
 >
 > `       The Ndb (whose name I took from one of the Xml tags in the PDB XML `  
 > `       format and which may or may not be proper terminology) is a separate namespace `  
 > `       for chain IDs and residue IDs. It is much more highly cleaned; you'll `  
 > `       almost never see a small molecule or DNA chain mixed with protein in one `  
 > `       chain. Also, PDB residue IDs can have letters in them; NDB residue IDs `  
-> `       are always integers.`  
-> `       `
+> `       are always integers.`
 >
 > `       The Ndb namespace still has data cleanliness problems, but it seems much `  
-> `       better overall than the Pdb namespace.`  
-> `       `
+> `       better overall than the Pdb namespace.`
 >
 > `       For an example of what I mean, look at the following .xml snippet.`  
-> `       Scroll about halfway down the file, and you'll see something like...`  
-> `       `
+> `       Scroll about halfway down the file, and you'll see something like...`
 >
 > `       ``
 >               &lt;PDBx:atom_site id="1249"&gt;
@@ -93,36 +87,30 @@ Non-protein chains present their own issues -
 >                  &lt;PDBx:auth_atom_id&gt;CG&lt;/PDBx:auth_atom_id&gt;
 >                  &lt;PDBx:pdbx_PDB_model_num&gt;1&lt;/PDBx:pdbx_PDB_model_num&gt;
 >               &lt;/PDBx:atom_site&gt;
->         `  
-> `       `
+>         `
 >
 > `       Here, label_asym_id is the NDB chain ID and auth_asym_id is the PDB `  
 > `       chain ID. Similarly, label_seq_id is the NDB residue ID and auth_seq_id `  
-> `       is the PDB residue ID.`  
-> `       `
+> `       is the PDB residue ID.`
 >
 > `       To make matters worse, Phil Bourne insisted that the community prefers `  
 > `       to see the PDB nomenclature. This is correct, since most of the `  
 > `       community uses the .pdb format. Whereas the NDB nomenclature is *much* `  
 > `       more amenable to use in the internal data structures, I had to make a `  
 > `       large dictionary to translate NDB to PDB (and vice-versa) to make sure `  
-> `       that I always displayed the PDB nomenclature in the interface.`  
-> `       `
+> `       that I always displayed the PDB nomenclature in the interface.`
 >
 > `       So, in summary, NDB is the residue and chain ID nomenclature which I `  
 > `       used internally for efficiency purposes, and PDB is the nomenclature I `  
 > `       displayed to the user. The PdbToNdbConverter class handles conversion `  
-> `       between the two.`  
-> `       `
+> `       between the two.`
 >
 > `       I used `  
 > `       two sections of the PDB XML schema to construct the hashes in `  
 > `       PdbToNdbConverter. You'll have to look at the parser to be sure, but I `  
 > `       think they were entity_poly_seqCategory and pdbx_entity_nonpolyCategory. `  
 > `       These sections provide a whole new can of worms, including chain ID `  
-> `       overlaps (even for NDB IDs).`  
-> `       `
+> `       overlaps (even for NDB IDs).`
 >
 > `       Add to that the fact that data errors in all of the formats are not `  
-> `       uncommon, which tends to further complicate the issue.`  
-> `       `
+> `       uncommon, which tends to further complicate the issue.`
