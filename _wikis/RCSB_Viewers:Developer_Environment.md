@@ -37,7 +37,7 @@ We use a specific SVN release - don't use just a generic release:
 
 -   Under the 'Help' menu item, go to 'Software Updates'.
 -   Go to the 'Available Software' tab.
--   Hit the 'Add' button.
+-   Click the 'Add' button.
 -   Enter this URL in the prompt:
     <em><http://subclipse.tigris.org/></em>
 -   After clicking 'Ok', the 'subclipse.tigris.org' selection will
@@ -76,7 +76,7 @@ build unless you add the plug-in. To do that:
 -   Go to the 'Help/Software Updates/Available Software' panel, again.
 -   Click the 'Add' Button.
 -   In the prompt, enter: <em><http://beust.com/eclipse></em>
--   Expand the new entry and you will see 'TestNG'. Check that and hit
+-   Expand the new entry and you will see 'TestNG'. Check that and click
     the Install button.
 -   After installing, Eclipse will suggest you restart it. Probably a
     good idea.
@@ -105,7 +105,7 @@ trunk, depending on your requirements.
 
 <dd>
 At this point, you will see the list of viewer projects. Select them
-all, right click on the selection, and hit 'Check Out' from the
+all, right click on the selection, and click 'Check Out' from the
 dropdown. This can take some time, depending on where you are and what
 OS you're using. Best to do it at night before you go to bed.
 
@@ -140,10 +140,10 @@ If you're having problems, make sure the following is set in the 'Build
 Path' configuration panel of <em>all</em> the viewer projects:
 
 -   In the 'Libraries' tab, <em>gluegen-rt.jar</em> and
-    <em>jogl.jar</em> should be listed. If not, add them by hitting the
-    'Add Jars' button and expand the tree in the prompt box to '3rd Pary
-    Libs/jogl' (ignore the versioned entries - they are there for backup
-    purposes)
+    <em>jogl.jar</em> should be listed. If not, add them by clicking the
+    'Add Jars' button and expanding the tree in the prompt box to '3rd
+    Pary Libs/jogl' (ignore the versioned entries - they are there for
+    backup purposes),
     `and selecting the jars.  Click 'Ok' and the new jar entries will appear in the list.`
 
 -   In each one of these entries, the 'Native library location' setting
