@@ -54,6 +54,10 @@ structure, as well as change the rendering styles.
 This viewer explores relationships between ligands (or other non-protein
 chains/residues) and the containing protein.
 
+  
+  
+![](LigandExplorerOverview.png "fig:LigandExplorerOverview.png")
+
 #### RCSB PDB Kiosk
 
 The *Kiosk* viewer is a full screen viewer that provides a slide show of

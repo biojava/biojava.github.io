@@ -25,6 +25,7 @@ A viewer that provides tools to manipulate and examine parts of the structure, a
 ==== RCSB Ligand Explorer ====
 
 This viewer explores relationships between ligands (or other non-protein chains/residues) and the containing protein.
+::[[Image:LigandExplorerOverview.png]]
 
 ==== RCSB PDB Kiosk ====
 
