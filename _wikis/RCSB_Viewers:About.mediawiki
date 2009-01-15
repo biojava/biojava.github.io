@@ -33,11 +33,11 @@ The ''Kiosk'' viewer is a full screen viewer that provides a slide show of a set
 
 == Current Projects ==
 
-The current projects defined for the ''RCSB Viewers'' are:
+The current primary projects defined for the ''RCSB Viewers'' are:
 
 <blockquote>
 ;RCSB MBT Libs
-: this project contains the modules to define and carry the 'model', defined as a set of structures.  It has been mostly preserved directly from the original ''MBT Library'' project.  It also contains modules to load files (currently only PDB and XML files are supported.)
+: this project contains the modules to define and carry the 'model', defined as a set of structures.  It has been mostly preserved directly from the original ''MBT Library'' project.  It also contains modules to load files (currently only PDB and XML files are supported.)  It is expected this will be replaced by ''BioJava''.
 
 ;RCSB UIApp Framework
 : this project contains modules required to make an actual UI (windowing) application.  It defines a singleton application class, mainframe (document frame) class, various controllers to tie the pieces together and direct program flow.  The UI aspect is based on ''Swing.''
@@ -48,6 +48,8 @@ The current projects defined for the ''RCSB Viewers'' are:
 ;RCSB Simple Viewer, RCSB Protein Workshop, RCSB Ligand Explorer, RCSB PDB Kiosk
 : projects for the end viewer applications.
 </blockquote>
+
+In addition, there are several minor projects for updating datasets, documentation, and tests.  See the SVN repository for further information.
 
 == Documentation ==
 
