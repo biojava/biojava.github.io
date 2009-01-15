@@ -51,12 +51,11 @@ Analysis
 --------
 
 Essentially, this is a good mechanism, however the granularity is too
-fine. Display lists are only for spheres, cylinders, and the geometry
-created for secondary structures. Again, while the latter is good, the
-former is too fine-grained. It would be better if higher level display
-lists were defined, that invoked the sphere and cylinder display lists.
-The higher level lists could be defined on a residue or chain or both
-basis.
+fine. Display lists are only for spheres, cylinders, and the residue
+pieces created for secondary structures. Again, while the latter is
+good, the former is too fine-grained. It would be better if higher level
+display lists were defined on a chain basis, that would in turn invoke
+the sphere and cylinder display lists.
 
 This adds to the complication in case of editing/modification, of
 course, because in doing so, the higher level display lists need to be
