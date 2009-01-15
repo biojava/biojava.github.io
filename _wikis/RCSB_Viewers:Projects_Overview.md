@@ -21,7 +21,6 @@ These projects provide the underpinnings for creating applications.
 <dt>
 3rd Party Libs
 
-</dt>
 <dd>
 These are external support jars (that are not included in the standard
 JRE distribution) the rest of the framework relies on. Key jar
@@ -38,7 +37,6 @@ specified in execution directives.
 <dt>
 RCSB MBT Lib
 
-</dt>
 <dd>
 This is the <em>Molecular Biology Toolkit</em>, a framework and
 structure specification that provides the foundation for creating and
@@ -57,7 +55,6 @@ analysis utilities.
 <dt>
 RCSB Viewers Framework
 
-</dt>
 <dd>
 The <em>Viewers Framework</em> is an intermediate project between the
 viewers and the MBT. It contains modules that are shared between the
@@ -76,7 +73,6 @@ the suite of 3d structure viewers:
 <dt>
 RCSB Simple Viewer
 
-</dt>
 <dd>
 A viewer that takes up the entire mainframe (window), without any
 additional panels or other control mechanism. It simply displays the
@@ -92,7 +88,6 @@ or other status information.
 <dt>
 RCSB Protein Workshop
 
-</dt>
 <dd>
 A viewer that provides a control panel, allowing view modifications such
 as rendering styles, colors, visibility, etc.
@@ -101,7 +96,6 @@ as rendering styles, colors, visibility, etc.
 <dt>
 RCSB Ligand Explorer
 
-</dt>
 <dd>
 Displays a structure and ligand combination, in the same space. Various
 tools are provided in a control panel to explore relationships between
@@ -111,7 +105,6 @@ the ligand and associated structure.
 <dt>
 RCSB PDB Kiosk
 
-</dt>
 <dd>
 A unique 'outreach' viewer that displays a number of structures in
 sequence, animating between different aspects of views. A kind of
