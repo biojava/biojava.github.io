@@ -28,7 +28,7 @@ title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classificatio
 `     site:`  
 `   `
 
-`       ::`[`ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz`](ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz)</a>  
+`       `[`ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz`](ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz)  
   
 `   `
 
