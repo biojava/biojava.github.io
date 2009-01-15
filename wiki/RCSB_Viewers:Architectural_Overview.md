@@ -19,7 +19,7 @@ blend the two notions as follows:''
 
   
   
-![](MBTArchAMDtoMVC.png "fig:MBTArchAMDtoMVC.png")
+![](MBTArchAMDToMVC.png "fig:MBTArchAMDToMVC.png")
 
 From here, it is easy to determine where most systems fit into the
 architecture, and how to extend it, gracefully.
