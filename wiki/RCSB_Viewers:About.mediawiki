@@ -70,3 +70,4 @@ In addition, there are several operational/architectural topic pages as follows:
 
 === RCSB Viewer Framework ===
 * [[RCSB Viewers:Viewer Framework:General Rendering|General Rendering]]
+* [[RCSB Viewers:Viewer Framework:Picking|Picking]]
