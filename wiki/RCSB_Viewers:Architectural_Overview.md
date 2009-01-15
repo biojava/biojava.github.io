@@ -15,8 +15,7 @@ such as Microsoft's *C++/MFC*, *C\#/Forms (application)* framework,
 *PowerPlant* on the *Mac*, *Viewkit* on *IRIX*, etc.
 
 We also like to think in terms of *Model/View/Controller*, and we can
-blend the two notions as follows:''
-<img src="images/MBTArchAMDtoMVC.png" alt="AMD to MVC Mapping"/>
+blend the two notions as follows:'' <image:MBTArchAMDtoMVC.png>
 
 From here, it is easy to determine where most systems fit into the
 architecture, and how to extend it, gracefully.
