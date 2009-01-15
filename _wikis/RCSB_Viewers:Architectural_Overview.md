@@ -82,31 +82,36 @@ application.)
 <!-- -->
 
   
-Note that by associating the <em>model</em> and doc-centric
-<em>controllers</em> with a frame, we now are free to expand the above
-<em>single-framed</em> representation to a <em>multiple-framed</em>
-representation:
+Note that by associating the *model* and doc-centric *controllers* with
+a frame, we now are free to expand the above *single-framed*
+representation to a *multiple-framed* representation:
 
 <img src="images/MBTMDIContainmentArch.png" alt="Multiple Frame Containment"/>
-This is simply a repeated structure for each <em>DocumentFrame</em>,
-with the addition of two more components:
+This is simply a repeated structure for each *DocumentFrame*, with the
+addition of two more components:
 
--   A <em>Multiple Frame Controller</em> (not implemented this version.)
-    This component does the following:
+-   A *Multiple Frame Controller* (not implemented this version.) This
+    component (would do) the following:
 
 <!-- -->
 
--   -   Creates the <em>Document Frames</em> as they are requested.
-    -   Provides access to the <em>DocumentFrames</em>, as well as their
+-   -   Creates the *Document Frames* as they are requested.
+    -   Provides access to the *DocumentFrames*, as well as their
         contained components.
     -   Maintains 'active frame' status (most access requests will be
         via the active frame.)
 
 <!-- -->
 
--   <em>Separated 'Other UI'</em> - UI that is not tied to a document,
-    or is updated when the active <em>Document Frame</em> changes. An
-    example would be a control panel that is not in a document frame.
+-   ''Separated 'Other UI' '' - UI that is not tied to a document, or is
+    updated when the active *Document Frame* changes. An example would
+    be a control panel that is not in a document frame.
+
+  
+An example multiple frame doc controller can be found in the *TestBed*
+project.
+
+<!-- -->
 
 Model  
 An instance of the data that defines the model. Currently an array of
