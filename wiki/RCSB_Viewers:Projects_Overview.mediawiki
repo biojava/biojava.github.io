@@ -22,17 +22,17 @@ the rest of the framework relies on.  Key jar subsystems are:
 <li>JAI - Java <em>Advanced Imaging</em> implementation.</li>
 </ul>
 In addition to the jars, the JOGL implementation requires JNI native libraries for each targed
-platform, the locations of which must be specified in execution directives.</dd>
+platform, the locations of which must be specified in execution directives.
 <dt>RCSB MBT Lib
 <dd>
 This is the <em>Molecular Biology Toolkit</em>, a framework and structure specification that provides
 the foundation for creating and accessing structure models.  In addition, the toolkit provides
 low-level base classes for application creation, basic UI services (file open dialog, etc.), and 3d
-scene creation.</dd>
+scene creation.
 <dd>
 The framework can provide the foundation for viewers (as it currently does), but parts of it may be
 used to construct non-viewer/non- or limited- UI applications, or even command-line or out-of-process
-analysis utilities.</dd>
+analysis utilities.
 <dt>RCSB Viewers Framework
 <dd>
 The <em>Viewers Framework</em> is an intermediate project between the viewers and the MBT.  It contains
