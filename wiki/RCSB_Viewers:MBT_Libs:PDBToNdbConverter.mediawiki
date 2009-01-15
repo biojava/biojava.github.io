@@ -44,26 +44,26 @@ Non-protein chains present their own issues -
 ::For an example of what I mean, look at the following .xml snippet.Scroll about halfway down the file, and you'll see something like...
 
 <code>
-&lt;PDBx:atom_site id="1249"&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:type_symbol&gt;C&lt;/PDBx:type_symbol&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_atom_id&gt;CG&lt;/PDBx:label_atom_id&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_alt_id xsi:nil="true" /&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_comp_id&gt;ARG&lt;/PDBx:label_comp_id&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_asym_id&gt;A&lt;/PDBx:label_asym_id&gt;             (--&gt; NDB chain ID)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_entity_id&gt;1&lt;/PDBx:label_entity_id&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_seq_id&gt;165&lt;/PDBx:label_seq_id&gt;             (--&gt; NDB residue ID)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_x&gt;15.583&lt;/PDBx:Cartn_x&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_y&gt;0.027&lt;/PDBx:Cartn_y&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_z&gt;-10.746&lt;/PDBx:Cartn_z&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:occupancy&gt;1.00&lt;/PDBx:occupancy&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:B_iso_or_equiv&gt;26.76&lt;/PDBx:B_iso_or_equiv&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_seq_id&gt;165&lt;/PDBx:auth_seq_id&gt;               (--&gt; PDB residue ID)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_comp_id&gt;ARG&lt;/PDBx:auth_comp_id&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_asym_id&gt;E&lt;/PDBx:auth_asym_id&gt;               (--&gt; PDB chain ID)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_atom_id&gt;CG&lt;/PDBx:auth_atom_id&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:pdbx_PDB_model_num&gt;1&lt;/PDBx:pdbx_PDB_model_num&gt;<br/>
-&lt;/PDBx:atom_site&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:atom_site id="1249"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:type_symbol&gt;C&lt;/PDBx:type_symbol&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_atom_id&gt;CG&lt;/PDBx:label_atom_id&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_alt_id xsi:nil="true" /&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_comp_id&gt;ARG&lt;/PDBx:label_comp_id&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_asym_id&gt;A&lt;/PDBx:label_asym_id&gt;             (--&gt; NDB chain ID)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_entity_id&gt;1&lt;/PDBx:label_entity_id&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_seq_id&gt;165&lt;/PDBx:label_seq_id&gt;             (--&gt; NDB residue ID)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_x&gt;15.583&lt;/PDBx:Cartn_x&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_y&gt;0.027&lt;/PDBx:Cartn_y&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_z&gt;-10.746&lt;/PDBx:Cartn_z&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:occupancy&gt;1.00&lt;/PDBx:occupancy&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:B_iso_or_equiv&gt;26.76&lt;/PDBx:B_iso_or_equiv&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_seq_id&gt;165&lt;/PDBx:auth_seq_id&gt;               (--&gt; PDB residue ID)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_comp_id&gt;ARG&lt;/PDBx:auth_comp_id&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_asym_id&gt;E&lt;/PDBx:auth_asym_id&gt;               (--&gt; PDB chain ID)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:auth_atom_id&gt;CG&lt;/PDBx:auth_atom_id&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:pdbx_PDB_model_num&gt;1&lt;/PDBx:pdbx_PDB_model_num&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/PDBx:atom_site&gt;
 </code>
 
 ::Here, label_asym_id is the NDB chain ID and auth_asym_id is the PDB chain ID. Similarly, label_seq_id is the NDB residue ID and auth_seq_id is the PDB residue ID.
