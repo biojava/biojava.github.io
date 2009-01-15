@@ -91,19 +91,21 @@ Note that by associating the *model* and doc-centric *controllers* with
 a frame, we now are free to expand the above *single-framed*
 representation to a *multiple-framed* representation:
 
-<img src="images/MBTMDIContainmentArch.png" alt="Multiple Frame Containment"/>
+  
+![](MBTMDIContainmentArch.png "fig:MBTMDIContainmentArch.png")
+
 This is simply a repeated structure for each *DocumentFrame*, with the
 addition of two more components:
 
 :\*A *Multiple Frame Controller* (not implemented this version.) This
 component (would do) the following:
 
-:\*\*Create the *Document Frames* as they are requested.
+::\*Create the *Document Frames* as they are requested.
 
-:\*\*Provide access to the *DocumentFrames*, as well as their contained
+::\*Provide access to the *DocumentFrames*, as well as their contained
 components.
 
-:\*\*Maintains 'active frame' status (most access requests will be via
+::\*Maintains 'active frame' status (most access requests will be via
 the active frame.)
 
 :\*''Separated 'Other UI' '' - UI that is not tied to a document, or is
