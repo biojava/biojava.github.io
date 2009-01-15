@@ -6,14 +6,14 @@ into two basic categories:
 <li>Support libraries and frameworks</li>
 <li>Viewer applications</li>
 </ul>
-<p>
-A further overview of these divisions follows.</p>
+
+A further overview of these divisions follows.
 
 == Support Libraries and Frameworks ==
 
 These projects provide the underpinnings for creating applications.
 <dl>
-<dt>3rd Party Libs</dt>
+<dt>3rd Party Libs
 <dd>
 These are external support jars (that are not included in the standard JRE distribution) 
 the rest of the framework relies on.  Key jar subsystems are:
@@ -23,7 +23,7 @@ the rest of the framework relies on.  Key jar subsystems are:
 </ul>
 In addition to the jars, the JOGL implementation requires JNI native libraries for each targed
 platform, the locations of which must be specified in execution directives.</dd>
-<dt>RCSB MBT Lib</dt>
+<dt>RCSB MBT Lib
 <dd>
 This is the <em>Molecular Biology Toolkit</em>, a framework and structure specification that provides
 the foundation for creating and accessing structure models.  In addition, the toolkit provides
@@ -33,7 +33,7 @@ scene creation.</dd>
 The framework can provide the foundation for viewers (as it currently does), but parts of it may be
 used to construct non-viewer/non- or limited- UI applications, or even command-line or out-of-process
 analysis utilities.</dd>
-<dt>RCSB Viewers Framework</dt>
+<dt>RCSB Viewers Framework
 <dd>
 The <em>Viewers Framework</em> is an intermediate project between the viewers and the MBT.  It contains
 modules that are shared between the viewers, but that are more 'viewer-specific' than the general
@@ -45,22 +45,22 @@ functionality provided in the MBT.</dd>
 These are the actual implementing applications, currently consisting of the suite of 3d structure
 viewers:
 <dl>
-<dt>RCSB Simple Viewer</dt>
+<dt>RCSB Simple Viewer
 <dd>
 A viewer that takes up the entire mainframe (window), without any additional panels or other control
 mechanism.  It simply displays the structure.</dd>
 <dd>
 A rudimentary menu is provided to open other structures, and a status bar is provided in the mainframe
 to echo the results of component hovers or other status information.</dd>
-<dt>RCSB Protein Workshop</dt>
+<dt>RCSB Protein Workshop
 <dd>
 A viewer that provides a control panel, allowing view modifications such as rendering styles, colors,
 visibility, etc.</dd>
-<dt>RCSB Ligand Explorer</dt>
+<dt>RCSB Ligand Explorer
 <dd>
 Displays a structure and ligand combination, in the same space.  Various tools are provided in a
 control panel to explore relationships between the ligand and associated structure.</dd>
-<dt>RCSB PDB Kiosk</dt>
+<dt>RCSB PDB Kiosk
 <dd>
 A unique 'outreach' viewer that displays a number of structures in sequence, animating between
 different aspects of views.  A kind of 'moving slideshow' presentation.</dd>
