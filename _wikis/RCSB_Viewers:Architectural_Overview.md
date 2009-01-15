@@ -125,15 +125,18 @@ Controllers (doc-centric)
 There are a number of these to control subfunctions/systems. Currently,
 these are:
 
--   <em>DocController</em> - controls the document, in particular
-    loading/saving.
--   <em>UpdateController</em> - controls change updates sent to
-    registered listeners.
--   <em>SceneController</em> - controls creation, access and changes to
-    the scene.
--   <em>StateController</em> - controls state attributes of the
-    document.
--   <em>MutatorController</em> - controls changes to the document.
+:\**DocController* - controls the document, in particular
+loading/saving.
+
+:\**UpdateController* - controls change updates sent to registered
+listeners.
+
+:\**SceneController* - controls creation, access and changes to the
+scene.
+
+:\**StateController* - controls state attributes of the document.
+
+:\**MutatorController* - controls changes to the document.
 
 More are expected to be added as functionality grows or functional units
 are further identified.
@@ -143,8 +146,7 @@ GlViewer
 <!-- -->
 
   
-The 3d viewer, attached to the <em>DocumentFrame</em>. Renders the
-scene.
+The 3d viewer, attached to the *DocumentFrame*. Renders the scene.
 
 <!-- -->
 
