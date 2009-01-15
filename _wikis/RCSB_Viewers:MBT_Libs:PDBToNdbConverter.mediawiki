@@ -29,7 +29,7 @@ The loaders create the ''PdbToNdbConverter'' as the last step from the lists of 
 
 Non-protein chains present their own issues - 
   
-From John Beaver (edited):
+  From John Beaver (edited):
 
   <blockquote>
   	<p>

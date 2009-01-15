@@ -38,7 +38,7 @@ then uses it throughout the rest of the application.
 
 Non-protein chains present their own issues -
 
-From John Beaver (edited):
+` From John Beaver (edited):`
 
 > `       Pdb and Ndb deal with one of the major legacy problems of the PDB data.`  
 > `       `
