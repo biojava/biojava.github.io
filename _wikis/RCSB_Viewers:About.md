@@ -131,6 +131,6 @@ follows:
 
 ### RCSB Viewer Framework
 
--   [RCSB Viewers:Viewer Framework:General
+-   [General
     Rendering](RCSB Viewers:Viewer Framework:General Rendering "wikilink")
 
