@@ -90,7 +90,7 @@ about halfway down the file, and you'll see something like...
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_alt_id xsi:nil="true" /&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_comp_id&gt;ARG&lt;/PDBx:label_comp_id&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_asym_id&gt;A&lt;/PDBx:label_asym_id&gt;             (--&gt; NDB chain ID)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_entity_id&gt;1&lt;/PDBx:label_entity_id&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_entity_id&gt;1&lt;/PDBx:label_entity_id&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:label_seq_id&gt;165&lt;/PDBx:label_seq_id&gt;             (--&gt; NDB residue ID)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_x&gt;15.583&lt;/PDBx:Cartn_x&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;PDBx:Cartn_y&gt;0.027&lt;/PDBx:Cartn_y&gt;<br/>
