@@ -49,8 +49,7 @@ title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classificatio
 `   `
 
 `     If bonds are not found for a given residue, the atoms are run through a bond-generation algorithm that determines`  
-`     bonds by distance. Atoms are arranged in an octree, first, for quick spatial checks. I don't think this is`  
-`     working correctly, right now. But, it's in there.`  
+`     bonds by distance. Atoms are arranged in an octree, first, for quick spatial checks.`  
 `   `
 
 `     Look in the 'RCSB MBT Libs' project, source directory 'Structure Model', in the package`  
