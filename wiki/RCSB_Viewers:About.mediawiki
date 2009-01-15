@@ -65,3 +65,4 @@ In addition, there are several operational/architectural topic pages as follows:
 
 === RCSB MBT Libs: ===
 * [[RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classification|Bonds and Nucleic Acid Identification/Classification]]
+* [[RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition|Fragment (Secondary Structure) Definition]]
