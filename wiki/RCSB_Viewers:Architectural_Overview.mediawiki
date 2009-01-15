@@ -43,13 +43,13 @@ The component breakout, with a brief explanation of each is as follows:
 :Note that by associating the ''model'' and doc-centric ''controllers'' with a frame, we now are free to expand the above ''single-framed'' representation to a ''multiple-framed'' representation:
 <img src="images/MBTMDIContainmentArch.png" alt="Multiple Frame Containment"/> This is simply a repeated structure for each ''DocumentFrame'', with the addition of two more components:
 
-*A ''Multiple Frame Controller'' (not implemented this version.)  This component (would do) the following:
+:*A ''Multiple Frame Controller'' (not implemented this version.)  This component (would do) the following:
 
-**Creates the ''Document Frames'' as they are requested.
-**Provides access to the ''DocumentFrames'', as well as their contained components.
-**Maintains 'active frame' status (most access requests will be via the active frame.)
+:**Create the ''Document Frames'' as they are requested.
+:**Provide access to the ''DocumentFrames'', as well as their contained components.
+:**Maintains 'active frame' status (most access requests will be via the active frame.)
 
-*''Separated 'Other UI' '' - UI that is not tied to a document, or is updated when the active ''Document Frame'' changes.  An example would be a control panel that is not in a document frame.
+:*''Separated 'Other UI' '' - UI that is not tied to a document, or is updated when the active ''Document Frame'' changes.  An example would be a control panel that is not in a document frame.
 
 :An example multiple frame doc controller can be found in the ''TestBed'' project.
 
