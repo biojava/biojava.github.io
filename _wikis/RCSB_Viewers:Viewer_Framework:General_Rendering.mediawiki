@@ -8,7 +8,7 @@
             ignore the term, or tie to a proper corollary)</li>
         <li>DisplayListGeometry -> ScenePrimitive</li>
         <li>DisplayListRenderable -> SubScene</li>
-        <li>DisplayLists -> ??</li>
+        <li>DisplayLists -> flat collection of all display lists objects.</li>
       </ul>
     </li>
     <li>
@@ -16,6 +16,7 @@
       switched to a different rendering engine.
     </li>
   </ul>
+
 ==Relevent Classes==
   <ul class="relevent-classes">
     <li>GlGeometryViewer</li>
