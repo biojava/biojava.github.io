@@ -33,7 +33,6 @@ In addition to the jars, the JOGL implementation requires JNI native
 libraries for each targed platform, the locations of which must be
 specified in execution directives.
 
-</dd>
 <dt>
 RCSB MBT Lib
 
@@ -44,14 +43,12 @@ accessing structure models. In addition, the toolkit provides low-level
 base classes for application creation, basic UI services (file open
 dialog, etc.), and 3d scene creation.
 
-</dd>
 <dd>
 The framework can provide the foundation for viewers (as it currently
 does), but parts of it may be used to construct non-viewer/non- or
 limited- UI applications, or even command-line or out-of-process
 analysis utilities.
 
-</dd>
 <dt>
 RCSB Viewers Framework
 
