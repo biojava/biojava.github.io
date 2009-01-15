@@ -19,6 +19,7 @@ A basic viewer with no UI, except a menubar that allows for loading of files and
 ==== RCSB Protein Workshop ====
 
 A viewer that provides tools to manipulate and examine parts of the structure, as well as change the rendering styles.
+::[[Image:ProteinWorkshopOverview.png]]
 
 ==== RCSB Ligand Explorer ====
 
