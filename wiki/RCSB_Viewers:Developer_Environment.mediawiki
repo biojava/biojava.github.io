@@ -1,4 +1,3 @@
-
 We are currently using <em>Eclipse</em> for our build environment.  Other environments may work,
 but since Eclipse is universally available and free, we highly recommend your using it.
 <p>
@@ -122,15 +121,13 @@ Should build and be runnable/debuggable, immediately.  As of this writing, Mac i
 project settings pertaining to JDK compile and build environment.
 <dt>Linux & Windows
 <dd>
-The MBT lib needs the JAI jars to build - these are provided by default in the Mac JDK, but not on Linux and Windows.
+The MBT lib needs the JAI and vecmath jars to build - these are provided by default in the Mac JDK, but not on Linux and Windows.
 To add them:
 <ul>
 <li>Right-click on the 'RCSB MBT Libs' project and select 'Build Path/Configure Build Path' from 
 the drop-down.</li>
 <li>
-Expand the 'Jai' entry (ignore the versioned entries, they are there for backup purposes) and 
-select the <em>jai_codec.jar</em> and <em>jai_core.jar</em> entries.  On pressing ok, these will
-be added to the path list.</li>
+Expand the 'Jai' entry (ignore the versioned entries, they are there for backup purposes) and select the <em>jai_codec.jar</em> and <em>jai_core.jar</em> entries.  Also, select the ''vecmath.jar'' entry.  On pressing ok, these will be added to the path list.</li>
 <li>
 Nothing further needs to be done.</li>
 </ul>
