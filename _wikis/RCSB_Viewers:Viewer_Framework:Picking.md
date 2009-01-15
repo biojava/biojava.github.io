@@ -35,8 +35,7 @@ Explanation
 
 `   The technique is based on a 'unique-color' mechanism, rather than a 'ray-pick' mechanism (See `*`OpenGL`
 `Programming` `Guide,` `Sixth` `Ed.` `-` `Object` `Selection` `Using`
-`the` `Back` `Buffer`*`)`  
-` `
+`the` `Back` `Buffer`*`)`
 
 `   On the redraw event, the action is forwarded to several layers of 'PickOrRedraw' functions.  If picking,`  
 `   the execution path sets up a 'unique color' scheme - essentially, the material for each pickable`  
