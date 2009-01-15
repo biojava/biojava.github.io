@@ -60,4 +60,5 @@ In addition, there are several operational/architectural topic pages as follows:
 === General: ===
 
 * [[RCSB Viewers:Architectural Overview|Architectural Overview]]
+* [[RCSB Viewers:Projects Overview|Projects Overview]]
 * [[RCSB Viewers:Source Division|Source Division]]
