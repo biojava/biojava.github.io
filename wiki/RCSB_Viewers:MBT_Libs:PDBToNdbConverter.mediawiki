@@ -30,7 +30,7 @@ The loaders create the ''PdbToNdbConverter'' as the last step from the lists of 
 Non-protein chains present their own issues - 
   
   From John Beaver (edited):
-
+<blockquote>
 Pdb and Ndb deal with one of the major legacy problems of the PDB data.
 
 The old .pdb file format has been around for a very long time. It's simple, and it's what most people who don't use the website use. It has several technical limitations, but the data matches the original author submission very closely.
@@ -74,3 +74,4 @@ So, in summary, NDB is the residue and chain ID nomenclature which I used intern
 I used two sections of the PDB XML schema to construct the hashes in ''PdbToNdbConverter.'' You'll have to look at the parser to be sure, but I think they were ''entity_poly_seqCategory'' and ''pdbx_entity_nonpolyCategory.'' These sections provide a whole new can of worms, including chain ID overlaps (even for NDB IDs).
 
 Add to that the fact that data errors in all of the formats are not uncommon, which tends to further complicate the issue.
+</blockquote>
