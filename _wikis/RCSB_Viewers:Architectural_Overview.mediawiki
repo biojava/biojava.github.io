@@ -25,10 +25,10 @@ A quick overview of the architectural components that make up the MBT (and is re
 up through the viewers) can be ascertained from the following diagram:</p>
 <img src="images/MBTSingleFrameContainmentArch.png" alt="Multiple Frame Containment" />
 
-The component breakout, with a brief explanation of each is as follows:</p>
+The component breakout, with a brief explanation of each is as follows:
 
 ;App/Master Controller
-<dd>
+
 :The ''app'' class (in the viewers, derived from ''VFAppBase'' from the ''Viewer Framework'' project) is the focal point of the application.  The main is typically attached to the derivation of this class.  The derived class is typically named the same as the application.
 
 :This class is the means by which all of the other components (directly or indirectly) are accessed.  Typical components are the''Mainframe/DocumentFrame'' and various controllers.
