@@ -43,7 +43,7 @@ Non-protein chains present their own issues -
 ::The Ndb namespace still has data cleanliness problems, but it seems much better overall than the Pdb namespace.
 ::For an example of what I mean, look at the following .xml snippet.Scroll about halfway down the file, and you'll see something like...
 
-::<code>
+<code>
 &lt;PDBx:atom_site id="1249"&gt;
 &lt;PDBx:group_PDB&gt;ATOM&lt;/PDBx:group_PDB&gt;
 &lt;PDBx:type_symbol&gt;C&lt;/PDBx:type_symbol&gt;
