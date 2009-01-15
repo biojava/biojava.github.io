@@ -48,10 +48,10 @@ chains/residues) and the containing protein.
 
 #### RCSB PDB Kiosk
 
-The *Kiosk* viewer provides a slide show of a set of structures,
-smoothly animating the camera for each structure shown to view the
-structure from different angles and perspectives. It can also focus on
-non-protein chains/residues, if present in the molecule.
+The *Kiosk* viewer is a full screen viewer that provides a slide show of
+a set of structures, smoothly animating the camera for each structure
+shown to view it from different angles and perspectives. It can also
+focus on non-protein chains/residues, if present in the molecule.
 
 Current Projects
 ----------------
