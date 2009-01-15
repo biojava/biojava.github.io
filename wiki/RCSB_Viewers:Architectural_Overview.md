@@ -34,7 +34,9 @@ A quick overview of the architectural components that make up the MBT
 (and is reflected up through the viewers) can be ascertained from the
 following diagram:
 
-<img src="images/MBTSingleFrameContainmentArch.png" alt="Multiple Frame Containment" />
+  
+  
+![](MBTSingleFrameContainmentArch.png "fig:MBTSingleFrameContainmentArch.png")
 
 The component breakout, with a brief explanation of each is as follows:
 
