@@ -14,7 +14,7 @@ History
 
 The *RCSB Viewers* were initially implemented as a set of viewers over
 the *MBT (Molecular Biology Toolkit) Library*, developed at the San
-Diego Super Computing center. The *MBT Library* provided the base-level
+Diego Super Computing Center. The *MBT Library* provided the base-level
 support for structure definition, loading, and viewing.
 
 Since then, as part of a major re-architecting effort, the visualization
@@ -25,11 +25,66 @@ Libs*) has been reduced to simply the structure definition and loading
 frameworks - the UI application and 3d visualization frameworks have
 been factored into discrete projects.
 
+Current Viewers
+---------------
+
+The current set of viewers that are based on the framework are as
+follows:
+
+#### RCSB Simple Viewer
+
+A basic viewer with no UI, except a menubar that allows for loading of
+files and saving the current image to a file.
+
+#### RCSB Protein Workshop
+
+A viewer that provides tools to manipulate and examine parts of the
+structure, as well as change the rendering styles.
+
+#### RCSB Ligand Explorer
+
+This viewer explores relationships between ligands (or other non-protein
+chains/residues) and the containing protein.
+
+#### RCSB PDB Kiosk
+
+The *Kiosk* viewer provides a slide show of a set of structures,
+smoothly animating the camera for each structure shown to view the
+structure from different angles and perspectives. It can also focus on
+non-protein chains/residues, if present in the molecule.
+
 Current Projects
 ----------------
 
 The current projects defined for the *RCSB Viewers* are:
 
+> RCSB MBT Libs  
+> this project contains the modules to define and carry the 'model',
+> defined as a set of structures. It has been mostly preserved directly
+> from the original *MBT Library* project. It also contains modules to
+> load files (currently only PDB and XML files are supported.)
+>
+> <!-- -->
+>
+> RCSB UIApp Framework  
+> this project contains modules required to make an actual UI
+> (windowing) application. It defines a singleton application class,
+> mainframe (document frame) class, various controllers to tie the
+> pieces together and direct program flow. The UI aspect is based on
+> *Swing.*
+>
+> <!-- -->
+>
+> RCSB Viewer Framework  
+> this is the project that carries the 3d modules and derived/modified
+> classes to enable creation of 3d applications. The 3d rendering is
+> provided by *JOGL (Java OpenGL)*, directly.
+>
+> <!-- -->
+>
+> RCSB Simple Viewer, RCSB Protein Workshop, RCSB Ligand Explorer, RCSB PDB Kiosk  
+> projects for the end viewer applications.
+>
 Documentation
 -------------
 
