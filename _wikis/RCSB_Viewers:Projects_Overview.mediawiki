@@ -67,18 +67,18 @@ different aspects of views.  A kind of 'moving slideshow' presentation.
 </dl>
 
 ==Re-Architecture Effort==
-<p>
+
 The MBT was created in 1998, using Java 1.0 constructs.  Since then, there have been many improvements
 in the language in terms of performance, type-safety, and syntax.  Furthermore, the
 <em>OpenGL</em> implementation is based on the 1.0 standard.  Similar improvements have occured 
-in the <em>OpenGL</em> implementation, as well.</p>
-<p>
+in the <em>OpenGL</em> implementation, as well.
+
 As a result, this version (undertaken in 2008), represents a large effort to re-architect the MBT and
 Viewers (which had
 diverged considerably in implementation), with an eye to a more maintainable condition, and one that
-more cleanly follows known architectural constructions.</p>
-<p>
+more cleanly follows known architectural constructions.
+
 There has also been a considerable effort to upgrade many of the constructs to minimally the JRE 1.5
-specification, especially as regards type-safety in constructs.</p>
-<p>
-There has been no intent to address or upgrade <em>OpenGL</em> usage in this version.</p>
+specification, especially as regards type-safety in constructs.
+
+There has been no intent to address or upgrade <em>OpenGL</em> usage in this version.
