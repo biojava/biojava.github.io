@@ -36,6 +36,10 @@ follows:
 A basic viewer with no UI, except a menubar that allows for loading of
 files and saving the current image to a file.
 
+  
+  
+![](SimpleViewerOverview.png "fig:SimpleViewerOverview.png")
+
 #### RCSB Protein Workshop
 
 A viewer that provides tools to manipulate and examine parts of the
