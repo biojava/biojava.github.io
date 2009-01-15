@@ -1,3 +1,4 @@
+==Notes==
 	  <ul class="preface">
 	    <li>
 	      Bond records are ignored in the loaders.  Bonds are determined either through
@@ -16,7 +17,7 @@
 	      See the <em>RCSB Excluded</em> project, <em>CL Tools</em> directory for more information.</p>
 	    </li>
 	  </ul>
-	  
+==Relevent Classes==	  
 	  <ul class="relevent-classes">
 	    <li>Bond - definition class</li>
 	    <li>BondFactory - Creates the bonds (static)</li>
@@ -26,7 +27,7 @@
 	    <li>OctreeAtomItem - for Octree</li>
 	    <li>OctreeDataItem - for Octree</li>
 	  </ul>
-	</p>
+==Explanation==
     <p>
       MBT maintains a dictionary of known structures. This comes from a combined .cif file that is found at this ftp
       site:
