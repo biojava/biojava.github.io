@@ -32,7 +32,7 @@
       site:
     </p>
 
-    	::ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz</a>
+    	ftp://ftp.wwpdb.org/pub/pdb/data/monomers/components.cif.gz
  
     <p>
       This file is loaded and broken apart by an external process - see the <span class="projectname">RCSB Excluded</span> 
