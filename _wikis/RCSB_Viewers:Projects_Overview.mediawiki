@@ -10,8 +10,8 @@ into two basic categories:
 A further overview of these divisions follows.</p>
 
 == Support Libraries and Frameworks ==
-<p>
-These projects provide the underpinnings for creating applications.</p>
+
+These projects provide the underpinnings for creating applications.
 <dl>
 <dt>3rd Party Libs</dt>
 <dd>
@@ -39,6 +39,7 @@ The <em>Viewers Framework</em> is an intermediate project between the viewers an
 modules that are shared between the viewers, but that are more 'viewer-specific' than the general
 functionality provided in the MBT.</dd>
 </dl>
+
 ==Applications==
 <p>
 These are the actual implementing applications, currently consisting of the suite of 3d structure
