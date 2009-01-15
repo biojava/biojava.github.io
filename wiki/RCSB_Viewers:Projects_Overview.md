@@ -39,9 +39,7 @@ RCSB MBT Lib
 <dd>
 This is the <em>Molecular Biology Toolkit</em>, a framework and
 structure specification that provides the foundation for creating and
-accessing structure models. In addition, the toolkit provides low-level
-base classes for application creation, basic UI services (file open
-dialog, etc.), and 3d scene creation.
+accessing structure models.
 
 <dd>
 The framework can provide the foundation for viewers (as it currently
@@ -50,15 +48,21 @@ limited- UI applications, or even command-line or out-of-process
 analysis utilities.
 
 <dt>
+RCSB UIApp Framework
+
+<dd>
+The <em>UIApp Framework</em>provides low-level base classes for
+application creation and basic UI services (mainframe, menu, file open
+dialog, etc.)
+
+<dt>
 RCSB Viewers Framework
 
 <dd>
-The <em>Viewers Framework</em> is an intermediate project between the
-viewers and the MBT. It contains modules that are shared between the
-viewers, but that are more 'viewer-specific' than the general
-functionality provided in the MBT.
+The <em>Viewers Framework</em> builds on the <em>UIApp Framework</em> to
+provide 3d graphics support. All of the 3d viewers are built on this
+framework.
 
-</dd>
 </dl>
 Applications
 ------------
