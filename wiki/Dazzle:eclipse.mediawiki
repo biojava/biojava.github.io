@@ -3,13 +3,12 @@
 Instructions how to run [[Dazzle|Dazzle]] in Eclipse using the Web Standard Tools.
 
 == required plugins ==
-To run Dazzle in Eclipse make sure you have the following eclipse plugins installed:
+To run Dazzle in Eclipse make sure you have the following eclipse plugins installed or you download a version of eclipse with these plugins already such as a Java EE eclipse version or sometimes labelled Server/Web version (e.g. [http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/ganymede/SR1/eclipse-jee-ganymede-SR1-macosx-carbon.tar.gz Ganymede] or [http://www.easyeclipse.org/site/distributions/index.html EasyEclipse]):
 
  WST - the [http://www.eclipse.org/webtools/wst/main.php Web Standard Tools project]
  Subclipse - the [http://subclipse.tigris.org/ subversion plugin for eclipse]
 
  For WST make sure to have your Tomcat/Resin server configured correctly as a Server in Eclipse.
-
 
 == Step 1 check out Dazzle ==
 
