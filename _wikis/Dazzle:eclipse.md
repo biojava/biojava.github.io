@@ -11,7 +11,12 @@ required plugins
 ----------------
 
 To run Dazzle in Eclipse make sure you have the following eclipse
-plugins installed:
+plugins installed or you download a version of eclipse with these
+plugins already such as a Java EE eclipse version or sometimes labelled
+Server/Web version (e.g.
+[Ganymede](http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/ganymede/SR1/eclipse-jee-ganymede-SR1-macosx-carbon.tar.gz)
+or
+[EasyEclipse](http://www.easyeclipse.org/site/distributions/index.html)):
 
 `WST - the `[`Web` `Standard` `Tools`
 `project`](http://www.eclipse.org/webtools/wst/main.php)  
