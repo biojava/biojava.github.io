@@ -13,7 +13,6 @@ Go to http://www.easyeclipse.org/site/distributions/server-java.html and select 
 *click new, server.
 *browse to the tomcat 5.5.27 dir and select. then select the jvm1.60 from the dropdown menu below.
 next, next, ok.
-*drag the web.xml file from the dazzle-webapp dir to the webcontent/web-inf dir then drag all the other files from that dir into the webcontent dir above the web-inf dir!!!
 
 ==Get project from the latest source in subversion==
 *choose import, other, checkout projects from svn.
