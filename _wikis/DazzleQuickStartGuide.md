@@ -36,10 +36,6 @@ Set up a server configuration in eclipse
 
 next, next, ok.
 
--   drag the web.xml file from the dazzle-webapp dir to the
-    webcontent/web-inf dir then drag all the other files from that dir
-    into the webcontent dir above the web-inf dir!!!
-
 Get project from the latest source in subversion
 ------------------------------------------------
 
