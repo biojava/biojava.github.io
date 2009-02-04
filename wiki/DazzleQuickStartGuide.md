@@ -73,8 +73,11 @@ Configure using dazzle.xml
 --------------------------
 
 -   drag the web.xml file from the dazzle-webapp dir to the
-    webcontent/web-inf dir then drag all the other files from that dir
-    into the webcontent dir above the web-inf dir!!!
+    webcontent/web-inf dir
+-   then drag all the other files from that dir into the webcontent dir
+    above the web-inf dir!!!(currently these files include files such as
+    das.xsl, dazzlecfg.xml, example.up, fickett-tss.gff, sources.xml,
+    test.embl, test.style, tss.style, wellcome.html).
 -   now go to the dazzlecfg.xml file that you just moved into the
     webcontent folder and alter the "value" next to filename for all
     occurances and put a / in front e.g. change "test.embl" to
