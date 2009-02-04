@@ -51,6 +51,7 @@ Get project from the latest source in subversion
 -   next
 -   leave the default "check out the project using the New Project
     Wizard"
+-   click "finish"
 -   open web dir then select dynamic web project
 -   type in the name of your project as "das"
 -   click finish
@@ -68,8 +69,9 @@ configured to use java 5.0 as standard). rigt click on the project and
 select properties then the J2EE tab, then select the jar files as before
 to be added to the project.
 
--   go to project properties again and select the source tab- then tick
-    the resources folder and ok.
+-   go to project properties again and select the java build path,
+    source tab- then click "add resources" tick the resources folder and
+    ok.
 
 Configure using dazzle.xml
 --------------------------
