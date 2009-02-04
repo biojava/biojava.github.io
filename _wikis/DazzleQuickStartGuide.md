@@ -72,6 +72,9 @@ to be added to the project.
 Configure using dazzle.xml
 --------------------------
 
+-   drag the web.xml file from the dazzle-webapp dir to the
+    webcontent/web-inf dir then drag all the other files from that dir
+    into the webcontent dir above the web-inf dir!!!
 -   now go to the dazzlecfg.xml file that you just moved into the
     webcontent folder and alter the "value" next to filename for all
     occurances and put a / in front e.g. change "test.embl" to
