@@ -139,6 +139,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 * [[BioJava:CookBook:PDB:mmcif|How can I read a .mmcif file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
 * [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on atoms?]]
+* [[BioJava:CookBook:PDB:groups|How to work with Groups (AminoAcid, Nucleotide, Hetatom)?
 * [[BioJava:CookBook:PDB:header|How can I access the header information of a PDB file?]]
 * [[BioJava:CookBook:PDB:seqres|How does BioJava deal with SEQRES and ATOM groups?]]
 * [[BioJava:CookBook:PDB:mutate|How can I mutate a residue?]]
