@@ -245,6 +245,8 @@ How Do I....?
     structure?](BioJava:CookBook:PDB:atoms "wikilink")
 -   [How can I do calculations on
     atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
+-   [[BioJava:CookBook:PDB:groups|How to work with Groups (AminoAcid,
+    Nucleotide, Hetatom)?
 -   [How can I access the header information of a PDB
     file?](BioJava:CookBook:PDB:header "wikilink")
 -   [How does BioJava deal with SEQRES and ATOM
