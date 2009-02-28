@@ -32,5 +32,5 @@ BioJava contains a protein structure superimposition algorithm that is
 implemented using the BioJava structure API. To learn more about
 aligning protein structures go to <BioJava:CookBook:PDB:align>
 
-Next: <BioJava:CookBook:PDB:header> - How to access the header
-information
+Next: <BioJava:CookBook:PDB:groups> - How to work with Groups
+(AminoAcids,Nucleotides, Hetatom)
