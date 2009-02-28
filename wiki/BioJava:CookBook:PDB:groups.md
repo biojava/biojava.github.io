@@ -7,9 +7,9 @@ title: BioJava:CookBook:PDB:groups
 The Group interface defines all methods common to a group of atoms.
 There are 3 tyes of Groups
 
--   AminoAcid
--   Nucleotide
--   Hetatom
+-   [AminoAcid](http://www.biojava.org/docs/api/org/biojava/bio/structure/AminoAcid.html)
+-   [Nucleotide](http://www.biojava.org/docs/api/org/biojava/bio/structure/NucleotideImpl.html)
+-   [Hetatom](http://www.biojava.org/docs/api/org/biojava/bio/structure/HetatomImpl.html)
 
 In order to get all amino acids that have been observed in a PDB chain
 you can use the following utility method:
