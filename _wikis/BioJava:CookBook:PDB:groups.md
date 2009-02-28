@@ -2,7 +2,7 @@
 title: BioJava:CookBook:PDB:groups
 ---
 
--   Groups\*
+### Groups
 
 The Group interface defines all methods common to a group of atoms.
 There are 3 tyes of Groups
