@@ -27,5 +27,32 @@ you can use the following utility method:
 
 </java>
 
+In a similar way you can access all nucleotide groups by <java>
+
+`           chain.getAtomGroups("nucleotide");`
+
+</java>
+
+and all Hetatom groups by <java>
+
+`           chain.getAtomGroups("hetatm");`
+
+</java>
+
+since all 3 types of groups are implementing the Group interface you can
+also iterate over all groups and check for the instance type:
+
+<java>
+
+`           List`<Group>` allgroups = chain.getAtomGroups();`  
+`           for (Group group : groups) {`  
+`               if ( group instanceof AminoAcid) {`  
+`                   AminoAcid aa = (AminoAcid) group;`  
+`                   System.out.println(aa.getSecStruc());`  
+`               }`  
+`           }`
+
+</java>
+
 Next: <BioJava:CookBook:PDB:header> - How to access the header
 information
