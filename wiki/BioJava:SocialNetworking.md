@@ -2,8 +2,21 @@
 title: BioJava:SocialNetworking
 ---
 
+Here a list of BioJava groups on various social networking sites:
+
 Facebook
 --------
 
 Te BioJava facebook group can be found at
 [<http://www.facebook.com/home.php#/group.php?gid=53562049203>](http://www.facebook.com/home.php#/group.php?gid=53562049203)
+
+LinkedIn
+--------
+
+There is a BioJava group on LinkedIn:
+
+Developers of the BioJava open-source bioinformatics project.
+
+To join the BioJava linkedin group: You need to be a linkedin member.
+You then need to find the group and ask to join. You don't need to be a
+contributor just a user or interested party.
