@@ -7,8 +7,9 @@ Here a list of BioJava groups on various social networking sites:
 Facebook
 --------
 
-Te BioJava facebook group can be found at
+The BioJava facebook group can be found at
 [<http://www.facebook.com/home.php#/group.php?gid=53562049203>](http://www.facebook.com/home.php#/group.php?gid=53562049203)
+. It is open for anybody to join.
 
 LinkedIn
 --------
