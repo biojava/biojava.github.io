@@ -1,0 +1,9 @@
+---
+title: BioJava:SocialNetworking
+---
+
+Facebook
+--------
+
+Te BioJava facebook group can be found at
+[<http://www.facebook.com/home.php#/group.php?gid=53562049203>](http://www.facebook.com/home.php#/group.php?gid=53562049203)
