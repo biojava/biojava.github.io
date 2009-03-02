@@ -12,7 +12,7 @@ If you re-use code from the cookbook please cite:
 
 == Announcing ==
 
-You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 20 octobre 2008).
+You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 2 mars 2009).
 
 You can also read Biojava in Anger in [[Biojava:CookbookPortuguese|Portuguese]] (Translated by Dickson Guedes)
 
