@@ -134,6 +134,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 * [[BioJava:CookbookFrench:PDB:Mmcif|Comment faire pour lire un fichier en format MMCIF?]]
 * [[BioJava:CookbookFrench:PDB:Atom|Comment obtenir les informations sur les atomes présent dans un fichier PDB?]]
 * [[BioJava:CookbookFrench:PDB:AtomCalc|Comment faire des calculs sur des Atomes présent dans un fichier PDB?]]
+* [[BioJava:CookbookFrench:PDB:Group|Comment travailler avec des objets de type Group (AminiAcid,Nucleotide,Hetatom)?]]
 * [[BioJava:CookbookFrench:PDB:Header|Comment accéder aux informations contenues dans l'en-tete d'un fichier PDB?]]
 * [[BioJava:CookbookFrench:PDB:Seqres|Comment utiliser les information des groupes SEQRES et ATOM avec BioJava?]]
 * [[BioJava:CookbookFrench:PDB:Mutate|Comment puis-je modifié un résidu?]]
