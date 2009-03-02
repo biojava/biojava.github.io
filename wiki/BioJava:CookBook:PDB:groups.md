@@ -5,13 +5,13 @@ title: BioJava:CookBook:PDB:groups
 ### Groups
 
 The Group interface defines all methods common to a group of atoms.
-There are 3 tyes of Groups
+There are 3 types of Groups:
 
 -   [AminoAcid](http://www.biojava.org/docs/api/org/biojava/bio/structure/AminoAcid.html)
 -   [Nucleotide](http://www.biojava.org/docs/api/org/biojava/bio/structure/NucleotideImpl.html)
 -   [Hetatom](http://www.biojava.org/docs/api/org/biojava/bio/structure/HetatomImpl.html)
 
-In order to get all amino acids that have been observed in a PDB chain
+In order to get all amino acids that have been observed in a PDB chain,
 you can use the following utility method:
 
 <java>
@@ -33,14 +33,14 @@ In a similar way you can access all nucleotide groups by <java>
 
 </java>
 
-and all Hetatom groups by <java>
+The Hetatom groups are access in a similar fashion: <java>
 
 `           chain.getAtomGroups("hetatm");`
 
 </java>
 
-since all 3 types of groups are implementing the Group interface you can
-also iterate over all groups and check for the instance type:
+Since all 3 types of groups are implementing the Group interface, you
+can also iterate over all groups and check for the instance type:
 
 <java>
 
