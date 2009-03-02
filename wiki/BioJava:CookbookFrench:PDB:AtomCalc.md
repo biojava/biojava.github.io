@@ -5,8 +5,10 @@ title: BioJava:CookbookFrench:PDB:AtomCalc
 Comment faire des calculs sur des Atomes présent dans un fichier PDB?
 ---------------------------------------------------------------------
 
-La classe Calc vous procure une série de méthodes permettant de faire
-divers calculs sur des Atomes.
+La classe
+[Calc](http://www.biojava.org/docs/api/org/biojava/bio/structure/Calc.html)
+vous procure une série de méthodes permettant de faire divers calculs
+sur des Atomes.
 
 <java> public double getPhi(Group a, Group b)
 
@@ -30,4 +32,4 @@ divers calculs sur des Atomes.
 
 BioJava possède également une classe utilisant un algorithm de
 superposition de structure protéique. Pour en savoir plus, consultez
-cette [ page](BioJava:CookbookFrench:PDB:Align "wikilink").
+cette [ recette](BioJava:CookbookFrench:PDB:Align "wikilink").
