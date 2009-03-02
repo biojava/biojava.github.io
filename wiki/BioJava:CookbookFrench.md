@@ -251,6 +251,8 @@ Comment faire pour ...?
     fichier PDB?](BioJava:CookbookFrench:PDB:Atom "wikilink")
 -   [Comment faire des calculs sur des Atomes présent dans un fichier
     PDB?](BioJava:CookbookFrench:PDB:AtomCalc "wikilink")
+-   [Comment travailler avec des objets de type Group
+    (AminiAcid,Nucleotide,Hetatom)?](BioJava:CookbookFrench:PDB:Group "wikilink")
 -   [Comment accéder aux informations contenues dans l'en-tete d'un
     fichier PDB?](BioJava:CookbookFrench:PDB:Header "wikilink")
 -   [Comment utiliser les information des groupes SEQRES et ATOM avec
