@@ -1,6 +1,6 @@
 == Comment faire des calculs sur des Atomes présent dans un fichier PDB? ==
 
-La classe Calc vous procure une s&eacute;rie de m&eacute;thodes permettant de faire divers calculs sur des Atomes.
+La classe [http://www.biojava.org/docs/api/org/biojava/bio/structure/Calc.html Calc] vous procure une s&eacute;rie de m&eacute;thodes permettant de faire divers calculs sur des Atomes.
 
 <java>
 public  double getPhi(Group a, Group b)
@@ -21,4 +21,4 @@ public  double getPhi(Group a, Group b)
     }
 </java>
 
-BioJava possède également une classe utilisant un algorithm de superposition de structure protéique. Pour en savoir plus, consultez cette [[BioJava:CookbookFrench:PDB:Align | page]].
+BioJava possède également une classe utilisant un algorithm de superposition de structure protéique. Pour en savoir plus, consultez cette [[BioJava:CookbookFrench:PDB:Align | recette]].
