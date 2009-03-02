@@ -1,12 +1,12 @@
 ===Groups===
 
-The Group interface defines all methods common to a group of atoms. There are 3 tyes of Groups
+The Group interface defines all methods common to a group of atoms. There are 3 types of Groups:
 
 * [http://www.biojava.org/docs/api/org/biojava/bio/structure/AminoAcid.html AminoAcid]
 * [http://www.biojava.org/docs/api/org/biojava/bio/structure/NucleotideImpl.html Nucleotide]
 * [http://www.biojava.org/docs/api/org/biojava/bio/structure/HetatomImpl.html Hetatom]
 
-In order to get all amino acids that have been observed in a PDB chain you can use the following utility method:
+In order to get all amino acids that have been observed in a PDB chain, you can use the following utility method:
 
 <java>
 			Chain chain = s.getChainByPDB("A");
@@ -25,13 +25,13 @@ In a similar way you can access all nucleotide groups by
 			chain.getAtomGroups("nucleotide");
 </java>
 
-and all Hetatom groups by
+The Hetatom groups are access in a similar fashion:
 <java>
 			chain.getAtomGroups("hetatm");
 </java>
 
 
-since all 3 types of groups are implementing the Group interface you can also iterate over all groups and check for the instance type:
+Since all 3 types of groups are implementing the Group interface, you can also iterate over all groups and check for the instance type:
 
 <java>
 			List<Group> allgroups = chain.getAtomGroups();
