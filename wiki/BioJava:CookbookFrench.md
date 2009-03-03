@@ -5,21 +5,21 @@ title: BioJava:CookbookFrench
 BioJava quand il y a le feu - Un tutoriel et un manuel pour les gens pressés
 ----------------------------------------------------------------------------
 
-La librairie BioJava peut être à la fois imposante et intimidante. Pour
-ceux parmi nous qui sommes pressés, il y a vraiment assez de matériel
-pour faire tourner la tête. Ce document est conçu pour vous aider à
-développer des applications utilisant BioJava, applications capables
-d'accomplir 99% des tâches les plus courantes, sans avoir à comprendre
-99% de l'API de BioJava.
+La librairie BioJava est imposante et il faut le dire, peut être
+intimidante. Pour ceux parmi nous qui sommes pressés, il y a vraiment
+assez de matériel pour faire tourner la tête. Ce document est conçu pour
+vous aider à développer des applications utilisant BioJava, applications
+capables d'accomplir 99% des tâches les plus courantes, sans avoir à
+comprendre 99% de l'API de BioJava.
 
-Cet site est inspiré de tous ces livres de recettes en programmation et
+Ce site est inspiré de tous ces livres de recettes en programmation et
 suit la même approche du "Comment faire pour...". Chacune de ces
 recettes contient également des codes de démonstration qui font ce que
 vous voulez et parfois plus. En bref, si vous trouvez le code que vous
 recherchez et faites un simple copier-coller dans votre programme, vous
 devriez être en mesure de réussir rapidement. J'ai tenté (enfin, Mark
 tente et je traduit!) de sur-documenter le code pour rendre plus évident
-ce qui est tenté, ce qui fait que le code à l'air un peu obèse.
+ce qui est tenté, ce qui explique pourquoi le code à l'air un peu obèse.
 
 'BioJava in Anger' est maintenu par Mark Schreiber. Si vous avez des
 suggestions, questions ou commentaire, contacter la [liste de
@@ -27,7 +27,7 @@ courriel](mailto://biojava-l@biojava.org) de BioJava. Pour s'y abonner,
 cliquer [ici](http://www.biojava.org/mailman/listinfo/biojava-l).
 
 Traduction française: [Sylvain
-Foisy](mailto://sylvain.foisyCHEZbioneq.qc.ca). Donc toute erreur est
+Foisy](mailto://sylvain.foisyCHEZdiploide.net). Donc toute erreur est
 mienne; contactez-moi pour correction. Encore mieux: participer au
 concept Wiki et faites-les vous-mêmes!!
 
