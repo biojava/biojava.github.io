@@ -23,7 +23,7 @@ If you want to directly access an array of [http://www.biojava.org/docs/api/org/
 <java>
 
 // get all Calpha atoms in the structure
-Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
+Atom[] caAtoms = StructureTools.getAtomArray(structure,new String[] {"CA"});
 
 </java>
 
