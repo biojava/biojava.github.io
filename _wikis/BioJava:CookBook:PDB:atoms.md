@@ -31,7 +31,7 @@ you can use the
 <java>
 
 // get all Calpha atoms in the structure Atom[] caAtoms =
-StructureTools.getAtomArray(structure,"CA");
+StructureTools.getAtomArray(structure,new String[] {"CA"});
 
 </java>
 
