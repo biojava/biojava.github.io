@@ -21,7 +21,7 @@ Il existe diff&eacute;rentes mani&egrave;res d'acc&eacute;der aux donn&eacute;es
 <java>
 
 // pour obtenir tous les atomes de type Calpha dans la structure
-Atom[] caAtoms = StructureTools.getAtomArray(structure,"CA");
+Atom[] caAtoms = StructureTools.getAtomArray(structure, new String[]{"CA")};
 
 </java>
 
