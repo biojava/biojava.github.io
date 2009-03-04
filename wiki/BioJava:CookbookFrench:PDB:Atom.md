@@ -30,7 +30,7 @@ tableau d'Atomes, utilisez le code suivant:
 <java>
 
 // pour obtenir tous les atomes de type Calpha dans la structure Atom[]
-caAtoms = StructureTools.getAtomArray(structure,"CA");
+caAtoms = StructureTools.getAtomArray(structure, new String[]{"CA")};
 
 </java>
 
