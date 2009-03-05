@@ -17,6 +17,11 @@ file (24Mb). The file contains all binaries, required jars, docs,
 source, test, demos and apps as gzipped tar files. For some browsers,
 right click and select "Save Link As".
 
+This file contains documentation, source and binaries. Please note that
+this JAR file <b>cannot</b> be dropped directly into your class path.
+You need to unpack the binaries first (or download them seperately
+below).
+
 BioJava binaries
 ----------------
 
