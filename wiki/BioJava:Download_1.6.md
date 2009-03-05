@@ -22,10 +22,7 @@ BioJava binaries
 
 A binary distribution is available as
 [biojava.jar](http://www.biojava.org/download/bj16/bin/biojava.jar) file
-(3.3Mb). For some browsers, right click and select "Save Link As". This
-file contains documentation, source and binaries. Please note that this
-JAR file <b>cannot</b> be dropped directly into your class path. You
-need to unpack the binaries first (or download them seperately below).
+(3.3Mb). For some browsers, right click and select "Save Link As".
 
 ### Support libraries
 
