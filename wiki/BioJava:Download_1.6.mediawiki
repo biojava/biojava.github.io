@@ -8,7 +8,7 @@ A complete download is available as the [http://www.biojava.org/download/bj16/al
 
 == BioJava binaries ==
 
-A  binary distribution is available as [http://www.biojava.org/download/bj16/bin/biojava.jar biojava.jar] file (3.3Mb). For some browsers, right click and select "Save Link As".
+A  binary distribution is available as [http://www.biojava.org/download/bj16/bin/biojava.jar biojava.jar] file (3.3Mb). For some browsers, right click and select "Save Link As". This file contains documentation, source and binaries. Please note that this JAR file <b>cannot</b> be dropped directly into your class path. You need to unpack the binaries first (or download them seperately below).
 
 === Support libraries ===
 
