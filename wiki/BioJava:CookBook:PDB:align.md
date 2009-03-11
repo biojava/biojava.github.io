@@ -63,25 +63,28 @@ Example](http://www.biojava.org/download/performance/biojava-structure-example1.
 `              System.out.println(aa);              `  
 `          }`
 
+`          try {`  
 `           // convert AlternativeAlignment 1 to PDB file, so it can be opened with a viewer of your choice`  
-`           //(e.g. Jmol, Rasmol)`  
-`           `  
+`           //(e.g. Jmol, Rasmol)`
+
 `           if ( aligs.length > 0) {`  
 `               AlternativeAlignment aa1 =aligs[0];`  
-`               String pdbstr = aa1.toPDB(s1,s2);`  
-`               `  
+`               String pdbstr = aa1.toPDB(s1,s2);`
+
 `               System.out.println("writing alignment to " + outputfile);`  
 `               FileOutputStream out= new FileOutputStream(outputfile); `  
-`               PrintStream p =  new PrintStream( out );`  
-`       `  
+`               PrintStream p =  new PrintStream( out );`
+
 `               p.println (pdbstr);`
 
 `               p.close();`  
 `               out.close();`  
 `           }`  
-`           `  
-`                      `  
-`       } catch (Exception e){`  
+`       } catch (FileNotFoundException e) {`  
+`           // TODO Auto-generated catch block`  
+`           e.printStackTrace();`  
+`       } catch (IOException e) {`  
+`           // TODO Auto-generated catch block`  
 `           e.printStackTrace();`  
 `       }`
 
