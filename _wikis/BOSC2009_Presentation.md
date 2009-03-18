@@ -25,8 +25,8 @@ Structure:
 
 Content for abstract / talk :
 
-`* paper got accepted`  
-`* new BioJava 1.7 release`  
+`* `[`paper`](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)` got accepted`  
+`* new BioJava 1.7 release (easter 2009)`  
 `* BioJava 2 status (Richard ?) `  
 `* usage analysis from google analytics`  
 `* new viewers is BioJava svn (to be announced yet)`
