@@ -5,8 +5,8 @@ title: Current events
 BioJava at BOSC 2009
 --------------------
 
-Here [the page](BOSC2009_Presentation "wikilink") to prepare the BOSC
-2009 submission for BioJava.
+Here [the page](BOSC2009_Presentation "wikilink") to prepare the [BOSC
+2009](http://www.open-bio.org/wiki/BOSC_2009) submission for BioJava.
 
 BioJava 1.7 to come soon
 ------------------------
