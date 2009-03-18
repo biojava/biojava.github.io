@@ -9,7 +9,7 @@ BioJava vous permet de faire l'alignement de deux Structures grâce à un
 algorithme basé sur une variation d'un algorithme en C++ fourni par
 Peter Lackner, Univ. de Salzburg (communication personnelle). Cet
 algorithme est basé sur la représentation des structures de protéines
-comme des corps rigides sur lesquelles ont transposent une matrice de
+comme des corps rigides sur lesquelles on transpose une matrice de
 distance. L'algorithme peut calculer les types d'alignement suivants:
 
 -   structures complètes
