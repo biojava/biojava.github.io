@@ -22,3 +22,11 @@ Structure:
 `   * URL for accessing the code`  
 `   * The particular Open Source License being used `  
 `   * Abstract`
+
+Content for abstract / talk :
+
+`* paper got accepted`  
+`* new BioJava 1.7 release`  
+`* BioJava 2 status (Richard ?) `  
+`* usage analysis from google analytics`  
+`* new viewers is BioJava svn (to be announced yet)`
