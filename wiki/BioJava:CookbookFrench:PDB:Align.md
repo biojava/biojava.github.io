@@ -63,7 +63,7 @@ Vous pouvez ensuite envoyer cet alignement pour affichage par Jmol grâce
 `                  System.out.println(aa);              `  
 `               }`  
 `                     `  
-`               // Convertir l'objet AlternativeAlignment 1 en fichier PDB`  
+`               // Convertir l'objet AlternativeAlignment aa1 en fichier PDB`  
 `               // afin de l'ouvrir avec le logiciel de visualisation de votre choix`  
 `               // (e.g. Jmol, Rasmol)`  
 `           `  
