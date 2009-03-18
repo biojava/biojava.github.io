@@ -7,10 +7,35 @@ Comment calculer un alignement de structures?
 
 BioJava vous permet de faire l'alignement de deux Structures grâce à un
 algorithme basé sur une variation d'un algorithme en C++ fourni par
-Peter Lackner, Univ. de Salzburg (communication personnelle)
+Peter Lackner, Univ. de Salzburg (communication personnelle). Cet
+algorithme est basé sur la représentation des structures de protéines
+comme des corps rigides sur lesquelles ont transposent une matrice de
+distance. L'algorithme peut calculer les types d'alignement suivants:
+
+-   structures complètes
+-   chaînes uniques
+-   des ensembles d'atomes
+
+Il permet également des solutions alternatives qui peuvent être
+rassemblées en groupes d'alignement similaire. Il utilise une série
+d'étapes:
+
+-   Il identifie de courtes portions de deux structures protéiques ayant
+    des distances intra-moléculaires similaires.
+-   Les paires de fragments sont comparés, et si possible, assemblés sur
+    de plus longs fragments.
+-   Une dernière étape de raffinement tente d'allonger l'alignement pour
+    obtenir une alignement complet des deux structures.
+
+Le code source est
+[ici](http://code.open-bio.org/svnweb/index.cgi/biojava/view/biojava-live/trunk/src/org/biojava/bio/structure/align/StructurePairAligner.java).
+Un programme Java Web Start est
+[disponible](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
+(Le fichier téléchargé comprend aussi Jmol).
 
 Vous pouvez ensuite envoyer cet alignement pour affichage par Jmol grâce
-à cette recette.
+à cette
+[recette](http://biojava.org/wiki/BioJava:CookBookFrench:PDB:Jmol).
 
 <java>
 
