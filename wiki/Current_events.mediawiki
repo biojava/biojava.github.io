@@ -1,6 +1,6 @@
 == BioJava at BOSC 2009 ==
 
-Here [[BOSC2009_Presentation|the page]] to prepare the BOSC 2009 submission for BioJava.
+Here [[BOSC2009_Presentation|the page]] to prepare the [http://www.open-bio.org/wiki/BOSC_2009 BOSC 2009] submission for BioJava.
 
 == BioJava 1.7 to come soon==
 
