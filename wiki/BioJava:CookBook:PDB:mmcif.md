@@ -16,9 +16,9 @@ to also hook in your own data model. For this you will require to
 implement the [MMcifConsumer
 interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
-The mmcif parsing code will be released with the next biojava release.
-To use it at the moment you will require a [recent build from
-SVN](Autobuild_events "wikilink").
+The mmcif parsing code will be released with the next biojava release in
+April 2009. To use it at the moment you will require a [recent build
+from SVN](Autobuild_events "wikilink").
 
 To parse an mmCif file do the following: <java> @since 1.7
 
