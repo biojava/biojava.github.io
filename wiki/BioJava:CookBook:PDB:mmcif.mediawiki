@@ -1,7 +1,7 @@
 === How do I read a .mmcif file? ===
 
 [http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format to PDB files ( [[#westbrook2000|1]],[[#westbrook2003|2]] ).
-It is not entirely easy to write a parser for it, as such BioJava solves this problem for you. The mmcif files are parsed into the same BioJava data structure as the [[BioJava:CookBook:PDB:read|PDB files]]. The example below demonstrates how to load the content into the BioJava data model for protein structures. The design of the source code allows you to also hook in your own data model. For this you will require to implement the [http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html MMcifConsumer interface].
+The mmcif files are parsed into the same BioJava data structure as the [[BioJava:CookBook:PDB:read|PDB files]]. The example below demonstrates how to load the content into the BioJava data model for protein structures. 
 
 The mmcif parsing code will be released with the next biojava release in April 2009. To use it at the moment you will require a [[Autobuild_events|recent build from SVN]].
 
@@ -21,8 +21,9 @@ To parse an mmCif file do the following:
 	}
 </java>
 
+== Parse into custom data structures ==
 
-The parser is contains a built-in event model. If you want you can use it to load mmCif data also in alternative data models (i.e. not the BioJava one). For this you would need to provide your own implementation of the MMcifConsumer interface. If you don;t have that, just use the SimpleMMcifConsumer, which provides this for you:
+By default the file content will be loaded into the BioJava data structures. The parser is contains a built-in event model, which allows to load  your own, custom data structures.  For this you will require to implement the [http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html MMcifConsumer interface] If you don;t have that, just use the SimpleMMcifConsumer
 
 <java>
 @since 1.7
