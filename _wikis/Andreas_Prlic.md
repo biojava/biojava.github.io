@@ -4,11 +4,12 @@ tags:
  - People
 ---
 
-Andreas Prlic works as a Senior Scientist for the PDB database in San
-Diego, California. Prior to this he worked as a PostDoc at the [Wellcome
-Trust Sanger Institute](http://www.sanger.ac.uk/), Cambridge, U.K. He
-provided the protein structure API to biojava. Other projects he is
-working on include e.g.
+[Andreas Prlic](http://www.spice-3d.org) works as a Senior Scientist for
+the PDB database in San Diego, California. Prior to this he worked as a
+PostDoc at the [Wellcome Trust Sanger
+Institute](http://www.sanger.ac.uk/), Cambridge, U.K. He provided the
+protein structure API to biojava. Other projects he is working on
+include e.g.
 [SPICE](http://www.efamily.org.uk/software/dasclients/spice) a browser
 for protein sequence and structure annotations, based on the Distributed
 Annotation System.
