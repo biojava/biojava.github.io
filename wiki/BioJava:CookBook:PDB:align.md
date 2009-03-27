@@ -9,12 +9,18 @@ algorithm](BioJava:CookBook:PDB:aboutalign "wikilink") contained in
 BioJava is based on a variation of the PSC++ algorithm provided by Peter
 Lackner, Univ. Salzburg (personal communication). The
 [algorithm](BioJava:CookBook:PDB:aboutalign "wikilink") is calculating a
-distance matrix based, rigid body protein structure superimposition. See
-a JavaWebStart example of how it works at <BioJava:Performance>
+distance matrix based, rigid body protein structure superimposition.
+
+Example
+-------
 
 [Run WebStart
 Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
-(5MB download includes Jmol for visualization)
+(5MB download includes Jmol for visualization) Lern more about this
+JavaWebStart example at <BioJava:Performance>
+
+Code
+----
 
 <java>
 
