@@ -6,15 +6,11 @@ title: BioJava:CookBook:PDB:mmcif
 
 [mmcif](http://ndbserver.rutgers.edu/mmcif/index.html) is an alternative
 file format to PDB files (
-[1](#westbrook2000 "wikilink"),[2](#westbrook2003 "wikilink") ). It is
-not entirely easy to write a parser for it, as such BioJava solves this
-problem for you. The mmcif files are parsed into the same BioJava data
-structure as the [PDB files](BioJava:CookBook:PDB:read "wikilink"). The
-example below demonstrates how to load the content into the BioJava data
-model for protein structures. The design of the source code allows you
-to also hook in your own data model. For this you will require to
-implement the [MMcifConsumer
-interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
+[1](#westbrook2000 "wikilink"),[2](#westbrook2003 "wikilink") ). The
+mmcif files are parsed into the same BioJava data structure as the [PDB
+files](BioJava:CookBook:PDB:read "wikilink"). The example below
+demonstrates how to load the content into the BioJava data model for
+protein structures.
 
 The mmcif parsing code will be released with the next biojava release in
 April 2009. To use it at the moment you will require a [recent build
@@ -36,11 +32,15 @@ To parse an mmCif file do the following: <java> @since 1.7
 
 </java>
 
-The parser is contains a built-in event model. If you want you can use
-it to load mmCif data also in alternative data models (i.e. not the
-BioJava one). For this you would need to provide your own implementation
-of the MMcifConsumer interface. If you don;t have that, just use the
-SimpleMMcifConsumer, which provides this for you:
+Parse into custom data structures
+---------------------------------
+
+By default the file content will be loaded into the BioJava data
+structures. The parser is contains a built-in event model, which allows
+to load your own, custom data structures. For this you will require to
+implement the [MMcifConsumer
+interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
+If you don;t have that, just use the SimpleMMcifConsumer
 
 <java> @since 1.7
 
