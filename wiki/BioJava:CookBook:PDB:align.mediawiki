@@ -7,7 +7,8 @@ based on a variation of the PSC++ algorithm provided by Peter Lackner, Univ. Sal
 == Example ==
 
 [http://www.biojava.org/download/performance/biojava-structure-example1.jnlp Run WebStart Example] (5MB download includes Jmol for visualization)
-Lern more about this JavaWebStart example at [[BioJava:Performance]]
+
+Learn more about this JavaWebStart example at [[BioJava:Performance]]
 
 == Code ==
 
