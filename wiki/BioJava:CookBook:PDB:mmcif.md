@@ -16,11 +16,35 @@ to also hook in your own data model. For this you will require to
 implement the [MMcifConsumer
 interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
-The mmcif parsing code is still under development and will be released
-with the next biojava release. To use it at the moment you will require
-a [recent build from SVN](Autobuild_events "wikilink").
+The mmcif parsing code will be released with the next biojava release.
+To use it at the moment you will require a [recent build from
+SVN](Autobuild_events "wikilink").
 
-<java> @since 1.7 public static void main(String[] args){
+To parse an mmCif file do the following: <java> @since 1.7
+
+`   public static void main(String[] args){`  
+`       String file = "/path/to/myfile.cif.gz";`  
+`       StructureIOFile pdbreader = new MMCIFFileReader();`  
+`       try {`  
+`           Structure s = pdbreader.getStructure(file);`  
+`           System.out.println(s);`  
+`           System.out.println(s.toPDB());`  
+`       } catch (IOException e) {`  
+`           e.printStackTrace();`  
+`       }`  
+`   }`
+
+</java>
+
+The parser is contains a built-in event model. If you want you can use
+it to load mmCif data also in alternative data models (i.e. not the
+BioJava one). For this you would need to provide your own implementation
+of the MMcifConsumer interface. If you don;t have that, just use the
+SimpleMMcifConsumer, which provides this for you:
+
+<java> @since 1.7
+
+`   public static void main(String[] args){`
 
 `       String fileName = args[0];`  
 `       `  
