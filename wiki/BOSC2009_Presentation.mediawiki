@@ -23,6 +23,7 @@ Content for abstract / talk :
 
  * [http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref paper] got accepted
  * new BioJava 1.7 release (easter 2009)
+ * what can you do with BioJava / available modules
  * BioJava 2 status (Richard ?) 
  * usage analysis from google analytics
- * new viewers is BioJava svn (to be announced yet)
+ * new 3D viewers is BioJava svn (to be announced yet)
