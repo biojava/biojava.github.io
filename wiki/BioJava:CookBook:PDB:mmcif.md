@@ -36,8 +36,8 @@ Parse into custom data structures
 ---------------------------------
 
 By default the file content will be loaded into the BioJava data
-structures. The parser is contains a built-in event model, which allows
-to load your own, custom data structures. For this you will require to
+structures. The parser contains a built-in event model, which allows to
+load your own, custom data structures. For this you will require to
 implement the [MMcifConsumer
 interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
 If you don;t have that, just use the SimpleMMcifConsumer
