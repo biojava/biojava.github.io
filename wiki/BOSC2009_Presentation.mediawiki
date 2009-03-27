@@ -27,3 +27,8 @@ Content for abstract / talk :
  * BioJava 2 status (Richard ?) 
  * usage analysis from google analytics
  * new 3D viewers is BioJava svn (to be announced yet)
+
+
+== BioJava user meeting at ISMB ==
+
+Location and time to be announced later
