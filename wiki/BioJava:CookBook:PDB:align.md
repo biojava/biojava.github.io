@@ -16,8 +16,9 @@ Example
 
 [Run WebStart
 Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
-(5MB download includes Jmol for visualization) Lern more about this
-JavaWebStart example at <BioJava:Performance>
+(5MB download includes Jmol for visualization)
+
+Learn more about this JavaWebStart example at <BioJava:Performance>
 
 Code
 ----
