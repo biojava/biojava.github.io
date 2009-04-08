@@ -22,6 +22,9 @@ Structure:
 == Abstract ==
 === BioJava 2009:  an Open-Source Framework for Bioinformatics===
 
+Authors:
+''A.  Prlić,  T. Down; A. Dräger; S. Foisy; D. Huen; J. Jacobsen, K. James;  M. Heuer;   M. Pocock;  M.J. Schreiber; G. Waldon; A. Yates; R.C.G. Holland;
+''
 BioJava is a mature open-source project that provides a framework for processing of biological data. BioJava contains powerful analysis and statistical routines, tools for parsing common file formats, and packages for manipulating sequences and 3D structures. It enables rapid bioinformatics application development in the Java programming language.
 
 
@@ -44,7 +47,6 @@ Content for abstract / talk :
  * BioJava 2 status (Richard ?) 
  * usage analysis from google analytics
  * new 3D viewers is BioJava svn (to be announced yet)
-
 
 == BioJava user meeting at ISMB ==
 

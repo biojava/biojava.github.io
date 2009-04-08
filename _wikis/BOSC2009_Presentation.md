@@ -28,11 +28,14 @@ Abstract
 
 ### BioJava 2009: an Open-Source Framework for Bioinformatics
 
-BioJava is a mature open-source project that provides a framework for
-processing of biological data. BioJava contains powerful analysis and
-statistical routines, tools for parsing common file formats, and
-packages for manipulating sequences and 3D structures. It enables rapid
-bioinformatics application development in the Java programming language.
+Authors: ''A. Prlić, T. Down; A. Dräger; S. Foisy; D. Huen; J. Jacobsen,
+K. James; M. Heuer; M. Pocock; M.J. Schreiber; G. Waldon; A. Yates;
+R.C.G. Holland; '' BioJava is a mature open-source project that provides
+a framework for processing of biological data. BioJava contains powerful
+analysis and statistical routines, tools for parsing common file
+formats, and packages for manipulating sequences and 3D structures. It
+enables rapid bioinformatics application development in the Java
+programming language.
 
 BioJava is available freely under the terms of version 2.1 of the GNU
 Lesser General Public License (LGPL) from <http://biojava.org/>. Here we
