@@ -28,14 +28,19 @@ Abstract
 
 ### BioJava 2009: an Open-Source Framework for Bioinformatics
 
-Authors: ''A. Prlić, T. Down; A. Dräger; S. Foisy; D. Huen; J. Jacobsen,
-K. James; M. Heuer; M. Pocock; M.J. Schreiber; G. Waldon; A. Yates;
-R.C.G. Holland; '' BioJava is a mature open-source project that provides
-a framework for processing of biological data. BioJava contains powerful
-analysis and statistical routines, tools for parsing common file
-formats, and packages for manipulating sequences and 3D structures. It
-enables rapid bioinformatics application development in the Java
-programming language.
+**Authors**: ''A. Prlić, T. Down; A. Dräger; S. Foisy; D. Huen; J.
+Jacobsen, K. James; M. Heuer; M. Pocock; M.J. Schreiber; G. Waldon; A.
+Yates; R.C.G. Holland; ''
+
+`The BioJava website is `[`http://biojava.org/`](http://biojava.org/)`. `
+
+`The version 1.7 release can be downloaded from ...`
+
+BioJava is a mature open-source project that provides a framework for
+processing of biological data. BioJava contains powerful analysis and
+statistical routines, tools for parsing common file formats, and
+packages for manipulating sequences and 3D structures. It enables rapid
+bioinformatics application development in the Java programming language.
 
 BioJava is available freely under the terms of version 2.1 of the GNU
 Lesser General Public License (LGPL) from <http://biojava.org/>. Here we
@@ -51,9 +56,6 @@ An ongoing project is the open sourcing of the RCSB protein structure
 viewers. These have been made available as open source as a stand-alone
 project. Work is currently under way to provide a more close integration
 with BioJava
-
-The BioJava website is <http://biojava.org/>. The version 1.7 release
-can be downloaded from ...
 
 Content for abstract / talk :
 
