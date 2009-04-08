@@ -49,6 +49,9 @@ viewers. These have been made available as open source as a stand-alone
 project. Work is currently under way to provide a more close integration
 with BioJava
 
+The BioJava website is <http://biojava.org/>. The version 1.7 release
+can be downloaded from ...
+
 Content for abstract / talk :
 
 `* `[`paper`](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)` got accepted`  
