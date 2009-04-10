@@ -44,7 +44,7 @@ statistical routines, tools for parsing common file formats, and
 packages for manipulating sequences and 3D structures. It enables rapid
 bioinformatics application development in the Java programming language.
 Here we present the latest BioJava release (version 1.7, released in Apr
-2009)
+2009).
 
 Besides numerous bug fixes and stability improvements, a lot of
 development has been going on in the protein structure modules. BioJava
@@ -55,16 +55,20 @@ component dictionary is in place.
 An ongoing project is the open sourcing of the RCSB protein structure
 viewers. These have been made available as open source as a stand-alone
 project. Work is currently under way to provide a more close integration
-with BioJava
+with BioJava.
 
 Content for abstract / talk :
 
 `* `[`paper`](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)` got accepted`  
 `* new BioJava 1.7 release (easter 2009)`  
 `* what can you do with BioJava / available modules`  
-`* BioJava 2 status (Richard ?) `  
+`* BioJava 3 status (Richard ?) `  
 `* usage analysis from google analytics`  
 `* new 3D viewers is BioJava svn (to be announced yet)`
+
+Author affiliations might be copied with changes from last year's
+abstract, in the revision history at
+[BOSC2008\_Abstract](BOSC2008_Abstract "wikilink").
 
 BioJava user meeting at ISMB
 ----------------------------
