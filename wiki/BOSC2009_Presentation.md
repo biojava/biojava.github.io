@@ -30,8 +30,9 @@ Abstract
 
 **Authors**:
 
-Presenting Author: Andreas Prlić, University of California San Diego,
-San Diego, CA, USA
+Presenting Author:
+
+    Andreas Prlić, University of California San Diego, San Diego, CA, USA
 
 Additional Authors:
 

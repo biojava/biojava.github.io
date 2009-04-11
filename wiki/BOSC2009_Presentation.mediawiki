@@ -25,7 +25,9 @@ Structure:
 '''Authors''':
 
 Presenting Author: 
+<pre>
 Andreas Prlić, University of California San Diego, San Diego, CA, USA
+</pre>
 
 Additional Authors:
 <pre>
