@@ -68,6 +68,9 @@ Content for talk
 from
 [<http://www.spice-3d.org/statsvn/stats/>](http://www.spice-3d.org/statsvn/stats/)
 
+size of sub-modules:
+[<http://www.spice-3d.org/statsvn/stats/dir_sizes.html>](http://www.spice-3d.org/statsvn/stats/dir_sizes.html)
+
     some author stats:
     Author      Lines of Code
     mrp         114161 (24.3%)
