@@ -60,9 +60,12 @@ with BioJava.
 Content for talk
 ----------------
 
+work in progress...
+
 `* what can you do with BioJava / available modules`  
 `* BioJava 3 status (Richard ?) `  
 `* usage analysis from google analytics`  
+`* new features`  
 `* new 3D viewers in BioJava svn (to be announced yet)`
 
 from
