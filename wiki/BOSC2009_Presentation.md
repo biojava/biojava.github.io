@@ -28,9 +28,24 @@ Abstract
 
 ### BioJava 2009: an Open-Source Framework for Bioinformatics
 
-**Authors**: ''A. Prlić, T. Down; A. Dräger; S. Foisy; D. Huen; J.
-Jacobsen, K. James; M. Heuer; M. Pocock; M.J. Schreiber; G. Waldon; A.
-Yates; R.C.G. Holland; ''
+**Authors**:
+
+Presenting Author: Andreas Prlić, University of California San Diego,
+San Diego, CA, USA
+
+Additional Authors:
+
+Thomas Down, Wellcome Trust/Cancer Research UK Gurdon Institute UK
+Andreas Dräger, Eberhard Karls University Tübingen, Center for
+Bioinformatics Tübingen (ZBIT) Germany David Huen, University of
+Cambridge, UK Sylvain Foisy, Laboratory in Genetics and Genomic Medicine
+of Inflammation, Montreal Heart Institute, Montreal, Québec, Canada
+Jules Jacobsen, European Bioinformatics Institute, Cambridge, UK Keith
+James, Wellcome Trust Sanger Institute, Cambridge, UK Michael Heuer,
+Harbinger Partners, Inc., USA Richard Holland, Eagle Genomics Ltd.,
+Cambridge, UK Matthew Pocock, University Newcastle Upon Tyne, UK Mark
+Schreiber,Novartis Institute for Tropical Diseases, Singapore Andy
+Yates, European Bioinformatics Institute, Cambridge, UK
 
 `The BioJava website is `[`http://biojava.org/`](http://biojava.org/)`. `
 
