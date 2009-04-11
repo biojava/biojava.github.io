@@ -78,11 +78,11 @@ size of sub-modules:
     holland     59306 (12.6%)
     andreas     55791 (11.9%)
     kdj         43546 (9.3%)
-    mark_s      36623 (7.8%)
+    mark_s  36623 (7.8%)
     dhuen       25610 (5.5%)
     draeger     8874 (1.9%)
     gcox        5954 (1.3%)
-    birney      4087 (0.9%)
+    birney  4087 (0.9%)
 
 Author affiliations might be copied with changes from last year's
 abstract, in the revision history at
