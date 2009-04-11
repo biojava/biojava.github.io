@@ -23,8 +23,24 @@ Structure:
 === BioJava 2009:  an Open-Source Framework for Bioinformatics===
 
 '''Authors''':
-''A.  Prlić,  T. Down; A. Dräger; S. Foisy; D. Huen; J. Jacobsen, K. James;  M. Heuer;   M. Pocock;  M.J. Schreiber; G. Waldon; A. Yates; R.C.G. Holland;
-''
+
+Presenting Author: 
+Andreas Prlić, University of California San Diego, San Diego, CA, USA
+
+Additional Authors:
+
+Thomas Down, Wellcome Trust/Cancer Research UK Gurdon Institute UK
+Andreas Dräger, Eberhard Karls University Tübingen, Center for Bioinformatics Tübingen (ZBIT) Germany
+David Huen, University of Cambridge, UK
+Sylvain Foisy, Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal Heart Institute, Montreal, Québec, Canada
+Jules Jacobsen, European Bioinformatics Institute, Cambridge, UK
+Keith James, Wellcome Trust Sanger Institute, Cambridge, UK
+Michael Heuer, Harbinger Partners, Inc., USA 
+Richard Holland, Eagle Genomics Ltd., Cambridge, UK
+Matthew Pocock, University Newcastle Upon Tyne, UK
+Mark Schreiber,Novartis Institute for Tropical Diseases, Singapore 
+Andy Yates, European Bioinformatics Institute, Cambridge, UK
+
 
  The BioJava website is http://biojava.org/. 
 
@@ -36,8 +52,7 @@ BioJava is a mature open-source project that provides a framework for processing
 
 Besides numerous bug fixes and stability improvements, a lot of development has been going on in the protein structure modules. BioJava now provides a  framework for parsing mmCif files. The parsing of PDB header information has been improved and a new tool to read the Chemical component dictionary is in place. 
 
-An ongoing project is the open sourcing of the RCSB protein structure viewers. These have been made available as open source as a stand-alone project. Work is currently under way to provide a more close integration with BioJava. 
- 
+An ongoing project is the open sourcing of the RCSB protein structure viewers. These have been made available as open source as a stand-alone project. Work is currently under way to provide a more close integration with BioJava.
 
 ==Content for talk==
 
