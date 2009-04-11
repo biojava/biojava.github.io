@@ -43,11 +43,11 @@ Additional Authors:
     Jules Jacobsen, European Bioinformatics Institute, Cambridge, UK
     Keith James, Wellcome Trust Sanger Institute, Cambridge, UK
     Michael Heuer, Harbinger Partners, Inc., USA 
-    Richard Holland, Eagle Genomics Ltd., Cambridge, UK
     Matthew Pocock, University Newcastle Upon Tyne, UK
     Mark Schreiber,Novartis Institute for Tropical Diseases, Singapore 
     George Waldon, geneinfinity.org 
     Andy Yates, European Bioinformatics Institute, Cambridge, UK
+    Richard Holland, Eagle Genomics Ltd., Cambridge, UK
 
 `The BioJava website is `[`http://biojava.org/`](http://biojava.org/)`. `
 
