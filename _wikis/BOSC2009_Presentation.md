@@ -57,14 +57,26 @@ viewers. These have been made available as open source as a stand-alone
 project. Work is currently under way to provide a more close integration
 with BioJava.
 
-Content for abstract / talk :
+Content for talk
+----------------
 
-`* `[`paper`](http://bioinformatics.oxfordjournals.org/cgi/content/abstract/btn397v1?ijkey=jIKd6VUGPrgshbv&keytype=ref)` got accepted`  
-`* new BioJava 1.7 release (easter 2009)`  
 `* what can you do with BioJava / available modules`  
 `* BioJava 3 status (Richard ?) `  
 `* usage analysis from google analytics`  
 `* new 3D viewers is BioJava svn (to be announced yet)`
+
+    some author stats:
+    Author      Lines of Code
+    mrp         114161 (24.3%)
+    thomasd     82637 (17.6%)
+    holland     59306 (12.6%)
+    andreas     55791 (11.9%)
+    kdj         43546 (9.3%)
+    mark_s      36623 (7.8%)
+    dhuen       25610 (5.5%)
+    draeger     8874 (1.9%)
+    gcox        5954 (1.3%)
+    birney      4087 (0.9%)
 
 Author affiliations might be copied with changes from last year's
 abstract, in the revision history at
