@@ -46,6 +46,7 @@ Additional Authors:
     Richard Holland, Eagle Genomics Ltd., Cambridge, UK
     Matthew Pocock, University Newcastle Upon Tyne, UK
     Mark Schreiber,Novartis Institute for Tropical Diseases, Singapore 
+    George Waldon, geneinfinity.org 
     Andy Yates, European Bioinformatics Institute, Cambridge, UK
 
 `The BioJava website is `[`http://biojava.org/`](http://biojava.org/)`. `
