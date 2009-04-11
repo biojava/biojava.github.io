@@ -38,8 +38,8 @@ Additional Authors:
 
     Thomas Down, Wellcome Trust/Cancer Research UK Gurdon Institute UK
     Andreas Dräger, Eberhard Karls University Tübingen, Center for Bioinformatics Tübingen (ZBIT) Germany
-    David Huen, University of Cambridge, UK
     Sylvain Foisy, Laboratory in Genetics and Genomic Medicine of Inflammation, Montreal Heart Institute, Montreal, Québec, Canada
+    David Huen, University of Cambridge, UK
     Jules Jacobsen, European Bioinformatics Institute, Cambridge, UK
     Keith James, Wellcome Trust Sanger Institute, Cambridge, UK
     Michael Heuer, Harbinger Partners, Inc., USA 
