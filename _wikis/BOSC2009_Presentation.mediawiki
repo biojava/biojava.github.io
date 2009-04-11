@@ -47,6 +47,9 @@ An ongoing project is the open sourcing of the RCSB protein structure viewers. T
  * usage analysis from google analytics
  * new 3D viewers is BioJava svn (to be announced yet)
 
+
+from [http://www.spice-3d.org/statsvn/stats/ http://www.spice-3d.org/statsvn/stats/]
+
 <pre>
 some author stats:
 Author  	Lines of Code
