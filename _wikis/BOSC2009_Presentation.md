@@ -63,7 +63,7 @@ Content for talk
 `* what can you do with BioJava / available modules`  
 `* BioJava 3 status (Richard ?) `  
 `* usage analysis from google analytics`  
-`* new 3D viewers is BioJava svn (to be announced yet)`
+`* new 3D viewers in BioJava svn (to be announced yet)`
 
 from
 [<http://www.spice-3d.org/statsvn/stats/>](http://www.spice-3d.org/statsvn/stats/)
