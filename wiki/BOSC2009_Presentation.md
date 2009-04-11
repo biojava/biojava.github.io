@@ -87,6 +87,8 @@ size of sub-modules:
     gcox        5954 (1.3%)
     birney  4087 (0.9%)
 
+check also: <http://www.ohloh.net/p/biojava>
+
 Author affiliations might be copied with changes from last year's
 abstract, in the revision history at
 [BOSC2008\_Abstract](BOSC2008_Abstract "wikilink").
