@@ -16,7 +16,7 @@ This is how I released BioJava 1.7 --[Andreas](User:Andreas "wikilink")
 
 ### On release date
 
-### In your local checkout
+### Verify code base
 
 -   Make sure code is ready for release. Check last minute commits
     (there usually are some).
@@ -26,13 +26,26 @@ This is how I released BioJava 1.7 --[Andreas](User:Andreas "wikilink")
 
 `ant-clean; ant runtests;`
 
--   make sure there are no broken tests being reported
+-   make sure there are no broken tests being reported.
+-   fix anything that needs to be fixed prior to release.
 
 If this all fine up to here, we are ready for release.
 
--   Branch and tag the svn directories.
+**Branch and Tag SVN**
 
-`svn copy the trunk to the corresponding directories in the /branches and /tags directories of the svn repository.`
+-   Branch and tag the svn directories. svn copy the trunk to the
+    corresponding directories in the /branches and /tags directories of
+    the svn repository.
+
+`svn cp -m "branching 1.7 release" svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch`  
+`svn cp -m "branching 1.7 release" svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7`
+
+-   Verify that all went well
+
+`svn list svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches`  
+`svn list svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags`
+
+**Build the release**
 
 -   edit the build.xml file and change the **version** field to the
     number of the current release.
