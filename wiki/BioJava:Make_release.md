@@ -60,11 +60,7 @@ If this all fine up to here, we are ready for release.
 
 -   prepare the biojava-all.jar bundle
 
-`enter the /dist subdirectory of your biojava`
-
--   do a
-
-`jar cvf biojava-1.7-all.jar`
+`cd dist; jar cvf biojava-1.7-all.jar biojava-1.7`
 
 ### Copy files to portal.open-bio.org
 

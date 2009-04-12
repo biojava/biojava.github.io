@@ -34,10 +34,8 @@ If this all fine up to here, we are ready for release.
  ant-clean; ant dist;
 * check that the javadocs have been built ok, first page should show the number of the current release/
  open file:///path/to/your/local/dir/biojava-live/dist/biojava-1.7/doc/biojava/index.html
-* prepare the biojava-all.jar bundle
- enter the /dist subdirectory of your biojava
-* do a
- jar cvf biojava-1.7-all.jar
+* prepare the biojava-all.jar bundle 
+ cd dist; jar cvf biojava-1.7-all.jar biojava-1.7
 
 ===Copy files to portal.open-bio.org ===
 * Log into the portal.open-bio.org server. go to /home/websites/biojava.org/html/static/download/ and create a new directory for the new release. See directory structure in other release how to organise this.
