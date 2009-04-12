@@ -70,7 +70,7 @@ BioJava 1.7 has been released on April 13th, 2009.
 Getting older versions
 ----------------------
 
--   The legacy release of 1.5 can be found
+-   The legacy release of 1.6 can be found
     [here](BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.5 can be found
     [here](BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
