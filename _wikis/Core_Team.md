@@ -12,7 +12,7 @@ Current Core
 ------------
 
 -   [Richard Holland](Richard Holland "wikilink")
--   [Andreas Prlic](Richard Holland "wikilink")
+-   [Andreas Prlic](Andreas Prlic "wikilink")
 
 Alumni
 ------
