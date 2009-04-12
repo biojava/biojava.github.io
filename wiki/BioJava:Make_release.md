@@ -16,7 +16,7 @@ This is how I released BioJava 1.7 --[Andreas](User:Andreas "wikilink")
 
 ### On release date
 
-### Verify code base
+**Verify code base**
 
 -   Make sure code is ready for release. Check last minute commits
     (there usually are some).
