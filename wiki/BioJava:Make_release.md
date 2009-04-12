@@ -144,8 +144,8 @@ update the symbolic link to the javadoc api
 ### Update the wikipedia pages to link to the new release
 
 Create a new download file for the release. (I copied
-<BioJava:Download_1.6> to <BioJava:Download_1.7>. Modify the new page to
-the latest data.
+<BioJava:Download_1.6> to <BioJava:Download_1.7>). Modify the new page
+to the latest data.
 
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
 page to <BioJava:Download_1.7>)
