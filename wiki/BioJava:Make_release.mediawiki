@@ -61,4 +61,16 @@ If this all fine up to here, we are ready for release.
 === Update Javadoc docu on portal.open-bio.org===
 
 Almost done... The last thing is to update the public javadoc files.
-For this, we need to recompile the javadocs and add a hook to the google analytics tracker, we are using on the website. use the modified ''my_build_biojava.xml'' that is attached here.
+For this, we need to recompile the javadocs and add a hook to the google analytics tracker, we are using on the website. use the modified ''my_build_biojava.xml'' that is attached here. (update the version variable in the file to your release number)
+ ant -buildfile my_build_biojava.xml dist
+Then copy the newly created javadoc files to the public server.
+ cd cd dist/biojava-1.7/doc/; tar cvf javadocs-server.tar ./biojava/
+ scp javadocs-server.tar username@portal.open-bio.org:~/
+The files are now in your home directory on the server. Untar the files on portal.open-bio.org:
+ tar xvf javadocs-server.tar
+The files are now in your home directory on the server. We need to hook them into the frontend:
+ cd /home/websites/biojava.org/html/static/docs/
+ mkdir api17
+ cp -r ~/biojava/* ./api17/ 
+verify that all went ok by pointing your browser to
+ http://www.biojava.org/docs/api17/
