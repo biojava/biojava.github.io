@@ -4,9 +4,7 @@ title: BioJava:Download 1.7
 
 This page offers downloads for the <b>BioJava 1.7 release</b>.
 
-BioJava 1.7 requires on <b>Java 1.5</b> or later. If you require Java
-1.4.2 then please download the previous [ release
-1.5](BioJava:Download 1.5 "wikilink")
+BioJava 1.7 requires on <b>Java 1.5</b> or later.
 
 Complete Download
 -----------------

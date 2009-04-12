@@ -1,6 +1,6 @@
 This page offers downloads for the <b>BioJava 1.7 release</b>. 
 
-BioJava 1.7 requires on <b>Java 1.5</b> or later. If you require Java 1.4.2 then please download the previous [[BioJava:Download 1.5| release 1.5]]
+BioJava 1.7 requires on <b>Java 1.5</b> or later. 
 
 == Complete Download ==
 A complete download is available as the [http://www.biojava.org/download/bj17/all/biojava-1.7-all.jar biojava-1.7-all.jar] file (27Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
@@ -19,7 +19,6 @@ A  binary distribution is available as [http://www.biojava.org/download/bj17/bin
 *  [http://www.biojava.org/download/bj17/support-jars/commons-dbcp-1.1.jar commons-dbcp-1.1.jar]: Only required for legacy BioSQL access (and building biojava.jar)
 *  [http://www.biojava.org/download/bj17/support-jars/commons-pool-1.1.jar commons-pool-1.1.jar]: Only required for legacy BioSQL access (and building biojava.jar)
 *  [http://www.biojava.org/download/bj17/support-jars/jgrapht-jdk1.5.jar jgrapht-jdk1.5.jar]: Only required for NEXUS file parsing (and building biojava.jar)
-
 
 === Source download ===
 The jar file containing the source code is available from [http://www.biojava.org/download/bj17/src/biojava-1.7-src.jar biojava-1.7-src.jar] (6.1Mb). This provides the same directory structure as is available from a SVN checkout of the project, including .jar file dependencies.
