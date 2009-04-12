@@ -5,10 +5,16 @@ title: BioJava:Make release
 How to make a BioJava release
 -----------------------------
 
-This page is intended for BioJava release managers.
+This page is intended for BioJava release managers. I was documenting
+this while I was doing the BioJava 1.7
+release. --[Andreas](User:Andreas "wikilink") 15:14, 12 April 2009 (UTC)
 
-This is how I released BioJava 1.7 --[Andreas](User:Andreas "wikilink")
-15:14, 12 April 2009 (UTC)
+### Required time
+
+A few hours. Most time is being spent in verifying that the code base is
+release ready. The actual preparation of the .jar files and copying them
+to the open-bio.org server is quite quick and can be done
+semi-automatic.
 
 ### Prior to release
 
