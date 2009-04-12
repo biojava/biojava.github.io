@@ -57,3 +57,8 @@ If this all fine up to here, we are ready for release.
 * Prepare the src release:
  ant clean; cd .. ; jar cvf biojava-1.7-src.jar biojava-live
  scp biojava-1.7-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/src/
+
+=== Update Javadoc docu on portal.open-bio.org===
+
+Almost done... The last thing is to update the public javadoc files.
+For this, we need to recompile the javadocs and add a hook to the google analytics tracker, we are using on the website. use the modified ''my_build_biojava.xml'' that is attached here.
