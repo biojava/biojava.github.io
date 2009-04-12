@@ -39,8 +39,20 @@ If this all fine up to here, we are ready for release.
 * do a
  jar cvf biojava-1.7-all.jar
 
-===On portal.open-bio.org ===
-* log into the server. go to /home/websites/biojava.org/html/static/download/ and create a new directory for the new release. See directory structure in other release how to organise this.
+===Copy files to portal.open-bio.org ===
+* Log into the portal.open-bio.org server. go to /home/websites/biojava.org/html/static/download/ and create a new directory for the new release. See directory structure in other release how to organise this.
 
-* copy file to 
+* Copy file biojava-all.jar
  scp biojava-1.7-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/all
+
+* Make the doc release bundle
+ ant clean; ant javadocs-all; cd ant-build; 
+
+* Copy file biojava-doc.jar
+
+
+* Back in your checkout, make the bin release: 
+ ant clean; ant;
+
+* Copy file biojava.jar 
+ scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/bin
