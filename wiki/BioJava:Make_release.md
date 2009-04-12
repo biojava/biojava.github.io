@@ -147,3 +147,7 @@ update <BioJava:Download> (Change the redirect on the BioJava:Download
 page to <BioJava:Download_1.7>)
 
 update the <MediaWiki:Sidebar> to point to the new Javadoc api
+
+### AND FINALLY
+
+Write release announcement to biojava-l and biojava-dev
