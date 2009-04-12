@@ -3,13 +3,13 @@ This page offers downloads for the <b>BioJava 1.7 release</b>.
 BioJava 1.7 requires on <b>Java 1.5</b> or later. If you require Java 1.4.2 then please download the previous [[BioJava:Download 1.5| release 1.5]]
 
 == Complete Download ==
-A complete download is available as the [http://www.biojava.org/download/bj17/all/biojava-1.7-all.jar biojava-1.7-all.jar] file (24Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
+A complete download is available as the [http://www.biojava.org/download/bj17/all/biojava-1.7-all.jar biojava-1.7-all.jar] file (27Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
 
 This file contains documentation, source and binaries. Please note that this JAR file <b>cannot</b> be dropped directly into your class path. You need to unpack the binaries first (or download them seperately below).
 
 == BioJava binaries ==
 
-A  binary distribution is available as [http://www.biojava.org/download/bj17/bin/biojava.jar biojava.jar] file (3.3Mb). For some browsers, right click and select "Save Link As".
+A  binary distribution is available as [http://www.biojava.org/download/bj17/bin/biojava.jar biojava.jar] file (3.5Mb). For some browsers, right click and select "Save Link As".
 
 === Support libraries ===
 
@@ -20,9 +20,13 @@ A  binary distribution is available as [http://www.biojava.org/download/bj17/bin
 *  [http://www.biojava.org/download/bj17/support-jars/commons-pool-1.1.jar commons-pool-1.1.jar]: Only required for legacy BioSQL access (and building biojava.jar)
 *  [http://www.biojava.org/download/bj17/support-jars/jgrapht-jdk1.5.jar jgrapht-jdk1.5.jar]: Only required for NEXUS file parsing (and building biojava.jar)
 
+
+=== Source download ===
+The jar file containing the source code is available from [http://www.biojava.org/download/bj17/src/biojava-1.7-src.jar biojava-1.7-src.jar] (6.1Mb). This provides the same directory structure as is available from a SVN checkout of the project, including .jar file dependencies.
+
 == Documentation ==
 
-Documentation is available via [http://www.biojava.org/download/bj17/doc/biojava-docs.jar biojava-docs.jar] (10Mb) that includes the javadocs for the API, demos and apps. For some browsers, right click and select "Save Link As".
+Documentation is available via [http://www.biojava.org/download/bj17/doc/biojava-docs.jar biojava-docs.jar] (11Mb) that includes the javadocs for the API, demos and apps. For some browsers, right click and select "Save Link As".
 
 You can also browse the documentation at [http://www.biojava.org/docs/api17/ BioJava 1.7 api]
 

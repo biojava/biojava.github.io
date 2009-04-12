@@ -13,7 +13,7 @@ Complete Download
 
 A complete download is available as the
 [biojava-1.7-all.jar](http://www.biojava.org/download/bj17/all/biojava-1.7-all.jar)
-file (24Mb). The file contains all binaries, required jars, docs,
+file (27Mb). The file contains all binaries, required jars, docs,
 source, test, demos and apps as gzipped tar files. For some browsers,
 right click and select "Save Link As".
 
@@ -27,7 +27,7 @@ BioJava binaries
 
 A binary distribution is available as
 [biojava.jar](http://www.biojava.org/download/bj17/bin/biojava.jar) file
-(3.3Mb). For some browsers, right click and select "Save Link As".
+(3.5Mb). For some browsers, right click and select "Save Link As".
 
 ### Support libraries
 
@@ -45,12 +45,19 @@ A binary distribution is available as
 -   [jgrapht-jdk1.5.jar](http://www.biojava.org/download/bj17/support-jars/jgrapht-jdk1.5.jar):
     Only required for NEXUS file parsing (and building biojava.jar)
 
+### Source download
+
+The jar file containing the source code is available from
+[biojava-1.7-src.jar](http://www.biojava.org/download/bj17/src/biojava-1.7-src.jar)
+(6.1Mb). This provides the same directory structure as is available from
+a SVN checkout of the project, including .jar file dependencies.
+
 Documentation
 -------------
 
 Documentation is available via
 [biojava-docs.jar](http://www.biojava.org/download/bj17/doc/biojava-docs.jar)
-(10Mb) that includes the javadocs for the API, demos and apps. For some
+(11Mb) that includes the javadocs for the API, demos and apps. For some
 browsers, right click and select "Save Link As".
 
 You can also browse the documentation at [BioJava 1.7
