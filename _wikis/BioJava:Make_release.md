@@ -136,3 +136,10 @@ them into the frontend:
 verify that all went ok by pointing your browser to
 
 [`http://www.biojava.org/docs/api17/`](http://www.biojava.org/docs/api17/)
+
+update the symbolic link to the javadoc api
+
+`point /home/websites/biojava.org/html/static/docs/api to api17`
+
+Now the link to the Javadoci API on the left hand side menu of the
+wikipedia pages should point to the new javadoc.
