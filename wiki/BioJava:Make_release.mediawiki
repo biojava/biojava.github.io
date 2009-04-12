@@ -79,9 +79,11 @@ update the symbolic link to the javadoc api
 
 === Update the wikipedia pages to link to the new release===
 
-update [[BioJava:Download]] (Change the redirect on the BioJava:Download page to [[BioJava:Download_1.7]])
+Create a new download file for the release. (I copied [[BioJava:Download_1.6]] to [[BioJava:Download_1.7]]. Modify the new page to the latest data.
 
-update the [[MediaWiki:Sidebar]] to point to the new Javadoc api
+Update [[BioJava:Download]] (Change the redirect on the BioJava:Download page to [[BioJava:Download_1.7]])
+
+Update the [[MediaWiki:Sidebar]] to point to the new Javadoc api
 
 === AND FINALLY ===
 
