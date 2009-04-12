@@ -83,6 +83,8 @@ If this all fine up to here, we are ready for release.
 
 **Back in your local checkout**
 
+-   remove the /dist subdirectory from your checkout. Not needed any
+    longer.
 -   Make the doc release bundle
 
 `ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.7-doc.jar docs/`
