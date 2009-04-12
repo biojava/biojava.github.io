@@ -10,11 +10,13 @@ This page is intended for BioJava release managers.
 This is how I released BioJava 1.7 --[Andreas](User:Andreas "wikilink")
 15:14, 12 April 2009 (UTC)
 
-Prior to release:
+### Prior to release
 
 -   Announce release deadlines on mailing list
 
-On release date:
+### On release date
+
+### In your local checkout
 
 -   Make sure code is ready for release. Check last minute commits
     (there usually are some).
@@ -51,6 +53,15 @@ If this all fine up to here, we are ready for release.
 
 `jar cvf biojava-1.7-all.jar`
 
+### On portal.open-bio.org
+
+-   log into the server. go to
+    /home/websites/biojava.org/html/static/download/ and create a new
+    directory for the new release. See directory structure in other
+    release how to organise this.
+
+<!-- -->
+
 -   copy file to
 
-`scp biojava-1.7-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/`
+`scp biojava-1.7-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/all`
