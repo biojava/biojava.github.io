@@ -45,7 +45,7 @@ Additional Authors:
     Michael Heuer, Harbinger Partners, Inc., USA 
     Matthew Pocock, University Newcastle Upon Tyne, UK
     Mark Schreiber,Novartis Institute for Tropical Diseases, Singapore 
-    George Waldon, geneinfinity.org 
+    George Waldon, GeneInfinity, USA 
     Andy Yates, European Bioinformatics Institute, Cambridge, UK
     Richard Holland, Eagle Genomics Ltd., Cambridge, UK
 
