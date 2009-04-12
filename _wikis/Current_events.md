@@ -9,11 +9,10 @@ Here is [the page](BOSC2009_Presentation "wikilink") to prepare the
 [BOSC 2009](http://www.open-bio.org/wiki/BOSC_2009) submission for
 BioJava.
 
-BioJava 1.7 to come soon
-------------------------
+BioJava 1.7 has been released
+-----------------------------
 
-We are planning to release the next version of BioJava on the Easter
-weekend 2009.
+Get the latest version of the code from <BioJava:Download>
 
 BOSC 2008 Presentation
 ----------------------
