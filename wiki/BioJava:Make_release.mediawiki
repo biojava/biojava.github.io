@@ -78,3 +78,5 @@ update the symbolic link to the javadoc api
  point /home/websites/biojava.org/html/static/docs/api to api17
 
 === Update the wikipedia pages to link to the new release===
+
+update [[BioJava:Download]] (Change the redirect on the BioJava:Download page to [[BioJava:Download_1.7]]
