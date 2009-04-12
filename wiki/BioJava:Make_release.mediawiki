@@ -43,14 +43,16 @@ If this all fine up to here, we are ready for release.
 * Copy file biojava-all.jar
  scp biojava-1.7-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/all
 
+'''Back in your local checkout'''
+
 * Make the doc release bundle
- ant clean; ant javadocs-all; cd ant-build; 
-
+ ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.7-doc.jar docs/
 * Copy file biojava-doc.jar
-
-
-* Back in your checkout, make the bin release: 
+ scp biojava-1.7-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/doc/biojava-docs.jar
+* Prepare the bin release: 
  ant clean; ant;
-
 * Copy file biojava.jar 
- scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/bin
+ scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/bin/
+* Prepare the src release:
+ ant clean; cd .. ; jar cvf biojava-1.7-src.jar biojava-live
+ scp biojava-1.7-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/src/
