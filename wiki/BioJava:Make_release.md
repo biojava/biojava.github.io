@@ -141,5 +141,4 @@ update the symbolic link to the javadoc api
 
 `point /home/websites/biojava.org/html/static/docs/api to api17`
 
-Now the link to the Javadoci API on the left hand side menu of the
-wikipedia pages should point to the new javadoc.
+### Update the wikipedia pages to link to the new release
