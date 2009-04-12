@@ -43,7 +43,8 @@ A binary distribution is available as
 -   [jgrapht-jdk1.5.jar](http://www.biojava.org/download/bj17/support-jars/jgrapht-jdk1.5.jar):
     Only required for NEXUS file parsing (and building biojava.jar)
 
-### Source download
+Source download
+---------------
 
 The jar file containing the source code is available from
 [biojava-1.7-src.jar](http://www.biojava.org/download/bj17/src/biojava-1.7-src.jar)
