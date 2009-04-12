@@ -2,7 +2,7 @@ The so-called Core developers are the project leaders who ensure that releases a
 
 == Current Core ==
 * [[Richard Holland|Richard Holland]]
-* [[Richard Holland|Andreas Prlic]]
+* [[Andreas Prlic|Andreas Prlic]]
 
 == Alumni ==
 These gurus laboured tirelessly as core developers in the early days of BioJava. Many are only semi-retired and still lurk on the mailing list. Occasionaly their oracular wisdom can be heard permeating the AEthers of the web.
