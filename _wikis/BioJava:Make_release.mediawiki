@@ -9,7 +9,7 @@ This is how I released BioJava 1.7 --[[User:Andreas|Andreas]] 15:14, 12 April 20
 
 ===On release date===
 
-=== Verify code base ===
+'''Verify code base'''
 
 * Make sure code is ready for release. Check last minute commits (there usually are some).
 * Make sure the auto-build page (cruisecontrol) does not report any problems
