@@ -114,11 +114,11 @@ analytics tracker, we are using on the website. use the modified
 *my\_build\_biojava.xml* that is attached here. (update the version
 variable in the file to your release number)
 
-`ant -buildfile my_build_biojava.xml dist`
+`ant -buildfile my_build_biojava.xml javadocs-biojava`
 
 Then copy the newly created javadoc files to the public server.
 
-`cd cd dist/biojava-1.7/doc/; tar cvf javadocs-server.tar ./biojava/`  
+`cd ant-build/docs/; tar cvf javadocs-server.tar ./biojava/`  
 `scp javadocs-server.tar username@portal.open-bio.org:~/`
 
 The files are now in your home directory on the server. Untar the files
