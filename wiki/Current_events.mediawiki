@@ -4,7 +4,31 @@ Here is [[BOSC2009_Presentation|the page]] to prepare the [http://www.open-bio.o
 
 == BioJava 1.7 has been released==
 
-Get the latest version of the code from [[BioJava:Download]]
+Sun, Apr 12, 2009 at 7:47 PM
+
+Biojava 1.7 has been released and is available from
+http://biojava.org/wiki/BioJava:Download
+
+BioJava is a mature open-source project that provides a framework for
+processing of biological data. BioJava contains powerful analysis and
+statistical routines, tools for parsing common file formats, and
+packages for manipulating sequences and 3D structures. It enables
+rapid bioinformatics application development in the Java programming
+language.
+
+Besides numerous bug fixes and stability improvements, a lot of
+development has been going on in the protein structure modules.
+BioJava now provides a framework for parsing mmCif files. The parsing
+of PDB header information has been improved and a new tool to read the
+Chemical component dictionary is in place.  Biojava 1.7 offers more
+functionality and stability over the previous official releases.  We
+highly recommend you to upgrade as soon as possible.
+
+Thanks to all contributors for making this release possible.
+
+Happy Biojava-ing,
+
+Andreas
 
 == BOSC 2008 Presentation ==
 
