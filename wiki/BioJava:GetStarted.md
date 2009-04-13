@@ -13,7 +13,7 @@ of MacOS X include a suitable Java implementation as standard. Java is
 also available on many other platforms: if in doubt, contact your
 vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version [BioJava 1.6 (requires Java
+You can get the latest version [BioJava 1.7 (requires Java
 1.5+)](Biojava:Download "wikilink") from the [download
 area](Biojava:Download "wikilink") .
 
