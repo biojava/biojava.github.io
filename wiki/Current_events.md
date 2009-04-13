@@ -14,8 +14,7 @@ BioJava 1.7 has been released
 
 Sun, Apr 12, 2009 at 7:47 PM
 
-Biojava 1.7 has been released and is available from
-<http://biojava.org/wiki/BioJava:Download>
+Biojava 1.7 has been released and is available from <BioJava:Download>
 
 BioJava is a mature open-source project that provides a framework for
 processing of biological data. BioJava contains powerful analysis and

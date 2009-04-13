@@ -7,7 +7,7 @@ Here is [[BOSC2009_Presentation|the page]] to prepare the [http://www.open-bio.o
 Sun, Apr 12, 2009 at 7:47 PM
 
 Biojava 1.7 has been released and is available from
-http://biojava.org/wiki/BioJava:Download
+[[BioJava:Download]]
 
 BioJava is a mature open-source project that provides a framework for
 processing of biological data. BioJava contains powerful analysis and
