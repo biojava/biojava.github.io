@@ -2,7 +2,7 @@
 title: BioJava:CookBook:Interfaces:ViewInGUI2
 ---
 
-<java> /\*\*
+![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") <java> /\*\*
 
 `* Class to load an EMBL and display it in a viewer.`  
 `*`  
