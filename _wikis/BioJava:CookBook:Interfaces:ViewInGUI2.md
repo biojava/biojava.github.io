@@ -4,7 +4,7 @@ title: BioJava:CookBook:Interfaces:ViewInGUI2
 
 ![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") <java> /\*\*
 
-`* Class to load an EMBL and display it in a viewer.`  
+`* Class to load an EMBL sequence file and display it in a viewer.`  
 `*`  
 `* Author:  Jolyon Holdstock`  
 `* Date:    April 2009`  
