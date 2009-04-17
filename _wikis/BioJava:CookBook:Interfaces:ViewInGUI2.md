@@ -23,7 +23,7 @@ SequenceViewerMotionListener {
 ` private TranslatedSequencePanel tsp = new TranslatedSequencePanel();`  
 ` private MultiLineRenderer mlr = new MultiLineRenderer();`  
 ` private RulerRenderer rr = new RulerRenderer();`  
-` private SequenceRenderer seqR = new SymbolSequenceRenderer();`  
+` private SequenceRenderer seqr = new SymbolSequenceRenderer();`  
 ` private FeatureBlockSequenceRenderer fbsr;`  
 ` private RichSequence richSeq;`
 
@@ -75,7 +75,7 @@ SequenceViewerMotionListener {
 `   mlr.addRenderer(fwd_sr);`  
 `   mlr.addRenderer(rr);`  
 `   mlr.addRenderer(rev_sr);`  
-`   mlr.addRenderer(seqR);`
+`   mlr.addRenderer(seqr);`
 
 `   //Set the sequence renderer for the TranslatedSequencePanel`  
 `   tsp.setRenderer(mlr);`  
@@ -86,7 +86,7 @@ SequenceViewerMotionListener {
 `   //Set the scale as pixels per Symbol.`  
 `   tsp.setScale(sequenceScale);`
 
-`   //Add a sequence viewer motion listener to the TranslateSequencePanel`  
+`   //Add a sequence viewer motion listener to the TranslatedSequencePanel`  
 `   tsp.addSequenceViewerMotionListener(this);`
 
 `   //Generate the control panel`  
