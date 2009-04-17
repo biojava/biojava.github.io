@@ -38,6 +38,7 @@ public class DisplaySequenceFile extends JFrame implements SequenceViewerMotionL
   private int windowHeight = 200;
 
   public DisplaySequenceFile(String fileName){
+    super("Display Rich Sequence File");
     //Load the sequence file
     try {
       richSeq = RichSequence.IOTools.readEMBLDNA(new BufferedReader(new FileReader(new File(fileName))), null).nextRichSequence();
@@ -178,7 +179,7 @@ public class DisplaySequenceFile extends JFrame implements SequenceViewerMotionL
   }
 
   /**
-   * Detected mouse dragged events
+   * Detect mouse dragged events
    * @param sve
    */
   public void mouseDragged(SequenceViewerEvent sve) {
@@ -227,7 +228,7 @@ public class DisplaySequenceFile extends JFrame implements SequenceViewerMotionL
       new DisplaySequenceFile(args[0]);
     }
     else {
-      System.out.println("Usage: java SequenceViewer <Genbank file>");
+      System.out.println("Usage: java SequenceViewer <EMBL file>");
       System.exit(1);
     }
   }
