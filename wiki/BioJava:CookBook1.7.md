@@ -211,6 +211,8 @@ How Do I....?
     tree](BioJava:CookBook:Interfaces:ViewAsTree "wikilink")?
 -   [How can I display a Sequence in a
     GUI](BioJava:CookBook:Interfaces:ViewInGUI "wikilink")?
+-   [How can I create a RichSequence
+    viewer](BioJava:CookBook:Interfaces:ViewInGUI2 "wikilink")?
 -   [How do I display Sequence
     coordinates](BioJava:CookBook:Interfaces:Coordinates "wikilink")?
 -   [How can I display
