@@ -35,6 +35,7 @@ SequenceViewerMotionListener {
 ` private int windowHeight = 200;`
 
 ` public DisplaySequenceFile(String fileName){`  
+`   super("Display Rich Sequence File");`  
 `   //Load the sequence file`  
 `   try {`  
 `     richSeq = RichSequence.IOTools.readEMBLDNA(new BufferedReader(new FileReader(new File(fileName))), null).nextRichSequence();`  
@@ -175,7 +176,7 @@ SequenceViewerMotionListener {
 ` }`
 
 ` /**`  
-`  * Detected mouse dragged events`  
+`  * Detect mouse dragged events`  
 `  * @param sve`  
 `  */`  
 ` public void mouseDragged(SequenceViewerEvent sve) {`  
@@ -228,7 +229,7 @@ it = annotationNotes.iterator(); it.hasNext();) {
 `     new DisplaySequenceFile(args[0]);`  
 `   }`  
 `   else {`  
-`     System.out.println("Usage: java SequenceViewer `<Genbank file>`");`  
+`     System.out.println("Usage: java SequenceViewer `<EMBL file>`");`  
 `     System.exit(1);`  
 `   }`  
 ` }`
