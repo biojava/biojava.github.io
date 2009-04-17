@@ -2,7 +2,7 @@
 title: BioJava:CookBook:Interfaces:ViewInGUI2
 ---
 
-/\*\*
+<java> /\*\*
 
 `* Class to load an EMBL and display it in a viewer.`  
 `*`  
@@ -233,4 +233,4 @@ it = annotationNotes.iterator(); it.hasNext();) {
 `   }`  
 ` }`
 
-}
+} </java>
