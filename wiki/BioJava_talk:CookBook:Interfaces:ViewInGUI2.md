@@ -15,3 +15,12 @@ Best regards
 Sylvain
 
 --[Foisys](User:Foisys "wikilink") 11:00, 19 April 2009 (UTC)
+
+Hi Sylvain,
+
+I can add some material but I wouldn't mind at all if you added extra
+comments.
+
+Cheers,
+
+Jolyon
