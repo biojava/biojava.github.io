@@ -27,6 +27,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.jstacs.de Jstacs]: A Java framework for statistical analysis and classification of biological sequences
 
+* [http://www.bioinf.jku.at/software/LSTM_protein/ jLSTM] "Long Short-Term Memory" for protein classification 
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
