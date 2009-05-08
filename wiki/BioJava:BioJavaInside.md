@@ -67,6 +67,11 @@ projects please add them to the list.
 -   [Jstacs](http://www.jstacs.de): A Java framework for statistical
     analysis and classification of biological sequences
 
+<!-- -->
+
+-   [jLSTM](http://www.bioinf.jku.at/software/LSTM_protein/) "Long
+    Short-Term Memory" for protein classification
+
 Publications
 ------------
 
