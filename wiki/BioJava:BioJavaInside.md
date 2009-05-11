@@ -74,8 +74,8 @@ projects please add them to the list.
 
 <!-- -->
 
--   [1](http://lajolla.sourceforge.net) LaJolla - Structural alignment
-    of RNA and proteins using an index structure for fast alignment of
+-   [LaJolla](http://lajolla.sourceforge.net) Structural alignment of
+    RNA and proteins using an index structure for fast alignment of
     thousands of structures. Including an easy to use command line
     interface. Open source at Sourceforge.
 
