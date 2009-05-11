@@ -147,5 +147,10 @@ other publications please add them.
 
 </biblio>
 
+Bauer, R.; Rother, K.; Moor, P.; Reinert, K.; Steinke, T.; Bujnicki, J.
+M.; Preissner, R. Fast Structural Alignment of Biomolecules Using a Hash
+Table, N-Grams and String Descriptors. *Algorithms* **2009**, 2,
+692-709. [open access full text](http://www.mdpi.com/1999-4893/2/2/692)
+
 More biojava publications can be found in [Google
 Scholar](http://scholar.google.com/scholar?q=biojava).
