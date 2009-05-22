@@ -58,6 +58,17 @@ Basic principles
     getTopBlastHit()).
 -   The source code license will be the GNU Lesser General Public
     License (LGPL) "version 2.1 or any later version".
+-   In general BJ3 exceptions should be RuntimeExceptions and unchecked.
+    They should also be well documented and give useful messages. It
+    should be up to the developer to decide what to capture and what not
+    to. In the current BioJava there are way to many exceptions that
+    can't really happen under any normal circumstances. We should only
+    need to think about exceptions in exceptional circumstances.
+-   The default Java logging API should be used extensively. This will
+    allow a developer the ability to fine tune debugging. The core
+    module should have a logging helper with static convenience methods
+    to make it very easy to liberally use logging calls via static
+    imports.
 
 Compromises and Unfinished bits
 -------------------------------
