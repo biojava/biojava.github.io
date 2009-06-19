@@ -73,7 +73,7 @@ cited in the same article as
     3PVI
     5PTI
 
-For more examples see the "demos" subdirectory of the SVN.
+For more examples see the "demos" subdirectory in SVN.
 
 ### Source Code
 
