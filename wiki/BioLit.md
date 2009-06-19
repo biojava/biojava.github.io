@@ -17,4 +17,4 @@ Developer access to the module is available via here:
 
 Anonymous access is via here:
 
-`svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk`](svn://code.open-bio.org/biojava/biojava-live/trunk)` biojava-live`
+`svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk`](svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk)` biojava-live`
