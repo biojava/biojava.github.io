@@ -13,6 +13,10 @@ This library is used for the RCSB-PDB and BioLit integration. For an
 example see here:
 [<http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi>](http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi)
 
+### Example
+
+For example usage see the demos subdirectory of the SVN.
+
 ### Source Code
 
 Developer access to the module is available via here:
