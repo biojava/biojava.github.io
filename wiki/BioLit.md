@@ -11,7 +11,7 @@ PubMedCentral based information for open access articles.
 
 This library is used for the RCSB-PDB and BioLit integration. The
 RCSB-PDB web site is using it to request the data from the [BioLit
-RESTful web services <http://biolit.ucsd.edu/doc/rest.html>]. For an
+RESTful web services](http://biolit.ucsd.edu/doc/rest.html). For an
 example see here:
 [<http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi>](http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi)
 
