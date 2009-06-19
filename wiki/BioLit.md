@@ -7,7 +7,7 @@ BioJava module: BioLit
 
 The BioJava module BioLit allows to perform web service request to the
 [BioLit <http://biolit.ucsd.edu>] website. It allows to extract
-PubMedCentral based information for open access articles.
+PubMedCentral derived information for open access articles.
 
 This library is used for the RCSB-PDB and BioLit integration. The
 RCSB-PDB web site is using it to request the data from the [BioLit
