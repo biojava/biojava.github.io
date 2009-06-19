@@ -79,8 +79,8 @@ For more examples see the "demos" subdirectory of the SVN.
 
 Developer access to the module is available via here:
 
-`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/modules/biojava-biolit/trunk`
+`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/modules/biojava-biolit/trunk biojava-biolit`
 
 Anonymous access is via here:
 
-`svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk`](svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk)` biojava-live`
+`svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk`](svn://code.open-bio.org/biojava/biojava-live/branches/modules/biojava-biolit/trunk)` biojava-biolit`
