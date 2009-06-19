@@ -50,7 +50,7 @@ public class GetRelated {
 } </java>
 
 Running this code will provide you with a list of PDB that have been
-cite in the same article as
+cited in the same article as
 <i>[1HIV](http://www.rcsb.org/pdb/explore/literature.do?structureId=1HIV)</i>:
 
     1A3C
