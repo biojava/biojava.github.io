@@ -60,7 +60,7 @@ Running this code will provide you with a list of PDB that have been cited in th
 </pre>
 
 
-For more examples see the "demos" subdirectory of the SVN.
+For more examples see the "demos" subdirectory in SVN.
 
 === Source Code ===
 
