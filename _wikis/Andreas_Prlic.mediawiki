@@ -1,5 +1,5 @@
-[http://www.spice-3d.org Andreas Prlic] works as a Senior Scientist for the PDB database in San Diego, California. Prior to this he worked as a PostDoc at the [http://www.sanger.ac.uk/ Wellcome Trust Sanger Institute], Cambridge, U.K.
-He provided the protein structure API to biojava. Other projects he is working on include e.g.  [http://www.efamily.org.uk/software/dasclients/spice SPICE] a browser for
+[http://www.spice-3d.org Andreas Prlic] is Senior Scientist at the RCSB-PDB database in San Diego, California. Prior to this he worked as a PostDoc at the [http://www.sanger.ac.uk/ Wellcome Trust Sanger Institute], Cambridge, U.K.
+Currently he is acting as project leader for BioJava. He developed the protein structure API. Other projects he was working on include e.g.  [http://www.efamily.org.uk/software/dasclients/spice SPICE] a browser for
 protein sequence and structure annotations, based on the Distributed Annotation System.
 
 [http://www.spice-3d.org/cruise/ Nightly builds of BioJava] can be accessed from his CruiseControl page at [http://www.spice-3d.org/cruise/ http://www.spice-3d.org/cruise/].
