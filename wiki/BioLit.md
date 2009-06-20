@@ -6,7 +6,7 @@ BioJava module: BioLit
 ----------------------
 
 The BioJava - BioLit module allows to perform web service request to the
-webservices provided by [BioLit <http://biolit.ucsd.edu>]. BioLit allows
+webservices provided by [BioLit](http://biolit.ucsd.edu). BioLit allows
 to access information from open access articles that are published in
 PubMedCentral.
 
