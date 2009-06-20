@@ -11,8 +11,8 @@ Institute](http://www.sanger.ac.uk/), Cambridge, U.K. Currently he is
 acting as project leader for BioJava. He developed the protein structure
 API. Other projects he was working on include e.g.
 [SPICE](http://www.efamily.org.uk/software/dasclients/spice) a browser
-for protein sequence and structure annotations, based on the Distributed
-Annotation System.
+for protein sequence and structure annotations, based on the
+[Distributed Annotation System](http://www.biodas.org).
 
 [Nightly builds of BioJava](http://www.spice-3d.org/cruise/) can be
 accessed from his CruiseControl page at
