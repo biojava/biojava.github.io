@@ -5,9 +5,11 @@ title: Current events
 BioJava at BOSC 2009
 --------------------
 
-Here is [the page](BOSC2009_Presentation "wikilink") to prepare the
-[BOSC 2009](http://www.open-bio.org/wiki/BOSC_2009) submission for
-BioJava.
+There will be a BioJava talk at
+[BOSC2009](http://open-bio.org/wiki/BOSC_2009_Schedule) in Stockholm,
+Sweden. We will also have a [BioJava user
+meeting](http://open-bio.org/wiki/BOSC_2009/Birds-of-a-Feather) as part
+of the Birds of a Feather session on Sunday there.
 
 BioJava 1.7 has been released
 -----------------------------
