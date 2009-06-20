@@ -1,6 +1,6 @@
 == BioJava at BOSC 2009 ==
 
-Here is [[BOSC2009_Presentation|the page]] to prepare the [http://www.open-bio.org/wiki/BOSC_2009 BOSC 2009] submission for BioJava.
+There will be a BioJava talk at [http://open-bio.org/wiki/BOSC_2009_Schedule BOSC2009] in Stockholm, Sweden. We will also have a [http://open-bio.org/wiki/BOSC_2009/Birds-of-a-Feather BioJava user meeting] as part of the Birds of a Feather session on Sunday there.
 
 == BioJava 1.7 has been released==
 
