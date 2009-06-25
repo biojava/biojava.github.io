@@ -8,8 +8,8 @@ BioJava at BOSC/ISMB 2009
 Here the [slides of the BioJava
 talk](http://www.biojava.org/download/files/bosc2009.pdf)
 
-BioJava user meeting at ISMB
+BioJava user meeting at BOSC
 ----------------------------
 
-The user meeting will take place during the sunday Birds Of a Feather
+The user meeting will take place during Sunday's Birds Of a Feather
 (BOF) session.
