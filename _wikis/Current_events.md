@@ -11,6 +11,8 @@ Sweden. We will also have a [BioJava user
 meeting](http://open-bio.org/wiki/BOSC_2009/Birds-of-a-Feather) as part
 of the Birds of a Feather session on Sunday there.
 
+[the presentation](BOSC2009_Presentation "wikilink")
+
 BioJava 1.7 has been released
 -----------------------------
 
