@@ -235,8 +235,8 @@ How Do I....?
 
 ### External Applications and Services
 
--   [How can I use QBlast to do Blast
-    analysis](BioJava:CookBook:Services:Qblast "wikilink")?
+-   [How can I use QBlast to do my alignments
+    remotely](BioJava:CookBook:Services:Qblast "wikilink")?
 
 ### Genetic Algorithms
 

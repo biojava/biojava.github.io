@@ -132,7 +132,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === External Applications and Services ===
 
-* [[BioJava:CookBook:Services:Qblast|How can I use QBlast to do Blast analysis]]?
+* [[BioJava:CookBook:Services:Qblast|How can I use QBlast to do my alignments remotely]]?
 
 === Genetic Algorithms ===
 
