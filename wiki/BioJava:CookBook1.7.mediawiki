@@ -130,6 +130,10 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 * [[BioJava:CookBook:BioSQL:Manage|How do I add, view and remove Sequence Objects from a BioSQL DB?]]
 * [[BioJava:CookBook:ExternalSources:NCBIFetch|How can I get a sequence straight from NCBI?]]
 
+=== External Applications and Services ===
+
+* [[BioJava:CookBook:Services:Qblast|How can I use QBlast to do Blast analysis]]?
+
 === Genetic Algorithms ===
 
 * [[BioJava:CookBook:GA|How can I make a Genetic Algorithm with BioJava]]?

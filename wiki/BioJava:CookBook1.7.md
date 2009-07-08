@@ -233,6 +233,11 @@ How Do I....?
 -   [How can I get a sequence straight from
     NCBI?](BioJava:CookBook:ExternalSources:NCBIFetch "wikilink")
 
+### External Applications and Services
+
+-   [How can I use QBlast to do Blast
+    analysis](BioJava:CookBook:Services:Qblast "wikilink")?
+
 ### Genetic Algorithms
 
 -   [How can I make a Genetic Algorithm with
