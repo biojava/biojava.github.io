@@ -236,6 +236,11 @@ Comment faire pour ...?
 -   [Comment récupérer des séquences directement du
     NCBI?](BioJava:CookbookFrench:ExternalSources:NCBIFetch "wikilink")
 
+### Utilisation de services externes
+
+-   [Coment faire pour aligner une séquence en utilisant le service
+    QBlast?](BioJava:CookbookFrench:Services:Qblast "wikilink")
+
 ### Algorithmes génétiques
 
 -   [Comment écrire un algorithme génétique avec
