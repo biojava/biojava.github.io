@@ -126,7 +126,7 @@ Pour obtenir la liste des articles contenus dans Google Scholar et citant BioJav
 
 === Utilisation de services externes ===
 
-* [[BioJava:CookbookFrench:Services:Qblast|Coment faire pour aligner une séquence en utilisant le service QBlast?]]
+* [[BioJava:CookbookFrench:Services:Qblast|Comment faire pour aligner une séquence en utilisant le service QBlast?]]
 
 === Algorithmes g&eacute;n&eacute;tiques ===
 
