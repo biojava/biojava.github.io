@@ -238,7 +238,7 @@ Comment faire pour ...?
 
 ### Utilisation de services externes
 
--   [Coment faire pour aligner une séquence en utilisant le service
+-   [Comment faire pour aligner une séquence en utilisant le service
     QBlast?](BioJava:CookbookFrench:Services:Qblast "wikilink")
 
 ### Algorithmes génétiques
