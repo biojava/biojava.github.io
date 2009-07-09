@@ -41,7 +41,7 @@ Les interfaces du package org.biojavax.bio.alignment devraient permettre
 à n'importe qui de développer un service d'alignement, utilisant par
 exemple FASTA ou Blast à l'EBI, qui eux utilisent des services web.
 
-AVERTISSEMENTS (en date de Juillet 2009):
+**AVERTISSEMENTS (en date de Juillet 2009):**
 
 - Seulement les programmes de blastall sont fonctionnels. MegaBlast et
 blastpgp sont des priorités.
