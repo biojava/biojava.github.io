@@ -25,7 +25,7 @@ To use QBlast, you use a RemoteQBlastService object (which implements
 RemotePairwiseAlignmentService) to manage the connection to the QBlast
 service, submission of requests and fetching of results. To do so, it
 needs a sequence (represented by either a string, a RichSequence object
-or a GID) and a RemoteQBlastServiceProperties object. This class
+or a GID) and a RemoteQBlastAlignmentProperties object. This class
 implements RemotePairwiseAlignmentProperties and it is use to set which
 program and which database to use for the analysis. Right now, it can't
 much make use of other parameters of the QBlast service but the methods
