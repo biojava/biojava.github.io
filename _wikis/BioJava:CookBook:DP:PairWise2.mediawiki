@@ -60,11 +60,11 @@ public class DeterministicAlignmentDemo {
       SubstitutionMatrix matrix = new SubstitutionMatrix(alphabet, new File(args[2]));
       // Define the default costs for sequence manipulation for the global alignment.
       SequenceAlignment aligner = new NeedlemanWunsch( 
-        0, 	// match
-        3,	// replace
-        2,      // insert
-        2,	// delete
-        1,      // gapExtend
+        (short) 0, 	// match
+        (short) 3,	// replace
+        (short) 2,      // insert
+        (short) 2,	// delete
+        (short) 1,      // gapExtend
         matrix 	// SubstitutionMatrix
       );
       Sequence query  = DNATools.createDNASequence(args[0], "query");
@@ -80,11 +80,11 @@ public class DeterministicAlignmentDemo {
       // Perform a local alginment from the sequences with Smith-Waterman. 
       // Firstly, define the expenses (penalties) for every single operation.
       aligner = new SmithWaterman(
-        -1,     // match
-        3,      // replace 
-        2,      // insert
-        2,      // delete
-        1,      // gapExtend
+        (short) -1,     // match
+        (short) 3,      // replace 
+        (short) 2,      // insert
+        (short) 2,      // delete
+        (short) 1,      // gapExtend
         matrix  // SubstitutionMatrix
       );
       // Perform the local alignment.
