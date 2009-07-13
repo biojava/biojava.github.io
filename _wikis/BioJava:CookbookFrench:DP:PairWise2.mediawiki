@@ -65,11 +65,11 @@ public class DeterministicAlignmentDemo {
       
       // Definition les valeurs des couts par defaut pour l'alignement global.
       SequenceAlignment aligner = new NeedlemanWunsch( 
-        0, 	// match
-        3,	// remplacement
-        2,      // insertion
-        2,	// deletion
-        1,      // gapExtend
+        (short)0, 	// match
+        (short)3,	// remplacement
+        (short)2,      // insertion
+        (short)2,	// deletion
+        (short)1,      // gapExtend
         matrix 	// Matrice de substitution
       );
 
@@ -89,11 +89,11 @@ public class DeterministicAlignmentDemo {
       // Effectuer l'alignement local. 
       // Primo, definir la valeur du cout de chaque operation.
       aligner = new SmithWaterman(
-        -1,      // match
-        3,       // remplacement 
-        2,       // insertion
-        2,       // deletion
-        1,       // gapExtend
+        (short)-1,      // match
+        (short)3,       // remplacement 
+        (short)2,       // insertion
+        (short)2,       // deletion
+        (short)1,       // gapExtend
         matrix   // Matrice de substitution
       );
       // Faire l'alignement et perserver les resultats.
