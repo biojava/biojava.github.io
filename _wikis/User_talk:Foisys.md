@@ -2,6 +2,13 @@
 title: User talk:Foisys
 ---
 
+-   Hi, thanks for shutting out all those spammers in the last couple of
+    days. Do you think we need to take other action to get rid of this
+    problem? --[Andreas](User:Andreas "wikilink") 03:38, 15 July 2009
+    (UTC)
+
+<!-- -->
+
 -   Just to let you know, we have had some problems on the othe Bio\*
     wiki sites with spammers. You should go ahead and create a
     `Index.php` page, then protect it for sysops only
