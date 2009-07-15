@@ -2,6 +2,14 @@
 title: User talk:Foisys
 ---
 
+-   My pleasure... Just sad to see people actaully thinking that we
+    bioinformaticians need such artificial paradises ;-) As for limiting
+    them, I don't know what can be done on our side, possibly asking the
+    open-bio masters to institute some kind of filter. If Jason is still
+    in charge, I could ask him.
+
+<!-- -->
+
 -   Hi, thanks for shutting out all those spammers in the last couple of
     days. Do you think we need to take other action to get rid of this
     problem? --[Andreas](User:Andreas "wikilink") 03:38, 15 July 2009
