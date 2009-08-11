@@ -2,6 +2,19 @@
 title: BioJava:CookBook:OBO:visualize
 ---
 
+How to visualize an Ontology (OBO) file as a directed acyclic graph
+===================================================================
+
+With the help of [GraphViz](http://www.graphviz.org) an ontology can be
+visualized as a directed acyclic graph. The example code shown below
+demonstrates how to generate a GraphViz file from an ontology that draws
+the desired sub-graph rooted on a given internal node (this can also be
+the top-level element).
+
+This code will be released with the next biojava release. To use it at
+the moment you will require a [recent build from
+SVN](Autobuild_events "wikilink").
+
 <java> /\*\*
 
 `* @author Andreas Dräger Universität Tübingen.`  
