@@ -155,6 +155,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === Ontologies ===
 * [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
+* [[BioJava:CookBook:OBO:visualize|How can I visualize an OBO file as a directed acyclic graph?]]
 
 == Disclaimer ==
 
