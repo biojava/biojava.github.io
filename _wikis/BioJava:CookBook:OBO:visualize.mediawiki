@@ -1,8 +1,6 @@
 <java>
 /**
- * @author Andreas Dr&auml;ger <a
- *         href="mailto:andreas.draeger@uni-tuebingen.de">
- *         andreas.draeger@uni-tuebingen.de</a>
+ * @author Andreas Dr&auml;ger Universit&auml;t T&uuml;bingen.
  * @since 1.8
  */
 public class OBO2GraphViz {

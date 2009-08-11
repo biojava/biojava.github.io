@@ -4,9 +4,7 @@ title: BioJava:CookBook:OBO:visualize
 
 <java> /\*\*
 
-`* @author Andreas Dräger `<a
- *         href="mailto:andreas.draeger@uni-tuebingen.de">  
-`*         andreas.draeger@uni-tuebingen.de`</a>  
+`* @author Andreas Dräger Universität Tübingen.`  
 `* @since 1.8`  
 `*/`
 
