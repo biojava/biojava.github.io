@@ -273,6 +273,8 @@ How Do I....?
 
 -   [How can I parse an OBO
     file?](BioJava:CookBook:OBO:parse "wikilink")
+-   [How can I visualize an OBO file as a directed acyclic
+    graph?](BioJava:CookBook:OBO:visualize "wikilink")
 
 Disclaimer
 ----------
