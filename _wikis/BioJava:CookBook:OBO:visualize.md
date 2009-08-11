@@ -17,7 +17,7 @@ SVN](Autobuild_events "wikilink").
 
 <java> /\*\*
 
-`* @author Andreas Dräger Universität Tübingen.`  
+`* @author Andreas Dräger, Universität Tübingen.`  
 `* @since 1.8`  
 `*/`
 
