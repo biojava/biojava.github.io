@@ -101,3 +101,6 @@ If something goes wrong, most servlet containers will create a log file containi
 
 A number of plugins are available to quickly set up a DAS source without having to write any code.
 See [[Dazzle:plugins]] for an overview of these plugins
+
+== Deployment on the Google App Engine ==
+* Check tutorial [[Dazzle:deployment_google_app_engine |  here]]
