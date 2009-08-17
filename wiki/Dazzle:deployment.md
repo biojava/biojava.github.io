@@ -180,3 +180,10 @@ Ready made plugins
 A number of plugins are available to quickly set up a DAS source without
 having to write any code. See <Dazzle:plugins> for an overview of these
 plugins
+
+Deployment on the Google App Engine
+-----------------------------------
+
+-   Check tutorial [
+    here](Dazzle:deployment_google_app_engine "wikilink")
+
