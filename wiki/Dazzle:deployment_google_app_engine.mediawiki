@@ -1,0 +1,51 @@
+==Work in progress ...==
+
+'''WARNING:[[User:Vincent Rouilly|Vincent Rouilly]] 15:18, 17 August 2009 (UTC)''': this is a very preliminary tutorial. It worked for me, but this tutorial would need some more inputs to be more robust. Please drop your comments / feedback at the bottom of the page if you have given it a try.
+
+===Prerequisites===
+* Java 1.5
+* Eclipse 3.4.1 + Google App Engine plug-in from http://code.google.com/appengine/docs/java/tools/eclipse.html
+* Dazzle code into /tmp/dazzle from: svn checkout http://www.derkholm.net/svn/repos/dazzle/trunk /tmp/dazzle
+
+===Installation Steps===
+
+# Create new Google App Engine project from Eclipse (after Google Engine plug-in installation):
+## Project name: dazzle
+## Package: org.biojava.servlets.dazzle
+## Uncheck 'Use Google Web Toolkit'
+## Finish
+
+# Import 'dazzle' Jar files into 'dazzle google engine' project
+## In Eclipse, 'dazzle' project Properties -> Java Build Path -> Add  External Jars
+## Import from /tmp/dazzle/jars: bioJava.jar, bytecode.jar, dasmi-model.jar, servlet-api-2.3.jar
+# Import 'dazzle' ressources folder into 'dazzle google engine' project
+## drag-and-drop /tmp/dazzle/resources folder into 'Eclipse:/dazzle' folder      
+# Import 'dazzle' src files into 'dazzle google engine' project
+## drag-and-drop /tmp/dazzle/src/org folder into 'Eclipse:/ dazzle/src' folder
+## Comment: you should have 3 errors due to the use of Context in 'MysqlFeatureCache'. For now, I just commented the 2 lines involved.
+# Import /tmp/dazzle/dazzle-webapp files into 'dazzle google engine' project
+# drag-and-drop files from /tmp/dazzle/dazzle-webapp into Eclipse:/dazzle/war/.  (do not select WEB-INF folder)
+# Import Jars to WEB-INF/lib
+## drag and drop jar files from /tmp/dazzle/jars into 'dazzle google engine' Eclipse:/dazzle/war/WEB-INF/lib
+## biojava.jar, bytecode.jar, dasmi-model.jar, servelt-api-2.3.jar, dazzle.jar
+# Update web.xml file in Eclipse:/dazzle/war/WEB-INF/
+          [....]
+          <servlet>
+          <servlet-name>Dazzle</servlet-name>
+         <servlet-class>org.biojava.servlets.dazzle.DazzleServlet</servlet-class>
+         </servlet>
+         <servlet-mapping>
+         <servlet-name>Dazzle</servlet-name>
+         <url-pattern>/das/*</url-pattern>
+         </servlet-mapping>
+        <welcome-file-list>
+                <welcome-file>das_welcome.html</welcome-file>
+        </welcome-file-list>
+        [...]
+# Run application in Eclipse as web Application (standalone test)
+## check with your web browser: http://localhost:8080/das/dsn
+# If it works, you can create a Google App Engine Application ID and deploy your dazzle server on the cloud.
+## http://code.google.com/appengine/docs/java/tools/uploadinganapp.html
+
+===Comments / Feedback ===
+* write your comment here ...
