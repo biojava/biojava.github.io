@@ -261,9 +261,9 @@ How Do I....?
 -   [How can I mutate a
     residue?](BioJava:CookBook:PDB:mutate "wikilink")
 -   [How can I calculate a structure
-    superimposition?](BioJava:CookBook:PDB:align "wikilink")
--   [How can I use a simple GUI to calculate a
-    superimposition?](BioJava:CookBook:PDB:alignGUI "wikilink")
+    alignment?](BioJava:CookBook:PDB:align "wikilink")
+-   [How can I use a simple GUI to calculate an
+    alignment?](BioJava:CookBook:PDB:alignGUI "wikilink")
 -   [How can I interact with
     Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
 -   [How can I serialize to a
