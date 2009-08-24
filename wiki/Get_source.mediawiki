@@ -1,14 +1,14 @@
 =BioJava migrating to Maven=
 
-BioJava is currently in the process of getting migrated to Maven. A code freeze on this SVN trunk has been declared for
+BioJava is currently in the process of getting migrated to Maven and split up into sub-modules. A code freeze on this SVN trunk has been declared for
 
 Thursday August 27th 23:00 GMT.
 
-After this the code base will be re-factored and future development will happen on a new location in SVN.
+After this the code base will be re-factored and future development will happen on a new location in SVN. New SVN checkout instructions will be provided as soon as the modularization has reached a state that is stable enough.
 
 You can track the status of this at
 
-[BioJava:MavenMigration]
+[[BioJava:MavenMigration]]
 
 =BioJava now using SVN=
 
