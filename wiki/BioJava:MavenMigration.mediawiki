@@ -23,3 +23,5 @@ After this the code base will be re-factored and future development will happen 
 * Finalize the new version of BioJava at the upcoming Hackaton
 
 * release!
+
+--[[User:Andreas|Andreas]] 03:08, 24 August 2009 (UTC)
