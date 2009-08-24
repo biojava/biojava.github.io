@@ -2,6 +2,21 @@
 title: Get source
 ---
 
+BioJava migrating to Maven
+==========================
+
+BioJava is currently in the process of getting migrated to Maven. A code
+freeze on this SVN trunk has been declared for
+
+Thursday August 27th 23:00 GMT.
+
+After this the code base will be re-factored and future development will
+happen on a new location in SVN.
+
+You can track the status of this at
+
+[BioJava:MavenMigration]
+
 BioJava now using SVN
 =====================
 
