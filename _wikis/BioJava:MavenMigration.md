@@ -36,7 +36,9 @@ Procedure
 
 <!-- -->
 
--   We need to identify leaders for the development of the sub-modules
+-   We need to identify leaders for the development of the sub-modules.
+    View the current [list of defined
+    modules](BioJava:Modules "wikilink")
 
 <!-- -->
 
