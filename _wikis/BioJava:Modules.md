@@ -20,10 +20,11 @@ Module: biojava-sequence Lead: Richard Holland
 `- Bring in Richard's new code that he started to develop on the biojava-3 branch.`  
 `- provide a more scaleable and efficient basis for dealing with large sequence files`  
 
-Module: biojava-alignment Lead: Andreas Draeger
+Module: biojava-alignment Lead: Andreas Dräger
 
-`- allow better access to underlying dynamic programming data structures`  
-`- allow more customizable display of pairwise alignments (HTML/plain text, etc)`
+`* refactoring of underlying data structures`  
+`* allow better access to underlying dynamic programming data structures`  
+`* allow more customizable display of pairwise alignments (HTML/plain text, etc)`
 
 Module : biojava-blast Lead: Mark Schreiber
 
