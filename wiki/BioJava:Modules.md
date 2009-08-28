@@ -39,8 +39,10 @@ Module: biojava-biosql Lead: Richard Holland
 `- merge the new biojava-sequence module with the current biojava-biosql code `  
 `- Mark Schreiber wants to work on BioSQL/ JPA bindings`
 
-Module: biojava-das : Lead: Jonathan Warren probably deprecate the old
-DAS code in BJ and replace it with the up to date Dasobert library
+Module: biojava-das : Lead: Jonathan Warren
+
+`- probably deprecate the old DAS code in BJ and replace it with`  
+`= the up to date Dasobert library`
 
 Module: biojava-structure Lead: Andreas Prlic
 
@@ -52,17 +54,18 @@ Module: biojava-structure Lead: Andreas Prlic
 
 Module: biojava-sequencing Lead: Michael Heuer
 
-` - support FastQ files`  
+`- support FastQ files`  
 `- support parsing of output for various new sequencing machines`
 
-Module: biojava-web services: The details seem still to be under
-discussion and perhaps we need multiple modules here? also what about
-REST vs. SOAP? To be discussed. People who expressed interest are: Niall
-Haslam,Scooter Willis, Sylvain Foisy
+Module: biojava-web services:
+
+`- The details seem still to be under discussion and perhaps we need multiple modules here?`  
+`- also what about REST vs. SOAP? To be discussed. People who expressed interest are:`  
+`- Niall Haslam,Scooter Willis, Sylvain Foisy`
 
 Module?: biojava-ws-blast Module?: biojava-ws-biolit
 
-Proposed Module: biojava-j2ee Lead: Mark Schreiber This would probably
+Proposed Module: biojava-j2ee Lead: Mark Schreiber - This would probably
 take the form of SessionBeans and WebServices that can be deployed to
 Glassfish/ JBoss etc to provide biological services for people who want
 to make client server or SOA apps.
