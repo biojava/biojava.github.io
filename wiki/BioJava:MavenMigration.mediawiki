@@ -16,7 +16,7 @@ After this the code base will be re-factored and future development will happen 
 
 * All developers should obtain a new checkout
 
-* We need to identify leaders for the development of the sub-modules
+* We need to identify leaders for the development of the sub-modules. View the current [[BioJava:Modules|list of defined modules]] 
 
 * Continue development on the new modules
 
