@@ -65,7 +65,6 @@ Module: biojava-web services:
 
 Module?: biojava-ws-blast Module?: biojava-ws-biolit
 
-Proposed Module: biojava-j2ee Lead: Mark Schreiber - This would probably
-take the form of SessionBeans and WebServices that can be deployed to
-Glassfish/ JBoss etc to provide biological services for people who want
-to make client server or SOA apps.
+Proposed Module: biojava-j2ee Lead: Mark Schreiber
+
+`- This would probably take the form of SessionBeans and WebServices that can be deployed to Glassfish/ JBoss etc to provide biological services  for people who want to make client server or SOA apps.`
