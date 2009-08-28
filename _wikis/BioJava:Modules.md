@@ -22,9 +22,9 @@ Module: biojava-sequence Lead: Richard Holland
 
 Module: biojava-alignment Lead: Andreas Dräger
 
-`* refactoring of underlying data structures`  
-`* allow better access to underlying dynamic programming data structures`  
-`* allow more customizable display of pairwise alignments (HTML/plain text, etc)`
+`- refactoring of underlying data structures`  
+`- allow better access to underlying dynamic programming data structures`  
+`- allow more customizable display of pairwise alignments (HTML/plain text, etc)`
 
 Module : biojava-blast Lead: Mark Schreiber
 
