@@ -60,3 +60,5 @@ Progress
 The new SVN location is emerging so far at:
 
 <http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/mvn>
+
+work in progress ...
