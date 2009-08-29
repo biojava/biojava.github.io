@@ -25,3 +25,9 @@ After this the code base will be re-factored and future development will happen 
 * release!
 
 --[[User:Andreas|Andreas]] 03:08, 24 August 2009 (UTC)
+
+== Progress ==
+
+The new SVN location is emerging so far at:
+
+http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/mvn
