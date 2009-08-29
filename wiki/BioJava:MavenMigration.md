@@ -53,3 +53,10 @@ Procedure
 -   release!
 
 --[Andreas](User:Andreas "wikilink") 03:08, 24 August 2009 (UTC)
+
+Progress
+--------
+
+The new SVN location is emerging so far at:
+
+<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/mvn>
