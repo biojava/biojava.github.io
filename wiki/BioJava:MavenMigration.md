@@ -57,8 +57,8 @@ Procedure
 Progress
 --------
 
-The new SVN location is emerging so far at:
+The new SVN location is emerging at:
 
-<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/mvn>
+[`http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/biojava`](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/biojava)
 
 work in progress ...
