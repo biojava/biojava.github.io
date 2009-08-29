@@ -28,8 +28,8 @@ After this the code base will be re-factored and future development will happen 
 
 == Progress ==
 
-The new SVN location is emerging so far at:
+The new SVN location is emerging at:
 
-http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/mvn
+ http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/biojava
 
 work in progress ...
