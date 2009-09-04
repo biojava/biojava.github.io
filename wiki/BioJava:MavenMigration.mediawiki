@@ -29,7 +29,31 @@ After this the code base will be re-factored and future development will happen 
 == Progress ==
 
 The new SVN location is emerging at:
+ http://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/biojava
+
+or in your browser:
 
  http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/biojava
 
-work in progress ...
+
+So far several new modules have been created and it is time for more eyes to take a look.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] biojava ............................................... SUCCESS [1.543s]
+[INFO] core .................................................. SUCCESS [16.352s]
+[INFO] alignment ............................................. SUCCESS [4.123s]
+[INFO] blast ................................................. SUCCESS [29.427s]
+[INFO] structure ............................................. SUCCESS [22.653s]
+[INFO] das ................................................... SUCCESS [27.339s]
+[INFO] biojava ............................................... SUCCESS [0.174s]
+[INFO] sequence-core ......................................... SUCCESS [1.161s]
+[INFO] sequence-dna .......................................... SUCCESS [0.778s]
+[INFO] sequence-rna .......................................... SUCCESS [0.701s]
+[INFO] sequence-biosql ....................................... SUCCESS [0.661s]
+[INFO] sequence-fasta ........................................ SUCCESS [0.739s]
+[INFO] sequence-blastxml ..................................... SUCCESS [0.362s]
+[INFO] sequencing ............................................ SUCCESS [1.840s]
+[INFO] phylo ................................................. SUCCESS [1.889s]
+[INFO] biosql ................................................ SUCCESS [1.997s]
+[INFO] gui ................................................... SUCCESS [1.923s]
+[INFO] ------------------------------------------------------------------------
