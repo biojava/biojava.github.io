@@ -37,6 +37,7 @@ or in your browser:
 
 
 So far several new modules have been created and it is time for more eyes to take a look.
+<pre>
 
 [INFO] ------------------------------------------------------------------------
 [INFO] biojava ............................................... SUCCESS [1.543s]
@@ -57,3 +58,4 @@ So far several new modules have been created and it is time for more eyes to tak
 [INFO] biosql ................................................ SUCCESS [1.997s]
 [INFO] gui ................................................... SUCCESS [1.923s]
 [INFO] ------------------------------------------------------------------------
+</pre>
