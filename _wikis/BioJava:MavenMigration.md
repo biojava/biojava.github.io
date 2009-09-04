@@ -59,7 +59,7 @@ Progress
 
 The new SVN location is emerging at:
 
-[`http://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/biojava`](http://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/biojava)
+`svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/biojava`
 
 or in your browser:
 
