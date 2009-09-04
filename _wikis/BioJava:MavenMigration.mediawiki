@@ -35,6 +35,10 @@ or in your browser:
 
  http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/biojava
 
+Anonymous checkouts are possible via:
+
+ svn://code.open-bio.org/biojava/biojava-live/biojava
+
 
 So far several new modules have been created and it is time for more eyes to take a look.
 <pre>
