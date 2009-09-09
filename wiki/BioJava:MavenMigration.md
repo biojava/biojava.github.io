@@ -98,7 +98,6 @@ TODO List
 
 The following things still need to be done:
 
-`- move the bytecode.jar from the jars folder in core into its own module`  
 `- find solution for what to do with docs (move to relevant module or wiki)`  
 `- add '`[`svn:ignore`](svn:ignore)` target' properties to all the module top-level folders`  
 `- signing: re-enable the digital signature for jars`  
