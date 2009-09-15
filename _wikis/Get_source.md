@@ -91,7 +91,8 @@ Once you have both plugins installed, you can browse through the SVN
 repository within eclipse, right-click on the biojava/trunk folder and
 check out as a Maven project.
 
-### SVN and EOL
+SVN and EOL
+-----------
 
 Unlike CVS, Subversion does not automatically convert End Of Line
 characters, which can cause problems across different operating systems.
