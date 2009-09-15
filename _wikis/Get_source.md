@@ -13,7 +13,7 @@ a build. Access is possible either via
 `- Developer SVN access (ssh account required)`
 
 Downloading and updating code via Anonymous SVN
------------------------------------------------
+===============================================
 
 The code.open-bio.org server offers up read-only copies of source code
 repositories via anonymous SVN. A list of code repositories available
@@ -54,10 +54,11 @@ unavailable for access.
 If a SVN client error occurs for longer than 20 minutes, please report
 this to: support@helpdesk.open-bio.org
 
-Developer checkout
-------------------
+Downloading and updating code via Developer SVN
+===============================================
 
-For a developer the SVN checkout works like this:
+For the developer access a user account on the dev.open-bio server is
+required. The SVN checkout works like this:
 
 `svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/  ./biojava-live`
 
