@@ -6,15 +6,12 @@ BioJava migrating to Maven
 ==========================
 
 BioJava is currently in the process of getting migrated to Maven and
-split up into sub-modules.
-
-You can track the status of this at
-
+split up into sub-modules. You can track the status of this at
 <BioJava:MavenMigration>
 
-The new mavenized code is available through the main biojava *trunk*.
-The old ant-based biojava is still available in the branch
-*trunk\_1\_7\_ant*
+As of September 2009 the new mavenized code is available through the
+main biojava *trunk*. The old ant-based biojava is still available in
+the branch *trunk\_1\_7\_ant*
 
 BioJava now using SVN
 =====================
