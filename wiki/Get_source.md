@@ -13,13 +13,6 @@ As of September 2009 the new mavenized code is available through the
 main biojava *trunk*. The old ant-based biojava is still available in
 the branch *trunk\_1\_7\_ant*
 
-BioJava now using SVN
-=====================
-
-As of January 2008 BioJava has moved the version control system from CVS
-to Subversion (svn). All Biojava modules, branches and tags and the
-history of the files has been imported into the new repository.
-
 Downloading and updating code via Anonymous SVN
 -----------------------------------------------
 
@@ -85,6 +78,18 @@ and add
 
 `host dev.open-bio.org`  
 `user blablabla`
+
+Eclipse Tips
+------------
+
+SVN plugin: Get the subclipse SVN plugin from
+[<http://subclipse.tigris.org/>](http://subclipse.tigris.org/) Maven
+plugin: We recommend getting the m2eclipse plugin from
+[<http://m2eclipse.sonatype.org/>](http://m2eclipse.sonatype.org/)
+
+Once you have both plugins installed, you can browse through the SVN
+repository within eclipse, right-click on the biojava/trunk folder and
+check out as a Maven project.
 
 ### SVN and EOL
 
@@ -165,8 +170,12 @@ for enabling auto-props. Change this to
 See also the [SVN developers page in the OBF
 wiki](http://www.open-bio.org/wiki/SVN-Developers)
 
-If you are working with Eclipse see how to configure a svn+ssh://
-connection: [subclipse](http://subclipse.tigris.org/faq.html#svn-ssh)
+BioJava now using SVN
+=====================
+
+As of January 2008 BioJava has moved the version control system from CVS
+to Subversion (svn). All Biojava modules, branches and tags and the
+history of the files has been imported into the new repository.
 
 History of the update procedure
 -------------------------------
