@@ -1,8 +1,8 @@
 =Check out code from SVN=
 
-BioJava requires [http://subversion.tigris.org/ Subversion] and [http://maven.apache.org/ Maven] for checking out the code and creating a build. Access is possible either via
- - Anonymous checkout
- - Developer checkout (ssh account required)
+BioJava requires [http://subversion.tigris.org/ Subversion] (SVN) and [http://maven.apache.org/ Maven] for checking out the code and creating a build. Access is possible either via
+ - Anonymous SVN access or
+ - Developer SVN access (ssh account required)
 
 == Downloading and updating code via Anonymous SVN ==
 
