@@ -1,6 +1,6 @@
 =Check out code from SVN=
 
-BioJava requires Subversion and Maven for checking out the code and building the system.
+BioJava requires Subversion and Maven for checking out the code and creating a build.
 
 == Downloading and updating code via Anonymous SVN ==
 
