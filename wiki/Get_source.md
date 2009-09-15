@@ -2,16 +2,11 @@
 title: Get source
 ---
 
-BioJava migrating to Maven
-==========================
+Check out code from SVN
+=======================
 
-BioJava is currently in the process of getting migrated to Maven and
-split up into sub-modules. You can track the status of this at
-<BioJava:MavenMigration>
-
-As of September 2009 the new mavenized code is available through the
-main biojava *trunk*. The old ant-based biojava is still available in
-the branch *trunk\_1\_7\_ant*
+BioJava requires Subversion and Maven for checking out the code and
+building the system.
 
 Downloading and updating code via Anonymous SVN
 -----------------------------------------------
@@ -171,15 +166,25 @@ for enabling auto-props. Change this to
 See also the [SVN developers page in the OBF
 wiki](http://www.open-bio.org/wiki/SVN-Developers)
 
+Repository News
+===============
+
+BioJava migrating to Maven
+--------------------------
+
+BioJava is currently in the process of getting migrated to Maven and
+split up into sub-modules. You can track the status of this at
+<BioJava:MavenMigration>
+
+As of September 2009 the new mavenized code is available through the
+main biojava *trunk*. The old ant-based biojava is still available in
+the branch *trunk\_1\_7\_ant*
+
 BioJava now using SVN
-=====================
+---------------------
 
 As of January 2008 BioJava has moved the version control system from CVS
 to Subversion (svn). All Biojava modules, branches and tags and the
-history of the files has been imported into the new repository.
-
-History of the update procedure
--------------------------------
-
-for more detailed documentation about the procedure used for the CVS to
-SVN migration see [SVNmigrationHistory](SVNmigrationHistory "wikilink")
+history of the files has been imported into the new repository. For more
+detailed documentation about the procedure used for the CVS to SVN
+migration see [SVNmigrationHistory](SVNmigrationHistory "wikilink")
