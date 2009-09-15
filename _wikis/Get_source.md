@@ -5,8 +5,12 @@ title: Get source
 Check out code from SVN
 =======================
 
-BioJava requires Subversion and Maven for checking out the code and
-creating a build.
+BioJava requires [Subversion](http://subversion.tigris.org/) and
+[Maven](http://maven.apache.org/) for checking out the code and creating
+a build. Access is possible either via
+
+`- Anonymous checkout`  
+`- Developer checkout (ssh account required)`
 
 Downloading and updating code via Anonymous SVN
 -----------------------------------------------
