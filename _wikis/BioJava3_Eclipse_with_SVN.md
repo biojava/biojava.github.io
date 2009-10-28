@@ -5,7 +5,7 @@ title: BioJava3 Eclipse with SVN
 Prerequisite
 ------------
 
--   Make sure you have a copy of the latest eclipse (Ganymed)
+-   Make sure you have a copy of the latest eclipse (Galileo)
 
 <!-- -->
 
@@ -20,7 +20,7 @@ Prerequisite
 <!-- -->
 
 -   Install the [subclipse](http://subclipse.tigris.org/) plugin for
-    subversion
+    subversion (latest version: 1.6)
 
 Installation
 ------------
