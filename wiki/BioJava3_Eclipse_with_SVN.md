@@ -14,8 +14,8 @@ Prerequisite
 
 <!-- -->
 
--   Install [Maven](http://maven.apache.org/eclipse-plugin.html) eclipse
-    plugin.
+-   Install the [m2eclipse](http://m2eclipse.sonatype.org/) Maven
+    eclipse plugin.
 
 <!-- -->
 
