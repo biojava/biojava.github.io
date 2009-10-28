@@ -91,6 +91,8 @@ Once you have both plugins installed, you can browse through the SVN
 repository within eclipse, right-click on the biojava/trunk folder and
 check out as a Maven project.
 
+For more details see [BioJava3\_eclipse](BioJava3_eclipse "wikilink").
+
 SVN and EOL
 -----------
 
