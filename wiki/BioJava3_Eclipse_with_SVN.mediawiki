@@ -1,12 +1,12 @@
 == Prerequisite ==
 
-* Make sure you have a copy of the latest eclipse (Ganymed)
+* Make sure you have a copy of the latest eclipse (Galileo)
 
 * Make sure you have Java 1.6 installed. (if you are on oSX 10.4.x install [http://landonf.bikemonkey.org/static/soylatte/ soylatte]
 
 * Install [http://maven.apache.org/eclipse-plugin.html Maven] eclipse plugin.
 
-* Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion
+* Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
 
 == Installation ==
 
