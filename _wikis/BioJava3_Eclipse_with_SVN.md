@@ -25,15 +25,6 @@ Prerequisite
 Installation
 ------------
 
--   Checked out [ the source for BioJava3](BioJava3_project "wikilink")
-    as a Java project (name it **biojava3**)
-
-<!-- -->
-
--   right click on the pom.xml and Run As -\> Maven install
-
-<!-- -->
-
--   right click on the toplevel biojava3 project name and -\>Enable
-    dependecy management
+-   Right click on the folder <i>/biojava/biojava-live/trunk</i> and
+    select Check Out as Maven project
 
