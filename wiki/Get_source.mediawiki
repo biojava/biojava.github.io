@@ -58,8 +58,9 @@ and add
 SVN plugin: Get the subclipse SVN plugin from [http://subclipse.tigris.org/ http://subclipse.tigris.org/]
 Maven plugin: We recommend getting the m2eclipse plugin from [http://m2eclipse.sonatype.org/ http://m2eclipse.sonatype.org/] 
 
-Once you have both plugins installed, you can browse through the SVN repository within eclipse, right-click on the biojava/trunk folder and check out as a Maven project. 
+Once you have both plugins installed, you can browse through the SVN repository within eclipse, right-click on the biojava/trunk folder and check out as a Maven project.
 
+For more details see [[BioJava3_eclipse]].
 
 == SVN and EOL  ==
 
