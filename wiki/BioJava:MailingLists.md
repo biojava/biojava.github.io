@@ -45,7 +45,7 @@ List rules
 ----------
 
 -   Post in text format only. If you post in HTML or RTF the antispam
-    software is likely to quarenteen your email for at least a week.
+    software is likely to quarantine your email for at least a week.
 -   Don't attach files. They will also cause the spam filter to kick in.
     You will also cause problems to people with low bandwidth
     connections (some of us check this list on the road).
@@ -54,10 +54,11 @@ List rules
 -   Job vacancies can be posted but only if relevant to the list, i.e
     they should be aimed at bioinformatics or genomics java programmers.
     If you are not sure ask one of the [core team](Core Team "wikilink")
-    first.
+    first. (Note: consider posting jobs to the bioinformatics.org job
+    list at [1](http://www.bioinformatics.org/jobs/)).
 -   Never spam!
--   Off topic issues should be kept to a minimum. The subjectline should
-    be pre-pended with [Off Topic] or similar
+-   Off topic issues should be kept to a minimum. The subject line
+    should be pre-pended with [Off Topic] or similar
 
 Bug Reports
 -----------
