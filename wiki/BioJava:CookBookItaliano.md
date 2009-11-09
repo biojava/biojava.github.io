@@ -58,7 +58,7 @@ Come posso....?
 -   [Come ottenere
     Java](http://java.sun.com/javase/downloads/index.jsp)?
 -   [Come posso ottenere e installare
-    BioJava](BioJava:GetStarted "wikilink")?
+    BioJava](BioJava:CookBookItaliano:GetStarted "wikilink")?
 
 ### Alphabets and Symbols
 
