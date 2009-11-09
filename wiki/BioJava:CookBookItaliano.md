@@ -29,19 +29,23 @@ Nel caso si riutilizzi il code di questo cookbook perfavore si citi:
 Avvisi
 ------
 
-You can now read BioJava in Anger in
-[French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
-Foisy; mise à jour / updated : 9 juillet 2009).
+E' possibile leggere BioJava in Anger in
+[Francese](Biojava:CookbookFrench "wikilink") (Tradotto da Sylvain
+Foisy; ultimo aggiornamento : 9 Luglio 2009).
 
-You can also read Biojava in Anger in
-[Portuguese](Biojava:CookbookPortuguese "wikilink") (Translated by
-Dickson Guedes)
+E' possibile leggere Biojava in Anger in
+[Portoghese](Biojava:CookbookPortuguese "wikilink") (Tradotto da Dickson
+Guedes)
 
-You can also read BioJava in Anger in
-[Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
-(Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
-2004).
+E' possibile leggere Biojava in Anger in
+[1](http://www.geocities.jp/bio_portal/bj_in_anger_ja/|Giapponese)
+(Tradotto da Takeshi Sasayama e Kentaro Sugino, ultimo aggiornamento 14
+Aug 2004).
 
-How about simplified
-[Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
-(Translated by Wu Xin).
+E' possibile leggere Biojava in Anger in
+[Cinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)
+(Tradotto da Xin).
+
+E' possibile leggere BioJava in Anger in
+[Italiano](Biojava:CookBookItaliano "wikilink") (Tradotto da Alessandro
+Cipriani; ultimo aggiornamento: 9 Novembre 2009).
