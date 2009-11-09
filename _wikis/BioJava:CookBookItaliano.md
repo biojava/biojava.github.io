@@ -12,22 +12,16 @@ bisogno per iniziare... e anche qualcosa di più. Questo documento è
 stato creato per favorire lo sviluppo di software con i programmi
 forniti dal FrameWork BioJava; i quali eseguono il 99% dei task più
 comuni senza l'obbligo di conoscere e comprendere il 99% delle API di
-BioJava. Queste pagine nascono da vari cookbooks di altri linguaggi di
-programmazione e seguono un approccio del tipo: "Come posso....?". Ogni
-domanda è collegata a delle parti di codice che fanno qualcosa di più di
-ciò che uno si aspetterebbe. Praticamente basta trovare il codice
-desiderato, copiarlo, incollarlo all'interno del proprio programma
+BioJava. Queste pagine nascono da vari cookbooks relativi ad altri
+linguaggi di programmazione e seguono un approccio del tipo: "Come
+posso....?". Ogni domanda è collegata a delle parti di codice che fanno
+ciò di cui uno ha bisogno e anche qualcosa di più. In pratica basta
+trovare il codice desiderato, copiarlo, incollarlo all'interno del
+proprio programma e quindi ottenere poi i risultati desiderati in breve
+tempo. Oltre che documentazione mi sono sforzato di rendere chiaro il
+codice e tanto da farlo sembrare ovvio e in alcuni casi quasi superfluo.
+Per suggerimenti, domande o commeti scrivere a [biojava mailing
+list](mailto:biojava-l@biojava.org). Per Iscriversi alla mailing seguire
+questo link [here](http://biojava.org/mailman/listinfo/biojava-l)
 
-The page was inspired by various programming cookbooks and follows a
-"How do I...?" type approach. Each "How do I?" is linked to some example
-code that does what you want and sometimes more. Basically if you find
-the code you want and copy and paste it into your program you should be
-up and running quickly. I have endeavoured to over document the code to
-make it more obvious what I am doing so some of the code might look a
-bit bloated.
-
-If you have any suggestions, questions or comments contact the [biojava
-mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
-go [here](http://biojava.org/mailman/listinfo/biojava-l)
-
-If you re-use code from the cookbook please cite:
+Nel caso si riutilizzi il code di questo cookbook perfavore si citi:
