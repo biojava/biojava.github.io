@@ -10,10 +10,12 @@ Nel caso si riutilizzi il code di questo cookbook perfavore si citi:
 
 == Avvisi==
 
-You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 9 juillet 2009).
+E' possibile leggere BioJava in Anger in [[Biojava:CookbookFrench|Francese]] (Tradotto da Sylvain Foisy; ultimo aggiornamento : 9 Luglio 2009).
 
-You can also read Biojava in Anger in [[Biojava:CookbookPortuguese|Portuguese]] (Translated by Dickson Guedes)
+E' possibile leggere Biojava in Anger in [[Biojava:CookbookPortuguese|Portoghese]] (Tradotto da Dickson Guedes)
 
-You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Japanese] (Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug 2004).
+E' possibile leggere Biojava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/|Giapponese] (Tradotto da Takeshi Sasayama e Kentaro Sugino, ultimo aggiornamento 14 Aug 2004).
 
-How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
+E' possibile leggere Biojava in Anger in [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Cinese] (Tradotto da Xin).
+
+E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (Tradotto da Alessandro Cipriani; ultimo aggiornamento: 9 Novembre 2009).
