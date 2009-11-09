@@ -38,7 +38,7 @@ E' possibile leggere BioJava in Anger in
 Guedes)
 
 E' possibile leggere BioJava in Anger in
-[1](http://www.geocities.jp/bio_portal/bj_in_anger_ja/|Giapponese)
+[Giapponese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
 (Tradotto da Takeshi Sasayama e Kentaro Sugino, ultimo aggiornamento 14
 Aug 2004).
 
