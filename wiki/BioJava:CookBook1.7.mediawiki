@@ -24,7 +24,7 @@ How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/i
 
 === Setup ===
 
-* [http://java.sun.com/downloads/ Where do I get a Java installation]?
+* [http://java.sun.com/javase/downloads/index.jsp Where do I get a Java installation]?
 * [[BioJava:GetStarted|How do I get and install BioJava]]?
 
 === Alphabets and Symbols ===
