@@ -51,7 +51,7 @@ How Do I....?
 ### Setup
 
 -   [Where do I get a Java
-    installation](http://java.sun.com/downloads/)?
+    installation](http://java.sun.com/javase/downloads/index.jsp)?
 -   [How do I get and install BioJava](BioJava:GetStarted "wikilink")?
 
 ### Alphabets and Symbols
