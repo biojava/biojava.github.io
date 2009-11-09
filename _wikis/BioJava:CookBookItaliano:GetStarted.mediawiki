@@ -2,10 +2,10 @@
 
 BioJava può essere eseguito su qualsiasi computer che abbia una Java Virtual Machine conforme alle specifiche J2SE 1.4 (o superiore). Java è disponibile per Linux, Windows, Solaris ed è possibile ottenerlo da [http://java.sun.com/javase/downloads/index.jsp Sun's java website]. Versioni recenti di MacOS X includono Java come standard. Java è anche disponibile per altre piattaforme: in caso di dubbi contattare il proprio rivenditore. I file binare di BioJava sono distribuiti in formato .jar (Java ARchive).
 
-L'ultima versione di [[Biojava:Download|BioJava 1.7 (richiede Java 1.5+)]] è scaricabile da [[Biojava:Download|area download]]. 
+L'ultima versione di [[Biojava:Download|BioJava 1.7 (richiede Java 1.5+)]] è scaricabile da qui [[Biojava:Download|area download]]. 
 
-Versioni legacy di BioJava sono scaricabili da qui [[Biojava:Download 1.5|BioJava 1.5 (richiede Java 1.4+)]] ;  o
+Versioni legacy di BioJava 1.5 sono scaricabili da qui [[Biojava:Download 1.5|BioJava 1.5 (richiede Java 1.4+)]] ;  o
 
-You can get the legacy release version of BioJava 1.4 [[Biojava:Download 1.4|here]];
+Versioni legacy di BioJava 1.4 sono scaricabili da qui [[Biojava:Download 1.4|BioJava 1.4]];
 
 E' possibile integrare BioJava anche con NetBeans IDE. Per sapere come seguire questo [[How_to_integrate_BioJava_in_NetBeans_IDE|link]].
