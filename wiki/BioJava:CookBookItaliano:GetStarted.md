@@ -28,13 +28,15 @@ E' possibile integrare BioJava anche con NetBeans IDE. Per sapere come
 seguire questo
 [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 
-Installation
-------------
+Installazione
+-------------
 
-None of these .jar files need to be unpacked for normal use -- simply
-place them in a convenient directory.
+Nessuno di questi files .jar ha bisogno di essere decompresso per un uso
+normale -- bisogna semplicemente copiarli in una directory qualsiasi.
 
-To use BioJava, add the required JAR files to your CLASSPATH environment
+Per utilizzare BioJava, aggiungere i files .jar al proprio CLASSPATH. La
+coretta sintassi cambia a seconda dell piattaforma utilizzata. To use
+BioJava, add the required JAR files to your CLASSPATH environment
 variable. The exact syntax varies between platforms. The text is wrapped
 due to limited space. The actual commands should be on a single line:
 
