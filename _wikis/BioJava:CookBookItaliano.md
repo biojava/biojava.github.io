@@ -2,8 +2,10 @@
 title: BioJava:CookBookItaliano
 ---
 
-BioJava In Anger - Un tutorial e una raccolta di "ricette" per coloro che hanno "fretta"
-----------------------------------------------------------------------------------------
+BioJava In Anger-Un tutorial e una raccolta di "ricette" per coloro che hanno "fretta"
+--------------------------------------------------------------------------------------
+
+;
 
 Apparentemente BioJava può sembrare enorme e spaventoso. Per tutti
 coloro che necessitano di utilizzare velocemente Biojava, qui possono
