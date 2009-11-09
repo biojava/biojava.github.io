@@ -22,6 +22,6 @@ tempo. Oltre che documentazione mi sono sforzato di rendere chiaro il
 codice e tanto da farlo sembrare ovvio e in alcuni casi quasi superfluo.
 Per suggerimenti, domande o commeti scrivere a [biojava mailing
 list](mailto:biojava-l@biojava.org). Per Iscriversi alla mailing seguire
-questo link [here](http://biojava.org/mailman/listinfo/biojava-l)
+questo link [qui](http://biojava.org/mailman/listinfo/biojava-l)
 
 Nel caso si riutilizzi il code di questo cookbook perfavore si citi:
