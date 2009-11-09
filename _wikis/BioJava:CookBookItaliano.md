@@ -50,13 +50,13 @@ E' possibile leggere BioJava in Anger in
 [Italiano](Biojava:CookBookItaliano "wikilink") (Tradotto da Alessandro
 Cipriani; ultimo aggiornamento: 9 Novembre 2009).
 
-How Do I....?
--------------
+Come posso....?
+---------------
 
 ### Setup
 
--   [Where do I get a Java
-    installation](http://java.sun.com/downloads/)?
+-   [Come ottenere
+    Java](http://java.sun.com/javase/downloads/index.jsp)?
 -   [How do I get and install BioJava](BioJava:GetStarted "wikilink")?
 
 ### Alphabets and Symbols

@@ -20,11 +20,11 @@ E' possibile leggere BioJava in Anger in [http://www.cbi.pku.edu.cn/chinese/docu
 
 E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (Tradotto da Alessandro Cipriani; ultimo aggiornamento: 9 Novembre 2009).
 
-== How Do I....? ==
+== Come posso....? ==
 
 === Setup ===
 
-* [http://java.sun.com/downloads/ Where do I get a Java installation]?
+* [http://java.sun.com/javase/downloads/index.jsp Come ottenere Java]?
 * [[BioJava:GetStarted|How do I get and install BioJava]]?
 
 === Alphabets and Symbols ===
