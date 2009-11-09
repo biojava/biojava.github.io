@@ -14,7 +14,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookbookFrench|Francese]] (Tr
 
 E' possibile leggere BioJava in Anger in [[Biojava:CookbookPortuguese|Portoghese]] (Tradotto da Dickson Guedes)
 
-E' possibile leggere BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/|Giapponese] (Tradotto da Takeshi Sasayama e Kentaro Sugino, ultimo aggiornamento 14 Aug 2004).
+E' possibile leggere BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_anger_ja/ Giapponese] (Tradotto da Takeshi Sasayama e Kentaro Sugino, ultimo aggiornamento 14 Aug 2004).
 
 E' possibile leggere BioJava in Anger in [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Cinese] (Tradotto da Xin).
 
