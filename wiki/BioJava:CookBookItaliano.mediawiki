@@ -1,5 +1,4 @@
-== BioJava In Anger -
-Un tutorial e una raccolta di "ricette" per coloro che hanno "fretta" ==
+==BioJava In Anger-Un tutorial e una raccolta di "ricette" per coloro che hanno "fretta"==;
 
 Apparentemente BioJava può sembrare enorme e spaventoso. Per tutti coloro che necessitano di utilizzare velocemente Biojava, qui possono trovare tutto ciò di cui hanno bisogno. Questo documento è stato creato per favorire lo sviluppo di programmi BioJava che eseguono il 99% dei task più comuni senza l'obbligo di conoscere e comprendere il 99% delle API di BioJava.
 
