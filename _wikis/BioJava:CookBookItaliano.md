@@ -25,3 +25,23 @@ list](mailto:biojava-l@biojava.org). Per Iscriversi alla mailing seguire
 questo link [qui](http://biojava.org/mailman/listinfo/biojava-l)
 
 Nel caso si riutilizzi il code di questo cookbook perfavore si citi:
+
+Avvisi
+------
+
+You can now read BioJava in Anger in
+[French](Biojava:CookbookFrench "wikilink") (Translated by Sylvain
+Foisy; mise à jour / updated : 9 juillet 2009).
+
+You can also read Biojava in Anger in
+[Portuguese](Biojava:CookbookPortuguese "wikilink") (Translated by
+Dickson Guedes)
+
+You can also read BioJava in Anger in
+[Japanese](http://www.geocities.jp/bio_portal/bj_in_anger_ja/)
+(Translated by Takeshi Sasayama and Kentaro Sugino, updated 14 Aug
+2004).
+
+How about simplified
+[Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
+(Translated by Wu Xin).
