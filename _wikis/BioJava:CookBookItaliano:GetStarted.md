@@ -108,8 +108,8 @@ alle [API](http://www.biojava.org/docs/api15b/index.html) e alla sezione
 imparare molto riguardo BioJava semplicemente utilizzando i programmi
 demo inclusi nei sorgenti (segue).
 
-Building your own
------------------
+Come compilare BioJava a partire da zero
+----------------------------------------
 
 Se si ha la necessità di modificare BioJava, si può ottenere una copia
 del codice sorgente dalla [Source
