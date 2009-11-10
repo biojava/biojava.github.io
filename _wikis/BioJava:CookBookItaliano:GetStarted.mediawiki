@@ -58,3 +58,25 @@ In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di bio
 E' anche possibile installare i file JAR nel proprio sistema copiandoli all'interno di una installazione esistente di Java. Sulla maggior parte dei sistemi Linux che sui sistemi Windows-like basta copiare i jar elencati sopra all'interno di ''${JAVA_HOME}/jre/lib/ext''. Su Mac OS X c'è una directory per ogni utente chiamata ''~/Library/Java/Extensions'' (nel caso non esista basta crearsela da soli). Per altre piattaforme consultare questo  [http://java.sun.com/javase/downloads/index.jsp link]. 
 
 A questo punto sarà possibile compilare ed eseguire i programmi BioJava utilizzando i comandi  ''javac'' e ''java''. E' opportuno dare uno sguardo al [[BioJava:Tutorial|tutorial]], alla documentazione relativa alle  [http://www.biojava.org/docs/api15b/index.html API ] e alla sezione [[BioJava:CookBookItaliano |BioJava in anger]]. Infine si può imparare molto riguardo BioJava semplicemente utilizzando i programmi demo inclusi nei sorgenti (segue).
+
+==  Building your own ==
+
+If you want to modify BioJava, you can obtain a copy of the source code from the [http://www.biojava.org/download/source Source directory] of the download area. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute source code via an [[CVS_to_SVN_Migration| anonymous SVN checkout]].
+
+BioJava is built using the ''ant'' build tool, a Java-specific equivalent of the common Make utilities. Please download and install the latest version of ''ant'' (currently 1.6.1). It is available [http://ant.apache.org here].
+
+To build the library, just change into the biojava-live directory and type ''ant''. The final JAR file will be placed in the ''ant-build'' directory. You can also use the command ''ant javadocs-biojava'' to build the API documentation.
+
+== Building the demo programs ==
+
+The source distribution contains a number of small demo programs. Once you have a working ''biojava.jar'' on your classpath, these can be compiled directly using ''javac'' from the demos directory.
+
+  (unix)
+  cd demos
+  javac seq/TestEmbl.java
+  java seq.TestEmbl seq/AL121903.embl
+  
+  (windows)
+  cd demos
+  javac seq\TestEmbl.java
+  java seq.TestEmbl seq\AL121903.embl
