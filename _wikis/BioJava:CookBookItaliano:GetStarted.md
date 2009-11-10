@@ -31,34 +31,35 @@ seguire questo
 Installazione
 -------------
 
-Nessuno di questi files .jar ha bisogno di essere decompresso per un uso
-normale -- bisogna semplicemente copiarli in una directory qualsiasi.
+Nessuno di questi archivi jar ha bisogno di essere estratto per essere
+utilizzato, bisogna semplicemente copiarli in una directory a piacere e
+aggiungerli al proprio CLASSPATH. La sintassi corretta per aggiungere
+nuove elementi al proprio CLASSPATH cambia a seconda dell piattaforma
+utilizzata.
 
-Per utilizzare BioJava, aggiungere i files .jar al proprio CLASSPATH. La
-coretta sintassi cambia a seconda dell piattaforma utilizzata. To use
-BioJava, add the required JAR files to your CLASSPATH environment
-variable. The exact syntax varies between platforms. The text is wrapped
-due to limited space. The actual commands should be on a single line:
+Attualmente basta eseguire uno di questi comandi (tutto su un riga):
 
-### UNIX Bourne-type shells (the default with most Linux distributions and MacOS 10.3)
+### UNIX Bourne-type shells (Linux e MacOS 10.3)
 
-`export CLASSPATH=/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
-`                        /home/thomas/commons-cli.jar:`  
-`                        /home/thomas/commons-collections-2.1.jar:`  
-`                        /home/thomas/commons-dbcp-1.1.jar:`  
-`                        /home/thomas/commons-pool-1.1.jar:.`
+`export CLASSPATH=$CLASSPATH:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
+`                            /home/thomas/commons-cli.jar:`  
+`                            /home/thomas/commons-collections-2.1.jar:`  
+`                            /home/thomas/commons-dbcp-1.1.jar:`  
+`                            /home/thomas/commons-pool-1.1.jar:.`
 
 In some distributions of Biojava, you need to specify biojava.jar
 instead of biojava-live.jar in the above. We are working on resolving
 this.
 
-### UNIX C-type shell (for example: versions of Mac OS X pre-10.3)
+### UNIX C-type shell (Mac OS X pre-10.3)
 
-`setenv CLASSPATH /home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
-`                        /home/thomas/commons-cli.jar:`  
-`                        /home/thomas/commons-collections-2.1.jar:`  
-`                        /home/thomas/commons-dbcp-1.1.jar:`  
-`                        /home/thomas/commons-pool-1.1.jar:.`
+setenv CLASSPATH ${CLASSPATH}:/
+/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
+
+`                             /home/thomas/commons-cli.jar:`  
+`                             /home/thomas/commons-collections-2.1.jar:`  
+`                             /home/thomas/commons-dbcp-1.1.jar:`  
+`                             /home/thomas/commons-pool-1.1.jar:.`
 
 In some distributions of Biojava, you need to specify biojava.jar
 instead of biojava-live.jar in the above. We are working on resolving
