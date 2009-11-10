@@ -41,11 +41,13 @@ Attualmente basta eseguire uno di questi comandi (tutto su un riga):
 
 ### UNIX Bourne-type shells (Linux e MacOS 10.3)
 
-`export CLASSPATH=$CLASSPATH:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
-`                            /home/thomas/commons-cli.jar:`  
-`                            /home/thomas/commons-collections-2.1.jar:`  
-`                            /home/thomas/commons-dbcp-1.1.jar:`  
-`                            /home/thomas/commons-pool-1.1.jar:.`
+    <nowiki>
+     export CLASSPATH=$CLASSPATH:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
+                                 /home/thomas/commons-cli.jar:
+                                 /home/thomas/commons-collections-2.1.jar:
+                                 /home/thomas/commons-dbcp-1.1.jar:
+                                 /home/thomas/commons-pool-1.1.jar:.
+    </nowiki>
 
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
 invece di biojava-live.jar. Stiamo lavorando per risolvere questo
