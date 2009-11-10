@@ -47,43 +47,53 @@ Attualmente basta eseguire uno di questi comandi (tutto su un riga):
 `                            /home/thomas/commons-dbcp-1.1.jar:`  
 `                            /home/thomas/commons-pool-1.1.jar:.`
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
+In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
+invece di biojava-live.jar. Stiamo lavorando per risolvere questo
+problema.
 
 ### UNIX C-type shell (Mac OS X pre-10.3)
 
-setenv CLASSPATH ${CLASSPATH}:/
-/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
+setenv CLASSPATH
+${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
 
 `                             /home/thomas/commons-cli.jar:`  
 `                             /home/thomas/commons-collections-2.1.jar:`  
 `                             /home/thomas/commons-dbcp-1.1.jar:`  
 `                             /home/thomas/commons-pool-1.1.jar:.`
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
+In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
+invece di biojava-live.jar. Stiamo lavorando per risolvere questo
+problema.
 
 ### Windows from command line
 
-`set CLASSPATH C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;`  
-`                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
-`                        C:\commons-dbcp-1.1.jar;.`
+set
+CLASSPATH=%CLASSPATH%;C:\\biojava-live.jar;C:\\bytecode.jar;C:\\commons-cli.jar;
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
+`                         C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
+`                         C:\commons-dbcp-1.1.jar;.`
+
+In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
+invece di biojava-live.jar. Stiamo lavorando per risolvere questo
+problema.
 
 ### Windows autoexec.bat files
 
-`set CLASSPATH=C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;`  
-`                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
-`                        C:\commons-pool-1.1.jar;.`
+set
+CLASSPATH=%CLASSPATH%;C:\\biojava-live.jar;C:\\bytecode.jar;C:\\commons-cli.jar;
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
+`                         C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
+`                         C:\commons-pool-1.1.jar;.`
+
+In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
+invece di biojava-live.jar. Stiamo lavorando per risolvere questo
+problema.
+
+E' anche possibile installare i file JAR nel proprio sistema copiandoli
+all'interno di una installazione esistente di Java. Sulla maggior parte
+dei sistemi Linux che sui sistemi Windows-like basta copiare i jar
+elencati sopra all'interno di *${JAVA\_HOME}/jre/lib/ext*. Su Mac OS X
+c'è una directory per ogni utente chiamata *~/Library/Java/Extensions*
 
 It is also possible to "install" JAR files onto your system by copying
 them into your Java installation's extensions directory. On most Unix
