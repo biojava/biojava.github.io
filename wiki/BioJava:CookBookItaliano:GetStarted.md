@@ -129,19 +129,23 @@ nella directory *ant-build*. Utilizzando il comando *ant
 javadocs-biojava* è possibile generare la documentazione relativa alle
 API.
 
-Building the demo programs
---------------------------
+Come compilare i programmi demo
+-------------------------------
 
-The source distribution contains a number of small demo programs. Once
-you have a working *biojava.jar* on your classpath, these can be
-compiled directly using *javac* from the demos directory.
+Il codice sorgente delle varie distribuzioni di biojava contiene un
+certo numero di programmi demo. Nel momento in cui si ha un copia
+funzionante della libreria *biojava.jar* nel proprio classpath, i
+programmi demo possono essere compilati direttamente utilizzando *javac*
+dalla directory *demos*.
 
-` (unix)`  
-` cd demos`  
-` javac seq/TestEmbl.java`  
-` java seq.TestEmbl seq/AL121903.embl`  
-` `  
-` (windows)`  
-` cd demos`  
-` javac seq\TestEmbl.java`  
-` java seq.TestEmbl seq\AL121903.embl`
+    <nowiki>
+      (unix)
+      cd demos
+      javac seq/TestEmbl.java
+      java seq.TestEmbl seq/AL121903.embl
+      
+      (windows)
+      cd demos
+      javac seq\TestEmbl.java
+      java seq.TestEmbl seq\AL121903.embl
+    </nowiki>
