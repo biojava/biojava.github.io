@@ -28,13 +28,13 @@ In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di bio
 
 === UNIX C-type shell (Mac OS X pre-10.3) ===
 
-<nowiki>
+[[
 setenv CLASSPATH ${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
                               /home/thomas/commons-cli.jar:
                               /home/thomas/commons-collections-2.1.jar:
                               /home/thomas/commons-dbcp-1.1.jar:
                               /home/thomas/commons-pool-1.1.jar:.
-</nowiki>
+]]
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di biojava-live.jar. Stiamo lavorando per risolvere questo problema.
 
 === Windows from command line ===
