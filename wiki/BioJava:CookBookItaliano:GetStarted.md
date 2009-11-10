@@ -81,11 +81,11 @@ problema.
 
 ### Windows autoexec.bat files
 
-set
-CLASSPATH=%CLASSPATH%;C:\\biojava-live.jar;C:\\bytecode.jar;C:\\commons-cli.jar;
-
-`                         C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
-`                         C:\commons-pool-1.1.jar;.`
+    <nowiki>
+    set CLASSPATH=%CLASSPATH%;C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;
+                              C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
+                              C:\commons-pool-1.1.jar;.
+    </nowiki>
 
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
 invece di biojava-live.jar. Stiamo lavorando per risolvere questo
@@ -96,18 +96,14 @@ all'interno di una installazione esistente di Java. Sulla maggior parte
 dei sistemi Linux che sui sistemi Windows-like basta copiare i jar
 elencati sopra all'interno di *${JAVA\_HOME}/jre/lib/ext*. Su Mac OS X
 c'è una directory per ogni utente chiamata *~/Library/Java/Extensions*
+(nel caso non esista basta crearsela da soli). Per altre piattaforme
+consultare questo
+[link](http://java.sun.com/javase/downloads/index.jsp).
 
-It is also possible to "install" JAR files onto your system by copying
-them into your Java installation's extensions directory. On most Unix
-systems, this is named *${JAVA\_HOME}/jre/lib/ext*. On Mac OS X there is
-a per-user extensions directory called *~/Library/Java/Extensions* (you
-may have to create this directory yourself). For other platforms,
-consult your Java vendor.
-
-You can now compile and run BioJava programs using the *javac* and
-*java* commands. You might like to look at the
-[tutorial](BioJava:Tutorial "wikilink"), [API
-documentation](http://www.biojava.org/docs/api15b/index.html) and the
-[BioJava in anger](BioJava:Cookbook "wikilink") section . Finally, you
-can learn a lot about BioJava by trying the demo programs included in
-the source distribution (see below).
+A questo punto sarà possibile compilare ed eseguire i programmi BioJava
+utilizzando i comandi *javac* e *java*. E' opportuno dare uno sguardo al
+[tutorial](BioJava:Tutorial "wikilink"), alla documentazione relativa
+alle [API](http://www.biojava.org/docs/api15b/index.html) e alla sezione
+[BioJava in anger](BioJava:CookBookItaliano "wikilink"). Infine si può
+imparare molto riguardo BioJava semplicemente utilizzando i programmi
+demo inclusi nei sorgenti (segue).
