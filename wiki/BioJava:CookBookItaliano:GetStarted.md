@@ -111,21 +111,23 @@ demo inclusi nei sorgenti (segue).
 Building your own
 -----------------
 
-If you want to modify BioJava, you can obtain a copy of the source code
-from the [Source directory](http://www.biojava.org/download/source) of
-the download area. Source releases are distributed in .tar.gz format.
-You can also obtain up-to-the-minute source code via an [ anonymous SVN
-checkout](CVS_to_SVN_Migration "wikilink").
+Se si ha la necessità di modificare BioJava, si può ottenere una copia
+del codice sorgente dalla [Source
+directory](http://www.biojava.org/download/source) dell'area download. I
+sorgenti sono distribuiti nel formato .tar.gz. L'ultima versione del
+codice (aggiornata al minuto) si può reperire tramite svn qui: [
+anonymous SVN checkout](CVS_to_SVN_Migration "wikilink").
 
-BioJava is built using the *ant* build tool, a Java-specific equivalent
-of the common Make utilities. Please download and install the latest
-version of *ant* (currently 1.6.1). It is available
-[here](http://ant.apache.org).
+BioJava è compilato utilizzando *ant* build tool, l'equivalente Java
+della famosa utilità Make. Scaricare e utilizzare l'ultima versione di
+*ant* (attualmente la 1.7.1). E' disponibile a questo
+[link](http://ant.apache.org).
 
-To build the library, just change into the biojava-live directory and
-type *ant*. The final JAR file will be placed in the *ant-build*
-directory. You can also use the command *ant javadocs-biojava* to build
-the API documentation.
+Per compilare la libreria bisogna eseguire il comando *ant* all'interno
+della directory biojava-live. L'archivio jar costruito sarà poi posto
+nella directory *ant-build*. Utilizzando il comando *ant
+javadocs-biojava* è possibile generare la documentazione relativa alle
+API.
 
 Building the demo programs
 --------------------------
