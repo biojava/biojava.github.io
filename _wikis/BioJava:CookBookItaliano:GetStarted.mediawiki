@@ -28,6 +28,7 @@ In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di bio
 
 === UNIX C-type shell (Mac OS X pre-10.3) ===
 
+
 setenv CLASSPATH ${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
                               /home/thomas/commons-cli.jar:
                               /home/thomas/commons-collections-2.1.jar:
