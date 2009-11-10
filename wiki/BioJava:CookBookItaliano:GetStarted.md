@@ -107,3 +107,39 @@ alle [API](http://www.biojava.org/docs/api15b/index.html) e alla sezione
 [BioJava in anger](BioJava:CookBookItaliano "wikilink"). Infine si può
 imparare molto riguardo BioJava semplicemente utilizzando i programmi
 demo inclusi nei sorgenti (segue).
+
+Building your own
+-----------------
+
+If you want to modify BioJava, you can obtain a copy of the source code
+from the [Source directory](http://www.biojava.org/download/source) of
+the download area. Source releases are distributed in .tar.gz format.
+You can also obtain up-to-the-minute source code via an [ anonymous SVN
+checkout](CVS_to_SVN_Migration "wikilink").
+
+BioJava is built using the *ant* build tool, a Java-specific equivalent
+of the common Make utilities. Please download and install the latest
+version of *ant* (currently 1.6.1). It is available
+[here](http://ant.apache.org).
+
+To build the library, just change into the biojava-live directory and
+type *ant*. The final JAR file will be placed in the *ant-build*
+directory. You can also use the command *ant javadocs-biojava* to build
+the API documentation.
+
+Building the demo programs
+--------------------------
+
+The source distribution contains a number of small demo programs. Once
+you have a working *biojava.jar* on your classpath, these can be
+compiled directly using *javac* from the demos directory.
+
+` (unix)`  
+` cd demos`  
+` javac seq/TestEmbl.java`  
+` java seq.TestEmbl seq/AL121903.embl`  
+` `  
+` (windows)`  
+` cd demos`  
+` javac seq\TestEmbl.java`  
+` java seq.TestEmbl seq\AL121903.embl`
