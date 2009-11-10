@@ -55,12 +55,8 @@ problema.
 
 setenv CLASSPATH
 ${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
-
-`                             /home/thomas/commons-cli.jar:`  
-`                             /home/thomas/commons-collections-2.1.jar:`  
-`                             /home/thomas/commons-dbcp-1.1.jar:`  
-`                             /home/thomas/commons-pool-1.1.jar:.`
-
+/home/thomas/commons-cli.jar: /home/thomas/commons-collections-2.1.jar:
+/home/thomas/commons-dbcp-1.1.jar: /home/thomas/commons-pool-1.1.jar:.
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
 invece di biojava-live.jar. Stiamo lavorando per risolvere questo
 problema.
