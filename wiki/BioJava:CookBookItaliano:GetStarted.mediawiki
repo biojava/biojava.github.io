@@ -26,7 +26,7 @@ Attualmente basta eseguire uno di questi comandi (tutto su un riga):
 
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di biojava-live.jar. Stiamo lavorando per risolvere questo problema.
 
-=== UNIX C-type shell (Mac OS X pre-10.3)===
+=== UNIX C-type shell (Mac OS X pre-10.3) ===
 
 setenv CLASSPATH ${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:
                               /home/thomas/commons-cli.jar:
@@ -36,7 +36,7 @@ setenv CLASSPATH ${CLASSPATH}:/home/thomas/biojava-live.jar:/home/thomas/bytecod
 
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar invece di biojava-live.jar. Stiamo lavorando per risolvere questo problema.
 
-=== Windows from command line ===;
+=== Windows from command line ===
 
 set CLASSPATH=%CLASSPATH%;C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;
                           C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
