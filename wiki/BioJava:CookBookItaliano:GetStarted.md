@@ -69,11 +69,11 @@ problema.
 
 ### Windows from command line
 
-set
-CLASSPATH=%CLASSPATH%;C:\\biojava-live.jar;C:\\bytecode.jar;C:\\commons-cli.jar;
-
-`                         C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
-`                         C:\commons-dbcp-1.1.jar;.`
+    <nowiki>
+    set CLASSPATH=%CLASSPATH%;C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;
+                              C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;
+                              C:\commons-dbcp-1.1.jar;.
+    </nowiki>
 
 In alcune distribuzioni di BioJava, bisogna sostituire biojava.jar
 invece di biojava-live.jar. Stiamo lavorando per risolvere questo
