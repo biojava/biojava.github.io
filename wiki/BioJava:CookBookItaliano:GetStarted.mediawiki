@@ -59,7 +59,7 @@ E' anche possibile installare i file JAR nel proprio sistema copiandoli all'inte
 
 A questo punto sarà possibile compilare ed eseguire i programmi BioJava utilizzando i comandi  ''javac'' e ''java''. E' opportuno dare uno sguardo al [[BioJava:Tutorial|tutorial]], alla documentazione relativa alle  [http://www.biojava.org/docs/api15b/index.html API ] e alla sezione [[BioJava:CookBookItaliano |BioJava in anger]]. Infine si può imparare molto riguardo BioJava semplicemente utilizzando i programmi demo inclusi nei sorgenti (segue).
 
-==  Building your own ==
+== Come compilare BioJava a partire da zero ==
 
 Se si ha la necessità di modificare BioJava, si può ottenere una copia del codice sorgente dalla [http://www.biojava.org/download/source Source directory] dell'area download. I sorgenti sono distribuiti nel formato .tar.gz. L'ultima versione del codice (aggiornata al minuto) si può reperire tramite svn qui: [[CVS_to_SVN_Migration| anonymous SVN checkout]].
 
