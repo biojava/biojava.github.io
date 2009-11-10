@@ -67,8 +67,6 @@ problema.
 
 ### Windows from command line
 
-;
-
 set
 CLASSPATH=%CLASSPATH%;C:\\biojava-live.jar;C:\\bytecode.jar;C:\\commons-cli.jar;
 
