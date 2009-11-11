@@ -30,25 +30,25 @@ org.biojava.bio.seq.\*;
 public class AlphabetExample {
 
 ` public static void main(String[] args) {`  
-`   Alphabet dna, rna, prot;`
-
-`   //get the DNA alphabet by name`  
-`   dna = AlphabetManager.alphabetForName("DNA");`
-
-`   //get the RNA alphabet by name`  
-`   rna = AlphabetManager.alphabetForName("RNA");`
-
-`   //get the Protein alphabet by name`  
-`   prot = AlphabetManager.alphabetForName("PROTEIN");`  
-`   //get the protein alphabet that includes the * termination Symbol`  
-`   prot = AlphabetManager.alphabetForName("PROTEIN-TERM");`
-
-`   //get those same Alphabets from the Tools classes`  
-`   dna = DNATools.getDNA();`  
-`   rna = RNATools.getRNA();`  
-`   prot = ProteinTools.getAlphabet();`  
-`   //or the one with the * symbol`  
-`   prot = ProteinTools.getTAlphabet();`
+`           Alphabet dna, rna, prot, proteinterm;`  
+`    `  
+`       //get the DNA alphabet by name`  
+`       dna = AlphabetManager.alphabetForName("DNA");`  
+`    `  
+`       //get the RNA alphabet by name`  
+`       rna = AlphabetManager.alphabetForName("RNA");`  
+`    `  
+`       //get the Protein alphabet by name`  
+`       prot = AlphabetManager.alphabetForName("PROTEIN");`  
+`       //get the protein alphabet that includes the * termination Symbol`  
+`       proteinterm = AlphabetManager.alphabetForName("PROTEIN-TERM");`  
+`    `  
+`       //get those same Alphabets from the Tools classes`  
+`       dna = DNATools.getDNA();`  
+`       rna = RNATools.getRNA();`  
+`       prot = ProteinTools.getAlphabet();`  
+`       //or the one with the * symbol`  
+`       proteinterm = ProteinTools.getTAlphabet();`
 
 ` }`
 
