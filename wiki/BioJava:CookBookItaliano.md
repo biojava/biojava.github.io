@@ -63,7 +63,7 @@ Come posso....?
 ### Alphabets and Symbols
 
 -   [How do I get a DNA, RNA or Protein
-    Alphabet](Biojava:Cookbook:Alphabets "wikilink")?
+    Alphabet](Biojava:CookBookItaliano:Alphabets "wikilink")?
 -   [How do I make a custom Alphabet from custom
     Symbols](Biojava:Cookbook:Alphabets:Custom "wikilink")?
 -   [How do I make a CrossProductAlphabet such as a codon
