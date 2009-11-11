@@ -22,7 +22,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 
 == Come posso....? ==
 
-=== Setup ===
+=== Per Iniziare ===
 
 * [http://java.sun.com/javase/downloads/index.jsp Come ottenere Java]?
 * [[BioJava:CookBookItaliano:GetStarted|Come posso ottenere e installare BioJava]]?

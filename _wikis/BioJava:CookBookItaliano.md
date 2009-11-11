@@ -53,7 +53,7 @@ Cipriani; ultimo aggiornamento: 9 Novembre 2009).
 Come posso....?
 ---------------
 
-### Setup
+### Per Iniziare
 
 -   [Come ottenere
     Java](http://java.sun.com/javase/downloads/index.jsp)?
