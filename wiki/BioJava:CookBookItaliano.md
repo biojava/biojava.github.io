@@ -60,7 +60,7 @@ Come posso....?
 -   [Come posso ottenere e installare
     BioJava](BioJava:CookBookItaliano:GetStarted "wikilink")?
 
-### Alphabets and Symbols
+### Alfabeti e Simboli
 
 -   [Come posso ottenere l'alfabeto del DNA, dell'RNA o
     Proteico](Biojava:CookBookItaliano:Alphabets "wikilink")?
