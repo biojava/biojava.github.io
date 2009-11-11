@@ -1,5 +1,9 @@
-== Come posso ottenere l'alfabeto del DNA, RNA o Proteico? ==
-In BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] are collections of [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols]. Common biological alphabets ([[wp:DNA|DNA]], [[wp:RNA|RNA]], [[wp:protein|protein]], etc) are registered with the BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager] at startup and can be accessed by name. The [[wp:DNA|DNA]], [[wp:RNA|RNA]] and [[wp:protein|protein]] alphabets can also be accessed using convenient static methods from [http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html DNATools], [http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html RNATools] and [http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html ProteinTools] respectively.
+== Come posso ottenere l'alfabeto del DNA, dell'RNA o Proteico? ==
+
+In BioJava gli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] sono collezioni di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli]. I più comuni alfabeti biologici ([[wp:DNA|DNA]], [[wp:RNA|RNA]], [[wp:protein|protein]], etc) sono memorizzati tramite il BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager] all'avvio e vi si può accedere tramite il nome. 
+
+
+The [[wp:DNA|DNA]], [[wp:RNA|RNA]] and [[wp:protein|protein]] alphabets can also be accessed using convenient static methods from [http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html DNATools], [http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html RNATools] and [http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html ProteinTools] respectively.
 
 Both of these approaches are shown in the example below
 
