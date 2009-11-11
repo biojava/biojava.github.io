@@ -45,6 +45,10 @@ How about simplified
 [Chinese](http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html)?
 (Translated by Wu Xin).
 
+And lets not forget this new
+[Italian](BioJava:CookBookItaliano "wikilink") translation (translated
+by Alessandro Cipriani; last update: 11 November 2009).
+
 How Do I....?
 -------------
 
