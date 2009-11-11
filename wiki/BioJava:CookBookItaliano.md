@@ -55,7 +55,7 @@ Come posso....?
 
 ### Per Iniziare
 
--   [Come ottenere
+-   [Come posso ottenere
     Java](http://java.sun.com/javase/downloads/index.jsp)?
 -   [Come posso ottenere e installare
     BioJava](BioJava:CookBookItaliano:GetStarted "wikilink")?
