@@ -29,7 +29,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 
 === Alphabets and Symbols ===
 
-* [[Biojava:CookBookItaliano:Alphabets|How do I get a DNA, RNA or Protein Alphabet]]?
+* [[Biojava:CookBookItaliano:Alphabets|Come posso ottenere l'alfabeto del DNA, dell'RNA o Proteico]]?
 * [[Biojava:Cookbook:Alphabets:Custom|How do I make a custom Alphabet from custom Symbols]]?
 * [[Biojava:Cookbook:Alphabets:CrossProduct|How do I make a CrossProductAlphabet such as a codon Alphabet]]?
 * [[Biojava:Cookbook:Alphabets:Component|How do I break Symbols from CrossProduct Alphabets into their component Symbols]]?
