@@ -2,20 +2,22 @@
 title: BioJava:CookBookItaliano:Alphabets
 ---
 
-Come posso ottenere l'alfabeto del DNA, RNA o Proteico?
--------------------------------------------------------
+Come posso ottenere l'alfabeto del DNA, dell'RNA o Proteico?
+------------------------------------------------------------
 
-In BioJava
-[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-are collections of
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-Common biological alphabets ([DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) are
-registered with the BioJava
+In BioJava gli
+[Alfabeti](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+sono collezioni di
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
+I più comuni alfabeti biologici ([DNA](wp:DNA "wikilink"),
+[RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) sono
+memorizzati tramite il BioJava
 [AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
-at startup and can be accessed by name. The [DNA](wp:DNA "wikilink"),
-[RNA](wp:RNA "wikilink") and [protein](wp:protein "wikilink") alphabets
-can also be accessed using convenient static methods from
+all'avvio e vi si può accedere tramite il nome.
+
+The [DNA](wp:DNA "wikilink"), [RNA](wp:RNA "wikilink") and
+[protein](wp:protein "wikilink") alphabets can also be accessed using
+convenient static methods from
 [DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
 [RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html)
 and
