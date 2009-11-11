@@ -2,6 +2,9 @@
 title: BioJava:CookBookItaliano:Alphabets
 ---
 
+Come posso ottenere l'alfabeto del DNA, RNA o Proteico?
+-------------------------------------------------------
+
 How do I get a DNA, RNA or Protein Alphabet?
 --------------------------------------------
 
