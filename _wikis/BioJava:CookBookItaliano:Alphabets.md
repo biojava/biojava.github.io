@@ -5,9 +5,6 @@ title: BioJava:CookBookItaliano:Alphabets
 Come posso ottenere l'alfabeto del DNA, RNA o Proteico?
 -------------------------------------------------------
 
-How do I get a DNA, RNA or Protein Alphabet?
---------------------------------------------
-
 In BioJava
 [Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
 are collections of
