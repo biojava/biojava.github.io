@@ -67,7 +67,7 @@ Come posso....?
 -   [Come posso creare un Alfabeto personalizzato con Simboli
     personalizzati](Biojava:CookBookItaliano:Alphabets:Custom "wikilink")?
 -   [How do I make a CrossProductAlphabet such as a codon
-    Alphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")?
+    Alphabet](Biojava:CookBookItaliano:Alphabets:CrossProduct "wikilink")?
 -   [How do I break Symbols from CrossProduct Alphabets into their
     component Symbols](Biojava:Cookbook:Alphabets:Component "wikilink")?
 -   [How can I tell if two Alphabets or Symbols are
