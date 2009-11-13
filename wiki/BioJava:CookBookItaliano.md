@@ -64,8 +64,8 @@ Come posso....?
 
 -   [Come posso ottenere l'alfabeto del DNA, dell'RNA o
     Proteico](Biojava:CookBookItaliano:Alphabets "wikilink")?
--   [How do I make a custom Alphabet from custom
-    Symbols](Biojava:Cookbook:Alphabets:Custom "wikilink")?
+-   [Come posso creare un Alfabeto personalizzato con Simboli
+    personalizzati](Biojava:CookBookItaliano:Alphabets:Custom "wikilink")?
 -   [How do I make a CrossProductAlphabet such as a codon
     Alphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")?
 -   [How do I break Symbols from CrossProduct Alphabets into their
