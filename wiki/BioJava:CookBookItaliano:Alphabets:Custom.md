@@ -5,8 +5,10 @@ title: BioJava:CookBookItaliano:Alphabets:Custom
 Come posso creare un Alfabeto personalizzato con Simboli personalizzati?
 ------------------------------------------------------------------------
 
-This example demonstrates the creation of a 'binary' alphabet that will
-have two
+Questo esempio mostra la creazione di un alfabeto binario che ha 2
+[Simboli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
+zero e uno. This example demonstrates the creation of a 'binary'
+alphabet that will have two
 [Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html),
 zero and one. The custom made
 [Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
