@@ -32,7 +32,7 @@ org.biojava.bio.seq.\*;
 public class AlphabetExample {
 
 ` public static void main(String[] args) {`  
-`   Alphabet dna, rna, prot;`
+`   Alphabet dna, rna, prot, proteinterm ;`
 
 `   //get the DNA alphabet by name`  
 `   dna = AlphabetManager.alphabetForName("DNA");`
@@ -50,7 +50,7 @@ public class AlphabetExample {
 `   rna = RNATools.getRNA();`  
 `   prot = ProteinTools.getAlphabet();`  
 `   //or the one with the * symbol`  
-`   prot = ProteinTools.getTAlphabet();`
+`   proteinterm  = ProteinTools.getTAlphabet();`
 
 ` }`
 
