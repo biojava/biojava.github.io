@@ -1,0 +1,27 @@
+== Come posso creare un CrossProductAlphabet come ad esempio un alfabeto di codoni  ==
+
+Un CrossProductAlphabet è il risultato della moltiplicazione di altri [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti]. I CrossProductAlphabets sono utilizzati per racchiudere 2 o più [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] all'interno di un singolo "cross product" da considerarsi come un unico  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo]. Ad esempio utilizzando un cross a 3 vie dell'alfabeto del [[wp:DNA|DNA]] è possibile  racchiudere un [[wp:codon|codone]] come un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo](ad esempio un alfabeto di triplette). E' possibile poi contare i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] relativi ai [[wp:codon|codoni]] in un [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] o è possibile utilizzarli in una [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distribution].
+
+CrossProductAlphabets can be created by name (if the component [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] are registered in the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager]) or by making a list of the desired [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and creating the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet] from the [http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html List]. Both approaches are shown in the example below.
+
+<java>
+import java.util.*;
+import org.biojava.bio.seq.*;
+import org.biojava.bio.symbol.*;
+
+public class CrossProduct {
+  public static void main(String[] args) {
+
+    //make a CrossProductAlphabet from a List
+    List l = Collections.nCopies(3, DNATools.getDNA());
+    Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);
+
+    //get the same Alphabet by name
+    Alphabet codon2 =
+        AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");
+
+    //show that the two Alphabets are canonical
+    System.out.println(codon == codon2);
+  }
+}
+</java>
