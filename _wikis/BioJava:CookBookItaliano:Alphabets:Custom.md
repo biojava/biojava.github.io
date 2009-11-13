@@ -7,17 +7,14 @@ Come posso creare un Alfabeto personalizzato con Simboli personalizzati?
 
 Questo esempio mostra la creazione di un alfabeto binario che ha 2
 [Simboli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
-zero e uno. This example demonstrates the creation of a 'binary'
-alphabet that will have two
-[Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html),
-zero and one. The custom made
-[Symbols](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
-and
-[Alphabet](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html)
-can then be used to make
-[SymbolList](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html),
-[Sequences](http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html),
-[Distributions](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
+zero e uno. La personalizzazione dei
+[Simboli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
+e
+dell'[Alfabeto](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html)
+possono essere utilizzati per costruire nuove [Liste di
+Si,boli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html),
+[Sequenze](http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html),
+[Distribuzioni](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
 etc.
 
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
