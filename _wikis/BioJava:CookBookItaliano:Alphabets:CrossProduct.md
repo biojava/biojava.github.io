@@ -2,8 +2,8 @@
 title: BioJava:CookBookItaliano:Alphabets:CrossProduct
 ---
 
-Come posso creare un CrossProductAlphabet come ad esempio un alfabeto di codoni
--------------------------------------------------------------------------------
+Come posso creare un CrossProductAlphabet? (ad esempio un alfabeto di codoni)
+-----------------------------------------------------------------------------
 
 Un CrossProductAlphabet è il risultato della moltiplicazione di
 [Alfabeti](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
