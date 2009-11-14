@@ -1,4 +1,4 @@
-== Come posso ottenere How do I break Symbols from CrossProductAlphabets into their component Symbols? ==
+== Come posso recuperare le componenti How do I break Symbols from CrossProductAlphabets into their component Symbols? ==
 
 I [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabets]] sono utilizzati per rappresentare gruppi di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] come un singolo simbolo. Questo è molto utile per trattare oggeti come i codoni come singoli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli]. A volte comunque è necessario riconvertire i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] nei suoi [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] originali. Mostriamo come questo può essere fatto.
 
