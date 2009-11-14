@@ -11,8 +11,8 @@ zero e uno. La personalizzazione dei
 [Simboli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html)
 e
 dell'[Alfabeto](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html)
-possono essere utilizzati per costruire nuove [Liste di
-Si,boli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html),
+può essere utilizzata per costruire nuove [Liste di
+Simboli](http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html),
 [Sequenze](http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html),
 [Distribuzioni](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
 etc.
