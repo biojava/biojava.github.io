@@ -1,8 +1,6 @@
 == Come posso creare un CrossProductAlphabet come ad esempio un alfabeto di codoni  ==
 
-Un CrossProductAlphabet è il risultato della moltiplicazione di altri [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti]. I CrossProductAlphabets sono utilizzati per racchiudere 2 o più [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] all'interno di un singolo "cross product" da considerarsi come un unico  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo]. Ad esempio utilizzando un cross a 3 vie dell'alfabeto del [[wp:DNA|DNA]] è possibile  racchiudere un [[wp:codon|codone]] come un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo](ad esempio un alfabeto di triplette). E' possibile poi contare i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] relativi ai [[wp:codon|codoni]] in un [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] o è possibile utilizzarli in una [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distribution].
-
-CrossProductAlphabets can be created by name (if the component [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] are registered in the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager]) or by making a list of the desired [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and creating the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabet] from the [http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html List]. Both approaches are shown in the example below.
+Un CrossProductAlphabet è il risultato della moltiplicazione di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] fra di loro. I CrossProductAlphabets sono utilizzati per racchiudere 2 o più [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] all'interno di un singolo "cross product" da considerarsi come un unico  [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo]. Ad esempio utilizzando un cross a 3 vie dell'alfabeto del [[wp:DNA|DNA]] è possibile  racchiudere un [[wp:codon|codone]] come un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simbolo](ad esempio un alfabeto di triplette). E' possibile poi contare i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] relativi ai [[wp:codon|codoni]] in un [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Count.html Count] o è possibile utilizzarli in una [http://www.biojava.org/docs/api14/org/biojava/bio/dist/Distribution.html Distribution]. I CrossProductAlphabets possono essere creati tramite un nome [purchè gli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] siano stati registrati all'interno dell'[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html AlphabetManager]) o creando una nuova lista di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] e creando un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto] a partire da una [http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html List]. Entrambi i metodi sono mostrati nell'esempio seguente.
 
 <java>
 import java.util.*;
@@ -12,15 +10,15 @@ import org.biojava.bio.symbol.*;
 public class CrossProduct {
   public static void main(String[] args) {
 
-    //make a CrossProductAlphabet from a List
+    //creo un CrossProductAlphabet a partire da una lista
     List l = Collections.nCopies(3, DNATools.getDNA());
     Alphabet codon = AlphabetManager.getCrossProductAlphabet(l);
 
-    //get the same Alphabet by name
+    //ottengo lo stesso alfabeto a partire dal nome
     Alphabet codon2 =
         AlphabetManager.generateCrossProductAlphaFromName("(DNA x DNA x DNA)");
 
-    //show that the two Alphabets are canonical
+    //mostriamo che i due alfabeti sono identici
     System.out.println(codon == codon2);
   }
 }
