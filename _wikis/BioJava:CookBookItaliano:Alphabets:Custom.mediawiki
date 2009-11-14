@@ -1,6 +1,6 @@
 == Come posso creare un Alfabeto personalizzato con Simboli personalizzati? ==
 
-Questo esempio mostra la creazione di un alfabeto binario che ha 2 [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html Simboli] zero e uno. La personalizzazione dei [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html Simboli] e dell'[http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html Alfabeto] possono essere utilizzati per costruire nuove [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html Liste di Si,boli], [http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html Sequenze], [http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html Distribuzioni], etc.
+Questo esempio mostra la creazione di un alfabeto binario che ha 2 [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html Simboli] zero e uno. La personalizzazione dei [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Symbol.html Simboli] e dell'[http://www.biojava.org/docs/api15/org/biojava/bio/symbol/Alphabet.html Alfabeto] può essere utilizzata per costruire nuove [http://www.biojava.org/docs/api15/org/biojava/bio/symbol/SymbolList.html Liste di Simboli], [http://www.biojava.org/docs/api15/org/biojava/bio/seq/Sequence.html Sequenze], [http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html Distribuzioni], etc.
 
 <java>
 import org.biojava.bio.symbol.*;
