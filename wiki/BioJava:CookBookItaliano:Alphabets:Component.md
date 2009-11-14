@@ -2,8 +2,8 @@
 title: BioJava:CookBookItaliano:Alphabets:Component
 ---
 
-Come posso ottenere How do I break Symbols from CrossProductAlphabets into their component Symbols?
----------------------------------------------------------------------------------------------------
+Come posso recuperare le componenti How do I break Symbols from CrossProductAlphabets into their component Symbols?
+-------------------------------------------------------------------------------------------------------------------
 
 I
 [CrossProductAlphabets](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
