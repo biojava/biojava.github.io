@@ -2,20 +2,21 @@
 title: BioJava:CookBookItaliano:Alphabets:Component
 ---
 
-How do I break Symbols from CrossProductAlphabets into their component Symbols?
--------------------------------------------------------------------------------
+Come posso ottenere How do I break Symbols from CrossProductAlphabets into their component Symbols?
+---------------------------------------------------------------------------------------------------
 
+I
 [CrossProductAlphabets](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
-are used to represent groups of
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-as a single Symbol. This is very useful for treating things like codons
-as single
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-Sometimes however, you might want to covert the
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-back into their component
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
-The following recipe demonstrates how this can be done.
+sono utilizzati per rappresentare gruppi di
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+come un singolo simbolo. Questo è molto utile per trattare oggeti come i
+codoni come singoli
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
+A volte comunque è necessario riconvertire i
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+nei suoi
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+originali. Mostriamo come questo può essere fatto.
 
 The
 [Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
