@@ -58,7 +58,7 @@ public class StringToSymbolList {
 
 } </java>
 
-### String to Sequence
+### Da String a Sequence
 
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
@@ -84,10 +84,10 @@ public class StringToSequence {
 
 } </java>
 
-### SymbolList to String
+### Da SymbolList a String
 
-You can call the seqString() method on either a SymbolList or a Sequence
-to get it's Stringified version.
+E' possibile chiamare il metodo seqString() sia sulla classe SymbolList
+o su Sequence per ottenere una versione in forma di stringa.
 
 <java> import org.biojava.bio.symbol.\*;
 
