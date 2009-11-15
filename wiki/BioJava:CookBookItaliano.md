@@ -71,9 +71,9 @@ Come posso....?
     codoni)](Biojava:CookBookItaliano:Alphabets:CrossProduct "wikilink")?
 -   [Come posso dividere i Simboli di un CrossProductAlphabets i maniera
     tale da recuperare i Simboli che li
-    compongo?](Biojava:CookBookItaliano:Alphabets:Component "wikilink")?
--   [How can I tell if two Alphabets or Symbols are
-    equal](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
+    compongo](Biojava:CookBookItaliano:Alphabets:Component "wikilink")?
+-   [Come posso stabilire l'identità fra Simboli e
+    Alfabeti](Biojava:CookBookItaliano:Alphabets:Canonical "wikilink")?
 -   [How can I make an ambiguous Symbol like Y or
     R](Biojava:Cookbook:Alphabets:Ambiguous "wikilink")?
 
