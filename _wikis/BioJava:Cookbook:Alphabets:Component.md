@@ -53,7 +53,8 @@ In this way a
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 can be ambiguous. For further discussion of
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-follow this link.
+follow this
+[link](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html).
 
 <java> package biojava\_in\_anger;
 
