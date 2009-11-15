@@ -2,8 +2,13 @@
 title: BioJava:CookBookItaliano:Sequence
 ---
 
-How do I make a Sequence from a String or make a Sequence Object back into a String?
-------------------------------------------------------------------------------------
+Come posso creare un oggetto Stringa a partire da una Sequenza e viceversa creare un oggetto Sequenza a partire da una Stringa?
+-------------------------------------------------------------------------------------------------------------------------------
+
+Molte volte ci imbattiamo in sequenze rappresentate da una Stringa di
+caratteri come ad esempio "atgccgtggcatcgaggcatatagc". E' un metodo
+conveniente per visualizzare e rappresentare in maniera sintetica un più
+complesso polimero biologico.
 
 A lot of the time we see sequence represented as a String of characters
 eg "atgccgtggcatcgaggcatatagc". It's a convenient method for viewing and
