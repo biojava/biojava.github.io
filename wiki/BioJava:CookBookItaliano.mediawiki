@@ -38,7 +38,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 
 === Manipolazioni Elementari di Sequenze ===
 
-* [[Biojava:Cookbook:Sequence|How do I make a Sequence from a String or make a Sequence Object back into a String]]?
+* [[Biojava:CookBookItaliano:Sequence|Come posso creare un oggetto Stringa a partire da una Sequenza e viceversa creare un oggetto Sequenza a partire da una Stringa?]]?
 * [[Biojava:Cookbook:Sequence:SubSequence|How do I get a subsection of a Sequence]]?
 * [[Biojava:Cookbook:Sequence:Transcribe|How do I transcribe a DNA Sequence to a RNA Sequence]]?
 * [[Biojava:Cookbook:Sequence:Reverse|How do I reverse complement a DNA or RNA Sequence]]?
