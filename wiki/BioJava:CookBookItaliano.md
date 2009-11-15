@@ -69,9 +69,9 @@ Come posso....?
 -   [Come posso creare un CrossProductAlphabet? (ad esempio un alfabeto
     di
     codoni)](Biojava:CookBookItaliano:Alphabets:CrossProduct "wikilink")?
--   [How do I break Symbols from CrossProduct Alphabets into their
-    component
-    Symbols](Biojava:CookBookItaliano:Alphabets:Component "wikilink")?
+-   [Come posso dividere i Simboli di un CrossProductAlphabets i maniera
+    tale da recuperare i Simboli che li
+    compongo?](Biojava:CookBookItaliano:Alphabets:Component "wikilink")?
 -   [How can I tell if two Alphabets or Symbols are
     equal](Biojava:Cookbook:Alphabets:Cononical "wikilink")?
 -   [How can I make an ambiguous Symbol like Y or
