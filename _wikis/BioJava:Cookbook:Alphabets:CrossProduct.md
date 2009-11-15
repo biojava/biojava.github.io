@@ -33,7 +33,9 @@ from the
 [List](http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html).
 Both approaches are shown in the example below.
 
-<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+<java> package biojava\_in\_anger;
+
+import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
 
 public class CrossProduct {
