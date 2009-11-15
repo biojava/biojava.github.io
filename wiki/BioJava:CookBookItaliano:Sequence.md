@@ -26,11 +26,11 @@ programmatore un strada per effettuare una conversione fra un oggetto
 Biojava a una Stringa semplice da leggere e da utilizzare, e viceversa.
 Per fare questo Biojava usa dei Tokenizers che leggono una stringa di
 testo e la interpretano per poi ottenere un oggetto BioJava Sequence o
-SymbolList. Nel caso
+SymbolList. Nel caso di DNA, RNA, e Protein è possibile fare questo
+facendo una singola chiamata a un metodo. La chiamata è fatta su un
+metodo statico dalle classi DNATools, RNATools or ProteinTools.
 
-`In the case of DNA, RNA and Protein you can do this with a single method call. The call is made to a static method from either DNATools, RNATools or ProteinTools.`
-
-### String to SymbolList
+### Da String a SymbolList
 
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
