@@ -2,21 +2,19 @@
 title: BioJava:CookBookItaliano:Alphabets:Ambiguous
 ---
 
-How can I make an ambiguous Symbol like Y or R?
------------------------------------------------
+Come posso costruire simboli ambigui come Y o R?
+------------------------------------------------
 
-The IBU defines standard codes for symbols that are ambiguous such as Y
-to indicate C or T and R to indicate G or C or N to indicate any
-nucleotide. BioJava represents these Symbols as BasisSymbols.
-BasisSymbol objects can contain one or more component Symbols that are
-valid members of the same Alphabet as the BasisSymbol and are therefore
-capable of being ambiguous.
-
-Generally an ambiguity Symbol is retrieved by calling the
-getAmbiguity(Set symbols) method from the Alphabet that the Symbol is
-intended to come from. In the case of making the Symbol Y the set
-'symbols' used as an argument will contain the DNA Alphabet Symbols 'C'
-and 'T'.
+L'IBU stabilisce una codifica standard per i simboli che sono ambigui
+come ad esempio Y per indicare C o T, R per indicare G o C o N per
+indicare qualsiasi nucleotide. Biojava rappresenta questi simboli come
+BasisSymbols. Una istanza di un BasisSymbol può contenere uno o più
+componenti Symbol, queste istanze possono far parte di un Alfabeto come
+Simboli avendo però la capacità di essere ambigui (rappresentano più
+valori). Generalmente un simbolo ambiguo è ottenuto chiamato il metodo
+getAmbiguity(Set symbols) della classe Alphabet da cui proviene il
+simbolo. Nel caso si voglia costruire il simbolo Y bisognerà utilizzare
+un set di simboli che conterrà i simboli C e T dell'alfabeto DNA.
 
 <java> package biojava\_in\_anger;
 
@@ -27,20 +25,20 @@ public class Ambiguity {
 
 ` public static void main(String[] args) {`  
 `   try {`  
-`     //get the DNA Alphabet`  
+`     //prendo L'alfabeto del DNA`  
 `     Alphabet dna = DNATools.getDNA();`
 
-`     //make the 'Y' symbol`  
+`     //creo il simbolo Y`  
 `     Set symbolsThatMakeY = new HashSet();`  
 `     symbolsThatMakeY.add(DNATools.c());`  
 `     symbolsThatMakeY.add(DNATools.t());`  
 `     Symbol y = dna.getAmbiguity(symbolsThatMakeY);`
 
-`     //print information about 'Y' basis Symbol`  
+`     //stampo le informazioni riguardanti il sibolo di base Y`  
 `     System.out.println("Formal name of 'Y' is: "+y.getName());`  
 `     System.out.println("Class type of 'Y' is: "+y.getClass().getName());`
 
-`     //break the Y BasisSymbol into its component AtomicSymbols`  
+`     //divido il BasisSymbol Y nei suoi componenti AtomicSymbols`  
 `     Alphabet matches = y.getMatches();`  
 `     System.out.print("The 'Y' Symbol is made of: ");`
 
