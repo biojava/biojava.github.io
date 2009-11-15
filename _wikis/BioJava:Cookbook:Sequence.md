@@ -8,7 +8,7 @@ How do I make a Sequence from a String or make a Sequence Object back into a Str
 A lot of the time we see sequence represented as a String of characters
 eg "atgccgtggcatcgaggcatatagc". It's a convenient method for viewing and
 succinctly representing a more complex biological polymer. BioJava makes
-use of SymbolLists and Sequences to represent these biological polyners
+use of SymbolLists and Sequences to represent these biological polymers
 as Objects. Sequences extend SymbolLists and provide extra methods to
 store things like the name of the sequence and any features it might
 have but you can think of a Sequence as a SymbolList.
