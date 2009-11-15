@@ -34,7 +34,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Alphabets:CrossProduct|Come posso creare un CrossProductAlphabet? (ad esempio un alfabeto di codoni)]]?
 * [[Biojava:CookBookItaliano:Alphabets:Component|Come posso dividere i Simboli di un  CrossProductAlphabets i maniera tale da recuperare i Simboli che li compongo]]?
 * [[Biojava:CookBookItaliano:Alphabets:Canonical|Come posso stabilire l'identità fra Simboli e Alfabeti]]?
-* [[Biojava:CookBookItaliano:Alphabets:Ambiguous|How can I make an ambiguous Symbol like Y or R]]?
+* [[Biojava:CookBookItaliano:Alphabets:Ambiguous|Come posso costruire simboli ambigui come Y o R]]?
 
 === Basic Sequence Manipulation ===
 
