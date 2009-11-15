@@ -18,8 +18,10 @@ intended to come from. In the case of making the Symbol Y the set
 'symbols' used as an argument will contain the DNA Alphabet Symbols 'C'
 and 'T'.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
-import java.util.\*;
+<java> package biojava\_in\_anger;
+
+import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*; import
+java.util.\*;
 
 public class Ambiguity {
 
