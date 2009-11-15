@@ -74,7 +74,7 @@ Come posso....?
     compongo](Biojava:CookBookItaliano:Alphabets:Component "wikilink")?
 -   [Come posso stabilire l'identità fra Simboli e
     Alfabeti](Biojava:CookBookItaliano:Alphabets:Canonical "wikilink")?
--   [How can I make an ambiguous Symbol like Y or
+-   [Come posso costruire simboli ambigui come Y o
     R](Biojava:CookBookItaliano:Alphabets:Ambiguous "wikilink")?
 
 ### Basic Sequence Manipulation
