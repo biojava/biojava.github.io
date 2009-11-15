@@ -77,7 +77,7 @@ Come posso....?
 -   [Come posso costruire simboli ambigui come Y o
     R](Biojava:CookBookItaliano:Alphabets:Ambiguous "wikilink")?
 
-### Basic Sequence Manipulation
+### Manipolazioni Elementari di Sequenze
 
 -   [How do I make a Sequence from a String or make a Sequence Object
     back into a String](Biojava:Cookbook:Sequence "wikilink")?
