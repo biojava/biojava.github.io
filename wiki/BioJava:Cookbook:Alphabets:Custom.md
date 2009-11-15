@@ -18,8 +18,10 @@ can then be used to make
 [Distributions](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
 etc.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
-import java.util.\*;
+<java> package biojava\_in\_anger;
+
+import org.biojava.bio.symbol.\*; import org.biojava.bio.\*; import
+java.util.\*;
 
 public class Binary {
 
