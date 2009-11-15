@@ -9,38 +9,37 @@ I
 [CrossProductAlphabets](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
 sono utilizzati per rappresentare gruppi di
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-come un singolo simbolo. Questo è molto utile per trattare oggeti come i
-codoni come singoli
+come se ne fosse uno solo. Questo è molto utile per trattare oggeti come
+i codoni come se fossero singoli
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
 A volte comunque è necessario riconvertire i
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-nei suoi
-[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-originali. Mostriamo come questo può essere fatto.
+nelle loro componenti originali. Mostriamo come questo può essere
+ottenuto.
 
-The
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-from a
+I
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+di un
 [CrossProductAlphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
-are implementations of the
-[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
-interface. The prefix 'Atomic' suggests that the
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-cannot be divided so one might ask, 'how can an indivisible Symbol be
-divided into it's component parts?'. The full definition of the
-[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
-is that it cannot be divided into a simpler Symbol that is still part of
-the same
-[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-The component parts of an
-[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
-from a
+sono implementazioni della interfaccia
+[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html).
+Il prefisso 'Atomico' suggerisce che i
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+non possano essere divisi, perciò uno si può domandare:'come posso
+dividere qualcosa che è indivisibile'. La definzione completa
+dell'[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
+è che non può essere diviso in un Simbolo più semplice che è parte dello
+stesso
+[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
+Per questo motivo la definzione di 'Atomic' stabilisce che gli
+[AtomicSymbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
+di un
 [CrossProductAlphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
-are not members of the same
-[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
-so the 'Atomic' definition still stands. A [codon](wp:codon "wikilink")
-would be from the (DNA x DNA x DNA) Alphabet whereas the components of
-the [codon](wp:codon "wikilink")
+non fanno parte dello stesso
+[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
+
+A [codon](wp:codon "wikilink") would be from the (DNA x DNA x DNA)
+Alphabet whereas the components of the [codon](wp:codon "wikilink")
 [Symbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
 are from the DNA alphabet.
 
