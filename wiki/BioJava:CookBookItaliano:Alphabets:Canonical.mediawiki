@@ -1,0 +1,25 @@
+== Come posso stabilire l'identità fra Simboli e Alfabeti? ==
+
+In Biojava the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] are canonical no matter how they where constructed or where they came from. This means that if two [[wp:DNA|DNA]] alphabets (or [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] from those alphabets) are instantiated at different times are equal via both the .equals() and == functions. Also Symbols from the PROTEIN and the PROTEIN-TERM alphabets are canonical as are Symbols from the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.html IntegerAlphabet] and the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.SubIntegerAlphabet.html SubIntegerAlphabet].
+
+This is even true of [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] on different virtual machines (thanks to some [http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html Serialization] magic) which means BioJava works across RMI.
+
+
+<java>
+import org.biojava.bio.symbol.*;
+import org.biojava.bio.seq.*;
+
+public class Canonical {
+  public static void main(String[] args) {
+
+    //get the DNA alphabet two ways
+    Alphabet a1 = DNATools.getDNA();
+    Alphabet a2 = AlphabetManager.alphabetForName("DNA");
+
+    //are they equal
+    System.out.println("equal: "+ a1.equals(a2));
+    //are they canonical
+    System.out.println("canonical: "+ (a1 == a2));
+  }
+}
+</java>
