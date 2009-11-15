@@ -40,7 +40,9 @@ non fanno parte dello stesso
 Un [codone](wp:codon "wikilink") fa parte dell'Alfabeto (DNA x DNA x
 DNA) dal momento che i [codoni](wp:codon "wikilink") in quanto
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-fanno parte dell'Alfabeto DNA. Ciò va in contrasto con la definizione di
+fanno parte dell'Alfabeto DNA.
+
+Ciò va in contrasto con la definizione di
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 perchè: un
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
@@ -61,16 +63,16 @@ org.biojava.bio.symbol.\*;
 public class BreakingComponents {
 
 ` public static void main(String[] args) {`  
-`   //make the 'codon' alphabet`  
+`   //creo 'codon' alphabet a partire da una lista `  
 `   List l = Collections.nCopies(3, DNATools.getDNA());`  
 `   Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);`
 
-`   //get the first symbol in the alphabet`  
+`   //prendo il primo elemento dell'alfabeto`  
 `   Iterator iter = ((FiniteAlphabet)alpha).iterator();`  
 `   AtomicSymbol codon = (AtomicSymbol)iter.next();`  
 `   System.out.print(codon.getName()+" is made of: ");`
 
-`   //break it into a list its components`  
+`   //vediamo come è formato`  
 `   List symbols = codon.getSymbols();`  
 `   for(int i = 0; i < symbols.size(); i++){`  
 `     if(i != 0)`  
