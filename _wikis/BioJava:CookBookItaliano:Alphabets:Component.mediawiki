@@ -2,7 +2,9 @@
 
 I [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabets]] sono utilizzati per rappresentare gruppi di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] come se fossero uno solo. Questo è molto utile per trattare oggeti come i codoni come se fossero singoli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli]. A volte comunque è necessario riconvertire i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] nelle loro componenti originali. Mostriamo come questo può essere ottenuto.
 
-I [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] di un [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabet]] sono implementazioni della interfaccia [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbol]. Il prefisso 'Atomico' suggerisce che i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] non possano essere divisi, perciò uno si può domandare:'come posso dividere qualcosa che è indivisibile'. La definzione completa dell'[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbol] è che non può essere diviso in un Simbolo più semplice che è parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Per questo motivo la definzione di 'Atomic' stabilisce che gli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbols] di un [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabet]] non fanno parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Un [[wp:codon|codone]] fa parte dell'Alfabeto (DNA x DNA x DNA) dal momento che i [[wp:codon|codoni]] in quanto [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] fanno parte dell'Alfabeto DNA. Ciò va in contrasto con la definizione di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] perchè: un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] può essere diviso in simboli che fanno parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Per ciò i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbols] sembrano ambigui. Per ulteriori chiarimenti sui [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] seguire questo [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html link].
+I [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] di un [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabet]] sono implementazioni della interfaccia [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbol]. Il prefisso 'Atomico' suggerisce che i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] non possano essere divisi, perciò uno si può domandare:'come posso dividere qualcosa che è indivisibile'. La definzione completa dell'[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbol] è che non può essere diviso in un Simbolo più semplice che è parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Per questo motivo la definzione di 'Atomic' stabilisce che gli [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html AtomicSymbols] di un [[Biojava:Cookbook:Alphabets:CrossProduct|CrossProductAlphabet]] non fanno parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Un [[wp:codon|codone]] fa parte dell'Alfabeto (DNA x DNA x DNA) dal momento che i [[wp:codon|codoni]] in quanto [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] fanno parte dell'Alfabeto DNA. 
+
+Ciò va in contrasto con la definizione di [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] perchè: un [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] può essere diviso in simboli che fanno parte dello stesso [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeto]. Per ciò i [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbols] sembrano ambigui. Per ulteriori chiarimenti sui [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html BasisSymbol] seguire questo [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html link].
 
 <java>
 package biojava_in_anger;
@@ -13,16 +15,16 @@ import org.biojava.bio.symbol.*;
 
 public class BreakingComponents {
   public static void main(String[] args) {
-    //make the 'codon' alphabet
+    //creo 'codon' alphabet a partire da una lista 
     List l = Collections.nCopies(3, DNATools.getDNA());
     Alphabet alpha = AlphabetManager.getCrossProductAlphabet(l);
 
-    //get the first symbol in the alphabet
+    //prendo il primo elemento dell'alfabeto
     Iterator iter = ((FiniteAlphabet)alpha).iterator();
     AtomicSymbol codon = (AtomicSymbol)iter.next();
     System.out.print(codon.getName()+" is made of: ");
 
-    //break it into a list its components
+    //vediamo come è formato
     List symbols = codon.getSymbols();
     for(int i = 0; i < symbols.size(); i++){
       if(i != 0)
