@@ -26,31 +26,23 @@ sono implementazioni della interfaccia
 Il prefisso 'Atomico' suggerisce che i
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
 non possano essere divisi, perciò uno si può domandare:'come posso
-dividere qualcosa che è indivisibile'. La definzione completa
-dell'[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
-è che non può essere diviso in un Simbolo più semplice che è parte dello
-stesso
-[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-Per questo motivo la definzione di 'Atomic' stabilisce che gli
-[AtomicSymbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
-di un
-[CrossProductAlphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
-non fanno parte dello stesso
-[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-Un [codone](wp:codon "wikilink") fa parte dell'Alfabeto (DNA x DNA x
-DNA) dal momento che i [codoni](wp:codon "wikilink") in quanto
-[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-fanno parte dell'Alfabeto DNA.
+dividere qualcosa che è indivisibile?'. La definzione completa di
+[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html)
+ci dice precisamente che esso non può essere diviso in un Simbolo più
+semplice che fa parte dello stesso
+[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+di cui fa parte
+l'[AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html).
 
 Ciò va in contrasto con la definizione di
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 perchè: un
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-può essere diviso in simboli che fanno parte dello stesso
+invece può essere diviso in simboli che fanno parte dello stesso
 [Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
 Per ciò i
 [BasisSymbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-sembrano ambigui. Per ulteriori chiarimenti sui
+si comportano diversamente. Per ulteriori chiarimenti sui
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
 seguire questo
 [link](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html).
