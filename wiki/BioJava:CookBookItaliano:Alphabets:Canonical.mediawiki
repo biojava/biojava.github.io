@@ -1,11 +1,13 @@
 == Come posso stabilire l'identità fra Simboli e Alfabeti? ==
 
-In Biojava the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and the same [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] are canonical no matter how they where constructed or where they came from. This means that if two [[wp:DNA|DNA]] alphabets (or [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] from those alphabets) are instantiated at different times are equal via both the .equals() and == functions. Also Symbols from the PROTEIN and the PROTEIN-TERM alphabets are canonical as are Symbols from the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.html IntegerAlphabet] and the [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.SubIntegerAlphabet.html SubIntegerAlphabet].
+In Biojava medesimi [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] e medesimi [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] sono gli stessi oggetti anche se sono stati creati in maniera diversa. Questo significa che se due alfabeti [[wp:DNA|DNA]] (o due [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] di questi due alfabeti) sono istanziati in tempi differenti essi sono lo stesso oggetto ed è possibile verificarlo utilizzando sia l'operatore == che il metodo .equal(). Anche i simboli del PROTEIN-ALPHABET e del PROTEIN-TERM-ALPHABET sono gli stessi,  così come lo sono quelli che appartengono al [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.html IntegerAlphabet] e al [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/IntegerAlphabet.SubIntegerAlphabet.html SubIntegerAlphabet].
 
-This is even true of [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alphabets] and [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Symbols] on different virtual machines (thanks to some [http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html Serialization] magic) which means BioJava works across RMI.
+Questo è vero anche per [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html Alfabeti] e [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html Simboli] su differenti virtual machine (un ringraziamento speciale va a [http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html Serialization]) cioè BioJava funziona anche sfruttando l'RMI.
 
 
 <java>
+package biojava_in_anger;
+
 import org.biojava.bio.symbol.*;
 import org.biojava.bio.seq.*;
 
@@ -16,9 +18,9 @@ public class Canonical {
     Alphabet a1 = DNATools.getDNA();
     Alphabet a2 = AlphabetManager.alphabetForName("DNA");
 
-    //are they equal
+    //sono identici
     System.out.println("equal: "+ a1.equals(a2));
-    //are they canonical
+    //sono canonici
     System.out.println("canonical: "+ (a1 == a2));
   }
 }
