@@ -5,6 +5,8 @@ In BioJava [http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.ht
 Both of these approaches are shown in the example below
 
 <java>
+package biojava_in_anger;
+
 import org.biojava.bio.symbol.*;
 import java.util.*;
 import org.biojava.bio.seq.*;
