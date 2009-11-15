@@ -37,23 +37,21 @@ di un
 [CrossProductAlphabet](Biojava:Cookbook:Alphabets:CrossProduct "wikilink")
 non fanno parte dello stesso
 [Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-
-A [codon](wp:codon "wikilink") would be from the (DNA x DNA x DNA)
-Alphabet whereas the components of the [codon](wp:codon "wikilink")
-[Symbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-are from the DNA alphabet.
-
-Contrast this with the definition of a
-[BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html).
-A
+Un [codone](wp:codon "wikilink") fa parte dell'Alfabeto (DNA x DNA x
+DNA) dal momento che i [codoni](wp:codon "wikilink") in quanto
+[Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
+fanno parte dell'Alfabeto DNA. Ciò va in contrasto con la definizione di
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-can be validly divided into components that are still part of the same
-[Alphabet](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
-In this way a
+perchè: un
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-can be ambiguous. For further discussion of
+può essere diviso in simboli che fanno parte dello stesso
+[Alfabeto](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html).
+Per ciò i
+[BasisSymbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
+sembrano ambigui. Per ulteriori chiarimenti sui
 [BasisSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html)
-follow this link.
+seguire questo
+[link](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html).
 
 <java> package biojava\_in\_anger;
 
