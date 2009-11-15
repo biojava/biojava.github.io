@@ -36,7 +36,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Alphabets:Canonical|Come posso stabilire l'identità fra Simboli e Alfabeti]]?
 * [[Biojava:CookBookItaliano:Alphabets:Ambiguous|Come posso costruire simboli ambigui come Y o R]]?
 
-=== Basic Sequence Manipulation ===
+=== Manipolazioni Elementari di Sequenze ===
 
 * [[Biojava:Cookbook:Sequence|How do I make a Sequence from a String or make a Sequence Object back into a String]]?
 * [[Biojava:Cookbook:Sequence:SubSequence|How do I get a subsection of a Sequence]]?
