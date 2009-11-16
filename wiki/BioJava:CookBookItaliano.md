@@ -82,8 +82,8 @@ Come posso....?
 -   [Come posso creare un oggetto Stringa a partire da una Sequenza e
     viceversa creare un oggetto Sequenza a partire da una
     Stringa](Biojava:CookBookItaliano:Sequence "wikilink")?
--   [How do I get a subsection of a
-    Sequence](Biojava:Cookbook:Sequence:SubSequence "wikilink")?
+-   [Come posso ottenere una sottosezione di una
+    Sequenza](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink")?
 -   [How do I transcribe a DNA Sequence to a RNA
     Sequence](Biojava:Cookbook:Sequence:Transcribe "wikilink")?
 -   [How do I reverse complement a DNA or RNA
