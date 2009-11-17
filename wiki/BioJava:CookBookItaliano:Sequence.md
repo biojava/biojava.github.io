@@ -39,18 +39,18 @@ public class StringToSymbolList {
 ` public static void main(String[] args) {`  
 `  `  
 `   try {`  
-`     //create a DNA SymbolList from a String`  
+`     //creo una DNA SymbolList a partire da una String`  
 `     SymbolList dna = DNATools.createDNA("atcggtcggctta");`
 
-`     //create a RNA SymbolList from a String`  
+`     //creo una RNA SymbolList a partire da una String`  
 `     SymbolList rna = RNATools.createRNA("auugccuacauaggc");`
 
-`     //create a Protein SymbolList from a String`  
+`     //creo una Protein SymbolList a partire da una String`  
 `     SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");`  
 `   }`  
 `   catch (IllegalSymbolException ex) {`  
-`     //this will happen if you use a character in one of your strings that is`  
-`     //not an accepted IUB Character for that Symbol.`  
+`      //questa eccezione viene sollevata se viene utilizzato all'interno di una stringa`  
+`      //un simbolo che non è previsto dallo IUB`  
 `     ex.printStackTrace();`  
 `   }`  
 `  `  
