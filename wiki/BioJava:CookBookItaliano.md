@@ -84,8 +84,8 @@ Come posso....?
     Stringa](Biojava:CookBookItaliano:Sequence "wikilink")?
 -   [Come posso ottenere una parte di una
     Sequenza](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink")?
--   [How do I transcribe a DNA Sequence to a RNA
-    Sequence](Biojava:Cookbook:Sequence:Transcribe "wikilink")?
+-   [Come posso trascrivere una Sequenze di DNa in una Sequenza di
+    Rna](Biojava:CookBookItaliano:Sequence:Transcribe "wikilink")?
 -   [How do I reverse complement a DNA or RNA
     Sequence](Biojava:Cookbook:Sequence:Reverse "wikilink")?
 -   [Sequences are immutable so how can I change it's
