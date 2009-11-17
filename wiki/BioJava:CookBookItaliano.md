@@ -86,8 +86,8 @@ Come posso....?
     Sequenza](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink")?
 -   [Come posso trascrivere una Sequenze di DNA in una Sequenza di
     RNA](Biojava:CookBookItaliano:Sequence:Transcribe "wikilink")?
--   [How do I reverse complement a DNA or RNA
-    Sequence](Biojava:CookBookItaliano:Sequence:Reverse "wikilink")?
+-   [Come posso fare il complemento inverso di una sequenza o di una
+    SymbolList](Biojava:CookBookItaliano:Sequence:Reverse "wikilink")?
 -   [Come posso cambiare il nome ad una Sequenza visto che è
     immutabile](Biojava:CookBookItaliano:Sequence:ChangeName "wikilink")?
 -   [How can I edit a Sequence or
