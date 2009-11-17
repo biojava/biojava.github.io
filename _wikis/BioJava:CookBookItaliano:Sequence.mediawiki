@@ -43,17 +43,17 @@ public class StringToSequence {
   public static void main(String[] args) {
 
     try {
-      //create a DNA sequence with the name dna_1
+      //creo una DNA sequence con nome dna_1
       Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");
 
-      //create an RNA sequence with the name rna_1
+      //creo una RNA sequence con nome  rna_1
       Sequence rna = RNATools.createRNASequence("augcug", "rna_1");
 
-      //create a Protein sequence with the name prot_1
+      //creo una Protein sequence con nome  prot_1
       Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");
     }
     catch (IllegalSymbolException ex) {
-      //an exception is thrown if you use a non IUB symbol
+      //viene sollevata una eccezione se non vengono utilizzati i Simboli previsti dallo IUB
       ex.printStackTrace();
     }
   }
