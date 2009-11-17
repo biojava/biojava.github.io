@@ -2,8 +2,8 @@
 title: BioJava:CookBookItaliano:Sequence:Transcribe
 ---
 
-How do I Transcribe a DNA Sequence to an RNA Sequence?
-------------------------------------------------------
+Come posso trascrivere una Sequenze di DNa in una Sequenza di Rna?
+------------------------------------------------------------------
 
 In BioJava DNA and RNA Sequences and SymbolLists are made using
 different Alphabets you can convert from DNA to RNA using the static
