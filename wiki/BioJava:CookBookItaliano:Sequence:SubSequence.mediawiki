@@ -1,35 +1,35 @@
 == Come posso ottenere una parte di una Sequenza? ==
 
-Given a Sequence object we might only be interested in examining the first 10 bases or we might want to get a region between two points. You might also want to print a subsequence to an OutputStream like STDOUT how could you do this?
+In genere data una sequenza noi potremmo essere solamente interessati ad esaminare o le prime 10 basi o una regione compresa fra 2 punti. Quindi si ha ha necessità di stampare una sotto-sequenza su un OutputStream come lo StdOut, come è possibile fare ciò?
 
-BioJava uses a biological coordinate system for identifying bases. The first base is numbered 1 and the last base index is equal to the length of the sequence. Note that this is different from String indexing which starts at 0 and proceedes to length -1. If you attempt to access a region outside of 1...length an IndexOutOfBoundsException will occur.
+Biojava utilizza un sistema di coordinate biologiche per identificare le basi. La prima base ha indice 1 e l'ultima ha indice uguale alla lunghezza totale della sequenza; a differenza degli indici assegnati ai caratteri di una stringa che partono da 0 fino a (lunghezza totale - 1). Se si cerca di accedere ad una regione al di fuori di (1..lunghezza totale) viene sollevata una eccezione di tipo IndexOutOfBoundsException.
 
-=== Getting a Sub - Sequence ===
+=== Ottenere una Sub - Sequence ===
 
 <java>
     SymbolList symL = null;
 
-    //code here to generate a SymbolList
+    //codice per generare una SymbolList
 
-    //get the first Symbol
+    //prendo il primo simbolo
     Symbol sym = symL.symbolAt(1);
 
-    //get the first three bases
+    //le prime tre basi
     SymbolList symL2 = symL.subList(1,3);
 
-    //get the last three bases
+    //le ultime tre basi
     SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
 </java>
 
-=== Printing a Sub - Sequence ===
+=== Stampa una Sub - Sequence ===
 
 <java>
-    //print the last three bases of a SymbolList or Sequence
+    //stampo le ultime tre basi di una SymbolList o di una Sequence
     String s = symL.subStr(symL.length() - 3, symL.length());
     System.out.println(s);
 </java>
 
-=== Complete Listing ===
+=== Codice completo ===
 
 <java>
 import org.biojava.bio.seq.*;
@@ -39,7 +39,7 @@ public class SubSequencing {
   public static void main(String[] args) {
     SymbolList symL = null;
 
-    //generate an RNA SymbolList
+    //creo una RNA SymbolList
     try {
       symL = RNATools.createRNA("auggcaccguccagauu");
     }
@@ -47,16 +47,16 @@ public class SubSequencing {
       ex.printStackTrace();
     }
 
-    //get the first Symbol
+    //prendo il primo simbolo
     Symbol sym = symL.symbolAt(1);
 
-    //get the first three bases
+    //prendo le prime tre basi
     SymbolList symL2 = symL.subList(1,3);
 
-    //get the last three bases
+    //prendo le ultime tre basi
     SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());
 
-    //print the last three bases
+    //stampo le ultime tre basi
     String s = symL.subStr(symL.length() - 3, symL.length());
     System.out.println(s);
   }
