@@ -2,12 +2,12 @@
 title: BioJava:CookBookItaliano:Sequence:Transcribe
 ---
 
-Come posso trascrivere una Sequenze di DNa in una Sequenza di Rna?
+Come posso trascrivere una Sequenze di DNA in una Sequenza di RNA?
 ------------------------------------------------------------------
 
-In BioJava DNA and RNA Sequences and SymbolLists are made using
-different Alphabets you can convert from DNA to RNA using the static
-method transcribe() in RNATools.
+In BioJava le Sequences/SymbolList di DNA e RNA sono generate
+utilizzando alfabeti diversi. E' possibile passare da un alfabeto DNA a
+uno RNA utilizzando il metodo transcribe() in RNATools.
 
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
@@ -16,23 +16,24 @@ public class TranscribeDNAtoRNA {
 `  public static void main(String[] args) {`
 
 `     try {`  
-`      //make a DNA SymbolList`  
+`      //crea a DNA SymbolList`  
 `      SymbolList symL = DNATools.createDNA("atgccgaatcgtaa");`
 
-`      //transcribe it to RNA (after BioJava 1.4 this method is deprecated)`  
+`      //la converto in RNA (questo metodo è deprecato dopo BioJava 1.4)`  
 `      symL = RNATools.transcribe(symL);`
 
-`      //(after BioJava 1.4 use this method instead)`  
+`      //(dopo BioJava 1.4 si utilizza questo metodo)`  
 `      symL = DNATools.toRNA(symL);`  
 `      `  
-`      //just to prove it worked`  
+`      //verifichiamo il funzionamento`  
 `      System.out.println(symL.seqString());`  
 `     }`  
 `     catch (IllegalSymbolException ex) {`  
-`       //this will happen if you try and make the DNA seq using non IUB symbols`  
-`        ex.printStackTrace();`  
+`           //questa eccezione viene sollevata se viene utilizzato`  
+`           //un simbolo che non è previsto dallo IUB per la creazione del DNA`  
+`             ex.printStackTrace();`  
 `     }catch (IllegalAlphabetException ex) {`  
-`      //this will happen if you try and transcribe a non DNA SymbolList`  
+`      //questa eccezione viene sollevata se si cerca e/o trascrive un non DNA SymbolList`  
 `        ex.printStackTrace();`  
 `     }`  
 `  }`
