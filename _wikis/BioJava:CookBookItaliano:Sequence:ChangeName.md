@@ -9,18 +9,17 @@ La maggior parte degli oggetti BioJava Sequence sono immutabili. Questa
 caratteristica da una grande sicurezza nel prevenire cambiamenti o
 anomalie che possono causare la corruzione dei dati. Una conseguenza di
 ciò è che non esiste alcun metodo del tipo setName() all'interno della
-classe Sequence.
+classe Sequence. Una maniera per poter cambiare la "vista" di una
+Sequence è quella di creare una ViewSequence utilizzando la Sequence
+originale come argomento del costruttore. In sostanza invece di
+utilizzare una sequenza con nome 'foo', creiamo una ViewSequence con
+nome 'bar' passandogli nel costruttore la sequenza di nome 'foo'.
+Durante l'esecuzione del programma useremo la ViewSequence 'bar' (al
+posto della sequenza 'foo') che agirà come wrapper redirigendo tutte le
+chiamate verso la sequenza originale. Con un unico vantaggio: la
+ViewSequence può essere chiamata come vogliamo.
 
-Mostly BioJava Sequence objects are immutable. This is really a safety
-feature to prevent changes corrupting the integrity of the data. A
-consequence of this is that there is no setName() method in Sequence.
-One way to change your "view" of a Sequence is to make a ViewSequence
-using the original Sequence as an argument in the constructor. Behind
-the scenes the ViewSequence wrapper intercepts some of the method calls
-to the underlying Sequence which gives the possibility of changing the
-name.
-
-The following program demonstrates this.
+Il codice sequente mostra quanto detto sopra:
 
 <java> import java.io.\*;
 
@@ -34,7 +33,7 @@ public class NameChange {
 `     Sequence seq =`  
 `         DNATools.createDNASequence("atgcgctaggctag","gi|12356|ABC123");`
 
-`     //create a veiw on the sequence and change its name`  
+`     //creo un vista della sequenze assegnando un nome alla view`  
 `     Sequence view = SequenceTools.view(seq, "ABC123");`
 
 `     //print to FASTA to prove the name has changed`  
