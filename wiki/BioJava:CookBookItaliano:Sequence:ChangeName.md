@@ -5,6 +5,12 @@ title: BioJava:CookBookItaliano:Sequence:ChangeName
 Come posso cambiare il nome di una sequenza visto che è immutabile?
 -------------------------------------------------------------------
 
+La maggior parte degli oggetti BioJava Sequence sono immutabili. Questa
+caratteristica da una grande sicurezza nel prevenire cambiamenti o
+anomalie che possono causare la corruzione dei dati. Una conseguenza di
+ciò è che non esiste alcun metodo del tipo setName() all'interno della
+classe Sequence.
+
 Mostly BioJava Sequence objects are immutable. This is really a safety
 feature to prevent changes corrupting the integrity of the data. A
 consequence of this is that there is no setName() method in Sequence.
