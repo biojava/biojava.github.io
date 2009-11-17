@@ -95,9 +95,9 @@ public class SymbolListToString {
 
 ` public static void main(String[] args) {`  
 `   SymbolList sl = null;`  
-`   //code here to instantiate sl`  
+`   //qui va il codice per istanziare una SymbolList`  
 `  `  
-`   //convert sl into a String`  
+`   //converto la SymbolList in una String`  
 `   String s = sl.seqString();`  
 ` }`
 
