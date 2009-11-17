@@ -27,10 +27,10 @@ public class ReverseComplement {
 `     System.out.println(symL.seqString());`  
 `   }`  
 `   catch (IllegalSymbolException ex) {`  
-`     //this will happen if you try and make the DNA seq using non IUB symbols`  
+`     //this will happen if you try and make the DNA  seq using non IUB symbols`  
 `     ex.printStackTrace();`  
 `   }catch (IllegalAlphabetException ex) {`  
-`     //this will happen if you try and reverse complement a non DNA sequence using DNATools`  
+`     //this will happen if you try and reverse complement a non DNA (RNA) sequence using DNATools (RNATools)`  
 `     ex.printStackTrace();`  
 `   }`  
 ` }`
