@@ -2,8 +2,12 @@
 title: BioJava:CookBookItaliano:Sequence:Regex
 ---
 
-How can make a motif into a regular expression?
------------------------------------------------
+Come posso trasformare un motivo di interesse biologico in una espressione regolare?
+------------------------------------------------------------------------------------
+
+Fra le più interessanti funzioni di BioJava ci sono quelle che si
+possono eseguire con MotifTools, come ad esempio trasformare una String
+in un Pattern come
 
 One of the interesting things you can do with BioJava's MotifTools is to
 make a String into a regular expression Pattern. You can then use this
@@ -14,41 +18,40 @@ Java's built-in regular expression functionality.
 
 A simple program is implemented below:
 
-<java> // Biojava imports import org.biojava.bio.seq.\*; import
-org.biojava.bio.symbol.\*; import org.biojava.utils.regex.\*;
+<java> // Biojava imports import org.biojava.\*;
 
 public class AmbiguitySearch {
 
 `   public static void main(String[] args) {`  
-`       try {`  
-`           // Variables needed...`  
-`           Matcher occurences;`  
-`           FiniteAlphabet IUPAC = DNATools.getDNA();`  
-`           SymbolList WorkingSequence = DNATools.createDNA("tagagatagacgatagc");`  
+`      try {`  
+`       // Variables needed...`  
+`       Matcher occurences;`  
+`       FiniteAlphabet IUPAC = DNATools.getDNA();`  
+`       SymbolList WorkingSequence = DNATools.createDNA("tagagatagacgatagc");`  
 `       `  
-`           // Create pattern using pattern factory.`  
-`           Pattern pattern;`  
-`           PatternFactory FACTORY = PatternFactory.makeFactory(IUPAC);`  
-`           try{`  
-`               pattern = FACTORY.compile("wtagn");`  
-`           } catch(Exception e) {e.printStackTrace(); return;}`  
+`               // Create pattern using pattern factory.`  
+`       Pattern pattern;`  
+`       PatternFactory FACTORY = PatternFactory.makeFactory(IUPAC);`  
+`       try{`  
+`           pattern = FACTORY.compile("wtagn");`  
+`       } catch(Exception e) {e.printStackTrace(); return;}`  
 `           System.out.println("Searching for: "+pattern.patternAsString());`  
 `       `  
-`           // Obtain iterator of matches.`  
-`           try {`  
-`               occurences = pattern.matcher( WorkingSequence );`  
-`           } catch(Exception e) {e.printStackTrace(); return;}`
+`       // Obtain iterator of matches.`  
+`       try {`  
+`           occurences = pattern.matcher( WorkingSequence );`  
+`       } catch(Exception e) {e.printStackTrace(); return;}`
 
-`           // Foreach match`  
-`           while( occurences.find() ) {`  
-`               System.out.println("Match: " +"\t"+ WorkingSequence `  
-`                               +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
+`       // Foreach match`  
+`       while( occurences.find() ) {`  
+`           System.out.println("Match: " +"\t"+ WorkingSequence `  
+`                       +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
 `           }`  
 `       }`  
 `       `  
 `       catch (Exception ex) {`  
 `           ex.printStackTrace();`  
-`           System.exit(1);`  
+`               System.exit(1);`  
 `       }`  
 `   }`
 
@@ -69,18 +72,7 @@ a String object for pattern matches.
 `* Outputs a list of counts to stdout.`  
 `*/`
 
-import java.io.BufferedReader; import java.io.FileInputStream; import
-java.io.InputStreamReader; import java.util.regex.Matcher; import
-java.util.regex.Pattern;
-
-import org.biojava.bio.BioError; import org.biojava.bio.BioException;
-import org.biojava.bio.seq.DNATools; import
-org.biojava.bio.seq.ProteinTools; import org.biojava.bio.seq.RNATools;
-import org.biojava.bio.seq.Sequence; import
-org.biojava.bio.seq.SequenceIterator; import
-org.biojava.bio.seq.io.SeqIOTools; import
-org.biojava.bio.symbol.MotifTools; import
-org.biojava.bio.symbol.SymbolList;
+import java.io.\*; import java.util.\*; import org.biojava.\*;
 
 public class MotifLister{
 
