@@ -7,16 +7,14 @@ Come posso trasformare un motivo di interesse biologico in una espressione regol
 
 Fra le più interessanti funzioni di BioJava ci sono quelle che si
 possono eseguire con MotifTools, come ad esempio trasformare una String
-in un Pattern come
+(un motivo) in un Pattern come espressione regolare. E' possibile
+ricercare poi questo Pattern all'interno di una SymbolList. Il Pattern
+generato può provenire a partire da una sequenza ambigua come ad esempio
+"acgytnwacrs". Per poter compiere questa operazione, in BioJava è
+presente un wrapper verso le funzionalità relative alle espressioni
+regolari built-in di Java.
 
-One of the interesting things you can do with BioJava's MotifTools is to
-make a String into a regular expression Pattern. You can then use this
-Pattern to search a SymbolList object for the existence of that Pattern.
-The generated Pattern can even be from an ambiguous sequence such as
-"acgytnwacrs". To accomplish this task, BioJava contains a wrapper to
-Java's built-in regular expression functionality.
-
-A simple program is implemented below:
+Un semplice programma d'esempio è mostrato di seguito:
 
 <java> // Biojava imports import org.biojava.\*;
 
@@ -24,25 +22,31 @@ public class AmbiguitySearch {
 
 `   public static void main(String[] args) {`  
 `      try {`  
-`       // Variables needed...`  
+`       //Inizializziamo le variabili`  
 `       Matcher occurences;`  
 `       FiniteAlphabet IUPAC = DNATools.getDNA();`  
 `       SymbolList WorkingSequence = DNATools.createDNA("tagagatagacgatagc");`  
 `       `  
-`               // Create pattern using pattern factory.`  
+`               // Creo un pattern utilizzando un pattern factory.`  
 `       Pattern pattern;`  
 `       PatternFactory FACTORY = PatternFactory.makeFactory(IUPAC);`  
 `       try{`  
 `           pattern = FACTORY.compile("wtagn");`  
-`       } catch(Exception e) {e.printStackTrace(); return;}`  
-`           System.out.println("Searching for: "+pattern.patternAsString());`  
+`       } catch(Exception e) {`  
+`                   e.printStackTrace(); `  
+`                   return;`  
+`               }`  
+`       System.out.println("Effettuo la ricerca per: "+pattern.patternAsString());`  
 `       `  
-`       // Obtain iterator of matches.`  
+`       // Ottengo un iteratore per i match ottenuti`  
 `       try {`  
 `           occurences = pattern.matcher( WorkingSequence );`  
-`       } catch(Exception e) {e.printStackTrace(); return;}`
+`       } catch(Exception e) {`  
+`                       e.printStackTrace(); `  
+`                       return;`  
+`               }`
 
-`       // Foreach match`  
+`       // Per ognuno di questi stampo il valore`  
 `       while( occurences.find() ) {`  
 `           System.out.println("Match: " +"\t"+ WorkingSequence `  
 `                       +"\n"+ occurences.start() +"\t"+ occurences.group().seqString());`  
@@ -57,9 +61,10 @@ public class AmbiguitySearch {
 
 } </java>
 
-Alternatively, the following example from Andy Hammer demonstrates how
-the java regular expression functionality can be used directly to search
-a String object for pattern matches.
+Alternativamente, il seguente esempio proposto da Andy Hammer dimostra
+come le funzionalità delle java regular expression possono essere
+utilizzate direttamente per ricercare un oggetto Stringa per il pattern
+matching.
 
 <java> /\*\*
 
@@ -116,7 +121,7 @@ public class MotifLister{
 
 `   count = 0;`
 
-`   //read the input`  
+`   //leggo gli input`  
 `   FileInputStream fis = new FileInputStream(inputFile);`  
 `   InputStreamReader isr = new InputStreamReader(fis);`  
 `   BufferedReader input = new BufferedReader(isr);`
