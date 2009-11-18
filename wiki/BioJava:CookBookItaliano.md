@@ -91,7 +91,7 @@ Come posso....?
 -   [Come posso cambiare il nome ad una Sequenza visto che è
     immutabile](Biojava:CookBookItaliano:Sequence:ChangeName "wikilink")?
 -   [How can I edit a Sequence or
-    SymbolList](Biojava:Cookbook:Sequence:Edit "wikilink")?
+    SymbolList](Biojava:CookBookItaliano:Sequence:Edit "wikilink")?
 -   [How can I make a sequence motif into a regular
     expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
 -   [How can I extract all regions beeing marked (or not) with a special
