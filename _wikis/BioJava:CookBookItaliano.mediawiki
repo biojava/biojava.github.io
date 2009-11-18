@@ -43,7 +43,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Sequence:Transcribe|Come posso trascrivere una Sequenze di DNA in una Sequenza di RNA]]?
 * [[Biojava:CookBookItaliano:Sequence:Reverse|Come posso fare il complemento inverso di una sequenza o di una SymbolList]]?
 * [[Biojava:CookBookItaliano:Sequence:ChangeName|Come posso cambiare il nome ad una Sequenza visto che è immutabile]]?
-* [[Biojava:CookBookItaliano:Sequence:Edit|How can I edit a Sequence or SymbolList]]?
+* [[Biojava:CookBookItaliano:Sequence:Edit|Come posso modificare una Sequence o una SymbolList]]?
 * [[Biojava:Cookbook:Sequence:Regex|How can I make a sequence motif into a regular expression]]?
 * [[Biojava:Cookbook:Sequence:ExtractGeneRegions|How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS')]]?
 
