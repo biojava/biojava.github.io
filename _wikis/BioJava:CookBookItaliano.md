@@ -93,7 +93,7 @@ Come posso....?
 -   [Come posso modificare una Sequence o una
     SymbolList](Biojava:CookBookItaliano:Sequence:Edit "wikilink")?
 -   [How can I make a sequence motif into a regular
-    expression](Biojava:Cookbook:Sequence:Regex "wikilink")?
+    expression](Biojava:CookBookItaliano:Sequence:Regex "wikilink")?
 -   [How can I extract all regions beeing marked (or not) with a special
     feature (e.g. 'gene' or
     'CDS')](Biojava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
