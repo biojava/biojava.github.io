@@ -7,67 +7,68 @@ Come posso modificare una Sequence o una SymbolList?
 
 Molte volte si ha la necessità di modificare l'ordine dei simboli in una
 SymbolList o in una Sequence. Ad esempio si può voler eliminare,
-inserire o riscrivere alcune basi in una Sequenza di DNA. Le SymbolList
+inserire o riscrivere alcune basi di una Sequenza di DNA. Le SymbolList
 BioJava hano un metodo chiamato edit(Edit e) che accetta come argomento
 un oggetto edit che effettuerà la modifica sulla SymbolList. L'oggetto
 Edit ammette un argomento che specifica da dove la modifica deve
 avvenire, quanti residui devono cambiare e la SymbolList con i residui
 aggiornati.
 
-It is worth noting that many BioJava implementations of Sequence and
-SymbolList do not allow edit operations as this may invalidate
-underlying Features or Annotations. The best strategy is to make a copy
-of the Symbols in the Sequence or SymbolList and operate on those.
+Vale la pena notare che molte implementazioni Biojava delle Sequence o
+delle SymbolList non permettono operazioni di modifica perchè potrebbero
+invalidare le Features o le Annotations sottostanti. La migliore
+strategia da utilizzare è quella di effettuare una copia dei Symbols
+della Sequence o della SymbolList e lavorare su quella.
 
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class EditExamples {
 
-` public static void main(String[] args) throws Exception{`  
-`   //you can't actually edit a sequence`  
+` public static void main(String[] args) throws Exception{`
+
+`   //creo una sequenza che ora non è modificabile`  
 `   Sequence seq = DNATools.createDNASequence("atggct", "seq");`
 
-`   //so you need to get a copy of the Symbols in it`  
-`   //using a "copy constructor"`  
+`   //effettuo una copia dei simboli utilizzando il "copy constructor"`  
 `   SimpleSymbolList syms = new SimpleSymbolList(seq);`
 
-`   //add to the end, while overwriting 0 symbols, "cc"`  
+`   //voglio aggiungere alla fine della sequenza i simboli "cc", senza sovrascrivere alcun simbolo`  
 `   Edit e = new Edit(seq.length()+1, 0, DNATools.createDNA("cc"));`  
-`   //apply the edit`  
+`   //applico la modifica`  
 `   syms.edit(e);`  
-`   //should now be atggctcc`  
+`   //verifico che la sequenza sia atggctcc`  
 `   System.out.println(syms.seqString());`
 
-`   //insert at the start, while overwriting 0 Symbols "tt"`  
+`   //voglio aggiungere all'inizio della sequenza i simboli "tt", senza sovrascrivere alcun simbolo`  
 `   e = new Edit(1, 0, DNATools.createDNA("tt"));`  
 `   syms.edit(e);`  
-`   //should now be ttatggctcc`  
+`   //verifico che la sequenza sia ttatggctcc`  
 `   System.out.println(syms.seqString());`
 
-`   //insert at position 4, overwriting 0 symbols "aca"`  
+`   //voglio aggiungere in posizione 4 della sequenza i simboli "aca", senza sovrascrivere alcun simbolo`  
 `   e = new Edit(4, 0, DNATools.createDNA("aca"));`  
 `   syms.edit(e);`  
 `   //should now be ttaacatggctcc`  
 `   System.out.println(syms.seqString());`
 
-`   //overwrite at position 2, 3 bases with "ggg"`  
+`   //voglio sovrascrivere in posizione 2 3 basi con "ggg"`  
 `   e = new Edit(2, 3, DNATools.createDNA("ggg"));`  
 `   syms.edit(e);`  
-`   //should now be tgggcatggctcc`  
+`   //verifico che la sequenza sia tgggcatggctcc`  
 `   System.out.println(syms.seqString());`
 
-`   //delete from the start 5 bases (overwrite 5 bases with nothing)`  
+`   //voglio eliminare dall'inizio della sequenza 5 basi (sovrascrivo 5 basi con nulla)`  
 `   e = new Edit(1, 5, SymbolList.EMPTY_LIST);`  
 `   syms.edit(e);`  
-`   //should now be atggctcc`  
+`   //verifico che la sequenza sia atggctcc`  
 `   System.out.println(syms.seqString());`
 
-`   //now a more complex example`
+`   //un ultimo esempio più complesso`
 
-`   //overwrite positions two and three with aa and then insert tt`  
+`   //sovrascriov la 2 e la 3 posizione con 'aa' e dopo inserisco 'tt'`  
 `   e = new Edit(2, 2, DNATools.createDNA("aatt"));`  
 `   syms.edit(e);`  
-`   //should now be aaattgctcc`  
+`   //verifico che la sequenza sia aaattgctcc`  
 `   System.out.println(syms.seqString());`  
 ` }`
 
