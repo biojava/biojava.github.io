@@ -1,6 +1,6 @@
-== Come posso modificare una sequenza? ==
+== Come posso modificare una Sequence o una SymbolList? ==
 
-Sometimes you will want to modify the order of Symbols in a SymbolList or Sequence. For example you may wish to delete some bases, insert some bases or overwrite some bases in a DNA Sequence. BioJava SymbolLists have a method called edit(Edit e) that takes an Edit object and performs that edit on the SymbolList. The Edit object takes arguments that specify where the edit should begin, how many residues will be changed and a SymbolList that will replace the residues.
+Molte volte si ha la necessità di modificare l'ordine dei simboli in una SymbolList o in una Sequence. Ad esempio si può voler eliminare, inserire o riscrivere alcune basi in una Sequenza di DNA. Le SymbolList BioJava hano un metodo chiamato edit(Edit e) che accetta come argomento un oggetto edit che effettuerà la modifica sulla SymbolList. L'oggetto Edit ammette un argomento che specifica da dove la modifica deve avvenire, quanti residui devono cambiare e la SymbolList con i residui aggiornati. 
 
 It is worth noting that many BioJava implementations of Sequence and SymbolList do not allow edit operations as this may invalidate underlying Features or Annotations. The best strategy is to make a copy of the Symbols in the Sequence or SymbolList and operate on those. 
 
