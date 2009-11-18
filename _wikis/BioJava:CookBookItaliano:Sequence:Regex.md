@@ -7,12 +7,12 @@ Come posso trasformare un motivo di interesse biologico in una espressione regol
 
 Fra le più interessanti funzioni di BioJava ci sono quelle che si
 possono eseguire con MotifTools, come ad esempio trasformare una String
-([motivo](Biojava:CookBookItaliano:Sequence:Regex:Motivo "wikilink")) in
-un Pattern come espressione regolare. E' possibile ricercare poi questo
-Pattern all'interno di una SymbolList. Il Pattern generato può provenire
-a partire da una sequenza ambigua come ad esempio "acgytnwacrs". Per
-poter compiere questa operazione, in BioJava è presente un wrapper verso
-le funzionalità relative alle espressioni regolari built-in di Java.
+(motivo) in un Pattern come espressione regolare. E' possibile ricercare
+poi questo Pattern all'interno di una SymbolList. Il Pattern generato
+può provenire a partire da una sequenza ambigua come ad esempio
+"acgytnwacrs". Per poter compiere questa operazione, in BioJava è
+presente un wrapper verso le funzionalità relative alle espressioni
+regolari built-in di Java.
 
 Un semplice programma d'esempio è mostrato di seguito:
 
