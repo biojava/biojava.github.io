@@ -8,7 +8,7 @@ To translate a DNA sequence you need to do the following
 
 Almost all of this can be achieved using static methods from BioJava tools classes. The following block of code demonstrates the procedure. Obviously if you already have an RNA sequence there is no need to transcribe it.
 
-''NOTE: if you try and create a 'triplet view' on a SymbolList or Sequence who's length is not evenly divisible by three an IllegalArgumentException will be thrown. See 'how to get a subsequence' for a description of how to get a portion of a Sequence for 
+''NOTE: if you try and create a 'triplet view' on a SymbolList or Sequence who's length is not evenly divisible by three an IllegalArgumentException will be thrown. See [[Biojava:Cookbook:Sequence:SubSequence|'how to get a subsequence']]  for a description of how to get a portion of a Sequence for 
 translation.''
 
 <java>
