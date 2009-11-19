@@ -99,7 +99,7 @@ Come posso....?
     caratteristiche speciali (ad esempio 'geni' or 'sequenze
     codificanti')](Biojava:CookBookItaliano:Sequence:ExtractGeneRegions "wikilink")?
 
-### Translation
+### Traduzioni
 
 -   [How do I translate a DNA or RNA Sequence or SymbolList to
     Protein](Biojava:Cookbook:Translation "wikilink")?
