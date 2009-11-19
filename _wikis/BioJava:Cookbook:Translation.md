@@ -2,8 +2,8 @@
 title: BioJava:Cookbook:Translation
 ---
 
-How Do I Translate a SymbolList or Sequence?
---------------------------------------------
+How do I translate a DNA or RNA Sequence or SymbolList to Protein?
+------------------------------------------------------------------
 
 To translate a DNA sequence you need to do the following
 
