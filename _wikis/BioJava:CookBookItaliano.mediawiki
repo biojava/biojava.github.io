@@ -47,7 +47,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Sequence:Regex|Come posso trasformare un motivo di interesse biologico in una espressione regolare]]?
 * [[Biojava:CookBookItaliano:Sequence:ExtractGeneRegions|Come posso estrarre tutte le regioni che rappresentano caratteristiche speciali (ad esempio 'geni' or 'sequenze codificanti')]]?
 
-=== Translation ===
+=== Traduzioni===
 
 * [[Biojava:Cookbook:Translation|How do I translate a DNA or RNA Sequence or SymbolList to Protein]]?
 * [[Biojava:Cookbook:Translation:Single|How do I translate a single codon to a single amino acid]]?
