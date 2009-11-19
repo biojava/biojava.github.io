@@ -101,8 +101,8 @@ Come posso....?
 
 ### Traduzioni
 
--   [How do I translate a DNA or RNA Sequence or SymbolList to
-    Protein](Biojava:Cookbook:Translation "wikilink")?
+-   [Come posso tradurre una Sequenza o una SymbolList di DNA o RNA in
+    una Proteina](Biojava:Cookbook:Translation "wikilink")?
 -   [How do I translate a single codon to a single amino
     acid](Biojava:Cookbook:Translation:Single "wikilink")?
 -   [How do I use a non standard translation
