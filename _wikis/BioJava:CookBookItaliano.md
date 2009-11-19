@@ -97,7 +97,7 @@ Come posso....?
     regolare](Biojava:CookBookItaliano:Sequence:Regex "wikilink")?
 -   [How can I extract all regions beeing marked (or not) with a special
     feature (e.g. 'gene' or
-    'CDS')](Biojava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
+    'CDS')](Biojava:CookBookItaliano:Sequence:ExtractGeneRegions "wikilink")?
 
 ### Translation
 
