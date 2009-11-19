@@ -95,9 +95,9 @@ Come posso....?
 -   [Come posso trasformare un motivo di interesse biologico in una
     espressione
     regolare](Biojava:CookBookItaliano:Sequence:Regex "wikilink")?
--   [How can I extract all regions beeing marked (or not) with a special
-    feature (e.g. 'gene' or
-    'CDS')](Biojava:CookBookItaliano:Sequence:ExtractGeneRegions "wikilink")?
+-   [Come posso estrarre tutte le regioni che rappresentano
+    caratteristiche speciali (ad esempio 'geni' or 'sequenze
+    codificanti')](Biojava:CookBookItaliano:Sequence:ExtractGeneRegions "wikilink")?
 
 ### Translation
 
