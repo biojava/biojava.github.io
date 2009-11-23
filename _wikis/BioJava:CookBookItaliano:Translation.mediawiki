@@ -3,7 +3,7 @@
 Per tradurre una sequenza di DNA bisogna seguire i seguenti passi:
 
 * [[Biojava:Cookbook:Sequence:Transcribe|Trascriverlo in RNA]].
-* Get a triplet (codon) view on the SymbolList.
+* Ottenere una triplet (codon) view della SymbolList.
 * Tradurlo in Proteina.
 
 Innanzitutto per realizza questi tre passi basta utilizzare i metodi statici delle classi relative agli strumenti di Biojava. Il blocco seguente di codice mostra come funziona questa procedura. Ovviamente se si ha già una sequenza di RNA non è necessario trascriverla.
@@ -18,30 +18,28 @@ public class Translate {
 
   public static void main(String[] args) {
     try {
-      //create a DNA SymbolList
+      //creo una SymbolList di DNA
       SymbolList symL = DNATools.createDNA("atggccattgaatga");
 
-      //transcribe to RNA (after biojava 1.4 this method is deprecated)
+      //lo trascrivo in RNA (dopo la versione 1.4 di BioJava questo metodo è deprecato)
       symL = RNATools.transcribe(symL);
 
-      //transcribe to RNA (after biojava 1.4 use this method instead)
+      //lo trascrivo in RNA  (dopo la versione 1.4 di BioJava si usa questo metodo)
       symL = DNATools.toRNA(symL);
       
-      //translate to protein
+      //lo traduco in proteina
       symL = RNATools.translate(symL);
 
-      //prove that it worked
+      //verifico
            System.out.println(symL.seqString());
      }catch (IllegalAlphabetException ex) {
-      
-     
       /* 
-       * this will occur if you try and transcribe a non DNA sequence or translate
-       * a sequence that isn't a triplet view on a RNA sequence.
+       * Questa eccezione viene sollevata se si cerca di trascrivere una sequenza che non è di DNA o tradurre 
+       * una sequenza che non è una triplet view di una RNA Sequence.
        */
        ex.printStackTrace();
      }catch (IllegalSymbolException ex) {
-      // this will happen if non IUB characters are used to create the DNA SymbolList
+      // Questa invece accade quando non si utilizzano i caratteri IUB per creare una DNA SymbolList
        ex.printStackTrace();
      }
    }
