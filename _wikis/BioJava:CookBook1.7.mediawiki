@@ -20,7 +20,7 @@ You can also read BioJava in Anger in [http://www.geocities.jp/bio_portal/bj_in_
 
 How about simplified [http://www.cbi.pku.edu.cn/chinese/documents/PUMA/biojava/index-cn.html Chinese]? (Translated by Wu Xin).
 
-And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (translated by Alessandro Cipriani; last update: 18 November 2009).
+And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (translated by Alessandro Cipriani; last update: 26 November 2009).
 
 == How Do I....? ==
 
