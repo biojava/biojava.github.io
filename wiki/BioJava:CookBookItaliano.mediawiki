@@ -50,7 +50,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 === Traduzioni===
 
 * [[Biojava:CookBookItaliano:Translation|Come posso tradurre una Sequence o una SymbolList di DNA o RNA in una Proteina]]?
-* [[Biojava:Cookbook:Translation:Single|How do I translate a single codon to a single amino acid]]?
+* [[Biojava:CookBookItaliano:Translation:Single|Come posso tradurre un singolo codone in un singolo aminoacido]]?
 * [[Biojava:Cookbook:Translation:NonStandart|How do I use a non standard translation table]]?
 * [[Biojava:Cookbook:Translation:SixFrames|How do I translate a nucleotide sequence in all six frames]]?
 * [[Biojava:Cookbook:Translation:OneLetterAmbi|How do I retrieve the 1-Letter code of a translated sequence containing ambiguities]]?
