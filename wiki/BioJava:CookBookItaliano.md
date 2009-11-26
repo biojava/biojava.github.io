@@ -103,8 +103,8 @@ Come posso....?
 
 -   [Come posso tradurre una Sequence o una SymbolList di DNA o RNA in
     una Proteina](Biojava:CookBookItaliano:Translation "wikilink")?
--   [How do I translate a single codon to a single amino
-    acid](Biojava:Cookbook:Translation:Single "wikilink")?
+-   [Come posso tradurre un singolo codone in un singolo
+    aminoacido](Biojava:CookBookItaliano:Translation:Single "wikilink")?
 -   [How do I use a non standard translation
     table](Biojava:Cookbook:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
