@@ -9,15 +9,15 @@ Per tradurre una sequenza di DNA bisogna seguire i seguenti passi:
 
 -   [Trascriverlo in
     RNA](Biojava:Cookbook:Sequence:Transcribe "wikilink").
--   Ottenere una triplet (codon) view della SymbolList.
+-   Dividerlo in triplette.
 -   Tradurlo in Proteina.
 
-Innanzitutto per realizza questi tre passi basta utilizzare i metodi
-statici delle classi relative agli strumenti di Biojava. Il blocco
+Innanzitutto diciamo che per realizzare questi tre passi basta
+utilizzare i metodi statici di classi già presenti in Biojava. Il blocco
 seguente di codice mostra come funziona questa procedura. Ovviamente se
 si ha già una sequenza di RNA non è necessario trascriverla.
 
-*Nota Bene:Se si cerca di creare una 'triplet view' di una SymbolList o
+*Nota Bene:Se si cerca di dividere in triplette una SymbolList o
 Sequenza la cui lunghezza non è divisible per tre viene sollevata una
 IllegalArgumentException. Segui questo
 [link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
