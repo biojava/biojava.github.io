@@ -16,11 +16,12 @@ Vediamo come:
 
 public class SingleTranslationDemo {
 
-` public static void main(String[] args) {`  
-`   //creo un alfabeto composto da codoni`  
+` public static void main(String[] args) {`
+
+`   //creo un alfabeto composto da codoni che sarà di un elemento`  
 `   Alphabet a = AlphabetManager.alphabetForName("(RNA x RNA x RNA)");`
 
-`   //creiamo una tabella di traduzione utilizzando uno dei nomi statici ottenuti dalla TranslationTable`  
+`   //prendo la "Tabella Standard del Codice Genetico"`  
 `   TranslationTable table = RNATools.getGeneticCode(TranslationTable.UNIVERSAL);`
 
 `   try {`  
@@ -35,7 +36,7 @@ public class SingleTranslationDemo {
 
 `     /*`  
 `      * Questo passo non è richiesto per la traduzione ma prova solamente che`  
-`      * il Simbolo proviente dall'alfabeto corretto. Altrimenti viene sollevata una eccezione.`  
+`      * il Simbolo proveniente dall'alfabeto corretto. Altrimenti viene sollevata una eccezione.`  
 `      */`  
 `     ProteinTools.getTAlphabet().validate(aminoAcid);`
 
