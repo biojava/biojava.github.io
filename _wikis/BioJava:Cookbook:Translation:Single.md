@@ -34,7 +34,10 @@ public class SingleTranslationDemo {
 `     Symbol sym = a.getSymbol(codon.toList());`
 
 `     //translate to amino acid`  
-`     Symbol aminoAcid = table.translate(sym);`
+`     Symbol aminoAcid = table.translate(sym);`  
+`     `  
+`     //i think it is Leucine`  
+`     System.out.println(aminoAcid.getName());`
 
 `     /*`  
 `      * This bit is not required for the translation it just proves that the`  
