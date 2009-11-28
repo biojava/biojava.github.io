@@ -5,15 +5,12 @@ title: BioJava:CookBookItaliano:Translation:Single
 Come posso tradurre un singolo codone in un singolo aminoacido?
 ---------------------------------------------------------------
 
-L'esempio di traduzion generale mostra come utilizzare RNATools per
-tradurre una SymbolList RNA in una SymbolList di Proteine ma molto di
-ciò che accade è nascosto dietro il comodo metodo translate(). Se invece
-si ha la necessità di tradurre un singolo codone in un singolo
-aminoacido bisogna si addentrarsi di più nel codice ma si ha anche la
-possibilità di capire come funziona realmente.
+L'esempio di traduzione precedente mostra come utilizzare RNATools per
+tradurre una SymbolList RNA in una SymbolList di Proteine. Possiamo
+capire meglio il funzionamento del metodo translate() se proviamo a
+tradurre un singolo codone in un singolo aminoacido.
 
-Ci sono attualmente un gran numero di modi per eseguire questa
-traduzione, ve ne presenterò uno di questi.
+Vediamo come:
 
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
@@ -40,7 +37,10 @@ public class SingleTranslationDemo {
 `      * Questo passo non è richiesto per la traduzione ma prova solamente che`  
 `      * il Simbolo proviente dall'alfabeto corretto. Altrimenti viene sollevata una eccezione.`  
 `      */`  
-`     ProteinTools.getTAlphabet().validate(aminoAcid);`  
+`     ProteinTools.getTAlphabet().validate(aminoAcid);`
+
+`     //mi aspetto che sia Leucina`  
+`     System.out.println(aminoAcid.getName());`  
 `   }`  
 `   catch (IllegalSymbolException ex) {`  
 `     ex.printStackTrace();`  
@@ -48,3 +48,5 @@ public class SingleTranslationDemo {
 ` }`
 
 } </java>
+
+NB: Questo è soltanto uno dei metodi per effettuare questa traduzione
