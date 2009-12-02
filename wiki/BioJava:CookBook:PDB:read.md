@@ -5,19 +5,14 @@ title: BioJava:CookBook:PDB:read
 ### How do I read a PDB file?
 
 BioJava provides a flexible data model for managing protein structural
-data. The example below shows how to read a PDB file from your file
-system, obtain a [Structure
-object](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html)
-and iterate over the
-[Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html)
-that are contained in the file. For more examples of how to access the
-[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
-please go to <BioJava:CookBook:PDB:atoms>. For more info on how the
-parser deals with SEQRES and ATOM records please see
-<BioJava:CookBook:PDB:seqres>
+data. It is possible to
 
-It is possible to parse individual PDB files, or work with local PDB
-file installations.
+-   parse individual PDB files, or
+-   work with local PDB file installations.
+
+The class providing the core functionality for this is the
+[PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html)
+class.
 
 Example: How to work with a local installation of PDB
 -----------------------------------------------------
@@ -79,7 +74,16 @@ Will give this output:
 Example: How to parse a local file
 ----------------------------------
 
-<java>
+This example shows how to read a PDB file from your file system, obtain
+a [Structure
+object](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html)
+and iterate over the
+[Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html)
+that are contained in the file. For more examples of how to access the
+[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
+please go to <BioJava:CookBook:PDB:atoms>. For more info on how the
+parser deals with SEQRES and ATOM records please see
+<BioJava:CookBook:PDB:seqres> <java>
 
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  

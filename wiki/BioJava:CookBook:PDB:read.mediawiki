@@ -1,12 +1,13 @@
 === How do I read a PDB file? ===
 
-BioJava provides a flexible data model for managing protein structural data.
-The example below shows how to read a PDB file from your file system, obtain a [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure object] and iterate over 
-the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html Groups] that are contained in the file. For more examples of how to access the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html Atoms] 
-please go to [[BioJava:CookBook:PDB:atoms]]. For more info on how the parser deals with SEQRES and ATOM records please
-see  [[BioJava:CookBook:PDB:seqres]] 
+BioJava provides a flexible data model for managing protein structural data. It is possible to 
+<ul>
+   <li>parse individual PDB files, or</li>
+   <li>work with local PDB file installations.</li>
+</ul>
 
-It is possible to parse individual PDB files, or work with local PDB file installations.
+The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader] class.
+
 
 == Example: How to work with a local installation of PDB ==
 
@@ -69,6 +70,10 @@ Compound: 2 HEMOGLOBIN (DEOXY) (BETA CHAIN) Chains: ChainId: B D Engineered: YES
 
 == Example: How to parse a local file ==
 
+This example shows how to read a PDB file from your file system, obtain a [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure object] and iterate over 
+the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html Groups] that are contained in the file. For more examples of how to access the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html Atoms] 
+please go to [[BioJava:CookBook:PDB:atoms]]. For more info on how the parser deals with SEQRES and ATOM records please
+see  [[BioJava:CookBook:PDB:seqres]] 
 <java>
  // also works for gzip compressed files
  String filename =  "path/to/pdbfile.ent" ;
