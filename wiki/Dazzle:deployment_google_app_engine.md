@@ -87,3 +87,5 @@ have given it a try.
 
 It would be nice to see a picture of how the eclipse project should look
 after all the imports/moving of code.
+
+![Caption](eclipseProject.png "Caption")
