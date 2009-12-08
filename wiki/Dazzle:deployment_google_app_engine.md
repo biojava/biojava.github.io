@@ -85,7 +85,7 @@ have given it a try.
 
 -   write your comment here ...
 
-It would be nice to see a picture of how the eclipse project should look
-after all the imports/moving of code.
+Below is a screenshot of an eclipse project layout after successfully
+following the above instructions.
 
 ![Caption](eclipseProject.png "Caption")
