@@ -85,3 +85,5 @@ have given it a try.
 
 -   write your comment here ...
 
+It would be nice to see a picture of how the eclipse project should look
+after all the imports/moving of code.
