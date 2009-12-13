@@ -2,8 +2,8 @@
 title: BioJava:Hackathon2010
 ---
 
-BioJava Hackaton 2010
-=====================
+BioJava Hackathon 2010
+======================
 
 The BioJava Hackaton will take place at the Genome Campus in Hinxton,
 Cambridge, U.K. from Jan. 19th-22nd
