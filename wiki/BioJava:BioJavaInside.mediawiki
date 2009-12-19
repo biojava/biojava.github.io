@@ -21,7 +21,7 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.biomatters.com Geneious]: A molecular biology toolkit.
 
-* [http://www.proteomecommons.org/dev/masssieve/index.html MassSieve]: An open source application to analyze mass spec proteomics data.
+* [http://www.ncbi.nlm.nih.gov/staff/slottad/MassSieve/ MassSieve]: An open source application to analyze mass spec proteomics data.
 
 * [http://www.charite.de/bioinf/strap/ Strap]: A tool for multiple sequence alignment and sequence based structure alignment.
 
