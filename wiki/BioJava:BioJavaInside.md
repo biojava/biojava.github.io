@@ -54,7 +54,7 @@ projects please add them to the list.
 
 <!-- -->
 
--   [MassSieve](http://www.proteomecommons.org/dev/masssieve/index.html):
+-   [MassSieve](http://www.ncbi.nlm.nih.gov/staff/slottad/MassSieve/):
     An open source application to analyze mass spec proteomics data.
 
 <!-- -->
