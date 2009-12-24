@@ -22,9 +22,7 @@ L'esempio seguente mostra un semplice programma che data una sequenza ne
 fa la traduzione secondo tutti i sei frame e il risultato viene
 memorizzato in un file e inviato nello STDOUT in formato FASTA.
 
-*Nota Bene:Se si cerca di dividere in triplette una SymbolList o
-Sequenza la cui lunghezza non è divisible per tre viene sollevata una
-IllegalArgumentException. Segui questo
+*Nota Bene:Segui questo
 [link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
