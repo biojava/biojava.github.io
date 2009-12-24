@@ -39,7 +39,7 @@ public class AlternateTranslation {
       //transcribe to RNA
       seq = RNATools.transcribe(seq);
 
-      //veiw the RNA sequence as codons, this is done internally by RNATool.translate()
+      //view the RNA sequence as codons, this is done internally by RNATool.translate()
       seq = SymbolListViews.windowedSymbolList(seq, 3);
 
       //translate
