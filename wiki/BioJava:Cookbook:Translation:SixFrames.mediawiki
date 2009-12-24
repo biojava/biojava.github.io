@@ -4,7 +4,6 @@ This is probably one of the more frequent tasks in bioinformatics and one of the
 
 Six frame translations are good for identifying large ORFs which can be indicators of coding regions, at least in species that don't have introns. A six frame translation is a simple matter of taking subsequences of the sequence(s) of interest and reverse complementing/translating as appropriate. The only trick is figuring out how to take the subsequences so you have regions that are equally divisible by three.
 
-
 ''NOTE: if you try and create a 'triplet view' on a SymbolList or Sequence who's length is not evenly divisible by three an IllegalArgumentException will be thrown. See [[Biojava:Cookbook:Sequence:SubSequence|'how to get a subsequence']]  for a description of how to get a portion of a Sequence for 
 translation.''
 
