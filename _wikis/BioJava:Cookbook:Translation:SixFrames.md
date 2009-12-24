@@ -16,9 +16,7 @@ complementing/translating as appropriate. The only trick is figuring out
 how to take the subsequences so you have regions that are equally
 divisible by three.
 
-*NOTE: if you try and create a 'triplet view' on a SymbolList or
-Sequence who's length is not evenly divisible by three an
-IllegalArgumentException will be thrown. See ['how to get a
+*NOTE: See ['how to get a
 subsequence'](Biojava:Cookbook:Sequence:SubSequence "wikilink") for a
 description of how to get a portion of a Sequence for translation.*
 
