@@ -105,8 +105,8 @@ Come posso....?
     una Proteina](Biojava:CookBookItaliano:Translation "wikilink")?
 -   [Come posso tradurre un singolo codone in un singolo
     aminoacido](Biojava:CookBookItaliano:Translation:Single "wikilink")?
--   [How do I use a non standard translation
-    table](Biojava:Cookbook:Translation:NonStandart "wikilink")?
+-   [Come posso utilizzare una tavola di traduzione non
+    standard](Biojava:CookBookItaliano:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
     frames](Biojava:Cookbook:Translation:SixFrames "wikilink")?
 -   [How do I retrieve the 1-Letter code of a translated sequence
