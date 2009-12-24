@@ -5,14 +5,16 @@ title: BioJava:CookBookItaliano:Translation:NonStandart
 Come posso utilizzare una tavola di traduzione non standard?
 ------------------------------------------------------------
 
-The convenient translate() method in RNATools, used in the general
-translation example, is only useful if you want to use the "Universal"
-translation table. This is not so good if you want to use one of those
-weird Mitochondrial translation tables. Fortunately this can be done in
-BioJava. RNATools also has a static method getGeneticCode(String name)
-that lets you get a TranslationTable by name.
+L'utile metodo translate() appartenente a RNATools, utilizzato
+nell'esempio generale di traduzione, viene utilizzato solamente quando
+si utilizza la tavola di traduzione Universale. Questo metodo non
+funziona se si ha la necessità di utilizzare le rare tavole di
+traduzione Mitocondriali. Fortunatamente questo può essere fatto con
+Biojava. RNATools ha metodo statico getGeneticCode(String name) che ci
+permette di ottenere una diversa tavola di traduzione, un oggetto della
+classe TranslationTable, a partire dal nome.
 
-The following TranslationTables are available:
+Sono disponibili le seguenti tavole di traduzione:
 
 -   FLATWORM\_MITOCHONDRIAL
 -   YEAST\_MITOCHONDRIAL
@@ -28,12 +30,12 @@ The following TranslationTables are available:
 -   MOLD\_MITOCHONDRIAL
 -   ECHINODERM\_MITOCHONDRIAL
 
-These are also the valid names that can be used as an argument in the
-static RNATools.getGeneticCode(String name) method. These names are also
-available as static Strings in the TranslationTools class.
+Questi nomi possono essere passati come argomento al metodo statico
+RNATools.getGeneticCode(String name). Questi nomi sono anche presenti
+come Stringhe costanti della classe TranslationTools.
 
-The following program shows the use of the Euplotid Nuclear translation
-table (where UGA = Cys).
+Il seguente programma mostra l'utilizzo della tavola di traduzione
+relativa a Euplotid Nuclear (dove UGA = Cys).
 
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
@@ -41,23 +43,23 @@ public class AlternateTranslation {
 
 ` public static void main(String[] args) {`
 
-`   //get the Euplotoid translation table`  
+`   //ottengo una diversa tavola di traduzione`  
 `   TranslationTable eup = RNATools.getGeneticCode(TranslationTable.EUPL_NUC);`
 
 `   try {`  
-`     //make a DNA sequence including the 'tga' codon`  
+`     //creo una sequenza di DNA che include il codono 'tga'`  
 `     SymbolList seq = DNATools.createDNA("atgggcccatgaaaaggcttggagtaa");`
 
-`     //transcribe to RNA`  
+`     //lo trascrivo in RNA`  
 `     seq = RNATools.transcribe(seq);`
 
-`     //veiw the RNA sequence as codons, this is done internally by RNATool.translate()`  
+`     //creo una vista della sequenza di RNA in codoni, normalmente questo è fatto internamente nel metodo RNATool.translate()`  
 `     seq = SymbolListViews.windowedSymbolList(seq, 3);`
 
-`     //translate`  
+`     //traduciamo`  
 `     SymbolList protein = SymbolListViews.translate(seq, eup);`
 
-`     //print out the protein`  
+`     //stampa a video la proteina`  
 `     System.out.println(protein.seqString());`  
 `   }`  
 `   catch (Exception ex) {`  
