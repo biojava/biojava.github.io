@@ -14,7 +14,13 @@ introns. A six frame translation is a simple matter of taking
 subsequences of the sequence(s) of interest and reverse
 complementing/translating as appropriate. The only trick is figuring out
 how to take the subsequences so you have regions that are equally
-divisible by three
+divisible by three.
+
+*NOTE: if you try and create a 'triplet view' on a SymbolList or
+Sequence who's length is not evenly divisible by three an
+IllegalArgumentException will be thrown. See ['how to get a
+subsequence'](Biojava:Cookbook:Sequence:SubSequence "wikilink") for a
+description of how to get a portion of a Sequence for translation.*
 
 The following example shows a simple program that will six frame
 translate all sequences in a file and print the results to STDOUT in
