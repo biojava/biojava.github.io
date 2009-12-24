@@ -108,7 +108,7 @@ Come posso....?
 -   [Come posso utilizzare una tavola di traduzione non
     standard](Biojava:CookBookItaliano:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
-    frames](Biojava:Cookbook:Translation:SixFrames "wikilink")?
+    frames](Biojava:CookBookItaliano:Translation:SixFrames "wikilink")?
 -   [How do I retrieve the 1-Letter code of a translated sequence
     containing
     ambiguities](Biojava:Cookbook:Translation:OneLetterAmbi "wikilink")?
