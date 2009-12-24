@@ -47,7 +47,7 @@ How about simplified
 
 And lets not forget this new
 [Italian](BioJava:CookBookItaliano "wikilink") translation (translated
-by Alessandro Cipriani; last update: 26 November 2009).
+by Alessandro Cipriani; last update: 24 December 2009).
 
 How Do I....?
 -------------
