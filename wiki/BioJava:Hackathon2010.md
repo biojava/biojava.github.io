@@ -24,7 +24,7 @@ Genome Campus, Hinxton]
 ### Accomodation and Travel
 
 Some of the participants are staying at the [Travelodge, Hills
-Road](http://maps.google.com/maps/place?cid=6821371219882759467&q=Travelodge,%2BHills%2BRoad%2Bin%2BCambridge)
+Road](http://maps.google.com/maps/place?cid=6821371219882759467&q=travelodge%2Bhills%2Broad%2Bcambridge)
 in Cambridge.
 
 There is a free bus provided by the Genome campus every morning and
