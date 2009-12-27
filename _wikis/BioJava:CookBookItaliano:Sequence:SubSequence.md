@@ -5,10 +5,10 @@ title: BioJava:CookBookItaliano:Sequence:SubSequence
 Come posso ottenere una parte di una Sequenza?
 ----------------------------------------------
 
-In genere data una sequenza noi potremmo essere solamente interessati ad
-esaminare o le prime 10 basi o una regione compresa fra 2 punti. Quindi
-si ha ha necessità di stampare una sotto-sequenza su un OutputStream
-come lo StdOut, come è possibile fare ciò?
+In genere, data una sequenza, che sia nucleotidica o proteica, noi
+potremmo essere solamente interessati ad esaminare o le prime 10 basi o
+una regione compresa fra 2 punti. Come è possibile stampare una
+sotto-sequenza su un OutputStream come lo StdOut?
 
 Biojava utilizza un sistema di coordinate biologiche per identificare le
 basi. La prima base ha indice 1 e l'ultima ha indice uguale alla
