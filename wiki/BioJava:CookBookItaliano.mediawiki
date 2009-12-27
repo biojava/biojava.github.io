@@ -55,10 +55,10 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Translation:SixFrames|Come posso tradure una sequenza di nucleotidi secondo tutti i sei frame]]?
 * [[Biojava:CookBookItaliano:Translation:OneLetterAmbi|Come è possibile ottenere una traduzione con codice a una lettera di una sequenza  che contiene ambiguità]]?
 
-=== Proteomics ===
+=== Proteomica ===
 
-* [[Biojava:Cookbook:Proteomics|How do I calculate the mass and pI of a peptide]]?
-* [[Biojava:Cookbook:Proteomics:AAindex|How do I analyze the symbol properties of an amino acid sequence using the Amino Acid Index database]]?
+* [[Biojava:CookBookItaliano:Proteomics|Come posso calcolare la massa e il pI di un aminoacido]]?
+* [[Biojava:Cookbook:Proteomics:AAindex|Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase]]?
 
 === Sequence I/O ===
 
