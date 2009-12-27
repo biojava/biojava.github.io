@@ -2,8 +2,8 @@
 title: BioJava:CookBookItaliano:Translation:OneLetterAmbi
 ---
 
-How can I retrieve the 1-Letter code of a translated sequence containing ambiguities?
--------------------------------------------------------------------------------------
+Come è possibile ottenere una traduzione con codice a una lettera di una sequenza che contiene ambiguità?
+---------------------------------------------------------------------------------------------------------
 
 In HIV context, population sequencing is done to detect mutations, which
 could induce resistance against certain drug. So sequences from HIV
