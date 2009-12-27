@@ -113,13 +113,13 @@ Come posso....?
     di una sequenza che contiene
     ambiguità](Biojava:CookBookItaliano:Translation:OneLetterAmbi "wikilink")?
 
-### Proteomics
+### Proteomica
 
--   [How do I calculate the mass and pI of a
-    peptide](Biojava:Cookbook:Proteomics "wikilink")?
--   [How do I analyze the symbol properties of an amino acid sequence
-    using the Amino Acid Index
-    database](Biojava:Cookbook:Proteomics:AAindex "wikilink")?
+-   [Come posso calcolare la massa e il pI di un
+    aminoacido](Biojava:CookBookItaliano:Proteomics "wikilink")?
+-   [Come posso analizzare le proprietà dei vari simboli di una sequenza
+    peptidica utilizzano Amino Acid Index
+    DataBase](Biojava:Cookbook:Proteomics:AAindex "wikilink")?
 
 ### Sequence I/O
 
