@@ -11,6 +11,8 @@ Cambridge, U.K. from Jan. 19th-22nd
 ### Goals
 
 `- Further development of the BioJava modules. For module specific goals see the `[`BioJava:Modules`](BioJava:Modules "wikilink")` page.`  
+`- Anything the module leaders deem necessary for their modules.`  
+`- Add new modules`  
 `- Finalizing BioJava 3.0`
 
 ### Location
