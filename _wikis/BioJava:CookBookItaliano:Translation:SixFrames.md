@@ -50,8 +50,8 @@ org.biojavax.bio.seq.RichSequence;
 
 `* `
 
-`* Program to six-frame translate a nucleotide sequence usage: java Hex `<file>  
-`* `<dna|rna>  
+`* Programma per la traduzione secondo tutti i 6 frame di una sequenza di nucleotidi`  
+`* utilizzo: java Hex.class `<file>` `<DNA|RNA>` o nessun argomento verranno utilizzati dei parametri standard`  
 `* `
 
 `*/`
@@ -85,51 +85,45 @@ public class Hex {
 `           SequenceIterator seqi = RichSequence.IOTools.readFasta(br,`  
 `                   toke, null);`  
 `           `  
-`           // for each sequence`  
+`           // per ogni sequenza`  
 `           while (seqi.hasNext()) {`  
 `               Sequence seq = seqi.nextSequence();`
 
-`               // for each frame`  
+`               // per ogni frame`  
 `               for (int i = 0; i < 3; i++) {`  
 `                   SymbolList prot;`  
 `                   Sequence trans;`
 
-`                   // take the reading frame`  
-`                   // remember that in a SymbolList the first element has`  
-`                   // index= 1`  
-`                   // remember that if the length of the list evenly divisible`  
-`                   // by three an IllegalArgumentException will be thrown`  
+`                   // prendiamo il frame di lettura`  
+`                   // Ricorda che in una SymbolList il primo elemento ha indice 1`  
+`                                       // Ricorda che se la lunghezza della lista non è divisibile per 3`  
+`                                       // altrimento quando se ne effettua la traduzione verrà sollevata una`  
+`                                       // eccezione di tipo IllegalArgumentException `  
 `                   SymbolList syms = seq.subList(i + 1, seq.length()`  
 `                           - (seq.length() - i) % 3);`
 
-`                   // if it is DNA transcribe it to RNA`  
+`                                       // se è DNA lo trascrivo in RNA`  
 `                   if (syms.getAlphabet() == DNATools.getDNA()) {`  
 `                       syms = DNATools.toRNA(syms);`  
 `                   }`
 
-`                   // output forward translation to STDOUT`  
+`                   // redirigo l'output sullo STDOUT`  
 `                   prot = RNATools.translate(syms);`  
 `                   trans = SequenceTools.createSequence(prot, "", seq`  
 `                           .getName()`  
 `                           + "TranslationFrame: +" + i,`  
-`                           Annotation.EMPTY_ANNOTATION);`  
-`                   /*`  
-`                    * This method is deprecated since BioJava 1.5`  
-`                    * SeqIOTools.writeFasta(System.out, trans);`  
-`                    */`  
+`                           Annotation.EMPTY_ANNOTATION);`
+
 `                   RichSequence.IOTools.writeFasta(System.out, trans, null);`
 
-`                   // output reverse frame translation to STDOUT`  
+`                   // redirigo l'output sullo STDOUT`  
 `                   syms = RNATools.reverseComplement(syms);`  
 `                   prot = RNATools.translate(syms);`  
 `                   trans = SequenceTools.createSequence(prot, "", seq`  
 `                           .getName()`  
 `                           + " TranslationFrame: -" + i,`  
 `                           Annotation.EMPTY_ANNOTATION);`  
-`                   /*`  
-`                    * This method is deprecated since BioJava 1.5`  
-`                    * SeqIOTools.writeFasta(System.out, trans);`  
-`                    */`  
+`   `  
 `                   RichSequence.IOTools.writeFasta(System.out, trans, null);`  
 `               }`  
 `           }`  
