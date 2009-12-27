@@ -109,9 +109,9 @@ Come posso....?
     standard](Biojava:CookBookItaliano:Translation:NonStandart "wikilink")?
 -   [Come posso tradure una sequenza di nucleotidi secondo tutti i sei
     frame](Biojava:CookBookItaliano:Translation:SixFrames "wikilink")?
--   [How do I retrieve the 1-Letter code of a translated sequence
-    containing
-    ambiguities](Biojava:CookBookItaliano:Translation:OneLetterAmbi "wikilink")?
+-   [Come è possibile ottenere una traduzione con codice a una lettera
+    di una sequenza che contiene
+    ambiguità](Biojava:CookBookItaliano:Translation:OneLetterAmbi "wikilink")?
 
 ### Proteomics
 

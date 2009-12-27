@@ -53,7 +53,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Translation:Single|Come posso tradurre un singolo codone in un singolo aminoacido]]?
 * [[Biojava:CookBookItaliano:Translation:NonStandart|Come posso utilizzare una tavola di traduzione non standard]]?
 * [[Biojava:CookBookItaliano:Translation:SixFrames|Come posso tradure una sequenza di nucleotidi secondo tutti i sei frame]]?
-* [[Biojava:CookBookItaliano:Translation:OneLetterAmbi|How do I retrieve the 1-Letter code of a translated sequence containing ambiguities]]?
+* [[Biojava:CookBookItaliano:Translation:OneLetterAmbi|Come è possibile ottenere una traduzione con codice a una lettera di una sequenza  che contiene ambiguità]]?
 
 === Proteomics ===
 
