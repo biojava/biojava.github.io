@@ -10,17 +10,13 @@ genoma della popolazione per mutazioni che possono indurre una
 resistenza contro determinate droge. Per questo motivo le sequenze
 provenienti dall'HIV spesso contengono ambiguità. Le annotazioni
 utilizzate per le mutazioni dell'HIV seguono la seguente convenzione:
-I47VA ("47")
+I47VA ("47" è la posizione di riferimento nella sequenza, I l'aminoacido
+nella sequenza di riferimento, "V,A" gli aminoacidi nella sequenza su
+cui stiamo lavorando).
 
-In HIV context, population sequencing is done to detect mutations, which
-could induce resistance against certain drug. So sequences from HIV
-often contain ambiguities. The annotation for HIV mutation follows the
-following convention: I47VA ("47" is the position in the reference
-sequence, "I" the amino acid in the reference sequence and "V,A" the
-amino acids in the sequence we look at).
-
-This sample code shows how to retrieve the 1-Letter code needed for this
-annotation at every position of the translated sequence:
+Questo esempio mostra come ottenere la codifica ad una lettera
+necessaria per questo tipo di annotazione in ogni posizione della
+sequenza tradotta:
 
 <java> import java.util.Iterator; import org.biojava.bio.BioException;
 import org.biojava.bio.seq.DNATools; import
@@ -29,11 +25,10 @@ org.biojava.bio.symbol.Alphabet; import
 org.biojava.bio.symbol.FiniteAlphabet; import
 org.biojava.bio.symbol.Symbol; import org.biojava.bio.symbol.SymbolList;
 
-public class Main {
+public class TranslationOneLetter {
 
 `   public static void main(String[] args) {`  
 `       try {`  
-`           // TODO code application logic here`  
 `           SymbolList symL = DNATools.createDNA("atnatggnnatg");`  
 `           SymbolList symL2 = DNATools.toProtein(symL);`
 
@@ -57,11 +52,11 @@ public class Main {
 
 `                   Symbol sym2 = (Symbol) i2.next();`
 
-`                   //This will print out the one letter code:`  
+`                   //questo stampa il codice a 1 lettera`  
 `                   System.out.println("one letter code: " + toke.tokenizeSymbol(sym2));`
 
-`               //This would print out the three letter code:`  
-`               //System.out.println("name: " + sym2.getName());`  
+`               //questo stampa il codice a 3 lettere`  
+`               System.out.println("name: " + sym2.getName());`  
 `               }`  
 `               System.out.println("\n");`  
 `           }`  
