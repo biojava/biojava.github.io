@@ -14,13 +14,17 @@ ampie Cornici di lettura aperte (Open Reading Frames) le quali, è noto,
 sono redioni codificanti o al limite sono regioni prive di introni. Per
 risolvere il problema della traduzione a sei frame basta prendere una
 sotto sequenza della sequenza di interesse e invertirla, traslarla o
-crearne il complemento in maniera appropriata. L'unico ostacolo che ci
-si pone dinnanzi e come scegliere le sottosequenze in maniera tale da
-avere regioni ugualmente divisibili per tre.
+crearne il complemento in maniera appropriata, per poi ovviamente
+tradurla. L'unico ostacolo che ci si pone dinnanzi e come scegliere le
+sottosequenze in maniera tale da avere regioni ugualmente divisibili per
+tre, altrimenti il metodo translate solleverà una
+IllegalArgumentException.
 
 L'esempio seguente mostra un semplice programma che data una sequenza ne
-fa la traduzione secondo tutti i sei frame e il risultato viene
-memorizzato in un file e inviato nello STDOUT in formato FASTA.
+fa la traduzione secondo tutti i sei frame o leggendolo da un file in
+formato fasta o prendendo la sequenza da una costante, il risultato
+viene poi memorizzato in un file e inviato nello STDOUT in formato
+FASTA.
 
 *Nota Bene:Segui questo
 [link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
