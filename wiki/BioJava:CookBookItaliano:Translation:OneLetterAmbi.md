@@ -5,6 +5,13 @@ title: BioJava:CookBookItaliano:Translation:OneLetterAmbi
 Come è possibile ottenere una traduzione con codice a una lettera di una sequenza che contiene ambiguità?
 ---------------------------------------------------------------------------------------------------------
 
+In un contesto di ricerca sull'HIV, si effettua il sequenziamento del
+genoma della popolazione per mutazioni che possono indurre una
+resistenza contro determinate droge. Per questo motivo le sequenze
+provenienti dall'HIV spesso contengono ambiguità. Le annotazioni
+utilizzate per le mutazioni dell'HIV seguono la seguente convenzione:
+I47VA ("47")
+
 In HIV context, population sequencing is done to detect mutations, which
 could induce resistance against certain drug. So sequences from HIV
 often contain ambiguities. The annotation for HIV mutation follows the
