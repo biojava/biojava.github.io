@@ -24,101 +24,140 @@ The following example shows a simple program that will six frame
 translate all sequences in a file and print the results to STDOUT in
 fasta format.
 
-<java> import java.io.BufferedReader; import java.io.FileReader;
+<java> import java.io.BufferedReader; import java.io.File; import
+java.io.FileOutputStream; import java.io.FileReader; import
+java.io.IOException; import java.io.PrintStream; import
+java.util.NoSuchElementException;
 
-import org.biojava.bio.Annotation; import org.biojava.bio.seq.DNATools;
-import org.biojava.bio.seq.RNATools; import
-org.biojava.bio.seq.Sequence; import
-org.biojava.bio.seq.SequenceIterator; import
+import org.biojava.bio.Annotation; import org.biojava.bio.BioException;
+import org.biojava.bio.seq.DNATools; import
+org.biojava.bio.seq.RNATools; import org.biojava.bio.seq.Sequence;
+import org.biojava.bio.seq.SequenceIterator; import
 org.biojava.bio.seq.SequenceTools; import
-org.biojava.bio.seq.io.SeqIOTools; import
-org.biojava.bio.symbol.SymbolList;
+org.biojava.bio.seq.io.SymbolTokenization; import
+org.biojava.bio.symbol.AlphabetManager; import
+org.biojava.bio.symbol.IllegalAlphabetException; import
+org.biojava.bio.symbol.SymbolList; import
+org.biojavax.bio.seq.RichSequence;
 
 /\*\*
 
 `* `
 
-Program to six-frame translate a nucleotide sequence
+`* Program to six-frame translate a nucleotide sequence usage: java Hex `<file>  
+`* `<dna|rna>  
+`* `
 
 `*/`
 
 public class Hex {
 
-` /**`  
-`  * Call this to get usage info, program terminates after call.`  
-`  */`  
-` public static void help() {`  
-`   System.out.println(`  
-`       "usage: java Hex `<file>` `<format eg fasta>` `<dna|rna>`");`  
-`   System.exit( -1);`  
-` }`
+`   public static void main(String[] args) {`  
+`       `  
+`       String filename = "";`  
+`       String type = "";`
 
-` public static void main(String[] args) throws Exception{`  
-`   if (args.length != 3) {`  
-`     help();`  
+`       try {`  
+`           if (args.length != 0) {`  
+`               filename = args[0];`  
+`               type = args[1].toUpperCase();`  
+`           }else{`  
+`               filename =System.getProperty("java.io.tmpdir")+"/MYOZ1.fasta";`  
+`               type="DNA";`  
+`               FileOutputStream f = new FileOutputStream(new File(filename));  `  
+`               PrintStream ps = new PrintStream(f);`  
+`               ps.print(MYOZ1);`  
+`               ps.close();`  
+`               f.close();`  
+`           }`
+
+`           SymbolTokenization toke = AlphabetManager.alphabetForName(type)`  
+`                   .getTokenization("token");`
+
+`           BufferedReader br = new BufferedReader(new FileReader(filename));`
+
+`           SequenceIterator seqi = RichSequence.IOTools.readFasta(br,`  
+`                   toke, null);`  
+`           `  
+`           // for each sequence`  
+`           while (seqi.hasNext()) {`  
+`               Sequence seq = seqi.nextSequence();`
+
+`               // for each frame`  
+`               for (int i = 0; i < 3; i++) {`  
+`                   SymbolList prot;`  
+`                   Sequence trans;`
+
+`                   // take the reading frame`  
+`                   // remember that in a SymbolList the first element has`  
+`                   // index= 1`  
+`                   // remember that if the length of the list evenly divisible`  
+`                   // by three an IllegalArgumentException will be thrown`  
+`                   SymbolList syms = seq.subList(i + 1, seq.length()`  
+`                           - (seq.length() - i) % 3);`
+
+`                   // if it is DNA transcribe it to RNA`  
+`                   if (syms.getAlphabet() == DNATools.getDNA()) {`  
+`                       syms = DNATools.toRNA(syms);`  
+`                   }`
+
+`                   // output forward translation to STDOUT`  
+`                   prot = RNATools.translate(syms);`  
+`                   trans = SequenceTools.createSequence(prot, "", seq`  
+`                           .getName()`  
+`                           + "TranslationFrame: +" + i,`  
+`                           Annotation.EMPTY_ANNOTATION);`  
+`                   /*`  
+`                    * This method is deprecated since BioJava 1.5`  
+`                    * SeqIOTools.writeFasta(System.out, trans);`  
+`                    */`  
+`                   RichSequence.IOTools.writeFasta(System.out, trans, null);`
+
+`                   // output reverse frame translation to STDOUT`  
+`                   syms = RNATools.reverseComplement(syms);`  
+`                   prot = RNATools.translate(syms);`  
+`                   trans = SequenceTools.createSequence(prot, "", seq`  
+`                           .getName()`  
+`                           + " TranslationFrame: -" + i,`  
+`                           Annotation.EMPTY_ANNOTATION);`  
+`                   /*`  
+`                    * This method is deprecated since BioJava 1.5`  
+`                    * SeqIOTools.writeFasta(System.out, trans);`  
+`                    */`  
+`                   RichSequence.IOTools.writeFasta(System.out, trans, null);`  
+`               }`  
+`           }`  
+`           br.close();`  
+`       } catch (IOException e) {`  
+`           e.printStackTrace();`  
+`       } catch (IllegalAlphabetException e) {`  
+`           e.printStackTrace();`  
+`       } catch (NoSuchElementException e) {`  
+`           e.printStackTrace();`  
+`       } catch (BioException e) {`  
+`           e.printStackTrace();`  
+`       }`  
 `   }`
 
-`   BufferedReader br = null;`  
-`   `  
-`   //file format (eg fasta)`  
-`   String format = args[1];`  
-`   `  
-`   //sequence type (eg dna)`  
-`   String alpha = args[2];`
-
-`   try {`  
-`     br = new BufferedReader(new FileReader(args[0]));`
-
-`     SequenceIterator seqi =`  
-`         (SequenceIterator)SeqIOTools.fileToBiojava(format, alpha, br);`
-
-`     //for each sequence`  
-`     while(seqi.hasNext()){`  
-`       Sequence seq = seqi.nextSequence();`
-
-`       //for each frame`  
-`       for (int i = 0; i < 3; i++) {`  
-`         SymbolList prot;`  
-`         Sequence trans;`
-
-`         //take the reading frame`  
-`         SymbolList syms = seq.subList(`  
-`               i+1,`  
-`               seq.length() - (seq.length() - i)%3);`
-
-`         //if it is DNA transcribe it to RNA`  
-`         if(syms.getAlphabet() == DNATools.getDNA()){`  
-`           //before BJ1.4 use this method`  
-`       syms = RNATools.transcribe(syms);`  
-`       //after BJ1.4 use this method`  
-`       syms = DNATools.toRNA(syms);`  
-`         }`
-
-`         //output forward translation to STDOUT`  
-`         prot = RNATools.translate(syms);`  
-`         trans = SequenceTools.createSequence(prot, "",`  
-`                                              seq.getName()+`  
-`                                              "TranslationFrame: +"+i,`  
-`                                              Annotation.EMPTY_ANNOTATION);`  
-`         SeqIOTools.writeFasta(System.out, trans);`
-
-`         //output reverse frame translation to STDOUT`  
-`         syms = RNATools.reverseComplement(syms);`  
-`         prot = RNATools.translate(syms);`  
-`         trans = SequenceTools.createSequence(prot, "",`  
-`                                              seq.getName() +`  
-`                                              " TranslationFrame: -" + i,`  
-`                                              Annotation.EMPTY_ANNOTATION);`  
-`         SeqIOTools.writeFasta(System.out, trans);`  
-`       }`  
-`     }`  
-`   }`  
-`   finally {`  
-`     //tidy up`  
-`     if(br != null){`  
-`       br.close();`  
-`     }`  
-`   }`  
-` }`
+`   private static String MYOZ1 = ">gi|21359948|ref|NM_021245.2| Homo sapiens myozenin 1 (MYOZ1), mRNA "`  
+`           + "\n"`  
+`           + "GTTTCTCCCTAAGTGCTTCTTTGGATCTCAGGCTCTAGGTGCAATGTGAAGGGGAGTCCCTGGGCAGACTGATCCCTGGC"`  
+`           + "TCAGACAGTTCAGTGGGAGAATCCCAAAGGCCTTTTCCCTCCTTCCTGAGCCTCCGGGCAAGGAGGGAGGGATCTTGGTT"`  
+`           + "CCAGGGTCTCAGTACCCCCTGTGCCATTTGAGCTGCTTGCGCTCATCATCTCTATTAATAACCAACTTCCCTCCCCCACT"`  
+`           + "GCCAGTGCTGCCCCCACGCCTGCCCAGCTCGTGTTCTCCGGTCACAGCAGCTCAGTCCTCCAAAGCTGCTGGACCCCAGG"`  
+`           + "GAGAGCTGACCACTGCCCGAGCAGCCGGCTGAATCCACCTCCACAATGCCGCTCTCAGGAACCCCGGCCCCTAATAAGAA"`  
+`           + "GAGGAAATCCAGCAAGCTGATCATGGAACTCACTGGAGGTGGACAGGAGAGCTCAGGCTTGAACCTGGGCAAAAAGATCA"`  
+`           + "GTGTCCCAAGGGATGTGATGTTGGAGGAACTGTCGCTGCTTACCAACCGGGGCTCCAAGATGTTCAAACTGCGGCAGATG"`  
+`           + "AGGGTGGAGAAGTTTATTTATGAGAACCACCCTGATGTTTTCTCTGACAGCTCAATGGATCACTTCCAGAAGTTCCTTCC"`  
+`           + "AACAGTGGGGGGACAGCTGGGCACAGCTGGTCAGGGATTCTCATACAGCAAGAGCAACGGCAGAGGCGGCAGCCAGGCAG"`  
+`           + "GGGGCAGTGGCTCTGCCGGACAGTATGGCTCTGATCAGCAGCACCATCTGGGCTCTGGGTCTGGAGCTGGGGGTACAGGT"`  
+`           + "GGTCCCGCGGGCCAGGCTGGCAGAGGAGGAGCTGCTGGCACAGCAGGGGTTGGTGAGACAGGATCAGGAGACCAGGCAGG"`  
+`           + "CGGAGAAGGAAAACATATCACTGTGTTCAAGACCTATATTTCCCCATGGGAGCGAGCCATGGGGGTTGACCCCCAGCAAA"`  
+`           + "TGAACCCCTGGTCCTCTACAACCAAAACCTCTCCAACAGGCCTTCTTTCAATCGAACCCCTATTCCCTGGCTGAGCTCTG"`  
+`           + "GGGAGCCTGTAGACTACAACGTGGATATTGGCATCCCCTTGGATGGAGAAACAGAGGAGCTGTGAGGTGTTTCCTCCTCT"`  
+`           + "GATTTGCATCATTTCCCCTCTCTGGCTCCAATTTGGAGAGGGAATGCTGAGCAGATAGCCCCCATTGTTAATCCAGTATC"`  
+`           + "CTTATGGGAATGGAGGGAAAAAGGAGAGATCTACCTTTCCATCCTTTACTCCAAGTCCCCACTCCACGCATCCTTCCTCA"`  
+`           + "CCAACTCAGAGCTCCCCTTCTACTTGCTCCATATGGAACCTGCTCGTTTATGGAATTTGCTCTGCCACCAGTAACAGTCA"`  
+`           + "ATAAACTTCAAGGAAAATGAAAAAAAA";`
 
 } </java>
