@@ -2,9 +2,9 @@
 
 Questo è probabilmente una dele più frequenti applicazioni della bioinformatica e una delle questioni più postate all'interno della mailing list.
 
-La traduzione secondo tutti i sei frame è utile per individuare le più ampie Cornici di lettura aperte (Open Reading Frames) le quali, è noto, sono redioni codificanti o al limite sono regioni prive di introni. Per risolvere il problema della traduzione a sei frame basta prendere una sotto sequenza della sequenza di interesse e invertirla, traslarla o crearne il complemento in maniera appropriata. L'unico ostacolo che ci si pone dinnanzi e come scegliere le sottosequenze in maniera tale da avere regioni ugualmente divisibili per tre.
+La traduzione secondo tutti i sei frame è utile per individuare le più ampie Cornici di lettura aperte (Open Reading Frames) le quali, è noto, sono redioni codificanti o al limite sono regioni prive di introni. Per risolvere il problema della traduzione a sei frame basta prendere una sotto sequenza della sequenza di interesse e invertirla, traslarla o crearne il complemento in maniera appropriata, per poi ovviamente tradurla. L'unico ostacolo che ci si pone dinnanzi e come scegliere le sottosequenze in maniera tale da avere regioni ugualmente divisibili per tre, altrimenti il metodo translate solleverà una IllegalArgumentException.
 
-L'esempio seguente mostra un semplice programma che data una sequenza ne fa la traduzione secondo tutti i sei frame e il risultato viene memorizzato in un file e inviato nello STDOUT in formato FASTA.
+L'esempio seguente mostra un semplice programma che data una sequenza ne fa la traduzione secondo tutti i sei frame o leggendolo da un file in formato fasta o prendendo la sequenza da una costante,  il risultato viene poi memorizzato in un file e inviato nello STDOUT in formato FASTA.
 
 ''Nota Bene:Segui questo [[Biojava:CookBookItaliano:Sequence:SubSequence|link]] per scoprire come ottenere una porzione di una Sequenza per poi tradurla''
 
