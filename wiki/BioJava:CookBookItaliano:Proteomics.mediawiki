@@ -58,7 +58,6 @@ public class CalcMass {
   }
 
   /**
-   * Calculates the isoelectric point assuming a free NH and COOH
    * Calcola il punto isoelettrico assumento un libero NH e COOH
    * @param protein the peptide
    * @throws IllegalAlphabetException if <code>protein</code> is not a peptide
@@ -123,29 +122,27 @@ public class CalcMass {
 
          /*
           * La traduzione di GTG o TTG attualmente è la Metionina se
-          * Translation of GTG or TTG actually results in a Methionine if
-          * it is the start codon (all proteins start with f-Met). Therefore
-          * we need to edit the sequence.
+          * se è il codone di start(tutte le sequenze partono con f-Met). Altrimenti
+          * dobbiamo modificare la sequenza.
           */      
           if(syms.symbolAt(1) != ProteinTools.met()){
             
-            //SimpleSymbolLists are editable others may not be
+            //SimpleSymbolLists sono editabili altri no
             syms = new SimpleSymbolList(syms);
             Edit e = new Edit(1, syms.getAlphabet(), ProteinTools.met());
             syms.edit(e);
           }
         }
-
-        //if the seq ends with a * (termination) we need to remove the *
+        //Se la sequenza finisce con una * (terminazione) abbiamo bisogno di rimuovere l'*
         if (syms.symbolAt(syms.length()) == ProteinTools.ter()) {
           syms = syms.subList(1, syms.length()-1);
         }
 
-        //do calculations
+        //effettuo i calcoli
         double mass = calcMass.mass(syms);
         double pI = calcMass.pI(syms);
 
-        //print result for this protein
+        //stampo i risultati per questa proteina
         out.println(mass+","+pI+","+syms.length()+","+syms.seqString());
       }
     }
