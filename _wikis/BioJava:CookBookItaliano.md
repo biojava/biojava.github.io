@@ -111,7 +111,7 @@ Come posso....?
     frame](Biojava:CookBookItaliano:Translation:SixFrames "wikilink")?
 -   [How do I retrieve the 1-Letter code of a translated sequence
     containing
-    ambiguities](Biojava:Cookbook:Translation:OneLetterAmbi "wikilink")?
+    ambiguities](Biojava:CookBookItaliano:Translation:OneLetterAmbi "wikilink")?
 
 ### Proteomics
 
