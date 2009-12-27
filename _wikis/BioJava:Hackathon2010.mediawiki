@@ -5,6 +5,8 @@ The BioJava Hackaton will take place at the Genome Campus in Hinxton, Cambridge,
 === Goals ===
 
  - Further development of the BioJava modules. For module specific goals see the [[BioJava:Modules]] page.
+ - Anything the module leaders deem necessary for their modules.
+ - Add new modules
  - Finalizing BioJava 3.0
 
 === Location ===
