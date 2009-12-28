@@ -19,10 +19,6 @@ implémenté dans BioJava. Le code source vous permet même de créer votre
 propre modèle de données mais il vous faudra implémenter [l'interface
 MMcifConsumer](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
-Le lecteur MMCIF est encore en développement actif et sera inclus dans
-la prochaine version de BioJava. Pour le moment, il vous faudra utiliser
-la [librairie en développement sur SVN](Autobuild_events "wikilink").
-
 <java> @A venir dans BioJava 1.7 mais disponible via SVN public static
 void main(String[] args){
 
