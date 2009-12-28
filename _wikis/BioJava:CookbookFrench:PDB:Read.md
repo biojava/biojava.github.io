@@ -2,8 +2,7 @@
 title: BioJava:CookbookFrench:PDB:Read
 ---
 
-Comment faire pour lire un fichier de type PDB?
------------------------------------------------
+### Comment faire pour lire un fichier de type PDB?
 
 La [*Protein Data Bank*](http://www.pdb.org) est la principale source de
 données struturales disponible sur l'Internet. Contrairement aux
