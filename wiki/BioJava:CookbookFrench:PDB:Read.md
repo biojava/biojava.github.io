@@ -9,16 +9,42 @@ La [*Protein Data Bank*](http://www.pdb.org) est la principale source de
 données struturales disponible sur l'Internet. Contrairement aux
 fichiers de type GenBank ou EMBL qui contiennent des donnés de séquence,
 les fichiers PDB contiennent plutôt des données de position d'atomes au
-sein d'une structure 3D. BioJava contient un modèle flexible permettant
-la gestion des données de structure contenues dans un fichier PDB. Les
-exemples ci-dessous montre comment créer et manipuler une repertoire PDB
-local ou faire la lecture d'un fichier PDB à partir d'un système de
-fichiers local.
+sein d'une structure 3D.
 
-L'accè aux informations de chaque Atome contenu dans le fichier se fait
-plutôt de cette manière.
+BioJava contient un modèle flexible permettant la gestion des données de
+structure contenues dans un fichier PDB. Les exemples ci-dessous
+montrent comment:
 
-### Exemple: Utilisation d'une installation locale de PDB
+-   créer et manipuler une repertoire PDB local ou
+-   faire la lecture d'un fichier PDB à partir d'un système de fichiers
+    local.
+
+Les fonctionnalités de base de cette capacité sont retrouvés dans la
+classe
+[PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html).
+
+Exemple bref: la manière rapide de lire un fichier local
+--------------------------------------------------------
+
+<java>
+
+`// fonctionne egalement sur le fichiers compressés en gzip`  
+`String filename =  "path/to/pdbfile.ent" ;`  
+  
+`PDBFileReader pdbreader = new PDBFileReader();`
+
+`try{`
+
+`    Structure struc = pdbreader.getStructure(filename);`  
+`    `  
+`} catch (Exception e){`  
+`    e.printStackTrace();`  
+`}`
+
+</java>
+
+Exemple: Utilisation d'une installation locale de PDB
+-----------------------------------------------------
 
 <java>
 
@@ -54,7 +80,7 @@ plutôt de cette manière.
 
 </java>
 
-L'exempl ci-dessus produira la sortie suivante:
+L'exemple ci-dessus produira la sortie suivante:
 
     Fetching ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/pdb4hhb.ent.gz
     writing to /tmp/hh/pdb4hhb.ent.gz
@@ -77,7 +103,8 @@ L'exempl ci-dessus produira la sortie suivante:
     Compound: 1 HEMOGLOBIN (DEOXY) (ALPHA CHAIN) Chains: ChainId: A C Engineered: YES OrganismScientific: HOMO SAPIENS OrganismTaxId: 9606 OrganismCommon: HUMAN 
     Compound: 2 HEMOGLOBIN (DEOXY) (BETA CHAIN) Chains: ChainId: B D Engineered: YES OrganismScientific: HOMO SAPIENS OrganismTaxId: 9606 OrganismCommon: HUMAN 
 
-### Exemple: Lecture d'un fichier local en format PDB
+Exemple: Lecture d'un fichier local en format PDB
+-------------------------------------------------
 
 <java>
 
