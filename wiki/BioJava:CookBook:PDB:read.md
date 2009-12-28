@@ -25,7 +25,8 @@ Short Example: the quickest way to read a local file
   
 `PDBFileReader pdbreader = new PDBFileReader();`
 
-`try{`  
+`try{`
+
 `    Structure struc = pdbreader.getStructure(filename);`  
 `    `  
 `} catch (Exception e){`  
