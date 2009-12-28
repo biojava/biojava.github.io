@@ -249,8 +249,8 @@ How Do I....?
 
 ### Protein Structure
 
--   [How can I read a PDB file?](BioJava:CookBook:PDB:read "wikilink")
--   [How can I read a .mmcif
+-   [How can I parse a PDB file?](BioJava:CookBook:PDB:read "wikilink")
+-   [How can I parse a .mmcif
     file?](BioJava:CookBook:PDB:mmcif "wikilink")
 -   [How can I access the atoms in a
     structure?](BioJava:CookBook:PDB:atoms "wikilink")
