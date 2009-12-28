@@ -88,6 +88,9 @@ Compound: 2 HEMOGLOBIN (DEOXY) (BETA CHAIN) Chains: ChainId: B D Engineered: YES
 
 == Exemple: Lecture d'un fichier local en format PDB == 
 
+L'exemple suivant permet le lecture d'un fichier PDB à partir de votre système de fichiers, la création d'un objet [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure] et faire l'itération sur les objets  [http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html Groups] qui sont contenu dans ce fichier. Pour les exemples d'accession aux objets [http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html Atoms], voir [[BioJava:CookbookFrench:PDB:Atom]]. Pour plus d'informations sur la gestion des informations SEQRES et ATOM,
+voir [[BioJava:CookbookFrench:PDB:Seqres]].
+
 <java>
  // fonctionne egalement avec les fichiers
  // compresses par zip
