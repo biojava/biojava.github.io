@@ -17,6 +17,7 @@ The class providing the core functionality for this is the [http://www.biojava.o
  PDBFileReader pdbreader = new PDBFileReader();
 
  try{
+
      Structure struc = pdbreader.getStructure(filename);
      
  } catch (Exception e){
