@@ -4,7 +4,6 @@
 
 L'exemple ci-dessous fait la démonstration de la lecture des données afin de créer un objet correpondant au modèle de données structurales implémenté dans BioJava. Le code source vous permet même de créer votre propre modèle de données mais il vous faudra implémenter [http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html l'interface MMcifConsumer].
 
-Le lecteur MMCIF est encore en développement actif et sera inclus dans la prochaine version de BioJava. Pour le moment, il vous faudra utiliser la [[Autobuild_events|librairie en développement sur SVN]].
 
 <java>
 @A venir dans BioJava 1.7 mais disponible via SVN
