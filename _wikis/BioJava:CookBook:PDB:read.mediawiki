@@ -8,6 +8,23 @@ BioJava provides a PDB file parser, that reads the content of a PDB file into a 
 
 The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader] class.
 
+== Short Example: the quickes way to read a local file ==
+
+<java>
+ // also works for gzip compressed files
+ String filename =  "path/to/pdbfile.ent" ;
+ 
+ PDBFileReader pdbreader = new PDBFileReader();
+
+ try{
+     Structure struc = pdbreader.getStructure(filename);
+     
+ } catch (Exception e){
+     e.printStackTrace();
+ }
+</java>
+
+
 == Example: How to work with a local installation of PDB ==
 
 <java>
