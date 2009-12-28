@@ -13,14 +13,36 @@ format MMCIF sont lus afin de créer le même type d'objets Structure crée
 à la suite de la lecture de [fichiers en format
 PDB](BioJava:CookbookFrench:PDB:Read "wikilink").
 
-L'exemple ci-dessous fait la démonstration de la lecture des données
-afin de créer un objet correpondant au modèle de données structurales
-implémenté dans BioJava. Le code source vous permet même de créer votre
-propre modèle de données mais il vous faudra implémenter [l'interface
+Pour lire un fichier en format mmCif, simplement utilisé le code
+suivant:
+
+<java> @depuis 1.7
+
+`   public static void main(String[] args){`  
+`       String file = "/path/to/myfile.cif.gz";`  
+`       StructureIOFile pdbreader = new MMCIFFileReader();`  
+`       try {`  
+`           Structure s = pdbreader.getStructure(file);`  
+`           System.out.println(s);`  
+`           System.out.println(s.toPDB());`  
+`       } catch (IOException e) {`  
+`           e.printStackTrace();`  
+`       }`  
+`   }`
+
+</java>
+
+Lire un fichier pour en créer un structure de données personalisée
+------------------------------------------------------------------
+
+L'exemple ci-dessus fait la démonstration de la lecture des données afin
+de créer un objet correpondant au modèle de données structurales
+implémenté dans BioJava. Le code source qui suit vous permet de créer
+votre propre modèle de données mais il vous faudra implémenter
+[l'interface
 MMcifConsumer](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
-<java> @A venir dans BioJava 1.7 mais disponible via SVN public static
-void main(String[] args){
+<java> public static void main(String[] args){
 
 `       String fileName = args[0];`  
 `       `  
