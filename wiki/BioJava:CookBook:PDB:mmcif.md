@@ -12,10 +12,6 @@ files](BioJava:CookBook:PDB:read "wikilink"). The example below
 demonstrates how to load the content into the BioJava data model for
 protein structures.
 
-The mmcif parsing code will be released with the next biojava release in
-April 2009. To use it at the moment you will require a [recent build
-from SVN](Autobuild_events "wikilink").
-
 To parse an mmCif file do the following: <java> @since 1.7
 
 `   public static void main(String[] args){`  

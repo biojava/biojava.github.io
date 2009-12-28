@@ -3,8 +3,6 @@
 [http://ndbserver.rutgers.edu/mmcif/index.html mmcif] is an alternative file format to PDB files ( [[#westbrook2000|1]],[[#westbrook2003|2]] ).
 The mmcif files are parsed into the same BioJava data structure as the [[BioJava:CookBook:PDB:read|PDB files]]. The example below demonstrates how to load the content into the BioJava data model for protein structures. 
 
-The mmcif parsing code will be released with the next biojava release in April 2009. To use it at the moment you will require a [[Autobuild_events|recent build from SVN]].
-
 To parse an mmCif file do the following:
 <java>
 @since 1.7
