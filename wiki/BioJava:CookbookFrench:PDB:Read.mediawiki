@@ -1,10 +1,33 @@
 == Comment faire pour lire un fichier de type PDB? ==
 
-La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. BioJava contient un mod&egrave;le flexible permettant la gestion des donn&eacute;es de structure contenues dans un fichier PDB. Les exemples ci-dessous montre comment créer et manipuler une repertoire PDB local ou faire la lecture d'un fichier PDB &agrave; partir d'un syst&egrave;me de fichiers local.
+La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. 
 
-L'acc&egrave; aux informations de chaque Atome contenu dans le fichier se fait plut&ocirc;t de cette mani&egrave;re.
+BioJava contient un mod&egrave;le flexible permettant la gestion des donn&eacute;es de structure contenues dans un fichier PDB. Les exemples ci-dessous montrent comment:
+<ul>
+<li>créer et manipuler une repertoire PDB local ou </li>
+<li>faire la lecture d'un fichier PDB &agrave; partir d'un syst&egrave;me de fichiers local.</li>
+</ul>
 
-===Exemple: Utilisation d'une installation locale de PDB===
+Les fonctionnalités de base de cette capacité sont retrouvés dans la classe [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader].
+
+== Exemple bref: la manière rapide de lire un fichier local ==
+
+<java>
+ // fonctionne egalement sur le fichiers compressés en gzip
+ String filename =  "path/to/pdbfile.ent" ;
+ 
+ PDBFileReader pdbreader = new PDBFileReader();
+
+ try{
+
+     Structure struc = pdbreader.getStructure(filename);
+     
+ } catch (Exception e){
+     e.printStackTrace();
+ }
+</java>
+
+== Exemple: Utilisation d'une installation locale de PDB ==
 
 <java>
 
@@ -39,7 +62,7 @@ L'acc&egrave; aux informations de chaque Atome contenu dans le fichier se fait p
 	}
 </java>
 
-L'exempl ci-dessus produira la sortie suivante:
+L'exemple ci-dessus produira la sortie suivante:
 <pre>
 Fetching ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/pdb4hhb.ent.gz
 writing to /tmp/hh/pdb4hhb.ent.gz
@@ -63,7 +86,7 @@ Compound: 1 HEMOGLOBIN (DEOXY) (ALPHA CHAIN) Chains: ChainId: A C Engineered: YE
 Compound: 2 HEMOGLOBIN (DEOXY) (BETA CHAIN) Chains: ChainId: B D Engineered: YES OrganismScientific: HOMO SAPIENS OrganismTaxId: 9606 OrganismCommon: HUMAN 
 </pre>
 
-===Exemple: Lecture d'un fichier local en format PDB===
+== Exemple: Lecture d'un fichier local en format PDB == 
 
 <java>
  // fonctionne egalement avec les fichiers
