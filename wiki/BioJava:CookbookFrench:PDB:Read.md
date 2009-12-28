@@ -105,6 +105,18 @@ L'exemple ci-dessus produira la sortie suivante:
 Exemple: Lecture d'un fichier local en format PDB
 -------------------------------------------------
 
+L'exemple suivant permet le lecture d'un fichier PDB à partir de votre
+système de fichiers, la création d'un objet
+[Structure](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html)
+et faire l'itération sur les objets
+[Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html)
+qui sont contenu dans ce fichier. Pour les exemples d'accession aux
+objets
+[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html),
+voir <BioJava:CookbookFrench:PDB:Atom>. Pour plus d'informations sur la
+gestion des informations SEQRES et ATOM, voir
+<BioJava:CookbookFrench:PDB:Seqres>.
+
 <java>
 
 `// fonctionne egalement avec les fichiers`  
