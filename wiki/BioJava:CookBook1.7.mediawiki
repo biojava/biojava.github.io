@@ -142,8 +142,8 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 
 === Protein Structure ===
 
-* [[BioJava:CookBook:PDB:read|How can I read a PDB file?]]
-* [[BioJava:CookBook:PDB:mmcif|How can I read a .mmcif file?]]
+* [[BioJava:CookBook:PDB:read|How can I parse a PDB file?]]
+* [[BioJava:CookBook:PDB:mmcif|How can I parse a .mmcif file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
 * [[BioJava:CookBook:PDB:atomsCalc|How can I do calculations on atoms?]]
 * [[BioJava:CookBook:PDB:groups|How to work with Groups (AminoAcid, Nucleotide, Hetatom)?]]
