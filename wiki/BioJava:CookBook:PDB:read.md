@@ -4,8 +4,9 @@ title: BioJava:CookBook:PDB:read
 
 ### How do I read a PDB file?
 
-BioJava provides a flexible data model for managing protein structural
-data. It is possible to
+BioJava provides a PDB file parser, that reads the content of a PDB file
+into a flexible data model for managing protein structural data. It is
+possible to
 
 -   parse individual PDB files, or
 -   work with local PDB file installations.
