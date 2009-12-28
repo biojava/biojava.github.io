@@ -1,4 +1,4 @@
-== Comment faire pour lire un fichier de type PDB? ==
+=== Comment faire pour lire un fichier de type PDB? ===
 
 La [http://www.pdb.org ''Protein Data Bank''] est la principale source de donn&eacute;es struturales disponible sur l'Internet. Contrairement aux fichiers de type GenBank ou EMBL qui contiennent des donn&eacute;s de s&eacute;quence, les fichiers PDB contiennent plut&ocirc;t des donn&eacute;es de position d'atomes au sein d'une structure 3D. 
 
