@@ -18,9 +18,9 @@ Cambridge, U.K. from Jan. 19th-22nd
 ### Location
 
 The Hackaton will be held at the Genome Campus in Hinxton.
-[OpenStreetMap](http://www.openstreetmap.org/?minlon=0.179953664541245&minlat=52.0744361877441&maxlon=0.19097812473774&maxlat=52.08349609375)
+[OpenStreetMap](http://www.openstreetmap.org/?minlon=0.179953664541245&minlat=52.0744361877441&maxlon=0.19097812473774&maxlat=52.08349609375),
 [<http://maps.google.com/maps?f=q&source=s_q&q=genome+campus+hinxton&ie=UTF8&hq>=&hnear=Wellcome+Trust+Genome+Campus,+Hinxton,+Saffron+Walden,+Essex,+Vereinigtes+K%C3%B6nigreich&z=11
-Google Map]
+Google Maps]
 
 ### Participants
 
