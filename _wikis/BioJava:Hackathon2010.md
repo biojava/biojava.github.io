@@ -44,6 +44,16 @@ timetable](http://www.ebi.ac.uk/Information/Travel/shuttle_timetable.html)
 <table>
 <tr>
 <td>
+9-10
+
+</td>
+<td>
+Go to campus security, register
+
+</td>
+</tr>
+<tr>
+<td>
 10:00
 
 </td>
