@@ -36,6 +36,7 @@ Google Maps]
 -   Andy Law - andy dot law at roslin dot ed dot ac dot uk
 -   Matias Piipari - matias dot piipari at gmail dot com
 -   Andy Yates - ayates at ebi dot ac dot uk
+-   Johan Henriksson - mahogny at areta dot org
 
 and making a special guest appearance:
 
