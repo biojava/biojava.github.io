@@ -26,9 +26,11 @@ Google Map]
 
 ### Accomodation and Travel
 
-Some of the participants are staying at the [Travelodge, Hills
-Road](http://maps.google.com/maps/place?cid=6821371219882759467&q=travelodge%2Bhills%2Broad%2Bcambridge)
-in Cambridge.
+Some of the participants are staying at theTravelodge, Hills Road in
+Cambridge.
+[OpenStreetMap](http://www.openstreetmap.org/?minlon=0.135944694280624&minlat=52.189998626709&maxlon=0.136144712567329&maxlat=52.1902008056641),
+[Google
+Maps](http://maps.google.com/maps/place?cid=6821371219882759467&q=travelodge%2Bhills%2Broad%2Bcambridge)
 
 There is a free bus provided by the Genome campus every morning and
 evening that can take you to there and bring you back. [Genome Campus
