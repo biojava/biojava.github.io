@@ -24,6 +24,20 @@ Google Maps]
 
 ### Participants
 
+(in no particular order)
+
+Jonathan Warren - jw12 at sanger dot ac dot uk Christoph Gille -
+christoph dot gille at charite dot de Scooter Willis - hwillis at
+scripps dot edu Andreas Prlic - andreas at sdsc dot edu Richard
+Holland - holland at eaglegenomics dot com Michael Heuer - heuermh at
+acm dot org Jules Jacobsen - jacobsen at ebi dot ac dot uk Andy Law -
+andy dot law at roslin dot ed dot ac dot uk Matias Piipari - matias dot
+piipari at gmail dot com Andy Yates - ayates at ebi dot ac dot uk
+
+and making a special guest appearance:
+
+Peter Cock - p dot j dot a dot cock at googlemail dot com
+
 ### Accomodation and Travel
 
 Some of the participants are staying at theTravelodge, Hills Road in
