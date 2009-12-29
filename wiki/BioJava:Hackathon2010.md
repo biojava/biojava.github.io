@@ -48,7 +48,7 @@ timetable](http://www.ebi.ac.uk/Information/Travel/shuttle_timetable.html)
 
 </td>
 <td>
-Go to campus security, register
+Go to campus security, register, set up computers
 
 </td>
 </tr>
