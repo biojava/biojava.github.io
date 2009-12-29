@@ -25,7 +25,6 @@ There is a free bus provided by the Genome campus every morning and evening that
 
 '''Monday 10 am - 5 pm'''
 
-
 <table>
 <tr><td>9-10</td><td>Go to campus security, register</td></tr>
 <tr><td>10:00</td><td>Welcome, Introduction, Overview of BioJava</td></tr>
