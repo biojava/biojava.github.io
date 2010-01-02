@@ -43,8 +43,13 @@ If this all fine up to here, we are ready for release.
     corresponding directories in the /branches and /tags directories of
     the svn repository.
 
-`svn cp -m "branching 1.7 release" svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch`  
-`svn cp -m "branching 1.7 release" svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7`
+`svn cp -m "branching 1.7 release" \`  
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch`
+
+`svn cp -m "branching 1.7 release" \`  
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7`
 
 -   Verify that all went well
 
