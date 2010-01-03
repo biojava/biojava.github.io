@@ -30,7 +30,7 @@ semi-automatic.
     problems
 -   Run
 
-`ant-clean; ant runtests;`
+`ant clean; ant runtests`
 
 -   make sure there are no broken tests being reported.
 -   fix anything that needs to be fixed prior to release.
@@ -47,7 +47,7 @@ If this all fine up to here, we are ready for release.
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch`
 
-`svn cp -m "branching 1.7 release" \`  
+`svn cp -m "tagging 1.7 release" \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7`
 
@@ -62,7 +62,7 @@ If this all fine up to here, we are ready for release.
     number of the current release.
 -   Run
 
-`ant-clean; ant dist;`
+`ant clean; ant dist`
 
 -   check that the javadocs have been built ok, first page should show
     the number of the current release/
@@ -100,7 +100,7 @@ If this all fine up to here, we are ready for release.
 
 -   Prepare the bin release:
 
-`ant clean; ant;`
+`ant clean; ant`
 
 -   Copy file biojava.jar
 
