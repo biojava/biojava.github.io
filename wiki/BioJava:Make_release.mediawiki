@@ -15,7 +15,7 @@ A few hours. Most time is being spent in verifying that the code base is release
 * Make sure code is ready for release. Check last minute commits (there usually are some).
 * Make sure the auto-build page (cruisecontrol) does not report any problems
 * Run 
- ant-clean; ant runtests;
+ ant clean; ant runtests
 * make sure there are no broken tests being reported.
 * fix anything that needs to be fixed prior to release.
 
@@ -27,7 +27,7 @@ If this all fine up to here, we are ready for release.
   svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \
   svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch
 
- svn cp -m "branching 1.7 release" \
+ svn cp -m "tagging 1.7 release" \
   svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \
   svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7
 * Verify that all went well
@@ -37,7 +37,7 @@ If this all fine up to here, we are ready for release.
 '''Build the release'''
 * edit the build.xml file and change the '''version''' field to the number of the current release.
 * Run
- ant-clean; ant dist;
+ ant clean; ant dist
 * check that the javadocs have been built ok, first page should show the number of the current release/
  open file:///path/to/your/local/dir/biojava-live/dist/biojava-1.7/doc/biojava/index.html
 * prepare the biojava-all.jar bundle 
@@ -56,7 +56,7 @@ If this all fine up to here, we are ready for release.
 * Copy file biojava-doc.jar
  scp biojava-1.7-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/doc/biojava-docs.jar
 * Prepare the bin release: 
- ant clean; ant;
+ ant clean; ant
 * Copy file biojava.jar 
  scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/bin/
 * Prepare the src release:
