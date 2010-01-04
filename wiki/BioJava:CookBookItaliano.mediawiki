@@ -58,7 +58,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 === Proteomica ===
 
 * [[Biojava:CookBookItaliano:Proteomics|Come posso calcolare la massa e il pI di un aminoacido]]?
-* [[Biojava:Cookbook:Proteomics:AAindex|Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase]]?
+* [[Biojava:CookBookItaliano:Proteomics:AAindex|Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase]]?
 
 === Sequence I/O ===
 
