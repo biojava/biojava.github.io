@@ -119,7 +119,7 @@ Come posso....?
     aminoacido](Biojava:CookBookItaliano:Proteomics "wikilink")?
 -   [Come posso analizzare le proprietà dei vari simboli di una sequenza
     peptidica utilizzano Amino Acid Index
-    DataBase](Biojava:Cookbook:Proteomics:AAindex "wikilink")?
+    DataBase](Biojava:CookBookItaliano:Proteomics:AAindex "wikilink")?
 
 ### Sequence I/O
 
