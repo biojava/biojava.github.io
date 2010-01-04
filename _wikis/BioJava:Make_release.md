@@ -116,8 +116,8 @@ If this all fine up to here, we are ready for release.
 Almost done... The last thing is to update the public javadoc files. For
 this, we need to recompile the javadocs and add a hook to the google
 analytics tracker, we are using on the website. use the modified
-*my\_build\_biojava.xml* that is attached here. (update the version
-variable in the file to your release number)
+[my\_build\_biojava.xml](BioJava:my_build_biojava "wikilink"). (update
+the version variable in the file to your release number)
 
 `ant -buildfile my_build_biojava.xml javadocs-biojava`
 
