@@ -99,7 +99,17 @@ Welcome, Introduction, Overview of BioJava
 </tr>
 <tr>
 <td>
-10:30
+10:20
+
+</td>
+<td>
+Declaration of Intentions of Module leaders
+
+</td>
+</tr>
+<tr>
+<td>
+10:40
 
 </td>
 <td>
@@ -109,7 +119,7 @@ Group
 </tr>
 <tr>
 <td>
-10:40
+10:50
 
 </td>
 <td>
@@ -123,7 +133,7 @@ Hack
 
 </td>
 <td>
-lunch
+Lunch
 
 </td>
 </tr>
@@ -187,7 +197,7 @@ Hack
 
 </td>
 <td>
-lunch
+Lunch
 
 </td>
 </tr>
@@ -251,7 +261,7 @@ Hack
 
 </td>
 <td>
-lunch
+Lunch
 
 </td>
 </tr>
