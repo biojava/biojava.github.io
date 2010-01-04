@@ -2,6 +2,13 @@
 title: Current events
 ---
 
+BioJava Hackathon 2010
+----------------------
+
+The BioJava Hackaton will take place at the Genome Campus in Hinxton,
+Cambridge, U.K. from Jan. 19th-22nd. For more info see
+<BioJava:Hackathon2010>.
+
 BioJava at BOSC 2009
 --------------------
 
