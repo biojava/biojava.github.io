@@ -54,10 +54,6 @@ allow you to drive through the gates to the visitors car park.
 -   Andy Yates - ayates at ebi dot ac dot uk
 -   Johan Henriksson - mahogny at areta dot org
 
-and making a special guest appearance:
-
--   Peter Cock - p dot j dot a dot cock at googlemail dot com
-
 ### Accomodation and Travel
 
 Some of the participants are staying at theTravelodge, Hills Road in
