@@ -43,7 +43,9 @@ Module: biojava-biosql Lead: Richard Holland
 Module: biojava-das : Lead: Jonathan Warren
 
 `- probably deprecate the old DAS code in BJ and replace it with`  
-`= the up to date Dasobert library`
+`= the up to date Dasobert library`  
+`-update dasobert code to 1.6 and make smaller`  
+`-add further support for getting new information contained in the registry (validation, on the fly validation, sources by types and cvId).`
 
 Module: biojava-structure Lead: Andreas Prlic
 
