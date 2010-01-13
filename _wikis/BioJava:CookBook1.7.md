@@ -136,6 +136,8 @@ How Do I....?
 
 -   [How do I list the Annotations in a
     Sequence](BioJava:Cookbook:Annotations:List "wikilink")?
+-   [How do I extract Annotations for a set of
+    Features](BioJava:Cookbook:Annotations:List2 "wikilink")?
 -   [How do I filter a Sequences based on their species (or another
     Annotation
     property)](BioJava:Cookbook:Annotations:Filter "wikilink")?
