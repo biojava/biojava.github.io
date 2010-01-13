@@ -34,9 +34,6 @@ the gene when the mouse is over a CDS feature.
 ![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") <java> /\*\*
 
 `* Class to load an EMBL sequence file and display it in a viewer.`  
-`*`  
-`* Author:  Jolyon Holdstock`  
-`* Date:    April 2009`  
 `*/`
 
 //Java libraries import java.awt.\*; import java.awt.event.\*; import
