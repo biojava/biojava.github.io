@@ -13,9 +13,6 @@ Lastly, there is a SequenceViewerMotionListener added to the TranslatedSequenceP
 <java>
 /**
  * Class to load an EMBL sequence file and display it in a viewer.
- *
- * Author:  Jolyon Holdstock
- * Date:    April 2009
  */
 
 //Java libraries
