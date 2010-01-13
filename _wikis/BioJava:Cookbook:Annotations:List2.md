@@ -13,9 +13,6 @@ annotation information about each of the CDS features
 <java> /\*\*
 
 `* Class to load an EMBL or Genbank sequence file and output annotation information about the CDS features.`  
-`*`  
-`* Author:  Jolyon Holdstock`  
-`* Date:    January 2010`  
 `*/`
 
 //Java libraries import java.io.\*; import java.util.\*; //BioJava
