@@ -2,6 +2,35 @@
 title: BioJava:CookBook:Interfaces:ViewInGUI2
 ---
 
+When building a bioinformatics GUI you will probably want to display the
+sequence of residues and features in the Sequence you are displaying.
+BioJava contains a number of GUI components that can render various
+aspects of a Sequence.
+
+The basic unit of any Sequence based GUI is the SequenceRenderContext
+which holds the Sequence and sends instructions to a SequenceRenderer
+which does the actual drawing of the Sequence. There are several
+SequenceRenderer implementations in BioJava.
+
+The following program demonstrates how to load an EMBL sequence file as
+a RichSequence. Two SequenceRenderers are generated from this
+RichSequence both filtered for CDS features and then filtered again for
+either forward or reverse strand orientation. These are added to a
+MultiLineRenderer as are a RulerRenderer and a SymbolSequenceRenderer.
+The RulerRenderer displays the sequence coordinates and the
+SymbolSequenceRenderer displays the sequence. The sequence display is
+limited by the sequenceScale parameter of the TranslatedSequencePanel
+and so is not always visiblke.
+
+Once loaded, the sequence and CDS features displayed can be controlled
+by the buttons in the JPanel controlPanel. These use the
+setSequenceScale and setSymbolTranslation methods of the
+TranslatedSequencePanel to modify the view.
+
+Lastly, there is a SequenceViewerMotionListener added to the
+TranslatedSequencePanel which triggers a ToolTip to display the name of
+the gene when the mouse is over a CDS feature.
+
 ![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") <java> /\*\*
 
 `* Class to load an EMBL sequence file and display it in a viewer.`  
