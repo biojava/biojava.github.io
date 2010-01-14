@@ -20,7 +20,7 @@ MultiLineRenderer as are a RulerRenderer and a SymbolSequenceRenderer.
 The RulerRenderer displays the sequence coordinates and the
 SymbolSequenceRenderer displays the sequence. The sequence display is
 limited by the sequenceScale parameter of the TranslatedSequencePanel
-and so is not always visiblke.
+and so is not always visible.
 
 Once loaded, the sequence and CDS features displayed can be controlled
 by the buttons in the JPanel controlPanel. These use the
