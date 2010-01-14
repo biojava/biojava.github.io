@@ -2,7 +2,7 @@ When building a bioinformatics GUI you will probably want to display the sequenc
 
 The basic unit of any Sequence based GUI is the SequenceRenderContext which holds the Sequence and sends instructions to a SequenceRenderer which does the actual drawing of the Sequence. There are several SequenceRenderer implementations in BioJava. 
 
-The following program demonstrates how to load an EMBL sequence file as a RichSequence. Two SequenceRenderers are generated from this RichSequence both filtered for CDS features and then filtered again for either forward or reverse strand orientation. These are added to a MultiLineRenderer as are a RulerRenderer and a SymbolSequenceRenderer. The RulerRenderer displays the sequence coordinates and the SymbolSequenceRenderer displays the sequence. The sequence display is limited by the sequenceScale parameter of the TranslatedSequencePanel and so is not always visiblke.
+The following program demonstrates how to load an EMBL sequence file as a RichSequence. Two SequenceRenderers are generated from this RichSequence both filtered for CDS features and then filtered again for either forward or reverse strand orientation. These are added to a MultiLineRenderer as are a RulerRenderer and a SymbolSequenceRenderer. The RulerRenderer displays the sequence coordinates and the SymbolSequenceRenderer displays the sequence. The sequence display is limited by the sequenceScale parameter of the TranslatedSequencePanel and so is not always visible.
 
 Once loaded, the sequence and CDS features displayed can be controlled by the buttons in the JPanel controlPanel. These use the setSequenceScale and setSymbolTranslation methods of the TranslatedSequencePanel to modify the view.
 
