@@ -9,9 +9,6 @@ This page is intended for BioJava release managers. I was documenting
 this while I was doing the BioJava 1.7
 release. --[Andreas](User:Andreas "wikilink") 15:14, 12 April 2009 (UTC)
 
-Updated per the 1.7.1 release. \<signature\> 03:35, 16 January 2010
-(UTC)
-
 ### Required time
 
 A few hours. Most time is being spent in verifying that the code base is
