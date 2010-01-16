@@ -47,7 +47,8 @@ allow you to drive through the gates to the visitors car park.
 -   Scooter Willis - hwillis at scripps dot edu
 -   Andreas Prlic - andreas at sdsc dot edu
 -   Richard Holland - holland at eaglegenomics dot com
--   Michael Heuer - heuermh at acm dot org
+-   Michael Heuer - heuermh at gmail dot com (online via irc or chat
+    only)
 -   Jules Jacobsen - jacobsen at ebi dot ac dot uk
 -   Andy Law - andy dot law at roslin dot ed dot ac dot uk
 -   Matias Piipari - matias dot piipari at gmail dot com
