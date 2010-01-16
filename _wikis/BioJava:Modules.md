@@ -19,6 +19,8 @@ Module: biojava-sequence Lead: Richard Holland
 
 `- Bring in Richard's new code that he started to develop on the biojava-3 branch.`  
 `- provide a more scaleable and efficient basis for dealing with large sequence files`  
+`- consider implementation based on ParallelArray from JSR166 (extra166y package, see `[`http://gee.cs.oswego.edu/dl/concurrency-interest/`](http://gee.cs.oswego.edu/dl/concurrency-interest/)`)`  
+`- consider implementation that supports MapReduce as in Apache Hadoop (http://hadoop.apache.org/)`
 
 Module: biojava-alignment Lead: Andreas Dräger
 
