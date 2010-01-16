@@ -57,8 +57,9 @@ Module: biojava-structure Lead: Andreas Prlic
 
 Module: biojava-sequencing Lead: Michael Heuer
 
-`- support FastQ files`  
-`- support parsing of output for various new sequencing machines`
+`- merge FASTQ support from 1.7.1 branch to trunk`  
+`- provide facade for Fastq --> Biojava sequence with quality scores`  
+`- review FASTQ IO interfaces, compare design with Richard's biojava3`
 
 Module: biojava-web services:
 
