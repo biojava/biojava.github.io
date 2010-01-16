@@ -9,6 +9,9 @@ This page is intended for BioJava release managers. I was documenting
 this while I was doing the BioJava 1.7
 release. --[Andreas](User:Andreas "wikilink") 15:14, 12 April 2009 (UTC)
 
+Updated per the 1.7.1 release. \<signature\> 03:35, 16 January 2010
+(UTC)
+
 ### Required time
 
 A few hours. Most time is being spent in verifying that the code base is
@@ -43,13 +46,13 @@ If this all fine up to here, we are ready for release.
     corresponding directories in the /branches and /tags directories of
     the svn repository.
 
-`svn cp -m "branching 1.7 release" \`  
+`svn cp -m "branching 1.8 release" \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_7-branch`
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_8-branch`
 
-`svn cp -m "tagging 1.7 release" \`  
+`svn cp -m "tagging 1.8 release" \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_7`
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_8`
 
 -   Verify that all went well
 
@@ -67,11 +70,11 @@ If this all fine up to here, we are ready for release.
 -   check that the javadocs have been built ok, first page should show
     the number of the current release/
 
-`open `[`file:///path/to/your/local/dir/biojava-live/dist/biojava-1.7/doc/biojava/index.html`](file:///path/to/your/local/dir/biojava-live/dist/biojava-1.7/doc/biojava/index.html)
+`open `[`file:///path/to/your/local/dir/biojava-live/dist/biojava-1.8/doc/biojava/index.html`](file:///path/to/your/local/dir/biojava-live/dist/biojava-1.8/doc/biojava/index.html)
 
 -   prepare the biojava-all.jar bundle
 
-`cd dist; jar cvf biojava-1.7-all.jar biojava-1.7`
+`cd dist; jar cvf biojava-1.8-all.jar biojava-1.8`
 
 ### Copy files to portal.open-bio.org
 
@@ -84,7 +87,7 @@ If this all fine up to here, we are ready for release.
 
 -   Copy file biojava-all.jar
 
-`scp biojava-1.7-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/all`
+`scp biojava-1.8-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/all`
 
 **Back in your local checkout**
 
@@ -92,11 +95,11 @@ If this all fine up to here, we are ready for release.
     longer.
 -   Make the doc release bundle
 
-`ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.7-doc.jar docs/`
+`ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.8-doc.jar docs/`
 
 -   Copy file biojava-doc.jar
 
-`scp biojava-1.7-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/doc/biojava-docs.jar`
+`scp biojava-1.8-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/doc/biojava-docs.jar`
 
 -   Prepare the bin release:
 
@@ -104,12 +107,12 @@ If this all fine up to here, we are ready for release.
 
 -   Copy file biojava.jar
 
-`scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/bin/`
+`scp ant-build/biojava.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/bin/`
 
 -   Prepare the src release:
 
-`ant clean; cd .. ; jar cvf biojava-1.7-src.jar biojava-live`  
-`scp biojava-1.7-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj17/src/`
+`ant clean; cd .. ; jar cvf biojava-1.8-src.jar biojava-live`  
+`scp biojava-1.8-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/src/`
 
 ### Update Javadoc docu on portal.open-bio.org
 
@@ -135,16 +138,16 @@ The files are now in your home directory on the server. We need to hook
 them into the frontend:
 
 `cd /home/websites/biojava.org/html/static/docs/`  
-`mkdir api17`  
-`cp -r ~/biojava/* ./api17/ `
+`mkdir api18`  
+`cp -r ~/biojava/* ./api18/`
 
 verify that all went ok by pointing your browser to
 
-[`http://www.biojava.org/docs/api17/`](http://www.biojava.org/docs/api17/)
+[`http://www.biojava.org/docs/api18/`](http://www.biojava.org/docs/api18/)
 
 update the symbolic link to the javadoc api
 
-`point /home/websites/biojava.org/html/static/docs/api to api17`
+`point /home/websites/biojava.org/html/static/docs/api to api18`
 
 ### Update the wikipedia pages to link to the new release
 
@@ -153,7 +156,7 @@ Create a new download file for the release. (I copied
 to the latest data.
 
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
-page to <BioJava:Download_1.7>)
+page to <BioJava:Download_1.8>)
 
 Update the <MediaWiki:Sidebar> to point to the new Javadoc api
 
