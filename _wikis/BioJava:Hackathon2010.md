@@ -15,6 +15,13 @@ Cambridge, U.K. from Jan. 19th-22nd
 `- Add new modules`  
 `- Finalizing BioJava 3.0`
 
+### News
+
+Stay up to date with what is going in Cambridge at
+
+<http://openbioinformatics.blogspot.com> and
+<http://twitter.com/search?q=%23biojava>
+
 ### Location
 
 The Hackathon will be held at the Genome Campus in Hinxton.
