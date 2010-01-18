@@ -22,6 +22,9 @@ Stay up to date with what is going in Cambridge at
 <http://openbioinformatics.blogspot.com> and
 <http://twitter.com/search?q=%23biojava>
 
+Or \#biojava on irc.freenode.net. Web IRC interface available at
+<http://webchat.freenode.net/>.
+
 ### Location
 
 The Hackathon will be held at the Genome Campus in Hinxton.
@@ -91,11 +94,6 @@ However one problem with all of these are the costs involved; if you can
 get into the Travelodge it's normally quite a bit cheaper but do check
 carefully. Spending £5 more per night to get into one of the other
 places can be worth it.
-
-### IRC
-
-Try \#biojava on irc.freenode.net. Web IRC interface available at
-<http://webchat.freenode.net/>.
 
 ### Schedule
 
