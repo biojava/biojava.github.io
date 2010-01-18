@@ -55,6 +55,10 @@ http://www.wtconference.org/ (owned by WT & sometimes will offer accommodation)
 
 However one problem with all of these are the costs involved; if you can get into the Travelodge it's normally quite a bit cheaper but do check carefully. Spending £5 more per night to get into one of the other places can be worth it.
 
+=== IRC ===
+
+Try #biojava on irc.freenode.net.  Web IRC interface available at http://webchat.freenode.net/.
+
 === Schedule ===
 
 '''Monday 10 am - 5 pm'''
