@@ -1,5 +1,11 @@
 ===How can I calculate a structure alignment?===
 
+The structure alignment possibilities of BioJava are going to be greatly enhanced in the upcoming BioJava 3 release. It will provide a BioJava port of the '''Combinatorial Extension''' algorithm (CE). The documentation how to use this algorithm is available from [[BioJava:CookBook:PDB:CE_Algorithm]]
+
+This is the example of how to use the current BioJava release:
+
+===Biojava 1.7===
+
 The [[BioJava:CookBook:PDB:aboutalign|structure alignment algorithm]] contained in BioJava is 
 based on a variation of the PSC++ algorithm provided by Peter Lackner, Univ. Salzburg
 (personal communication). The [[BioJava:CookBook:PDB:aboutalign|algorithm]] is calculating a distance matrix based, rigid body protein structure superimposition.
