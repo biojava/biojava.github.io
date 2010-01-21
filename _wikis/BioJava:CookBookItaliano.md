@@ -48,7 +48,7 @@ E' possibile leggere BioJava in Anger in
 
 E' possibile leggere BioJava in Anger in
 [Italiano](Biojava:CookBookItaliano "wikilink") (Tradotto da Alessandro
-Cipriani; ultimo aggiornamento: 18 Novembre 2009).
+Cipriani; ultimo aggiornamento: 21 Gennaio 2010).
 
 Come posso....?
 ---------------
