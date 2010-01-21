@@ -3,15 +3,20 @@
 Per poter analizzare le proprietà dei vari residui che compongono la sequenza amminoacidica, ad esempio l'idrofobicità media, è possibile utilizzare l'interfaccia <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html SymbolPropertyTable]</code>. Il suo metodo <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html#getDoubleValue(org.biojava.bio.symbol.Symbol) getDoubleValue]</code> ritorna un valore numerico per un dato amminoacido. il database [http://www.genome.ad.jp/dbget/aaindex.html Amino Acid Index] contiene oltre 500 tipi differenti tavole di proprietà di amminoacidi e di coppie di amminoacidi. Queste tavole sono reperibili a questo indirizzo ftp ''[ftp://ftp.genome.ad.jp/pub/db/genomenet/aaindex/aaindex1 aaindex1]'' o http [http://www.genome.jp/dbget-bin/show_man?aaindex AAindex1] in formato testo.
 Questo file può essere caricato tramite la classe <code>AAindexStreamReader</code>. Poi, le tavole delle proprietà possono essere gestite una dopo l'altra tramite il metodo <code>nextTable</code>, che restituisce per ogni tavola un oggetto di tipo <code>AAindex</code> che implementa l'interfaccia <code>SymbolPropertyTable</code>. Se il file deve essere mantenuto in memoria e bisogna fare un accesso casuale a dette tavole basta utilizzare <code>SimpleSymbolPropertyTableDB</code> inizializzandolo con un oggetto di tipo <code>AAindexStreamReader</code>.
 
-L'esempio seguente mostra come calcolare l'idrofobicità media di un gruppo di residui di una data sequenza peptidica (in questo esempio la sequenza contiene solamente 20 residui) sulla base della tavola ''CIDH920105'' preso dall'indice  ''aaindex1'':
+L'esempio seguente mostra un metodo che calcola l'idrofobicità media di un gruppo di residui di una data sequenza peptidica (in questo esempio la sequenza contiene solamente 20 residui) sulla base della tavola ''CIDH920105'' preso dall'indice  ''aaindex1'':
 
 <java>
-SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
-AAindex hydrophobicity = (AAindex) db.table("CIDH920105");
-SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");
-double hp = 0.0;
-for (int i = 1; i <= symbols.length(); i++) {
-    hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
+public class Test {
+	public static void main(String[] args) {
+              AAindexStreamReader aai = AAindexStreamReader(new FileReader("aaindex1"));
+              SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(aai);
+              AAindex hydrophobicity = (AAindex) db.table("CIDH920105");
+              SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");
+              double hp = 0.0;
+              for (int i = 1; i <= symbols.length(); i++) {
+                       hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
+              }
+              System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));
+        }
 }
-System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));</java>
 </java>

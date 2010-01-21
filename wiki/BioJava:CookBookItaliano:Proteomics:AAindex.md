@@ -26,19 +26,23 @@ memoria e bisogna fare un accesso casuale a dette tavole basta
 utilizzare `SimpleSymbolPropertyTableDB` inizializzandolo con un oggetto
 di tipo `AAindexStreamReader`.
 
-L'esempio seguente mostra come calcolare l'idrofobicità media di un
-gruppo di residui di una data sequenza peptidica (in questo esempio la
-sequenza contiene solamente 20 residui) sulla base della tavola
+L'esempio seguente mostra un metodo che calcola l'idrofobicità media di
+un gruppo di residui di una data sequenza peptidica (in questo esempio
+la sequenza contiene solamente 20 residui) sulla base della tavola
 *CIDH920105* preso dall'indice *aaindex1*:
 
-<java> SimpleSymbolPropertyTableDB db = new
-SimpleSymbolPropertyTableDB(new AAindexStreamReader(new
-FileReader("aaindex1"))); AAindex hydrophobicity = (AAindex)
-db.table("CIDH920105"); SymbolList symbols =
-ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV"); double hp = 0.0; for
-(int i = 1; i \<= symbols.length(); i++) {
+<java> public class Test {
 
-`   hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));`
+`   public static void main(String[] args) {`  
+`             AAindexStreamReader aai = AAindexStreamReader(new FileReader("aaindex1"));`  
+`             SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(aai);`  
+`             AAindex hydrophobicity = (AAindex) db.table("CIDH920105");`  
+`             SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");`  
+`             double hp = 0.0;`  
+`             for (int i = 1; i <= symbols.length(); i++) {`  
+`                      hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));`  
+`             }`  
+`             System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));`  
+`       }`
 
-} System.out.println("Average hydrophobicity: " + Double.toString(hp /
-symbols.length()));</java> </java>
+} </java>
