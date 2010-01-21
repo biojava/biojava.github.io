@@ -4,6 +4,16 @@ title: BioJava:CookBook:PDB:align
 
 ### How can I calculate a structure alignment?
 
+The structure alignment possibilities of BioJava are going to be greatly
+enhanced in the upcoming BioJava 3 release. It will provide a BioJava
+port of the **Combinatorial Extension** algorithm (CE). The
+documentation how to use this algorithm is available from
+<BioJava:CookBook:PDB:CE_Algorithm>
+
+This is the example of how to use the current BioJava release:
+
+### Biojava 1.7
+
 The [structure alignment
 algorithm](BioJava:CookBook:PDB:aboutalign "wikilink") contained in
 BioJava is based on a variation of the PSC++ algorithm provided by Peter
