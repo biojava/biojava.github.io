@@ -27,5 +27,5 @@ main(String[] args) {
 
 } </java>
 
-The PDB\_DIR property allows to specify the path, where in the local
+The *PDB\_DIR* property allows to specify the path, where in the local
 file system PDB files are stored.
