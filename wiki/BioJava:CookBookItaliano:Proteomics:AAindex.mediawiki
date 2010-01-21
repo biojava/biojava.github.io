@@ -1,12 +1,12 @@
-== How do I analyze the symbol properties of an amino acid sequence using the Amino Acid Index database? ==
+== Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase? ==
 
-To analyze the symbol properties of an amino acid sequence, e.g. the average hydrophobicity of the protein, one can use the interface <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html SymbolPropertyTable]</code>. Its <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html#getDoubleValue(org.biojava.bio.symbol.Symbol) getDoubleValue]</code> method returns a numeric value for a given amino acid symbol, e.g. a negative or positive value that indicates the hydrophobicity of the amino acid relative to the other amino acids. The [http://www.genome.ad.jp/dbget/aaindex.html Amino Acid Index] database contains over 500 different amino acid property tables in a simple text file called ''[ftp://ftp.genome.ad.jp/pub/db/genomenet/aaindex/aaindex1 aaindex1]''. [http://www.genome.jp/dbget-bin/show_man?aaindex AAindex1] is also the format name.
+Per poter analizzare le proprietà dei vari residui che compongono la sequenza amminoacidica, ad esempio l'idrofobicità media, è possibile utilizzare l'interfaccia <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html SymbolPropertyTable]</code>. Il suo metodo <code>[http://www.biojava.org/docs/api14/org/biojava/bio/symbol/SymbolPropertyTable.html#getDoubleValue(org.biojava.bio.symbol.Symbol) getDoubleValue]</code> ritorna un valore numerico per un dato amminoacido. il database [http://www.genome.ad.jp/dbget/aaindex.html Amino Acid Index] contiene oltre 500 tipi differenti tavole di proprietà di amminoacidi e di coppie di amminoacidi. Queste tavole sono reperibili a questo indirizzo ftp ''[ftp://ftp.genome.ad.jp/pub/db/genomenet/aaindex/aaindex1 aaindex1]'' o http [http://www.genome.jp/dbget-bin/show_man?aaindex AAindex1] in formato testo.
+Questo file può essere caricato tramite la classe <code>AAindexStreamReader</code>. Poi, le tavole delle proprietà possono essere gestite una dopo l'altra tramite il metodo <code>nextTable</code>, che restituisce per ogni tavola un oggetto di tipo <code>AAindex</code> che implementa l'interfaccia <code>SymbolPropertyTable</code>. Se il file deve essere mantenuto in memoria e bisogna fare un accesso casuale a dette tavole basta utilizzare <code>SimpleSymbolPropertyTableDB</code> inizializzandolo con un oggetto di tipo <code>AAindexStreamReader</code>.
 
-This file can be loaded through the <code>AAindexStreamReader</code> class. Afterwards, the property tables can be enumerated by calling the <code>nextTable</code> method, which returns for each property table an <code>AAindex</code> object that implements the <code>SymbolPropertyTable</code> interface. If the file must be hold in memory and random access to the property tables (via the table name) is needed, one can use a <code>SimpleSymbolPropertyTableDB</code> object and initialize it with a <code>AAindexStreamReader</code> object.
+L'esempio seguente mostra come calcolare l'idrofobicità media di un gruppo di residui di una data sequenza peptidica (in questo esempio la sequenza contiene solamente 20 residui) sulla base della tavola ''CIDH920105'' preso dall'indice  ''aaindex1'':
 
-The following example shows how to calculate the average hydrophobicity for a given amino acid sequence (in this example the sequence only contains the twenty amino acids) on the basis of the ''CIDH920105'' table from the AAindex1 file ''aaindex1'':
-
-<java>SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
+<java>
+SimpleSymbolPropertyTableDB db = new SimpleSymbolPropertyTableDB(new AAindexStreamReader(new FileReader("aaindex1")));
 AAindex hydrophobicity = (AAindex) db.table("CIDH920105");
 SymbolList symbols = ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV");
 double hp = 0.0;
@@ -14,3 +14,4 @@ for (int i = 1; i <= symbols.length(); i++) {
     hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
 }
 System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));</java>
+</java>
