@@ -29,3 +29,10 @@ main(String[] args) {
 
 The *PDB\_DIR* property allows to specify the path, where in the local
 file system PDB files are stored.
+
+Local Installation
+==================
+
+**Required modules**: *biojava3-structure, alignment*
+
+<java> </java>
