@@ -52,9 +52,11 @@ public class Entropy {
 
 `   //print the Entropy of each residue`  
 `   System.out.println("Symbol\tEntropy");`  
-`   for (Iterator i = entropy.keySet().iterator(); i.hasNext(); ) {`  
-`     Symbol sym = (Symbol)i.next();`  
-`     System.out.println(sym.getName()+ "\t" +entropy.get(sym));`  
+`   for (Iterator i = entropy.entrySet().iterator(); i.hasNext(); ) {`  
+`     Map.Entry entry = (Map.Entry)i.next();`  
+`     Symbol sym = (Symbol)entry.getKey();`  
+`     Double val = (Double)entry.getValue();`  
+`     System.out.println(sym.getName()+ "\t" +val);`  
 `   }`  
 ` }`
 
