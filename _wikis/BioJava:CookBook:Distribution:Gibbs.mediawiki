@@ -505,7 +505,7 @@ public class SimpleGibbsAlignerDemo {
     //a file of sequences sequences
     File f = new File(args[0]);
     //am I dealing with protein?
-    boolean protein = new Boolean(args[1]).booleanValue();
+    boolean protein = Boolean.parseBoolean(args[1]);
     //the size of the motif I am looking for.
     int window = Integer.parseInt(args[2]);
     //the number of times to attempt a motif identification.
