@@ -46,5 +46,5 @@ ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV"); double hp = 0.0; for
 
 `   hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));`
 
-} System.out.println("Average hydrophobicity: " + Double.toString(hp /
+} System.out.println("Average hydrophobicity: " + (hp /
 symbols.length()));</java>
