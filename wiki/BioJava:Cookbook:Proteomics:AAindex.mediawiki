@@ -15,4 +15,4 @@ double hp = 0.0;
 for (int i = 1; i <= symbols.length(); i++) {
     hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));
 }
-System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));</java>
+System.out.println("Average hydrophobicity: " + (hp / symbols.length()));</java>
