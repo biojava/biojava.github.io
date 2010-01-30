@@ -62,7 +62,7 @@ public class PropertyCalculator {
 `   }`
 
 `   // Sortie du resultat sur STDOUT`  
-`   System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));`  
+`   System.out.println("Average hydrophobicity: " + (hp / symbols.length()));`  
 ` }`
 
 } </java>
