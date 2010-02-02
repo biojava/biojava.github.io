@@ -22,3 +22,24 @@ If any1 could tell me how to rectify these errors and work ahead, it would be ve
 Regards,
 
 Sreejith
+
+&lt;newsectionheaderdefaultlevel&gt;
+
+Hello Guys, following the time evolution of the problems posted
+the list, I have a problem you'd like great ideas
+I read that here, my case is problematic:
+
+Working with Bioinformatics applied to proteomics, using the software
+3D Image Master Plantinum to analysis of images acquired from
+scanner of gels containing proteins in it, give this application
+analytical is limited when we move the spot (the point where it is
+against the protein) in order to publish the statistical analysis and papers.
+
+I need to develop an application or script to
+automate this function within the software, so when researchers
+can instead use the pencil to highlight the spots, with only one
+click the circle is positioned on the spot in the gel
+
+best regards
+
+jayron
