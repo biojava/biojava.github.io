@@ -60,7 +60,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:CookBookItaliano:Proteomics|Come posso calcolare la massa e il pI di un aminoacido]]?
 * [[Biojava:CookBookItaliano:Proteomics:AAindex|Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase]]?
 
-=== Sequence I/O ===
+=== Sequenze I/O ===
 
 * [[Biojava:CookBookItaliano:SeqIO:WriteInFasta|Come posso scrivere le sequeze in formato FASTA]]?
 * [[Biojava:Cookbook:SeqIO:ReadFasta|How do I read in a Fasta file]]?
