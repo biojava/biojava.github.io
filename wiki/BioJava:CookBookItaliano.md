@@ -121,7 +121,7 @@ Come posso....?
     peptidica utilizzano Amino Acid Index
     DataBase](Biojava:CookBookItaliano:Proteomics:AAindex "wikilink")?
 
-### Sequence I/O
+### Sequenze I/O
 
 -   [Come posso scrivere le sequeze in formato
     FASTA](Biojava:CookBookItaliano:SeqIO:WriteInFasta "wikilink")?
