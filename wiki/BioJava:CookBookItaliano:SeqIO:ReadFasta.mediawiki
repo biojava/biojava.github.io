@@ -1,5 +1,6 @@
-== How do I read Sequences from a Fasta File? ==
+== Come posso leggere una sequenze da un file in formato FASTA? ==
 
+Una dei delle operazioni di I/O più eseguite in bioninformatica è il caricamento di un flat file in memoria.
 One of the most frequent I/O tasks is the reading of a flat file representation of sequence into memory. SeqIOTools provides some basic static methods to read files into BioJava. There is actually more than one solution. The more specific is demonstrated first and the more general second.
 
 === Solution 1 ===
