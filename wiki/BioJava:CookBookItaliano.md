@@ -125,8 +125,8 @@ Come posso....?
 
 -   [Come posso scrivere le sequeze in formato
     FASTA](Biojava:CookBookItaliano:SeqIO:WriteInFasta "wikilink")?
--   [How do I read in a Fasta
-    file](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
+-   [ Come posso leggere un file in formato
+    FASTA](Biojava:CookBookItaliano:SeqIO:ReadFasta "wikilink")?
 -   [How do I read a GenBank/EMBL/SwissProt
     file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?
 -   [How do I read a sequence file with the Biojavax
