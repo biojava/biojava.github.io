@@ -1,45 +1,46 @@
-== How Do I Print A Sequence in Fasta Format? ==
+== Come posso stampare una sequenza in formato FASTA? ==
 
-FASTA format is a fairly standard bioinformatics output that is convenient and easy to read. BioJava has a tools class called SeqIOTools that provides static convenience methods to perform a number of common bioinformatics IO tasks. The follwing snippets demonstrate how to print a Sequence or even a whole SequenceDB in FASTA format to an OutputStream like System.out. All of the WriteXX methods from SeqIOTools take an OutputStream as an argument. In this way you can pipe the newly formatted sequence to a file or another method or STDOUT, STDERR etc.
+Da molto tempo il formato FASTA è uno standard per la rappresentazione di sequenze nucleotidiche o peptidiche essendo molto facile da leggere. Biojava ha una classe di utilità chiamata SeqIOTools che fornisce un insieme di comodi metodi statici per eseguire un insieme di operazioni di I/O, I seguenti pezzi di codice mostrano come inviare su un OutputStream, come il System.out, una sequenza o un interno SequenceDB in formato FASTA. Tutti i metodi chiamati WriteXXX della classe SeqIOTools prendono come dato di ingresso un OutputStream. In questo modo è possibile scrivere la sequenza nel nuovo formato in un qualsiasi OutPutStream, sia esso un file, lo STDOUT, lo STDERR, etc.
 
-SeqIOTools is in the package org.biojava.bio.seq.io
+SeqIOTools è nel pacage org.biojava.bio.seq.io
 
-=== Printing a SequenceDB ===
+=== Stampiamo un SequenceDB ===
 
 <java>
-      //make a instance of the SequenceDB interface
+      //creiamo una istanza dell'interfaccia SequenceDB
       SequenceDB db = new HashSequenceDB();
 
-      //add the sequences to the DB
+      //aggiungiuamo 2 sequenze al DB
       db.addSequence(seq1);
       db.addSequence(seq2);
 
       /*
-       * now print it to an output stream in FASTA format using a static method
-       * from the utility class SeqIOTools. In this case our output stream is
-       * STDOUT
+       * stampiamo ora le due sequenze in formato FASTA utilizzando la classe SeqIOTools. In
+       * questo caso l'outputstream è lo STDOUT.
+       * 
        */
+
       SeqIOTools.writeFasta(System.out, db);
 </java> 
 
-=== Printing from a SequenceIterator ===
+=== Stampiamo le sequenze recuperate con un SequenceIterator ===
 
-Many readXXX() methods from SeqIOTools return a SequenceIterator that iterates over all the Sequences in a file. Most of the writeXXX() methods from SeqIOTools have a version of the methods that takes a SequenceIterator as an argument, e.g.
+Molti dei metodi readXXX() appartenenti alla classe SeqIOTools restituiscono un SequenceIterator e molti dei metodi writeXXX() appartenenti alla stessa classe accettano come dato di ingresso proprio un SequenceIterator.
 
 <java>
       SequenceIterator iter =
           (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);
 
-      //and now write it all to FASTA, (you can write to any OutputStream, not just System.out)
+      // e ora le scriviamo tutte nel formato FASTA, e le inviamo ad un OutPutStream
       SeqIOTools.writeFasta(System.out, iter);
 </java>
 
-=== Printing a Single Sequence ===
+=== Stampiamo una singola sequenza ===
 
 <java>
       /*
-       * SeqIOTools also has a method that takes a single sequence so you don't
-       * have to make a SequenceDB
+       * La classe SeqIOTools ha un metodo che prende una singola sequenza e la scrive nel formato FASTA
+       * senza la necessità di costruire un SequenceDB
        */
       SeqIOTools.writeFasta(System.out, seq1);
 </java>
