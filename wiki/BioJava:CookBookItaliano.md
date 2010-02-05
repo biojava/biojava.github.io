@@ -123,8 +123,8 @@ Come posso....?
 
 ### Sequence I/O
 
--   [How do I write Sequences in Fasta
-    format](Biojava:Cookbook:SeqIO:WriteInFasta "wikilink")?
+-   [Come posso scrivere le sequeze in formato
+    FASTA](Biojava:CookBookItaliano:SeqIO:WriteInFasta "wikilink")?
 -   [How do I read in a Fasta
     file](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
 -   [How do I read a GenBank/EMBL/SwissProt
