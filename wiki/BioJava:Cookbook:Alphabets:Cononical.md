@@ -9,7 +9,7 @@ In Biojava the same
 [Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
 and the same
 [Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
-are canonical no matter how they where constructed or where they came
+are canonical no matter how they were constructed or where they came
 from. This means that if two [DNA](wp:DNA "wikilink") alphabets (or
 [Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
 from those alphabets) are instantiated at different times are equal via
