@@ -106,7 +106,7 @@ it = ra.getNoteSet().iterator(); it.hasNext();){
 `       }`  
 `     }`  
 `     //Outout the feature information`  
-`     System.out.println(locus + "  " + gene + "  " + geneSynonym + "  " + proteinID + "  " + product +"  " + featureStrand + "\t" + featureLocation);`  
+`     System.out.println(locus + "  " + gene + "  " + geneSynonym + "  " + proteinID + "  " + product + "  " + featureStrand + "  " + featureLocation);`  
 `   }`  
 ` }`  
 ` `  
