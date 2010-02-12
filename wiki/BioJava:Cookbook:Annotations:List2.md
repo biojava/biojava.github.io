@@ -33,7 +33,7 @@ public class ExtractInformation {
 `     richSeq = RichSequence.IOTools.readGenbankDNA(new BufferedReader(new FileReader(fileName)),null).nextRichSequence();`  
 `   }`  
 `   catch(FileNotFoundException fnfe){`  
-`     System.out.println("FilwNotFoundException: " + fnfe);`  
+`     System.out.println("FileNotFoundException: " + fnfe);`  
 `   }`  
 `   catch(BioException bioe1){`  
 `     System.err.println("Not a Genbank sequence trying EMBL");`  
