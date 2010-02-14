@@ -106,7 +106,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[BioJava:CookBook:Distribution:Bayes|Using Distributions to make a naive Bayes classifier]]
 * [[Biojava:CookBook:Distribution:Composition|How do I calculate the composition of a Sequence or collection of Sequences?]] This example uses JDK 1.5 and BioJavaX
 
-=== Weight Matrices and Dynamic Programming ===
+=== Matrici Pesate e Programmazione Dinamica ===
 
 * [[BioJava:CookBook:DP:WeightMatrix|Come posso utilizzare una matrice di pesi per cercare un motivo]]?
 * [[BioJava:CookBook:DP:HMM|How do I make a HMMER like profile HMM]]?
