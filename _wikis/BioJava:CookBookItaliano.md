@@ -200,7 +200,7 @@ Come posso....?
     Sequences?](Biojava:CookBook:Distribution:Composition "wikilink")
     This example uses JDK 1.5 and BioJavaX
 
-### Weight Matrices and Dynamic Programming
+### Matrici Pesate e Programmazione Dinamica
 
 -   [Come posso utilizzare una matrice di pesi per cercare un
     motivo](BioJava:CookBook:DP:WeightMatrix "wikilink")?
