@@ -202,8 +202,8 @@ Come posso....?
 
 ### Weight Matrices and Dynamic Programming
 
--   [How do I use a WeightMatrix to find a
-    motif](BioJava:CookBook:DP:WeightMatrix "wikilink")?
+-   [Come posso utilizzare una matrice di pesi per cercare un
+    motivo](BioJava:CookBook:DP:WeightMatrix "wikilink")?
 -   [How do I make a HMMER like profile
     HMM](BioJava:CookBook:DP:HMM "wikilink")?
 -   |How do I set up a custom HMM? (Link to
@@ -211,9 +211,9 @@ Come posso....?
     (EST) )
 -   [How do I generate a pair-wise alignment with a Hidden Markov
     Model](BioJava:CookBook:DP:PairWise "wikilink")?
--   [How do I generate a global or local alignment with the
-    Needleman-Wunsch- or the
-    Smith-Waterman-algorithm](BioJava:CookBook:DP:PairWise2 "wikilink")?
+-   [Come posso generare un allineamento globale o locale,
+    rispettivamente, con gli algoritmi di Needleman-Wunsch o di
+    Smith-Waterman](BioJava:CookbookItaliano:DP:PairWise2 "wikilink")?
 
 ### User Interfaces
 
