@@ -124,6 +124,7 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 * [[BioJava:CookBook:Interfaces:ViewInGUI2|How can I create a RichSequence viewer]]?
 * [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
 * [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
+* [[BioJava:CookBook:Interfaces:How can I view an Alignment]]?
 * [[BioJava:CookBook:Interfaces:ProteinPeptideFeatures|How can I display Protein Features / a Peptide Digest]]?
 
 === BioSQL and Sequence Databases ===
