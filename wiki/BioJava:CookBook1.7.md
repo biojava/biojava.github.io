@@ -223,8 +223,8 @@ How Do I....?
     coordinates](BioJava:CookBook:Interfaces:Coordinates "wikilink")?
 -   [How can I display
     features](BioJava:CookBook:Interfaces:Features "wikilink")?
--   [BioJava:CookBook:Interfaces:How can I view an
-    Alignment](BioJava:CookBook:Interfaces:How can I view an Alignment "wikilink")?
+-   [How can I view an
+    Alignment](BioJava:CookBook:Interfaces:Alignments "wikilink")?
 -   [How can I display Protein Features / a Peptide
     Digest](BioJava:CookBook:Interfaces:ProteinPeptideFeatures "wikilink")?
 
