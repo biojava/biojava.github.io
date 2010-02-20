@@ -6,13 +6,12 @@ Come posso leggere una sequenze da un file in formato FASTA?
 ------------------------------------------------------------
 
 Una dei delle operazioni di I/O più eseguite in bioninformatica è il
-caricamento di un flat file in memoria. One of the most frequent I/O
-tasks is the reading of a flat file representation of sequence into
-memory. SeqIOTools provides some basic static methods to read files into
-BioJava. There is actually more than one solution. The more specific is
-demonstrated first and the more general second.
+caricamento di un flat file di una sequenza in memoria. La classe
+SeqIOTools dispone di una serie di metodi statici per la lettura dei
+files. Ci sono più modi per poter eseguire questa operazione. Il primo è
+un esempio più specifico il secondo invece un pò più generale.
 
-### Solution 1
+### Soluzione n°1
 
 <java> import java.io.\*; import java.util.\*;
 
@@ -22,38 +21,40 @@ org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
 public class ReadFasta {
 
 ` /**`  
-`  * The program takes two args: the first is the file name of the Fasta file.`  
-`  * The second is the name of the Alphabet. Acceptable names are DNA RNA or PROTEIN.`  
+`  * Per poter essere eseguita questa classe ha bisogno di due parametri di ingresso:`  
+`  * il primo è il nome del file con il suo percorso, e il secondo è il nome dell'alfabeto`  
+`  * che si vuole utilizzare DNA, RNA, PROTEIN.`  
 `  */`  
 ` public static void main(String[] args) {`
 
 `   try {`  
-`     //setup file input`  
+`     //apre il file di input`  
 `     String filename = args[0];`  
 `     BufferedInputStream is =`  
 `         new BufferedInputStream(new FileInputStream(filename));`
 
-`     //get the appropriate Alphabet`  
+`     //prende l'alfabeto richiesto`  
 `     Alphabet alpha = AlphabetManager.alphabetForName(args[1]);`
 
-`     //get a SequenceDB of all sequences in the file`  
+`     //crea un SequenceDB con tutte le sequenze presenti nel file`  
 `     SequenceDB db = SeqIOTools.readFasta(is, alpha);`  
 `   }`  
 `   catch (BioException ex) {`  
-`     //not in fasta format or wrong alphabet`  
+`     //questa eccezione viene sollevata quando o le sequenze non sono in formato fasta`  
+`     //o quando l'alfabeto utilizzato è sbagliato`  
 `     ex.printStackTrace();`  
 `   }catch (NoSuchElementException ex) {`  
-`     //no fasta sequences in the file`  
+`     //questa eccezione viene sollevata quando non sono presenti sequenze in formato fasta all'interno del file`  
 `     ex.printStackTrace();`  
 `   }catch (FileNotFoundException ex) {`  
-`     //problem reading file`  
+`     //questa eccezione viene sollevata quando il file che si intende leggere non esiste`  
 `     ex.printStackTrace();`  
 `   }`  
 ` }`
 
 } </java>
 
-### Solution 2
+### Soluzione n°2
 
 <java> import java.io.\*;
 
