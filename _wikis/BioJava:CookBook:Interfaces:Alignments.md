@@ -13,10 +13,11 @@ alignment. Start with a MultiLineRenderer. To the MultiLineRenderer you
 connect one AlignmentRenderer for each sequence in the alignment. Each
 AlignmentRenderer should have the label of the sequence it should render
 set on it. And in the end you connect a SymbolSequenceRenderer to each
-AlignmentRenderer.
+AlignmentRenderer. The same SymbolSequenceRenderer can be used for all
+the AlignmentRenderers.
 
-So, for an Alignment with three sequences,labeled seq1,seq2 and seq3,
-the renderer tree would look like this:
+So for an Alignment with three sequences labeled seq1, seq2 and seq3 the
+renderer tree would look like this:
 
 `                    __  AlignmentRenderer --- SymbolSequenceRenderer`  
 `                   |    label=labelForSeq1`  
@@ -53,13 +54,13 @@ public class AlignmentPanel extends JFrame {
 ` `  
 ` //Instantiate the BioJava GUI elements`  
   
-` //TranslatedSequencePanel `  
+` //TranslatedSequencePanel to hold the renderers `  
 ` TranslatedSequencePanel tsp = new TranslatedSequencePanel();`  
 ` //AlignmentRenderer to hold each sequence`  
 ` AlignmentRenderer render1, render2, render3;`  
-` //MultiLinRenderer to allow display of multiple tracks in the TranslatedSequencePanel`  
+` //MultiLineRenderer to allow display of multiple tracks in the TranslatedSequencePanel`  
 ` MultiLineRenderer multi = new MultiLineRenderer();`  
-` //SymbolSequenceRenderer to handle display of the sequence symbols`  
+` //SymbolSequenceRenderer to handle display of the sequence symbols - only one instance is needed`  
 ` SymbolSequenceRenderer symbol = new SymbolSequenceRenderer();`  
 ` //RulerRenderer to display sequence coordinates`  
 ` RulerRenderer ruler = new RulerRenderer();`  
@@ -107,8 +108,10 @@ public class AlignmentPanel extends JFrame {
 `   `  
 `   //Set the sequence in the TranslatedSequencePanel`  
 `   tsp.setSequence((SymbolList)ali);`  
+`   //Set the background colour of the TranslatedSequencePanel`  
 `   tsp.setOpaque(true);`  
 `   tsp.setBackground(Color.white);`  
+`   //Set the renderer for the TranslatedSequencePanel`  
 `   tsp.setRenderer(multi);  `  
 `   `  
 `   //Set up the display`  
