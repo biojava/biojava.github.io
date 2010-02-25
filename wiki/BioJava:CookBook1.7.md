@@ -226,7 +226,7 @@ How Do I....?
 -   [How can I view an
     Alignment](BioJava:CookBook:Interfaces:Alignments "wikilink")?
 -   [How can I view an Alignment
-    II](BioJava:CookBook:Interfaces:Alignments "wikilink")?
+    II](BioJava:CookBook:Interfaces:Alignments II "wikilink")?
 -   [How can I display Protein Features / a Peptide
     Digest](BioJava:CookBook:Interfaces:ProteinPeptideFeatures "wikilink")?
 
