@@ -10,7 +10,7 @@ javax.swing.\*; //Load the BioJava libraries import org.biojava.bio.\*;
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*; import
 org.biojava.bio.symbol.\*; import org.biojava.bio.gui.sequence.\*;
 
-public class AlignmentPanel extends JFrame {
+public class AlignmentPanel\_II extends JFrame {
 
 ` //Create references to the sequences`  
 ` Sequence seq, seq1, seq2, seq3;`  
@@ -36,7 +36,7 @@ public class AlignmentPanel extends JFrame {
 
 ` JScrollBar scrollBar;`  
 ` `  
-` public AlignmentPanel(){`  
+` public AlignmentPanel_II(){`  
 `   super("Alignment Panel  II");`
 
 `   //Create the sequences for the alignment`  
@@ -190,7 +190,7 @@ public class AlignmentPanel extends JFrame {
 `  * Main method`  
 `  */`  
 ` public static void main(String args []){`  
-`   new AlignmentPanel();`  
+`   new AlignmentPanel_II();`  
 ` }`
 
 } </java>
