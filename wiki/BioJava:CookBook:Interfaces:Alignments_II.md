@@ -2,6 +2,8 @@
 title: BioJava:CookBook:Interfaces:Alignments II
 ---
 
+![](Alignment_II.gif "Alignment_II.gif")
+
 <java> //Load the Java libraries import java.awt.\*; import
 java.awt.event.\*; import java.awt.geom.\*; import java.util.\*; import
 javax.swing.\*; //Load the BioJava libraries import org.biojava.bio.\*;

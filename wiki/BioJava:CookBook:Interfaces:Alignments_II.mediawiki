@@ -1,3 +1,5 @@
+[[File:Alignment_II.gif]]
+
 <java>
 //Load the Java libraries
 import java.awt.*;
