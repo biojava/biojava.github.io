@@ -125,7 +125,7 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 * [[BioJava:CookBook:Interfaces:Coordinates|How do I display Sequence coordinates]]?
 * [[BioJava:CookBook:Interfaces:Features|How can I display features]]?
 * [[BioJava:CookBook:Interfaces:Alignments|How can I view an Alignment]]?
-* [[BioJava:CookBook:Interfaces:Alignments|How can I view an Alignment II]]?
+* [[BioJava:CookBook:Interfaces:Alignments II|How can I view an Alignment II]]?
 * [[BioJava:CookBook:Interfaces:ProteinPeptideFeatures|How can I display Protein Features / a Peptide Digest]]?
 
 === BioSQL and Sequence Databases ===
