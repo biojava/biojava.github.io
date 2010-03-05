@@ -4,7 +4,7 @@ title: BioJava:Download 1.7.1
 
 This page offers downloads for the <b>BioJava 1.7.1 release</b>.
 
-BioJava 1.7.1 requires on <b>Java 1.5</b> or later.
+BioJava 1.7.1 requires <b>Java 1.5</b> or later.
 
 Complete Download
 -----------------

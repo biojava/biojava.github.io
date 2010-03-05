@@ -1,6 +1,6 @@
 This page offers downloads for the <b>BioJava 1.7.1 release</b>. 
 
-BioJava 1.7.1 requires on <b>Java 1.5</b> or later. 
+BioJava 1.7.1 requires <b>Java 1.5</b> or later. 
 
 == Complete Download ==
 A complete download is available as the [http://www.biojava.org/download/bj171/all/biojava-1.7.1-all.jar biojava-1.7.1-all.jar] file (27Mb). The file contains all binaries, required jars, docs, source, test, demos and apps as gzipped tar files. For some browsers, right click and select "Save Link As".
