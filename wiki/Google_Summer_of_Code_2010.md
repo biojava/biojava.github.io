@@ -2,8 +2,8 @@
 title: Google Summer of Code 2010
 ---
 
-Google Summer of Code
-=====================
+Google Summer of Code 2010
+--------------------------
 
 The Open Bioinformatics foundation is [applying to participate in the
 Google Summer of
