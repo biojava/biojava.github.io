@@ -55,7 +55,7 @@ Documentation
 -------------
 
 Documentation is available via
-[biojava-1.7.1-docs.jar](http://www.biojava.org/download/bj171/doc/biojava-1.7.1-docs.jar)
+[biojava-1.7.1-doc.jar](http://www.biojava.org/download/bj171/doc/biojava-1.7.1-doc.jar)
 (11Mb) that includes the javadocs for the API, demos and apps. For some
 browsers, right click and select "Save Link As".
 
