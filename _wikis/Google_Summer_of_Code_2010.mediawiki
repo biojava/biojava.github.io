@@ -1,4 +1,4 @@
-= Google Summer of Code =
+== Google Summer of Code 2010 ==
 
 The Open Bioinformatics foundation is [http://www.open-bio.org/wiki/Google_Summer_of_Code applying to participate in the Google Summer of Code].
 
