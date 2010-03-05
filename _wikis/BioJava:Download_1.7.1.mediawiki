@@ -26,7 +26,7 @@ The jar file containing the source code is available from [http://www.biojava.or
 
 == Documentation ==
 
-Documentation is available via [http://www.biojava.org/download/bj171/doc/biojava-1.7.1-docs.jar biojava-1.7.1-docs.jar] (11Mb) that includes the javadocs for the API, demos and apps. For some browsers, right click and select "Save Link As".
+Documentation is available via [http://www.biojava.org/download/bj171/doc/biojava-1.7.1-doc.jar biojava-1.7.1-doc.jar] (11Mb) that includes the javadocs for the API, demos and apps. For some browsers, right click and select "Save Link As".
 
 You can also browse the documentation at [http://www.biojava.org/docs/api171/ BioJava 1.7.1 api]
 
