@@ -36,4 +36,6 @@ Develop a multiple sequence alignment algorithm entirely written in Java
 </td>
 </tr>
 </table>
-
+Please read
+[<http://www.open-bio.org/wiki/Google_Summer_of_Code>](http://www.open-bio.org/wiki/Google_Summer_of_Code)
+for more details.
