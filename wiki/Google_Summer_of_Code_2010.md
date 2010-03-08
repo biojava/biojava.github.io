@@ -25,9 +25,8 @@ BioJava offers the following Google Summer of Code projects:
 
 ### All-Java Multiple Sequence Alignment
 
+Develop an all-Java implementation of a multiple sequence alignment
+algorithm. Interested students should have a general knowledge of
+alignment algorithms and experience in Java-based software development.
+
 **Mentor:** Andreas Prlic
-
-**Project:** Develop an all-Java multiple sequence alignment algorithm
-
-**Student background requirements:** General knowledge of alignment
-algorithms, Java development experience
