@@ -15,37 +15,10 @@ which are currently under development.
 
 We also offer the following projects:
 
-<table >
-<tr>
-<td>
-Name of Mentor
+| Name of Mentor | Project                                                                              | Required Background                                |
+|----------------|--------------------------------------------------------------------------------------|----------------------------------------------------|
+| Andreas Prlic  | [Develop an all-Java multiple sequence alignment algorithm](GOSC2010:MSA "wikilink") | General knowledge of alignment algorithms, Eclipse |
 
-</td>
-<td>
-Project
-
-</td>
-<td>
-Required Background
-
-</td>
-</tr>
-<tr>
-<td>
-Andreas Prlic
-
-</td>
-<td>
-[Develop a multiple sequence alignment algorithm entirely written in
-Java](GOSC2010:MSA "wikilink")
-
-</td>
-<td>
-General knowledge of alignment algorithms, Eclipse
-
-</td>
-</tr>
-</table>
-Please read
-[<http://www.open-bio.org/wiki/Google_Summer_of_Code>](http://www.open-bio.org/wiki/Google_Summer_of_Code)
-for more details.
+Please read [the Open Bioinformatics Foundation Google Summer of
+Code](http://www.open-bio.org/wiki/Google_Summer_of_Code) page for more
+details.
