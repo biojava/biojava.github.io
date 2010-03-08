@@ -25,6 +25,10 @@ Name of Mentor
 Project
 
 </td>
+<td>
+Required Background
+
+</td>
 </tr>
 <tr>
 <td>
@@ -32,7 +36,12 @@ Andreas Prlic
 
 </td>
 <td>
-Develop a multiple sequence alignment algorithm entirely written in Java
+[Develop a multiple sequence alignment algorithm entirely written in
+Java](GOSC2010:MSA "wikilink")
+
+</td>
+<td>
+General knowledge of alignment algorithms, Eclipse
 
 </td>
 </tr>
