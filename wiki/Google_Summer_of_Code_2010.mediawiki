@@ -1,20 +1,19 @@
-== Google Summer of Code 2010 ==
+== Introduction ==
 
 The Open Bioinformatics foundation is [http://www.open-bio.org/wiki/Google_Summer_of_Code applying to participate in the Google Summer of Code].
 
 We are accepting applicants for projects for BioJava. If you want to propose a project, have a look at the [[BioJava:Modules]] page, for areas which are currently under development.
 
-We also offer the following projects:
+Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at the Open Bioinformatics Foundation] and the [http://code.google.com/soc main Google Summer of Code page] for more details about the program.
 
-{| class="wikitable"
-|-
-! Name of Mentor
-! Project
-! Required Background
-|-
-| Andreas Prlic
-| [[GOSC2010:MSA|Develop an all-Java multiple sequence alignment algorithm]]
-| General knowledge of alignment algorithms, Eclipse
-|}
+== Projects ==
 
-Please read [http://www.open-bio.org/wiki/Google_Summer_of_Code the Open Bioinformatics Foundation Google Summer of Code] page for more details.
+BioJava offers the following Google Summer of Code projects:
+
+=== All-Java Multiple Sequence Alignment ===
+
+'''Mentor:''' Andreas Prlic
+
+'''Project:''' Develop an all-Java multiple sequence alignment algorithm
+
+'''Student background requirements:''' General knowledge of alignment algorithms, Java development experience
