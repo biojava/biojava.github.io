@@ -6,9 +6,15 @@ We are accepting applicants for projects for BioJava. If you want to propose a p
 
 We also offer the following projects:
 
-<table >
-<tr><td> Name of Mentor </td> <td> Project </td><td>Required Background</td></tr>
-<tr><td>Andreas Prlic</td> <td>[[GOSC2010:MSA|Develop a multiple sequence alignment algorithm entirely written in Java]]</td><td>General knowledge of alignment algorithms, Eclipse</td></tr>
-</table>
+{| class="wikitable"
+|-
+! Name of Mentor
+! Project
+! Required Background
+|-
+| Andreas Prlic
+| [[GOSC2010:MSA|Develop an all-Java multiple sequence alignment algorithm]]
+| General knowledge of alignment algorithms, Eclipse
+|}
 
-Please read [http://www.open-bio.org/wiki/Google_Summer_of_Code http://www.open-bio.org/wiki/Google_Summer_of_Code] for more details.
+Please read [http://www.open-bio.org/wiki/Google_Summer_of_Code the Open Bioinformatics Foundation Google Summer of Code] page for more details.
