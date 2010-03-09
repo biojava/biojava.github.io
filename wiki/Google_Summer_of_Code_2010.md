@@ -34,7 +34,7 @@ algorithm.
 
 <!-- -->
 
-Rationale : Multiple sequence alignment is a frequently performed performed task in order to identify new members of protein families and infer phylogenetic relationships between proteins. At the present there is no Java only implementation for an algorithm that can create such multiple alignments. As such a number of already existing and Java related BioInformatics tools and web site would benefit from such an implementation. BioJava at the present already contains implementations for pairwise alignments and tools to create phylogenetic trees. This project will combine these tools in order to create a new implementation for this problem.  
+Rationale : Multiple sequence alignment is a frequently performed task in sequence analysis with the goal to identify new members of protein families and infer phylogenetic relationships between proteins and genes. At the present there is no Java-only implementation for this algorithm. As such the number of already existing and Java related BioInformatics tools and web site would benefit from this implementation and sequence analysis could be more easily performed for the end-user. BioJava at the present already contains implementations for pairwise alignments and tools to create phylogenetic trees. This project will combine these tools in order to create a new implementation for this problem.  
 
 <!-- -->
 
