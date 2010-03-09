@@ -54,7 +54,7 @@ alignments to incorporate more distantly related sequences. Apply
 sequence weighting to correct for closely related sequences and apply
 residue specific gap penalties.
 
-Challenges : Requires to join a number of existing tools into a unique solution. A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava.  
+Challenges : Requires to join a number of existing tools into a unique solution. A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava. Step 3 contains probably most risk. As such a first implementation will be based on a straightforward approach for building up the MSA progressively. If there is more time left during the project, more advanced rules can get implemented.  
 
 <!-- -->
 
