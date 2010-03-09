@@ -30,28 +30,37 @@ BioJava offers the following Google Summer of Code projects:
 
 All-Java Multiple Sequence Alignment  
 Develop an all-Java implementation of a multiple sequence alignment
-algorithm. Interested students should have a general knowledge of
-alignment algorithms and experience in Java-based software development.
+algorithm.
 
 <!-- -->
 
-Rationale :  
+Rationale : Multiple sequence alignment is a frequently performed performed task in order to identify new members of protein families and infer phylogenetic relationships between proteins. At the present there is no Java only implementation for an algorithm that can create such multiple alignments. Such an implementation would be helpful in order to facilitate easy deployment in Web servers and via Java Web Start applications. BioJava at the present already contains implementations for pairwise alignments and tools to create phylogenetic trees. This project will combine these tools in order to create a new implementation for this problem.  
 
 <!-- -->
 
 Approach :  
 
-<!-- -->
+The multiple sequence alignment algorithm wil consist 3 steps: 1)
+Pairwise sequence alignments of all sequences will be calculated.
+BioJava already contains code for this. This code needs to be updated to
+be compliant with the new BioJava 3. 2) The results of the pairwise
+alignments are used to build up a distance matrix. This matrix is used
+to construct a tree using the Neighbor Joining Algorithm. 3) Apply a
+strategy similar to CLUSTALW to progressively build up the multiple
+alignment. Align closer related sequences first and extend the
+alignments to incorporate more distantly related sequences. Apply
+sequence weighting to correct for closely related sequences and apply
+residue specific gap penalties.
 
-Challenges :  
+Challenges : Requires to join a number of existing tools into a unique solution. A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava.  
 
 <!-- -->
 
 Involved toolkits or projects :  
 
-<!-- -->
+Core, Alignment and Phylogeny modules of BioJava3
 
-Degree of difficulty and needed skills : Moderate.  
+Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of alignment algorithms and experience in Java-based software development.  
 
 <!-- -->
 
