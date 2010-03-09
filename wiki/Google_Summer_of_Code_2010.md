@@ -33,6 +33,29 @@ Develop an all-Java implementation of a multiple sequence alignment
 algorithm. Interested students should have a general knowledge of
 alignment algorithms and experience in Java-based software development.
 
+<!-- -->
+
+Rationale :  
+
+<!-- -->
+
+Approach :  
+
+<!-- -->
+
+Challenges :  
+
+<!-- -->
+
+Involved toolkits or projects :  
+
+<!-- -->
+
+Degree of difficulty and needed skills : Moderate.  
+
+<!-- -->
+
+  
 **Mentor: [ Andreas Prlic](Andreas_Prlic "wikilink")**
 
 
