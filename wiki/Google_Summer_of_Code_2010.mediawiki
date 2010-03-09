@@ -30,9 +30,8 @@ BioJava offers the following Google Summer of Code projects:
 
 ; Challenges : Requires to join a number of existing tools into a unique solution. A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava.
 
-; Involved toolkits or projects : 
-Core, Alignment and Phylogeny modules of BioJava3
+; Involved toolkits or projects : Core, Alignment and Phylogeny modules of BioJava3
 
 ; Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of alignment algorithms and experience in Java-based software development.
 
-:'''Mentor: [[Andreas_Prlic | Andreas Prlic]]'''
+; Mentor: '''[[Andreas_Prlic | Andreas Prlic]]'''
