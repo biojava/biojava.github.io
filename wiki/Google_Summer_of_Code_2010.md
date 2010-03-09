@@ -58,15 +58,14 @@ Challenges : Requires to join a number of existing tools into a unique solution.
 
 <!-- -->
 
-Involved toolkits or projects :  
+Involved toolkits or projects : Core, Alignment and Phylogeny modules of BioJava3  
 
-Core, Alignment and Phylogeny modules of BioJava3
+<!-- -->
 
 Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of alignment algorithms and experience in Java-based software development.  
 
 <!-- -->
 
-  
-**Mentor: [ Andreas Prlic](Andreas_Prlic "wikilink")**
+Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")**  
 
 
