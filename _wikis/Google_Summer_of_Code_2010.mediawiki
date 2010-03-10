@@ -21,12 +21,9 @@ BioJava offers the following Google Summer of Code projects:
  
 ; Approach : The multiple sequence alignment algorithm will consist of 3 steps: 
 
-1) Pairwise sequence alignments of all sequences will be calculated.  BioJava already contains code for this. This code needs to be updated to be compliant with the new BioJava 3.
-
-2) The results of the pairwise alignments are used to build up a distance matrix. This matrix is used to construct a tree using the Neighbor Joining Algorithm.
-
-3) Apply a strategy similar to CLUSTALW to progressively build up the multiple alignment. Align closer related sequences first and extend the alignments to incorporate more distantly related sequences. Apply sequence weighting to correct for closely related sequences and apply residue specific gap penalties.
-
+:# Pairwise sequence alignments of all sequences will be calculated.  BioJava already contains code for this. This code needs to be updated to be compliant with the new BioJava 3.
+:# The results of the pairwise alignments are used to build up a distance matrix. This matrix is used to construct a tree using the Neighbor Joining Algorithm.
+:# Apply a strategy similar to CLUSTALW to progressively build up the multiple alignment. Align closer related sequences first and extend the alignments to incorporate more distantly related sequences. Apply sequence weighting to correct for closely related sequences and apply residue specific gap penalties.
 
 ; Challenges : Requires to join a number of existing tools into a unique solution. A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava. Step 3 contains probably most risk. As such a first implementation will be based on a straightforward  approach for building up the MSA progressively. If there is more time left during the project, more advanced rules can get implemented.
 

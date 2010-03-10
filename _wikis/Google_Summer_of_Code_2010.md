@@ -40,15 +40,15 @@ Rationale : Multiple sequence alignment is a frequently performed task in sequen
 
 Approach : The multiple sequence alignment algorithm will consist of 3 steps:  
 
-1) Pairwise sequence alignments of all sequences will be calculated.
+:\# Pairwise sequence alignments of all sequences will be calculated.
 BioJava already contains code for this. This code needs to be updated to
 be compliant with the new BioJava 3.
 
-2) The results of the pairwise alignments are used to build up a
+:\# The results of the pairwise alignments are used to build up a
 distance matrix. This matrix is used to construct a tree using the
 Neighbor Joining Algorithm.
 
-3) Apply a strategy similar to CLUSTALW to progressively build up the
+:\# Apply a strategy similar to CLUSTALW to progressively build up the
 multiple alignment. Align closer related sequences first and extend the
 alignments to incorporate more distantly related sequences. Apply
 sequence weighting to correct for closely related sequences and apply
