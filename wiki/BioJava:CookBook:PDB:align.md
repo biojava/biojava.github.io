@@ -4,14 +4,20 @@ title: BioJava:CookBook:PDB:align
 
 ### How can I calculate a structure alignment?
 
+### Cobinatorial Extension (CE) and FATCAT
+
 The structure alignment possibilities of BioJava are going to be greatly
 enhanced in the upcoming BioJava 3 release. It will provide a BioJava
 port of the **Combinatorial Extension** algorithm (CE) as well as of the
 **FATCAT** algorithm. The documentation how to use this algorithm is
-available from <BioJava:CookBook:PDB:CE_Algorithm> and
+available from
+
+<BioJava:CookBook:PDB:CE_Algorithm>
+
 <BioJava:CookBook:PDB:FATCAT_Algorithm>
 
-This is the example of how to use in the BioJava 1.7 release:
+This is the example of how to use the structure alignment algorithm with
+the BioJava 1.7 release:
 
 ### Biojava 1.7
 
