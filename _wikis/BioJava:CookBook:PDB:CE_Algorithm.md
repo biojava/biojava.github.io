@@ -74,13 +74,14 @@ edit some of the parameters.
 `          // set the maximum gap size to unlimited `  
 `          params.setMaxGapSize(-1);`  
 `          `  
+`          // The results are stored in an AFPChain object           `  
 `          AFPChain afpChain = algorithm.align(ca1,ca2,params);            `
 
 `          afpChain.setName1(name1);`  
 `          afpChain.setName2(name2);`
 
-`          // flexible original results:`  
-`          System.out.println(afpChain.toFatcat(ca1,ca2));`  
+`           // show a nice summary print`  
+`          System.out.println(AfpChainWriter.toWebSiteDisplay(afpChain, ca1, ca2));`  
 `          `  
 `          // print rotation matrices`  
 `          System.out.println(afpChain.toRotMat());`  
