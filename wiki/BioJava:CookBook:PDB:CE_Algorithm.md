@@ -33,7 +33,8 @@ file system PDB files are stored.
 Local Execution
 ===============
 
-**Required modules**: *biojava3-structure, alignment*
+**Required modules**: *biojava3-structure, alignment* **Optional
+module** : *biojava3-structure-gui* for the 3D visualisation
 
 Using BioJava3 it is possible to align any set of atoms with the CE
 algorithm. This example demonstrates how to align two protein chains and
