@@ -7,8 +7,8 @@ title: BioJava:CookBook:PDB:align
 ### Cobinatorial Extension (CE) and FATCAT
 
 The structure alignment possibilities of BioJava are going to be greatly
-enhanced in the upcoming BioJava 3 release. It will provide a BioJava
-port of the **Combinatorial Extension** algorithm (CE) as well as of the
+enhanced in the upcoming BioJava 3 release. It provides a BioJava port
+of the **Combinatorial Extension** algorithm (CE) as well as of the
 **FATCAT** algorithm. The documentation how to use this algorithm is
 available from
 
