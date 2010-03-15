@@ -21,6 +21,8 @@ The ''PDB_DIR'' property allows to specify the path, where in the local file sys
 
 '''Required modules''': ''biojava3-structure,  alignment''
 
+Using BioJava3 it is possible to align any set of atoms with the CE algorithm. This example demonstrates how to align two protein chains and edit some of the parameters.
+
 <java>
 
    public static void main(String[] args){
