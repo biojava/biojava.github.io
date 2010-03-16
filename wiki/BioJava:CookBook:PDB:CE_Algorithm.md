@@ -108,24 +108,25 @@ CE Parameters
 
 This CE implementation allows to specify a couple of custom parameters.
 
-1.  int winSize : (default 8) The window size used for the calculation
-    of the initial Aligned Fragment Pairs
-2.  double rmsdThr; (default 3.0) RMSD threshold used while tracing the
-    AFP fragments
-3.  double rmsdThrJoin; (default 4.0) RMSD threshold used to decide if
-    two AFPs should be joined
-4.  String[] alignmentAtoms; (default CA) allows to configure which
+1.  private int **maxGapSize**; (default 30) The Max gap size parameter
+    G , which has been obtained empirically in the CE paper. The larger
+    the max gap size, the longer the compute time, but in same cases
+    drastically improved results. (e.g. 1CDG.A vs. 1TIM.A) For no limit
+    set this parameter to -1.
+2.  boolean **checkCircular**; (default false) A flag that determines if
+    CE should check for Circular Permutations (CP). Increases
+    calculation time significantly, but can detect CPs.
+3.  int **winSize** : (default 8) The window size used for the
+    calculation of the initial Aligned Fragment Pairs
+4.  double **rmsdThr**; (default 3.0) RMSD threshold used while tracing
+    the AFP fragments
+5.  double **rmsdThrJoin**; (default 4.0) RMSD threshold used to decide
+    if two AFPs should be joined
+6.  String[] **alignmentAtoms**; (default CA) allows to configure which
     atoms to use. At the present only supports "CA" and "CA","CB"
     settings
-5.  private int maxGapSize; (default 30) The Max gap size parameter G ,
-    which was described to have been obtained empirically in the CE
-    paper. the larger the max gap size, the longer the compute time, but
-    in same cases drastically improved results. (e.g. 1CDG.A vs. 1TIM.A)
-    For NO LIMIT set it to -1.
-6.  boolean showAFPRanges; (default false) A print flag that allows to
-    view the ranges of the inital AFPs, prior to alignment optimization.
-7.  boolean checkCircular; (default false) A flag that determines if CE
-    should check for Circular Permutations (CP). Increases calculation
-    time significantly, but can detect CPs.
+7.  boolean **showAFPRanges**; (default false) A print flag that allows
+    to view the ranges of the inital AFPs, prior to alignment
+    optimization.
 
 back to <BioJava:CookBook:PDB:align>
