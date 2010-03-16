@@ -23,6 +23,10 @@ BioJava 1.7 contains an unpublished structure alignment algorithm. For more info
 
 Also know as "overlaying" is a process of fitting two (equivalent) sets of Atoms onto each other. This can be useful e.g. to overlay two different structural models of the same protein. BioJava also provides a tool for this. (See the [http://www.biojava.org/docs/api/org/biojava/bio/structure/SVDSuperimposer.html SVDSuperimposer.html] javadoc.
 
+=== Where is it being used ? ===
+
+The protein structure modules of BioJava3 are used on the RCSB PDB web site for the [http://www.rcsb.org/pdb/workbench/workbench.do Protein Comparison Tool].
+
 === Interesting test proteins ===
 
 # 1cdg.A vs 1tim.A . A TIM barrel aligned with a '''multi domain protein''' that contains a TIM barrel. While default CE and FATCAT (rigid) parameters only manage to find 3/4 of the barrel aligned, setting the ''Maximum Gap Size'' parameter in CE to ''unlimited'' (-1) allows it to find the whole barrel. ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1tim.A&mol=1cdg.A Example] - CE with default gap size)
