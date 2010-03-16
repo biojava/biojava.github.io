@@ -21,7 +21,7 @@ A user interface for running structure alignments manually is available
 through the biojava3-structure-gui modules. <java> public static void
 main(String[] args) {
 
-`       System.setProperty("PDB_DIR","/Users/andreas/WORK/PDB/");`  
+`       System.setProperty("PDB_DIR","/tmp/");`  
 `   `  
 `       AlignmentGui.getInstance();`
 
