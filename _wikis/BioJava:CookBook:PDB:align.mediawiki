@@ -22,3 +22,5 @@ BioJava 1.7 contains an unpublished structure alignment algorithm. For more info
 === Structure superposition ===
 
 Also know as "overlaying" is a process of fitting two (equivalent) sets of Atoms onto each other. This can be useful e.g. to overlay two different structural models of the same protein. BioJava also provides a tool for this. (See the [http://www.biojava.org/docs/api/org/biojava/bio/structure/SVDSuperimposer.html SVDSuperimposer.html] javadoc.
+
+=== Interesting test proteins ===
