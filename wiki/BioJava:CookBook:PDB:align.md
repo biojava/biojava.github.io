@@ -2,9 +2,30 @@
 title: BioJava:CookBook:PDB:align
 ---
 
-### How can I calculate a structure alignment?
+How can I calculate a structure alignment?
+==========================================
 
-### Cobinatorial Extension (CE) and FATCAT
+### What is a structure alignment?
+
+**Structural alignment** attempts to establish equivalences between two
+or more polymer structures based on their shape and three-dimensional
+conformation. In contrast to simple structural superposition, where at
+least some equivalent residues of the two structures are known,
+structural alignment requires no *a priori* knowledge of equivalent
+positions. Structural alignment is a valuable tool for the comparison of
+proteins with low sequence similarity, where evolutionary relationships
+between proteins cannot be easily detected by standard sequence
+alignment techniques. Structural alignment can therefore be used to
+imply evolutionary relationships between proteins that share very little
+common sequence. However, caution should be used in using the results as
+evidence for shared evolutionary ancestry because of the possible
+confounding effects of convergent evolution by which multiple unrelated
+amino acid sequences converge on a common tertiary structure.
+
+For more info see the [Wikipedia article on protein structure
+alignment](http://en.wikipedia.org/wiki/Structural_alignment).
+
+### Alignment with Cobinatorial Extension (CE) and FATCAT
 
 The structure alignment possibilities of BioJava are going to be greatly
 enhanced in the upcoming BioJava 3 release. It provides a BioJava port
@@ -16,107 +37,18 @@ available from
 
 <BioJava:CookBook:PDB:FATCAT_Algorithm>
 
-This is the example of how to use the structure alignment algorithm with
-the BioJava 1.7 release:
+### Alignment with BioJava 1.7
+
+BioJava 1.7 contains an unpublished structure alignment algorithm. For
+more information on it, please see here:
 
 <BioJava:CookBook:PDB:BioJava_Algorithm>
 
-### Biojava 1.7
+### Structure superposition
 
-The [structure alignment
-algorithm](BioJava:CookBook:PDB:aboutalign "wikilink") contained in
-BioJava is based on a variation of the PSC++ algorithm provided by Peter
-Lackner, Univ. Salzburg (personal communication). The
-[algorithm](BioJava:CookBook:PDB:aboutalign "wikilink") is calculating a
-distance matrix based, rigid body protein structure superimposition.
-
-Example
--------
-
-[Run WebStart
-Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
-(5MB download includes Jmol for visualization)
-
-Learn more about this JavaWebStart example at <BioJava:Performance>
-
-Code
-----
-
-<java>
-
-` public static void main(String[] args){`
-
-`       PDBFileReader pdbr = new PDBFileReader();`  
-`       pdbr.setPath("/Path/To/My/PDBFiles/");`
-
-`       String pdb1 = "1buz";`  
-`       String pdb2 = "1ali";`  
-`       String outputfile = "/somewhere/alig_" + pdb1 + "_" + pdb2 + ".pdb";`
-
-`       try {`  
-`           // NO NEED TO DO CHANGE ANYTHING BELOW HERE...`
-
-`           StructurePairAligner sc = new StructurePairAligner();`
-
-`           // step1 : read molecules`
-
-`           System.out.println("aligning " + pdb1 + " vs. " + pdb2);`
-
-`           Structure s1 = pdbr.getStructureById(pdb1);`  
-`           Structure s2 = pdbr.getStructureById(pdb2);`  
-`           // of course you do not have to use the full structures`  
-`           // you could also just use any set of atoms of your choice`
-
-`           // step 2 : do the calculations`  
-`           sc.align(s1, s2);`
-
-`           // if you want more control over the alignment parameters`  
-`           // use the StrucAligParameters`  
-`           // StrucAligParameters params = new StrucAligParameters();`  
-`           // params.setFragmentLength(8);`  
-`           // sc.align(s1,s2,params);`
-
-`           AlternativeAlignment[] aligs = sc.getAlignments();`
-
-`           // cluster similar results together`  
-`           ClusterAltAligs.cluster(aligs);`
-
-`           // print the result:`  
-`           // the AlternativeAlignment object gives access to rotation matrices`  
-`           // / shift vectors.`  
-`           for (int i = 0; i < aligs.length; i++) {`  
-`               AlternativeAlignment aa = aligs[i];`  
-`               System.out.println(aa);`  
-`           }`
-
-`           // convert AlternativeAlignment 1 to PDB file, so it can be opened`  
-`           // with a viewer of your choice`  
-`           // (e.g. Jmol, Rasmol)`
-
-`           if (aligs.length > 0) {`  
-`               AlternativeAlignment aa1 = aligs[0];`  
-`               String pdbstr = aa1.toPDB(s1, s2);`
-
-`               System.out.println("writing alignment to " + outputfile);`  
-`               FileOutputStream out = new FileOutputStream(outputfile);`  
-`               PrintStream p = new PrintStream(out);`
-
-`               p.println(pdbstr);`
-
-`               p.close();`  
-`               out.close();`  
-`           }`  
-`       } catch (FileNotFoundException e) {`  
-`           // TODO Auto-generated catch block`  
-`           e.printStackTrace();`  
-`       } catch (IOException e) {`  
-`           // TODO Auto-generated catch block`  
-`           e.printStackTrace();`  
-`       } catch (StructureException e) {`  
-`           e.printStackTrace();`  
-`       }`
-
-} </java>
-
-You can send the structure alignment for display to Jmol. see
-<BioJava:CookBook:PDB:Jmol> for more on this.
+Also know as "overlaying" is a process of fitting two (equivalent) sets
+of Atoms onto each other. This can be useful e.g. to overlay two
+different structural models of the same protein. BioJava also provides a
+tool for this. (See the
+[SVDSuperimposer.html](http://www.biojava.org/docs/api/org/biojava/bio/structure/SVDSuperimposer.html)
+javadoc.
