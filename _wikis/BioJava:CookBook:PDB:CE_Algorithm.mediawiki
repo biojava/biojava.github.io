@@ -88,5 +88,16 @@ Using BioJava3 it is possible to align any set of atoms with the CE algorithm. T
 
 </java>
 
+= CE Parameters =
+
+This CE implementation allows to specify a couple of custom parameters.
+
+# 	int winSize : (default 8) The window size used for the calculation of the initial Aligned Fragment Pairs
+#	double rmsdThr; (default 3.0)  RMSD threshold used while tracing the AFP fragments
+#	double rmsdThrJoin; (default 4.0) RMSD threshold used to decide if two AFPs should be joined
+#	String[] alignmentAtoms; (default CA) allows to configure which atoms to use. At the present only supports "CA" and "CA","CB" settings
+#	private int maxGapSize;  (default 30) The Max gap size parameter G , which was described to have been obtained empirically in the CE paper. the larger the max gap size, the longer the compute time, but in same cases drastically improved results. (e.g. 1CDG.A vs. 1TIM.A) For NO LIMIT set it to -1.
+# boolean showAFPRanges; (default false) A print flag that allows to view the ranges of the inital AFPs, prior to alignment optimization.
+# 	boolean checkCircular; (defaul false) A flag that determines if CE should check for Circular Permutations (CP). Increases calculation time significantly, but can detect CPs.
 
 back to [[BioJava:CookBook:PDB:align]]
