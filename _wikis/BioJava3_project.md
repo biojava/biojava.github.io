@@ -9,8 +9,8 @@ Status
 ------
 
 Coding has started in the [BioJava SVN
-repository](CVS_to_SVN_Migration "wikilink"). At the present we are at a
-alpha stage.
+repository](CVS_to_SVN_Migration "wikilink"). At the present we are at
+an alpha stage.
 
 Availability
 ------------
