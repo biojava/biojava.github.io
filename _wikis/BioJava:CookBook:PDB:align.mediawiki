@@ -11,6 +11,8 @@ The structure alignment possibilities of BioJava are going to be greatly enhance
 
 This is the example of how to use the structure alignment algorithm with the BioJava 1.7 release:
 
+[[BioJava:CookBook:PDB:BioJava_Algorithm]]
+
 ===Biojava 1.7===
 
 The [[BioJava:CookBook:PDB:aboutalign|structure alignment algorithm]] contained in BioJava is 
