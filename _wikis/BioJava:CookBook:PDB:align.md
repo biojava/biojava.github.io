@@ -62,11 +62,14 @@ javadoc.
     setting the *Maximum Gap Size* parameter in CE to *unlimited* (-1)
     allows it to find the whole barrel.
     ([Example](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1tim.A&mol=1cdg.A) -
-    default gap size)
-
-<!-- -->
-
-1.  4hhb.A vs. 4hhb.B See how the visualisation tools in BioJava can
+    CE with default gap size)
+2.  4hhb.A vs. 4hhb.B See how the visualisation tools in BioJava can
     also display a superposition of the **ligands** in an alignment.
     ([Example](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B))
+3.  1a64.A vs. 1hng.B . Domain swapping. In this example the similarity
+    between the two chains can best be found using the FATCAT-flexible
+    algorithm (Compare these examples:
+    [FATCAT-flexible](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_fatcat_flexible&mol=1hng.B&mol=1a64.A)
+    vs.
+    [CE](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1HNG.B&mol=1A64.A)
 
