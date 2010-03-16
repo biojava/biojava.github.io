@@ -53,3 +53,5 @@ different structural models of the same protein. BioJava also provides a
 tool for this. (See the
 [SVDSuperimposer.html](http://www.biojava.org/docs/api/org/biojava/bio/structure/SVDSuperimposer.html)
 javadoc.
+
+### Interesting test proteins
