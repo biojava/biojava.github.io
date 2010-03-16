@@ -19,6 +19,8 @@ available from
 This is the example of how to use the structure alignment algorithm with
 the BioJava 1.7 release:
 
+<BioJava:CookBook:PDB:BioJava_Algorithm>
+
 ### Biojava 1.7
 
 The [structure alignment
