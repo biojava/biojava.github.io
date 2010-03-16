@@ -54,6 +54,12 @@ tool for this. (See the
 [SVDSuperimposer.html](http://www.biojava.org/docs/api/org/biojava/bio/structure/SVDSuperimposer.html)
 javadoc.
 
+### Where is it being used ?
+
+The protein structure modules of BioJava3 are used on the RCSB PDB web
+site for the [Protein Comparison
+Tool](http://www.rcsb.org/pdb/workbench/workbench.do).
+
 ### Interesting test proteins
 
 1.  1cdg.A vs 1tim.A . A TIM barrel aligned with a **multi domain
