@@ -25,6 +25,6 @@ Also know as "overlaying" is a process of fitting two (equivalent) sets of Atoms
 
 === Interesting test proteins ===
 
-# 1cdg.A vs 1tim.A . A TIM barrel aligned with a '''multi domain protein''' that contains a TIM barrel. While default CE and FATCAT (rigid) parameters only manage to find 3/4 of the barrel aligned, setting the ''Maximum Gap Size'' parameter in CE to ''unlimited'' (-1) allows it to find the whole barrel. ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1tim.A&mol=1cdg.A Example] - default gap size)
-
+# 1cdg.A vs 1tim.A . A TIM barrel aligned with a '''multi domain protein''' that contains a TIM barrel. While default CE and FATCAT (rigid) parameters only manage to find 3/4 of the barrel aligned, setting the ''Maximum Gap Size'' parameter in CE to ''unlimited'' (-1) allows it to find the whole barrel. ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1tim.A&mol=1cdg.A Example] - CE with default gap size)
 # 4hhb.A vs. 4hhb.B See how the visualisation tools in BioJava can also display a superposition of the '''ligands''' in an alignment. ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B Example])
+# 1a64.A vs. 1hng.B . Domain swapping. In this example the similarity between the two chains can best be found using the FATCAT-flexible algorithm (Compare these examples: [http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_fatcat_flexible&mol=1hng.B&mol=1a64.A FATCAT-flexible] vs. [http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1HNG.B&mol=1A64.A CE]
