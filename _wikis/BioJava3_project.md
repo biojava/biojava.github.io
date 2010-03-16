@@ -10,7 +10,7 @@ Status
 
 Coding has started in the [BioJava SVN
 repository](CVS_to_SVN_Migration "wikilink"). At the present we are at a
-pre-alpha stage.
+alpha stage.
 
 Availability
 ------------
@@ -18,14 +18,14 @@ Availability
 At the moment we only recommend developers to checkout the source code.
 Check it out via
 
-`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/biojava3/`
+`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/`
 
 If you just want to see what is going on browse the code at
-[<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/branches/biojava3>](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/branches/biojava3)
+[<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk>](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk)
 
 Anonymous checkout is possible at
 
-`svn co `[`svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/`](svn://code.open-bio.org/biojava/biojava-live/branches/biojava3/)
+`svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk/`](svn://code.open-bio.org/biojava/biojava-live/trunk/)
 
 IDE specific instructions
 -------------------------
