@@ -55,3 +55,18 @@ tool for this. (See the
 javadoc.
 
 ### Interesting test proteins
+
+1.  1cdg.A vs 1tim.A . A TIM barrel aligned with a **multi domain
+    protein** that contains a TIM barrel. While default CE and FATCAT
+    (rigid) parameters only manage to find 3/4 of the barrel aligned,
+    setting the *Maximum Gap Size* parameter in CE to *unlimited* (-1)
+    allows it to find the whole barrel.
+    ([Example](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1tim.A&mol=1cdg.A) -
+    default gap size)
+
+<!-- -->
+
+1.  4hhb.A vs. 4hhb.B See how the visualisation tools in BioJava can
+    also display a superposition of the **ligands** in an alignment.
+    ([Example](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B))
+
