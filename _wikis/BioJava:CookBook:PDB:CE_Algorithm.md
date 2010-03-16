@@ -124,7 +124,7 @@ This CE implementation allows to specify a couple of custom parameters.
     For NO LIMIT set it to -1.
 6.  boolean showAFPRanges; (default false) A print flag that allows to
     view the ranges of the inital AFPs, prior to alignment optimization.
-7.  boolean checkCircular; (defaul false) A flag that determines if CE
+7.  boolean checkCircular; (default false) A flag that determines if CE
     should check for Circular Permutations (CP). Increases calculation
     time significantly, but can detect CPs.
 
