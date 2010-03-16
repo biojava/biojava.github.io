@@ -30,8 +30,9 @@ alignment](http://en.wikipedia.org/wiki/Structural_alignment).
 The structure alignment possibilities of BioJava are going to be greatly
 enhanced in the upcoming BioJava 3 release. It provides a BioJava port
 of the **Combinatorial Extension** algorithm (CE) as well as of the
-**FATCAT** algorithm. The documentation how to use this algorithm is
-available from
+**FATCAT** algorithm. Thanks to the (P. Bourne, Yuzhen Ye and A. Godzik
+for granting permission to freely use and redistribute their code. The
+documentation how to use this algorithm is available from
 
 <BioJava:CookBook:PDB:CE_Algorithm>
 
