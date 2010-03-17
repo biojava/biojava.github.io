@@ -5,6 +5,8 @@
 == Projects ==
 The following projects make use of BioJava. If you know of other projects please add them to the list.
 
+* [http://www.genostar.com/ Metabolic Pathway Builder]: Software suite dedicated to the exploration of connections among genes, proteins, reactions and metabolic pathways
+
 * [http://www.dengueinfo.org/ DengueInfo]: a Dengue genome information portal that uses BioJava in the middleware and talks to a biosql database.
 
 * [http://www.derkholm.net/thomas/dazzle Dazzle]: A BioJava based DAS server.
