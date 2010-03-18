@@ -25,7 +25,7 @@ unrelated amino acid sequences converge on a common tertiary structure.
 For more info see the [Wikipedia article on protein structure
 alignment](http://en.wikipedia.org/wiki/Structural_alignment).
 
-### Alignment with Cobinatorial Extension (CE) and FATCAT
+### Alignment with Combinatorial Extension (CE) and FATCAT
 
 The structure alignment possibilities of BioJava are going to be greatly
 enhanced in the upcoming BioJava 3 release. It provides a BioJava port
