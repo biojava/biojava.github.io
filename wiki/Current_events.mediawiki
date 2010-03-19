@@ -1,3 +1,6 @@
+== Google Summer of Code ==
+
+BioJava is participating in the Google Summer of Code. We are currently accepting student applications. For more info see here [[Google_Summer_of_Code]]
 == BioJava Hackathon 2010==
 
 The BioJava Hackaton will take place at the Genome Campus in Hinxton, Cambridge, U.K. from Jan. 19th-22nd. For more info see [[BioJava:Hackathon2010]].
