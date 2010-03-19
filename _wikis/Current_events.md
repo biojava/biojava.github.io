@@ -2,6 +2,13 @@
 title: Current events
 ---
 
+Google Summer of Code
+---------------------
+
+BioJava is participating in the Google Summer of Code. We are currently
+accepting student applications. For more info see here
+[Google\_Summer\_of\_Code](Google_Summer_of_Code "wikilink")
+
 BioJava Hackathon 2010
 ----------------------
 
