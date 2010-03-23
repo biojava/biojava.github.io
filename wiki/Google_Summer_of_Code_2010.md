@@ -79,7 +79,7 @@ Develop a Postranslational Modification package for the BioJava project.
 
 <!-- -->
 
-Rationale : Posttranslational modifications (PTM) [1](http://en.wikipedia.org/wiki/Posttranslational_modification) are modifications to proteins after protein biosynthesis that modulate protein function function. These PTMs are present in the 3D structures of the Protein Data Bank. A frequently asked question is to query or classify proteins by their PTMs. The goal of this project is to develop a BioJava package that first identifies these modifications and then classifies them by the type of PTM. Controlled vocabulary will be used to uniquely annotate PTMs. For glycosylated proteins, the linkage patters will be established and presented as linear text or 2D graphical representations using the guidelines from the Consortium for Functional Glyconomics [2](http://www.functionalglycomics.org/static/consortium/Nomenclature.shtml).  
+Rationale : Posttranslational modifications (PTM) [1](http://en.wikipedia.org/wiki/Posttranslational_modification) are modifications to proteins after protein biosynthesis that modulate protein function. These PTMs are present in the 3D structures of the Protein Data Bank. A frequently asked question is to query or classify proteins by their PTMs. The goal of this project is to develop a BioJava package that first identifies these modifications and then classifies them by the type of PTM. Controlled vocabulary will be used to uniquely annotate PTMs. For glycosylated proteins, the linkage patters will be established and presented as linear text or 2D graphical representations using the guidelines from the Consortium for Functional Glyconomics [2](http://www.functionalglycomics.org/static/consortium/Nomenclature.shtml).  
 
 <!-- -->
 
