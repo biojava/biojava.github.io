@@ -23,6 +23,10 @@ Mentors
 
 -   [ Andreas Prlic](Andreas_Prlic "wikilink") - 1 student
 
+<!-- -->
+
+-   [ Peter Rose](Peter_Rose "wikilink") - 1 student
+
 Projects
 --------
 
