@@ -10,7 +10,7 @@ Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at
 
 * [[Andreas_Prlic | Andreas Prlic]] - 1 student
 
-* [[Peter_Rose | Peter Rose]] - 1 student
+* Peter Rose [http://www.linkedin.com/in/peterrose] - 1 student
 
 == Projects ==
 
