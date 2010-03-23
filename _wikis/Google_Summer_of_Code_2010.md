@@ -75,7 +75,8 @@ Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")**
 ------------------------------------------------------------------------
 
 Identification and Classification of Posttranslational Modification of Proteins  
-Develop a Postranslational Modification package for the BioJava project.
+Develop a Posttranslational Modification package for the BioJava
+project.
 
 <!-- -->
 
