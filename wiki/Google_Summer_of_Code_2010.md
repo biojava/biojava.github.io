@@ -72,4 +72,43 @@ Degree of difficulty and needed skills : Difficult. Interested students should h
 
 Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")**  
 
+------------------------------------------------------------------------
+
+Identification and Classification of Posttranslational Modification of Proteins  
+Develop a Postranslational Modification package for the BioJava project.
+
+<!-- -->
+
+Rationale : Posttranslational modifications (PTM) [1](http://en.wikipedia.org/wiki/Posttranslational_modification) are modifications to proteins after protein biosynthesis that modulate protein function function. These PTMs are present in the 3D structures of the Protein Data Bank. A frequently asked question is to query or classify proteins by their PTMs. The goal of this project is to develop a BioJava package that first identifies these modifications and then classifies them by the type of PTM. Controlled vocabulary will be used to uniquely annotate PTMs. For glycosylated proteins, the linkage patters will be established and presented as linear text or 2D graphical representations using the guidelines from the Consortium for Functional Glyconomics [2](http://www.functionalglycomics.org/static/consortium/Nomenclature.shtml).  
+
+<!-- -->
+
+Approach : The PTM identification and classification will include the following steps:  
+
+:\# A list of known PTMs will be established. Then code will be
+developed to locate these PTMs in a 3D protein structures.
+
+:\# The protein link residues for the PTM will be determined based on
+distance ranges.
+
+:\# The link pattern for glycans will be defined by the connectivity of
+the sugar molecules in the 3D protein structure.
+
+:\# The results will be presented as text in a linear notation and 2D
+graphical representations if time permits.
+
+Challenges : A successful student will have prior experience in software development in Java and will have to learn and modify various tools already provided through BioJava. New algorithms will be added to BioJava to support this project.  
+
+<!-- -->
+
+Involved toolkits or projects : BioJava3, Eclipse IDE  
+
+<!-- -->
+
+Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of alignment algorithms and experience in Java-based software development.  
+
+<!-- -->
+
+Mentor: **[ Peter Rose](Peter_Rose "wikilink")**  
+
 
