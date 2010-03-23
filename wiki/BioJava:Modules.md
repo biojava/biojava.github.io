@@ -10,7 +10,6 @@ following people have stepped up to become module leader:
 
 Module: biojava-core Lead: Andreas Prlic
 
-`- break the new modules out of core`  
 `- bring up to modern Java standards, use Generics`  
 `- declare old/unused code obsolete`  
 `- don;t break backwards compatibility`
