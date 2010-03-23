@@ -46,7 +46,7 @@ BioJava offers the following Google Summer of Code projects:
 
 ; Approach : The PTM identification and classification will include the following steps:
 
-:# Establish a list of known PTMs and write code to locate these PTMs in a 3D protein structures.
+:# Establish a list of known PTMs and write code to locate these PTMs in a 3D protein structure.
 :# Determine the protein residues that carry PTMs based on distance thresholds.
 :# Traverse the sugar molecules and establish their link pattern based on connectivity.
 :# Present the PTMs as text in a linear notation and 2D graphical representations if time permits.

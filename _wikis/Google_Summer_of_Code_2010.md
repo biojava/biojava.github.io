@@ -86,7 +86,7 @@ Rationale : Posttranslational modifications (PTM) [2](http://en.wikipedia.org/wi
 Approach : The PTM identification and classification will include the following steps:  
 
 :\# Establish a list of known PTMs and write code to locate these PTMs
-in a 3D protein structures.
+in a 3D protein structure.
 
 :\# Determine the protein residues that carry PTMs based on distance
 thresholds.
