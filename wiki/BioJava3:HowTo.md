@@ -22,8 +22,8 @@ All the examples in this section require the biojava-dna module.
 ` List`<Symbol>` mySeq = SymbolListFormatter.parseSymbolList(mySeqString);`  
 ` `  
 ` // Is it a big list? Don't want to hold it all in memory? Use an iterator instead.`  
-` Iterator`<Symbol>` myIterator = SymbolListFormater.parseSymbols(mySeqString);`  
-` while (myIterator.hasNext()) {`  
+` for (Iterator`<Symbol>` myIterator = SymbolListFormater.parseSymbols(mySeqString);`  
+`      myIterator.hasNext(); ) {`  
 `   Symbol sym = myIterator.next();`  
 ` }`  
 `  `  
@@ -106,8 +106,8 @@ A quality-scored DNA sequence
 ### Iterating over the base/score pairs
 
 ` // A 1-indexed iterator and ListIterators are also available.`  
-` Iterator`<TaggedSymbol<Integer>`> iter = scoredSeq.taggedSymbolIterator();`  
-` while (iter.hasNext()) {`  
+` for (Iterator`<TaggedSymbol<Integer>`> iter = scoredSeq.taggedSymbolIterator();`  
+`      iter.hasNext(); ) {`  
 `   TaggedSymbol`<Integer>` taggedSym = iter.next();`  
 `   Symbol sym = taggedSym.getSymbol();`  
 `   Integer score = taggedSym.getTag();`  
@@ -124,8 +124,7 @@ A quality-scored DNA sequence
 ### Iterating over the scores only
 
 ` // A ListIterator is also available, as are 1-indexed iterators.`  
-` Iterator`<Integer>` iter = scoredSeq.tagIterator();`  
-` while (iter.hasNext()) {`  
+` for (Iterator`<Integer>` iter = scoredSeq.tagIterator(); iter.hasNext(); ) {`  
 `   Integer score = iter.next();`  
 ` }`
 
@@ -144,9 +143,9 @@ simpler for the most common use-cases.
 
 ### Parsing a FASTA file (the easy way)
 
-` ThingParser`<FASTA>` parser = ThingParserFactory.`  
-`   getReadParser(FASTA.format, new File("/path/to/my/fasta.fa"));`  
-` while (parser.hasNext()) {`  
+` for (ThingParser`<FASTA>` parser = ThingParserFactory.`  
+`        getReadParser(FASTA.format, new File("/path/to/my/fasta.fa"));`  
+`      parser.hasNext(); ) {`  
 `   FASTA fasta = parser.next(); `  
 `   // fasta contains a complete FASTA record.`  
 ` }`  
@@ -156,8 +155,8 @@ simpler for the most common use-cases.
 
 ` FASTAReader reader = new FASTAFileReader(new File("/path/to/my/fasta.fa"));`  
 ` FASTABuilder builder = new FASTABuilder();`  
-` ThingParser`<FASTA>` parser = new ThingParser`<FASTA>`(reader, builder);`  
-` while (parser.hasNext()) {`  
+` for (ThingParser`<FASTA>` parser = new ThingParser`<FASTA>`(reader, builder);`  
+`      parser.hasNext(); ) {`  
 `   FASTA fasta = parser.next(); `  
 `   // fasta contains a complete FASTA record.`  
 ` }`  
