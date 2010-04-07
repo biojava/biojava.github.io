@@ -1,0 +1,2 @@
+[http://pages.cs.wisc.edu/~chapman/ Mark Chapman] is a graduate student in [http://www.cs.wisc.edu/ Computer Sciences] at the [http://www.wisc.edu/ University of Wisconsin] - Madison.
+Currently, he is applying to work on BioJava during the [[Google Summer of Code]] 2010. He plans to develop a multiple sequence alignment module and update the pairwise alignment module to fit the [[BioJava3 Design]].
