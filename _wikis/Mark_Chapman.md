@@ -4,6 +4,8 @@ tags:
  - People
 ---
 
+![Progressive Multiple Sequence
+Alignment](Flowchart-ProgressiveMultipleSequenceAlignment.png "fig:Progressive Multiple Sequence Alignment")
 [Mark Chapman](http://pages.cs.wisc.edu/~chapman/) is a graduate student
 in [Computer Sciences](http://www.cs.wisc.edu/) at the [University of
 Wisconsin](http://www.wisc.edu/) - Madison. Currently, he is applying to
