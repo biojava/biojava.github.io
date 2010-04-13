@@ -21,6 +21,10 @@ The following example shows how to obtain the latest BioJava codebase snapshot u
 
  svn co svn://code.open-bio.org/biojava/biojava-live/trunk biojava-live
 
+We have had some problems with the anonymous checkouts recently. We are now also hosting a [http://github.com/biojava/biojava read only mirror at github]. To checkout from there:
+
+ svn co http://svn.github.com/biojava/biojava.git ./biojava
+
 ===Troubleshooting Anonymous SVN===
 
 If you encounter an error while using the SVN client or SVN Web interface, the likely cause is that our server is in the middle of replicating the repository from the primary source. While the mirror and replication process occurs, it is not unusual for SVN client functionality to break temporarily.
