@@ -35,6 +35,12 @@ directory named "biojava-live" on your system:
 
 `svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk`](svn://code.open-bio.org/biojava/biojava-live/trunk)` biojava-live`
 
+We have had some problems with the anonymous checkouts recently. We are
+now also hosting a [read only mirror at
+github](http://github.com/biojava/biojava). To checkout from there:
+
+`svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
+
 ### Troubleshooting Anonymous SVN
 
 If you encounter an error while using the SVN client or SVN Web
