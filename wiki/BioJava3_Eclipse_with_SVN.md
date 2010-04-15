@@ -25,6 +25,7 @@ Prerequisite
 Installation
 ------------
 
--   Right click on the folder <i>/biojava/biojava-live/trunk</i> and
-    select Check Out as Maven project
+-   In the SVN Repository Exploring view: Right click on the folder
+    <i>/biojava/biojava-live/trunk</i> and select Check Out as Maven
+    project
 
