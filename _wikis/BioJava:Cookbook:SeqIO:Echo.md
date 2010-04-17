@@ -11,16 +11,15 @@ these and convert them into Sequence objects. The SeqIOTools class
 provides many static methods that do this for you. In most cases this is
 great but you may want to write a parser for a format that is not
 supported by biojava. Alternatively, you might not want to generate
-Sequence objects. For example if you only wanted the the names of all
-the sequences in a very large file it would be horribly inefficient to
-make them all into full Sequence objects only to call getName() on them
-and send them off to the Garbage Collector. If you did this for the
-entire nr set of GenBank you could be twiddling your thumbs for ages
-while the parser assembles all the features, symbollists and
-annotations. Using biojava's sequence I/O API it is possible to make
-your own parsers. It is also possible to plug-in your own components
-with the already existing parsers to generate a highly customized
-parsing architecture.
+Sequence objects. For example if you only wanted the names of all the
+sequences in a very large file it would be horribly inefficient to make
+them all into full Sequence objects only to call getName() on them and
+send them off to the Garbage Collector. If you did this for the entire
+nr set of GenBank you could be twiddling your thumbs for ages while the
+parser assembles all the features, symbollists and annotations. Using
+biojava's sequence I/O API it is possible to make your own parsers. It
+is also possible to plug-in your own components with the already
+existing parsers to generate a highly customized parsing architecture.
 
 The core of the API are the two interfaces SequenceFormat and
 SeqIOListener. The API is heavily based on the event/ call-back model.
