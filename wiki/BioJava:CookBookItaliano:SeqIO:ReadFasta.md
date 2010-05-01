@@ -56,44 +56,42 @@ public class ReadFasta {
 
 ### Soluzione n°2
 
-<java> import java.io.\*;
-
-import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
-org.biojava.bio.seq.io.\*;
+<java> import java.io.\*; import org.biojava.bio.\*; import
+org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 
 public class ReadFasta2 {
 
 ` /**`  
-`  * This program will read any file supported by SeqIOTools it takes three`  
-`  * arguments, the first is the file name the second is the name of`  
-`  * a file format supported by SeqIOTools. eg fasta, genbank etc.`  
-`  * The third argument is the alphabet (eg dna, rna, protein).`  
+`  * Questo programma legge ogni tipo di file supportato dalla classe SeqIOTools`  
+`  * Accetta tre parametri: il primo è il nome del file, il secondo è il nome del`  
+`  * formato utilizzato (ad esempio fasta, genbank etc) infine il terzo è l'alfabeto`  
+`  * utilizzato (ad esempio dna, rna, peptidico)`  
+`  * Sia il nome del formato che quello dell'alfabeto sono case insensitive.`  
 `  *`  
-`  * Both the format and alphabet names are case insensitive.`  
-`  *`  
-`  */`  
+`  */`
+
 ` public static void main(String[] args) {`  
 `   try {`  
-`     //prepare a BufferedReader for file io`  
+`     //creiamo un BufferedReader per il file in input`  
 `     BufferedReader br = new BufferedReader(new FileReader(args[0]));`
 
 `     String format = args[1];`  
 `     String alphabet = args[2];`
 
 `     /*`  
-`      * get a Sequence Iterator over all the sequences in the file.`  
-`      * SeqIOTools.fileToBiojava() returns an Object. If the file read`  
-`      * is an alignment format like MSF and Alignment object is returned`  
-`      * otherwise a SequenceIterator is returned.`  
+`      * Creiamo un Sequence Iterator per scorrere tutte le sequenze presenti nel file.`  
+`      * Il metodo statico utilizzato è SeqIOTools.fileToBiojava().`  
+`      * Se il file letto è in un formato che rappresenta il risultato di un allineamento`  
+`      * allora questo metodo restituirà un Alignment altrimenti restituirà un SequenceIterator `  
 `      */`  
 `     SequenceIterator iter =`  
 `         (SequenceIterator)SeqIOTools.fileToBiojava(format,alphabet, br);`  
 `   }`  
 `   catch (FileNotFoundException ex) {`  
-`     //can't find file specified by args[0]`  
+`     //non posso trovare il file specificato da questo parametro args[0]`  
 `     ex.printStackTrace();`  
 `   }catch (BioException ex) {`  
-`     //error parsing requested format`  
+`     //errore nel parsing del formato richiesto`  
 `     ex.printStackTrace();`  
 `   }`  
 ` }`
