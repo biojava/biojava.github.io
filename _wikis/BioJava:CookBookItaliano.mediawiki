@@ -70,10 +70,11 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 * [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
 * [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
 
-=== Annotations ===
+=== Annotazioni ===
 
-* [[BioJava:CookBookItaliano:Annotations:List|How do I list the Annotations in a Sequence]]?
-* [[BioJava:CookBookItaliano:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
+* [[BioJava:Cookbook:Annotations:List|How do I list the Annotations in a Sequence]]?
+* [[BioJava:Cookbook:Annotations:List2|How do I extract Annotations for a set of Features]]? 
+* [[BioJava:Cookbook:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
 
 === Locations and Features ===
 
