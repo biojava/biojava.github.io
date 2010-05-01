@@ -138,13 +138,15 @@ Come posso....?
 -   [How does sequence I/O work in
     BioJava](Biojava:Cookbook:SeqIO:Echo "wikilink")?
 
-### Annotations
+### Annotazioni
 
 -   [How do I list the Annotations in a
-    Sequence](BioJava:CookBookItaliano:Annotations:List "wikilink")?
+    Sequence](BioJava:Cookbook:Annotations:List "wikilink")?
+-   [How do I extract Annotations for a set of
+    Features](BioJava:Cookbook:Annotations:List2 "wikilink")?
 -   [How do I filter a Sequences based on their species (or another
     Annotation
-    property)](BioJava:CookBookItaliano:Annotations:Filter "wikilink")?
+    property)](BioJava:Cookbook:Annotations:Filter "wikilink")?
 
 ### Locations and Features
 
