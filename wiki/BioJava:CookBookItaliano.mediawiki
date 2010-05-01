@@ -72,8 +72,8 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 
 === Annotations ===
 
-* [[BioJava:Cookbook:Annotations:List|How do I list the Annotations in a Sequence]]?
-* [[BioJava:Cookbook:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
+* [[BioJava:CookBookItaliano:Annotations:List|How do I list the Annotations in a Sequence]]?
+* [[BioJava:CookBookItaliano:Annotations:Filter|How do I filter a Sequences based on their species (or another Annotation property)]]?
 
 === Locations and Features ===
 
