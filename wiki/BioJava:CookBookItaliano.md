@@ -140,13 +140,12 @@ Come posso....?
 
 ### Annotazioni
 
--   [How do I list the Annotations in a
-    Sequence](BioJava:Cookbook:Annotations:List "wikilink")?
--   [How do I extract Annotations for a set of
-    Features](BioJava:Cookbook:Annotations:List2 "wikilink")?
--   [How do I filter a Sequences based on their species (or another
-    Annotation
-    property)](BioJava:Cookbook:Annotations:Filter "wikilink")?
+-   [Come posso elencare le Annotazioni di una
+    Sequenza](BioJava:CookBookItaliano:Annotations:List "wikilink")?
+-   [Come posso estrarre le Annotazioni per un insieme di
+    Features](BioJava:CookBookItaliano:Annotations:List2 "wikilink")?
+-   [Come posso filtrare le sequenze in base alle specie o secondo altre
+    proprietà](BioJava:CookBookItaliano:Annotations:Filter "wikilink")?
 
 ### Locations and Features
 
