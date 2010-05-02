@@ -10,13 +10,13 @@ popular file formats used in bio-informatics. Since Biojava 1.5 and the
 addition of the Biojavax extension, the way of reading files has changed
 somewhat. Although you can still read sequence files using the
 **SeqIOTools** class, it has been marked deprecated and is now replaced
-by the **RichSequenceIO.Tools** class. This class keeps the mapping of
+by the **RichSequence.IOTools** class. This class keeps the mapping of
 the information found in a given file format, allowing better
 correspondance to BioSQL databases. It also enforce the use of
 namespaces. The Biojavax extension also allows for easy parser creation
 if you need to read a new file format. But for most users, this is a
 rather remote thing. So, how is it different? Actually, it is not that
-different ;-) **RichSequenceIO.Tools** allows you to read files (DNA,
+different ;-) **RichSequence.IOTools** allows you to read files (DNA,
 RNA or protein) in the following format:
 
 -   EMBL (native or XML)
