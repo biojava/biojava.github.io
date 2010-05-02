@@ -7,9 +7,9 @@ Come posso leggere una sequenze da un file in formato FASTA?
 
 Una dei delle operazioni di I/O più eseguite in bioninformatica è il
 caricamento di un flat file di una sequenza in memoria. La classe
-SeqIOTools dispone di una serie di metodi statici per la lettura dei
-files. Ci sono più modi per poter eseguire questa operazione. Il primo è
-un esempio più specifico il secondo invece un pò più generale.
+IOTools dispone di una serie di metodi statici per la lettura dei files.
+Ci sono più modi per poter eseguire questa operazione. Di seguito si
+mostra un esempio di lettura di un file in formato FASTA.
 
 ### Soluzione n°1
 
