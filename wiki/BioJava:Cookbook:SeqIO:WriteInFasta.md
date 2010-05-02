@@ -61,6 +61,20 @@ SequenceIterator as an argument, e.g.
 `      * SeqIOTools also has a method that takes a single sequence so you don't`  
 `      * have to make a SequenceDB`  
 `      */`  
-`     SeqIOTools.writeFasta(System.out, seq1);`
+`       private static void printSingleSequence(){`  
+`       Sequence dna;`  
+`       try {`  
+`           dna = DNATools.createDNASequence("atgctg", "dna_1");`  
+`           RichSequence.IOTools.writeFasta(System.out, dna, null);`  
+`       } catch (IllegalSymbolException e) {`  
+`           //questa eccezione viene sollevata nel caso in cui all'interno della`  
+`           //sequenza ci siano caratteri non validi`  
+`           e.printStackTrace();`  
+`       } catch (IOException e) {`  
+`           //questa eccezione viene sollevata nel caso in cui ci siano problemi`  
+`           //con lo stream`  
+`           e.printStackTrace();`  
+`       }       `  
+`   }`
 
 </java>
