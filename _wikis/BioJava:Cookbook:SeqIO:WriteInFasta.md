@@ -20,15 +20,12 @@ IOTools is in the package org.biojavax.bio.seq.RichSequence.IOTools
 
 <java> private static void printSequenceDB() {
 
-`       // creiamo una istanza dell'interfaccia SequenceDB`  
-`       SequenceDB db = new HashSequenceDB();`  
-`       `  
+`       SequenceDB db = new HashSequenceDB();       `  
 `       Sequence dna1;`  
 `       Sequence dna2;`  
 `       try {`  
 `           dna1 = DNATools.createDNASequence("atgctgtgg", "dna_1");`  
 `           dna2 = DNATools.createDNASequence("atgctgctt", "dna_2");`  
-`           //aggiungiuamo 2 sequenze al DB`  
 `           db.addSequence(dna1);`  
 `               db.addSequence(dna2);`  
 `           RichSequence.IOTools.writeFasta(System.out, db.sequenceIterator(), null);`  
