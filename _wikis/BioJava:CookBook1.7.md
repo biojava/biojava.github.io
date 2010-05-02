@@ -122,7 +122,7 @@ How Do I....?
 -   [How do I read in a Fasta
     file](Biojava:Cookbook:SeqIO:ReadFasta "wikilink")?
 -   [How do I read a GenBank/EMBL/SwissProt
-    file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?
+    file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?(deprecated)
 -   [How do I read a sequence file with the Biojavax
     extension](Biojava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
 -   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
