@@ -25,7 +25,7 @@ public class ReadFasta {
 `  * che si vuole utilizzare DNA, RNA, PROTEIN.`  
 `  */`  
 ` public static void main(String[] args) {`  
-`      `  
+`      readFasta(args[0], args[1]);`  
 ` }`  
 ` private static void readFasta(String fileName, String type) {`  
 `   try {`  
