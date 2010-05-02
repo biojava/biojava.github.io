@@ -4,7 +4,7 @@ Da molto tempo il formato FASTA è uno standard per la rappresentazione di seque
 
 IOTools è nel pacage org.biojava.bio.seq.io
 
-=== Stampiamo un SequenceDB ===
+=== Stampiamo un SequenceDB utilizzando un iterator ===
 
 <java>
 	private static void printSequenceDB() {
