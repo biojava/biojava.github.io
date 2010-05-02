@@ -37,19 +37,7 @@ IOTools è nel pacage org.biojava.bio.seq.io
 `           db.addSequence(dna2);`  
 `           `  
 `           RichSequence.IOTools.writeFasta(System.out, db.sequenceIterator(), null);`  
-`       } catch (IllegalSymbolException e) {`  
-`           // questa eccezione viene sollevata nel caso in cui all'interno`  
-`           // della sequenza ci siano caratteri non validi`  
-`           e.printStackTrace();`  
-`       } catch (IOException e) {`  
-`           // questa eccezione viene sollevata nel caso in cui ci siano`  
-`           // problemi con lo stream`  
-`           e.printStackTrace();`  
-`       } catch (IllegalIDException e) {`  
-`           e.printStackTrace();`  
-`       } catch (ChangeVetoException e) {`  
-`           e.printStackTrace();`  
-`       } catch (BioException e) {`  
+`       } catch (Exception e) {`  
 `           e.printStackTrace();`  
 `       }`  
 `   }`
