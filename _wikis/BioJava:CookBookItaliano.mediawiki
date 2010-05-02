@@ -64,7 +64,7 @@ E' possibile leggere BioJava in Anger in [[Biojava:CookBookItaliano|Italiano]] (
 
 * [[Biojava:CookBookItaliano:SeqIO:WriteInFasta|Come posso scrivere le sequeze in formato FASTA]]?
 * [[Biojava:CookBookItaliano:SeqIO:ReadFasta| Come posso leggere un file in formato FASTA]]?
-* [[Biojava:CookBookItaliano:SeqIO:ReadGES|Come posso leggere un file in formato GenBank/EMBL/SwissProt]]?
+* [[Biojava:CookBookItaliano:SeqIO:ReadGES|Come posso leggere un file in formato GenBank/EMBL/UniProt/FASTA/INSDseq]]?
 * [[Biojava:Cookbook:SeqIO:GBtoFasta|How do I extract GenBank/EMBL/Swissprot sequences and write them as Fasta]]?
 * [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
 * [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
