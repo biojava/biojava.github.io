@@ -64,7 +64,8 @@ un SequenceIterator.
 `      * La classe SeqIOTools ha un metodo che prende una singola sequenza e la scrive nel formato `  
 `      * FASTA senza la necessità di costruire un SequenceDB`  
 `      */`  
-`           Sequence dna;`  
+`   private static void printSingleSequence(){`  
+`       Sequence dna;`  
 `       try {`  
 `           dna = DNATools.createDNASequence("atgctg", "dna_1");`  
 `           RichSequence.IOTools.writeFasta(System.out, dna, null);`  
@@ -76,6 +77,7 @@ un SequenceIterator.
 `           //questa eccezione viene sollevata nel caso in cui ci siano problemi`  
 `           //con lo stream`  
 `           e.printStackTrace();`  
-`       }`
+`       }       `  
+`   }`
 
 </java>
