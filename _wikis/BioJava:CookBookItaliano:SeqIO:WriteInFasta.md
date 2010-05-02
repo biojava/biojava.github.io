@@ -22,20 +22,37 @@ IOTools è nel pacage org.biojava.bio.seq.io
 
 <java>
 
-`     //creiamo una istanza dell'interfaccia SequenceDB`  
-`     SequenceDB db = new HashSequenceDB();`
+`   private static void printSequenceDB() {`  
+`       // creiamo una istanza dell'interfaccia SequenceDB`  
+`       SequenceDB db = new HashSequenceDB();`  
+`       `  
+`       Sequence dna1;`  
+`       Sequence dna2;`
 
-`     //aggiungiuamo 2 sequenze al DB`  
-`     db.addSequence(seq1);`  
-`     db.addSequence(seq2);`
-
-`     /*`  
-`      * stampiamo ora le due sequenze in formato FASTA utilizzando la classe SeqIOTools. In`  
-`      * questo caso l'outputstream è lo STDOUT.`  
-`      * `  
-`      */`
-
-`     SeqIOTools.writeFasta(System.out, db);`
+`       try {`  
+`           dna1 = DNATools.createDNASequence("atgctgtgg", "dna_1");`  
+`           dna2 = DNATools.createDNASequence("atgctgctt", "dna_2");`  
+`           // aggiungiuamo 2 sequenze al DB`  
+`           db.addSequence(dna1);`  
+`           db.addSequence(dna2);`  
+`           `  
+`           RichSequence.IOTools.writeFasta(System.out, db.sequenceIterator(), null);`  
+`       } catch (IllegalSymbolException e) {`  
+`           // questa eccezione viene sollevata nel caso in cui all'interno`  
+`           // della sequenza ci siano caratteri non validi`  
+`           e.printStackTrace();`  
+`       } catch (IOException e) {`  
+`           // questa eccezione viene sollevata nel caso in cui ci siano`  
+`           // problemi con lo stream`  
+`           e.printStackTrace();`  
+`       } catch (IllegalIDException e) {`  
+`           e.printStackTrace();`  
+`       } catch (ChangeVetoException e) {`  
+`           e.printStackTrace();`  
+`       } catch (BioException e) {`  
+`           e.printStackTrace();`  
+`       }`  
+`   }`
 
 </java>
 
