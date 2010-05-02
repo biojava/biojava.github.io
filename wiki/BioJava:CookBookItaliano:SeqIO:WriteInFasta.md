@@ -34,8 +34,7 @@ IOTools è nel pacage org.biojava.bio.seq.io
 `           dna2 = DNATools.createDNASequence("atgctgctt", "dna_2");`  
 `           // aggiungiuamo 2 sequenze al DB`  
 `           db.addSequence(dna1);`  
-`           db.addSequence(dna2);`  
-`           `  
+`               db.addSequence(dna2);`  
 `           RichSequence.IOTools.writeFasta(System.out, db.sequenceIterator(), null);`  
 `       } catch (Exception e) {`  
 `           e.printStackTrace();`  
