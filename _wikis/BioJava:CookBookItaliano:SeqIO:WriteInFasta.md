@@ -18,7 +18,7 @@ stream, sia esso un file, lo STDOUT, lo STDERR, etc.
 
 IOTools è nel pacage org.biojava.bio.seq.io
 
-### Stampiamo un SequenceDB
+### Stampiamo un SequenceDB utilizzando un iterator
 
 <java>
 
