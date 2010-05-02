@@ -6,17 +6,17 @@ Come posso stampare una sequenza in formato FASTA?
 --------------------------------------------------
 
 Da molto tempo il formato FASTA è uno standard per la rappresentazione
-di sequenze nucleotidiche o peptidiche essendo molto facile da leggere.
-Biojava ha una classe di utilità chiamata SeqIOTools che fornisce un
-insieme di comodi metodi statici per eseguire un insieme di operazioni
-di I/O, I seguenti pezzi di codice mostrano come inviare su un
-OutputStream, come il System.out, una sequenza o un interno SequenceDB
-in formato FASTA. Tutti i metodi chiamati WriteXXX della classe
-SeqIOTools prendono come dato di ingresso un OutputStream. In questo
+di sequenze nucleotidiche o peptidiche essendo il suo "parsing" molto
+semplice. Biojava ha una classe statica di utilità chiamata IOTools che
+fornisce un insieme di comodi metodi statici per eseguire un insieme di
+operazioni di I/O, I seguenti pezzi di codice mostrano come inviare su
+un OutputStream, come ad esempio il System.out, una sequenza o un intero
+SequenceDB in formato FASTA. Tutti i metodi chiamati WriteXXX della
+classe IOTools prendono come dato di ingresso un OutputStream. In questo
 modo è possibile scrivere la sequenza nel nuovo formato in un qualsiasi
-OutPutStream, sia esso un file, lo STDOUT, lo STDERR, etc.
+stream, sia esso un file, lo STDOUT, lo STDERR, etc.
 
-SeqIOTools è nel pacage org.biojava.bio.seq.io
+IOTools è nel pacage org.biojava.bio.seq.io
 
 ### Stampiamo un SequenceDB
 
@@ -61,9 +61,21 @@ un SequenceIterator.
 <java>
 
 `     /*`  
-`      * La classe SeqIOTools ha un metodo che prende una singola sequenza e la scrive nel formato FASTA`  
-`      * senza la necessità di costruire un SequenceDB`  
+`      * La classe SeqIOTools ha un metodo che prende una singola sequenza e la scrive nel formato `  
+`      * FASTA senza la necessità di costruire un SequenceDB`  
 `      */`  
-`     SeqIOTools.writeFasta(System.out, seq1);`
+`           Sequence dna;`  
+`       try {`  
+`           dna = DNATools.createDNASequence("atgctg", "dna_1");`  
+`           RichSequence.IOTools.writeFasta(System.out, dna, null);`  
+`       } catch (IllegalSymbolException e) {`  
+`           //questa eccezione viene sollevata nel caso in cui all'interno della`  
+`           //sequenza ci siano caratteri non validi`  
+`           e.printStackTrace();`  
+`       } catch (IOException e) {`  
+`           //questa eccezione viene sollevata nel caso in cui ci siano problemi`  
+`           //con lo stream`  
+`           e.printStackTrace();`  
+`       }`
 
 </java>
