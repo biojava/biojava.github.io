@@ -15,8 +15,7 @@ un esempio più specifico il secondo invece un pò più generale.
 
 <java> import java.io.\*; import java.util.\*;
 
-import org.biojava.bio.\*; import org.biojava.bio.seq.db.\*; import
-org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
+import org.biojava.\* import org.biojavax.\*
 
 public class ReadFasta {
 
@@ -25,32 +24,25 @@ public class ReadFasta {
 `  * il primo è il nome del file con il suo percorso, e il secondo è il nome dell'alfabeto`  
 `  * che si vuole utilizzare DNA, RNA, PROTEIN.`  
 `  */`  
-` public static void main(String[] args) {`
-
+` public static void main(String[] args) {`  
+`      `  
+` }`  
+` private static void readFasta(String fileName, String type) {`  
 `   try {`  
-`     //apre il file di input`  
-`     String filename = args[0];`  
-`     BufferedInputStream is =`  
-`         new BufferedInputStream(new FileInputStream(filename));`
-
-`     //prende l'alfabeto richiesto`  
-`     Alphabet alpha = AlphabetManager.alphabetForName(args[1]);`
-
-`     //crea un SequenceDB con tutte le sequenze presenti nel file`  
-`     SequenceDB db = SeqIOTools.readFasta(is, alpha);`  
+`       SequenceDB db = new HashSequenceDB();`  
+`       BufferedReader br = new BufferedReader(new FileReader(filename));`  
+`           // prende l'alfabeto richiesto`  
+`       SymbolTokenization toke = AlphabetManager.alphabetForName(type)`  
+`                                         .getTokenization("token");`  
+`           // crea un SequenceDB con tutte le sequenze presenti nel file`  
+`       SequenceIterator seqi = RichSequence.IOTools.readFasta(br, toke,null);`  
+`       while (seqi.hasNext()) {`  
+`           db.addSequence(seqi.nextSequence());`  
+`       }`  
+`   } catch (Exception e) {`  
+`       e.printStackTrace();`  
 `   }`  
-`   catch (BioException ex) {`  
-`     //questa eccezione viene sollevata quando o le sequenze non sono in formato fasta`  
-`     //o quando l'alfabeto utilizzato è sbagliato`  
-`     ex.printStackTrace();`  
-`   }catch (NoSuchElementException ex) {`  
-`     //questa eccezione viene sollevata quando non sono presenti sequenze in formato fasta all'interno del file`  
-`     ex.printStackTrace();`  
-`   }catch (FileNotFoundException ex) {`  
-`     //questa eccezione viene sollevata quando il file che si intende leggere non esiste`  
-`     ex.printStackTrace();`  
-`   }`  
-` }`
+`   }`
 
 } </java>
 
