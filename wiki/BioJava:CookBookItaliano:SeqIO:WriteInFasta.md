@@ -56,23 +56,6 @@ IOTools è nel pacage org.biojava.bio.seq.io
 
 </java>
 
-### Stampiamo le sequenze recuperate con un SequenceIterator
-
-Molti dei metodi readXXX() appartenenti alla classe SeqIOTools
-restituiscono un SequenceIterator e molti dei metodi writeXXX()
-appartenenti alla stessa classe accettano come dato di ingresso proprio
-un SequenceIterator.
-
-<java>
-
-`     SequenceIterator iter =`  
-`         (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);`
-
-`     // e ora le scriviamo tutte nel formato FASTA, e le inviamo ad un OutPutStream`  
-`     SeqIOTools.writeFasta(System.out, iter);`
-
-</java>
-
 ### Stampiamo una singola sequenza
 
 <java>
