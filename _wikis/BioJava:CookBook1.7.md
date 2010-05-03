@@ -305,8 +305,7 @@ request through the [biojava mailing
 list](mailto:biojava-l@biojava.org).
 
 The code is [open-source](wp:Open source "wikilink"). A good definition
-of open-source can be found
-[here](http://www.opensource.org/docs/definition_plain.php). If you
-agree with that definition then you can use it.
+of open-source can be found [here](http://www.opensource.org/docs/osd).
+If you agree with that definition then you can use it.
 
 --[Guedes](User:Guedes "wikilink") 16:19, 28 March 2006 (EST)
