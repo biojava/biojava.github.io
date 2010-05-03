@@ -1,3 +1,3 @@
 [http://web.missouri.edu/~jg722/ Jianjiong Gao] is a PhD student in [http://digbio.missouri.edu/ Xu Group] at [http://www.missouri.edu/ University of Missouri]. His research is focusing on Bioinformatics, specifically computational proteomics and post-translational modification.
 
-He joined BioJava as a Google Summer of Code <sup>TM</sup> 2010 student on the project [[GSoC:PTM|''BioJava Packages for Identification, Classification, and Visualization of Posttranslational Modification of Proteins'']], mentored by Peter Rose.
+He joined BioJava as a Google Summer of Code <sup>TM</sup> 2010 student on the project [[GSoC:PTM|''BioJava Packages for Identification, Classification, and Visualization of Posttranslational Modification of Proteins'']], mentored by [http://www.linkedin.com/in/peterrose Peter Rose].
