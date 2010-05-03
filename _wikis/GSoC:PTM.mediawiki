@@ -1,7 +1,7 @@
 '''BioJava Packages for Identification, Classification, and Visualization of Posttranslational Modification of Proteins'''
 
 * Student: [[Jianjiong Gao]]
-* Mentor: Peter Rose
+* Mentor: [http://www.linkedin.com/in/peterrose Peter Rose]
 * Co-menter: [[Andreas Prlic]]
 
 The original proposal is [http://docs.google.com/fileview?id=0B6z8AlO4d-qMMzAzZWFmYzQtMWRlNy00Y2Y2LThmZjktNjFhYzNlOTg3ZDEz&hl=en here]

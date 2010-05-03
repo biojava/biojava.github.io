@@ -6,7 +6,7 @@ title: GSoC:PTM
 of Posttranslational Modification of Proteins**
 
 -   Student: [Jianjiong Gao](Jianjiong Gao "wikilink")
--   Mentor: Peter Rose
+-   Mentor: [Peter Rose](http://www.linkedin.com/in/peterrose)
 -   Co-menter: [Andreas Prlic](Andreas Prlic "wikilink")
 
 The original proposal is
