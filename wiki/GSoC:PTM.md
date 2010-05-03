@@ -2,12 +2,15 @@
 title: GSoC:PTM
 ---
 
-BioJava Packages for Identification, Classification, and Visualization
-of Posttranslational Modification of Proteins
+**BioJava Packages for Identification, Classification, and Visualization
+of Posttranslational Modification of Proteins**
 
 -   Student: [Jianjiong Gao](Jianjiong Gao "wikilink")
 -   Mentor: Peter Rose
 -   Co-menter: [Andreas Prlic](Andreas Prlic "wikilink")
+
+The original proposal is
+[here](http://docs.google.com/fileview?id=0B6z8AlO4d-qMMzAzZWFmYzQtMWRlNy00Y2Y2LThmZjktNjFhYzNlOTg3ZDEz&hl=en)
 
 Background
 ----------
@@ -175,14 +178,12 @@ Tasks and Implementation
 -   Extending the diagram with an option to display PTMs in the
     structure.
     -   For attached PTMs (case 1) and modified amino acids (case 2),
-        place triangles and abbreviations over the residue as shown in
-        Figure 2.
+        place triangles and abbreviations over the residue.
         -   Whether to display the PTM annotation is an option to the
             users, just like other annotations.
         -   Different colors of the triangles and texts could be used to
             distinguish case 1 and case 2 PTMs.
--   For cross-link, linking the two residues with a dotted line as shown
-    in Figure 3.
+-   For cross-link, linking the two residues with a dotted line.
     -   Currently in PDB, disulfide bonds is displayed without an
         option.
     -   A better way will be leaving the cross-links as an optional
@@ -209,7 +210,17 @@ Tasks and Implementation
 Timeline
 --------
 
+-   05/24-05/25: Task 1-Making a list of PTM types.
+-   05/26-06/01: Task 2-Defining data representation of PTMs.
+-   06/03-06/08: Task 3-Reading and parsing 3D protein structure files
+    (.pdb or .cif).
+-   06/10-06/22: Task 4-Identifying PTMs in 3D protein structures.
+-   06/24-06/25: Task 5-Representing PTMs in text.
+-   06/26-07/30: Task 6.1-Refactor sequence diagram code from PDB.
+-   07/31-08/06: Task 6.2-Annotating PTMs on sequence diagram view.
+-   08/07-08/16: Task 7-Generating 2D tree images of glycan structures.
+
 Comments
 --------
 
-Please edit this page directly or add comments here...
+*Please edit this page directly or add comments here...*
