@@ -356,7 +356,7 @@ Timeline
 Comments
 --------
 
-*Please edit this page directly or add comments here...*
+*Please add comments here...*
 
 -   Peter Rose (04/30): It's an ever increasing list of PTMs. So instead
     of hardcoding PTMs, it would be better to load them from a file,
