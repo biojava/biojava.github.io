@@ -9,6 +9,6 @@ Bioinformatics, specifically computational proteomics and
 post-translational modification.
 
 He joined BioJava as a Google Summer of Code <sup>TM</sup> 2010 student
-on the project *BioJava Packages for Identification, Classification, and
-Visualization of Posttranslational Modification of Proteins*, mentored
-by Peter Rose.
+on the project [*BioJava Packages for Identification, Classification,
+and Visualization of Posttranslational Modification of
+Proteins*](GSoC:PTM "wikilink"), mentored by Peter Rose.
