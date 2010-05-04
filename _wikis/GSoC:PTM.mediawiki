@@ -79,17 +79,17 @@ public class Hydroxyproline extends AbstractPTM {
 
 <java>
 public interface AttachedPTM extends PTM {
-	// return the attached group, e.g. a glycan.
-	public <G extends org.biojava.bio.structure.Group> G getAttachedGroup();
+    // return the attached group, e.g. a glycan.
+    public <G extends org.biojava.bio.structure.Group> G getAttachedGroup();
 
-	// return the attachment atom on the modified amino acid.
-	public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid();
+    // return the attachment atom on the modified amino acid.
+    public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid();
 
-	// return the attachment atom on the attached group.
-	public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup();
+    // return the attachment atom on the attached group.
+    public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup();
 
-	// return the distance between the two attachment atoms.
-	public double getDistance();
+    // return the distance between the two attachment atoms.
+    public double getDistance();
 }
 </java>
 
@@ -111,23 +111,23 @@ public abstract class AbstractAttachedPTM extends AbstractPTM implements Attache
         this.atomOnAttachedGroup = atomOnAttachedGroup;
     }
 
-	// return the attached group, e.g. a glycan.
-	public org.biojava.bio.structure.Group getAttachedGroup() {
+    // return the attached group, e.g. a glycan.
+    public org.biojava.bio.structure.Group getAttachedGroup() {
         return attachedGroup;
     }
 
-	// return the attachment atom on the modified amino acid.
-	public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid() {
+    // return the attachment atom on the modified amino acid.
+    public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid() {
         return atomOnAminoAcid;
     }
 
-	// return the attachment atom on the attached group.
-	public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup() {
+    // return the attachment atom on the attached group.
+    public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup() {
         return atomOnAttachedGroup;
     }
 
-	// return the distance between the two attachment atoms.
-	public double getDistance() {
+    // return the distance between the two attachment atoms.
+    public double getDistance() {
         // calculate the distance
         return 0.0;
     }
@@ -160,8 +160,8 @@ public abstract class AbstractCrossLink extends AbstractAttachedPTM {
         super(modifiedAminoAcid1, modifiedAminoAcid1, atomOnAminoAcid, atomOnAttachedGroup);
     }
 
-	// return the attached group, e.g. a glycan.
-	public org.biojava.bio.structure.AminoAcid getAttachedGroup() {
+    // return the attached group, e.g. a glycan.
+    public org.biojava.bio.structure.AminoAcid getAttachedGroup() {
         return (org.biojava.bio.structure.AminoAcid)super.getAttachedGroup();
     }
 }
