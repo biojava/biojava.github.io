@@ -14,7 +14,7 @@ leggere i file contenenti le sequenze utilizzando la classe
 dalla classe **RichSequence.IOTools**. Questa classe a differenza di
 quella deprecata ha dei metodi più specifici che tengono in
 considerazione il formato dei file, per permette una migliore
-corrispondenza con il database BioSql. Inoltre ora è obblicatorio l'uso
+corrispondenza con il database BioSql. Inoltre ora è obbligatorio l'uso
 dei namespace. L'estensione Biojavax permette anche una semplice
 creazione di un parser per la lettura di un file in un nuovo formato,
 anche se questo è una situazione che avviene raramente. La classe
