@@ -2,28 +2,30 @@
 title: BioJava:CookBookItaliano:SeqIO:ReadGES
 ---
 
-How do I read a sequence file (in whatever format) with the new Biojavax extension?
------------------------------------------------------------------------------------
+Come posso leggere un file in formato GenBank/EMBL/UniProt/FASTA/INSDseq?
+-------------------------------------------------------------------------
 
-Since its inception, Biojava has been able to read files in the most
-popular file formats used in bio-informatics. Since Biojava 1.5 and the
-addition of the Biojavax extension, the way of reading files has changed
-somewhat. Although you can still read sequence files using the
-**SeqIOTools** class, it has been marked deprecated and is now replaced
-by the **RichSequence.IOTools** class. This class keeps the mapping of
-the information found in a given file format, allowing better
-correspondance to BioSQL databases. It also enforce the use of
-namespaces. The Biojavax extension also allows for easy parser creation
-if you need to read a new file format. But for most users, this is a
-rather remote thing. So, how is it different? Actually, it is not that
-different ;-) **RichSequence.IOTools** allows you to read files (DNA,
-RNA or protein) in the following format:
+Fin dall'inizio, tramite le librerie Biojava era possibile leggere file
+nei formati più comuni utilizzati in bioinformatica. A partire dalla
+versione 1.5 di Biojava con l'aggiunta delle estensioni Biojavax, il
+modo di leggere i file è cambiato un pò. Anche se è possibile ancora
+leggere i file contenenti le sequenze utilizzando la classe
+**SeqIOTools**, essa ora è stata segnata come deprecata e sostituita
+dalla classe **RichSequence.IOTools**. Questa classe a differenza di
+quella deprecata ha dei metodi più specifici che tengono in
+considerazione il formato dei file, per permette una migliore
+corrispondenza con il database BioSql. Inoltre ora è obblicatorio l'uso
+dei namespace. L'estensione Biojavax permette anche una semplice
+creazione di un parser per la lettura di un file in un nuovo formato,
+anche se questo è una situazione che avviene raramente. La classe
+**RichSequence.IOTools** da la possibilità di leggere file contenenti
+DNA, RNA or proteinnei seguenti formati:
 
--   EMBL (native or XML)
+-   EMBL (nativo o XML)
 -   FASTA
 -   GenBank
 -   INSDseq
--   UniProt (native or XML)
+-   UniProt (nativeo o XML)
 
 This class also has a method, *readFile*, that can read a file while
 guessing its format.
@@ -32,7 +34,7 @@ guessing its format.
 
 import org.biojavax.SimpleNamespace; import
 org.biojavax.bio.seq.RichSequence; import
-org.biojavax.bio.seq.RichSequenceIterator;
+org.biojavax.bio.seq.RichSequenceIterator
 
 public class ReadGES\_BJ1\_6{
 
