@@ -54,10 +54,9 @@ public class ListAnnotations {
     try {
       //read in an EMBL Record
       BufferedReader br = new  BufferedReader(new FileReader(args[0]));
-      SequenceIterator seqs = SeqIOTools.readEmbl(br);
-
+      
       //for each sequence list the annotations
-      while(seqs.hasNext()){
+      for(SequenceIterator seqs = SeqIOTools.readEmbl(br); seqs.hasNext(); ){
         Annotation anno = seqs.nextSequence().getAnnotation();
 
         //print each key value pair
