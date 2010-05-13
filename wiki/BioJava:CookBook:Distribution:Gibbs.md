@@ -155,8 +155,8 @@ public class SimpleGibbsAligner {
 `       a[index] = sampleSequence(index);`  
 `       //reportMatch(a[index], s[index]);`  
 `       iterations++;`  
-`       index = (++index)%s.length;`  
-`     }while(stop() == false);`  
+`       index = (index+1)%s.length;`  
+`     }while(!stop());`  
 `   }`  
 `   catch (Exception ex) {`  
 `     ex.printStackTrace();`  
