@@ -80,7 +80,7 @@ Tasks and Implementation
         resource and annotation
         tool](http://www.ncbi.nlm.nih.gov/pubmed/15174122)
     -   Has a link to a PDB file with PTM structure: Xref PDBHET
--   PSI\_MOD
+-   PSI-MOD
     -   <http://psidev.sourceforge.net/mod/>
     -   Paper: [The PSI-MOD community standard for representation of
         protein modification
