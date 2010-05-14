@@ -60,22 +60,53 @@ Tasks and Implementation
 
 ### Task1. Making a list of PTM types
 
--   UniProt maintains such a list:
-    <http://www.uniprot.org/keywords/9991>.
--   A list of PTMs will be selected in the first stage.
-    -   Glycosylation
-    -   Phosphorylation
-    -   Methylation
-    -   Dimethylation
-    -   Sulfation
-    -   Ubiquitination
-    -   Acetylation
-    -   Palmitoylation
-    -   SUMOylation
-    -   Decarboxylation
-    -   Hydroxyproline
-    -   etc...
--   More PTMs will be supported later.
+-   Resources
+    -   UniProt
+        -   <http://www.uniprot.org/docs/ptmlist.txt>
+        -   <http://www.uniprot.org/manual/mod_res>
+        -   Paper: [Annotation of post-translational modifications in
+            the Swiss-Prot knowledge
+            base](http://www.ncbi.nlm.nih.gov/pubmed/15174124)
+        -   Paper: [Annotation of glycoproteins in the SWISS-PROT
+            database](http://www.ncbi.nlm.nih.gov/pubmed/11680872)
+        -   Three types of PTM (FT): MOD\_RES, CROSSLNK, LIPID
+        -   Contains DR records that point to other PTM databases (i.e.
+            RESID)
+    -   RESID database
+        -   <http://www.ebi.ac.uk/RESID/>
+        -   <http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz>?-page+LibInfo+-id+2F9eD1VPLvp+-lib+RESID
+        -   Paper: [The RESID Database of Protein Modifications as a
+            resource and annotation
+            tool](http://www.ncbi.nlm.nih.gov/pubmed/15174122)
+        -   Has a link to a PDB file with PTM structure: Xref PDBHET
+    -   PSI\_MOD
+        -   <http://psidev.sourceforge.net/mod/>
+        -   Paper: [The PSI-MOD community standard for representation of
+            protein modification
+            data](http://www.nature.com/nbt/journal/v26/n8/full/nbt0808-864.html)
+    -   ExPASy
+        -   <http://ca.expasy.org/tools/findmod/findmod_masses.html>
+    -   Delta Mass
+        -   <http://www.abrf.org/index.cfm/dm.home>
+        -   Paper: [Proteomic analysis of post-translational
+            modifications](http://www.ncbi.nlm.nih.gov/pubmed/12610572)
+    -   GlycoSciences
+        -   <http://www.glycosciences.de/>
+        -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=22560&show=65#mass>
+        -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=297&show=4129#crosslinks>
+        -   Paper: [Bioinformatics for glycomics: Status, methods,
+            requirements and
+            perspectives](http://bib.oxfordjournals.org/cgi/content/short/5/2/164)
+        -   Paper: [pdb-care (PDB carbohydrate residue check): a program
+            to support annotation of complex carbohydrate structures in
+            PDB files](http://www.biomedcentral.com/1471-2105/5/69)
+        -   Paper: [Data mining the protein data bank: automatic
+            detection and assignment of carbohydrate
+            structures](http://www.ncbi.nlm.nih.gov/pubmed/15010309)
+    -   Glycobiology resources
+        -   <http://glycores.ncifcrf.gov/intr/index.html>
+    -   [Ted Baker: Erice 2008 talk on Isopeptide
+        bonds](http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf)
 
 ### Task2. Defining data representation of PTMs
 
