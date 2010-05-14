@@ -43,7 +43,7 @@ This project will be beneficial to the research community by facilitating struct
 ** http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz?-page+LibInfo+-id+2F9eD1VPLvp+-lib+RESID
 ** Paper: [http://www.ncbi.nlm.nih.gov/pubmed/15174122 The RESID Database of Protein Modifications as a resource and annotation tool]
 ** Has a link to a PDB file with PTM structure: Xref PDBHET
-* PSI_MOD
+* PSI-MOD
 ** http://psidev.sourceforge.net/mod/
 ** Paper: [http://www.nature.com/nbt/journal/v26/n8/full/nbt0808-864.html The PSI-MOD community standard for representation of protein modification data]
 * ExPASy
@@ -61,6 +61,7 @@ This project will be beneficial to the research community by facilitating struct
 * Glycobiology resources
 ** http://glycores.ncifcrf.gov/intr/index.html
 * [http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf Ted Baker: Erice 2008 talk on Isopeptide bonds]
+
 ====Procedure to get a list of PTMs====
 * Retrieve the [http://www.wwpdb.org/ccd.html Chemical Component Dictrionary]
 * Remove all obsolete or ambiguous chemical components by only keeping entries with 
