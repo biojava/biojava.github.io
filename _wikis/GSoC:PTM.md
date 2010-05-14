@@ -60,53 +60,77 @@ Tasks and Implementation
 
 ### Task1. Making a list of PTM types
 
--   Resources
-    -   UniProt
-        -   <http://www.uniprot.org/docs/ptmlist.txt>
-        -   <http://www.uniprot.org/manual/mod_res>
-        -   Paper: [Annotation of post-translational modifications in
-            the Swiss-Prot knowledge
-            base](http://www.ncbi.nlm.nih.gov/pubmed/15174124)
-        -   Paper: [Annotation of glycoproteins in the SWISS-PROT
-            database](http://www.ncbi.nlm.nih.gov/pubmed/11680872)
-        -   Three types of PTM (FT): MOD\_RES, CROSSLNK, LIPID
-        -   Contains DR records that point to other PTM databases (i.e.
-            RESID)
-    -   RESID database
-        -   <http://www.ebi.ac.uk/RESID/>
-        -   <http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz>?-page+LibInfo+-id+2F9eD1VPLvp+-lib+RESID
-        -   Paper: [The RESID Database of Protein Modifications as a
-            resource and annotation
-            tool](http://www.ncbi.nlm.nih.gov/pubmed/15174122)
-        -   Has a link to a PDB file with PTM structure: Xref PDBHET
-    -   PSI\_MOD
-        -   <http://psidev.sourceforge.net/mod/>
-        -   Paper: [The PSI-MOD community standard for representation of
-            protein modification
-            data](http://www.nature.com/nbt/journal/v26/n8/full/nbt0808-864.html)
-    -   ExPASy
-        -   <http://ca.expasy.org/tools/findmod/findmod_masses.html>
-    -   Delta Mass
-        -   <http://www.abrf.org/index.cfm/dm.home>
-        -   Paper: [Proteomic analysis of post-translational
-            modifications](http://www.ncbi.nlm.nih.gov/pubmed/12610572)
-    -   GlycoSciences
-        -   <http://www.glycosciences.de/>
-        -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=22560&show=65#mass>
-        -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=297&show=4129#crosslinks>
-        -   Paper: [Bioinformatics for glycomics: Status, methods,
-            requirements and
-            perspectives](http://bib.oxfordjournals.org/cgi/content/short/5/2/164)
-        -   Paper: [pdb-care (PDB carbohydrate residue check): a program
-            to support annotation of complex carbohydrate structures in
-            PDB files](http://www.biomedcentral.com/1471-2105/5/69)
-        -   Paper: [Data mining the protein data bank: automatic
-            detection and assignment of carbohydrate
-            structures](http://www.ncbi.nlm.nih.gov/pubmed/15010309)
-    -   Glycobiology resources
-        -   <http://glycores.ncifcrf.gov/intr/index.html>
-    -   [Ted Baker: Erice 2008 talk on Isopeptide
-        bonds](http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf)
+#### Resources
+
+-   UniProt
+    -   <http://www.uniprot.org/docs/ptmlist.txt>
+    -   <http://www.uniprot.org/manual/mod_res>
+    -   Paper: [Annotation of post-translational modifications in the
+        Swiss-Prot knowledge
+        base](http://www.ncbi.nlm.nih.gov/pubmed/15174124)
+    -   Paper: [Annotation of glycoproteins in the SWISS-PROT
+        database](http://www.ncbi.nlm.nih.gov/pubmed/11680872)
+    -   Three types of PTM (FT): MOD\_RES, CROSSLNK, LIPID
+    -   Contains DR records that point to other PTM databases (i.e.
+        RESID)
+-   RESID database
+    -   <http://www.ebi.ac.uk/RESID/>
+    -   <http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz>?-page+LibInfo+-id+2F9eD1VPLvp+-lib+RESID
+    -   Paper: [The RESID Database of Protein Modifications as a
+        resource and annotation
+        tool](http://www.ncbi.nlm.nih.gov/pubmed/15174122)
+    -   Has a link to a PDB file with PTM structure: Xref PDBHET
+-   PSI\_MOD
+    -   <http://psidev.sourceforge.net/mod/>
+    -   Paper: [The PSI-MOD community standard for representation of
+        protein modification
+        data](http://www.nature.com/nbt/journal/v26/n8/full/nbt0808-864.html)
+-   ExPASy
+    -   <http://ca.expasy.org/tools/findmod/findmod_masses.html>
+-   Delta Mass
+    -   <http://www.abrf.org/index.cfm/dm.home>
+    -   Paper: [Proteomic analysis of post-translational
+        modifications](http://www.ncbi.nlm.nih.gov/pubmed/12610572)
+-   GlycoSciences
+    -   <http://www.glycosciences.de/>
+    -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=22560&show=65#mass>
+    -   <http://www.glycosciences.de/sweetdb/start.php?action=explore_linucsid&linucsid=297&show=4129#crosslinks>
+    -   Paper: [Bioinformatics for glycomics: Status, methods,
+        requirements and
+        perspectives](http://bib.oxfordjournals.org/cgi/content/short/5/2/164)
+    -   Paper: [pdb-care (PDB carbohydrate residue check): a program to
+        support annotation of complex carbohydrate structures in PDB
+        files](http://www.biomedcentral.com/1471-2105/5/69)
+    -   Paper: [Data mining the protein data bank: automatic detection
+        and assignment of carbohydrate
+        structures](http://www.ncbi.nlm.nih.gov/pubmed/15010309)
+-   Glycobiology resources
+    -   <http://glycores.ncifcrf.gov/intr/index.html>
+-   [Ted Baker: Erice 2008 talk on Isopeptide
+    bonds](http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf)
+
+#### Procedure to get a list of PTMs
+
+-   Retrieve the [Chemical Component
+    Dictrionary](http://www.wwpdb.org/ccd.html)
+-   Remove all obsolete or ambiguous chemical components by only keeping
+    entries with
+    -   \_chem\_comp.pdbx\_release\_status REL
+    -   \_chem\_comp.pdbx\_ambiguous\_flag N
+-   Create two subsets of the CCD
+    -   A. All chemical components that are
+        -   not the 20 standard amino acids and
+        -   do not have a \_chem\_comp.mon\_nstd\_parent\_comp\_id field
+            corresponding to one of the 20 standard amino acids.
+    -   B. All chemical components that have a
+        \_chem\_comp.mon\_nstd\_parent\_comp\_id field corresponding to
+        one of the 20 standard amino acids.
+-   For case 1 (attachments), match the RESID NameXref PDBHET ID with
+    chemical component set A to get [a list of attachment
+    groups](http://spreadsheets1.google.com/ccc?key=tCBmM83dURWTKEwM34MwRsg&hl=en).
+-   For case 2 (modified amino acids), match the RESID NameXref PDBHET
+    ID with set B to get [a list of modified amino acids that are
+    PTMs](http://spreadsheets1.google.com/ccc?key=tmS1y7VhfTIIrapme6kSUug&hl=en).
 
 ### Task2. Defining data representation of PTMs
 
