@@ -58,8 +58,8 @@ This project will be beneficial to the research community by facilitating struct
 ** Paper: [http://bib.oxfordjournals.org/cgi/content/short/5/2/164 Bioinformatics for glycomics: Status, methods, requirements and perspectives]
 ** Paper: [http://www.biomedcentral.com/1471-2105/5/69 pdb-care (PDB carbohydrate residue check): a program to support annotation of complex carbohydrate structures in PDB files]
 ** Paper: [http://www.ncbi.nlm.nih.gov/pubmed/15010309 Data mining the protein data bank: automatic detection and assignment of carbohydrate structures]
-* Glycobiology resources
-** http://glycores.ncifcrf.gov/intr/index.html
+* [http://glycores.ncifcrf.gov/intr/index.html Glycobiology resources listed at NCI-Frederick]
+* [http://www.biocuckoo.org/link.php A compendium of computational resources for PTM at CUCKOO workgroup]
 * [http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf Ted Baker: Erice 2008 talk on Isopeptide bonds]
 
 ====Procedure to get a list of PTMs====
