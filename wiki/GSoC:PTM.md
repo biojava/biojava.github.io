@@ -104,8 +104,10 @@ Tasks and Implementation
     -   Paper: [Data mining the protein data bank: automatic detection
         and assignment of carbohydrate
         structures](http://www.ncbi.nlm.nih.gov/pubmed/15010309)
--   Glycobiology resources
-    -   <http://glycores.ncifcrf.gov/intr/index.html>
+-   [Glycobiology resources listed at
+    NCI-Frederick](http://glycores.ncifcrf.gov/intr/index.html)
+-   [A compendium of computational resources for PTM at CUCKOO
+    workgroup](http://www.biocuckoo.org/link.php)
 -   [Ted Baker: Erice 2008 talk on Isopeptide
     bonds](http://erice2008.docking.org/vcourse/04wed/1130-Baker/Ted%20Baker.pdf)
 
