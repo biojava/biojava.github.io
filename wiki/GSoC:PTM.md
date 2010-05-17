@@ -134,136 +134,76 @@ Tasks and Implementation
 
 ### Task2. Defining data representation of PTMs
 
-<java> public interface PTM {
+A singleton class to store different types of PTMs of case 1 & 2 as
+follows. <java> public final class PTMType {
 
-`   // return the modified amino acid.`  
-`   public org.biojava.bio.structure.AminoAcid getModifiedAminoAcid ();`
+`   public String getPdbId() {...}`  
+`   public String getResidId() {...}`  
+`   public String getPsiModId() {...}`  
+`   public String getFullName() {...}`  
+`   public String getFomula() {...}`  
+`   public String getParentComp() {...}`
 
-} </java>
+`   // The PTMConstraints interface defines the constraints such as what types of amino acid it attaches/modifies, `  
+`   // on which atom, whether on terminals, etc.`  
+`   public PTMConstraints getConstraints() {...};`
 
-<java> public abstract class AbstractPTM implements PTM {
+`   // Builder pattern could be helpful for registration.`  
+`   public static void register(String pdbId, ...) {...}`
 
-`   private org.biojava.bio.structure.AminoAcid aminoAcid;`
-
-`   public AbstractPTM(org.biojava.bio.structure.AminoAcid modifiedAminoAcid) {`  
-`       this.aminoAcid = modifiedAminoAcid;`  
-`   }`
-
-`   // return the modified amino acid.`  
-`   public org.biojava.bio.structure.AminoAcid getModifiedAminoAcid () {`  
-`       return aminoAcid;`  
-`   }`
-
-} </java>
-
-<java> public class Hydroxyproline extends AbstractPTM {
-
-`   public Hydroxyproline(org.biojava.bio.structure.AminoAcid modifiedAminoAcid) {`  
-`       super(modifiedAminoAcid);`  
-`   }`
+`   public static PTMType getByPdbId(String pdbId) {...}`  
+`   public static PTMType getByResidId() {...}`  
+`   public Static PTMType getByPsiModId() {...}`
 
 } </java>
 
-<java> public interface AttachedPTM extends PTM {
+Two ways to representing modified residues.
+
+One way: <java> public interface PTM {
+
+`   public PTMType getType();`  
+`   public org.biojava.bio.structure.AminoAcid getModifiedAminoAcid();`
+
+}
+
+// case 2 implementation public class PTMImpl {...}
+
+// case 1 interface public interface AttachedPTM extends PTM {
 
 `   // return the attached group, e.g. a glycan.`  
-`   public `<G extends org.biojava.bio.structure.Group>` G getAttachedGroup();`
-
+`   public org.biojava.bio.structure.Group getAttachedGroup();`  
+  
 `   // return the attachment atom on the modified amino acid.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid();`
-
+`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid();`  
+  
 `   // return the attachment atom on the attached group.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup();`
-
+`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup();`  
+  
 `   // return the distance between the two attachment atoms.`  
 `   public double getDistance();`
 
 } </java>
 
-<java> public abstract class AbstractAttachedPTM extends AbstractPTM
-implements AttachedPTM {
+Alternative way: <java> public class ModifiedAminoAcid extends
+org.biojava.bio.structure.AminoAcid {
 
-`   private org.biojava.bio.structure.Group attachedGroup;`  
-`   private org.biojava.bio.structure.Atom atomOnAminoAcid;`  
-`   private org.biojava.bio.structure.Atom atomOnAttachedGroup;`
+`   public PTMType getType() {...}`
 
-`   public AbstractAttachedPTM(`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid,`  
-`           org.biojava.bio.structure.Group attachedGroup,`  
-`           org.biojava.bio.structure.Atom atomOnAminoAcid,`  
-`           org.biojava.bio.structure.Atom atomOnAttachedGroup`  
-`           ) {`  
-`       super(modifiedAminoAcid);`  
-`       this.attachedGroup = attachedGroup;`  
-`       this.atomOnAminoAcid = atomOnAminoAcid;`  
-`       this.atomOnAttachedGroup = atomOnAttachedGroup;`  
-`   }`
+}
+
+public class ModifiedAminoAcidByAttachment extends ModifiedAminoAcid {
 
 `   // return the attached group, e.g. a glycan.`  
-`   public org.biojava.bio.structure.Group getAttachedGroup() {`  
-`       return attachedGroup;`  
-`   }`
-
+`   public org.biojava.bio.structure.Group getAttachedGroup() {...}`  
+  
 `   // return the attachment atom on the modified amino acid.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid() {`  
-`       return atomOnAminoAcid;`  
-`   }`
-
+`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid() {...}`  
+  
 `   // return the attachment atom on the attached group.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup() {`  
-`       return atomOnAttachedGroup;`  
-`   }`
-
+`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup() {...}`  
+  
 `   // return the distance between the two attachment atoms.`  
-`   public double getDistance() {`  
-`       // calculate the distance`  
-`       return 0.0;`  
-`   }`
-
-} </java>
-
-<java> public class Glycosylation extends AbstractAttachedPTM {
-
-`   public Glycosylation(`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid,`  
-`           org.biojava.bio.structure.Group attachedGroup,`  
-`           org.biojava.bio.structure.Atom atomOnAminoAcid,`  
-`           org.biojava.bio.structure.Atom atomOnAttachedGroup`  
-`           ) {`  
-`       super(modifiedAminoAcid, attachedGroup, atomOnAminoAcid, atomOnAttachedGroup);`  
-`   }`
-
-} </java>
-
-<java> public abstract class AbstractCrossLink extends
-AbstractAttachedPTM {
-
-`   public AbstractCrossLink(`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid1,`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid2,`  
-`           org.biojava.bio.structure.Atom atomOnAminoAcid,`  
-`           org.biojava.bio.structure.Atom atomOnAttachedGroup`  
-`           ) {`  
-`       super(modifiedAminoAcid1, modifiedAminoAcid1, atomOnAminoAcid, atomOnAttachedGroup);`  
-`   }`
-
-`   // return the attached group, e.g. a glycan.`  
-`   public org.biojava.bio.structure.AminoAcid getAttachedGroup() {`  
-`       return (org.biojava.bio.structure.AminoAcid)super.getAttachedGroup();`  
-`   }`
-
-} </java>
-
-<java> public abstract class DisulfideBond extends AbstractCrossLink {
-
-`   public DisulfideBond(`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid1,`  
-`           org.biojava.bio.structure.AminoAcid modifiedAminoAcid2,`  
-`           org.biojava.bio.structure.Atom atomOnAminoAcid,`  
-`           org.biojava.bio.structure.Atom atomOnAttachedGroup`  
-`           ) {`  
-`       super(modifiedAminoAcid1, modifiedAminoAcid1, atomOnAminoAcid, atomOnAttachedGroup);`  
-`   }`
+`   public double getDistance() {...}`
 
 } </java>
 
