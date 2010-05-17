@@ -144,8 +144,8 @@ follows. <java> public final class PTMType {
 `   public String getFomula() {...}`  
 `   public String getParentComp() {...}`
 
-`   // The PTMConstraints interface defines the constraints such as what types of amino acid it attaches/modifies, `  
-`   // on which atom, whether on terminals, etc.`  
+`   // The PTMConstraints interface defines the constraints such as what types of `  
+`   // amino acids it attaches/modifies, on which atom, whether on terminals, etc.`  
 `   public PTMConstraints getConstraints() {...};`
 
 `   // Builder pattern could be helpful for registration.`  
