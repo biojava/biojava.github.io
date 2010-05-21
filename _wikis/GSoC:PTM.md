@@ -131,6 +131,9 @@ Tasks and Implementation
 -   For case 2 (modified amino acids), match the RESID NameXref PDBHET
     ID with set B to get [a list of modified amino acids that are
     PTMs](http://spreadsheets1.google.com/ccc?key=tmS1y7VhfTIIrapme6kSUug&hl=en).
+-   [A initial list of
+    PTMs](http://spreadsheets0.google.com/ccc?key=tCC48SYpb9v0ehoel6PlnZg&hl=en)
+    were then manually selected.
 
 ### Task2. Defining data representation of PTMs
 
