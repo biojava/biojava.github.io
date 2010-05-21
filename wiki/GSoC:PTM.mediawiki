@@ -73,6 +73,7 @@ This project will be beneficial to the research community by facilitating struct
 ** B. All chemical components that have a _chem_comp.mon_nstd_parent_comp_id field corresponding to one of the 20 standard amino acids.
 * For case 1 (attachments), match the RESID NameXref PDBHET ID with chemical component set A to get [http://spreadsheets1.google.com/ccc?key=tCBmM83dURWTKEwM34MwRsg&hl=en a list of attachment groups].
 * For case 2 (modified amino acids), match the RESID NameXref PDBHET ID with set B to get [http://spreadsheets1.google.com/ccc?key=tmS1y7VhfTIIrapme6kSUug&hl=en a list of modified amino acids that are PTMs].
+* [http://spreadsheets0.google.com/ccc?key=tCC48SYpb9v0ehoel6PlnZg&hl=en A initial list of PTMs] were then manually selected.
 
 ===Task2. Defining data representation of PTMs===
 A singleton class to store different types of PTMs of case 1 & 2 as follows.
