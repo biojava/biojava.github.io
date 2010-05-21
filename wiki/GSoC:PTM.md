@@ -137,6 +137,10 @@ Tasks and Implementation
 
 ### Task2. Defining data representation of PTMs
 
+[An XML
+file](https://docs.google.com/leaf?id=0B6z8AlO4d-qMMzEwMjUyM2YtODM4Yy00ZmJlLWE0YmMtYzdiYWNjZmFmYjFj&hl=en)
+is used to store the information of PTMs.
+
 A singleton class to store different types of PTMs of case 1 & 2 as
 follows. <java> public final class PTMType {
 
