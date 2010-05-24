@@ -72,6 +72,14 @@ Degree of difficulty and needed skills : Difficult. Interested students should h
 
 Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")**  
 
+<!-- -->
+
+Student: **[Mark Chapman](Mark Chapman "wikilink")**  
+
+<!-- -->
+
+Project overview, timeline, and updates: **[ Improvements including Multiple Sequence Alignment Algorithms](GSoC:MSA "wikilink")**  
+
 ------------------------------------------------------------------------
 
 Identification and Classification of Posttranslational Modification of Proteins  

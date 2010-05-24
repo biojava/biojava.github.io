@@ -35,6 +35,9 @@ BioJava offers the following Google Summer of Code projects:
 
 ; Mentor: '''[[Andreas_Prlic | Andreas Prlic]]'''
 
+; Student: '''[[Mark Chapman]]'''
+
+; Project overview, timeline, and updates: '''[[GSoC:MSA | Improvements including Multiple Sequence Alignment Algorithms]]'''
 
 ----
 
