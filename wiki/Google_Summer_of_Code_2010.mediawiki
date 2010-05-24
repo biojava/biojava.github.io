@@ -61,3 +61,7 @@ BioJava offers the following Google Summer of Code projects:
 ; Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of chemistry and biology, and in particular protein structures, and experience in Java-based software development. Experience with Java Swing would be a plus.
 
 ; Mentor: [http://www.linkedin.com/in/peterrose Peter Rose]
+
+; Student: [[Jianjiong Gao]]
+
+; [[GSoC:PTM|More information]]
