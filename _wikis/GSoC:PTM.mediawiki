@@ -244,6 +244,9 @@ public class ModifiedAminoAcidByAttachment extends ModifiedAminoAcid {
 * 07/31-08/06: Task 6.2-Annotating PTMs on sequence diagram view.
 * 08/07-08/16: Task 7-Generating 2D tree images of glycan structures.
 
+==Weekly Report==
+
+
 ==Comments==
 ''Please add comments here...''
 * Peter Rose (04/30): It's an ever increasing list of PTMs. So instead of hardcoding PTMs, it would be better to load them from a file, i.e. xml.
