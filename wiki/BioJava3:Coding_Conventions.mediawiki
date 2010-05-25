@@ -1,2 +1,1 @@
-
-* Each file should contain the BioJava LGPL copyright statement on top.
+* Each file should contain the  [[BioJava3_license]]  LGPL copyright statement.
