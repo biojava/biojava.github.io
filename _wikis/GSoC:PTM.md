@@ -355,6 +355,9 @@ Timeline
 -   07/31-08/06: Task 6.2-Annotating PTMs on sequence diagram view.
 -   08/07-08/16: Task 7-Generating 2D tree images of glycan structures.
 
+Weekly Report
+-------------
+
 Comments
 --------
 
