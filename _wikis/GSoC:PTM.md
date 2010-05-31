@@ -358,6 +358,12 @@ Timeline
 Weekly Report
 -------------
 
+-   05/31/2010
+    -   A initial list of case 1 and case 2 PTMs has be identified.
+    -   An XML format to store the information of PTMs has been defined.
+    -   Java classes representing the PTMs have been committed to the
+        code repository.
+
 Comments
 --------
 
