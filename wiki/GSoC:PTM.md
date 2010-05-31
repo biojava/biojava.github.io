@@ -137,36 +137,23 @@ Tasks and Implementation
 
 ### Task2. Defining data representation of PTMs
 
-[An XML
-file](https://docs.google.com/leaf?id=0B6z8AlO4d-qMMzEwMjUyM2YtODM4Yy00ZmJlLWE0YmMtYzdiYWNjZmFmYjFj&hl=en)
-is used to store the information of PTMs.
+-   [An XML
+    file](https://docs.google.com/leaf?id=0B6z8AlO4d-qMMzEwMjUyM2YtODM4Yy00ZmJlLWE0YmMtYzdiYWNjZmFmYjFj&hl=en)
+    is used to store the information of PTMs.
 
-A singleton class to store different types of PTMs of case 1 & 2 as
-follows. <java> public final class PTMType {
+<!-- -->
 
-`   public String getPdbId() {...}`  
-`   public String getResidId() {...}`  
-`   public String getPsiModId() {...}`  
-`   public String getFullName() {...}`  
-`   public String getFomula() {...}`  
-`   public String getParentComp() {...}`
+-   A Java class *ProteinModification* to store different types of PTMs.
 
-`   // The PTMConstraints interface defines the constraints such as what types of `  
-`   // amino acids it attaches/modifies, on which atom, whether on terminals, etc.`  
-`   public PTMConstraints getConstraints() {...};`
+<!-- -->
 
-`   // Builder pattern could be helpful for registration.`  
-`   public static void register(String pdbId, ...) {...}`
+-   Two ways to representing modified residues.
 
-`   public static PTMType getByPdbId(String pdbId) {...}`  
-`   public static PTMType getByResidId() {...}`  
-`   public Static PTMType getByPsiModId() {...}`
+<!-- -->
 
-} </java>
+-   -   One way:
 
-Two ways to representing modified residues.
-
-One way: <java> public interface PTM {
+<java> public interface PTM {
 
 `   public PTMType getType();`  
 `   public org.biojava.bio.structure.AminoAcid getModifiedAminoAcid();`
@@ -191,7 +178,9 @@ One way: <java> public interface PTM {
 
 } </java>
 
-Alternative way: <java> public class ModifiedAminoAcid extends
+-   -   Alternative way:
+
+<java> public class ModifiedAminoAcid extends
 org.biojava.bio.structure.AminoAcid {
 
 `   public PTMType getType() {...}`
