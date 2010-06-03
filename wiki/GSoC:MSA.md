@@ -208,6 +208,8 @@ Progress Log
 -   design work (incomplete)
     -   update to current alignment module
     -   extension to multiple sequence alignment
+    -   ConcurrencyTools utility for submitting parallel tasks to a
+        shared thread pool
 
 References
 ----------
