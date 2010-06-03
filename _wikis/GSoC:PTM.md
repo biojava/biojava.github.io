@@ -335,7 +335,7 @@ Timeline
 --------
 
 -   05/24-05/25: Task 1-Making a list of PTM types.
--   05/26-06/03: Task 2-Defining data representation of PTMs.
+-   05/26-06/02: Task 2-Defining data representation of PTMs.
 -   06/03-06/09: Task 3-Reading and parsing 3D protein structure files
     (.pdb or .cif).
 -   06/10-06/23: Task 4-Identifying PTMs in 3D protein structures.
