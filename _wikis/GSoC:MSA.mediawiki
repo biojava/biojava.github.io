@@ -175,6 +175,16 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 
 ''August 30''
 
+==Progress Log==
+
+===May 24 - May 28===
+
+* setup biojava3-alignment module
+* read Effective Java by Joshua Bloch
+* design work (incomplete)
+** update to current alignment module
+** extension to multiple sequence alignment
+
 ==References==
 
 * BioJava &mdash; doi:10.1093/bioinformatics/btn397
