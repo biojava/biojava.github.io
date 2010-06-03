@@ -198,6 +198,17 @@ Alignment](Timeline-GSoC_MSA.png "Project Timeline for Google Summer of Code: Mu
 
 *August 30*
 
+Progress Log
+------------
+
+### May 24 - May 28
+
+-   setup biojava3-alignment module
+-   read Effective Java by Joshua Bloch
+-   design work (incomplete)
+    -   update to current alignment module
+    -   extension to multiple sequence alignment
+
 References
 ----------
 
