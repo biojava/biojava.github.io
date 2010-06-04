@@ -390,10 +390,19 @@ org.biojava3.alignment.template
 <java>
 
 ` abstract class AbstractPairwiseSequenceAligner`<S extends Sequence>` implements PairwiseSequenceAligner`<S>  
-`   AbstractPairwiseSequenceAligner()`  
 `   AbstractPairwiseSequenceAligner(S, S, GapPenalty, SubstitutionMatrix)`  
 `   GapPenalty getGapPenalty()`  
-`   SubstitutionMatrix getSubstitutionMatrix()`  
+`   SubstitutionMatrix getSubstitutionMatrix()`
+
+</java>
+
+### AbstractMutablePairwiseSequenceAligner
+
+<java>
+
+` abstract class AbstractMutablePairwiseSequenceAligner`<S extends Sequence>` extends AbstractPairwiseSequenceAligner`<S>` implements MutablePairwiseSequenceAligner`<S>  
+`   AbstractMutablePairwiseSequenceAligner()`  
+`   AbstractMutablePairwiseSequenceAligner(S, S, GapPenalty, SubstitutionMatrix)`  
 `   void setGapPenalty(GapPenalty)`  
 `   void setSubstitutionMatrix(SubstitutionMatrix)`
 
