@@ -1,0 +1,314 @@
+'''Design for Alignment in BioJava3'''
+
+''Part of [[GSoC:MSA]] Project by [[Mark Chapman]]''
+
+This page has a list of packages, interfaces, and classes to form the basis of the BioJava3 alignment module.  The new module ports ''nearly'' all the current BioJava 1.7 alignment features to the BioJava3 standard.  Additional features prepare for the inclusion of multiple sequence alignments.
+
+The base data structures are immutable for efficiency with extensions to mutable forms for JavaEE/Bean compliance.  Simple factory methods reside in the static Alignments class.  A full interface hierarchy allows for flexible customization and expansion.
+
+==Dependencies==
+
+* org.biojava3.core.sequence.location.template.Location
+* org.biojava3.core.sequence.template.Compound
+* org.biojava3.core.sequence.template.CompoundSet
+* org.biojava3.core.sequence.template.Sequence
+
+==org.biojava3.alignment==
+
+===Alignments===
+<java>
+  class Alignments // static utility
+    private Alignments() { } // prevents instantiation
+    List<Pair<S>> getAllPairsAlignments(Sequence, Sequence...)
+    int[] getAllPairsScores(Sequence, Sequence...)
+    Pair<S> getPairwiseAlignment(Sequence, Sequence)
+    int getPairwiseScore(Sequence, Sequence)
+    Profile<S> getProgressiveAlignment(List<Sequence>)
+    void setDefaultGapPenalty(GapPenalty)
+    void setDefaultSubstitutionMatrix(SubstitutionMatrix)
+</java>
+
+===SimpleGapPenalty===
+<java>
+  class SimpleGapPenalty implements GapPenalty
+    SimpleGapPenalty(short, short) // open, extend
+</java>
+
+===SimpleSubstitutionMatrix===
+<java>
+  class SimpleSubstitutionMatrix<S extends CompoundSet> implements SubstitutionMatrix<S>
+    SimpleSubstitutionMatrix(File) // guess compound set from source
+    SimpleSubstitutionMatrix(String) // guess compound set from source
+    SimpleSubstitutionMatrix(S, File)
+    SimpleSubstitutionMatrix(S, short, short) // identity matrix (ignore or handle ambiguities?)
+    SimpleSubstitutionMatrix(S, String)
+    SimpleSubstitutionMatrix(S, String, String) // optional name parameter
+    String toString()
+</java>
+
+===NeedlemanWunsch===
+<java>
+  class NeedlemanWunsch<S extends Sequence> extends AbstractPairwiseSequenceAligner<S>
+    NeedlemanWunsch(S, S, GapPenalty, SubstitutionMatrix)
+</java>
+
+===SmithWaterman===
+<java>
+  class SmithWaterman<S extends Sequence> extends AbstractPairwiseSequenceAligner<S>
+    SmithWaterman(S, S, GapPenalty, SubstitutionMatrix)
+</java>
+
+===FractionalIdentityScorer===
+<java>
+  class FractionalIdentityScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    FractionalIdentityScorer(SequencePair<S>)
+</java>
+
+===FractionalSimilarityScorer===
+<java>
+  class FractionalSimilarityScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    FractionalSimilarityScorer(SequencePair<S>)
+</java>
+
+===KmersPairwiseScorer===
+<java>
+  class KmersPairwiseScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    KmersPairwiseScorer(S, S, int)
+</java>
+
+===WuManberPairwiseScorer===
+<java>
+  class WuManberPairwiseScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    WuManberPairwiseScorer(S, S, ?) // not sure of parameters, yet
+</java>
+
+===FractionalIdentityInProfilePairwiseScorer===
+<java>
+  class FractionalIdentityInProfilePairwiseScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    FractionalIdentityInProfilePairwiseScorer(S, S, Profile)
+</java>
+
+===FractionalSimilarityInProfilePairwiseScorer===
+<java>
+  class FractionalSimilarityInProfilePairwiseScorer<S extends Sequence> implements PairwiseSequenceScorer<S>
+    FractionalSimilarityInProfilePairwiseScorer(S, S, Profile)
+</java>
+
+==org.biojava3.alignment.template==
+
+===GapPenalty===
+<java>
+  interface GapPenalty
+    enum Type {CONSTANT, LINEAR, AFFINE} // gep = 0, gep = gop, gep != gop ... TODO: add DYNAMIC type
+    short getExtensionPenalty()
+    short getOpenPenalty()
+    Type getType()
+    void setExtensionPenalty(short)
+    void setOpenPenalty(short)
+</java>
+
+===SubstitutionMatrix===
+<java>
+  interface SubstitutionMatrix<S extends CompoundSet<C extends Compound>>
+    S getCompoundSet()
+    String getDescription()
+    short[][] getMatrix()
+    String getMatrixAsString()
+    short getMaxValue()
+    short getMinValue()
+    String getName()
+    short getValue(C, C)
+    void normalizeMatrix(short) // scale
+    void setDescription(String)
+    void setName(String)
+</java>
+
+===AlignedSequence===
+<java>
+  interface AlignedSequence<C extends Compound> extends Sequence<C>
+    int getAlignmentIndexAt(int)
+    int getEnd()
+    Location getLocationInAlignment()
+    int getNumGaps()
+    Sequence<C> getOriginalSequence()
+    int getOverlapCount() // if !isCircular() ? == 1 : >= 1
+    int getSequenceIndexAt(int)
+    int getStart()
+    boolean isCircular()
+</java>
+
+===MutableAlignedSequence===
+<java>
+  interface MutableAlignedSequence<C extends Compound> extends AlignedSequence<C>
+    void setLocation(Location)
+    void shiftAtAlignmentLocation(Location, int)
+    void shiftAtSequenceLocation(Location, int)
+</java>
+
+===Profile===
+<java>
+  interface Profile<S extends Sequence<C extends Compound>> extends Iterable<S>
+    AlignedSequence<C> getAlignedSequence(int)
+    AlignedSequence<C> getAlignedSequence(S) // will find either aligned or original sequences
+    List<AlignedSequence<C>> getAlignedSequences() // unmodifiable unless class implements MutableProfile
+    List<AlignedSequence<C>> getAlignedSequences(int...) // useful for views
+    List<AlignedSequence<C>> getAlignedSequences(S...) // useful for views
+    C getCompoundAt(int, int)
+    C getCompoundAt(S, int) // will find either aligned or original sequences
+    List<C> getCompoundsAt(int) // useful for views
+    CompoundSet<C> getCompoundSet()
+    int[] getIndicesAt(int) // useful for views
+    int getIndexOf(C)
+    int getLastIndexOf(C)
+    int getLength() // number of columns
+    int getSize() // number of rows ... if !isCircular() ? == number of sequences : >= number of sequences
+    ProfileView<S> getSubProfile(Location) // only include sequences that overlap Location
+    boolean isCircular() // if so, sequences longer than length() return multiple compounds at any location
+    String toString() // simple view: each sequence on 1 line
+    String toString(int) // formatted view: show start and end indices of profile and sequences, limited line length
+</java>
+
+===MutableProfile===
+<java>
+  interface MutableProfile<S extends Sequence<C extends Compound>> extends Profile<S>
+    // getAlignedSequences modifiable, full iterator with remove
+    void setSequences(List<AlignedSequence<C>>)
+</java>
+
+===ProfileView===
+<java>
+  interface ProfileView<S extends Sequence<C extends Compound>> extends Profile<S>
+    int getEnd()
+    int getStart()
+    Profile<S> getViewedProfile()
+    String toString() // simple view
+    String toString(int) // formatted view
+</java>
+
+===SequencePair===
+<java>
+  interface SequencePair<S extends Sequence<C extends Compound>> extends Profile<S>
+    C getCompoundInQueryAt(int)
+    C getCompoundInTargetAt(int)
+    int getIndexInQueryAt(int)
+    int getIndexInQueryForTargetAt(int)
+    int getIndexInTargetAt(int)
+    int getIndexInTargetForQueryAt(int)
+    int getNumIdenticals()
+    int getNumSimilars()
+    AlignedSequence<C> getQuery()
+    AlignedSequence<C> getTarget()
+</java>
+
+===MutableSequencePair===
+<java>
+  interface MutableSequencePair<S extends Sequence> extends MutableProfile<S>, SequencePair<S>
+    void setPair(AlignedSequence<C>, AlignedSequence<C>)
+    void setQuery(AlignedSequence<C>)
+    void setTarget(AlignedSequence<C>)
+</java>
+
+===AbstractSequencePair===
+<java>
+  abstract class AbstractSequencePair<S extends Sequence>
+    float getPercentGapsQuery()
+    float getPercentGapsTarget()
+    float getPercentIdentityQuery()
+    float getPercentIdentitySubject()
+    float getPercentSimilarityQuery()
+    float getPercentSimilaritySubject()
+</java>
+
+===ProfilePair===
+<java>
+  interface ProfilePair<S extends Sequence> extends Profile<S>
+    Profile<S> getQuery()
+    Profile<S> getTarget()
+</java>
+
+===MutableProfilePair===
+<java>
+  interface MutableProfilePair<S extends Sequence> extends MutableProfile<S>, ProfilePair<S>
+    void setPair(Profile<S>, Profile<S>)
+    void setQuery(Profile<S>)
+    void setTarget(Profile<S>)
+</java>
+
+===Scorer===
+<java>
+  interface Scorer // resides in core module
+    int getMaxScore()
+    int getMinScore()
+    int getScore()
+</java>
+
+===PairwiseSequenceScorer===
+<java>
+  interface PairwiseSequenceScorer<S extends Sequence> extends Scorer, SequencePair<S>
+    SequencePair<S> getPair()
+</java>
+
+===PairwiseProfileScorer===
+<java>
+  interface PairwiseProfileScorer<S extends Sequence> extends Scorer, ProfilePair<S>
+    ProfilePair<S> getPair()
+</java>
+
+===Aligner===
+<java>
+  interface Aligner<S extends Sequence> extends Scorer
+    long getComputationTime()
+    Profile<S> getProfile()
+</java>
+
+===MatrixAligner===
+<java>
+  interface MatrixAligner<S extends Sequence> extends Aligner<S>
+    short[][] getScoreMatrix()
+    short getScoreMatrixAt(int, int)
+    String getScoreMatrixAsString()
+</java>
+
+===PairwiseSequenceAligner===
+<java>
+  interface PairwiseSequenceAligner<S extends Sequence> extends MatrixAligner<S>, PairwiseSequenceScorer<S>
+    // combines 2 interfaces
+</java>
+
+===ProfileProfileAligner===
+<java>
+  interface ProfileProfileAligner<S extends Sequence> extends MatrixAligner<S>, PairwiseProfileScorer<S>
+    // combines 2 interfaces
+</java>
+
+===AbstractPairwiseSequenceAligner===
+<java>
+  abstract class AbstractPairwiseSequenceAligner<S extends Sequence> implements PairwiseSequenceAligner<S>
+    AbstractPairwiseSequenceAligner()
+    AbstractPairwiseSequenceAligner(S, S, GapPenalty, SubstitutionMatrix)
+    GapPenalty getGapPenalty()
+    SubstitutionMatrix getSubstitutionMatrix()
+    void setGapPenalty(GapPenalty)
+    void setSubstitutionMatrix(SubstitutionMatrix)
+</java>
+
+==org.biojava3.alignment.views==
+
+===SimpleProfileView===
+<java>
+  class SimpleProfileView<S extends Sequence> implements ProfileView<S>
+    SimpleProfileView(Profile<S>, int, int)
+</java>
+
+===CompoundCountsView===
+<java>
+  class CompoundCountsView<S extends Sequence<C extends Compound>> extends SimpleProfileView<S>
+    CompoundCountsView(Profile<S>, int, int)
+    int getCompoundCountsAt(C... compounds)
+</java>
+
+==Questions / Comments==
+
+Where should indexing start with the bio default of 1 rather than the Java standard of 0?
+
+''Please add comments here...''
