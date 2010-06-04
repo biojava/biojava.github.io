@@ -284,10 +284,16 @@ The base data structures are immutable for efficiency with extensions to mutable
 ===AbstractPairwiseSequenceAligner===
 <java>
   abstract class AbstractPairwiseSequenceAligner<S extends Sequence> implements PairwiseSequenceAligner<S>
-    AbstractPairwiseSequenceAligner()
     AbstractPairwiseSequenceAligner(S, S, GapPenalty, SubstitutionMatrix)
     GapPenalty getGapPenalty()
     SubstitutionMatrix getSubstitutionMatrix()
+</java>
+
+===AbstractMutablePairwiseSequenceAligner===
+<java>
+  abstract class AbstractMutablePairwiseSequenceAligner<S extends Sequence> extends AbstractPairwiseSequenceAligner<S> implements MutablePairwiseSequenceAligner<S>
+    AbstractMutablePairwiseSequenceAligner()
+    AbstractMutablePairwiseSequenceAligner(S, S, GapPenalty, SubstitutionMatrix)
     void setGapPenalty(GapPenalty)
     void setSubstitutionMatrix(SubstitutionMatrix)
 </java>
