@@ -205,7 +205,7 @@ Progress Log
 
 -   setup biojava3-alignment module
 -   read Effective Java by Joshua Bloch
--   design work (incomplete)
+-   [design](GSoC:MSA_Design "wikilink") work (incomplete)
     -   update to current alignment module
     -   extension to multiple sequence alignment
     -   ConcurrencyTools utility for submitting parallel tasks to a

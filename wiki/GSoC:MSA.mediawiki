@@ -181,7 +181,7 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 
 * setup biojava3-alignment module
 * read Effective Java by Joshua Bloch
-* design work (incomplete)
+* [[GSoC:MSA_Design|design]] work (incomplete)
 ** update to current alignment module
 ** extension to multiple sequence alignment
 ** ConcurrencyTools utility for submitting parallel tasks to a shared thread pool
