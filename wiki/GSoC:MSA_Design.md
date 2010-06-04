@@ -40,6 +40,7 @@ org.biojava3.alignment
 `   int getPairwiseScore(Sequence, Sequence)`  
 `   Profile`<S>` getProgressiveAlignment(List`<Sequence>`)`  
 `   void setDefaultGapPenalty(GapPenalty)`  
+`   void setDefaultPairwiseSequenceAligner(Class`<T extends PairwiseSequenceAligner>`)`  
 `   void setDefaultSubstitutionMatrix(SubstitutionMatrix)`
 
 </java>
