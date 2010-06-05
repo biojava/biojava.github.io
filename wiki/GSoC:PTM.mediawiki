@@ -80,7 +80,10 @@ This project will be beneficial to the research community by facilitating struct
 
 * A Java class ''ProteinModification'' to store different types of PTMs.
 
-* Three interface representing three cases.
+* Three interfaces representing three cases.
+** ModifiedResidue
+** Attachment
+** CrossLink
 
 ===Task3. Reading and parsing 3D protein structure files (.pdb or .cif)===
 * Utilizing org.biojava.bio.structure (http://www.biojava.org/wiki/BioJava:CookBook:PDB:read).
