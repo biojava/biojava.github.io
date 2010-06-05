@@ -147,7 +147,10 @@ Tasks and Implementation
 
 <!-- -->
 
--   Three interface representing three cases.
+-   Three interfaces representing three cases.
+    -   ModifiedResidue
+    -   Attachment
+    -   CrossLink
 
 ### Task3. Reading and parsing 3D protein structure files (.pdb or .cif)
 
