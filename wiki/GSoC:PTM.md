@@ -147,61 +147,7 @@ Tasks and Implementation
 
 <!-- -->
 
--   Two ways to representing modified residues.
-
-<!-- -->
-
--   -   One way:
-
-<java> public interface PTM {
-
-`   public PTMType getType();`  
-`   public org.biojava.bio.structure.AminoAcid getModifiedAminoAcid();`
-
-}
-
-// case 2 implementation public class PTMImpl {...}
-
-// case 1 interface public interface AttachedPTM extends PTM {
-
-`   // return the attached group, e.g. a glycan.`  
-`   public org.biojava.bio.structure.Group getAttachedGroup();`  
-  
-`   // return the attachment atom on the modified amino acid.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid();`  
-  
-`   // return the attachment atom on the attached group.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup();`  
-  
-`   // return the distance between the two attachment atoms.`  
-`   public double getDistance();`
-
-} </java>
-
--   -   Alternative way:
-
-<java> public class ModifiedAminoAcid extends
-org.biojava.bio.structure.AminoAcid {
-
-`   public PTMType getType() {...}`
-
-}
-
-public class ModifiedAminoAcidByAttachment extends ModifiedAminoAcid {
-
-`   // return the attached group, e.g. a glycan.`  
-`   public org.biojava.bio.structure.Group getAttachedGroup() {...}`  
-  
-`   // return the attachment atom on the modified amino acid.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAminoAcid() {...}`  
-  
-`   // return the attachment atom on the attached group.`  
-`   public org.biojava.bio.structure.Atom getAttachmentAtomOnAttachedGroup() {...}`  
-  
-`   // return the distance between the two attachment atoms.`  
-`   public double getDistance() {...}`
-
-} </java>
+-   Three interface representing three cases.
 
 ### Task3. Reading and parsing 3D protein structure files (.pdb or .cif)
 
