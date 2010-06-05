@@ -34,14 +34,31 @@ org.biojava3.alignment
 
 ` class Alignments // static utility`  
 `   private Alignments() { } // prevents instantiation`  
-`   List`<Pair<S>`> getAllPairsAlignments(Sequence, Sequence...)`  
-`   int[] getAllPairsScores(Sequence, Sequence...)`  
-`   Pair`<S>` getPairwiseAlignment(Sequence, Sequence)`  
+`   List`<Pair<S>`> getAllPairsAlignments(List`<S extends Sequence>`)`  
+`   int[] getAllPairsScores(List`<? extends Sequence>`)`  
+`   Pair`<S extends Sequence>` getPairwiseAlignment(S, S)`  
 `   int getPairwiseScore(Sequence, Sequence)`  
-`   Profile`<S>` getProgressiveAlignment(List`<Sequence>`)`  
-`   void setDefaultGapPenalty(GapPenalty)`  
-`   void setDefaultPairwiseSequenceAligner(Class`<T extends PairwiseSequenceAligner>`)`  
-`   void setDefaultSubstitutionMatrix(SubstitutionMatrix)`
+`   Profile`<S>` getMultipleSequenceAlignment(List`<S extends Sequence>`)`  
+`   enum MSAEmulation { CLUSTALW, MUSCLE, KALIGN, CUSTOM }`  
+`   class Defaults // static inner class`  
+`     MSAEmulation getEmulation()`  
+`     GapPenalty getGapPenalty()`  
+`     Class`<? extends HierarchicalClusterer>` getHierarchicalClusterer()`  
+`     Class`<? extends PairwiseSequenceAligner>` getPairwiseSequenceAligner()`  
+`     Class`<? extends PairwiseSequenceScorer>` getPairwiseSequenceScorer()`  
+`     Class`<? extends PartitionRefiner>` getPartitionRefiner()`  
+`     Class`<? extends ProfileProfileAligner>` getProfileProfileAligner()`  
+`     Class`<? extends RescoreRefiner>` getRescoreRefiner()`  
+`     SubstitutionMatrix getSubstitutionMatrix()`  
+`     void setEmulation(MSAEmulation)`  
+`     void setGapPenalty(GapPenalty)`  
+`     void setHierarchicalClusterer(Class`<? extends HierarchicalClusterer>`)`  
+`     void setPairwiseSequenceAligner(Class`<? extends PairwiseSequenceAligner>`)`  
+`     void setPairwiseSequenceScorer(Class`<? extends PairwiseSequenceScorer>`)`  
+`     void setPartitionRefiner(Class`<? extends PartitionRefiner>`)`  
+`     void setProfileProfileAligner(Class`<? extends ProfileProfileAligner>`)`  
+`     void setRescoreRefiner(Class`<? extends RescoreRefiner>`)`  
+`     void setSubstitutionMatrix(SubstitutionMatrix)`
 
 </java>
 
@@ -105,39 +122,105 @@ org.biojava3.alignment
 
 </java>
 
-### KmersPairwiseScorer
+### KmersScorer
 
 <java>
 
-` class KmersPairwiseScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
-`   KmersPairwiseScorer(S, S, int)`
+` class KmersScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
+`   KmersScorer(S, S, int)`
 
 </java>
 
-### WuManberPairwiseScorer
+### WuManberScorer
 
 <java>
 
-` class WuManberPairwiseScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
-`   WuManberPairwiseScorer(S, S, ?) // not sure of parameters, yet`
+` class WuManberScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
+`   WuManberScorer(S, S, ?) // TODO: not sure of parameters`
 
 </java>
 
-### FractionalIdentityInProfilePairwiseScorer
+### FractionalIdentityInProfileScorer
 
 <java>
 
-` class FractionalIdentityInProfilePairwiseScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
-`   FractionalIdentityInProfilePairwiseScorer(S, S, Profile)`
+` class FractionalIdentityInProfileScorer`<S extends Sequence>` implements PairInProfileScorer`<S>  
+`   FractionalIdentityInProfileScorer(S, S, Profile)`
 
 </java>
 
-### FractionalSimilarityInProfilePairwiseScorer
+### FractionalSimilarityInProfileScorer
 
 <java>
 
-` class FractionalSimilarityInProfilePairwiseScorer`<S extends Sequence>` implements PairwiseSequenceScorer`<S>  
-`   FractionalSimilarityInProfilePairwiseScorer(S, S, Profile)`
+` class FractionalSimilarityInProfileScorer`<S extends Sequence>` implements PairInProfileScorer`<S>  
+`   FractionalSimilarityInProfileScorer(S, S, Profile)`
+
+</java>
+
+### GuideTree
+
+<java>
+
+` class GuideTree`<S extends Sequence>  
+`   GuideTree(int[], List`<S>`, HierarchicalClusterer) // all pairs score`  
+`   int[] getAllPairsScores()`  
+`   float[][] getDistanceMatrix()`  
+`   Node getRoot()`  
+`   int[][] getScoreMatrix()`  
+`   class Node`  
+`     float getBranchLength1()`  
+`     float getBranchLength2()`  
+`     Node getChild1()`  
+`     Node getChild2()`  
+`     Node getParent()`  
+`     S getSequence() // null unless isLeaf()`  
+`     boolean isLeaf()`
+
+</java>
+
+### StandardRescoreRefiner
+
+<java>
+
+` class StandardRescoreRefiner`<S extends Sequence>` implements RescoreRefiner`<S>  
+`   StandardRescoreRefiner(Profile, Class`<? extends PairInProfileScorer<S>`>, Class`<? extends ProfileProfileAligner<S>`>)`
+
+</java>
+
+### DayhoffRescoreRefiner
+
+<java>
+
+` class DayhoffRescoreRefiner`<S extends Sequence>` implements RescoreRefiner`<S>  
+`   DayhoffRescoreRefiner(Profile, Class`<? extends PairInProfileScorer<S>`>, Class`<? extends ProfileProfileAligner<S>`>)`
+
+</java>
+
+### SinglePartitionRefiner
+
+<java>
+
+` class SinglePartitionRefiner`<S extends Sequence>` implements PartitionRefiner`<S>  
+`   SinglePartitionRefiner(Profile, Class`<? extends ProfileProfileAligner<S>`>)`
+
+</java>
+
+### StochasticPartitionRefiner
+
+<java>
+
+` class StochasticPartitionRefiner`<S extends Sequence>` implements PartitionRefiner`<S>  
+`   StochasticPartitionRefiner(Profile, Class`<? extends ProfileProfileAligner<S>`>)`
+
+</java>
+
+### TreeTraversalPartitionRefiner
+
+<java>
+
+` class TreeTraversalPartitionRefiner`<S extends Sequence>` implements PartitionRefiner`<S>  
+`   TreeTraversalPartitionRefiner(Profile, Class`<? extends ProfileProfileAligner<S>`>)`
 
 </java>
 
@@ -287,7 +370,7 @@ org.biojava3.alignment.template
 
 <java>
 
-` abstract class AbstractSequencePair`<S extends Sequence>  
+` abstract class AbstractSequencePair`<S extends Sequence>` implements SequencePair`<S>  
 `   float getPercentGapsQuery()`  
 `   float getPercentGapsTarget()`  
 `   float getPercentIdentityQuery()`  
@@ -333,16 +416,25 @@ org.biojava3.alignment.template
 
 <java>
 
-` interface PairwiseSequenceScorer`<S extends Sequence>` extends Scorer, SequencePair`<S>  
+` interface PairwiseSequenceScorer`<S extends Sequence>` extends Scorer`  
 `   SequencePair`<S>` getPair()`
 
 </java>
 
-### PairwiseProfileScorer
+### PairInProfileScorer
 
 <java>
 
-` interface PairwiseProfileScorer`<S extends Sequence>` extends Scorer, ProfilePair`<S>  
+` interface PairInProfileScorer`<S extends Sequence>` extends PairwiseSequenceScorer`<S>  
+`   Profile`<S>` getProfile()`
+
+</java>
+
+### ProfileProfileScorer
+
+<java>
+
+` interface ProfileProfileScorer`<S extends Sequence>` extends Scorer`  
 `   ProfilePair`<S>` getPair()`
 
 </java>
@@ -381,8 +473,27 @@ org.biojava3.alignment.template
 
 <java>
 
-` interface ProfileProfileAligner`<S extends Sequence>` extends MatrixAligner`<S>`, PairwiseProfileScorer`<S>  
+` interface ProfileProfileAligner`<S extends Sequence>` extends MatrixAligner`<S>`, ProfileProfileScorer`<S>  
 `   // combines 2 interfaces`
+
+</java>
+
+### RescoreRefiner
+
+<java>
+
+` interface RescoreRefiner`<S extends Sequence>` extends Aligner`<S>`, ProfileProfileScorer`<S>  
+`   Class`<? extends PairInProfileScorer<S>`> getPairInProfileScorer()`  
+`   Class`<? extends ProfileProfileAligner<S>`> getProfileProfileAligner()`
+
+</java>
+
+### PartitionRefiner
+
+<java>
+
+` interface PartitionRefiner`<S extends Sequence>` extends Aligner`<S>`, ProfileProfileScorer`<S>  
+`   Class`<? extends ProfileProfileAligner<S>`> getProfileProfileAligner()`
 
 </java>
 
@@ -425,9 +536,62 @@ org.biojava3.alignment.views
 
 <java>
 
-` class CompoundCountsView`<S extends Sequence<C extends Compound>`> extends SimpleProfileView`<S>  
+` class CompoundCountsView`<S extends Sequence>` extends SimpleProfileView`<S>  
+`   CompoundCountsView(Profile`<S>`)`  
 `   CompoundCountsView(Profile`<S>`, int, int)`  
-`   int getCompoundCountsAt(C... compounds)`
+`   int[] getCompoundCountsAt(int) // returned array is size of CompoundSet`
+
+</java>
+
+### CompoundWeightsView
+
+<java>
+
+` class CompoundWeightsView`<S extends Sequence>` extends SimpleProfileView`<S>  
+`   CompoundWeightsView(Profile`<S>`)`  
+`   CompoundWeightsView(Profile`<S>`, int, int)`  
+`   float[] getCompoundWeightsAt(int) // returned array is size of CompoundSet`
+
+</java>
+
+### ConsensusView
+
+<java>
+
+` class ConsensusView`<S extends Sequence>` extends SimpleProfileView`<S>  
+`   ConsensusView(Profile`<S>`)`  
+`   ConsensusView(Profile`<S>`, int, int)`  
+`   S getConsensusSequence()`
+
+</java>
+
+org.biojava3.core.util
+----------------------
+
+### ConcurrencyTools
+
+<java>
+
+` class ConcurrencyTools // static utility`  
+`   private ConcurrencyTools() { } // prevents instantiation`  
+`   ExecutorService getThreadPool()`  
+`   void setThreadPoolDefault()`  
+`   void setThreadPoolSingle()`  
+`   void setThreadPool(ExecutorService)`  
+`   void shutdown()`  
+`   void shutdownAndAwaitTermination()`  
+`   Future`<T>` submit(Callable`<T>`, String)`  
+`   Future`<T>` submit(Callable`<T>`)`  
+`   // TODO: additional logging and listening services`
+
+</java>
+
+### LoggingTools
+
+<java>
+
+` class LoggingTools // static utility`  
+`   private LoggingTools() { } // prevents instantiation`
 
 </java>
 
