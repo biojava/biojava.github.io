@@ -301,6 +301,11 @@ Weekly Report
     -   An XML format to store the information of PTMs has been defined.
     -   Java classes representing the PTMs have been committed to the
         code repository.
+-   06/07/2010
+    -   Case 3 PTMs were added into the XML file.
+    -   XML parser.
+    -   Identification of case 1 PTMs.
+    -   Unit tests.
 
 Comments
 --------
