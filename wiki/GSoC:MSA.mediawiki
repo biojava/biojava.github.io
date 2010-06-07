@@ -186,6 +186,13 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 ** extension to multiple sequence alignment
 ** ConcurrencyTools utility for submitting parallel tasks to a shared thread pool
 
+===June 1 - June 4===
+
+* [[GSoC:MSA_Design|design]] work
+** posted to wiki
+** integrated ideas from mentors
+** started coding
+
 ==References==
 
 * BioJava &mdash; doi:10.1093/bioinformatics/btn397

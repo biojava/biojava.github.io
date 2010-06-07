@@ -211,6 +211,13 @@ Progress Log
     -   ConcurrencyTools utility for submitting parallel tasks to a
         shared thread pool
 
+### June 1 - June 4
+
+-   [design](GSoC:MSA_Design "wikilink") work
+    -   posted to wiki
+    -   integrated ideas from mentors
+    -   started coding
+
 References
 ----------
 
