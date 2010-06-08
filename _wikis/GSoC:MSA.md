@@ -221,6 +221,8 @@ Progress Log
 Skype call notes
 ----------------
 
+[June 8th](MSA_skype_20100608 "wikilink")
+
 References
 ----------
 
