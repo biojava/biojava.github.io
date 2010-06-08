@@ -193,6 +193,8 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 ** integrated ideas from mentors
 ** started coding
 
+== Skype call notes ==
+
 ==References==
 
 * BioJava &mdash; doi:10.1093/bioinformatics/btn397
