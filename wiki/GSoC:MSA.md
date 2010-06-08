@@ -218,6 +218,9 @@ Progress Log
     -   integrated ideas from mentors
     -   started coding
 
+Skype call notes
+----------------
+
 References
 ----------
 
