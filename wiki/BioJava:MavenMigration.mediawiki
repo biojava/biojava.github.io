@@ -3,9 +3,12 @@
 
 == Progress ==
 
-The new modularized code has been moved to the biojava-live/trunk
+The new modularized code has been moved to the biojava-live/trunk.
 
-More feedback is welcome.
+ The BioJava Maven repository that contains snapshot builds is available from [http://www.biojava.org/download/maven/ http://www.biojava.org/download/maven/]
+
+
+Any feedback is welcome.
 
 <pre>
 
