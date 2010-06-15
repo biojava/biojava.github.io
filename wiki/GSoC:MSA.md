@@ -231,7 +231,7 @@ Progress Log
 Skype call notes
 ----------------
 
-[June 8th](MSA_skype_20100608 "wikilink") [June
+[June 8th](MSA_skype_20100608 "wikilink"), [June
 15th](MSA_skype_20100615 "wikilink")
 
 References
