@@ -331,9 +331,9 @@ Meeting Minutes
         -   Break long functions (e.g. in
             DefaultProteinModificationParser) into short ones.
         -   Collections.singletonList for 1-element list.
-        -   Use FindBugs plugin to detect bugs
-        -   Remove any Eclipse warnings if present
-        -   Follow Sun JavaDoc guidelines
+        -   Use FindBugs plugin to detect potential bugs
+        -   Remove any Eclipse/Java warnings if present
+        -   Follow Sun JavaDoc conventions
             [1](http://java.sun.com/j2se/javadoc/writingdoccomments/)
         -   Any Checkstyle template for BioJava?
     -   Cookbook page after API is stable.
