@@ -331,6 +331,7 @@ Meeting Minutes
         -   FineDocs?
         -   Any Checkstyle template for BioJava?
     -   Cookbook page after API is stable.
+    -   Andreas is refactoring sequence diagram code from PDB web.
     -   In sequence diagram, dashed line is only for cross-link2. How to
         represent cross-links that link more than 2 residues?
 
