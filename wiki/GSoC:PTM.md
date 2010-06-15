@@ -318,8 +318,9 @@ Meeting Minutes
     -   Find more test cases for cross-links (at least one for each type
         of cross-link)
     -   Scan whole PDB to find more modifications
-        -   Alternative confirmation (altloc) could be a reason for some
-            strange cases.
+        -   Alternative confirmation (altloc, see [PDB Content
+            Guide](ftp://ftp.wwpdb.org/pub/pdb/doc/format_descriptions/Format_v32_letter.pdf)
+            ) could be a reason for some strange cases.
         -   Send to Andreas if errors occur when reading structures.
     -   How to deal with multiple modifications (in Green fluorescent
         proteins), e.g. CRO in 3MIQ?
