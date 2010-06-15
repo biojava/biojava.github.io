@@ -189,6 +189,10 @@ This project will be beneficial to the research community by facilitating struct
 ** XML parser.
 ** Identification of case 1 PTMs.
 ** Unit tests.
+* 06/14/2010
+** Identification of PTMs of all three cases.
+** More modifications were added into the XML file.
+** Representing PTMs in text in test code.
 
 ==Comments==
 ''Please add comments here...''

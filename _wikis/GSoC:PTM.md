@@ -306,6 +306,10 @@ Weekly Report
     -   XML parser.
     -   Identification of case 1 PTMs.
     -   Unit tests.
+-   06/14/2010
+    -   Identification of PTMs of all three cases.
+    -   More modifications were added into the XML file.
+    -   Representing PTMs in text in test code.
 
 Comments
 --------
