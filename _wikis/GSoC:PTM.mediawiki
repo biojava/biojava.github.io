@@ -194,6 +194,21 @@ This project will be beneficial to the research community by facilitating struct
 ** More modifications were added into the XML file.
 ** Representing PTMs in text in test code.
 
+==Meeting Minutes==
+* 06/15/2010
+** Find more test cases for cross-links (at least one for each type of cross-link)
+** Scan whole PDB to find more modifications
+*** Alternative confirmation (altloc) could be a reason for some strange cases.
+*** Send to Andreas if errors occur when reading structures.
+** How to deal with multiple modifications (in Green fluorescent proteins), e.g. CRO in 3MIQ?
+** About code
+*** Break long functions (e.g. in DefaultProteinModificationParser) into short ones.
+*** Collections.singletonList for 1-element list.
+*** FineDocs? 
+*** Any Checkstyle template for BioJava?
+** Cookbook page after API is stable.
+** In sequence diagram, dashed line is only for cross-link2. How to represent cross-links that link more than 2 residues?
+
 ==Comments==
 ''Please add comments here...''
 * Peter Rose (04/30): It's an ever increasing list of PTMs. So instead of hardcoding PTMs, it would be better to load them from a file, i.e. xml.
