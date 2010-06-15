@@ -205,8 +205,7 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 
 == Skype call notes ==
 
-[[MSA_skype_20100608|June 8th]]
-[[MSA_skype_20100615|June 15th]]
+[[MSA_skype_20100608|June 8th]], [[MSA_skype_20100615|June 15th]]
 
 ==References==
 
