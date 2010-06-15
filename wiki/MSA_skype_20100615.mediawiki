@@ -6,7 +6,9 @@ Mark, Scooter, Kyle, Andreas
 ==Report from last week:==
 
 - The questions regarding phylo and forester library were resolved by email
+
 - Scooter and Andreas refactored the phylo module so forester is now a stand alone jar file
+
 - All of BioJava modules now compile and Andreas will move a automated build system into production during the next days.
 
 - Mark committed the code for pairwise alignments (Needleman Wunsch). There were a few complications, hence slight delay from last week.
