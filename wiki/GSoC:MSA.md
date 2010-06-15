@@ -218,6 +218,16 @@ Progress Log
     -   integrated ideas from mentors
     -   started coding
 
+### June 7 - June 11
+
+-   implemented interface hierarchy
+    -   added documentation comments
+-   outlined simple factory class *Alignments*
+-   implemented data structures
+    -   gap penalty
+    -   substitution matrix
+    -   associated tests
+
 Skype call notes
 ----------------
 
