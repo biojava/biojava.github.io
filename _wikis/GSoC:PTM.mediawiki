@@ -205,9 +205,9 @@ This project will be beneficial to the research community by facilitating struct
 ** About code
 *** Break long functions (e.g. in DefaultProteinModificationParser) into short ones.
 *** Collections.singletonList for 1-element list.
-*** Use FindBugs plugin to detect bugs
-*** Remove any Eclipse warnings if present 
-*** Follow Sun JavaDoc guidelines [http://java.sun.com/j2se/javadoc/writingdoccomments/]
+*** Use FindBugs plugin to detect potential bugs
+*** Remove any Eclipse/Java warnings if present 
+*** Follow Sun JavaDoc conventions [http://java.sun.com/j2se/javadoc/writingdoccomments/]
 *** Any Checkstyle template for BioJava?
 ** Cookbook page after API is stable.
 ** Andreas is refactoring sequence diagram code from PDB web.
