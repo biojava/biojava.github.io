@@ -331,6 +331,7 @@ Meeting Minutes
         -   Break long functions (e.g. in
             DefaultProteinModificationParser) into short ones.
         -   Collections.singletonList for 1-element list.
+        -   Return empty collection instead of null.
         -   Use FindBugs plugin to detect potential bugs
         -   Remove any Eclipse/Java warnings if present
         -   Follow Sun JavaDoc conventions
