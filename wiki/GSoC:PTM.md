@@ -311,10 +311,11 @@ Weekly Report
     -   More modifications were added into the XML file.
     -   Representing PTMs in text in test code.
 
-Meeting Minutes
----------------
+Skype call notes
+----------------
 
 -   06/15/2010
+    -   Participants: Jianjiong, Peter, Andreas.
     -   Find more test cases for cross-links (at least one for each type
         of cross-link)
     -   Scan whole PDB to find more modifications
