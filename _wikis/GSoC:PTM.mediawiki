@@ -194,8 +194,9 @@ This project will be beneficial to the research community by facilitating struct
 ** More modifications were added into the XML file.
 ** Representing PTMs in text in test code.
 
-==Meeting Minutes==
+==Skype call notes==
 * 06/15/2010
+** Participants: Jianjiong, Peter, Andreas.
 ** Find more test cases for cross-links (at least one for each type of cross-link)
 ** Scan whole PDB to find more modifications
 *** Classify non-natural modifications into the same classes as the natural modifications (attachments, modified residues, cross-links)
