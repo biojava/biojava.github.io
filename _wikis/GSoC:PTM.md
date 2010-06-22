@@ -310,6 +310,12 @@ Weekly Report
     -   Identification of PTMs of all three cases.
     -   More modifications were added into the XML file.
     -   Representing PTMs in text in test code.
+-   06/22/2010
+    -   More modifications were added into the XML file, such as
+        isopeptide bonds.
+    -   Improving the current code according to
+    -   PDB sequence diagram code was refactored from PDB.org by
+        Andreas.
 
 Skype call notes
 ----------------
