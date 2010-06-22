@@ -228,6 +228,28 @@ Progress Log
     -   substitution matrix
     -   associated tests
 
+### June 14 - June 18
+
+-   implemented global pairwise sequence alignment
+    -   aligned sequence
+    -   profile
+    -   sequence pair
+    -   Needleman-Wunsch
+-   implemented parallelization
+    -   concurrency tools: shared thread pool
+    -   callable aligners and scorers
+    -   factory methods which queue and run concurrent alignments and
+        scorings
+
+### June 21 - June 22
+
+-   additional pairwise scoring options
+    -   fractional identity
+    -   fractional similarity
+-   guide tree formation
+    -   convert scores into distance matrix
+    -   call neighbor joining in forester library
+
 Skype call notes
 ----------------
 
