@@ -232,7 +232,8 @@ Skype call notes
 ----------------
 
 [June 8th](MSA_skype_20100608 "wikilink"), [June
-15th](MSA_skype_20100615 "wikilink")
+15th](MSA_skype_20100615 "wikilink"), [June
+22nd](MSA_skype_20100622 "wikilink")
 
 References
 ----------
