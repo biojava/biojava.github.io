@@ -5,6 +5,11 @@ title: BioJava:CookBook:PDB:align
 How can I calculate a structure alignment?
 ==========================================
 
+![](Jce1.png "Jce1.png")
+
+Structure alignment of Hemoglobin Alpha and Beta chain ([4hhb.A vs
+4hhb.B](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B))
+
 ### What is a structure alignment?
 
 **Structural alignment** attempts to establish equivalences between two
