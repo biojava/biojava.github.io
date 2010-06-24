@@ -1,5 +1,9 @@
 =How can I calculate a structure alignment?=
 
+[[File:Jce1.png]]
+
+Structure alignment of Hemoglobin Alpha and Beta chain ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B 4hhb.A vs 4hhb.B])
+
 === What is a structure alignment? ===
 '''Structural alignment''' attempts to establish equivalences between two or more polymer structures based on their shape and three-dimensional conformation.  In contrast to simple structural superposition (see below), where at least some equivalent residues of the two structures are known, structural alignment requires no ''a priori'' knowledge of equivalent positions.  Structural alignment is a valuable tool for the comparison of proteins with low sequence similarity, where evolutionary relationships between proteins cannot be easily detected by standard sequence alignment techniques. Structural alignment can therefore be used to imply evolutionary relationships between proteins that share very little common sequence. However, caution should be used in using the results as evidence for shared evolutionary ancestry because of the possible confounding effects of convergent evolution by which multiple unrelated amino acid sequences converge on a common tertiary structure. 
 
