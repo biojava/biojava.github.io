@@ -78,5 +78,8 @@ Tool](http://www.rcsb.org/pdb/workbench/workbench.do).
     [FATCAT-flexible](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_fatcat_flexible&mol=1hng.B&mol=1a64.A)
     vs.
     [CE](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1HNG.B&mol=1A64.A)
-4.  1stp.A vs. 1swg.D . Circular permutation
+4.  [1stp.A vs.
+    1swg.D](http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce_cp&mol=1STP.A&mol=1SWG.D).
+    Circular permutation. Can be detected when running CE in the
+    circular permutation mode.
 
