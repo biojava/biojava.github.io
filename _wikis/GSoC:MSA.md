@@ -241,7 +241,7 @@ Progress Log
     -   factory methods which queue and run concurrent alignments and
         scorings
 
-### June 21 - June 22
+### June 21 - June 25
 
 -   additional pairwise scoring options
     -   fractional identity
@@ -249,6 +249,16 @@ Progress Log
 -   guide tree formation
     -   convert scores into distance matrix
     -   call neighbor joining in forester library
+-   local pairwise sequence alignment
+    -   factory method
+    -   profile
+    -   sequence pair
+    -   Smith-Waterman
+-   profile-profile alignment
+    -   aligned sequence
+    -   profile
+    -   profile pair
+    -   abstract aligner
 
 Skype call notes
 ----------------
