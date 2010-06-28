@@ -316,6 +316,13 @@ Weekly Report
     -   Improving the current code according to
     -   PDB sequence diagram code was refactored from PDB.org by
         Andreas.
+-   06/28/2010
+    -   Finished going over all RESID entries.
+        -   212 entries were added in the XML file.
+        -   Special treatment should be applied to all ACE entries.
+    -   Identify additional attached ligands that are not directly
+        attached to amino acids.
+    -   List unidentifiable atom linkages.
 
 Skype call notes
 ----------------
