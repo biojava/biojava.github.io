@@ -140,7 +140,29 @@ README = svn:mime-type=text/plain;svn:eol-style=native
 
 </pre>
 
-=== Links ===
+= Maven SNAPSHOT builds =
+
+BioJava now also provides SNAPSHOT builds of the latest code base. This is created automatically by the automated build system at [http://emmy.rcsb.org:8080/cruisecontrol/
+].  In order to install .jar files from this repository automatically for your Maven projects, add the following lines to your project .pom file:
+
+<pre>
+<repositories>
+	<repository>
+		<id>biojava-maven-repo</id>
+		<name>BioJava repository</name>
+		<url>http://www.biojava.org/download/maven/</url>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+	</repository>
+</repositories>
+</pre>
+
+
+= Links =
 See also the [http://www.open-bio.org/wiki/SVN-Developers SVN developers page in the OBF wiki]
 
 =Repository News=
