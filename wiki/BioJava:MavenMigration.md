@@ -44,9 +44,7 @@ The following things still need to be done:
 
 `- find solution for what to do with docs (move to relevant module or wiki)`  
 `- add '`[`svn:ignore`](svn:ignore)` target' properties to all the module top-level folders`  
-`- signing: re-enable the digital signature for jars`  
-`- update cruisecontrol to use maven instead of ant`  
-`- figure out the easiest way to install sequence-blastxml on netbeans (resolve jaxb dependcy problem)`
+`- signing: re-enable the digital signature for jars`
 
 Procedure
 ---------
