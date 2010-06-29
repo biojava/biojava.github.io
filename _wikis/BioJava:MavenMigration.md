@@ -12,7 +12,9 @@ The new modularized code has been moved to the biojava-live/trunk.
 
 `The BioJava Maven repository that contains snapshot builds is available from `[[`http://www.biojava.org/download/maven/`](http://www.biojava.org/download/maven/)](http://www.biojava.org/download/maven/)
 
-Any feedback is welcome.
+We are providing SNAPSHOT builds of the latest BioJava code base. For
+more information see [ the installation
+instructions](CVS_to_SVN_Migration "wikilink").
 
 
     [INFO] ------------------------------------------------------------------------
