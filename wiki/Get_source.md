@@ -175,7 +175,31 @@ for enabling auto-props. Change this to
     INSTALL = svn:mime-type=text/plain;svn:eol-style=native
     README = svn:mime-type=text/plain;svn:eol-style=native
 
-### Links
+Maven SNAPSHOT builds
+=====================
+
+BioJava now also provides SNAPSHOT builds of the latest code base. This
+is created automatically by the automated build system at
+[<http://emmy.rcsb.org:8080/cruisecontrol/> ]. In order to install .jar
+files from this repository automatically for your Maven projects, add
+the following lines to your project .pom file:
+
+    <repositories>
+        <repository>
+            <id>biojava-maven-repo</id>
+            <name>BioJava repository</name>
+            <url>http://www.biojava.org/download/maven/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+Links
+=====
 
 See also the [SVN developers page in the OBF
 wiki](http://www.open-bio.org/wiki/SVN-Developers)
