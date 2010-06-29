@@ -1,0 +1,29 @@
+Back to [[GSoC:MSA]]
+
+==Participants:==
+Mark, Kyle, Andreas
+
+==Weekly update:==
+
+Mark: Finished the Smith Waterman implementation and updated the datastructures to store local alignments. Started with data structures for profile profile alignments.
+
+Next steps: Algorithm for profile profile alignment and traversing the tree
+
+
+===Problem with Eclipse===
+Sometimes the substitution matrices can't be found from resource folder. Is it a Maven eclipse issue?
+
+===Test Coverage===
+Tried the CodeCover eclipse plugin but there were some issues with it. Would be nice to be able to see how complete the tests are. 
+
+===Cruisecontrol===
+Running now at [http://emmy.rcsb.org:8080/cruisecontrol/ http://emmy.rcsb.org:8080/cruisecontrol/]
+
+===Github===
+Kyle: We have a first fork. Andy Yates patched some issues on a branch. Need to make sure the patches are merged back correctly.
+
+== Outlook for next week ==
+Mark: plan for this week to have a rough sequence alignment
+
+== Travel Plans ==
+Andreas: I will be traveling next two tuesdays, so no regular skype calls, unless there is an emergency. Communication will be via email.
