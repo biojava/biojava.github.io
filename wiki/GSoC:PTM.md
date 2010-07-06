@@ -323,6 +323,9 @@ Weekly Report
     -   Identify additional attached ligands that are not directly
         attached to amino acids.
     -   List unidentifiable atom linkages.
+-   07/08/2010
+    -   In progress of scanning whole PDB.
+    -   Hacking the PDB sequence diagram code.
 
 Skype call notes
 ----------------
