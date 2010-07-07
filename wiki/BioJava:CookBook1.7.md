@@ -286,6 +286,11 @@ How Do I....?
 -   [How can I visualize an OBO file as a directed acyclic
     graph?](BioJava:CookBook:OBO:visualize "wikilink")
 
+### Cloud computing
+
+-   [How do I use Biojava in the Amazon EC2
+    cloud?](BioJava:CookBook:Cloud:ec2 "wikilink")
+
 Disclaimer
 ----------
 

@@ -162,6 +162,10 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 * [[BioJava:CookBook:OBO:parse|How can I parse an OBO file?]]
 * [[BioJava:CookBook:OBO:visualize|How can I visualize an OBO file as a directed acyclic graph?]]
 
+=== Cloud computing ===
+
+* [[BioJava:CookBook:Cloud:ec2|How do I use Biojava in the Amazon EC2 cloud?]]
+
 == Disclaimer ==
 
 This code is generously donated by people who probably have better things to do. Where possible we test it but errors may have crept in. As such, all code and advice here in has no warranty or guarantee of any sort. You didn't pay for it and if you use it we are not responsible for anything that goes wrong. Be a good programmer and test it yourself before unleashing it on your corporate database.
