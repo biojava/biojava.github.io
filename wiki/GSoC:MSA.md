@@ -260,6 +260,32 @@ Progress Log
     -   profile pair
     -   abstract aligner
 
+### June 28 - July 2
+
+-   local pairwise sequence alignment
+    -   added tests
+    -   fixed bug in data structure
+-   similar/equivalent compounds
+    -   implemented in amino acid compound set
+    -   sparked discussion about compound sets
+    -   provided example to user on mailing list
+-   alternative scorers
+    -   added tests for identical compounds
+    -   added tests for similar compounds
+-   profile-profile alignment
+    -   refactored matrix aligners
+    -   researched profile score functions
+    -   started GuideTree wrapper class
+
+### July 5 - July 7
+
+-   profile-profile alignment
+    -   refactored matrix aligners (minor)
+    -   added single sequence profiles
+    -   finished naive implementation
+    -   finished GuideTree wrapper class
+        -   includes rough MSA built from tree
+
 Skype call notes
 ----------------
 
