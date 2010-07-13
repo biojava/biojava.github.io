@@ -250,13 +250,19 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 ** researched profile score functions
 ** started GuideTree wrapper class
 
-===July 5 - July 7===
+===July 5 - July 9===
+* profiles
+** added column counts and weights
+** added single sequence profiles
 * profile-profile alignment
 ** refactored matrix aligners (minor)
-** added single sequence profiles
-** finished naive implementation
 ** finished GuideTree wrapper class
-*** includes rough MSA built from tree
+*** iterable from leaves to root
+** finished naive implementation
+** added caching of profile vectors
+** added concurrent progressive MSA
+* progressive MSA factory method
+** allows easy multiple sequence alignments
 
 == Skype call notes ==
 
