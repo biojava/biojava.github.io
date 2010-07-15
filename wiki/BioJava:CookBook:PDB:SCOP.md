@@ -44,19 +44,14 @@ Load a SCOP superfamily and align the first domain against all others
 This example loads a superfamily from SCOP and aligns the first domain
 in this family against all others.
 
-<java> public static void main(String[] args){
+<java>
 
-`     String cacheLocation = "/tmp/";`
-
-`     String pdbId = "4HHB";`  
+`public void alignSuperfamily(){`  
+`     `  
+`     String cacheLocation = "/tmp/";`  
 `    `  
 `     // download SCOP if required and load into memory`  
-`     ScopInstallation scop = new ScopInstallation(cacheLocation);`
-
-`     List`<ScopDomain>` domains = scop.getDomainsForPDB(pdbId);`
-
-`     System.out.println(domains);`
-
+`     ScopInstallation scop = new ScopInstallation(cacheLocation);`  
 `     List`<ScopDescription>` superfams = scop.getByCategory(ScopCategory.Superfamily);`
 
 `     System.out.println("Total nr. of superfamilies:" + superfams.size());`
@@ -70,7 +65,7 @@ in this family against all others.
 `     fileparams.setParseSecStruc(false);`  
 `     cache.setFileParsingParams(fileparams);`  
 `     `  
-`     // get the first superfamily`  
+`     // get tge first superfamily`  
 `     ScopDescription superfam1 = superfams.get(0);`  
 `     System.out.println("First superfamily: " + superfam1);`  
 `     `  
