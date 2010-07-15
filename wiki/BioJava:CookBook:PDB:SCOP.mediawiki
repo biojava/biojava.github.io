@@ -1,3 +1,4 @@
+= Parsing SCOP with BioJava =
 The BioJava SCOP parser can
 * automatically download the SCOP release files (if they are not at a specified local directory)
 * parse the SCOP files 
@@ -86,6 +87,29 @@ null
 
 </pre>
 
+== Print various SCOP categories ==
+
+<java>
+public void getCategories(){
+      String cacheLocation = "/tmp/";
+      
+      // download SCOP if required and load into memory
+      ScopInstallation scop = new ScopInstallation(cacheLocation);
+      List<ScopDescription> superfams = scop.getByCategory(ScopCategory.Superfamily);
+
+      System.out.println("Total nr. of superfamilies:" + superfams.size());
+      
+      List<ScopDescription> folds = scop.getByCategory(ScopCategory.Fold);
+      System.out.println("Total nr. of folds:" + folds.size());  
+ }
+</java>
+
+prints
+
+<pre>
+Total nr. of superfamilies:2223
+Total nr. of folds:1393
+</pre>
 
 ==Load a SCOP superfamily and align the first domain against all others==
 This example loads a superfamily from SCOP and aligns the first domain in this family against all others.
