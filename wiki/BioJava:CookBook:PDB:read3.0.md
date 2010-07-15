@@ -127,6 +127,54 @@ Will give this output:
     Atom ligands: [Hetatom 147 PO4 true atoms: 1, Hetatom 148 HEM true atoms: 43]
     VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH
 
+Caching of structure data
+-------------------------
+
+If you are running a script that is frequently re-using the same PDB
+structures, there is a new utility class that keeps an in-memory cache
+of the files for quicker access. The cache is a soft-cache, this means
+it won't cause out of memory exceptions, but garbage collect the data if
+the Java virtual machine needs to free up space.
+
+<java> public void loadStructureFromCache(){
+
+`     String pdbId = "4hhb";`  
+`     String chainName = "4hhb.A";`  
+`     String entityName = "4hhb:0";`
+
+`     // split PDB file installation?`  
+`     boolean isPdbDirectorySplit = true;`
+
+`     String pdbFilePath = "/tmp/";`
+
+`     // we can set a flag if the file should be cached in memory`  
+`     // this will enhance IO massively if the same files have to be accessed over and over again.`  
+`     // since this is a soft cache, no danger of memory leak`  
+`     // this is actually not necessary to provide, since the default is "true" if the AtomCache is being used.`  
+`     System.setProperty(InputStreamProvider.CACHE_PROPERTY, "true");`
+
+`     AtomCache cache = new AtomCache(pdbFilePath,isPdbDirectorySplit);`
+
+`     try {`  
+`        System.out.println("======================");`  
+`        Structure s = cache.getStructure(pdbId);`
+
+`        System.out.println("Full Structure:" + s);`
+
+`        Atom[] ca = cache.getAtoms(chainName);`  
+`        System.out.println("got " + ca.length + " CA atoms");`
+
+`        Structure firstEntity = cache.getStructure(entityName);`  
+`        System.out.println("First entity: " + firstEntity);`
+
+`     } catch (Exception e){`  
+`        e.printStackTrace();`  
+`     }`
+
+`  }`
+
+</java>
+
 Example: How to parse a local file
 ----------------------------------
 
