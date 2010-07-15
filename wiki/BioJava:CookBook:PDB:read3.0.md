@@ -38,34 +38,58 @@ Short Example: the quickest way to read a local file
 Example: How to work with a local installation of PDB
 -----------------------------------------------------
 
+BioJava can work with local installations of PDB files. It can also
+automatically download and install missing PDB files. Here an example
+for how to do that:
+
 <java>
 
-`       try {`  
-`           PDBFileReader reader = new PDBFileReader();`
+public void basicLoad(String pdbId){
 
-`           // the path to the local PDB installation`  
-`           reader.setPath("/tmp");`  
-`           `  
-`           // are all files in one directory, or are the files split,`  
-`           // as on the PDB ftp servers?`  
-`           reader.setPdbDirectorySplit(true);`  
-`           `  
-`           // should a missing PDB id be fetched automatically from the FTP servers?`  
-`           reader.setAutoFetch(true);`  
-`           `  
-`           // should the ATOM and SEQRES residues be aligned when creating the internal data model?`  
-`           reader.setAlignSeqRes(false);`  
-`           `  
-`           // should secondary structure get parsed from the file`  
-`           reader.setParseSecStruc(false);`  
-`           `  
-`           Structure structure = reader.getStructureById("4hhb");`  
-`           `  
-`           System.out.println(structure);`  
-`           `  
-`       } catch (Exception e){`  
-`           e.printStackTrace();`  
-`       }`
+`     try {`
+
+`        PDBFileReader reader = new PDBFileReader();`
+
+`        // the path to the local PDB installation`  
+`        reader.setPath("/tmp");`
+
+`        // are all files in one directory, or are the files split,`  
+`        // as on the PDB ftp servers?`  
+`        reader.setPdbDirectorySplit(true);`
+
+`        // should a missing PDB id be fetched automatically from the FTP servers?`  
+`        reader.setAutoFetch(true);`
+
+`        // configure the parameters of file parsing`  
+`        `  
+`        FileParsingParameters params = new FileParsingParameters();`  
+`        `  
+`        // should the ATOM and SEQRES residues be aligned when creating the internal data model?`  
+`        params.setAlignSeqRes(true);`
+
+`        // should secondary structure get parsed from the file`  
+`        params.setParseSecStruc(false);`
+
+`        params.setLoadChemCompInfo(true);`  
+`        `  
+`        reader.setFileParsingParameters(params);`  
+`        `  
+`        Structure structure = reader.getStructureById(pdbId);`  
+`        `  
+`        System.out.println(structure);`  
+`        `  
+`        for (Chain c: structure.getChains()){`  
+`           System.out.println("Chain " + c.getName() + " details:");`  
+`           System.out.println("Atom ligands: " + c.getAtomLigands());`  
+`           System.out.println(c.getSeqResSequence());`  
+`        }`  
+`        `
+
+`     } catch (Exception e){`  
+`        e.printStackTrace();`  
+`     }`
+
+`}`
 
 </java>
 
