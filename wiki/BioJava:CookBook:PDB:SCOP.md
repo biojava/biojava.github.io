@@ -9,7 +9,7 @@ The BioJava SCOP parser can
 -   parse the SCOP files
 -   provides an API to access any level of the SCOP classification.
 
-If you are running out of memory while running any of theexample,
+If you are running out of memory while running any of the example,
 increase memory by adding the VM argument:
 
 `-Xmx500M`
