@@ -48,4 +48,6 @@ If you re-use code from the cookbook please cite:
     Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
 -   [How can I serialize to a
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
+-   [How can I load data from the SCOP
+    classification?](BioJava:CookBook:PDB:SCOP "wikilink")
 
