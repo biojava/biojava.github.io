@@ -33,6 +33,60 @@ d4hhbb_	4hhb	B:	a.1.1.2	15428	cl=46456,cf=46457,sf=46458,fa=46463,dm=46500,sp=46
 d4hhbd_	4hhb	D:	a.1.1.2	15429	cl=46456,cf=46457,sf=46458,fa=46463,dm=46500,sp=46501,px=15429]
 </pre>
 
+
+== Traverse the SCOP hierarchy ==
+
+This examples loads a domain and traverses through its hierarchy in SCOP.
+
+<java>
+private void traverseHierarchy()
+   {
+      String cacheLocation = "/tmp/";
+      String pdbId = "4HHB";
+      // download SCOP if required and load into memory
+      ScopInstallation scop = new ScopInstallation(cacheLocation);
+      
+      List<ScopDomain> domains = scop.getDomainsForPDB(pdbId);
+      
+      // show the hierachy for the first domain:
+      
+      ScopNode node = scop.getScopNode(domains.get(0).getSunid());
+      
+      while (node != null){
+         
+         System.out.println("This node: sunid:" + node.getSunid() );
+         System.out.println(scop.getScopDescriptionBySunid(node.getSunid()));
+         node = scop.getScopNode(node.getParentSunid());
+      }
+      
+}
+</java>
+
+Produces this output:
+<pre>
+parsed 110800 scop sunid domains.
+parsed 143429 scop sunid nodes.
+This node: sunid:15251
+parsed 143428 scop sunid descriptions.
+15251	px	a.1.1.2	d4hhba_	4hhb A:
+This node: sunid:46487
+46487	sp	a.1.1.2	-	Human (Homo sapiens) [TaxId: 9606]
+This node: sunid:46486
+46486	dm	a.1.1.2	-	Hemoglobin, alpha-chain
+This node: sunid:46463
+46463	fa	a.1.1.2	-	Globins
+This node: sunid:46458
+46458	sf	a.1.1	-	Globin-like
+This node: sunid:46457
+46457	cf	a.1	-	Globin-like
+This node: sunid:46456
+46456	cl	a	-	All alpha proteins
+This node: sunid:0
+null
+
+</pre>
+
+
 ==Load a SCOP superfamily and align the first domain against all others==
 This example loads a superfamily from SCOP and aligns the first domain in this family against all others.
 
