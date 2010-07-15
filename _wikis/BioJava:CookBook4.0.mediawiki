@@ -10,6 +10,7 @@ If you re-use code from the cookbook please cite:
 
 {{Reference}}
 
+== How Do I....? ==
 
 === Protein Structure ===
 
