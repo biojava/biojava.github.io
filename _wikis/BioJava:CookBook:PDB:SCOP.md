@@ -31,6 +31,13 @@ Print all SCOP domains for a protein structure
 
 } </java>
 
+prints:
+
+    [d4hhba_    4hhb    A:  a.1.1.2 15251   cl=46456,cf=46457,sf=46458,fa=46463,dm=46486,sp=46487,px=15251, 
+    d4hhbc_ 4hhb    C:  a.1.1.2 15252   cl=46456,cf=46457,sf=46458,fa=46463,dm=46486,sp=46487,px=15252, 
+    d4hhbb_ 4hhb    B:  a.1.1.2 15428   cl=46456,cf=46457,sf=46458,fa=46463,dm=46500,sp=46501,px=15428, 
+    d4hhbd_ 4hhb    D:  a.1.1.2 15429   cl=46456,cf=46457,sf=46458,fa=46463,dm=46500,sp=46501,px=15429]
+
 Load a SCOP superfamily and align the first domain against all others
 ---------------------------------------------------------------------
 
