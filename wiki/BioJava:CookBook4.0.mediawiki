@@ -14,6 +14,8 @@ If you re-use code from the cookbook please cite:
 
 === Protein Structure ===
 
+Required modules: biojava-structure, biojava-structure-gui, (for the moment still required, will change soon: core, alignment)
+
 * [[BioJava:CookBook:PDB:read|How can I parse a PDB file?]]
 * [[BioJava:CookBook:PDB:mmcif|How can I parse a .mmcif file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
