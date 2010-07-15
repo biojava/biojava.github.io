@@ -65,10 +65,12 @@ in this family against all others.
 `     fileparams.setParseSecStruc(false);`  
 `     cache.setFileParsingParams(fileparams);`  
 `     `  
-`     // get tge first superfamily`  
+`     // get the first superfamily`  
 `     ScopDescription superfam1 = superfams.get(0);`  
 `     System.out.println("First superfamily: " + superfam1);`  
-`     `  
+`     `
+
+`     // ScopNodes allow to traverse the SCOP hierarchy      `  
 `     ScopNode node = scop.getScopNode(superfam1.getSunID());`  
 `     System.out.println("scopNode for first superfamily:" + node);`  
 `     `  
