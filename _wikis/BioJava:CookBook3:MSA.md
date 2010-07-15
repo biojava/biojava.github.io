@@ -34,6 +34,7 @@ public class TestMe {
 `           lst.add( seq);`  
 `           System.out.println(seq.getOriginalHeader());`  
 `       }`  
+`               // just for the sake of testing, not required...`  
 `       SubstitutionMatrix`<AminoAcidCompound>` matrix = new SimpleSubstitutionMatrix`<AminoAcidCompound>`();`  
 `       List alig = Alignments.getAllPairsAlignments(lst, PairwiseAligner.GLOBAL, new SimpleGapPenalty(), matrix);`  
 `       System.out.println(alig);`  
