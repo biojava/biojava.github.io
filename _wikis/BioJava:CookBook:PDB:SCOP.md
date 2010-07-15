@@ -2,6 +2,9 @@
 title: BioJava:CookBook:PDB:SCOP
 ---
 
+Parsing SCOP with BioJava
+=========================
+
 The BioJava SCOP parser can
 
 -   automatically download the SCOP release files (if they are not at a
@@ -89,6 +92,30 @@ Produces this output:
     46456   cl  a   -   All alpha proteins
     This node: sunid:0
     null
+
+Print various SCOP categories
+-----------------------------
+
+<java> public void getCategories(){
+
+`     String cacheLocation = "/tmp/";`  
+`     `  
+`     // download SCOP if required and load into memory`  
+`     ScopInstallation scop = new ScopInstallation(cacheLocation);`  
+`     List`<ScopDescription>` superfams = scop.getByCategory(ScopCategory.Superfamily);`
+
+`     System.out.println("Total nr. of superfamilies:" + superfams.size());`  
+`     `  
+`     List`<ScopDescription>` folds = scop.getByCategory(ScopCategory.Fold);`  
+`     System.out.println("Total nr. of folds:" + folds.size());  `  
+`}`
+
+</java>
+
+prints
+
+    Total nr. of superfamilies:2223
+    Total nr. of folds:1393
 
 Load a SCOP superfamily and align the first domain against all others
 ---------------------------------------------------------------------
