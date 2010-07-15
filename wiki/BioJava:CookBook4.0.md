@@ -23,6 +23,9 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 If you re-use code from the cookbook please cite:
 
+How Do I....?
+-------------
+
 ### Protein Structure
 
 -   [How can I parse a PDB file?](BioJava:CookBook:PDB:read "wikilink")
