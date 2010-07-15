@@ -9,9 +9,18 @@ The BioJava SCOP parser can
 -   parse the SCOP files
 -   provides an API to access any level of the SCOP classification.
 
+If you are running out of memory while running this example, increase
+memory by adding the VM argument:
+
+`-Xmx500M`
+
+Load a SCOP superfamily and align the first domain against all others
+---------------------------------------------------------------------
+
 This example loads a superfamily from SCOP and aligns the first domain
-in this family against all others. <java> public static void
-main(String[] args){
+in this family against all others.
+
+<java> public static void main(String[] args){
 
 `     String cacheLocation = "/tmp/";`
 
