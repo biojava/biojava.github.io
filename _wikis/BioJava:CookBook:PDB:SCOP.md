@@ -9,10 +9,27 @@ The BioJava SCOP parser can
 -   parse the SCOP files
 -   provides an API to access any level of the SCOP classification.
 
-If you are running out of memory while running this example, increase
-memory by adding the VM argument:
+If you are running out of memory while running any of theexample,
+increase memory by adding the VM argument:
 
 `-Xmx500M`
+
+Print all SCOP domains for a protein structure
+----------------------------------------------
+
+<java> public void printDomainsForPDB(){
+
+`     String cacheLocation = "/tmp/";`  
+`     String pdbId = "4HHB";`  
+`     `  
+`     // download SCOP if required and load into memory`  
+`     ScopInstallation scop = new ScopInstallation(cacheLocation);`
+
+`     List`<ScopDomain>` domains = scop.getDomainsForPDB(pdbId);`
+
+`     System.out.println(domains);`
+
+} </java>
 
 Load a SCOP superfamily and align the first domain against all others
 ---------------------------------------------------------------------
