@@ -4,7 +4,7 @@ The BioJava SCOP parser can
 * provides an API to access any level of the SCOP classification.
 
 
-If you are running out of memory while running any of theexample, increase memory by adding the VM argument:
+If you are running out of memory while running any of the example, increase memory by adding the VM argument:
  -Xmx500M
 
 == Print all SCOP domains for a protein structure ==
