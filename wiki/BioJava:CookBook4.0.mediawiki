@@ -25,3 +25,4 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:PDB:alignGUI|How can I use a simple GUI to calculate an alignment?]]
 * [[BioJava:CookBook:PDB:Jmol|How can I interact with Jmol?]]
 * [[BioJava:CookBook:PDB:hibernate|How can I serialize to a database?]]
+* [[BioJava:CookBook:PDB:SCOP|How can I load data from the SCOP classification?]]
