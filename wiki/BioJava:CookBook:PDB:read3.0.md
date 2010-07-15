@@ -95,18 +95,16 @@ public void basicLoad(String pdbId){
 
 Will give this output:
 
-    Fetching ftp://ftp.wwpdb.org/pub/pdb/data/structures/all/pdb/pdb4hhb.ent.gz
-    writing to /tmp/hh/pdb4hhb.ent.gz
-    structure  4HHB Authors: G.FERMI,M.F.PERUTZ Resolution: 1.74 Technique: X-RAY DIFFRACTION  Classification: OXYGEN TRANSPORT DepDate: Wed Mar 07 00:00:00 PST 1984 IdCode: 4HHB Title: THE CRYSTAL STRUCTURE OF HUMAN DEOXYHAEMOGLOBIN AT 1.74 ANGSTROMS RESOLUTION ModDate: Tue Feb 24 00:00:00 PST 2009 
+    structure  4HHB Authors: G.FERMI,M.F.PERUTZ IdCode: 4HHB Classification: OXYGEN TRANSPORT DepDate: Wed Mar 07 00:00:00 PST 1984 Technique: X-RAY DIFFRACTION  Resolution: 1.74 ModDate: Tue Feb 24 00:00:00 PST 2009 Title: THE CRYSTAL STRUCTURE OF HUMAN DEOXYHAEMOGLOBIN AT 1.74 ANGSTROMS RESOLUTION 
      chains:
     chain 0: >A< HEMOGLOBIN (DEOXY) (ALPHA CHAIN)
-     length SEQRES: 0 length ATOM: 198 aminos: 141 hetatms: 57 nucleotides: 0
+     length SEQRES: 141 length ATOM: 198 aminos: 141 hetatms: 57 nucleotides: 0
     chain 1: >B< HEMOGLOBIN (DEOXY) (BETA CHAIN)
-     length SEQRES: 0 length ATOM: 205 aminos: 146 hetatms: 59 nucleotides: 0
+     length SEQRES: 146 length ATOM: 205 aminos: 146 hetatms: 59 nucleotides: 0
     chain 2: >C< HEMOGLOBIN (DEOXY) (ALPHA CHAIN)
-     length SEQRES: 0 length ATOM: 201 aminos: 141 hetatms: 60 nucleotides: 0
+     length SEQRES: 141 length ATOM: 201 aminos: 141 hetatms: 60 nucleotides: 0
     chain 3: >D< HEMOGLOBIN (DEOXY) (BETA CHAIN)
-     length SEQRES: 0 length ATOM: 197 aminos: 146 hetatms: 51 nucleotides: 0
+     length SEQRES: 146 length ATOM: 197 aminos: 146 hetatms: 51 nucleotides: 0
     DBRefs: 4
     DBREF  4HHB A    1   141  UNP    P69905   HBA_HUMAN        1    141
     DBREF  4HHB B    1   146  UNP    P68871   HBB_HUMAN        1    146
@@ -115,6 +113,19 @@ Will give this output:
     Molecules: 
     Compound: 1 HEMOGLOBIN (DEOXY) (ALPHA CHAIN) Chains: ChainId: A C Engineered: YES OrganismScientific: HOMO SAPIENS OrganismTaxId: 9606 OrganismCommon: HUMAN 
     Compound: 2 HEMOGLOBIN (DEOXY) (BETA CHAIN) Chains: ChainId: B D Engineered: YES OrganismScientific: HOMO SAPIENS OrganismTaxId: 9606 OrganismCommon: HUMAN 
+
+    Chain A details:
+    Atom ligands: [Hetatom 142 HEM true atoms: 43]
+    VLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR
+    Chain B details:
+    Atom ligands: [Hetatom 147 PO4 true atoms: 1, Hetatom 148 HEM true atoms: 43]
+    VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH
+    Chain C details:
+    Atom ligands: [Hetatom 142 HEM true atoms: 43]
+    VLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR
+    Chain D details:
+    Atom ligands: [Hetatom 147 PO4 true atoms: 1, Hetatom 148 HEM true atoms: 43]
+    VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH
 
 Example: How to parse a local file
 ----------------------------------
