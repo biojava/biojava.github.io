@@ -37,19 +37,12 @@ d4hhbd_	4hhb	D:	a.1.1.2	15429	cl=46456,cf=46457,sf=46458,fa=46463,dm=46500,sp=46
 This example loads a superfamily from SCOP and aligns the first domain in this family against all others.
 
 <java>
-public static void main(String[] args){
-
+ public void alignSuperfamily(){
+      
       String cacheLocation = "/tmp/";
-
-      String pdbId = "4HHB";
      
       // download SCOP if required and load into memory
       ScopInstallation scop = new ScopInstallation(cacheLocation);
-
-      List<ScopDomain> domains = scop.getDomainsForPDB(pdbId);
-
-      System.out.println(domains);
-
       List<ScopDescription> superfams = scop.getByCategory(ScopCategory.Superfamily);
 
       System.out.println("Total nr. of superfamilies:" + superfams.size());
@@ -64,7 +57,7 @@ public static void main(String[] args){
       fileparams.setParseSecStruc(false);
       cache.setFileParsingParams(fileparams);
       
-      // get the first superfamily
+      // get tge first superfamily
       ScopDescription superfam1 = superfams.get(0);
       System.out.println("First superfamily: " + superfam1);
       
