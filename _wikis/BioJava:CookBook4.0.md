@@ -33,7 +33,8 @@ to new biojava3-alignment)
 
 **Optional module** : *biojava-structure-gui* for the 3D visualisation
 
--   [How can I parse a PDB file?](BioJava:CookBook:PDB:read "wikilink")
+-   [How can I parse a PDB
+    file?](BioJava:CookBook:PDB:read3.0 "wikilink")
 -   [How can I parse a .mmcif
     file?](BioJava:CookBook:PDB:mmcif "wikilink")
 -   [How can I access the atoms in a
