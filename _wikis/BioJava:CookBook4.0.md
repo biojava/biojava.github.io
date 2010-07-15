@@ -28,6 +28,9 @@ How Do I....?
 
 ### Protein Structure
 
+Required modules: biojava-structure, biojava-structure-gui, (for the
+moment still required, will change soon: core, alignment)
+
 -   [How can I parse a PDB file?](BioJava:CookBook:PDB:read "wikilink")
 -   [How can I parse a .mmcif
     file?](BioJava:CookBook:PDB:mmcif "wikilink")
