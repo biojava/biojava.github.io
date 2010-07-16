@@ -206,6 +206,10 @@ This project will be beneficial to the research community by facilitating struct
 * 07/08/2010
 ** In progress of scanning whole PDB.
 ** Hacking the PDB sequence diagram code.
+* 07/16/2010
+** Attending ISMB from July 09-13
+** Finished scanning whole PDB. Need to analyze the result.
+** Started to refactor the sequence diagram code.
 
 ==Skype call notes==
 * 06/15/2010
