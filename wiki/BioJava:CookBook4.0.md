@@ -26,6 +26,10 @@ If you re-use code from the cookbook please cite:
 How Do I....?
 -------------
 
+### Core
+
+### Genome
+
 ### Protein Structure
 
 **Required modules**: *biojava-structure, alignment* (will change soon
