@@ -12,9 +12,13 @@ If you re-use code from the cookbook please cite:
 
 == How Do I....? ==
 
-=== Core ===
+=== biojava3-core ===
 
-=== Genome ===
+=== biojava3-genome ===
+
+=== biojava3-phylo ===
+
+=== biojava3-alignment ===
 
 === Protein Structure ===
 
