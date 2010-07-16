@@ -326,6 +326,10 @@ Weekly Report
 -   07/08/2010
     -   In progress of scanning whole PDB.
     -   Hacking the PDB sequence diagram code.
+-   07/16/2010
+    -   Attending ISMB from July 09-13
+    -   Finished scanning whole PDB. Need to analyze the result.
+    -   Started to refactor the sequence diagram code.
 
 Skype call notes
 ----------------
