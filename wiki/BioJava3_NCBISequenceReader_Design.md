@@ -38,3 +38,16 @@ implementing classes.
 ### Logging
 
 using log4j would be very useful!
+
+Testing
+-------
+
+The table below shows a summary of the unit tests created for the
+NCBISequenceReader class.
+
+| Test Name (method) | Description | Seed data | Requires network (Y/N) |
+|--------------------|-------------|-----------|------------------------|
+| Cell 1             | Cell 2      | Cell 3    | Cell 4                 |
+| Cell A             | Cell B      | Cell C    |
+
+
