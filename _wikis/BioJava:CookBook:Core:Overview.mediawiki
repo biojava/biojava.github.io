@@ -4,6 +4,8 @@ When doing the analysis of code from Biojava 1 and what should be done in Biojav
 
 In the genomic view of sequence data we now have very large data sets where it isn't unreasonable to expect that if you load a protein sequence with an accession id that you should be able to use the api to retrieve the gene sequence that codes for that protein sequence. Once you have the gene sequence you should easily extract intron sequences or sequence data flanking the gene sequence for analysis. By leveraging the REST or Web Services of public data sources like Uniprot or NCBI we want the api to hide these implementation details but offer enough flexibility that other public or prive data sources can be easily integrated into BioJava3. 
 
+We will try and minimize the size of biojava3-core module by not making it a convient place to add in new classes that do not directly relate to protein or DNA sequences or become dependent on external jar files. As an example we are currently using Java 6 XML api to process XML files which has performance issues as compared to Dom4J. It is tempting to make Dom4J a standard library in BioJava3 because of its speed and api but it is no longer being actively developed. We are using the Java 6 api for REST or WebService calls where we could use Axis or some other interesting 3rd party library. Before you realize it core has a large number of external dependencies which creates potential problems for developers who are using the Biojava3 api if a different version of an external api is required. 
+
 
 '''The core sequence classes'''
 
