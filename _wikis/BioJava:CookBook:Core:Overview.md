@@ -58,17 +58,18 @@ The core sequence classes
     -   RNASequence
     -   ProteinSequence
 
-String is King but Sequence Interface rains supreme
----------------------------------------------------
+String is King but Sequence Interface reigns supreme
+----------------------------------------------------
 
 We really want to make it easy to create a sequence and what could be
 easier than using a String.
 
 <java>
 
-ProteinSequence proteinSequence = new
-ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX"); DNASequence dnaSequence =
-new DNASequence("ATCG"); </java>
+`           ProteinSequence proteinSequence = new ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX");`  
+`           DNASequence dnaSequence = new DNASequence("ATCG");`
+
+</java>
 
 The storage of the sequence data is defined by the Sequence interface
 which allows for some interesting and we hope useful abstraction. The
