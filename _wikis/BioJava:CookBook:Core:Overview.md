@@ -16,17 +16,20 @@ through code and be familiar to the Biologist when writing code.
 
 In the genomic view of sequence data we now have very large data sets
 which presents challenges in loading everything into memory or
-retreating to a database and let it handle that complexity. By modeling
-the relationships between a ProteinSequence and a GeneSequence it isn't
-unreasonable to expect that if you load a protein sequence with an
-accession id that you should be able to use the api to retrieve the gene
-sequence that codes for that protein sequence. Once you have the gene
-sequence you should easily extract intron sequences or sequence data
-flanking the gene sequence for analysis. By leveraging the REST or Web
-Services of public data sources like Uniprot or NCBI we want the api to
-hide these implementation details but offer enough flexibility that
-other public or prive data sources can be easily integrated into
-BioJava3.
+retreating to a database and let it handle that complexity. We want to
+allow easy integration of sequence databases such as BioSQL but at the
+same time support large sequence datasets loaded from disk or accessed
+via web services. This is why the Sequence Interface reigns supreme! By
+modeling the relationships between a ProteinSequence and a GeneSequence
+it isn't unreasonable to expect that if you load a protein sequence with
+an accession id that you should be able to use a method in the protein
+sequence to retrieve the gene sequence that codes for that protein
+sequence. Once you have the gene sequence you should be able to easily
+extract intron sequences or sequence data flanking the gene sequence for
+analysis. By leveraging the REST or Web Services of public data sources
+like Uniprot or NCBI we want the api to hide these implementation
+details but offer enough flexibility that other public or prive data
+sources can be easily integrated into BioJava3.
 
 An additional design goal is to keep the size of biojava3-core module as
 small as possible by not making it a convient place to add in new
