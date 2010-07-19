@@ -2,7 +2,26 @@
 The '''''NCBISequenceReader''''' class, part of the biojava-core project, retrieves data from the [http://www.ncbi.nlm.nih.gov/ NCBI] website using the [http://eutils.ncbi.nlm.nih.gov/ eutils] via a HTTP GET request. The SOAP interface was not pursued due to advice from other contributors to this project.
 
 == Design Overview ==
-Coming soon...
+
+The NCBISequenceReader class implements the ProxySequenceReader interface which is in turn a subclass of the SequenceReader and Sequence interfaces. 
+
+[[File:Ncbisequencereader.png]]
+
+The NCBIHelper class performs most of the heavy lifting, connecting to the NCBI database and building the URL as well as parsing the returning data. 
+
+=== NCBISequenceReader ===
+This class stores only that information which is needed in order to fulfil the interface contract and behave in line with the other classes which implement the ProxySequenceReader interface. The implementation of the connectivity to and interpretation of the NCBI resource is delegated to the NCBIHelper class; which is a dependancy of this class.
+
+The constructor takes a simple string as the only argument, this string is the ID of the nucleotide sequence which is to be fetched.
+
+All loading of sequence data is performed lazily at the behest of the caller, there have with some consideration given to the minimum length a retrieved sequence can be.
+
+=== NCBIHelper ===
+Ideally, the NCBIHelper class would be made a more generic class which could read from any configured URL resource but since I am only aware of the one source at present a hard-coded solution has been provided for the time being.
+
+Since the NCBIHelper is connecting to a remote site using the HttpConnection java classes there are several exceptions which can be thrown. Additionally, there are also potential failures even if a successful connection is made (404, 403 and invalid sequence etc). This is currently handled internally by the class and some information logged but it does not provide a useful mechanism to the caller about what has happened. Is the problem fatal? Is it a timeout? 
+
+In order to return something meaningful in the case of an error a new exception has been added to the code I have developed so far, the SequenceException method, in the case of a fatal problem the exception will be caught and wrapped in a SequenceException and then re-thrown allowing the caller can catch it, and if necessary inspect it.
 
 == Design Issues ==
 The following issues have come up during the implementation and need to be resolved.
