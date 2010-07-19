@@ -28,6 +28,13 @@ How Do I....?
 
 ### biojava3-core
 
+-   [What defines the
+    biojava3-core?](BioJava:CookBook:Core:Overview "wikilink")
+-   [How are sequences
+    created?](BioJava:CookBook:Core:Sequences "wikilink")
+-   [How do I read or write Fasta
+    files?](BioJava:CookBook:Core:FastaReadWrite "wikilink")
+
 ### biojava3-genome
 
 ### biojava3-phylo
