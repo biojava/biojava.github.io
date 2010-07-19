@@ -4,33 +4,38 @@ title: BioJava:CookBook:Core:Overview
 
 **Draft copy of Core module design and capabilities.**
 
-When doing the analysis of code from Biojava 1 and emphasis was placed
-on breaking the code into modules. Thus core represent a collection of
-classes that would be common to other modules. The common elements for
-all modules is reading, writing and representation of sequence data. We
-have also placed an emphasis of modeling in Java the biological
-relationships between sequences as accurately as possible. In the
-genomic view of sequence data we now have very large data sets where it
-isn't unreasonable to expect that if you load a protein sequence with an
-accession id that you should be able to use the api to retrieve the gene
-sequence that codes for that protein sequence. Once you have the gene
-sequence you should easily extract intron sequences or sequence data
-flanking the gene sequence for analysis. By leveraging the REST or Web
-Services of public data sources like Uniprot or NCBI we want the api to
-hide these implementation details but offer enough flexibility that
-other public or prive data sources can be easily integrated into
-BioJava3.
+When doing the analysis of code from Biojava 1 and what should be done
+in Biojava3 and emphasis was placed on breaking the code into modules.
+Thus core represent a collection of classes that would be common to
+other modules. The common elements for all modules is reading, writing
+and representation of sequence data. We have also thought it was
+important to use Java to model the biological relationships between
+sequences as accurately as possible. The Biojava3 api should establish
+concrete relationships that help the computer scientist understand the
+biology through code and be familiar to the Biologist when writing code.
 
-The core sequence classes
+In the genomic view of sequence data we now have very large data sets
+where it isn't unreasonable to expect that if you load a protein
+sequence with an accession id that you should be able to use the api to
+retrieve the gene sequence that codes for that protein sequence. Once
+you have the gene sequence you should easily extract intron sequences or
+sequence data flanking the gene sequence for analysis. By leveraging the
+REST or Web Services of public data sources like Uniprot or NCBI we want
+the api to hide these implementation details but offer enough
+flexibility that other public or prive data sources can be easily
+integrated into BioJava3.
 
--   DNASequence
-    -   ChromosomeSequence
-    -   GeneSequence
-    -   IntronSequence
-    -   ExonSequence
-    -   TranscriptSequence
--   RNASequence
--   ProteinSequence
+""The core sequence classes""
+
+-   AbstractSequence
+    -   DNASequence
+        -   ChromosomeSequence
+        -   GeneSequence
+        -   IntronSequence
+        -   ExonSequence
+        -   TranscriptSequence
+    -   RNASequence
+    -   ProteinSequence
 
 The storage of the sequence data is defined by the Sequence interface
 which allows for some interesting and we hope useful abstraction. The

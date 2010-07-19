@@ -1,17 +1,19 @@
-
 '''Draft copy of Core module design and capabilities.'''
 
-When doing the analysis of code from Biojava 1 and emphasis was placed on breaking the code into modules. Thus core represent a collection of classes that would be common to other modules. The common elements for all modules is reading, writing and representation of sequence data. We have also placed an emphasis of modeling in Java the biological relationships between sequences as accurately as possible. In the genomic view of sequence data we now have very large data sets where it isn't unreasonable to expect that if you load a protein sequence with an accession id that you should be able to use the api to retrieve the gene sequence that codes for that protein sequence. Once you have the gene sequence you should easily extract intron sequences or sequence data flanking the gene sequence for analysis. By leveraging the REST or Web Services of public data sources like Uniprot or NCBI we want the api to hide these implementation details but offer enough flexibility that other public or prive data sources can be easily integrated into BioJava3. 
+When doing the analysis of code from Biojava 1 and what should be done in Biojava3 and emphasis was placed on breaking the code into modules. Thus core represent a collection of classes that would be common to other modules. The common elements for all modules is reading, writing and representation of sequence data. We have also thought it was important to use Java to model the biological relationships between sequences as accurately as possible. The Biojava3 api should establish concrete relationships that help the computer scientist understand the biology through code and be familiar to the Biologist when writing code. 
 
-The core sequence classes
-*DNASequence
-**ChromosomeSequence
-**GeneSequence
-**IntronSequence
-**ExonSequence
-**TranscriptSequence
-*RNASequence
-*ProteinSequence
+In the genomic view of sequence data we now have very large data sets where it isn't unreasonable to expect that if you load a protein sequence with an accession id that you should be able to use the api to retrieve the gene sequence that codes for that protein sequence. Once you have the gene sequence you should easily extract intron sequences or sequence data flanking the gene sequence for analysis. By leveraging the REST or Web Services of public data sources like Uniprot or NCBI we want the api to hide these implementation details but offer enough flexibility that other public or prive data sources can be easily integrated into BioJava3. 
+
+""The core sequence classes""
+*AbstractSequence
+**DNASequence
+***ChromosomeSequence
+***GeneSequence
+***IntronSequence
+***ExonSequence
+***TranscriptSequence
+**RNASequence
+**ProteinSequence
 
 The storage of the sequence data is defined by the Sequence interface which allows for some interesting and we hope useful abstraction. The simplest Sequence interface to represent a sequences as a String is the ArrayListSequenceReader and is the default data store when creating a sequence from a string. For large genomic data you can create a ChromosomeSequence from a TwoBitSequenceReader or FourBitSequenceReader and reduce the in memory storage requirements. By using the Sequence Interface we can easily extend the concept of local sequence storage in a fasta file to loading the sequence from Uniprot or NCBI based on an accession ID. The following is a simple example of creating a ProteinSequence using a Uniprot ID where the UniprotProxySequenceReader implements the Sequence interface and knows how to take the Uniprot ID and retrieve the sequence data from Uniprot. The UniprotProxySequenceReader can implement other feature interfaces and using the XML data that describes the Protein Sequence we can give a list of known mutations or mutagenenis studies with references to papers. This also allows us to link the Uniprot ID to the NCBI id and retrieve the gene sequence data from NCBI via the NCBIProxySequenceReader. We are still in the early stages of extending these sequence relationships and expect some api changes the abstraction of the sequence storage to an interface allows for a great deal of flexibility.    
 
