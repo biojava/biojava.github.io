@@ -25,7 +25,7 @@ the api to hide these implementation details but offer enough
 flexibility that other public or prive data sources can be easily
 integrated into BioJava3.
 
-""The core sequence classes""
+**The core sequence classes**
 
 -   AbstractSequence
     -   DNASequence
