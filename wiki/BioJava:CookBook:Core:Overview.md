@@ -31,14 +31,22 @@ protein or DNA sequences or become dependent on external jar files. As
 an example we are currently using Java 6 XML api to process XML files
 which has performance issues as compared to Dom4J. It is tempting to
 make Dom4J a standard library in BioJava3 because of its speed and api
-but it is no longer being actively developed. We are using the Java 6
-api for REST or WebService calls where we could use Axis or some other
-interesting 3rd party library. Before you realize it core has a large
-number of external dependencies which creates potential problems for
-developers who are using the Biojava3 api if a different version of an
-external api is required.
+but it is no longer being actively developed so working hard not to
+become dependent on Dom4J. We are using the Java 6 api for REST or
+WebService calls where we could use Axis or some other interesting 3rd
+party library. Before you realize it core has a large number of external
+dependencies which creates potential problems for developers who are
+using the Biojava3 api in their application if a different version of an
+external api is required. For now Core is all about sequences and
+keeping it as small as possible. Currently, the biojava3-core module is
+being developed as part of the day job with tight deadlines and never
+enough time to do extensive documentation or even minimal documentation.
+Now that appears the biojava3-core module is settling down I will be
+working on finishing the JavaDoc, adding additional test cases and
+providing examples in the wiki.
 
-**The core sequence classes**
+The core sequence classes
+-------------------------
 
 -   AbstractSequence
     -   DNASequence
@@ -49,6 +57,18 @@ external api is required.
         -   TranscriptSequence
     -   RNASequence
     -   ProteinSequence
+
+String is King but Sequence Interface rains supreme
+---------------------------------------------------
+
+We really want to make it easy to create a sequence and what could be
+easier than using a String.
+
+<java>
+
+ProteinSequence proteinSequence = new
+ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX"); DNASequence dnaSequence =
+new DNASequence("ATCG"); </java>
 
 The storage of the sequence data is defined by the Sequence interface
 which allows for some interesting and we hope useful abstraction. The
@@ -122,3 +142,6 @@ could be easily extended to maintain a max number of sequences loaded or
 memory used and free up sequence data that is loaded into memory. This
 way you can implement the appropriate cacheing algorithm based on the
 usage of the sequence data.
+
+DNA Translation
+---------------
