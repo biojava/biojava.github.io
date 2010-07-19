@@ -21,14 +21,14 @@ We will try and minimize the size of biojava3-core module by not making it a con
 **ProteinSequence
 
 
-== String is King but Sequence Interface rains supreme ==
+== String is King but Sequence Interface reigns supreme ==
 
 We really want to make it easy to create a sequence and what could be easier than using a String.
 
 <java>
 
-ProteinSequence proteinSequence = new ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX");
-DNASequence dnaSequence = new DNASequence("ATCG");
+            ProteinSequence proteinSequence = new ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX");
+            DNASequence dnaSequence = new DNASequence("ATCG");
 </java>
 
 
