@@ -39,6 +39,8 @@ How Do I....?
 
 ### biojava3-phylo
 
+*external library*: forester.jar
+
 ### biojava3-alignment
 
 **Required modules**: *biojava3-alignment, biojava3-core,
