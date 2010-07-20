@@ -157,13 +157,16 @@ memory used and free up sequence data that is loaded into memory. This
 way you can implement the appropriate cacheing algorithm based on the
 usage of the sequence data.
 
+Helper Classes make it easy
+---------------------------
+
 In an effort to provide a flexible and modular api the abstraction can
 often make it difficult for someone getting started with the api to know
-what to use. We have implemented a set of classes that have the work
+what to use. We are implementing a set of classes that have the word
 Helper in them to hide the abstraction and at the same time provide
 examples on how to use the underlying API. Typically the helper methods
-will be static methods and generally should be a small block of code.
-The following code shows the use of FastaReaderHelper and
+will be static methods and generally should be a small block of glue
+code. The following code shows the use of FastaReaderHelper and
 FastaWriterHelper.
 
 <java>
