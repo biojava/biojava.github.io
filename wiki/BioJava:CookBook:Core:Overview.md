@@ -93,12 +93,19 @@ and retrieve the sequence data from Uniprot. The
 UniprotProxySequenceReader can implement other feature interfaces and
 using the XML data that describes the Protein Sequence we can give a
 list of known mutations or mutagenenis studies with references to
-papers. This also allows us to link the Uniprot ID to the NCBI id and
+papers. This also allows us to link the Uniprot ID to the NCBI ID and
 retrieve the gene sequence data from NCBI via the
 NCBIProxySequenceReader. We are still in the early stages of extending
-these sequence relationships and expect some api changes the abstraction
-of the sequence storage to an interface allows for a great deal of
-flexibility.
+these sequence relationships and expect some api changes. The
+abstraction of the sequence storage to an interface allows for a great
+deal of flexibility but has also added some challenges in how to handle
+situations when something goes wrong and you need to throw an exception.
+By introducing the ability to load sequences from remote URLs when the
+internet is not working or you have implemented a lazy instantiation
+approach to loading sequence data we have made it difficult to handle
+error conditions without making every method throw an exception. This a
+design work in progress as we get feedback from developers and expect
+some level of api changes as we improve the overall design.
 
 <java>
 
@@ -149,6 +156,22 @@ could be easily extended to maintain a max number of sequences loaded or
 memory used and free up sequence data that is loaded into memory. This
 way you can implement the appropriate cacheing algorithm based on the
 usage of the sequence data.
+
+In an effort to provide a flexible and modular api the abstraction can
+often make it difficult for someone getting started with the api to know
+what to use. We have implemented a set of classes that have the work
+Helper in them to hide the abstraction and at the same time provide
+examples on how to use the underlying API. Typically the helper methods
+will be static methods and generally should be a small block of code.
+The following code shows the use of FastaReaderHelper and
+FastaWriterHelper.
+
+<java>
+
+`       LinkedHashMap`<String, DNASequence>` dnaSequences = FastaReaderHelper.readFastaDNASequence(new File("454Scaffolds.fna"));`  
+`       FastaWriterHelper.writeNucleotideSequence(new File("454Scaffolds-1.fna",dnaSequences.values());`
+
+</java>
 
 DNA Translation
 ---------------
