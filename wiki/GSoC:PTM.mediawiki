@@ -76,7 +76,7 @@ This project will be beneficial to the research community by facilitating struct
 * [http://spreadsheets0.google.com/ccc?key=tCC48SYpb9v0ehoel6PlnZg&hl=en A initial list of PTMs] were then manually selected.
 
 ===Task2. Defining data representation of PTMs===
-* [https://docs.google.com/leaf?id=0B6z8AlO4d-qMMzEwMjUyM2YtODM4Yy00ZmJlLWE0YmMtYzdiYWNjZmFmYjFj&hl=en An XML file] is used to store the information of PTMs.
+* [http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/biojava3-protmod/src/main/resources/org/biojava3/protmod An XML file] is used to store the information of PTMs.
 
 * A Java class ''ProteinModification'' to store different types of PTMs.
 
