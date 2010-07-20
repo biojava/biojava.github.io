@@ -152,3 +152,6 @@ usage of the sequence data.
 
 DNA Translation
 ---------------
+
+Ambiguous Symbols
+-----------------
