@@ -39,7 +39,7 @@ How Do I....?
 
 ### biojava3-phylo
 
-**Required modules**: ''biojava3-core,
+**Required modules**: ''biojava3-core
 
 **external library**: *forester.jar*
 
