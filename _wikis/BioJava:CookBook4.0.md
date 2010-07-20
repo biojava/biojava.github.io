@@ -39,7 +39,7 @@ How Do I....?
 
 ### biojava3-phylo
 
-*external library*: forester.jar
+**external library**: *forester.jar*
 
 ### biojava3-alignment
 
