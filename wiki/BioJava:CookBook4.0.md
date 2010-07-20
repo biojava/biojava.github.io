@@ -28,7 +28,7 @@ How Do I....?
 
 ### biojava3-core
 
--   [What defines the
+-   [Overview of
     biojava3-core?](BioJava:CookBook:Core:Overview "wikilink")
 -   [How are sequences
     created?](BioJava:CookBook:Core:Sequences "wikilink")
@@ -37,7 +37,13 @@ How Do I....?
 
 ### biojava3-genome
 
+-   [Overview of
+    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
+
 ### biojava3-phylo
+
+-   [Overview of
+    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
 
 **Required modules**: ''biojava3-core
 
