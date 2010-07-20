@@ -41,7 +41,7 @@ How Do I....?
 
 **Required modules**: ''biojava3-core
 
-**external library**: *forester.jar*
+**Required external library**: *forester.jar*
 
 ### biojava3-alignment
 
