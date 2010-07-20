@@ -41,6 +41,9 @@ How Do I....?
 
 ### biojava3-alignment
 
+[How can I create a Multiple Sequence
+Alignment](BioJava:CookBook:MSA "wikilink")?
+
 ### Protein Structure
 
 **Required modules**: *biojava-structure, alignment* (will change soon
