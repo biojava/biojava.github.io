@@ -15,17 +15,8 @@ an beta stage. Documentation is emerging at <BioJava:CookBook3.0>
 Availability
 ------------
 
-At the moment we only recommend developers to checkout the source code.
-Check it out via
-
-`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/`
-
-If you just want to see what is going on browse the code at
-[<http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk>](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk)
-
-Anonymous checkout is possible at
-
-`svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk/`](svn://code.open-bio.org/biojava/biojava-live/trunk/)
+See the [BioJava SVN access](CVS_to_SVN_Migration "wikilink") page for
+how to check out the code from SVN or get the latest SNAPSHOT builds.
 
 IDE specific instructions
 -------------------------
