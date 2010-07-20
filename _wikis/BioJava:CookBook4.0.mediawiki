@@ -21,6 +21,8 @@ If you re-use code from the cookbook please cite:
 
 === biojava3-phylo ===
 
+''external library'': forester.jar
+
 === biojava3-alignment ===
 
 '''Required modules''': ''biojava3-alignment, biojava3-core,  biojava3-phylo''
