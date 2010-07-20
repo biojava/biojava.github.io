@@ -138,7 +138,7 @@ Tasks and Implementation
 ### Task2. Defining data representation of PTMs
 
 -   [An XML
-    file](https://docs.google.com/leaf?id=0B6z8AlO4d-qMMzEwMjUyM2YtODM4Yy00ZmJlLWE0YmMtYzdiYWNjZmFmYjFj&hl=en)
+    file](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/biojava3-protmod/src/main/resources/org/biojava3/protmod)
     is used to store the information of PTMs.
 
 <!-- -->
