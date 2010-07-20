@@ -23,6 +23,8 @@ If you re-use code from the cookbook please cite:
 
 === biojava3-alignment ===
 
+[[BioJava:CookBook:MSA|How can I create a Multiple Sequence Alignment]]?
+
 === Protein Structure ===
 
 '''Required modules''': ''biojava-structure,  alignment'' (will change soon to new biojava3-alignment)
