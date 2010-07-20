@@ -41,6 +41,8 @@ How Do I....?
 
 ### biojava3-alignment
 
+**Required modules**: ''biojava3-core, biojava3-phylo
+
 [How can I create a Multiple Sequence
 Alignment](BioJava:CookBook:MSA "wikilink")?
 
