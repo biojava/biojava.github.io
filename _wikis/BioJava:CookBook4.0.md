@@ -56,6 +56,9 @@ to new biojava3-alignment)
 
 **Optional module** : *biojava-structure-gui* for the 3D visualisation
 
+**Optional external library** : *JmolApplet.jar* for the 3D
+visualisation
+
 -   [How can I parse a PDB
     file?](BioJava:CookBook:PDB:read3.0 "wikilink")
 -   [How can I parse a .mmcif

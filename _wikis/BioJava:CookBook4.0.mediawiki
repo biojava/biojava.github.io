@@ -34,6 +34,8 @@ If you re-use code from the cookbook please cite:
 
 '''Optional module''' : ''biojava-structure-gui'' for the 3D visualisation
 
+'''Optional external library''' : ''JmolApplet.jar'' for the 3D visualisation
+
 * [[BioJava:CookBook:PDB:read3.0|How can I parse a PDB file?]]
 * [[BioJava:CookBook:PDB:mmcif|How can I parse a .mmcif file?]]
 * [[BioJava:CookBook:PDB:atoms|How can I access the atoms in a structure?]]
