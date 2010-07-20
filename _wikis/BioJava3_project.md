@@ -10,7 +10,7 @@ Status
 
 Coding has started in the [BioJava SVN
 repository](CVS_to_SVN_Migration "wikilink"). At the present we are at
-an beta stage.
+an beta stage. Documentation is emerging at <BioJava:CookBook3.0>
 
 Availability
 ------------
