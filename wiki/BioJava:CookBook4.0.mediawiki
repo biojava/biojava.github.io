@@ -23,7 +23,7 @@ If you re-use code from the cookbook please cite:
 
 === biojava3-alignment ===
 
-'''Required modules''': ''biojava3-core,  biojava3-phylo
+'''Required modules''': ''biojava3-alignment, biojava3-core,  biojava3-phylo''
 
 [[BioJava:CookBook:MSA|How can I create a Multiple Sequence Alignment]]?
 
