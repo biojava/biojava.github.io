@@ -33,7 +33,7 @@ If you re-use code from the cookbook please cite:
 '''Required external library''': ''forester.jar''
 
 * [[BioJava:CookBook3:PSA|How can I calculate a Pairwise Sequence Alignment]]? (Smith Waterman, Needleman Wunsch)
-* [[BioJava:CookBook:MSA|How can I create a Multiple Sequence Alignment]]?
+* [[BioJava:CookBook3:MSA|How can I create a Multiple Sequence Alignment]]?
 
 === Protein Structure ===
 

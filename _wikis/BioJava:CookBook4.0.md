@@ -60,7 +60,7 @@ biojava3-phylo*
     Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
     Needleman Wunsch)
 -   [How can I create a Multiple Sequence
-    Alignment](BioJava:CookBook:MSA "wikilink")?
+    Alignment](BioJava:CookBook3:MSA "wikilink")?
 
 ### Protein Structure
 
