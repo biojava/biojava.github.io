@@ -7,57 +7,45 @@ How to create a Multiple Sequence Alignment in BioJava
 
 <java>
 
-public class TestMe {
+package org.biojava3.alignment;
+
+import java.net.URL; import java.util.ArrayList; import java.util.List;
+
+import org.biojava3.alignment.Alignments.MSAEmulation; import
+org.biojava3.alignment.template.Profile; import
+org.biojava3.core.sequence.ProteinSequence; import
+org.biojava3.core.sequence.compound.AminoAcidCompound; import
+org.biojava3.core.sequence.io.FastaReaderHelper; import
+org.biojava3.core.util.ConcurrencyTools;
+
+public class CookbookMSA {
 
 `   public static void main(String[] args){`  
-`       `  
 `       String[] ids = new String[] {"Q21691", "Q21495", "O48771"};`  
-`       `  
-`       TestMe me = new TestMe();`  
 `       try {`  
-`           me.align(ids);`  
+`           multipleSequenceAlignment(ids);`  
 `       } catch (Exception e){`  
 `           e.printStackTrace();`  
 `       }`  
 `   }`
 
-`   private void align(String[] ids) throws Exception{`  
-`       `  
-`       `  
-`       List`<ProteinSequence>` lst = new ArrayList< ProteinSequence>();`  
-`       for (String id : ids){`  
-`       `  
-`           ProteinSequence seq = getSequenceForId(id);`  
-`               `  
-`           `  
-`           System.out.println("id :" + id + " " + seq);`  
-`           lst.add( seq);`  
-`           System.out.println(seq.getOriginalHeader());`  
+`   private static void multipleSequenceAlignment(String[] ids) throws Exception {`  
+`       List`<ProteinSequence>` lst = new ArrayList`<ProteinSequence>`();`  
+`       for (String id : ids) {`  
+`           lst.add(getSequenceForId(id));`  
 `       }`  
-`               // just for the sake of testing, not required...`  
-`       SubstitutionMatrix`<AminoAcidCompound>` matrix = new SimpleSubstitutionMatrix`<AminoAcidCompound>`();`  
-`       List alig = Alignments.getAllPairsAlignments(lst, PairwiseAligner.GLOBAL, new SimpleGapPenalty(), matrix);`  
-`       System.out.println(alig);`  
-`       `  
-`       Profile`<ProteinSequence,AminoAcidCompound>` profile = Alignments.getMultipleSequenceAlignment(lst, MSAEmulation.CLUSTALW);`  
-`       System.out.println("Clustalw:" );`  
-`       System.out.println(profile);`  
-`       `  
-`       `  
-`       `  
-`   }`  
-`   public ProteinSequence getSequenceForId(String uniProtId) throws Exception{`  
-`       String template = "`[`http://www.uniprot.org/uniprot/%s.fasta`](http://www.uniprot.org/uniprot/%s.fasta)`";`  
-`       `  
-`           URL uniprotFasta = new URL(String.format(template, uniProtId));`  
-`           `  
-`           LinkedHashMap`<String, ProteinSequence>` map = `  
-`               FastaReaderHelper.readFastaProteinSequence(uniprotFasta.openStream());`  
-`           `  
-`           return map.get(uniProtId);`  
-`           `  
-`   }`  
-`   `
+`       Profile`<ProteinSequence, AminoAcidCompound>` profile =`  
+`               Alignments.getMultipleSequenceAlignment(lst, MSAEmulation.CLUSTALW);`  
+`       System.out.printf("Clustalw:%n%s%n", profile);`  
+`       ConcurrencyTools.shutdown();`  
+`   }`
+
+`   private static ProteinSequence getSequenceForId(String uniProtId) throws Exception {`  
+`       URL uniprotFasta = new URL(String.format("`[`http://www.uniprot.org/uniprot/%s.fasta`](http://www.uniprot.org/uniprot/%s.fasta)`", uniProtId));`  
+`       ProteinSequence seq = FastaReaderHelper.readFastaProteinSequence(uniprotFasta.openStream()).get(uniProtId);`  
+`       System.out.printf("id : %s %s%n%s%n", uniProtId, seq, seq.getOriginalHeader());`  
+`       return seq;`  
+`   }`
 
 }
 
