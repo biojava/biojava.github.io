@@ -76,7 +76,7 @@ Alternative: dengue virus: use 3000 residue long  several thousand sequences
 GSoC meeting in october: Q: who is going ANdreas will check out dates and see who from OBF is attending.
 
 
-Priorities for next week:
+===Priorities for next week:===
 
 Variable gap penalty extendable
 linear space version (timewise neighbour joining might be crux)
