@@ -1,7 +1,11 @@
-Participants: Mark, Scooter, Andreas
+Back to [[GSoC:MSA]]
 
-Marks agenda:
+==Participants:==
+Mark, Scooter, Andreas
 
+
+==Agenda==
+Mark sent out this agenda for this meeting agenda:
 
 Updates:
 
@@ -54,7 +58,9 @@ Other
 -- add defensive programming method(s) to ProxySequenceReader interface
 
 
-Andreas notes:
+==Meeting Notes==
+
+We are back after a long conference induced skype call break...
 
 Mark reports: finished  basic implementation of profile-profile alignment
 added examples to wiki.
