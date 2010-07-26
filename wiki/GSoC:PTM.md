@@ -328,6 +328,7 @@ Weekly Report
     -   Hacking the PDB sequence diagram code.
 -   07/16/2010
     -   Attending ISMB from July 09-13
+    -   Add keywords in the XML file.
     -   Finished scanning whole PDB. Need to analyze the result.
     -   Started to refactor the sequence diagram code.
 -   07/26/2010
