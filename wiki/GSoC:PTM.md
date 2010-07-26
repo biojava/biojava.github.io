@@ -330,6 +330,9 @@ Weekly Report
     -   Attending ISMB from July 09-13
     -   Finished scanning whole PDB. Need to analyze the result.
     -   Started to refactor the sequence diagram code.
+-   07/26/2010
+    -   Analyzed results of PDB scanning
+    -   Still working on sequence diagram code.
 
 Skype call notes
 ----------------
