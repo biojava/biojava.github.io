@@ -331,7 +331,8 @@ Weekly Report
     -   Finished scanning whole PDB. Need to analyze the result.
     -   Started to refactor the sequence diagram code.
 -   07/26/2010
-    -   Analyzed results of PDB scanning
+    -   Analyzed results of PDB scanning:
+        [summary](http://spreadsheets.google.com/ccc?key=0Aqz8AlO4d-qMdGVtNWM5Zk5mWXlBQUIwMnZESjc2SkE&hl=en&authkey=CI6ggKsN).
     -   Still working on sequence diagram code.
 
 Skype call notes
