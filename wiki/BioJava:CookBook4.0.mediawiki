@@ -34,6 +34,7 @@ If you re-use code from the cookbook please cite:
 
 * [[BioJava:CookBook3:PSA|How can I calculate a Pairwise Sequence Alignment]]? (Smith Waterman, Needleman Wunsch)
 * [[BioJava:CookBook3:MSA|How can I create a Multiple Sequence Alignment]]?
+* [[BioJava:CookBook3:MSAProfiler|How can I profile the time and memory requirements of a Multiple Sequence Alignment]]?
 
 === Protein Structure ===
 
