@@ -305,7 +305,7 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 
 == Skype call notes ==
 
-[[MSA_skype_20100608|June 8th]], [[MSA_skype_20100615|June 15th]], [[MSA_skype_20100622|June 22nd]], [[MSA_skype_20100629|June 29th]], [[MSA_skype_20100721|July 21st]]
+[[MSA_skype_20100608|June 8th]], [[MSA_skype_20100615|June 15th]], [[MSA_skype_20100622|June 22nd]], [[MSA_skype_20100629|June 29th]], [[MSA_skype_20100721|July 21st]] [[MSA_skype_20100727|July 27th]]
 
 ==References==
 
