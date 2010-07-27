@@ -61,6 +61,8 @@ biojava3-phylo*
     Needleman Wunsch)
 -   [How can I create a Multiple Sequence
     Alignment](BioJava:CookBook3:MSA "wikilink")?
+-   [How can I profile the time and memory requirements of a Multiple
+    Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
 
 ### Protein Structure
 
