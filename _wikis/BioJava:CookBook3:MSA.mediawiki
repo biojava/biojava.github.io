@@ -32,7 +32,7 @@ public class CookbookMSA {
             lst.add(getSequenceForId(id));
         }
         Profile<ProteinSequence, AminoAcidCompound> profile =
-                Alignments.getMultipleSequenceAlignment(lst, MSAEmulation.CLUSTALW);
+                Alignments.getMultipleSequenceAlignment(lstW);
         System.out.printf("Clustalw:%n%s%n", profile);
         ConcurrencyTools.shutdown();
     }
