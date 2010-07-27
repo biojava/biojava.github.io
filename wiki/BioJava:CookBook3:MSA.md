@@ -35,7 +35,7 @@ public class CookbookMSA {
 `           lst.add(getSequenceForId(id));`  
 `       }`  
 `       Profile`<ProteinSequence, AminoAcidCompound>` profile =`  
-`               Alignments.getMultipleSequenceAlignment(lstW);`  
+`               Alignments.getMultipleSequenceAlignment(lst);`  
 `       System.out.printf("Clustalw:%n%s%n", profile);`  
 `       ConcurrencyTools.shutdown();`  
 `   }`
