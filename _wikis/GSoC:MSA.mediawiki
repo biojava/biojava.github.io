@@ -264,6 +264,45 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 * progressive MSA factory method
 ** allows easy multiple sequence alignments
 
+===July 12 - July 16===
+* rescore refinement
+** FractionalIdentityInProfileScorer
+** FractionalSimilarityInProfileScorer
+** Profile from 2 AlignedSequence
+* MSA options
+** researched algorithms and scoring methods used in several common aligners
+** listed stage options and 'emulation' defaults
+* arranged Alignments static class in 3 access levels
+* wrote simple example programs
+* benchmarked time for MSA stages
+
+===July 19 - July 23===
+* posted simple example programs to biojava3 cookbook
+** [[BioJava:CookBook3:PSA|Pairwise Sequence Alignment]]
+** [[BioJava:CookBook3:MSA|Multiple Sequence Alignment]]
+* longer skype call than usual to prioritize additions yet this summer
+** variable gap penalty
+** linear space alignment
+*** read papers by Myers and Miller, Thompson, Guan and Uberbacher, and Morgenstern et al
+** refinement
+** benchmarking: time, memory, and quality
+*** downloaded the snoal and susd pfam families and the dengue and hiv genomes
+*** benchmarked time and memory (with 1.5GB limit)
+* various improvements
+** changed biojava3-genome dependency from jaligner to biojava3-alignment
+** refactored AlignedSequence to have Sequence generic type
+** fixed various compiler warnings in core module
+** added distance and similarity methods to Scorer interface
+** added new thread pool options as discussed in call
+** disabled test in structure module to allow a successful build
+** changed private methods in Alignments to default access
+
+===July 26 - July 30===
+* removed MSAEmulation
+** added comments about similar routines at each stage
+* worked around unchecked class cast warning
+** assert that compound sets match between sequences and substitution matrix
+
 == Skype call notes ==
 
 [[MSA_skype_20100608|June 8th]], [[MSA_skype_20100615|June 15th]], [[MSA_skype_20100622|June 22nd]], [[MSA_skype_20100629|June 29th]], [[MSA_skype_20100721|July 21st]]
