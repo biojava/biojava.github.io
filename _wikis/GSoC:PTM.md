@@ -339,6 +339,9 @@ Weekly Report
 Skype call notes
 ----------------
 
+-   07/29/2010 (Agenda)
+    -   Unidentified modified residues: contact John Garavelli?
+    -   Serialization
 -   06/15/2010
     -   Participants: Jianjiong, Peter, Andreas.
     -   Find more test cases for cross-links (at least one for each type
