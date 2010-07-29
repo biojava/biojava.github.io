@@ -342,6 +342,9 @@ Skype call notes
 -   07/29/2010 (Agenda)
     -   Unidentified modified residues: contact John Garavelli?
     -   Serialization
+    -   Do we need to scan different models in a structure?
+    -   Metal Coordination: some metal ions links to multiple residues
+        forming cross links, e.g. AA0136
 -   06/15/2010
     -   Participants: Jianjiong, Peter, Andreas.
     -   Find more test cases for cross-links (at least one for each type
