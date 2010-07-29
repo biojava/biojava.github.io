@@ -339,12 +339,23 @@ Weekly Report
 Skype call notes
 ----------------
 
--   07/29/2010 (Agenda)
-    -   Unidentified modified residues: contact John Garavelli?
-    -   Serialization
-    -   Do we need to scan different models in a structure?
-    -   Metal Coordination: some metal ions links to multiple residues
-        forming cross links, e.g. AA0136
+-   07/29/2010
+    -   Participants: Jianjiong, Peter.
+    -   Top priority: add PTM annotations in sequence diagram.
+    -   Serialization: using Strings to represents identified PTMs.
+    -   Metal Coordination
+        -   classify according to number of residues involved
+        -   some metal ions links to multiple residues forming cross
+            links, e.g. AA0136
+    -   Unidentified modified residues: contact John Garavelli
+    -   Do we need to scan different models in a structure? No, use the
+        first model.
+    -   Improve Java doc
+    -   Add a chapter in cookbook:
+        <http://biojava.org/wiki/BioJava:CookBook3.0>
+
+<!-- -->
+
 -   06/15/2010
     -   Participants: Jianjiong, Peter, Andreas.
     -   Find more test cases for cross-links (at least one for each type
