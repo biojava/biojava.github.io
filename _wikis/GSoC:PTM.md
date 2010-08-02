@@ -335,6 +335,9 @@ Weekly Report
     -   Analyzed results of PDB scanning:
         [summary](http://spreadsheets.google.com/ccc?key=0Aqz8AlO4d-qMdGVtNWM5Zk5mWXlBQUIwMnZESjc2SkE&hl=en&authkey=CI6ggKsN).
     -   Still working on sequence diagram code.
+-   08/02/2010
+    -   Refactor ModifiedCompound and ModifiedCompoundImpl.
+    -   Serialization.
 
 Skype call notes
 ----------------

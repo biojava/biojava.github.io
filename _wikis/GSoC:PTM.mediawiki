@@ -214,6 +214,9 @@ This project will be beneficial to the research community by facilitating struct
 ** Keywords added in the XML file.
 ** Analyzed results of PDB scanning: [http://spreadsheets.google.com/ccc?key=0Aqz8AlO4d-qMdGVtNWM5Zk5mWXlBQUIwMnZESjc2SkE&hl=en&authkey=CI6ggKsN summary].
 ** Still working on sequence diagram code.
+* 08/02/2010
+** Refactor ModifiedCompound and ModifiedCompoundImpl.
+** Serialization.
 
 ==Skype call notes==
 * 07/29/2010
