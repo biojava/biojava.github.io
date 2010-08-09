@@ -339,8 +339,8 @@ Weekly Report
     -   Refactor ModifiedCompound and ModifiedCompoundImpl.
     -   Serialization.
 -   08/09/2010
--   Refactor package struectures
--   Integrate crosslinks in sequence diagram.
+    -   Refactor package structures
+    -   Integrate crosslinks in sequence diagram.
 
 Skype call notes
 ----------------
