@@ -217,6 +217,9 @@ This project will be beneficial to the research community by facilitating struct
 * 08/02/2010
 ** Refactor ModifiedCompound and ModifiedCompoundImpl.
 ** Serialization.
+* 08/09/2010
+* Refactor package struectures
+* Integrate crosslinks in sequence diagram.
 
 ==Skype call notes==
 * 07/29/2010
