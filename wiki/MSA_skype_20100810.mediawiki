@@ -5,9 +5,9 @@ Mark,  Andreas
 
 ==Weekly Update==
 
-Mark: performance enhancement: found solution to reduce requirement from quadratic to linear: a not too well know paper from (???) Guang and Ueberbacher describes: instead of picking one point in the middle, do this in a forward run, keep one tracepoint and keep updating it as you continue on through scoring and you have the point chosen that is on the path of the best score for this row. (Mark: can you provide reference?)
+Mark: performance enhancement: found solution to reduce requirement from quadratic to linear: a not too well know paper from [http://www.osti.gov/bridge/purl.cover.jsp?purl=/10168027-kXI3LM/native/ Guan and Uberbacher] describes: instead of picking one point in the middle, do this in a forward run, keep one tracepoint and keep updating it as you continue on through scoring and you have the point chosen that is on the path of the best score for this row.
 
-next thought : you can do that for multiple rows, do 10 points each pass and you end up with linear space requirement. Gets rid of overhead of Myers&Miller only 10% increase in time component.
+next thought : you can do that for multiple rows, do 10 points each pass and you end up with linear space requirement. Gets rid of overhead of Myers&Miller with only 10% increase in time component.
 
 == Alignment Quality ==
 
