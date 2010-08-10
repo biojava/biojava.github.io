@@ -62,4 +62,4 @@ If you re-use code from the cookbook please cite:
 
 '''Required modules''': ''biojava3-protmod, biojava-structure''
 
-* [[BioJava:CookBook3:ProtMod|How to identify protein modifications in a 3D struture?]]
+* [[BioJava:CookBook3:ProtMod|How can I identify protein modifications in a 3D struture?]]
