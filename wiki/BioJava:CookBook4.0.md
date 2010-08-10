@@ -105,6 +105,6 @@ visualisation
 
 **Required modules**: *biojava3-protmod, biojava-structure*
 
--   [How to identify protein modifications in a 3D
+-   [How can I identify protein modifications in a 3D
     struture?](BioJava:CookBook3:ProtMod "wikilink")
 
