@@ -101,3 +101,10 @@ visualisation
 -   [How can I load data from the SCOP
     classification?](BioJava:CookBook:PDB:SCOP "wikilink")
 
+### biojava3-protmod
+
+**Required modules**: *biojava3-protmod, biojava-structure*
+
+-   [How to identify protein modifications in a 3D
+    struture?](BioJava:CookBook3:ProtMod "wikilink")
+
