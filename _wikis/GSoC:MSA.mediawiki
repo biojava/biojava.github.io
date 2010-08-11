@@ -300,7 +300,7 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 ===July 26 - July 30===
 * updated cookbook programs
 ** added them to test folder in repository
-** added time and memory usage profiler
+** added [[BioJava:CookBook3:MSAProfiler|time and memory usage profiler]]
 * made improvements to memory usage during multiple sequence alignment
 ** null out cached values after use (e.g. keep pairwise scores, but not alignments)
 * various improvements
@@ -309,6 +309,18 @@ by both iterating (clustalw/muscle) and partitioning (muscle/kalign).
 ** worked around unchecked class cast warning; assert that compound sets match in sequences and substitution matrix
 ** provided simple access to common substitution matrices: SubstitutionMatrixHelper
 ** refactored aligner, scorer, and refiner enum types
+
+===August 2 - August 6===
+* survived strep throat
+* decided to pursue [http://www.osti.gov/bridge/purl.cover.jsp?purl=/10168027-kXI3LM/native/ Guan-Uberbacher]'s linear space alignment
+** simpler concept than Myers-Miller; only forward scoring passes
+** allows multiple divisions in each pass; improves time requirement
+** provides a hook for anchored alignments
+
+===August 9 - August 13===
+* refactored alignment routines
+** reduced memory requirement of single pass routines: score vectors and traceback matrix
+** prepared for linear space alignment: traceback vectors (less memory), but multiple passes (more time)
 
 == Skype call notes ==
 
