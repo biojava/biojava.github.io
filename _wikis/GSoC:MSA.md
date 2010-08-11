@@ -333,11 +333,21 @@ Progress Log
 
 ### July 26 - July 30
 
--   removed MSAEmulation
-    -   added comments about similar routines at each stage
--   worked around unchecked class cast warning
-    -   assert that compound sets match between sequences and
-        substitution matrix
+-   updated cookbook programs
+    -   added them to test folder in repository
+    -   added time and memory usage profiler
+-   made improvements to memory usage during multiple sequence alignment
+    -   null out cached values after use (e.g. keep pairwise scores, but
+        not alignments)
+-   various improvements
+    -   added hasGap method to Profile; implemented in SimpleProfile
+    -   removed MSAEmulation; added comments about similar routines at
+        each stage
+    -   worked around unchecked class cast warning; assert that compound
+        sets match in sequences and substitution matrix
+    -   provided simple access to common substitution matrices:
+        SubstitutionMatrixHelper
+    -   refactored aligner, scorer, and refiner enum types
 
 Skype call notes
 ----------------
