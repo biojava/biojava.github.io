@@ -364,6 +364,8 @@ Progress Log
 ### August 9 - August 13
 
 -   refactored alignment routines
+    -   granted access to all 3 score matrices built for affine gap
+        penalties
     -   reduced memory requirement of single pass routines: score
         vectors and traceback matrix
     -   prepared for linear space alignment: traceback vectors (less
