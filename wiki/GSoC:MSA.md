@@ -335,7 +335,8 @@ Progress Log
 
 -   updated cookbook programs
     -   added them to test folder in repository
-    -   added time and memory usage profiler
+    -   added [time and memory usage
+        profiler](BioJava:CookBook3:MSAProfiler "wikilink")
 -   made improvements to memory usage during multiple sequence alignment
     -   null out cached values after use (e.g. keep pairwise scores, but
         not alignments)
@@ -348,6 +349,25 @@ Progress Log
     -   provided simple access to common substitution matrices:
         SubstitutionMatrixHelper
     -   refactored aligner, scorer, and refiner enum types
+
+### August 2 - August 6
+
+-   survived strep throat
+-   decided to pursue
+    [Guan-Uberbacher](http://www.osti.gov/bridge/purl.cover.jsp?purl=/10168027-kXI3LM/native/)'s
+    linear space alignment
+    -   simpler concept than Myers-Miller; only forward scoring passes
+    -   allows multiple divisions in each pass; improves time
+        requirement
+    -   provides a hook for anchored alignments
+
+### August 9 - August 13
+
+-   refactored alignment routines
+    -   reduced memory requirement of single pass routines: score
+        vectors and traceback matrix
+    -   prepared for linear space alignment: traceback vectors (less
+        memory), but multiple passes (more time)
 
 Skype call notes
 ----------------
