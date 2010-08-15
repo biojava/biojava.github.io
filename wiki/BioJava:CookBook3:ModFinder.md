@@ -13,7 +13,7 @@ identify all pre-loaded modifications or a part of them.
 Example: identify and print all preloaed modifications from a structure
 -----------------------------------------------------------------------
 
-<java> void identifyAndPrintModfication(Structure struc) {
+<java> void identifyAndPrintModfications(Structure struc) {
 
 `   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();`  
 `   parser.identify(struc);`  
