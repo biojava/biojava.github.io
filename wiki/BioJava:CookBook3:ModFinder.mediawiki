@@ -4,7 +4,7 @@ BioJava provide a module '''biojava3-protmod''' for identification of protein pr
 
 ==Example: identify and print all preloaed modifications from a structure==
 <java>
-void identifyAndPrintModfication(Structure struc) {
+void identifyAndPrintModfications(Structure struc) {
     ProteinModificationIdentifier parser = new ProteinModificationIdentifier();
     parser.identify(struc);
     Set<ModifiedCompound> mcs = parser.getIdentifiedModifiedCompound();
