@@ -341,6 +341,9 @@ Weekly Report
 -   08/09/2010
     -   Refactor package structures
     -   Integrate crosslinks in sequence diagram.
+-   08/16/2010
+    -   Better representation of PTMs in sequence diagram.
+    -   Support metal coordination modifications.
 
 Skype call notes
 ----------------
