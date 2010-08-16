@@ -370,6 +370,11 @@ Progress Log
         vectors and traceback matrix
     -   prepared for linear space alignment: traceback vectors (less
         memory), but multiple passes (more time)
+-   added alignment output formatting
+    -   allows interlacing of sequences to show aligned columns
+    -   combines a header, alignment information (indices, etc.), and
+        sequence information (accession IDs, indices, etc.)
+    -   outputs to CLUSTALW's ALN, FASTA, and GCG's MSF standard formats
 
 Skype call notes
 ----------------
