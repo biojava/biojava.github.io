@@ -385,7 +385,8 @@ Skype call notes
 29th](MSA_skype_20100629 "wikilink"), [July
 21st](MSA_skype_20100721 "wikilink"), [July
 27th](MSA_skype_20100727 "wikilink"), [Aug
-10th](MSA_skype_20100810 "wikilink")
+10th](MSA_skype_20100810 "wikilink"), [Aug
+17th](MSA_skype_20100817 "wikilink")
 
 References
 ----------
