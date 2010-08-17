@@ -1,0 +1,63 @@
+Back to [[GSoC:MSA]]
+
+==Participants:==
+Mark, Scooter, Kyle, Andreas
+
+=Summary=
+
+This week the Google Summer of Code project is coming to an end. We are extremely happy with how the GSoC project has progressed. Mark has reached the goals of the project and we now have a flexible and multi-threaded MSA implementation that works in linear space and that, as an option, allows the users to define anchors that are used in the build up of the multiple alignment.
+
+
+== Linear Space ==
+Mark worked on the Linear Space implementation of the algorithm. It uses anchors - give extra possibility for user to influence alignment.
+User can say this region matches up, with this requirement the rest of the sequences will be aligned.
+
+Can be used to add core-regions as defined by structure alignment, use as basis for seq alignment
+
+Where the anchors are coming from, is a new avenue. some people have played with it, can be a new tool that people can use.
+
+== Formatted output ==
+default formatted output, alignment indexes, seq indexes
+allows sequences to see how alignments to see how columns line up
+allows to write .aln format (clustalw)
+fasta files
+msf format - Balibase uses that for comparison
+
+== Benchmarking ==
+
+Mark will try to run against BaliBase
+
+
+Reading in output and re-align
+
+discussion if this should be in BioJava core or alignment. Seems we tend to want reading MSA files as part of the core module.
+
+== Wiki add documentation ==
+
+Gaps,
+Subst matrices
+there will be support for global and semi-global (non-penalized end gaps)
+
+Short vs. double for gap penalties - is there a performance difference? Mark might take a look at this if there is time (low priority). 
+ 
+== Plans for paper ==
+
+- special: linear space
+- find better alignments than Pfam
+- find large alignments
+- results on BaliBase
+- large alignment from Dengue 
+- multi threaded application (Terracotta)
+   Mark: all pairs scoring, progressive alignment
+
+== Final things to wrap up ==
+* quality
+get initial score from Balibase
+
+* documentation
+- what features, how to change parameters
+- how to define anchors for the alignment (from a structure alignment)
+
+* file input out in core module
+
+- after that: work long term goals
