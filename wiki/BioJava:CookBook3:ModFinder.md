@@ -9,7 +9,7 @@ BioJava provide a module *biojava3-protmod* for identification of
 protein pre-, co-, and post-translational modifications from structures.
 [A list of protein
 modifications](BioJava:CookBook3:SupportedProtMod "wikilink") has been
-pro-loaded. It is possible to identify all pre-loaded modifications or
+pre-loaded. It is possible to identify all pre-loaded modifications or
 part of them.
 
 Example: identify and print all preloaded modifications from a structure
