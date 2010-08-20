@@ -14,31 +14,33 @@ The protmod maintains a registry of supported protein modifications. The list of
 
 ==Example: retrieve registered protein modifications==
 <java>
-// all protein modifications
-Set<ProteinModification> mods = ProteinModification.allModifications();
-
 // a protein modification by ID
 ProteinModification mod = ProteinModification.getById("0001");
 
+Set<ProteinModification> mods;
+
+// all protein modifications
+mods = ProteinModification.allModifications();
+
 // a set of protein modifications by RESID ID
-Set<ProteinModification> mods = ProteinModification.getByResidId("AA0151");
+mods = ProteinModification.getByResidId("AA0151");
 
 // a set of protein modifications by PSI-MOD ID
-Set<ProteinModification> mods = ProteinModification.getByPsimodId("MOD:00160");
+mods = ProteinModification.getByPsimodId("MOD:00160");
 
 // a set of protein modifications by PDBCC ID
-Set<ProteinModification> mods = ProteinModification.getByPdbccId("SEP");
+mods = ProteinModification.getByPdbccId("SEP");
 
 // a set of protein modifications by category
-Set<ProteinModification> mods = ProteinModification.getByCategory(ModificationCategory.ATTACHMENT);
+mods = ProteinModification.getByCategory(ModificationCategory.ATTACHMENT);
 
 // a set of protein modifications by occurrence type
-Set<ProteinModification> mods = ProteinModification.getByOccurrenceType(ModificationOccurrenceType.NATURAL);
+mods = ProteinModification.getByOccurrenceType(ModificationOccurrenceType.NATURAL);
 
 // a set of protein modifications by a keyword
-Set<ProteinModification> mods = ProteinModification.getByKeyword("phosphoprotein");
+mods = ProteinModification.getByKeyword("phosphoprotein");
 
 // a set of protein modifications by involved components.
-Set<ProteinModification> mods = ProteinModification.getByComponent(Component.of("FAD", ComponentType.LIGAND));
+mods = ProteinModification.getByComponent(Component.of("FAD", ComponentType.LIGAND));
 
 </java>
