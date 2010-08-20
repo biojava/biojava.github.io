@@ -85,6 +85,12 @@ projects please add them to the list.
     thousands of structures. Including an easy to use command line
     interface. Open source at Sourceforge.
 
+<!-- -->
+
+-   [GenBeans](http://www.geneinfinity.org/genbeans/index.html): A rich
+    client platform for bioinformatics primarily focused on molecular
+    biology and sequence analysis.
+
 Publications
 ------------
 
