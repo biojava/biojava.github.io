@@ -18,8 +18,9 @@ iso-peptide bonds.
 The protmod maintains a registry of supported protein modifications. The
 list of protein modifications contained in the XML file will be
 automatically loaded. You can [ define and add a new protein
-modification](AddProtMod "wikilink") if it has not been defined in the
-XML file. From the protein modification registry, a user can retrieve
+modification](BioJava:CookBook3:AddProtMod "wikilink") if it has not
+been defined in the XML file. From the protein modification registry, a
+user can retrieve
 
 -   all protein modifications,
 -   a protein modification by ID,
