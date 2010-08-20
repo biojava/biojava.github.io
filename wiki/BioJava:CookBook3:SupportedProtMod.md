@@ -38,34 +38,33 @@ user can retrieve
 Example: retrieve registered protein modifications
 --------------------------------------------------
 
-<java> // all protein modifications Set<ProteinModification> mods =
-ProteinModification.allModifications();
-
-// a protein modification by ID ProteinModification mod =
+<java> // a protein modification by ID ProteinModification mod =
 ProteinModification.getById("0001");
 
-// a set of protein modifications by RESID ID Set<ProteinModification>
-mods = ProteinModification.getByResidId("AA0151");
+Set<ProteinModification> mods;
 
-// a set of protein modifications by PSI-MOD ID Set<ProteinModification>
-mods = ProteinModification.getByPsimodId("MOD:00160");
+// all protein modifications mods =
+ProteinModification.allModifications();
 
-// a set of protein modifications by PDBCC ID Set<ProteinModification>
-mods = ProteinModification.getByPdbccId("SEP");
+// a set of protein modifications by RESID ID mods =
+ProteinModification.getByResidId("AA0151");
 
-// a set of protein modifications by category Set<ProteinModification>
-mods =
+// a set of protein modifications by PSI-MOD ID mods =
+ProteinModification.getByPsimodId("MOD:00160");
+
+// a set of protein modifications by PDBCC ID mods =
+ProteinModification.getByPdbccId("SEP");
+
+// a set of protein modifications by category mods =
 ProteinModification.getByCategory(ModificationCategory.ATTACHMENT);
 
-// a set of protein modifications by occurrence type
-Set<ProteinModification> mods =
+// a set of protein modifications by occurrence type mods =
 ProteinModification.getByOccurrenceType(ModificationOccurrenceType.NATURAL);
 
-// a set of protein modifications by a keyword Set<ProteinModification>
-mods = ProteinModification.getByKeyword("phosphoprotein");
+// a set of protein modifications by a keyword mods =
+ProteinModification.getByKeyword("phosphoprotein");
 
-// a set of protein modifications by involved components.
-Set<ProteinModification> mods =
+// a set of protein modifications by involved components. mods =
 ProteinModification.getByComponent(Component.of("FAD",
 ComponentType.LIGAND));
 
