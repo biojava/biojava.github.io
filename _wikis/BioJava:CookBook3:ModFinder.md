@@ -12,8 +12,8 @@ modifications](BioJava:CookBook3:SupportedProtMod "wikilink") has been
 pro-loaded. It is possible to identify all pre-loaded modifications or
 part of them.
 
-Example: identify and print all preloaed modifications from a structure
------------------------------------------------------------------------
+Example: identify and print all preloaded modifications from a structure
+------------------------------------------------------------------------
 
 <java> void identifyAndPrintModfications(Structure struc) {
 
