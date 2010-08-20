@@ -5,7 +5,7 @@ title: BioJava:CookBook3:SupportedProtMod
 How can I get the list of supported protein modifications?
 ----------------------------------------------------------
 
-The protmod module contains[an XML
+The protmod module contains [an XML
 file](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/biojava3-protmod/src/main/resources/org/biojava3/protmod),
 defining a list of protein modifications, retrieved from [Protein Data
 Bank Chemical Component Dictrionary](http://www.wwpdb.org/ccd.html),
