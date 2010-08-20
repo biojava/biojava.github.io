@@ -33,6 +33,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://lajolla.sourceforge.net LaJolla] Structural alignment of RNA and proteins using an index structure for fast alignment of thousands of structures. Including an easy to use command line interface. Open source at Sourceforge.
 
+* [http://www.geneinfinity.org/genbeans/index.html GenBeans]: A rich client platform for bioinformatics primarily focused on molecular biology and sequence analysis. 
+
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
 
