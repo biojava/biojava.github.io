@@ -109,4 +109,6 @@ visualisation
     struture?](BioJava:CookBook3:ProtMod "wikilink")
 -   [How can I get the list of supported protein
     modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+-   [How can I define a new protein
+    modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
