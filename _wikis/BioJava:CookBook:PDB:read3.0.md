@@ -194,18 +194,22 @@ parser deals with SEQRES and ATOM records please see
   
 `PDBFileReader pdbreader = new PDBFileReader();`
 
-`// the following parameters are optional: `
+`// configure the parameters of file parsing`
 
-`//the parser can read the secondary structure`  
-`// assignment from the PDB file header and add it to the amino acids`  
-`pdbreader.setParseSecStruc(true);`
+`FileParsingParameters params = new FileParsingParameters();`
+
+`// parse the C-alpha atoms only, default = false`  
+`params.setParseCAOnly(false);`
 
 `// align the SEQRES and ATOM records, default = true   `  
 `// slows the parsing speed slightly down, so if speed matters turn it off.`  
-`pdbreader.setAlignSeqRes(true);`  
-` `  
-`// parse the C-alpha atoms only, default = false`  
-`pdbreader.setParseCAOnly(false);`
+`params.setAlignSeqRes(true);`
+
+`// the parser can read the secondary structure`  
+`// assignment from the PDB file header and add it to the amino acids`  
+`params.setParseSecStruc(true);`  
+`        `  
+`reader.setFileParsingParameters(params);`
 
 `// download missing PDB files automatically from EBI ftp server, default = false`  
 `pdbreader.setAutoFetch(false);`
