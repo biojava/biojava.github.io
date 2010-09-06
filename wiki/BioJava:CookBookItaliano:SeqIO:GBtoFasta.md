@@ -6,7 +6,9 @@ Come posso leggere una sequenza GenBank/EMBL/Swissprot e convertirla nel formato
 ---------------------------------------------------------------------------------------
 
 Per effettuare questa conversione estendiamo l'esempio precedente
-aggiungendo la funzionalità
+(clicca [qui](Biojava:CookBookItaliano:SeqIO:ReadGES "wikilink"))
+aggiungendo la funzionalità di scrivere la sequenza in formato FASTA. Di
+seguito sono mostrati due esempi
 
 To perform this task we are going to extend the general reader from the
 previous demo and include in it the ability to write sequence data in
