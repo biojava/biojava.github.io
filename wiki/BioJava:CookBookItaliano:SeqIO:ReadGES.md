@@ -13,13 +13,13 @@ leggere i file contenenti le sequenze utilizzando la classe
 **SeqIOTools**, essa ora è stata segnata come deprecata e sostituita
 dalla classe **RichSequence.IOTools**. Questa classe a differenza di
 quella deprecata ha dei metodi più specifici che tengono in
-considerazione il formato dei file, per permette una migliore
-corrispondenza con il database BioSql. Inoltre ora è obbligatorio l'uso
+considerazione il formato dei file per permettere,inoltre, una migliore
+corrispondenza con il database BioSql. Ora infatti è obbligatorio l'uso
 dei namespace. L'estensione Biojavax permette anche una semplice
-creazione di un parser per la lettura di un file in un nuovo formato,
-anche se questo è una situazione che avviene raramente. La classe
-**RichSequence.IOTools** da la possibilità di leggere file contenenti
-DNA, RNA or proteinnei seguenti formati:
+creazione di un parser per la lettura di un file in un formato
+personalizzato, anche se questo è una situazione che avviene raramente.
+La classe **RichSequence.IOTools** da la possibilità di leggere file
+contenenti DNA, RNA or proteine nei seguenti formati:
 
 -   EMBL (nativo o XML)
 -   FASTA
@@ -27,8 +27,8 @@ DNA, RNA or proteinnei seguenti formati:
 -   INSDseq
 -   UniProt (nativeo o XML)
 
-This class also has a method, *readFile*, that can read a file while
-guessing its format.
+Questa classe ha anche un metodo, *readFile*, per leggere un file
+indoviandone il formato.
 
 <java> import java.io.BufferedReader; import java.io.FileReader;
 
@@ -39,10 +39,10 @@ org.biojavax.bio.seq.RichSequenceIterator
 public class ReadGES\_BJ1\_6{
 
 `   /* `  
-`    * ReadGES_BJ1_6.java - A pretty simple demo program to read a sequence file`  
-`    * with a known format using Biojavax extension found in BJ1.6. `  
+`    * ReadGES_BJ1_6.java -E' un semplice programma per leggere un file di sequenza `  
+`    * noto il suo formato. Esso utilizza le estensioni Biojavax che si trovano in BJ1.6. `  
 `    * `  
-`    * You only need to provide a file as args[0]`  
+`    * Basta passare alla classe il path del file come args[0]`  
 `    */`  
 `   public static void main(String[] args) {`  
 `       BufferedReader br = null;`  
@@ -51,12 +51,12 @@ public class ReadGES\_BJ1\_6{
 `       try{`  
 `           br = new BufferedReader(new FileReader(args[0]));`  
 `           ns = new SimpleNamespace("biojava");`  
-`           `  
-`           // You can use any of the convenience methods found in the BioJava 1.6 API`  
-`           RichSequenceIterator rsi = RichSequence.IOTools.readFastaDNA(br,ns);`  
+`           `
+
+`                       // Si può utilizzare uno qualsiasi dei metodi presenti nelle BioJava 1.6 API        `  
+`                       RichSequenceIterator rsi = RichSequence.IOTools.readFastaDNA(br,ns);`  
 `   `  
-`           // Since a single file can contain more than a sequence, you need to iterate over`  
-`           // rsi to get the information.`  
+`                       //Se un file contiene più sequenze è possibile utilizzare un iteratore per leggerle tutte`  
 `           while(rsi.hasNext()){`  
 `               RichSequence rs = rsi.nextRichSequence();`  
 `               System.out.println(rs.getName());`  
