@@ -129,8 +129,9 @@ Come posso....?
     FASTA](Biojava:CookBookItaliano:SeqIO:ReadFasta "wikilink")?
 -   [Come posso leggere un file in formato
     GenBank/EMBL/UniProt/FASTA/INSDseq](Biojava:CookBookItaliano:SeqIO:ReadGES "wikilink")?
--   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
-    Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
+-   [Come posso leggere una sequenza GenBank/EMBL/Swissprot convertirla
+    nel formato
+    FASTA](Biojava:CookBookItaliano:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
     Sequence](Biojava:Cookbook:SeqIO:ABItoSequence "wikilink")?
 -   [How does sequence I/O work in
