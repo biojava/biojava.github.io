@@ -5,6 +5,9 @@ title: BioJava:CookBookItaliano:SeqIO:GBtoFasta
 Come posso leggere una sequenza GenBank/EMBL/Swissprot e convertirla nel formato FASTA?
 ---------------------------------------------------------------------------------------
 
+Per effettuare questa conversione estendiamo l'esempio precedente
+aggiungendo la funzionalità
+
 To perform this task we are going to extend the general reader from the
 previous demo and include in it the ability to write sequence data in
 fasta format. Two examples are provided, one uses the slightly earlier
