@@ -25,7 +25,7 @@ public class ReadWriteGES\_BJ1\_6{
 `   public static void main(String[] args) {`  
 `       BufferedReader br = null;`  
 `       Namespace ns = null;`  
-`               //questo è il path utilizzato anche per il file in formato fasta`  
+`               //this path is used for destination file too`  
 `       String filePath= "/whereYourFileIs/sequences";`  
 `       String insdExt=".gbc";`  
 `       String fastaExt=".FASTA";`  
@@ -36,10 +36,11 @@ public class ReadWriteGES\_BJ1\_6{
 `           ns = RichObjectFactory.getDefaultNamespace();`  
   
   
-`                       // Si può utilizzare uno qualsiasi dei metodi presenti nelle BioJava 1.6 API        `  
+`               // You can use any of the convenience methods found in the BioJava 1.6 API`  
 `                       RichSequenceIterator rsi = RichSequence.IOTools.readINSDseqDNA(br, ns);`  
   
-`                       //Se un file contiene più sequenze è possibile utilizzare un iteratore per leggerle tutte`  
+`           // Since a single file can contain more than a sequence, you need to iterate over`  
+`           // rsi to get the information.`  
 `                       while (rsi.hasNext()) {`  
 `                           RichSequence seq = rsi.nextRichSequence();`  
 `                           RichSequence.IOTools.writeFasta(new `  
