@@ -11,7 +11,9 @@ La classe '''RichSequence.IOTools''' da la possibilità di leggere file contenen
 <li>UniProt (nativeo o XML)</li>
 </ul>
 
-Questa classe ha anche un metodo, ''readFile'', per leggere un file indoviandone il formato.
+Questa classe ha anche un metodo, ''readFile'', per leggere un file indovinandone il formato.
+
+Seguendo questo [http://www.ncbi.nlm.nih.gov/nuccore/146274?report=genbank link] è possibile scaricare alcuni file di esempio.
 
 <java>
 import java.io.BufferedReader;
