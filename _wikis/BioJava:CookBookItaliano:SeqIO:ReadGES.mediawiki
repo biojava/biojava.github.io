@@ -19,7 +19,7 @@ import java.io.FileReader;
 
 import org.biojavax.SimpleNamespace;
 import org.biojavax.bio.seq.RichSequence;
-import org.biojavax.bio.seq.RichSequenceIterator
+import org.biojavax.bio.seq.RichSequenceIterator;
 
 public class ReadGES_BJ1_6{
 	/* 
