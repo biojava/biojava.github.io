@@ -8,7 +8,7 @@ Come posso leggere una sequenza GenBank/EMBL/Swissprot e convertirla nel formato
 Per effettuare questa conversione estendiamo l'esempio precedente
 (clicca [qui](Biojava:CookBookItaliano:SeqIO:ReadGES "wikilink"))
 aggiungendo la funzionalità di scrivere la sequenza in formato FASTA. Di
-seguito sono mostrati due esempi
+seguito è mostrato un esempio:
 
 <java> import java.io.BufferedReader; import java.io.File; import
 java.io.FileOutputStream; import java.io.FileReader;
