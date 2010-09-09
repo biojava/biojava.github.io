@@ -28,7 +28,11 @@ contenenti DNA, RNA or proteine nei seguenti formati:
 -   UniProt (nativeo o XML)
 
 Questa classe ha anche un metodo, *readFile*, per leggere un file
-indoviandone il formato.
+indovinandone il formato.
+
+Seguendo questo
+[link](http://www.ncbi.nlm.nih.gov/nuccore/146274?report=genbank) è
+possibile scaricare alcuni file di esempio.
 
 <java> import java.io.BufferedReader; import java.io.FileReader;
 
