@@ -17,8 +17,6 @@ import org.biojavax.Namespace; import org.biojavax.RichObjectFactory;
 import org.biojavax.bio.seq.RichSequence; import
 org.biojavax.bio.seq.RichSequenceIterator;
 
-//http://www.ncbi.nlm.nih.gov/nuccore/146274?report=gbc\_xml
-
 public class ReadWriteGES\_BJ1\_6{
 
 `   public static void main(String[] args) {`  
@@ -41,7 +39,8 @@ public class ReadWriteGES\_BJ1\_6{
 `                       //Se un file contiene più sequenze è possibile utilizzare un iteratore per leggerle tutte`  
 `                       while (rsi.hasNext()) {`  
 `                           RichSequence seq = rsi.nextRichSequence();`  
-`                           RichSequence.IOTools.writeFasta(new FileOutputStream(new File(filePath+fastaExt)), seq, ns);`  
+`                           RichSequence.IOTools.writeFasta(new `  
+`                                        FileOutputStream(new File(filePath+fastaExt)), seq, ns);`  
 `                           System.out.println(`  
 `                                   seq.toString() +`  
 `                                   " has " + seq.countFeatures() + `  
