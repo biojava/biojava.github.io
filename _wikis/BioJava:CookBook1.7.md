@@ -125,8 +125,8 @@ How Do I....?
     file](Biojava:Cookbook:SeqIO:ReadGES "wikilink")?(deprecated)
 -   [How do I read a sequence file with the Biojavax
     extension](Biojava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
--   [How do I extract GenBank/EMBL/Swissprot sequences and write them as
-    Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
+-   [How do I extract GenBank/EMBL/UniProt/FASTA/INSDseq sequences and
+    write them as Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
     Sequence](Biojava:Cookbook:SeqIO:ABItoSequence "wikilink")?
 -   [How does sequence I/O work in
