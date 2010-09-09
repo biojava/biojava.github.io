@@ -34,7 +34,7 @@ indoviandone il formato.
 
 import org.biojavax.SimpleNamespace; import
 org.biojavax.bio.seq.RichSequence; import
-org.biojavax.bio.seq.RichSequenceIterator
+org.biojavax.bio.seq.RichSequenceIterator;
 
 public class ReadGES\_BJ1\_6{
 
