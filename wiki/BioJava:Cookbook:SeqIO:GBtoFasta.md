@@ -9,7 +9,7 @@ To perform this task we are going to extend the general reader from the
 previous demo and include in it the ability to write sequence data in
 fasta format.One example are provided here:
 
-Follow this
+Following this
 [link](http://www.ncbi.nlm.nih.gov/nuccore/146274?report=genbank) you
 can download some example files.
 
