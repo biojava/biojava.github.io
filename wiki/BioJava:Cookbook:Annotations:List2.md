@@ -53,8 +53,8 @@ public class ExtractInformation {
 `   FeatureHolder fh = richSeq.filter(ff);`
 
 `   //Iterate through the CDS features`  
-`   for (Iterator `<RichFeature>` i = fh.features(); i.hasNext();){`  
-`     RichFeature rf = i.next();`  
+`   for (Iterator `<Feature>` i = fh.features(); i.hasNext();){`  
+`     RichFeature rf = (RichFeature)i.next();`  
 `     `  
 `     //Get the strand orientation of the feature`  
 `     char featureStrand = rf.getStrand().getToken();`
