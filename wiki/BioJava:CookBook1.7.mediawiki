@@ -10,6 +10,11 @@ If you re-use code from the cookbook please cite:
 
 {{Reference}}
 
+== Upcoming 3.0 release ==
+
+Many things will change in the upcoming BioJava 3.0 release. A preview on the new API is available from here:
+[[BioJava:CookBook3.0]]
+
 == Announcing ==
 
 You can now read BioJava in Anger in [[Biojava:CookbookFrench|French]] (Translated by Sylvain Foisy; mise &agrave; jour / updated : 28 décembre 2009).
