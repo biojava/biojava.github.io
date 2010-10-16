@@ -179,5 +179,114 @@ FastaWriterHelper.
 DNA Translation
 ---------------
 
+DNA translation follows the normal biological flow where a portion of
+DNA (assumed to be CDS) is translated to mRNA. This is translated to a
+protein sequence using codons. All parts of the translation process are
+configurable including:
+
+-   CompoundSets used in the Sequence objects
+-   The SequenceCreator used
+-   The Frame and direction of translation
+-   Trimming stop codons
+-   IUPAC codon tables
+
+### Quick and Dirty
+
+The following translates the given DNASequence to a peptide using the
+non-ambiguity CompoundSets with Codon table 1 in Frame 1 in the forward
+orientation.
+
+<java>
+
+` ProteinSequence protein = new DNASequence("ATG").getRNASequence().getProteinSequence();`
+
+</java>
+
+### Translating in a Different Frame
+
+<java>
+
+` DNASequence dna = new DNASequence("AATG");`  
+` RNASequence rna = dna.getRNASequence(Frame.TWO);`  
+` ProteinSequence protein = rna.getProteinSequence();`
+
+</java>
+
+### Using a TranslationEngine
+
+Translation engines are the workhorse of the translation process. If you
+want to do something \_out of the ordinary\_ then normally you will have
+to build one. A singleton version is available and is what the methods
+involved in the translation process use when not given an instance of
+TranslationEngine. If building a custom engine then you do this using
+the Builder object as shown in the following example. Here we will build
+an engine to
+
+-   Translate bacteria genomes
+-   Convert any initiating amino acid which is not methionine into one
+-   Trim stops
+
+<java> TranscriptionEngine.Builder b = new
+TranscriptionEngine.Builder(); b.table(11).initMet(true).trimStop(true);
+TranscriptionEngine engine = b.build(); </java>
+
+This can be handed to the translation methods like so:
+
+<java>
+
+` DNASequence dna = new DNASequence("ATG");`  
+` RNASequence rna = dna.getRNASequence(engine);`  
+` ProteinSequence protein = rna.getProteinSequence(engine);`
+
+</java>
+
+The translation can be started from the TranslationEngine directly
+except this results in more general objects (you will get back objects
+which implement the Sequence interface and not the true object type).
+
+<java>
+
+` DNASequence dna = new DNASequence("ATG");`  
+` TranscriptionEngine engine = TranscriptionEngine.getDefault(); //Get the default engine`  
+` Sequence`<NucleotideCompound>` rna = engine.getDnaRnaTranslator().createSequence(dna);`  
+` Sequence`<AminoAcidCompound>` protein = engine.getRnaAminoAcidTranslator().createSequence(rna);`  
+` `  
+` //Or to jump to it straight away use this method (coming soon)`  
+` Sequence`<AminoAcidCompound>` protein = engine.translate(dna);`  
+`   `  
+` //Or to translate in all the forward frames`  
+` DNASequence longerDna = new DNASequence("ATGGCGTGA");`  
+` Map`<Frame, Sequence<AminoAcidCompound>`> results = `  
+`   engine.multipleFrameTranslation(longerDna, Frame.getForwardFrames());`
+
+</java>
+
+### Codon Tables
+
+BioJava supports all IUPAC tables available from the
+`org.biojava3.core.sequence.io.IUPACParser` class. It is possible to
+define your own codon table should BioJava not support it. To do this
+you can use the `IUPACTable` object which accepts 3 Strings used to
+indicate the DNA used for each codon. If this does not suffice then you
+can implement your own instance of `Table` to return the required
+codons. The IUPAC tables we have are:
+
+-   1 - UNIVERSAL
+-   2 - VERTEBRATE\_MITOCHONDRIAL
+-   3 - YEAST\_MITOCHONDRIAL
+-   4 - MOLD\_MITOCHONDRIAL
+-   5 - INVERTEBRATE\_MITOCHONDRIAL
+-   6 - CILIATE\_NUCLEAR
+-   9 - ECHINODERM\_MITOCHONDRIAL
+-   10 - EUPLOTID\_NUCLEAR
+-   11 - BACTERIAL
+-   12 - ALTERNATIVE\_YEAST\_NUCLEAR
+-   13 - ASCIDIAN\_MITOCHONDRIAL
+-   14 - FLATWORM\_MITOCHONDRIAL
+-   15 - BLEPHARISMA\_MACRONUCLEAR
+-   16 - 2CHLOROPHYCEAN\_MITOCHONDRIAL
+-   21 - TREMATODE\_MITOCHONDRIAL
+-   23 - SCENEDESMUS\_MITOCHONDRIAL
+
 Ambiguous Symbols
 -----------------
