@@ -212,15 +212,15 @@ orientation.
 
 </java>
 
-### Using a TranslationEngine
+### Using a TranscriptionEngine
 
-Translation engines are the workhorse of the translation process. If you
-want to do something \_out of the ordinary\_ then normally you will have
-to build one. A singleton version is available and is what the methods
-involved in the translation process use when not given an instance of
-TranslationEngine. If building a custom engine then you do this using
-the Builder object as shown in the following example. Here we will build
-an engine to
+Transcription engines are the workhorse of the translation process. If
+you want to do something \_out of the ordinary\_ then normally you will
+have to build one. A singleton version is available and is what the
+methods involved in the translation process use when not given an
+instance of TranscriptionEngine. If building a custom engine then you do
+this using the Builder object as shown in the following example. Here we
+will build an engine to
 
 -   Translate bacteria genomes
 -   Convert any initiating amino acid which is not methionine into one
@@ -240,7 +240,7 @@ This can be handed to the translation methods like so:
 
 </java>
 
-The translation can be started from the TranslationEngine directly
+The translation can be started from the TranscriptionEngine directly
 except this results in more general objects (you will get back objects
 which implement the Sequence interface and not the true object type).
 
