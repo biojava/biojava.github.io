@@ -89,7 +89,7 @@ it be possible to provide a version with e.g. blue or green ?
 
 Logo16.1 ![](Biojava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
 
-Logo17 ![](Biojava_logo_jitendra.jpg "fig:Biojava_logo_jitendra.jpg")
+Logo17
 
 Dear biological programmers and Biojava project lovers. I, Jitendra
 Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
