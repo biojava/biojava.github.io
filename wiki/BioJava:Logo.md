@@ -95,3 +95,6 @@ Dear biological programmers and Biojava project lovers. I, Jitendra
 Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
 that correctly explain the biojava project. I need your valuable
 comments on it.
+
+this logo clearly violates Sun's/Oracle's trademark. Please take it off
+ASAP. --[Andreas](User:Andreas "wikilink") 06:45, 29 October 2010 (UTC)
