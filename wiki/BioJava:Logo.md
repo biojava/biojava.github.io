@@ -91,6 +91,18 @@ Logo16.1 ![](Biojava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
 
 Logo17 ![](Biojava_logo_jitendra.jpg "fig:Biojava_logo_jitendra.jpg")
 
+Dear BioJava Lovers:
+
+Explanation: JAVA cup is popular amongst the java programmers, that is a
+trademark logo of it. In order to design a BioJava logo, I plan to use
+the basic concept of Biojava project, where we are implementing the Java
+power to solve the biological puzzles. So basically we are using the
+free, Platform independent JAVA language to improve the biological
+findings.
+
+**Here in this logo the JAVA is pouring its essence into BIOlogy, and
+thereby enhancing the research.**
+
 Dear biological programmers and Biojava project lovers. I, Jitendra
 Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
 that correctly explain the biojava project. I need your valuable
