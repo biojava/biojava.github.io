@@ -107,3 +107,11 @@ Dear biological programmers and Biojava project lovers. I, Jitendra
 Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
 that correctly explain the biojava project. I need your valuable
 comments on it.
+
+Logo17.1 Dear BioJava Lovers Here A new logo of BioJava, that explain
+everything in silent mode. I receive several comments on my previous
+logo17 one of them was regarding stability of the JAVA language, so this
+time I tried to make it stable and make more perfect logo. Here in this
+logo the JAVA cup is stable ( indicate the stability of the language)
+and vapor is coming out of it that is in the form of DNA strand it
+indicate the essence of JAVA into Biology.
