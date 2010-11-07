@@ -103,11 +103,6 @@ findings.
 **Here in this logo the JAVA is pouring its essence into BIOlogy, and
 thereby enhancing the research.**
 
-Dear biological programmers and Biojava project lovers. I, Jitendra
-Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
-that correctly explain the biojava project. I need your valuable
-comments on it.
-
 Logo17.1![](Biojava_jitendra-final.gif "fig:Biojava_jitendra-final.gif")
 
 Dear BioJava Lovers,
@@ -119,3 +114,8 @@ and make more perfect logo. **Here in this logo the JAVA cup is stable (
 indicate the stability of the language) and vapor is coming out of it
 that is in the form of DNA strand it indicate the essence of JAVA into
 Biology.**
+
+Dear biological programmers and Biojava project lovers. I, Jitendra
+Narayan [1](http://www.bioinformaticsonline.com), finally design a logo
+that correctly explain the biojava project. I need your valuable
+comments on it.
