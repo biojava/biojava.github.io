@@ -28,9 +28,9 @@ and what atoms are linked between them ModificationCondition condition =
 new ModificationConditionImpl(components,
 Collections.singletonList(linkage));
 
-// register the modification and set optional information
-ProteinModification.register("0018\_test",
+// build a modification ProteinModification mod =
 
+`       new ProteinModificationImpl.Builder("0018_test", `  
 `       ModificationCategory.CROSS_LINK_2,`  
 `       ModificationOccurrenceType.NATURAL,`  
 `       condition)`  
@@ -42,8 +42,10 @@ ProteinModification.register("0018\_test",
 `       .setPsimodName("L-cystine (cross-link)")`  
 `       .setSystematicName("(R,R)-3,3'-disulfane-1,2-diylbis(2-aminopropanoic acid)")`  
 `       .addKeyword("disulfide bond")`  
-`       .addKeyword("redox-active center");`
+`       .addKeyword("redox-active center")`  
+`   .build();`
 
+//register the modification ProteinModificationRegistry.register(mod);
 </java>
 
 Example: definedisulfide bond in XML file and register by Java code
