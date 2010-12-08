@@ -39,33 +39,33 @@ Example: retrieve registered protein modifications
 --------------------------------------------------
 
 <java> // a protein modification by ID ProteinModification mod =
-ProteinModification.getById("0001");
+ProteinModificationRegistry.getById("0001");
 
 Set<ProteinModification> mods;
 
 // all protein modifications mods =
-ProteinModification.allModifications();
+ProteinModificationRegistry.allModifications();
 
 // a set of protein modifications by RESID ID mods =
-ProteinModification.getByResidId("AA0151");
+ProteinModificationRegistry.getByResidId("AA0151");
 
 // a set of protein modifications by PSI-MOD ID mods =
-ProteinModification.getByPsimodId("MOD:00160");
+ProteinModificationRegistry.getByPsimodId("MOD:00160");
 
 // a set of protein modifications by PDBCC ID mods =
-ProteinModification.getByPdbccId("SEP");
+ProteinModificationRegistry.getByPdbccId("SEP");
 
 // a set of protein modifications by category mods =
-ProteinModification.getByCategory(ModificationCategory.ATTACHMENT);
+ProteinModificationRegistry.getByCategory(ModificationCategory.ATTACHMENT);
 
 // a set of protein modifications by occurrence type mods =
-ProteinModification.getByOccurrenceType(ModificationOccurrenceType.NATURAL);
+ProteinModificationRegistry.getByOccurrenceType(ModificationOccurrenceType.NATURAL);
 
 // a set of protein modifications by a keyword mods =
-ProteinModification.getByKeyword("phosphoprotein");
+ProteinModificationRegistry.getByKeyword("phosphoprotein");
 
 // a set of protein modifications by involved components. mods =
-ProteinModification.getByComponent(Component.of("FAD",
+ProteinModificationRegistry.getByComponent(Component.of("FAD",
 ComponentType.LIGAND));
 
 </java>
