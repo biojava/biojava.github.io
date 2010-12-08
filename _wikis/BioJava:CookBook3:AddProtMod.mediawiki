@@ -14,11 +14,12 @@ ModificationLinkage linkage = new ModificationLinkage(components, 0, "SG", 1, "S
 // define the modification condition, i.e. what components are involved and what atoms are linked between them
 ModificationCondition condition = new ModificationConditionImpl(components, Collections.singletonList(linkage));
 
-// register the modification and set optional information
-ProteinModification.register("0018_test", 
-        ModificationCategory.CROSS_LINK_2,
-        ModificationOccurrenceType.NATURAL,
-        condition)
+// build a modification
+ProteinModification mod = 
+        new ProteinModificationImpl.Builder("0018_test", 
+		ModificationCategory.CROSS_LINK_2,
+		ModificationOccurrenceType.NATURAL,
+		condition)
         .setDescription("A protein modification that effectively cross-links two L-cysteine residues to form L-cystine.")
         .setFormula("C 6 H 8 N 2 O 2 S 2")
         .setResidId("AA0025")
@@ -27,7 +28,11 @@ ProteinModification.register("0018_test",
         .setPsimodName("L-cystine (cross-link)")
         .setSystematicName("(R,R)-3,3'-disulfane-1,2-diylbis(2-aminopropanoic acid)")
         .addKeyword("disulfide bond")
-        .addKeyword("redox-active center");
+        .addKeyword("redox-active center")
+	.build();
+
+//register the modification
+ProteinModificationRegistry.register(mod);
 </java>
 
 ==Example: definedisulfide bond in XML file and register by Java code==
