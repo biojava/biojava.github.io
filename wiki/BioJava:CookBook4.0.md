@@ -45,9 +45,8 @@ How Do I....?
 -   [Overview of
     biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
 
-**Required modules**: ''biojava3-core
-
-**Required external library**: *forester.jar*
+**Required modules**: ''biojava3-core **Required external library**:
+*forester.jar*
 
 ### biojava3-alignment
 
