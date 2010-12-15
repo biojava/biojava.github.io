@@ -66,11 +66,8 @@ biojava3-phylo*
 
 ### Protein Structure
 
-**Required modules**: *biojava-structure, alignment* (will change soon
-to new biojava3-alignment)
-
-**Optional module** : *biojava-structure-gui* for the 3D visualisation
-
+**Required modules**: *biojava3-structure, biojava3-alignment*
+**Optional module** : *biojava3-structure-gui* for the 3D visualisation
 **Optional external library** : *JmolApplet.jar* for the 3D
 visualisation
 
