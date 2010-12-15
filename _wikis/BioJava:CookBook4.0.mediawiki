@@ -23,7 +23,6 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:Phylo:Overview|Overview of biojava3-phylo?]]
 
 '''Required modules''': ''biojava3-core 
-
 '''Required external library''': ''forester.jar''
 
 === biojava3-alignment ===
