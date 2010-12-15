@@ -52,9 +52,7 @@ How Do I....?
 ### biojava3-alignment
 
 **Required modules**: *biojava3-alignment, biojava3-core,
-biojava3-phylo*
-
-**Required external library**: *forester.jar*
+biojava3-phylo* **Required external library**: *forester.jar*
 
 -   [How can I calculate a Pairwise Sequence
     Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
