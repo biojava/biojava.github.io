@@ -131,9 +131,8 @@ public void loadStructureFromCache(){
       String pdbFilePath = "/tmp/";
 
       // we can set a flag if the file should be cached in memory
-      // this will enhance IO massively if the same files have to be accessed over and over again.
-      // since this is a soft cache, no danger of memory leak
-      // this is actually not necessary to provide, since this will be set automatically by the Atom Cache.  
+      // This will enhance IO massively if the same files have to be accessed over and over again.
+      // This property is actually not necessary to provide, since this will be set automatically by the Atom Cache.  
       // The  default is "true" if the AtomCache is being used.
       System.setProperty(InputStreamProvider.CACHE_PROPERTY, "true");
 
