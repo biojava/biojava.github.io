@@ -146,7 +146,8 @@ accessed through AminoAcid.getSecStruc();
 ### setAlignSeqRes(boolean)
 
 Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB
-file be aligned? (default:yes)
+file be aligned? (default:yes) This alignment is done in order to map
+the ATOM records onto the SEQRES sequence.
 
 ### loadChemComp(boolean)
 
