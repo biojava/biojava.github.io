@@ -119,12 +119,6 @@ VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDN
 
 The FileParsingParameters class allows to configure various aspects of the file parser:
 
-=== setParseCAOnly(boolean) ===
-Parse only the Atom records for C-alpha atoms 
-
-===setParseSecStruc(boolean) === 
-A flag if the secondary structure information from the PDB file (author's assignment) should be parsed.    If true the assignment can be accessed through AminoAcid.getSecStruc(); 
- 
 ===setAlignSeqRes(boolean)===
 Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB file be aligned? (default:yes) This alignment is done in order to map the ATOM records onto the SEQRES sequence.
 
@@ -139,6 +133,12 @@ Without the correct representations, those groups would be flagged as
 
 ===parseHeaderOnly(boolean)===
 This tells the parser to ignore ATOM records and only parse the header of the file.
+
+=== setParseCAOnly(boolean) ===
+Parse only the Atom records for C-alpha atoms 
+
+===setParseSecStruc(boolean) === 
+A flag if the secondary structure information from the PDB file (author's assignment) should be parsed.    If true the assignment can be accessed through AminoAcid.getSecStruc();
 
 == Caching of structure data ==
 
