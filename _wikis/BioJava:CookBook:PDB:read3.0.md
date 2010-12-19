@@ -133,16 +133,6 @@ What do the parameters for the file parsing mean?
 The FileParsingParameters class allows to configure various aspects of
 the file parser:
 
-### setParseCAOnly(boolean)
-
-Parse only the Atom records for C-alpha atoms
-
-### setParseSecStruc(boolean)
-
-A flag if the secondary structure information from the PDB file
-(author's assignment) should be parsed. If true the assignment can be
-accessed through AminoAcid.getSecStruc();
-
 ### setAlignSeqRes(boolean)
 
 Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB
@@ -164,6 +154,16 @@ those groups would be flagged as "X", or might be missing
 
 This tells the parser to ignore ATOM records and only parse the header
 of the file.
+
+### setParseCAOnly(boolean)
+
+Parse only the Atom records for C-alpha atoms
+
+### setParseSecStruc(boolean)
+
+A flag if the secondary structure information from the PDB file
+(author's assignment) should be parsed. If true the assignment can be
+accessed through AminoAcid.getSecStruc();
 
 Caching of structure data
 -------------------------
