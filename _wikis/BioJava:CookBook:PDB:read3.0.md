@@ -159,6 +159,11 @@ definitions. This has an impact on the sequence alignment that is done
 during the alignSeqRes process. Without the correct representations,
 those groups would be flagged as "X", or might be missing
 
+### parseHeaderOnly(boolean)
+
+This tells the parser to ignore ATOM records and only parse the header
+of the file.
+
 Caching of structure data
 -------------------------
 
