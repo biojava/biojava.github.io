@@ -132,9 +132,10 @@ Caching of structure data
 
 If you are running a script that is frequently re-using the same PDB
 structures, there is a new utility class that keeps an in-memory cache
-of the files for quicker access. The cache is a soft-cache, this means
-it won't cause out of memory exceptions, but garbage collect the data if
-the Java virtual machine needs to free up space.
+of the files for quicker access, the AtomCache. The cache is a
+soft-cache, this means it won't cause out of memory exceptions, but
+garbage collects the data if the Java virtual machine needs to free up
+space. The AtomCache is thread-safe.
 
 <java> public void loadStructureFromCache(){
 
@@ -150,7 +151,8 @@ the Java virtual machine needs to free up space.
 `     // we can set a flag if the file should be cached in memory`  
 `     // this will enhance IO massively if the same files have to be accessed over and over again.`  
 `     // since this is a soft cache, no danger of memory leak`  
-`     // this is actually not necessary to provide, since the default is "true" if the AtomCache is being used.`  
+`     // this is actually not necessary to provide, since this will be set automatically by the Atom Cache.  `  
+`     // The  default is "true" if the AtomCache is being used.`  
 `     System.setProperty(InputStreamProvider.CACHE_PROPERTY, "true");`
 
 `     AtomCache cache = new AtomCache(pdbFilePath,isPdbDirectorySplit);`
