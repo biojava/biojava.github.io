@@ -115,6 +115,30 @@ VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDN
 
 </pre>
 
+== What do the parameters for the file parsing mean? ==
+
+The FileParsingParameters class allows to configure various aspects of the file parser:
+
+ 
+=== setParseCAOnly(boolean) ===
+Parse only the Atom records for C-alpha atoms 
+
+===setParseSecStruc(boolean) === 
+A flag if the secondary structure information from the PDB file (author's assignment) should be parsed.    If true the assignment can be accessed through AminoAcid.getSecStruc(); 
+ 
+===setAlignSeqRes(boolean)===
+Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB file be aligned? (default:yes)
+ 
+===loadChemComp(boolean)=== 
+Should the definitions of chemical components be downloaded from the PDB? The [http://www.wwpdb.org/ccd.html chemical components] provide the chemically correct definition of
+the various groups. There are quite a few chemically modified amino
+acids in PDB files which can be represented as amino acids, rather
+than Hetatom groups, based on these definitions. This has an impact on
+the sequence alignment that is done during the alignSeqRes process.
+Without the correct representations, those groups would be flagged as
+"X", or might be missing
+
+
 == Caching of structure data ==
 
 If you are running a script that is frequently re-using the same PDB structures, there is a new utility class that keeps an in-memory cache of the files for quicker access, the AtomCache. The cache is a soft-cache, this means it won't cause out of memory exceptions, but garbage collects the data if the Java virtual machine needs to free up space. The AtomCache is thread-safe.

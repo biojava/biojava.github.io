@@ -127,6 +127,38 @@ Will give this output:
     Atom ligands: [Hetatom 147 PO4 true atoms: 1, Hetatom 148 HEM true atoms: 43]
     VHLTPEEKSAVTALWGKVNVDEVGGEALGRLLVVYPWTQRFFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLKGTFATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH
 
+What do the parameters for the file parsing mean?
+-------------------------------------------------
+
+The FileParsingParameters class allows to configure various aspects of
+the file parser:
+
+### setParseCAOnly(boolean)
+
+Parse only the Atom records for C-alpha atoms
+
+### setParseSecStruc(boolean)
+
+A flag if the secondary structure information from the PDB file
+(author's assignment) should be parsed. If true the assignment can be
+accessed through AminoAcid.getSecStruc();
+
+### setAlignSeqRes(boolean)
+
+Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB
+file be aligned? (default:yes)
+
+### loadChemComp(boolean)
+
+Should the definitions of chemical components be downloaded from the
+PDB? The [chemical components](http://www.wwpdb.org/ccd.html) provide
+the chemically correct definition of the various groups. There are quite
+a few chemically modified amino acids in PDB files which can be
+represented as amino acids, rather than Hetatom groups, based on these
+definitions. This has an impact on the sequence alignment that is done
+during the alignSeqRes process. Without the correct representations,
+those groups would be flagged as "X", or might be missing
+
 Caching of structure data
 -------------------------
 
