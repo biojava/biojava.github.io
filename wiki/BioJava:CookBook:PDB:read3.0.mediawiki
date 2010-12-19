@@ -126,8 +126,8 @@ Parse only the Atom records for C-alpha atoms
 A flag if the secondary structure information from the PDB file (author's assignment) should be parsed.    If true the assignment can be accessed through AminoAcid.getSecStruc(); 
  
 ===setAlignSeqRes(boolean)===
-Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB file be aligned? (default:yes)
- 
+Should the AminoAcid sequences from the SEQRES and ATOM records of a PDB file be aligned? (default:yes) This alignment is done in order to map the ATOM records onto the SEQRES sequence.
+
 ===loadChemComp(boolean)=== 
 Should the definitions of chemical components be downloaded from the PDB? The [http://www.wwpdb.org/ccd.html chemical components] provide the chemically correct definition of
 the various groups. There are quite a few chemically modified amino
