@@ -2,6 +2,12 @@
 title: Current events
 ---
 
+BioJava 3.0 released
+--------------------
+
+Biojava 3.0 was released on Dec 28th 2010. See the <BioJava:Download>
+for accessing the latest version.
+
 Google Summer of Code
 ---------------------
 
