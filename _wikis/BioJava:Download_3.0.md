@@ -10,8 +10,7 @@ About
 -----
 
 *BioJava* 3.0 has been released and is available using Maven from
-[<http://biojava.org/download/maven/>
-<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
+[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
 
 Over the last year *BioJava* has undergone a major re-write. It has been
 modularized into small, re-usable components and a number of new
