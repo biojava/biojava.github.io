@@ -66,7 +66,16 @@ You can add the BioJava repository by adding the following XML to your project .
 | [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0/biojava3-phylo-3.0.jar biojava3-phylo-3.0.jar] 
 | [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0/biojava3-phylo-3.0-sources.jar biojava3-phylo-3.0-sources.jar] 
 | [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0/biojava3-phylo-3.0-javadoc.jar biojava3-phylo-3.0-javadoc.jar]
-
+|-
+| biojava3-protmod 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protmod/3.0/biojava3-protmod-3.0.jar biojava3-protmod-3.0.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protmod/3.0/biojava3-protmod-3.0-sources.jar biojava3-protmod-3.0-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protmod/3.0/biojava3-protmod-3.0-javadoc.jar biojava3-protmod-3.0-javadoc.jar]
+|-
+| biojava3-ws 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0/biojava3-ws-3.0.jar biojava3-ws-3.0.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0/biojava3-ws-3.0-sources.jar biojava3-ws-3.0-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0/biojava3-ws-3.0-javadoc.jar biojava3-ws-3.0-javadoc.jar]
 
 |}
 
