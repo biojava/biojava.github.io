@@ -2,11 +2,11 @@
 title: BioJava3 Proposal
 ---
 
-BioJava 3 development is well under way
-=======================================
+BioJava 3 has been released
+===========================
 
 This page was used while starting the discussions for creating the new
-version. The current status of the project is available from
+version. BioJava 3.0 has been released on Dec. 28th 2010.
 
 [BioJava3\_project](BioJava3_project "wikilink")
 
