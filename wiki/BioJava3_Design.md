@@ -2,6 +2,12 @@
 title: BioJava3 Design
 ---
 
+**Not current**
+
+The content on this page was used during the development of the BioJava
+3. BioJava 3 has been released on December 28th 2010. The latest release
+is available from <BioJava:Download>
+
 Implementation
 --------------
 
