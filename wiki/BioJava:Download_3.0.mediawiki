@@ -29,6 +29,27 @@ You can add the BioJava repository by adding the following XML to your project .
 	</repositories>
 </pre>
 
+== Manual Download ==
+{|
+|+
+! Module
+! Binary Jar
+! Source Jar
+! Javadoc Jar
+|-
+| biojava3-core 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0.jar biojava3-core-3.0.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0-sources.jar biojava3-core-3.0-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0-javadoc.jar biojava3-core-3.0-javadoc.jar]
+|-
+| biojava3-alignment 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0.jar biojava3-alignment-3.0.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0-sources.jar biojava3-alignment-3.0-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0-javadoc.jar biojava3-alignment-3.0-javadoc.jar]
+|-
+
+|}
+
 == Browse API docs ==
 You can also browse the documentation at [http://www.biojava.org/docs/api3.0/ BioJava 3.0 api]
 
