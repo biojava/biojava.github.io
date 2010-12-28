@@ -1,0 +1,102 @@
+---
+title: BioJava:Download 3.0
+---
+
+This page offers downloads for the <b>BioJava 3.0 release</b>.
+
+BioJava 3.0 requires <b>Java 1.6</b> or later.
+
+About
+-----
+
+*BioJava* 3.0 has been released and is available using Maven from
+[<http://biojava.org/download/maven/>
+<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
+
+Over the last year *BioJava* has undergone a major re-write. It has been
+modularized into small, re-usable components and a number of new
+features have been added. The new approach, modeled after the apache
+commons, minimizes dependencies and allows for easier contribution of
+new components.
+
+### At the present the main modules are:
+
+**biojava3-core**: The core module offers the basic tools required for
+working with biological sequences of various types (DNA, RNA, protein).
+Besides file parsers for popular file formats it provides efficient data
+structures for sequence manipulation and serialization.
+
+**biojava3-genome**: The genome module provides support for reading and
+writing of gtf, gff2, gff3 file formats
+
+**biojava3-alignment**: This module provides implementations for
+pairwise and multiple sequence alignments (MSA). The implementation for
+MSA provides a flexible and multi-threaded framework that works in
+linear space and that, as an option, allows the users to define anchors
+that are used in the build up of the multiple alignment.
+
+**biojava3-structure**: The 3D protein structure module provides parsers
+and a data model for working PDB and mmCif files. New features in this
+release are the implementation of the CE and FATCAT structural alignment
+algorithms and the support of chemical component definition files, for a
+chemically and biologically correct representation of modified residues
+and ligands.
+
+**biojava3-protmod**: The protein modification module can detect more
+than 200 protein modifications and crosslinks in 3D protein structures.
+It comes with an XML file and Java data structures to store information
+about different types of protein modifications collected from PDB,
+RESID, and PSI-MOD.
+
+Not every feature of the BioJava 1.X code base was migrated over to
+BioJava 3.0. A modularized version of the 1.X sources is available as a
+new "biojava-legacy" project.
+
+Maven Download
+--------------
+
+BioJava 3.0 requires [Maven Maven](http://maven.apache.org/) for the
+build process. We are providing a BioJava specific Maven repository at
+<http://biojava.org/download/maven/> .
+
+You can add the BioJava repository by adding the following XML to your
+project .pom file:
+
+        <repositories>
+            ...
+            <repository>
+                <id>biojava-maven-repo</id>
+                <name>BioJava repository</name>
+                <url>http://www.biojava.org/download/maven/</url>           
+            </repository>
+        </repositories>
+
+Browse API docs
+---------------
+
+You can also browse the documentation at [BioJava 3.0
+api](http://www.biojava.org/docs/api3.0/)
+
+Release Date
+------------
+
+BioJava 3.0 has been released on December 28th, 2010.
+
+Getting older versions
+----------------------
+
+-   The legacy release of 1.7.1 can be found
+    [here](BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
+-   The legacy release of 1.7 can be found
+    [here](BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
+-   The legacy release of 1.6 can be found
+    [here](BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
+-   The legacy release of 1.5 can be found
+    [here](BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
+-   The legacy release of 1.4 can be found
+    [here](BioJava:Download 1.4 "wikilink")
+-   The legacy release 1.3 can be found
+    [here](BioJava:Download 1.3 "wikilink").
+-   Older releases of BioJava can be found in the [download
+    area](http://www.biojava.org/download/).
+
