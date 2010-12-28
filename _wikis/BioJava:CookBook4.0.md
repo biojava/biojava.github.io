@@ -6,8 +6,8 @@ BioJava Cookbook for release 3.\*
 ---------------------------------
 
 BioJava 3 is a major re-write of BioJava 1. As such many things work
-differently. This cookbook will provide examples how to work with the
-new codebase.
+differently. This cookbook provides examples how to work with the new
+codebase.
 
 The page was inspired by various programming cookbooks and follows a
 "How do I...?" type approach. Each "How do I?" is linked to some example
