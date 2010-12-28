@@ -1,10 +1,9 @@
 == BioJava 3.0 released ==
 
-Biojava 3.0 was released on Dec 28th 2010. See the [[BioJava:Download]] for accessing the latest version.
+Biojava 3.0 was released on Dec 28th 2010. 
 
 
-BioJava 3.0 has been released and is available using Maven from
-http://biojava.org/download/maven/
+BioJava 3.0 has been released and is available from [[BioJava:Download]].
 
 BioJava is a mature open-source project that provides a framework for
 processing of biological data. BioJava contains powerful analysis and
