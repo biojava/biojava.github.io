@@ -2,6 +2,14 @@
 title: BioJava:CookBook1.7
 ---
 
+BioJava 3.0 release
+-------------------
+
+Many things changed in the BioJava 3.0 release. The cookbook for the new
+API is available from here: <BioJava:CookBook3.0> The content on this
+page is still available to support the legacy code base, which is now
+available through the biojava-legacy project in the BioJava SVN.
+
 BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry
 ------------------------------------------------------------------
 
@@ -24,12 +32,6 @@ mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
 go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 If you re-use code from the cookbook please cite:
-
-BioJava 3.0 release
--------------------
-
-Many things changed in the BioJava 3.0 release. The cookbook for the new
-API is available from here: <BioJava:CookBook3.0>
 
 Announcing
 ----------

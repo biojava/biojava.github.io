@@ -1,3 +1,8 @@
+== BioJava 3.0 release ==
+
+Many things changed in the BioJava 3.0 release.  The cookbook for the new API is available from here:
+[[BioJava:CookBook3.0]]  The content on this page is still available to support the legacy code base, which is now available through the biojava-legacy project in the BioJava SVN.
+
 == BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry ==
 
 BioJava can be both big and intimidating. For those of us who are in a hurry there really is a whole lot there to get your head around. This document is designed to help you develop BioJava programs that do 99% of common tasks without needing to read and understand 99% of the BioJava API.
@@ -9,11 +14,6 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 If you re-use code from the cookbook please cite:
 
 {{Reference}}
-
-== BioJava 3.0 release ==
-
-Many things changed in the BioJava 3.0 release.  The cookbook for the new API is available from here:
-[[BioJava:CookBook3.0]]
 
 == Announcing ==
 
