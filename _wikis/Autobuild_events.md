@@ -13,7 +13,7 @@ build based on the latest SVN content.
 
 The automated builds make sure that the source code repository at all
 times compiles fine and all JUnit tests are passed correctly. If this is
-the case, a Maven based SNAPSHOP build of all biojava modules is created
+the case, a Maven based SNAPSHOT build of all biojava modules is created
 and automatically provided for download at the BioJava Maven repository.
 Note: Snapshot builds are based on the latest source code checkout which
 might contain experimental or alpha-release source code. If you are
