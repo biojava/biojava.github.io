@@ -1,3 +1,7 @@
+== BioJava 3.0 released ==
+
+Biojava 3.0 was released on Dec 28th 2010. See the [[BioJava:Download]] for accessing the latest version.
+
 == Google Summer of Code ==
 
 BioJava is participating in the Google Summer of Code. We are currently accepting student applications. For more info see here [[Google_Summer_of_Code]]
