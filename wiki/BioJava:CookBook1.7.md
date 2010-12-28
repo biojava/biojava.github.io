@@ -25,11 +25,11 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 If you re-use code from the cookbook please cite:
 
-Upcoming 3.0 release
---------------------
+BioJava 3.0 release
+-------------------
 
-Many things will change in the upcoming BioJava 3.0 release. A preview
-on the new API is available from here: <BioJava:CookBook3.0>
+Many things changed in the BioJava 3.0 release. The cookbook for the new
+API is available from here: <BioJava:CookBook3.0>
 
 Announcing
 ----------
