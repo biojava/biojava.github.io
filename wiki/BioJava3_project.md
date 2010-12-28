@@ -11,7 +11,7 @@ Status
 **RELEASED**
 
 BioJava 3.0 has been released on December 28th 2010. A copy of the code
-is available from <BioJava::Download> Documentation is available from
+is available from <BioJava:Download> Documentation is available from
 <BioJava:CookBook3.0>
 
 Availability
