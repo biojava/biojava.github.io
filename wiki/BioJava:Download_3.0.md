@@ -65,6 +65,14 @@ Release Date
 
 BioJava 3.0 has been released on December 28th, 2010.
 
+Legacy Code
+-----------
+
+Not every feature of the BioJava 1.X code base was migrated over to
+BioJava 3.0. A modularized version of the 1.X sources is available as a
+new "biojava-legacy" project in SVN. The current legacy builds are at
+version 1.8.
+
 Getting older versions
 ----------------------
 
