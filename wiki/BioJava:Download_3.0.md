@@ -40,6 +40,15 @@ project .pom file:
             </repository>
         </repositories>
 
+Manual Download
+---------------
+
+| Module             | Binary Jar                                                                                                                    | Source Jar                                                                                                                                    | Javadoc Jar                                                                                                                                   |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| biojava3-core      | [biojava3-core-3.0.jar](http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0.jar)                | [biojava3-core-3.0-sources.jar](http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0-sources.jar)                | [biojava3-core-3.0-javadoc.jar](http://biojava.org/download/maven/org/biojava/biojava3-core/3.0/biojava3-core-3.0-javadoc.jar)                |
+| biojava3-alignment | [biojava3-alignment-3.0.jar](http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0.jar) | [biojava3-alignment-3.0-sources.jar](http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0-sources.jar) | [biojava3-alignment-3.0-javadoc.jar](http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0/biojava3-alignment-3.0-javadoc.jar) |
+||
+
 Browse API docs
 ---------------
 
