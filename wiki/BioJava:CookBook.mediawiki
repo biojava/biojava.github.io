@@ -1,1 +1,1 @@
-#REDIRECT [[BioJava:CookBook1.7]]
+#REDIRECT [[BioJava:CookBook3.0]]
