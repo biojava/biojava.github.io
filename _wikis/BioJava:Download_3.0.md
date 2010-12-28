@@ -71,7 +71,7 @@ Legacy Code
 Not every feature of the BioJava 1.X code base was migrated over to
 BioJava 3.0. A modularized version of the 1.X sources is available as a
 new "biojava-legacy" project in SVN. The current legacy builds are at
-version 1.8.
+version 1.8. (also available via Maven)
 
 Getting older versions
 ----------------------
