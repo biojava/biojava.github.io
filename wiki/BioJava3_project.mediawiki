@@ -1,8 +1,10 @@
 =BioJava 3=
 
 ==Status==
+'''RELEASED'''
 
-Coding has started in the [[CVS_to_SVN_Migration|BioJava SVN repository]]. At the present we are at an beta stage. Documentation is emerging at [[BioJava:CookBook3.0]]
+BioJava 3.0 has been released on December 28th 2010. A copy of the code is available from [[BioJava::Download]]
+Documentation is available from [[BioJava:CookBook3.0]]
 
 ==Availability==
 See the [[CVS_to_SVN_Migration|BioJava SVN access]] page for how to check out the code from SVN or get the latest SNAPSHOT builds.
