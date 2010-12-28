@@ -106,3 +106,8 @@ visualisation
 -   [How can I define and register a new protein
     modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
+Legacy 1.7 CookBook
+-------------------
+
+The CookBook for the legacy 1.X code base is available from
+<BioJava:CookBook1.7>.
