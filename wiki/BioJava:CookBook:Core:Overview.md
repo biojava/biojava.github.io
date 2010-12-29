@@ -172,7 +172,7 @@ FastaWriterHelper.
 <java>
 
 `       LinkedHashMap`<String, DNASequence>` dnaSequences = FastaReaderHelper.readFastaDNASequence(new File("454Scaffolds.fna"));`  
-`       FastaWriterHelper.writeNucleotideSequence(new File("454Scaffolds-1.fna",dnaSequences.values());`
+`       FastaWriterHelper.writeNucleotideSequence(new File("454Scaffolds-1.fna"),dnaSequences.values());`
 
 </java>
 
