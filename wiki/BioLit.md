@@ -12,8 +12,7 @@ PubMedCentral.
 
 This library is used by the RCSB-PDB web site to dynamically request the
 data from the [BioLit RESTful web
-services](http://biolit.ucsd.edu/doc/rest.jspl). For an example see
-here:
+services](http://biolit.ucsd.edu/doc/rest.jsp). For an example see here:
 [<http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi>](http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi)
 
 ### Source Code Examples
