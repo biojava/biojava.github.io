@@ -2,7 +2,7 @@
 
 The BioJava - BioLit module allows to perform web service request to the webservices provided by [http://biolit.ucsd.edu BioLit]. BioLit allows to access information from open access articles that are published in PubMedCentral.
 
-This library is used by the RCSB-PDB web site to dynamically request the data from the [http://biolit.ucsd.edu/doc/rest.jspl BioLit RESTful web services].  For an example see here:
+This library is used by the RCSB-PDB web site to dynamically request the data from the [http://biolit.ucsd.edu/doc/rest.jsp BioLit RESTful web services].  For an example see here:
 [http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi http://www.rcsb.org/pdb/explore/literature.do?structureId=1aoi]
 
 === Source Code Examples ===
