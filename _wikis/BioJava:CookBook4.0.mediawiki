@@ -62,6 +62,12 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
 * [[BioJava:CookBook3:AddProtMod|How can I define and register a new protein modification?]]
 
+=== biojava3-ws ===
+
+'''Required modules''': ''biojava3-core, biojava-ws''
+
+* [[BioJava:CookBook3:NCBIQBlastService|How can I use NCBI's QBlast service ?]]
+
 == Legacy 1.7 CookBook ==
 
 The CookBook for the legacy 1.X code base is available from [[BioJava:CookBook1.7]].
