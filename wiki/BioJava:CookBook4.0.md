@@ -106,6 +106,13 @@ visualisation
 -   [How can I define and register a new protein
     modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
+### biojava3-ws
+
+**Required modules**: *biojava3-core, biojava-ws*
+
+-   [How can I use NCBI's QBlast service
+    ?](BioJava:CookBook3:NCBIQBlastService "wikilink")
+
 Legacy 1.7 CookBook
 -------------------
 
