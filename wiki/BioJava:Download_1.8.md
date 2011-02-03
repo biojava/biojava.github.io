@@ -93,6 +93,10 @@ Getting older versions
     [here](BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
     [here](BioJava:Download 1.3 "wikilink").
+
+Getting BioJava 3
+-----------------
+
 -   BioJava 3 can be found in the [download
     area](http://www.biojava.org/download/).
 
