@@ -40,54 +40,49 @@ project .pom file:
 Manual Download
 ---------------
 
-| Module    | Binary Jar                                                                                         | Source Jar                                                                                                         | Javadoc Jar                                                                                                        |
-|-----------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| alignment | [alignment-1.8.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8.jar) | [alignment-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-sources.jar) | [alignment-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-javadoc.jar) |
-| biosql    | [biosql-1.8.jar](http://http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8.jar)   | [biosql-1.8-sources.jar](http://http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-sources.jar)   | [biosql-1.8-javadoc.jar](http://http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-javadoc.jar)   |
+| Module     | Binary Jar                                                                                            | Source Jar                                                                                                            | Javadoc Jar                                                                                                           |
+|------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| alignment  | [alignment-1.8.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8.jar)    | [alignment-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-sources.jar)    | [alignment-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-javadoc.jar)    |
+| biosql     | [biosql-1.8.jar](http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8.jar)             | [biosql-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-sources.jar)             | [biosql-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-javadoc.jar)             |
+| blast      | [blast-1.8.jar](http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8.jar)                | [blast-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8-sources.jar)                | [blast-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8-javadoc.jar)                |
+| bytecode   | [bytecode-1.8.jar](http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8.jar)       | [bytecode-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8-sources.jar)       | [bytecode-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8-javadoc.jar)       |
+| core       | [core-1.8.jar](http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8.jar)                   | [core-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8-sources.jar)                   | [core-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8-javadoc.jar)                   |
+| das        | [das-1.8.jar](http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8.jar)                      | [das-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8-sources.jar)                      | [das-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8-javadoc.jar)                      |
+| gui        | [gui-1.8.jar](http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8.jar)                      | [gui-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8-sources.jar)                      | [gui-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8-javadoc.jar)                      |
+| phylo      | [phylo-1.8.jar](http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8.jar)                | [phylo-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8-sources.jar)                | [phylo-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8-javadoc.jar)                |
+| sequencing | [sequencing-1.8.jar](http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8.jar) | [sequencing-1.8-sources.jar](http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8-sources.jar) | [sequencing-1.8-javadoc.jar](http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8-javadoc.jar) |
 
-### Support libraries
-
--   [bytecode.jar](http://www.biojava.org/download/bj171/support-jars/bytecode.jar):
-    Required to run biojava
--   [commons-cli.jar](http://www.biojava.org/download/bj171/support-jars/commons-cli.jar):
-    Only required to compile and use some of the demos
--   [commons-collections-2.1.jar](http://www.biojava.org/download/bj171/support-jars/commons-collections-2.1.jar):
-    only required for some demos and BioSQL access (and building
-    biojava.jar)
--   [commons-dbcp-1.1.jar](http://www.biojava.org/download/bj171/support-jars/commons-dbcp-1.1.jar):
-    Only required for legacy BioSQL access (and building biojava.jar)
--   [commons-pool-1.1.jar](http://www.biojava.org/download/bj171/support-jars/commons-pool-1.1.jar):
-    Only required for legacy BioSQL access (and building biojava.jar)
--   [jgrapht-jdk1.5.jar](http://www.biojava.org/download/bj171/support-jars/jgrapht-jdk1.5.jar):
-    Only required for NEXUS file parsing (and building biojava.jar)
-
-Source download
+Browse API docs
 ---------------
 
-The jar file containing the source code is available from
-[biojava-1.7.1-src.jar](http://www.biojava.org/download/bj171/src/biojava-1.7.1-src.jar)
-(6.1Mb). This provides the same directory structure as is available from
-a SVN checkout of the project, including .jar file dependencies.
-
-Documentation
--------------
-
-Documentation is available via
-[biojava-1.7.1-doc.jar](http://www.biojava.org/download/bj171/doc/biojava-1.7.1-doc.jar)
-(11Mb) that includes the javadocs for the API, demos and apps. For some
-browsers, right click and select "Save Link As".
-
-You can also browse the documentation at [BioJava 1.7.1
-api](http://www.biojava.org/docs/api171/)
+You can also browse the documentation at [BioJava Legacy 1.8
+api](http://www.biojava.org/docs/api1.8/)
 
 Release Date
 ------------
 
-BioJava 1.7.1 has been released on January 15th, 2008.
+BioJava 1.8 has been released on December 28th, 2010.
+
+Support libraries
+-----------------
+
+Necessary libraries are available in maven repositories
+
+-   commons-cli.jar: Only required to compile and use some of the demos
+-   commons-collections-2.1.jar: only required for some demos and BioSQL
+    access (and building biojava.jar)
+-   commons-dbcp-1.1.jar: Only required for legacy BioSQL access (and
+    building biojava.jar)
+-   commons-pool-1.1.jar: Only required for legacy BioSQL access (and
+    building biojava.jar)
+-   jgrapht-jdk1.5.jar: Only required for NEXUS file parsing (and
+    building biojava.jar)
 
 Getting older versions
 ----------------------
 
+-   The legacy release of 1.7.1 can be found
+    [here](BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7 can be found
     [here](BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.6 can be found
@@ -98,6 +93,6 @@ Getting older versions
     [here](BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
     [here](BioJava:Download 1.3 "wikilink").
--   Older releases of BioJava can be found in the [download
+-   BioJava 3 can be found in the [download
     area](http://www.biojava.org/download/).
 
