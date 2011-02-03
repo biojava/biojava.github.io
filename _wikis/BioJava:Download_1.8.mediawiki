@@ -97,4 +97,6 @@ Necessary libraries are available in maven repositories
 * The legacy release of 1.5 can be found [[BioJava:Download 1.5|here]] (requires Java 1.4.2+)
 * The legacy release of 1.4 can be found [[BioJava:Download 1.4|here]]
 * The legacy release 1.3 can be found [[BioJava:Download 1.3|here]].
+
+== Getting BioJava 3 ==
 * BioJava 3 can be found in the [http://www.biojava.org/download/ download area].
