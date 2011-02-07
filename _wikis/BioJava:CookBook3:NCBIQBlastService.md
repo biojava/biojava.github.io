@@ -23,16 +23,19 @@ requests, grab the requests ID and fetch the results at a later time.
 To use QBlast, you use a NCBIQBlastService object (which implements
 RemotePairwiseAlignmentService) to manage the connection to the QBlast
 service, submission of requests and fetching of results. To do so, it
-needs a sequence (represented by either a string, a RichSequence object
-or a GID) and a NCBIQBlastAlignmentProperties object. This class
-implements RemotePairwiseAlignmentProperties and it is use to set which
-program and which database to use for the analysis. Right now, it can't
-much make use of other parameters of the QBlast service but the methods
-are in development to fix this situation. One would recover results
-using the same RemoteQBlastService object, which hold submission
-information, and an object of type NCBIQBlastOutputProperties to
-specifiy the informations to recover and the format to present to the
-submitter.
+needs a sequence (represented by either a string or a Sequence object;
+search by GID will be added in a future release) and a
+NCBIQBlastAlignmentProperties object. Submitting a Sequence object is
+the preferred method since it allows for some basic sanity checks
+related to the sequence type-to-program selection. The
+NCBIQBlastAlignmentProperties class implements
+RemotePairwiseAlignmentProperties and it is use to set which program and
+which database to use for the analysis. Right now, it can't much make
+use of other parameters of the QBlast service but the methods are in
+development to fix this situation. One would recover results using the
+same NCBIQBlastService object, which hold submission information, and an
+object of type NCBIQBlastOutputProperties to specify the informations to
+recover and the format to present to the submitter.
 
 Using the interfaces found in package org.biojava3.ws.alignment should
 allow extensions to other remote alignment services like FASTA and Blast
@@ -47,7 +50,7 @@ high in the TO DO list.
 on a ProteinSequence object...
 
 - Do not use multiple threads to send loads of requests to NCBI. This
-would only get you into trouble, up to getting blacklisted by NCBI.
+would only get you into trouble, up to getting you blacklisted by NCBI.
 
 <java>
 
