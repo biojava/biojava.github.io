@@ -74,8 +74,8 @@ public class NCBIQBlastServiceTest {
 `   public static void main(String[] args) {`  
   
 `       NCBIQBlastService rbw;`  
-`               NCBIQBlastAlignmentProperties rqb;`  
-`               NCBIQBlastOutputProperties rof;`  
+`             NCBIQBlastAlignmentProperties rqb;`  
+`             NCBIQBlastOutputProperties rof;`  
 `       InputStream is;`  
 `       ArrayList`<String>` rid = new ArrayList`<String>`();`  
 `       String request = "";`  
