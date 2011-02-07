@@ -73,7 +73,9 @@ public class NCBIQBlastServiceTest {
 `    */`  
 `   public static void main(String[] args) {`  
   
-`       NCBIQBlastOutputProperties rof;`  
+`       NCBIQBlastService rbw;`  
+`               NCBIQBlastAlignmentProperties rqb;`  
+`               NCBIQBlastOutputProperties rof;`  
 `       InputStream is;`  
 `       ArrayList`<String>` rid = new ArrayList`<String>`();`  
 `       String request = "";`  
@@ -87,9 +89,8 @@ public class NCBIQBlastServiceTest {
 `            * You would imagine that one would blast a bunch of sequences of`  
 `            * identical nature with identical parameters...`  
 `            */`  
-`           NCBIQBlastService rbw = new NCBIQBlastService();`
-
-`           NCBIQBlastAlignmentProperties rqb = new NCBIQBlastAlignmentProperties();`
+`           rbw = new NCBIQBlastService();`  
+`           rqb = new NCBIQBlastAlignmentProperties();`
 
 `           rqb.setBlastProgram("blastp");`  
 `           rqb.setBlastDatabase("nr");`  
