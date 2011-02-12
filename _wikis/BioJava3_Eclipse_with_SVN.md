@@ -15,7 +15,8 @@ Prerequisite
 <!-- -->
 
 -   Install the [m2eclipse](http://m2eclipse.sonatype.org/) Maven
-    eclipse plugin.
+    eclipse plugin. Be sure to include SCM integration, offered through
+    the m2eclipse-extras package.
 
 <!-- -->
 
