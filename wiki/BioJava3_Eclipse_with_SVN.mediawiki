@@ -4,7 +4,7 @@
 
 * Make sure you have Java 1.6 installed. (if you are on oSX 10.4.x install [http://landonf.bikemonkey.org/static/soylatte/ soylatte]
 
-* Install the  [http://m2eclipse.sonatype.org/ m2eclipse] Maven eclipse plugin.
+* Install the  [http://m2eclipse.sonatype.org/ m2eclipse] Maven eclipse plugin. Be sure to include SCM integration, offered through the m2eclipse-extras package.
 
 * Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
 
