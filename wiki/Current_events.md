@@ -5,8 +5,8 @@ title: Current events
 BioJava 3.0.1 released
 ----------------------
 
-BioJava 3.0.1 was released on Feb 13th 2011and is available from
-BioJava:Download.
+BioJava 3.0.1 was released on Feb 13th 2011 and is available from
+<BioJava:Download>.
 
 The 3.0.1 release is mainly a bug fixing release for the recent 3.0
 released which provided a major rewrite of the biojava code base. A
