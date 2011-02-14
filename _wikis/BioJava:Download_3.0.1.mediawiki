@@ -33,7 +33,7 @@ You can add the BioJava repository by adding the following XML to your project .
 
 == Manual Download ==
 
-bundel containing all jars, source and javadocs: [http://biojava.org/download/bj3.0.1/biojava3.0.1/biojava3.0.1-all.tar.gz biojava3.0.1-all]
+bundel containing all jars, source and javadocs: [http://biojava.org/download/bj3.0.1/biojava3.0.1-all.tar.gz biojava3.0.1-all]
 
 {|
 |+
