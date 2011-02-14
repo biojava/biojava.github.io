@@ -11,7 +11,7 @@ following people have stepped up to become module leader:
 BioJava 3.0
 -----------
 
-Module: biojava-core Lead: Scooter Willis
+Module: biojava3-core Lead: Scooter Willis
 
 Module: biojava3-structure Lead: Andreas Prlic
 
