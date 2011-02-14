@@ -80,7 +80,7 @@ You can add the BioJava repository by adding the following XML to your project .
 |}
 
 == Browse API docs ==
-You can also browse the documentation at [http://www.biojava.org/docs/api3.0/ BioJava 3.0 api]
+You can also browse the documentation at [http://www.biojava.org/docs/api3.0/ BioJava 3.0.1 api]
 
 ==Release Date==
 BioJava 3.0 has been released on December 28th, 2010.

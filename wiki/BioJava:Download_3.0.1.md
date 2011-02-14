@@ -56,7 +56,7 @@ Manual Download
 Browse API docs
 ---------------
 
-You can also browse the documentation at [BioJava 3.0
+You can also browse the documentation at [BioJava 3.0.1
 api](http://www.biojava.org/docs/api3.0/)
 
 Release Date
