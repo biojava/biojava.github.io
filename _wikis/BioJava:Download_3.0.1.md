@@ -75,6 +75,10 @@ version 1.8. (also available via Maven)
 Getting older versions
 ----------------------
 
+-   The legacy release of 3.0 can be found
+    [here](BioJava:Download 3.0 "wikilink") (requires Java 1.5+)
+-   The legacy release of 1.8.1 can be found
+    [here](BioJava:Download 1.8 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7.1 can be found
     [here](BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7 can be found
