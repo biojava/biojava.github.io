@@ -4,7 +4,7 @@ The following list of modules for BioJava have been defined and the following pe
 
 == BioJava 3.0 ==
 
-Module: biojava-core Lead: Scooter Willis 
+Module: biojava3-core Lead: Scooter Willis 
 
 Module: biojava3-structure Lead: Andreas Prlic
 
