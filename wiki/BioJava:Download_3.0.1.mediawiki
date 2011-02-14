@@ -93,7 +93,7 @@ a new "biojava-legacy" project in SVN. The current legacy builds are at version 
 == Getting older versions ==
 
 * The legacy release of 3.0 can be found [[BioJava:Download 3.0|here]] (requires Java 1.5+)
-* The legacy release of 1.8.1 can be found [[BioJava:Download 1.8|here]] (requires Java 1.5+)
+* The legacy release of 1.8 can be found [[BioJava:Download 1.8|here]] (requires Java 1.5+)
 * The legacy release of 1.7.1 can be found [[BioJava:Download 1.7.1|here]] (requires Java 1.5+)
 * The legacy release of 1.7 can be found [[BioJava:Download 1.7|here]] (requires Java 1.5+)
 * The legacy release of 1.6 can be found [[BioJava:Download 1.6|here]] (requires Java 1.5+)
