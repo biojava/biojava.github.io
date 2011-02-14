@@ -18,6 +18,9 @@ features have been added. The new approach, modeled after the apache
 commons, minimizes dependencies and allows for easier contribution of
 new components.
 
+The 3.0.1 release is mainly a bug fixing release for the recent 3.0
+released which provided a major rewrite of the biojava code base.
+
 View the <BioJava:Modules> page for a list of current modules.
 
 Maven Download
