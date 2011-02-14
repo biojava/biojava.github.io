@@ -64,6 +64,17 @@ In an effort to provide a flexible and modular api the abstraction can often mak
         FastaWriterHelper.writeNucleotideSequence(new File("454Scaffolds-1.fna"),dnaSequences.values());
 </java>
 
+== Working with Sequence Objects ==
+
+When working with Sequence objects it is important to keep a number of points in mind
+
+# You must never rely on the backing storage of a Sequence
+# Never perform operations on the String form of a Sequence since this will incur a performance penalty
+# Sequences are iterable and can be stepped through using Java5's foreach loop construct
+# All Sequences have a generic capture of the type of compound they contain. Learn to use this capture to increase or decrease the types of Sequence you want to process
+# If you need to change the contents of a Sequence investigate the views used by Translation on how to avoid costly and unnecessary construction costs
+# Review SequenceMixin on how to write for Sequences in a very generic manner
+
 === Indexing Sequences By Length ===
 
 Sometimes it is useful to index a set of sequences by their length. Avoid using any kind of String method to do this since String operations are costly in BioJava (due to the String conversion that must be applied). Here is an example on how to do it for any Sequence object.
