@@ -15,8 +15,6 @@ Module: biojava3-core Lead: Scooter Willis
 
 Module: biojava3-structure Lead: Andreas Prlic
 
-Module: biojava3-ws: Lead: Sylvain Foisy
-
 Module: biojava3-alignment: Lead: Mark Chapman
 
 Module: biojava3-protmod: Lead: Jianjiong Gao
@@ -24,6 +22,8 @@ Module: biojava3-protmod: Lead: Jianjiong Gao
 Module: biojava3-phylo: Lead: Scooter Willis
 
 Module: biojava3-genome: Lead: Any Yates
+
+Module: biojava3-ws: Lead: Sylvain Foisy
 
 Legacy BioJava 1.8
 ------------------
