@@ -45,7 +45,7 @@ project .pom file:
 Manual Download
 ---------------
 
-bundel containing all jars, source and javadocs:
+.tar.gz containing all jars, source and javadocs:
 [biojava3.0.1-all](http://biojava.org/download/bj3.0.1/biojava3.0.1-all.tar.gz)
 
 | Module                 | Binary Jar                                                                                                                                      | Source Jar                                                                                                                                                      | Javadoc Jar                                                                                                                                                     |
