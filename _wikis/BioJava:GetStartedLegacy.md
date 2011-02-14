@@ -39,10 +39,6 @@ due to limited space. The actual commands should be on a single line:
 `                        /home/thomas/commons-dbcp-1.1.jar:`  
 `                        /home/thomas/commons-pool-1.1.jar:.`
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
-
 ### UNIX C-type shell (for example: versions of Mac OS X pre-10.3)
 
 `setenv CLASSPATH /home/thomas/biojava-live.jar:/home/thomas/bytecode.jar:`  
@@ -51,20 +47,11 @@ this.
 `                        /home/thomas/commons-dbcp-1.1.jar:`  
 `                        /home/thomas/commons-pool-1.1.jar:.`
 
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. Note: Since version 1.8,
-BioJava is modular and the following scripts need to be adjusted to
-incorporate submodules.
-
 ### Windows from command line
 
 `set CLASSPATH C:\biojava-live.jar;C:\bytecode.jar;C:\commons-cli.jar;`  
 `                        C:\commons-collections-2.1.jar;C:\commons-dbcp-1.1.jar;`  
 `                        C:\commons-dbcp-1.1.jar;.`
-
-In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above. We are working on resolving
-this.
 
 ### Windows autoexec.bat files
 
@@ -73,7 +60,9 @@ this.
 `                        C:\commons-pool-1.1.jar;.`
 
 In some distributions of Biojava, you need to specify biojava.jar
-instead of biojava-live.jar in the above.
+instead of biojava-live.jar in the above. Note: Since version 1.8,
+BioJava is modular and the scripts need to be adjusted to incorporate
+submodules.
 
 It is also possible to "install" JAR files onto your system by copying
 them into your Java installation's extensions directory. On most Unix
@@ -85,29 +74,24 @@ consult your Java vendor.
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the
 [tutorial](BioJava:Tutorial "wikilink"), [API
-documentation](http://www.biojava.org/docs/api15b/index.html) and the
-[BioJava in anger](BioJava:Cookbook "wikilink") section . Finally, you
-can learn a lot about BioJava by trying the demo programs included in
-the source distribution (see below).
+documentation](http://www.biojava.org/docs/api1.8/) and the [BioJava in
+anger](BioJava:Cookbook "wikilink") section . Finally, you can learn a
+lot about BioJava by trying the demo programs included in the source
+distribution (see below).
 
 Building your own
 -----------------
 
 If you want to modify BioJava, you can obtain a copy of the source code
-from the [Source directory](http://www.biojava.org/download/source) of
-the download area. Source releases are distributed in .tar.gz format.
-You can also obtain up-to-the-minute source code via an [ anonymous SVN
+from the [Maven repository](http://biojava.org/download/maven/) of the
+download area. Source releases are distributed in .tar.gz format. You
+can also obtain up-to-the-minute source code via an [ anonymous SVN
 checkout](CVS_to_SVN_Migration "wikilink").
 
-BioJava is built using the *ant* build tool, a Java-specific equivalent
-of the common Make utilities. Please download and install the latest
-version of *ant* (currently 1.6.1). It is available
-[here](http://ant.apache.org).
-
-To build the library, just change into the biojava-live directory and
-type *ant*. The final JAR file will be placed in the *ant-build*
-directory. You can also use the command *ant javadocs-biojava* to build
-the API documentation.
+Since version 1.8, BioJava Legacy 1.8 requires
+[Maven](http://maven.apache.org/) for the build process. We are also
+providing a BioJava specific Maven repository at
+<http://biojava.org/download/maven/> .
 
 Building the demo programs
 --------------------------
