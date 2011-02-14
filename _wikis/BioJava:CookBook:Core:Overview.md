@@ -176,6 +176,29 @@ FastaWriterHelper.
 
 </java>
 
+### Indexing Sequences By Length
+
+Sometimes it is useful to index a set of sequences by their length.
+Avoid using any kind of String method to do this since String operations
+are costly in BioJava (due to the String conversion that must be
+applied). Here is an example on how to do it for any Sequence object.
+
+<java> List<Sequence<AminoAcidCompound>\> translations =
+populateFromSomewhere(); Collections.sort(translations, new
+Comparator<Sequence<? extends Compound>\>() {
+
+`public int compare(Sequence`<? extends Compound>` o1, Sequence`<? extends Compound>` o2) {`  
+`  Integer o1Length = o1.getLength();`  
+`  Integer o2Length = o2.getLength();`  
+`  return o1Length.compareTo(o2Length);`  
+`}`
+
+}); </java>
+
+Note our usage of the generic type to capture Sequence objects of any
+type since the assessment of length is something which can be applied to
+any Sequence not just AminoAcidCompound sequences.
+
 DNA Translation
 ---------------
 
@@ -204,6 +227,14 @@ orientation.
 
 ### Translating in a Different Frame
 
+A common feature of transcription is the ability to specify the base at
+which we start translating from DNA to RNA which in turn has an effect
+on how we convert the resulting RNA into a protein. This can be the
+difference between a working translation and one full of gibberish. The
+Frame enum provides all 6 available frames which can be given to the DNA
+object when we request the RNA. Multiple frames of translations are
+possible but see later on.
+
 <java>
 
 ` DNASequence dna = new DNASequence("AATG");`  
@@ -211,6 +242,23 @@ orientation.
 ` ProteinSequence protein = rna.getProteinSequence();`
 
 </java>
+
+### Translating in Multiple Frames
+
+This requires a TranscriptionEngine but we will work with the default
+one for the moment. If you are unsure of the frame a portion of DNA is
+to be translated in you can specify a number of frames to perform the
+translation in. The following example attempts to translate a sequence
+in all three forward frames. The code returns a map of the results keyed
+by their frame.
+
+<java> TranscriptionEngine te = TranscriptionEngine.getDefault();
+Frame[] frames = Frame.getForwardFrames();
+Map<Frame, Sequence<AminoAcidCompound>\> results =
+te.multipleFrameTranslation(dna, frames); </java>
+
+Using this we can replicate the functionality found in EMBOSS' transeq
+package.
 
 ### Using a TranscriptionEngine
 
@@ -252,12 +300,7 @@ which implement the Sequence interface and not the true object type).
 ` Sequence`<AminoAcidCompound>` protein = engine.getRnaAminoAcidTranslator().createSequence(rna);`  
 ` `  
 ` //Or to jump to it straight away use this method (coming soon)`  
-` Sequence`<AminoAcidCompound>` protein = engine.translate(dna);`  
-`   `  
-` //Or to translate in all the forward frames`  
-` DNASequence longerDna = new DNASequence("ATGGCGTGA");`  
-` Map`<Frame, Sequence<AminoAcidCompound>`> results = `  
-`   engine.multipleFrameTranslation(longerDna, Frame.getForwardFrames());`
+` Sequence`<AminoAcidCompound>` protein = engine.translate(dna);`
 
 </java>
 
