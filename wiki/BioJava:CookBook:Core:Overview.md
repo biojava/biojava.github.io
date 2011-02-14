@@ -176,6 +176,26 @@ FastaWriterHelper.
 
 </java>
 
+Working with Sequence Objects
+-----------------------------
+
+When working with Sequence objects it is important to keep a number of
+points in mind
+
+1.  You must never rely on the backing storage of a Sequence
+2.  Never perform operations on the String form of a Sequence since this
+    will incur a performance penalty
+3.  Sequences are iterable and can be stepped through using Java5's
+    foreach loop construct
+4.  All Sequences have a generic capture of the type of compound they
+    contain. Learn to use this capture to increase or decrease the types
+    of Sequence you want to process
+5.  If you need to change the contents of a Sequence investigate the
+    views used by Translation on how to avoid costly and unnecessary
+    construction costs
+6.  Review SequenceMixin on how to write for Sequences in a very generic
+    manner
+
 ### Indexing Sequences By Length
 
 Sometimes it is useful to index a set of sequences by their length.
