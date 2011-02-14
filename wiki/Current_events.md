@@ -2,6 +2,34 @@
 title: Current events
 ---
 
+BioJava 3.0.1 released
+----------------------
+
+BioJava 3.0.1 was released on Feb 13th 2011
+
+The 3.0.1 release is mainly a bug fixing release for the recent 3.0
+released which provided a major rewrite of the biojava code base. A
+couple of noteworthy bug fixes:
+
+- core: fixed an issue with sequence index positions, new utility
+methods for parsing of large fasta files
+
+- structure: Fixed issues with PDB header parsing and more stability
+with non-standard PDB files. Added new algorithm to automatically infer
+protein domain boundaries.
+
+- web services: Fixed wrong dependency on old codebase and overall
+improvements in functionality
+
+- protein modifications: Minor bugfixes
+
+In parallel the biojava-legacy code base has been updated to release
+version 1.8.1 and it provides a bug fix related to circular locations.
+
+Thanks to all contributors for making this release possible.
+
+Happy Biojava-ing
+
 BioJava 3.0 released
 --------------------
 
