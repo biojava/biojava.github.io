@@ -1,6 +1,6 @@
 == BioJava 3.0.1 released ==
 
-BioJava 3.0.1 was released on Feb 13th 2011
+BioJava 3.0.1 was released on Feb 13th 2011and is available from BioJava:Download.
 
 The 3.0.1 release is mainly a bug fixing release for the recent 3.0 released which provided a major rewrite of the biojava code base.
 A couple of noteworthy bug fixes:
@@ -18,7 +18,6 @@ In parallel the biojava-legacy code base has been updated to release version 1.8
 Thanks to all contributors for making this release possible.
 
 Happy Biojava-ing
-
 
 == BioJava 3.0 released ==
 
