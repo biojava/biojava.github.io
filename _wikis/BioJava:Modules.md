@@ -8,11 +8,25 @@ BioJava Modules
 The following list of modules for BioJava have been defined and the
 following people have stepped up to become module leader:
 
-Module: biojava-core Lead: Andreas Prlic
+BioJava 3.0
+-----------
 
-`- bring up to modern Java standards, use Generics`  
-`- declare old/unused code obsolete`  
-`- don;t break backwards compatibility`
+Module: biojava-core Lead: Scooter Willis
+
+Module: biojava3-structure Lead: Andreas Prlic
+
+Module: biojava3-ws: Lead: Sylvain Foisy
+
+Module: biojava3-alignment: Lead: Mark Chapman
+
+Module: biojava3-protmod: Lead: Jianjiong Gao
+
+Module: biojava3-phylo: Lead: Scooter Willis
+
+Module: biojava3-genome: Lead: Any Yates
+
+Legacy BioJava 1.8
+------------------
 
 Module: biojava-sequence Lead: Richard Holland
 
@@ -50,10 +64,7 @@ Module: biojava-das : Lead: Jonathan Warren
 
 Module: biojava-structure Lead: Andreas Prlic
 
-`- add support for SCOP file parsing`  
-`- add support for easy access of domains (in terms of coordinates)`  
 `- add secondary structure assignment`  
-`- improve structure alignments`  
 `- better integration with 3D viewers (Jmol, RCSB viewers)`
 
 Module: biojava-sequencing Lead: Michael Heuer
