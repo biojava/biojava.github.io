@@ -62,7 +62,7 @@ api](http://www.biojava.org/docs/api3.0/)
 Release Date
 ------------
 
-BioJava 3.0 has been released on December 28th, 2010.
+BioJava 3..10 has been released on February 13th, 2010.
 
 Legacy Code
 -----------
