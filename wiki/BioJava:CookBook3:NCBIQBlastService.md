@@ -109,7 +109,8 @@ public class NCBIQBlastServiceTest {
 `            */`  
 `           for (Entry`<String, ProteinSequence>` entry : a.entrySet()) {`  
 `               System.out.println( entry.getValue().getOriginalHeader() + "\n");`  
-`               request = rbw.sendAlignmentRequest(entry.getValue(),rqb);`  
+`                               String s = entry.getValue().toString();`  
+`               request = rbw.sendAlignmentRequest(s,rqb);`  
 `               rid.add(request);`  
 `           }`
 
