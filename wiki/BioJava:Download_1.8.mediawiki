@@ -23,6 +23,12 @@ You can add the BioJava repository by adding the following XML to your project .
 </pre>
 
 == Manual Download ==
+'''Download the entire maven project at once:'''
+
+[http://biojava.org/download/bj1.8.1/bj1.8.1-all.tar.gz bj1.8.1-all]
+
+'''Or each module individually:''' (faster if you just want the jars)
+
 {|
 |+
 ! Module
