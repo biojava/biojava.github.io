@@ -1,14 +1,14 @@
-This page offers downloads for the <b>BioJava Legacy 1.8 release</b>. 
+This page offers downloads for the <b>BioJava Legacy 1.8.1 release</b>. 
 
-BioJava Legacy 1.8 requires <b>Java 1.5</b> or later. 
+BioJava Legacy 1.8.1 requires <b>Java 1.5</b> or later. 
 
 == About ==
-BioJava legacy 1.8 has been released and is available using Maven from http://biojava.org/download/maven/
+BioJava legacy 1.8.1 has been released and is available using Maven from http://biojava.org/download/maven/
 
 Over the last year BioJava has undergone a major re-write. A new code base has been started under the codename [[BioJava:Download|BioJava 3]]. The old BioJava code (or BioJava 1 or BioJava Legacy) has been modularized into small, re-usable components and is available for download on this page.
 
 == Maven Download ==
-BioJava Legacy 1.8 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
+BioJava Legacy 1.8.1 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
 
 You can add the BioJava repository by adding the following XML to your project .pom file:
 <pre>
@@ -31,56 +31,58 @@ You can add the BioJava repository by adding the following XML to your project .
 ! Javadoc Jar
 |-
 | alignment 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8.jar  alignment-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-sources.jar  alignment-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8/alignment-1.8-javadoc.jar  alignment-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1.jar  alignment-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-sources.jar  alignment-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-javadoc.jar  alignment-1.8.1-javadoc.jar]
 |-
 | biosql 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8.jar biosql-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-sources.jar biosql-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8/biosql-1.8-javadoc.jar biosql-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1.jar biosql-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1-sources.jar biosql-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1-javadoc.jar biosql-1.8.1-javadoc.jar]
 |-
 | blast 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8.jar blast-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8-sources.jar blast-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8/blast-1.8-javadoc.jar blast-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1.jar blast-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1-sources.jar blast-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1-javadoc.jar blast-1.8.1-javadoc.jar]
 |-
 | bytecode
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8.jar bytecode-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8-sources.jar bytecode-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8/bytecode-1.8-javadoc.jar bytecode-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1.jar bytecode-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1-sources.jar bytecode-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1-javadoc.jar bytecode-1.8.1-javadoc.jar]
 |-
 | core
-| [http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8.jar core-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8-sources.jar core-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/core/1.8/core-1.8-javadoc.jar core-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1.jar core-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1-sources.jar core-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1-javadoc.jar core-1.8.1-javadoc.jar]
 |-
 | das
-| [http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8.jar das-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8-sources.jar das-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/das/1.8/das-1.8-javadoc.jar das-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1.jar das-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1-sources.jar das-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1-javadoc.jar das-1.8.1-javadoc.jar]
 |-
 | gui
-| [http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8.jar gui-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8-sources.jar gui-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/gui/1.8/gui-1.8-javadoc.jar gui-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1.jar gui-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1-sources.jar gui-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1-javadoc.jar gui-1.8.1-javadoc.jar]
 |-
 | phylo
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8.jar phylo-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8-sources.jar phylo-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8/phylo-1.8-javadoc.jar phylo-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1.jar phylo-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1-sources.jar phylo-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1-javadoc.jar phylo-1.8.1-javadoc.jar]
 |-
 | sequencing
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8.jar sequencing-1.8.jar] 
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8-sources.jar sequencing-1.8-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8/sequencing-1.8-javadoc.jar sequencing-1.8-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1.jar sequencing-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1-sources.jar sequencing-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1-javadoc.jar sequencing-1.8.1-javadoc.jar]
 |}
 
 == Browse API docs ==
 You can also browse the documentation at [http://www.biojava.org/docs/api1.8/ BioJava Legacy 1.8 api]
 
-==Release Date==
+==Release Dates==
 BioJava 1.8 has been released on December 28th, 2010.
+
+BioJava 1.8.1 has been released on February 13th, 2011.
 
 == Support libraries ==
 Necessary libraries are available in maven repositories
