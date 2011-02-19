@@ -40,6 +40,12 @@ project .pom file:
 Manual Download
 ---------------
 
+**Download the entire maven project at once:**
+
+[bj1.8.1-all](http://biojava.org/download/bj1.8.1/bj1.8.1-all.tar.gz)
+
+**Or each module individually:** (faster if you just want the jars)
+
 | Module     | Binary Jar                                                                                                  | Source Jar                                                                                                                  | Javadoc Jar                                                                                                                 |
 |------------|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
 | alignment  | [alignment-1.8.1.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1.jar)    | [alignment-1.8.1-sources.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-sources.jar)    | [alignment-1.8.1-javadoc.jar](http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-javadoc.jar)    |
