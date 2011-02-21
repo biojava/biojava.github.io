@@ -39,7 +39,7 @@ recover and the format to present to the submitter.
 
 Using the interfaces found in package org.biojava3.ws.alignment should
 allow extensions to other remote alignment services like FASTA and Blast
-at EBI, which use web services.
+at EBI, which use more classic web services.
 
 **WARNING (as of early February 2011):**
 
