@@ -27,20 +27,24 @@ Your first bug might be related to the fact that in my example code, you
 read a file with ProteinSequences in an array and ProteinSequence
 objects are what is expected here:
 
-`
-            for (Entry<String, ProteinSequence> entry : a.entrySet()) {
-                System.out.println( entry.getValue().getOriginalHeader() + "\n");
-                request = rbw.sendAlignmentRequest(entry.getValue(),rqb);
-                rid.add(request);           }
-`
+<java>
+
+`           for (Entry`<String, ProteinSequence>` entry : a.entrySet()) {`  
+`               System.out.println( entry.getValue().getOriginalHeader() + "\n");`  
+`               request = rbw.sendAlignmentRequest(entry.getValue(),rqb);`  
+`               rid.add(request);           }`
+
+</java>
 
 If you are using DNASequences, you need to do this:
 
-`          for (Entry<String, DNASequence> entry : a.entrySet()) {
-                System.out.println( entry.getValue().getOriginalHeader() + "\n");
-                request = rbw.sendAlignmentRequest(entry.getValue(),rqb);
-                rid.add(request);           }
-`
+<java> for (Entry<String, DNASequence> entry : a.entrySet()) {
+
+`               System.out.println( entry.getValue().getOriginalHeader() + "\n");`  
+`               request = rbw.sendAlignmentRequest(entry.getValue(),rqb);`  
+`               rid.add(request);           }`
+
+</java>
 
 I can tell you this works a-ok :-)
 
