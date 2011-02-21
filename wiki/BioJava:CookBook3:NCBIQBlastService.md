@@ -41,17 +41,22 @@ Using the interfaces found in package org.biojava3.ws.alignment should
 allow extensions to other remote alignment services like FASTA and Blast
 at EBI, which use web services.
 
-WARNING (as of early February 2011):
+**WARNING (as of early February 2011):**
 
-- You need to use the biojava-live tree to have this example working.
+- You need to use the latest biojava-live tree to have this example
+working.
 
-- Only blastall programs are implemented. MegaBlast and blastpgp are
-high in the TO DO list.
+- Only blastall programs are implemented right now: blastn,
+blastp,blastx,tblastn,tblastx. MegaBlast and phi-blast are high in the
+TO DO list. However, as QBlast is implemented right now, it might not be
+possible to create a way of doing psi-blast analysis.
 
 - Basic sanity checks are in place so that you won't try to use blastn
 on a ProteinSequence object...
 
-- To do: create methods to manipulate expect values and word sizes.
+- Get and Set methods now exists to manipulate expect values and word
+sizes. (Note: this is done as of 21 feb 2011; available via
+biojava-live)
 
 - Do not use multiple threads to send loads of requests to NCBI. This
 would only get you into trouble, up to getting you blacklisted by NCBI.
