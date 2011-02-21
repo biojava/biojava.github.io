@@ -43,11 +43,15 @@ at EBI, which use web services.
 
 WARNING (as of early February 2011):
 
+- You need to use the biojava-live tree to have this example working.
+
 - Only blastall programs are implemented. MegaBlast and blastpgp are
 high in the TO DO list.
 
 - Basic sanity checks are in place so that you won't try to use blastn
 on a ProteinSequence object...
+
+- To do: create methods to manipulate expect values and word sizes.
 
 - Do not use multiple threads to send loads of requests to NCBI. This
 would only get you into trouble, up to getting you blacklisted by NCBI.
