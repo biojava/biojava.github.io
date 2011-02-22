@@ -60,7 +60,7 @@ Hi,
 
 It works now with the fixed biojava-live svn. For some odd reason that
 also fixed the first bug. I only had to give rqb a blank
-setAdvancedOptions otherwise that would give an error.
+setAdvancedOptions otherwise that would give a new error.
 
 Sorry for ruining this wiki discussion page with these posts that are
 obviously not done the correct way, i am new to this ;)
