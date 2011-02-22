@@ -65,4 +65,17 @@ setAdvancedOptions otherwise that would give a new error.
 Sorry for ruining this wiki discussion page with these posts that are
 obviously not done the correct way, i am new to this ;)
 
-Thanks for your quick response and fix
+Thanks for your quick response and fix.
+
+------------------------------------------------------------------------
+
+The setAdvancedOptions workaround was a actually showing a bug in the
+way I dealt with th efiled in the first place... I fixed it in the
+biojava-live svn tree. BTW, using the discussion section of the page is
+a perfect use of the wiki, but don't forget to also use the mailing list
+for flagging problems to us, the developers.
+
+Btw no 2: my pleasure. Only via your feedbacks can we improve on this
+code :-)
+
+--[Foisys](User:Foisys "wikilink") 19:34, 22 February 2011 (UTC)
