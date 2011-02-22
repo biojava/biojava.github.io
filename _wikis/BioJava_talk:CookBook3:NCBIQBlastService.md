@@ -53,3 +53,16 @@ biojava-live svn. Please give it a try and let me know if it works. It
 does for me...
 
 --[Foisys](User:Foisys "wikilink") 01:45, 21 February 2011 (UTC)
+
+------------------------------------------------------------------------
+
+Hi,
+
+It works now with the fixed biojava-live svn. For some odd reason that
+also fixed the first bug. I only had to give rqb a blank
+setAdvancedOptions otherwise that would give an error.
+
+Sorry for ruining this wiki discussion page with these posts that are
+obviously not done the correct way, i am new to this ;)
+
+Thanks for your quick response and fix
