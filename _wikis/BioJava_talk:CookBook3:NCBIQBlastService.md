@@ -69,8 +69,8 @@ Thanks for your quick response and fix.
 
 ------------------------------------------------------------------------
 
-The setAdvancedOptions workaround was a actually showing a bug in the
-way I dealt with th efiled in the first place... I fixed it in the
+The setAdvancedOptions workaround was actually showing a bug in the way
+I dealt with the field in the first place... I fixed it in the
 biojava-live svn tree. BTW, using the discussion section of the page is
 a perfect use of the wiki, but don't forget to also use the mailing list
 for flagging problems to us, the developers.
