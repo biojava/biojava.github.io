@@ -2,7 +2,7 @@
 title: BioJava:CookBook:PDB:ligands
 ---
 
-{code:Java}
+<java>
 
 `        Structure struct = structure;`  
 `        List`<Group>` hets = struct.getHetGroups();`  
@@ -19,4 +19,4 @@ title: BioJava:CookBook:PDB:ligands
 `               }`  
 `           }`
 
-{code}
+</java>
