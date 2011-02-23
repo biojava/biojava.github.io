@@ -2,7 +2,8 @@
 title: BioJava talk:CookBook:PDB:ligands
 ---
 
-###### About this page
+About this page
+---------------
 
 Hi,
 
