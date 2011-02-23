@@ -25,6 +25,6 @@ title: BioJava:CookBook:PDB:ligands
 
 </java>
 
-*nb* StructureTools.findBonds() is currently under development and will
-**not** give chemically correct answers. However, it will give very
+*n.b.* StructureTools.findBonds() is currently under development and
+will **not** give chemically correct answers. However, it will give very
 quick and dirty approximations based on distances.
