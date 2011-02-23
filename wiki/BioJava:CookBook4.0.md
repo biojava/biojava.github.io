@@ -94,6 +94,8 @@ visualisation
     database?](BioJava:CookBook:PDB:hibernate "wikilink")
 -   [How can I load data from the SCOP
     classification?](BioJava:CookBook:PDB:SCOP "wikilink")
+-   [How can I find residues binding a
+    ligand?](BioJava:CookBook:PDB:ligands "wikilink")
 
 ### biojava3-protmod
 
