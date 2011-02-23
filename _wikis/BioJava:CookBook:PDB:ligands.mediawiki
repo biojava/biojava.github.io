@@ -1,4 +1,4 @@
-{code:Java}
+<java>
          Structure struct = structure;
          List<Group> hets = struct.getHetGroups();
             for (Group group : hets) {
@@ -13,4 +13,4 @@
                         System.out.println(bond);
                 }
             }
-{code}
+</java>
