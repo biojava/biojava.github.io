@@ -1,1 +1,4 @@
-#REDIRECT [[Google Summer of Code 2010]]
+
+== History ==
+
+[[Google Summer of Code 2010]]
