@@ -18,6 +18,9 @@ Foundation](http://www.open-bio.org/wiki/Google_Summer_of_Code) and the
 [main Google Summer of Code page](http://code.google.com/soc) for more
 details about the program.
 
+Project Proposals
+-----------------
+
 Previous Years
 --------------
 
