@@ -8,7 +8,33 @@ Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at
 
 == Project Proposals ==
 
+;Amino acids physico-chemical properties calculation 
 
+;Rationale 
+:The calculation of simple physico-chemical properties for biopolymers is an important tool in the arsenal of molecular biologist. Theoretically calculated quantities like extinction coefficients, isoelectric points, hydrophobicities and instability indices are useful guides as to how a molecule behaves in an experiment. Many tools for calculating these properties exist, including widely used open-source implementations in EMBOSS and BioPerl, but only some are currently available in BioJava3. The aim of this project is to port or produce new implementations of standard algorithms for a range of calculations within BioJava3.
+
+;Approach 
+:The following methods will be implemented in pure Java. High performance will be insured by possibility of multithreaded calculations. 
+:#	Molecular weight
+:#      Extinction coefficient
+:#	Instability index 
+:#	Aliphatic index
+:#	Grand Average of Hydropathy 
+:#	Isoelectric point 
+:#	Number of amino acids in the protein (His, Met, Cys)
+A standalone Java library will be developed and an API for other Java programs to use these functions as well as the command line executable. 
+
+;Challenges 
+:Functional tests will be developed for tools, along with API and high level documentation for end users. The BioJava3 data model already provides support for representing the fundamental properties used in each calculation, but new methods will be needed to apply the calculations to objects representing biological molecules.
+
+;Involved toolkits or projects 
+:Java, BioJava3, Eclipse, JUnit.
+
+;Degree of difficulty and needed skills 
+:This is a simple low risk project as algorithms are independent of each other and simple. Interested students should have a general knowledge of core Java programming, knowledge of multi-threaded programming will be beneficial. There is plenty of scope for the student to implement other property calculations not listed here which will be beneficial for the Java Bio- and Medical informatics communities. 
+
+;Mentor
+Peter Troshin, co-mentor (?)
 
 == Previous Years ==
 
