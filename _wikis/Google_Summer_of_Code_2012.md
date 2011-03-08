@@ -79,7 +79,7 @@ Java Bio- and Medical informatics communities.
 
 Mentor  
 
-Peter Troshin, co-mentor (?)
+[Peter Troshin](User:Ptroshin "wikilink"), co-mentor (?)
 
 Previous Years
 --------------
