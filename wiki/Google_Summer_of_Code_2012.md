@@ -18,12 +18,9 @@ Foundation](http://www.open-bio.org/wiki/Google_Summer_of_Code) and the
 [main Google Summer of Code page](http://code.google.com/soc) for more
 details about the program.
 
-Project Proposals
------------------
+### Project Proposals
 
-Amino acids physico-chemical properties calculation  
-
-<!-- -->
+#### Amino acids physico-chemical properties calculation
 
 Rationale  
 The calculation of simple physico-chemical properties for biopolymers is
@@ -83,7 +80,9 @@ Mentor
 
 ------------------------------------------------------------------------
 
-Extend Sequence Viewer code to become a client for the Distributed Annotation System  
+#### Extend Sequence Viewer code to become a client for the Distributed Annotation System
+
+  
 The Sequence Viewer [1](https://github.com/biojava/RCSB_SequenceViewer)
 is a project that can display protein annotations projected onto various
 types of protein sequences (PDB, UniProt, etc). So far all annotations
