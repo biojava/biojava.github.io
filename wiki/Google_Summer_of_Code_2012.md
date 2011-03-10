@@ -81,6 +81,21 @@ Mentor
 
 [Peter Troshin](User:Ptroshin "wikilink"), co-mentor (?)
 
+------------------------------------------------------------------------
+
+Extend Sequence Viewer code to become a client for the Distributed Annotation System  
+
+The Sequence Viewer [1](https://github.com/biojava/RCSB_SequenceViewer)
+is a project that can display protein annotations projected onto various
+types of protein sequences (PDB, UniProt, etc). So far all annotations
+are loaded from flat files or local databases. It would be nice to
+extend this viewer to add support for the [Distributed Annotation
+System](http://www.biodas.org)
+
+Mentor  
+
+[Andreas Prlic](User:Andreas "wikilink"), co-mentor (?)
+
 Previous Years
 --------------
 
