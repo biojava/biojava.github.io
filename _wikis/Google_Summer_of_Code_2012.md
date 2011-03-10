@@ -95,7 +95,7 @@ Challenges
 Existing components that enable DAS communication will be used to extend
 the sequence drawing code base. The code is currently single threaded.
 In order to enable efficient data display a multi-threaded layer and an
-event model be added.
+event model will be added.
 
 Degree of difficulty and needed skills  
 
