@@ -39,7 +39,7 @@ A standalone Java library will be developed and an API for other Java programs t
 ----
 
 ;Extend Sequence Viewer code to become a client for the Distributed Annotation System
-:The Sequence Viewer [https://github.com/biojava/RCSB_SequenceViewer]  is a project that can display protein annotations projected onto various types of protein sequences (PDB, UniProt, etc). So far all annotations are loaded from flat files or local databases. It would be nice to extend this viewer to add support for the [http://www.biodas.org Distributed Annotation System] (DAS).
+:The Sequence Viewer [https://github.com/biojava/RCSB_SequenceViewer]  is a project that can display protein annotations projected onto various types of protein sequences (PDB, UniProt, etc). So far all annotations are loaded from flat files or local databases. The goal of this project is to extend this viewer to add support for the [http://www.biodas.org Distributed Annotation System] (DAS).
 ;Challenges
 :Existing components that enable DAS communication will be used to extend the sequence drawing code base. The code is currently single threaded. In order to enable efficient data display a multi-threaded layer  and an event model be added.
 ;Degree of difficulty and needed skills 
