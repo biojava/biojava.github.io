@@ -11,6 +11,10 @@ static methods to read files into BioJava. There is actually more than
 one solution. The more specific is demonstrated first and the more
 general second.
 
+Note that, as of BioJava 1.8, writing and reading of FASTA files are
+better done with BioJavax, see IOTools is in the package
+[org.biojavax.bio.seq.RichSequence.IOTools](http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichSequence.IOTools.html).
+
 ### Solution 1
 
 <java> import java.io.\*; import java.util.\*;
