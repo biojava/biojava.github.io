@@ -6,20 +6,20 @@ How do I get a DNA, RNA or Protein Alphabet?
 --------------------------------------------
 
 In BioJava
-[Alphabets](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Alphabet.html)
+[Alphabets](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/Alphabet.html)
 are collections of
-[Symbols](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html).
+[Symbols](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/Symbol.html).
 Common biological alphabets ([DNA](wp:DNA "wikilink"),
 [RNA](wp:RNA "wikilink"), [protein](wp:protein "wikilink"), etc) are
 registered with the BioJava
-[AlphabetManager](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AlphabetManager.html)
+[AlphabetManager](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/AlphabetManager.html)
 at startup and can be accessed by name. The [DNA](wp:DNA "wikilink"),
 [RNA](wp:RNA "wikilink") and [protein](wp:protein "wikilink") alphabets
 can also be accessed using convenient static methods from
-[DNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/DNATools.html),
-[RNATools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/RNATools.html)
+[DNATools](http://www.biojava.org/docs/api1.8/org/biojava/bio/seq/DNATools.html),
+[RNATools](http://www.biojava.org/docs/api1.8/org/biojava/bio/seq/RNATools.html)
 and
-[ProteinTools](http://www.biojava.org/docs/api14/org/biojava/bio/seq/ProteinTools.html)
+[ProteinTools](http://www.biojava.org/docs/api1.8/org/biojava/bio/seq/ProteinTools.html)
 respectively.
 
 Both of these approaches are shown in the example below
@@ -41,7 +41,8 @@ public class AlphabetExample {
 `       rna = AlphabetManager.alphabetForName("RNA");`  
 `    `  
 `       //get the Protein alphabet by name`  
-`       prot = AlphabetManager.alphabetForName("PROTEIN");`  
+`       prot = AlphabetManager.alphabetForName("PROTEIN");`
+
 `       //get the protein alphabet that includes the * termination Symbol`  
 `       proteinterm = AlphabetManager.alphabetForName("PROTEIN-TERM");`  
 `    `  
