@@ -17,6 +17,10 @@ SymbolList.
 Remember that BioJava uses the biological coordinate system thus the
 first PointLocation in a Sequence will be 1 not 0.
 
+As of BioJava 1.8, you may want to consider using
+[RichLocation](http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichLocation.html)
+from the [BioJavax](BioJava:BioJavaXDocs "wikilink") extension.
+
 <java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class SpecifyPoint {
