@@ -6,22 +6,21 @@ Introduction
 ------------
 
 BioJava will run on any computer with a Java virtual machine complying
-to the Java 2 Standard Edition (J2SE) 1.4 (or later) specifications.
+to the Java 2 Standard Edition (J2SE) 1.6 (or later) specifications.
 Java implementations for Linux, Windows, and Solaris are available to
-download from [Sun's java website](http://java.sun.com). Recent versions
-of MacOS X include a suitable Java implementation as standard. Java is
-also available on many other platforms: if in doubt, contact your
-vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
+download from [Oracle's java
+website](http://www.oracle.com/technetwork/java/). Recent versions of
+MacOS X include a suitable Java implementation as standard. Java is also
+available on many other platforms: if in doubt, contact your vendor.
+BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version [BioJava 1.7 (requires Java
-1.5+)](Biojava:Download "wikilink") from the [download
-area](Biojava:Download "wikilink") .
+You can get the latest version [BioJava3 (v3.0.1) (requires Java
+1.6+)](Biojava:Download "wikilink") from the [download
+area](Biojava:Download "wikilink").
 
-You can get the legacy version of [BioJava 1.5 (requires Java
-1.4+)](Biojava:Download 1.5 "wikilink") ; or
-
-You can get the legacy release version of BioJava 1.4
-[here](Biojava:Download 1.4 "wikilink");
+You can get the latest version [BioJava1 (v1.8.1) (requires Java
+1.5+)](Biojava:Download_1.8 "wikilink") from the [BJ1 download
+area](Biojava:Download_1.8 "wikilink") .
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
@@ -88,31 +87,22 @@ may have to create this directory yourself). For other platforms,
 consult your Java vendor.
 
 You can now compile and run BioJava programs using the *javac* and
-*java* commands. You might like to look at the
-[tutorial](BioJava:Tutorial "wikilink"), [API
-documentation](http://www.biojava.org/docs/api15b/index.html) and the
-[BioJava in anger](BioJava:Cookbook "wikilink") section . Finally, you
-can learn a lot about BioJava by trying the demo programs included in
-the source distribution (see below).
+*java* commands. You might like to look at the developer section on the
+[Main page](http://www.biojava.org/wiki/Main_Page) for documentation,
+cookbook and tutorials. Finally, you can learn a lot about BioJava by
+trying the demo programs included in the source distribution (see
+below).
 
 Building your own
 -----------------
 
 If you want to modify BioJava, you can obtain a copy of the source code
-from the [Source directory](http://www.biojava.org/download/source) of
-the download area. Source releases are distributed in .tar.gz format.
-You can also obtain up-to-the-minute source code via an [ anonymous SVN
-checkout](CVS_to_SVN_Migration "wikilink").
+from the download areas. Source releases are distributed in .tar.gz
+format. You can also obtain up-to-the-minute source code via either the
+[Maven repository](http://biojava.org/download/maven/) or an [ anonymous
+SVN checkout](CVS_to_SVN_Migration "wikilink").
 
-BioJava is built using the *ant* build tool, a Java-specific equivalent
-of the common Make utilities. Please download and install the latest
-version of *ant* (currently 1.6.1). It is available
-[here](http://ant.apache.org).
-
-To build the library, just change into the biojava-live directory and
-type *ant*. The final JAR file will be placed in the *ant-build*
-directory. You can also use the command *ant javadocs-biojava* to build
-the API documentation.
+BioJava is now built using [Apache Maven](http://maven.apache.org/).
 
 Building the demo programs
 --------------------------
