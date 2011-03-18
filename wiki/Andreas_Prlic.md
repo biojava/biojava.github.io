@@ -14,6 +14,6 @@ for protein sequence and structure annotations, based on the
 
 [Nightly builds of BioJava](http://www.spice-3d.org/cruise/) can be
 accessed from his CruiseControl page at
-[<http://www.spice-3d.org/cruise/>](http://www.spice-3d.org/cruise/).
+[<http://emmy.rcsb.org:8080/cruisecontrol/>](http://emmy.rcsb.org:8080/cruisecontrol/).
 
 <Category:People>
