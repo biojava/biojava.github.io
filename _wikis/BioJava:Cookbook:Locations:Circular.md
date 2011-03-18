@@ -38,6 +38,12 @@ and install BioJava](BioJava:GetStarted "wikilink")" link on the main
 page and read the section on cvs. biojava-live BioJava version 1.3 (when
 released) will be adequate.**
 
+Since BioJava 1.5+, you may want to consider using
+[RichLocation](http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichLocation.html)
+from the [BioJavax](BioJava:BioJavaXDocs "wikilink") extension, which
+provides several tools to work with circular locations and has been
+extensively tested.
+
 <java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SpecifyCircular {
