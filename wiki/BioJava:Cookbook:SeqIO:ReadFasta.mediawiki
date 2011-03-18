@@ -2,6 +2,8 @@
 
 One of the most frequent I/O tasks is the reading of a flat file representation of sequence into memory. SeqIOTools provides some basic static methods to read files into BioJava. There is actually more than one solution. The more specific is demonstrated first and the more general second.
 
+Note that, as of BioJava 1.8, writing and reading of FASTA files are better done with BioJavax, see IOTools is in the package [http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichSequence.IOTools.html org.biojavax.bio.seq.RichSequence.IOTools].
+
 === Solution 1 ===
 
 <java>
