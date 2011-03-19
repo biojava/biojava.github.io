@@ -65,6 +65,8 @@ How Do I....?
 -   [Where do I get a Java
     installation](http://java.sun.com/javase/downloads/index.jsp)?
 -   [How do I get and install BioJava](BioJava:GetStarted "wikilink")?
+-   [How do I integrate BioJava with NetBeans
+    IDE](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink")?
 
 ### Alphabets and Symbols
 

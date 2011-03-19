@@ -33,6 +33,7 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 
 * [http://java.sun.com/javase/downloads/index.jsp Where do I get a Java installation]?
 * [[BioJava:GetStarted|How do I get and install BioJava]]?
+* [[How_to_integrate_BioJava_in_NetBeans_IDE|How do I integrate BioJava with NetBeans IDE]]?
 
 === Alphabets and Symbols ===
 
