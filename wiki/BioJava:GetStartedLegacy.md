@@ -5,7 +5,28 @@ title: BioJava:GetStartedLegacy
 Introduction
 ------------
 
-BioJava will run on any computer with a Java virtual machine complying
+Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the
+continuation of the old BioJava core while a new code base, BioJava 3,
+is currently being developed. As of the concurrent release of BioJava
+1.8.1 and BioJava 3.0.1, many functionalities are still not available in
+BioJava 3 and differences between their respective sequence models may
+make BioJava 1 a valid option for your project.
+
+To find out more about BioJava 1, check any of the following entry
+points:
+
+-   [Tutorial](BioJava:Tutorial "wikilink") to learn about symbols,
+    sequence, and events.
+-   [Cook Book](BioJava:CookBookLegacy "wikilink"), also famously known
+    as BioJava in Anger, to find out many code snippets.
+-   [BioJavax Extension](BioJava:BioJavaXDocs "wikilink") which provides
+    sophisticated event-based methods to read, write, and manipulate
+    sequence files.
+
+Installation
+------------
+
+BioJava 1 will run on any computer with a Java virtual machine complying
 to the Java 2 Standard Edition (J2SE) 1.5 (or later) specifications.
 Java implementations for Linux, Windows, and Solaris are available to
 download from [Oracle's java
@@ -21,15 +42,11 @@ area](Biojava:Download "wikilink") .
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 
-Installation
-------------
-
 None of these .jar files need to be unpacked for normal use -- simply
-place them in a convenient directory.
-
-To use BioJava, add the required JAR files to your CLASSPATH environment
-variable. The exact syntax varies between platforms. The text is wrapped
-due to limited space. The actual commands should be on a single line:
+place them in a convenient directory. To use BioJava, add the required
+JAR files to your CLASSPATH environment variable. The exact syntax
+varies between platforms. The text is wrapped due to limited space. The
+actual commands should be on a single line:
 
 ### UNIX Bourne-type shells (the default with most Linux distributions and MacOS 10.3)
 
