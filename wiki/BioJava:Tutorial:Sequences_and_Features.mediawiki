@@ -1,6 +1,6 @@
 '''By [mailto:td2@sanger.ac.uk Thomas Down]'''
 
-[[BioJava:Tutorial:Symbols and SymbolLists|Chapter 1]] of this tutorial covered the <code>SymbolList</code> interface, BioJava's basic representation of biological sequence data. This chapter examines the <code>Sequence</code> interface. This adds extra functionality to <code>SymbolList</code>, providing a convenient way to handle annotated sequences from biological database. This chapter concentrates on classes and interfaces defined in the package <code>org.biojava.bio.seq</code>. For full descriptions of all the API used here, please consult the {{JavaDoc:Documentation}}. 
+[[BioJava:Tutorial:Symbols and SymbolLists|Chapter 1]] of this tutorial covered the <code>SymbolList</code> interface, BioJava's basic representation of biological sequence data. This chapter examines the <code>Sequence</code> interface. This adds extra functionality to <code>SymbolList</code>, providing a convenient way to handle annotated sequences from biological database. This chapter concentrates on classes and interfaces defined in the package <code>org.biojava.bio.seq</code>. For full descriptions of all the API used here, please consult the JavaDoc API documentation ([http://www.biojava.org/docs/api1.8/ latest biojava 1.8]). 
 
 
 == A tour of a Sequence ==
