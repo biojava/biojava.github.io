@@ -11,7 +11,8 @@ representation of biological sequence data. This chapter examines the
 providing a convenient way to handle annotated sequences from biological
 database. This chapter concentrates on classes and interfaces defined in
 the package `org.biojava.bio.seq`. For full descriptions of all the API
-used here, please consult the .
+used here, please consult the JavaDoc API documentation ([latest biojava
+1.8](http://www.biojava.org/docs/api1.8/)).
 
 A tour of a Sequence
 --------------------
