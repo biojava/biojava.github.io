@@ -10,7 +10,9 @@ would invalidate the state of another object, all without violating the
 principals of encapsulation. The main classes are in the
 `org.biojava.utils` package and include `Changeable`, `ChangeEvent`,
 `ChangeListener`, `ChangeType` and `ChangeVetoException`. For full
-descriptions of all the API used here, please consult the .
+descriptions of all the API used here, please consult the JavaDoc API
+documentation ([latest biojava
+1.8](http://www.biojava.org/docs/api1.8/)).
 
 What is the difference between Changeability and Mutability?
 ------------------------------------------------------------
