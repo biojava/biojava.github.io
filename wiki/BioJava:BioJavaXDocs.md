@@ -2,20 +2,21 @@
 title: BioJava:BioJavaXDocs
 ---
 
-BioJavaX is not BioJava 2 is not BioJavaX.
+BioJavaX is not BioJava 3 is not BioJavaX.
 ------------------------------------------
 
-BioJavaX is an extension to the existing BioJava project. Anything
-written with BioJava will work with BioJavaX, and vice versa.
+BioJavaX is an extension to the existing BioJava 1 or BioJava Legacy
+project. Anything written with BioJava will work with BioJavaX, and vice
+versa.
 
 org.biojavax is to org.biojava as javax is to java.
 
-The BioJava2 project is a completely new project which intends to
+The BioJava3 project is a completely new project which intends to
 rewrite everything in BioJava from scratch, based around a new set of
 object designs and concepts. It is entirely incompatible with the
 existing BioJava project.
 
-Therefore BioJavaX is not BioJava 2, and has nothing to do with it.
+Therefore BioJavaX is not BioJava 3, and has nothing to do with it.
 Please don't get them confused!
 
 What didn't change?
