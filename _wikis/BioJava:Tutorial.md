@@ -29,8 +29,6 @@ the JavaDoc API documentation ([latest biojava
 -   [Walkthrough of one of the dynamic programming
     examples](BioJava:Tutorial:Dynamic programming examples "wikilink")
 -   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
--   [Multi-Alignment using ClustalW and
-    BioJava](BioJava:Tutorial:MultiAlignClustalW "wikilink")
 -   [Approaches to Web Development for
     Bioinformatics](http://medicalcomputing.net/tools_dna1.php)
 
