@@ -99,3 +99,22 @@ public class SymbolListToString {
 ` }`
 
 } </java>
+
+The above example uses the process of 'tokenization' to create the
+String, in this case hidden in the SeqString method. Different types of
+tokenization can be used to control the output String.
+
+<java>
+
+Alphabet alph; // An alphabet SymbolList sym; //A SymbolList
+
+SymbolTokenization tok= alph.getTokenization("token"); String output =
+tok.tokenizeSymbolList(sym)
+
+</java>
+
+Use "token" or "default" to represent nucleotides and amino acids in
+lower case single characters; use "alternate" to represent DNA in single
+capital letters and amino acids from the PROTEIN\_TERM alphabet in
+character triplets (e.g. Arg) (see
+[AlternateTokenization](http://www.biojava.org/docs/api1.8/org/biojava/bio/seq/io/AlternateTokenization.html)).
