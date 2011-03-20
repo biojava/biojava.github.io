@@ -257,6 +257,8 @@ How Do I....?
 
 -   [How can I use QBlast to do my alignments
     remotely](BioJava:CookBook:Services:Qblast "wikilink")?
+-   [How to create multi-Alignments using ClustalW and
+    BioJava](BioJava:Tutorial:MultiAlignClustalW "wikilink")?
 
 ### Genetic Algorithms
 
