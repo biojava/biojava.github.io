@@ -144,6 +144,7 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 === External Applications and Services ===
 
 * [[BioJava:CookBook:Services:Qblast|How can I use QBlast to do my alignments remotely]]?
+* [[BioJava:Tutorial:MultiAlignClustalW|How to create multi-Alignments using ClustalW and BioJava]]?
 
 === Genetic Algorithms ===
 
