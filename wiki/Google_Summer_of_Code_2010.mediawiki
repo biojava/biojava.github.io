@@ -33,7 +33,7 @@ BioJava offers the following Google Summer of Code projects:
 
 ; Degree of difficulty and needed skills : Difficult. Interested students should have a general knowledge of alignment algorithms and experience in Java-based software development.
 
-; Mentor: '''[[Andreas_Prlic | Andreas Prlic]]'''
+; Mentor: '''[[Andreas_Prlic | Andreas Prlic]]''' , Co-Mentors: Scooter Willis, Kyle Ellrott
 
 ; Student: '''[[Mark Chapman]]'''
 
