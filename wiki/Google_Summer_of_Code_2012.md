@@ -5,8 +5,8 @@ title: Google Summer of Code 2012
 Introduction
 ------------
 
-The Open Bioinformatics foundation is [applying to participate in the
-Google Summer of
+The Open Bioinformatics foundation is [participating again in this
+year's Google Summer of
 Code](http://www.open-bio.org/wiki/Google_Summer_of_Code).
 
 We are accepting applicants for projects for BioJava. If you want to
