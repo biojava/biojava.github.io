@@ -5,19 +5,16 @@ The function should then locate the overlap of the end of x with the
 beginning of y.<br> 
 The function should return the non-overlapping start of x
 If x does not match the first length(x) characters of y, then return x.
-<br>Further particulars: 
-* The minimum overlap should be 5 or more characters. 
-* The character set is a to z, all in lower case. 
-* Miss matches are not allowed
-* The cross over is between the end of x and the start of y.
+The minimum overlap should be 5 or more characters. 
+
 
 '''Goal 2:'''
 
 The function should be nicely wrapped up to accept a file, from the command line, that has two columns.
 
 The resulting program should accept the file, feeding the function
-with each element from the column and print the result to an out
-file, the name specific at the command line.
+with each element from the column and print the result to either an out
+file or a standard output.
 
 Example Command:
 
@@ -54,10 +51,11 @@ There will be no header in the file and the columns are separated with a tab cha
 
 The target is optimal code, therefore there are several goals (in no
 particular order):
-* CPU efficiency
-* RAM efficiency
 * Code quality (maintability, reusability, OO design, etc)
+* CPU & RAM efficiency
 
-Using multiple threads to speed up the comparison is a plus
+Using multiple threads to speed up the comparison is a plus. 
+
+'''Please note that the task is not very well defined''' and you will have to make some assumptions, please make sure to document all of them. Also provide an appropriate Javadoc for your program if you coding for the goal 2 or 3.  
 
 Either code for one, two or all of the goals.
