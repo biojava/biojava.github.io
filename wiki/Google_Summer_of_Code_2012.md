@@ -74,6 +74,16 @@ Java Bio- and Medical informatics communities.
 
 <!-- -->
 
+Selection criteria (not exhaustive list, but will give you some guidance)  
+
+:\# Quality of proposal (feasible given your skills and available time,
+useful outcome)
+
+:\# Interaction (response to emails, back-and-forth regarding proposal)
+
+:\# If you like to make your application stand out I'd suggest a [short
+coding exercise](short coding exercise "wikilink").
+
 Mentor  
 
 [Peter Troshin](User:Ptroshin "wikilink"), co-mentor (?)
