@@ -70,7 +70,7 @@ Degree of difficulty and needed skills : Difficult. Interested students should h
 
 <!-- -->
 
-Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")**  
+Mentor: **[ Andreas Prlic](Andreas_Prlic "wikilink")** , Co-Mentors: Scooter Willis, Kyle Ellrott  
 
 <!-- -->
 
