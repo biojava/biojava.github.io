@@ -4,14 +4,17 @@ title: Short coding exercise
 
 **Goal 1:**
 
+This task is inspired by the pre-processing of the next generation
+sequencing data.
+
 Implement the interface
 
 ` public interface StringOverlapFinder {`  
-`     String getOverlap(String x, String y);`  
+`     String cleanX(String x, String y);`  
 ` }`
 
-The getOverlap function should locate the overlap of the end of x with
-the beginning of y.  
+The cleanX function should locate the overlap of the end of x with the
+beginning of y.  
 The function should return the non-overlapping start of x If x does not
 match the first length(x) characters of y, then return x. The minimum
 overlap should be 5 or more characters.
