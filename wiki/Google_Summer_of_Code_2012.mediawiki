@@ -33,6 +33,12 @@ A standalone Java library will be developed and an API for other Java programs t
 ;Degree of difficulty and needed skills 
 :This is a simple low risk project as algorithms are independent of each other and simple. Interested students should have a general knowledge of core Java programming, knowledge of multi-threaded programming will be beneficial. There is plenty of scope for the student to implement other property calculations not listed here which will be beneficial for the Java Bio- and Medical informatics communities. 
 
+;Selection criteria (not exhaustive list, but will give you some guidance) 
+
+:# Quality of proposal (feasible given your skills and available time, useful outcome)
+:# Interaction (response to emails, back-and-forth regarding proposal)
+:# If you like to make your application stand out I'd suggest a [[short coding exercise]].  
+
 ;Mentor
 [[User:Ptroshin|Peter Troshin]], co-mentor (?)
 
