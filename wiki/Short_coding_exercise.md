@@ -4,17 +4,22 @@ title: Short coding exercise
 
 **Goal 1:**
 
-Create a function that can accept two strings (x, y). The function
-should then locate the overlap of the end of x with the beginning of
-y.  
+Implement the interface
+
+` public interface StringOverlapFinder {`  
+`     String getOverlap(String x, String y);`  
+` }`
+
+The getOverlap function should locate the overlap of the end of x with
+the beginning of y.  
 The function should return the non-overlapping start of x If x does not
 match the first length(x) characters of y, then return x. The minimum
 overlap should be 5 or more characters.
 
 **Goal 2:**
 
-The function should be nicely wrapped up to accept a file, from the
-command line, that has two columns.
+The function should be wrapped up to accept a file, from the command
+line, that has two columns.
 
 The resulting program should accept the file, feeding the function with
 each element from the column and print the result to either an out file
