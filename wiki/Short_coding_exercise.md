@@ -79,6 +79,7 @@ there are several goals (in no particular order):
 
 -   Code quality (maintability, reusability, OO design, etc)
 -   CPU & RAM efficiency
+-   Execution speed
 
 Using multiple threads to speed up the comparison is a plus.
 
