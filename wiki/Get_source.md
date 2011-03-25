@@ -30,7 +30,10 @@ directory named "biojava-live" on your system:
 `svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
 
 Anonymous checkouts are now hosted at [read only mirror at
-github](http://github.com/biojava/biojava).
+github](http://github.com/biojava/biojava). As such you can of course
+also use git to get a copy of the code:
+
+`git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
 
 ### Troubleshooting Anonymous SVN
 
