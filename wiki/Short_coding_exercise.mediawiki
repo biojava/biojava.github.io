@@ -74,9 +74,9 @@ The target is optimal code that solves the problem correctly, therefore there ar
 particular order):
 * Code quality (maintability, reusability, OO design, etc)
 * CPU & RAM efficiency
+* Execution speed
 
-Using multiple threads to speed up the comparison is a plus. 
-
+Using multiple threads to speed up the comparison is a plus.
 
 ===Submission===
 
