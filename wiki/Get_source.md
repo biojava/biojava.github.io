@@ -20,13 +20,6 @@ The code.open-bio.org server offers up read-only copies of source code
 repositories via anonymous SVN. A list of code repositories available
 via SVN can be seen here: <http://code.open-bio.org/svnweb/index.cgi>
 
-Example Usage:
-
-To see what SVN modules the BioJava project is making available, try
-this command:
-
-`svn list `[`svn://code.open-bio.org/biojava`](svn://code.open-bio.org/biojava)
-
 ### Checking out the latest BioJava code
 
 The following example shows how to obtain the latest BioJava codebase
@@ -34,13 +27,10 @@ snapshot using anonymous SVN, it will check out the latest copy of
 biojava-live/ from the "SVN trunk" and will locally store it in a
 directory named "biojava-live" on your system:
 
-`svn co `[`svn://code.open-bio.org/biojava/biojava-live/trunk`](svn://code.open-bio.org/biojava/biojava-live/trunk)` biojava-live`
-
-We have had some problems with the anonymous checkouts recently. We are
-now also hosting a [read only mirror at
-github](http://github.com/biojava/biojava). To checkout from there:
-
 `svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
+
+Anonymous checkouts are now hosted at [read only mirror at
+github](http://github.com/biojava/biojava).
 
 ### Troubleshooting Anonymous SVN
 
