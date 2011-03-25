@@ -1,4 +1,4 @@
-'''Goal 1:''' 
+===Goal 1===
 
 This task is inspired by the pre-processing of the next generation sequencing data. 
 
@@ -15,7 +15,7 @@ If x does not match the first length(x) characters of y, then return x.
 The minimum overlap should be 5 or more characters. 
 
 
-'''Goal 2:'''
+===Goal 2===
 
 The function should be wrapped up to accept a file, from the command line, that has two columns.
 
@@ -27,14 +27,14 @@ Example Command:
 
    java FindEnds inputFile.txt outputFile.txt
 
-'''Goal 3:'''
+===Goal 3===
     
 Code under the assumption that 
 * The input file does not fit into memory
 * The length of the individual strings to compare can be up to 100000 characters (fits into memory). 
 
 
-'''Example of Function Input and Result:'''
+===Example of Function Input and Result===
 
 x = "abcdefghijklm"
 
@@ -43,7 +43,7 @@ y = "hijklmnopqrst"
 return: "abcdefg"
 
 
-'''Example Input File:'''
+===Example Input File===
 
     Column_1 (x) Column_2 (y)
     abcdefghijklm hijklmnopqrstuvw
@@ -54,15 +54,36 @@ return: "abcdefg"
 There will be no header in the file and the columns are separated with a tab character (\t).
 
 
-'''Target:'''
+===Example Output===
 
-The target is optimal code, therefore there are several goals (in no
+If you coding for Goal 2 or 3 to help with assessment please make sure your program can 
+write the "clean" output. For example for the input 
+
+    abcdefghijklm hijklmnopqrstuvw
+    aioludhfgakjn akjnopqrstuvwxuh
+
+your program should produce the following output 
+   
+   abcdefg
+   aioludhfgakjn
+
+
+===Target===
+
+The target is optimal code that solves the problem correctly, therefore there are several goals (in no
 particular order):
 * Code quality (maintability, reusability, OO design, etc)
 * CPU & RAM efficiency
 
 Using multiple threads to speed up the comparison is a plus. 
 
-'''Please note that the task is not very well defined''' and you will have to make some assumptions, please make sure to document all of them. Also provide an appropriate Javadoc for your program if you coding for the goal 2 or 3.  
+
+===Submission===
+
+Please prepare a JAR file containing the following: 
+* The executable JAR containing the program. This must be called ''runme.jar''. 
+* A directory called ''src'', containing all the source code and related parts of your project.
+* A directory called ''docs'', containing a pure ASCII text file called ''choices.txt'' describing the significant design choices you made, uncertainties you had regarding the project, and the decisions you made when resolving them. 
+* A directory called ''docs/javadoc'' containing javadoc for your classes. 
 
 Either code for one, two or all of the goals.
