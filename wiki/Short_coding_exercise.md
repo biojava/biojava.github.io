@@ -98,6 +98,7 @@ Please prepare a JAR file containing the following:
 -   A directory called *docs/javadoc* containing javadoc for your
     classes.
 
-Submit the Jar file to **gsocexercise at gmail dot com**
+Submit the Jar file to **gsocexercise at gmail dot com** by the 10 of
+April.
 
 Either code for one, two or all of the goals.
