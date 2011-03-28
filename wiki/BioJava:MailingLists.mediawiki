@@ -31,7 +31,7 @@ This list is intended for more technical discussions about API design, bugs in C
 * Off topic issues should be kept to a minimum. The subject line should be pre-pended with [Off Topic] or similar
 
 == Bug Reports ==
-Bugs in released code should be reported via [http://bugzilla.open-bio.org/enter_bug.cgi?product=BioJava BugZilla]
+Bugs in released code should be reported via [https://redmine.open-bio.org Redmine]
 
 All bug reports should contain:
 * BioJava version (eg 1.6).
