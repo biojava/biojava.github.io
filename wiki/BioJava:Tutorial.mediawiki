@@ -13,7 +13,7 @@ The following tutorials are currently available - more are always welcome! While
 ** [[BioJava:Tutorial:Blast2HTML Example Application|Blast2HTML Example Application]]
 * [[BioJava:Tutorial:Dynamic programming examples|Walkthrough of one of the dynamic programming examples]] 
 * [[BioJava:Tutorial:Installing BioSQL|Installing BioSQL]]
-* [http://medicalcomputing.net/tools_dna1.php Approaches to Web Development for Bioinformatics]
+* [http://biojava.org/download/WebDevelopmentBioinformatics.pdf Approaches to Web Development for Bioinformatics]
 The [[BioJava:CookBook|BioJava in Anger]] page offers cookbook-style tutorials about performing many common tasks in BioJava. 
 
 Additionally, a number of small demo programs can be found in the <code>demos</code> directory of the BioJava source distribution.
