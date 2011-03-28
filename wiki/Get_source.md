@@ -9,7 +9,7 @@ BioJava requires [Subversion](http://subversion.tigris.org/) (SVN) and
 [Maven](http://maven.apache.org/) for checking out the code and creating
 a build. Access is possible either via
 
-`- Anonymous SVN access or`  
+`- Anonymous SVN or GIT access or`  
 `- Developer SVN access (ssh account required) or`  
 `- BioJava SNAPSHOT builds (anonymous, Maven required)`
 
