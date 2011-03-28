@@ -99,6 +99,6 @@ Please prepare a JAR file containing the following:
     classes.
 
 Submit the Jar file to **gsocexercise at gmail dot com** by the 10 of
-April.
+April inclusive.
 
 Either code for one, two or all of the goals.
