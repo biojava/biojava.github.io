@@ -30,7 +30,7 @@ the JavaDoc API documentation ([latest biojava
     examples](BioJava:Tutorial:Dynamic programming examples "wikilink")
 -   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
 -   [Approaches to Web Development for
-    Bioinformatics](http://medicalcomputing.net/tools_dna1.php)
+    Bioinformatics](http://biojava.org/download/WebDevelopmentBioinformatics.pdf)
 
 The [BioJava in Anger](BioJava:CookBook "wikilink") page offers
 cookbook-style tutorials about performing many common tasks in BioJava.
