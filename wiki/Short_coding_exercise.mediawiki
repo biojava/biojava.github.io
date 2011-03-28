@@ -86,4 +86,6 @@ Please prepare a JAR file containing the following:
 * A directory called ''docs'', containing a pure ASCII text file called ''choices.txt'' describing the significant design choices you made, uncertainties you had regarding the project, and the decisions you made when resolving them. 
 * A directory called ''docs/javadoc'' containing javadoc for your classes. 
 
+Submit the Jar file to '''gsocexercise at gmail dot com'''
+
 Either code for one, two or all of the goals.
