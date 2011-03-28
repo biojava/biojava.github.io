@@ -64,7 +64,7 @@ Bug Reports
 -----------
 
 Bugs in released code should be reported via
-[BugZilla](http://bugzilla.open-bio.org/enter_bug.cgi?product=BioJava)
+[Redmine](https://redmine.open-bio.org)
 
 All bug reports should contain:
 
