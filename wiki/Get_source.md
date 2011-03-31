@@ -18,7 +18,7 @@ Downloading and updating code via Anonymous SVN
 
 The code.open-bio.org server offers up read-only copies of source code
 repositories via anonymous SVN. A list of code repositories available
-via SVN can be seen here: <http://code.open-bio.org/svnweb/index.cgi>
+via SVN can be seen here: <http://code.open-bio.org/?root=biojava>
 
 ### Checking out the latest BioJava code
 
