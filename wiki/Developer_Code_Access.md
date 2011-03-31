@@ -3,7 +3,7 @@ title: Developer Code Access
 ---
 
 Developer Access to SVN
-=======================
+-----------------------
 
 For the developer access a user account on the dev.open-bio server is
 required. Once you have such an account, the SVN checkout works like
