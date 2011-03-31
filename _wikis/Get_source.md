@@ -62,14 +62,6 @@ unavailable for access.
 If a SVN client error occurs for longer than 20 minutes, please report
 this to: support@helpdesk.open-bio.org
 
-Downloading and updating code via Developer SVN
-===============================================
-
-For getting write access to BioJava you need a developer account on
-dev.open-bio.org. Details for how developers can check out the
-read/write enabled SVN see at
-[Developer\_Code\_Access](Developer_Code_Access "wikilink")
-
 Maven SNAPSHOT builds
 =====================
 
@@ -93,6 +85,14 @@ the following lines to your project .pom file:
         </repository>
     </repositories>
 
+Downloading and updating code via Developer SVN
+===============================================
+
+For getting write access to BioJava you need a developer account on
+dev.open-bio.org. Details for how developers can check out the
+read/write enabled SVN see at
+[Developer\_Code\_Access](Developer_Code_Access "wikilink")
+
 Links
 =====
 
@@ -102,12 +102,11 @@ wiki](http://www.open-bio.org/wiki/SVN-Developers)
 Repository News
 ===============
 
-BioJava migrating to Maven
---------------------------
+BioJava migrated to Maven
+-------------------------
 
-BioJava is currently in the process of getting migrated to Maven and
-split up into sub-modules. You can track the status of this at
-<BioJava:MavenMigration>
+BioJava has migrated to Maven and was re-organized into sub-modules. For
+more information see <BioJava:MavenMigration>
 
 As of September 2009 the new mavenized code is available through the
 main biojava *trunk*. The old ant-based biojava is still available in
