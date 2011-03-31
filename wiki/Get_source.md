@@ -25,15 +25,23 @@ via SVN can be seen here: <http://code.open-bio.org/svnweb/index.cgi>
 The following example shows how to obtain the latest BioJava codebase
 snapshot using anonymous SVN, it will check out the latest copy of
 biojava-live/ from the "SVN trunk" and will locally store it in a
-directory named "biojava-live" on your system:
+directory named "biojava" on your system:
 
-`svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
+`svn co `[`http://code.open-bio.org/repos/biojava/biojava-live/trunk`](http://code.open-bio.org/repos/biojava/biojava-live/trunk)` ./biojava`
 
 Anonymous checkouts are now hosted at [read only mirror at
 github](http://github.com/biojava/biojava). As such you can of course
 also use git to get a copy of the code:
 
+`svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
+
+or if you prefer GIT:
+
 `git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
+
+A list of all available projects in SVN can be obtained with:
+
+`svn list `[`http://code.open-bio.org/repos/biojava`](http://code.open-bio.org/repos/biojava)
 
 ### Troubleshooting Anonymous SVN
 
