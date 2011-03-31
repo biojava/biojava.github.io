@@ -39,10 +39,6 @@ The final step of our codebase replication process is to explicitly re-verify th
 
 If a SVN client error occurs for longer than 20 minutes, please report this to: support@helpdesk.open-bio.org
 
-= Downloading and updating code via Developer SVN = 
-
-For getting write access to BioJava you need a developer account on dev.open-bio.org. Details for how developers can check out the read/write enabled SVN see at [[Developer_Code_Access]]
-
 = Maven SNAPSHOT builds =
 
 BioJava now also provides SNAPSHOT builds of the latest code base. This is created automatically by the automated build system at [http://emmy.rcsb.org:8080/cruisecontrol/
@@ -65,13 +61,17 @@ BioJava now also provides SNAPSHOT builds of the latest code base. This is creat
 </pre>
 
 
+= Downloading and updating code via Developer SVN = 
+
+For getting write access to BioJava you need a developer account on dev.open-bio.org. Details for how developers can check out the read/write enabled SVN see at [[Developer_Code_Access]]
+
 = Links =
 See also the [http://www.open-bio.org/wiki/SVN-Developers SVN developers page in the OBF wiki]
 
 =Repository News=
-==BioJava migrating to Maven==
+==BioJava migrated to Maven==
 
-BioJava is currently in the process of getting migrated to Maven and split up into sub-modules. You can track the status of this at [[BioJava:MavenMigration]]
+BioJava has migrated to Maven and was re-organized into sub-modules. For more information see [[BioJava:MavenMigration]]
 
 As of September 2009 the new mavenized code is available through the main biojava ''trunk''. The old ant-based biojava is still available in the branch ''trunk_1_7_ant''
 
