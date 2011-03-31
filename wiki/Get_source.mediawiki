@@ -13,16 +13,15 @@ The code.open-bio.org server offers up read-only copies of source code repositor
 
 The following example shows how to obtain the latest BioJava codebase snapshot using anonymous SVN, it will check out the latest copy of biojava-live/ from the "SVN trunk" and will locally store it in a directory named "biojava" on your system:
 
-
  svn co http://code.open-bio.org/repos/biojava/biojava-live/trunk ./biojava
 
 Anonymous checkouts are now hosted at [http://github.com/biojava/biojava read only mirror at github]. As such you can of course also use git to get a copy of the code:
 
- svn co http://svn.github.com/biojava/biojava.git ./biojava
-
-or if you prefer GIT:
-
  git clone https://github.com/biojava/biojava.git
+ 
+finally there is also a SVN interface to github:
+
+ svn co http://svn.github.com/biojava/biojava.git ./biojava
 
 
 A list of all available projects in SVN can be obtained with:
