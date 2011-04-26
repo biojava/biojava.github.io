@@ -8,7 +8,7 @@ title: GSoC:AAPropertiesComputation
 [Chuan Hock
 Koh](http://compbio.ddns.comp.nus.edu.sg/~ChuanHockKoh/index.html)*
 
-*Mentored by Peter Troshin*
+*Mentored by [Peter Troshin](http://biojava.org/wiki/User:Ptroshin)*
 
 *Co-mentored by [Andreas Prlic](Andreas Prlic "wikilink")*
 
