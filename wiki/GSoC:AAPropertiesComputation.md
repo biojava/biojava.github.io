@@ -58,7 +58,7 @@ Timeline
 
 ### Phase 5 (3 Weeks)
 
-"August 1 to August 21"
+*August 1 to August 21*
 
 -   Final touch-up based on mentors’ feedback
 
