@@ -5,11 +5,12 @@ title: GSoC:AAPropertiesComputation
 **Amino Acids Physico-Chemical Properties Calculation**
 
 *[Google Summer of Code](Google Summer of Code "wikilink") Project by
-[Chuan Hock Koh](Chuan Hock Koh "wikilink")*
+[Chuan Hock
+Koh](http://compbio.ddns.comp.nus.edu.sg/~ChuanHockKoh/index.html)*
 
-*Mentored by [Peter Troshin](Peter Troshin "wikilink")*
+*Mentored by Peter Troshin*
 
-*Co-mentored by Andreas Prlic*
+*Co-mentored by [Andreas Prlic](Andreas Prlic "wikilink")*
 
 The calculation of simple physico-chemical properties for biopolymers is
 an important tool in the arsenal of molecular biologist. Theoretically
@@ -64,9 +65,9 @@ Timeline
 Progress Log
 ------------
 
-### April 26 -
+### April 26 - Current
 
--   setup biojava3-alignment module
+-   Set up project page in BioJava Wiki
 
 Skype call notes
 ----------------

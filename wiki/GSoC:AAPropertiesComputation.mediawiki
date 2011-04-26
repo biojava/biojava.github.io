@@ -1,10 +1,10 @@
 '''Amino Acids Physico-Chemical Properties Calculation'''
 
-''[[Google Summer of Code]] Project by [[Chuan Hock Koh]]''
+''[[Google Summer of Code]] Project by [http://compbio.ddns.comp.nus.edu.sg/~ChuanHockKoh/index.html Chuan Hock Koh]''
 
-''Mentored by [[Peter Troshin]]''
+''Mentored by Peter Troshin''
 
-''Co-mentored by Andreas Prlic''
+''Co-mentored by [[Andreas Prlic]]''
 
 The calculation of simple physico-chemical properties for biopolymers is an important tool in the arsenal of molecular biologist. Theoretically calculated quantities like extinction coefficients, isoelectric points, hydrophobicities and instability indices are useful guides as to how a molecule behaves in an experiment. Many tools for calculating these properties exist, including widely used open-source implementations in EMBOSS and BioPerl, but only some are currently available in BioJava3. The aim of this project is to port or produce new implementations of standard algorithms for a range of calculations within BioJava3.
 
@@ -49,9 +49,9 @@ The calculation of simple physico-chemical properties for biopolymers is an impo
 
 ==Progress Log==
 
-===April 26 - ===
+===April 26 - Current===
 
-* setup biojava3-alignment module
+* Set up project page in BioJava Wiki
 
 == Skype call notes ==
 
