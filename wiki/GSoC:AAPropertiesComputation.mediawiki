@@ -2,7 +2,7 @@
 
 ''[[Google Summer of Code]] Project by [http://compbio.ddns.comp.nus.edu.sg/~ChuanHockKoh/index.html Chuan Hock Koh]''
 
-''Mentored by Peter Troshin''
+''Mentored by [http://biojava.org/wiki/User:Ptroshin Peter Troshin]''
 
 ''Co-mentored by [[Andreas Prlic]]''
 
