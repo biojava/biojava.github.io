@@ -40,7 +40,7 @@ A standalone Java library will be developed and an API for other Java programs t
 :# If you like to make your application stand out I'd suggest a [[short coding exercise]].  
 
 ;Mentor
-[[User:Ptroshin|Peter Troshin]], co-mentor (?)
+[[User:Ptroshin|Peter Troshin]], co-mentor [[User:Andreas| Andreas Prlic]]
 
 ----
 

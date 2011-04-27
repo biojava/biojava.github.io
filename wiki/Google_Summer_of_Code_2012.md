@@ -86,7 +86,8 @@ coding exercise](short coding exercise "wikilink").
 
 Mentor  
 
-[Peter Troshin](User:Ptroshin "wikilink"), co-mentor (?)
+[Peter Troshin](User:Ptroshin "wikilink"), co-mentor [ Andreas
+Prlic](User:Andreas "wikilink")
 
 ------------------------------------------------------------------------
 
