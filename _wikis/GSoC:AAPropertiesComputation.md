@@ -68,6 +68,10 @@ Progress Log
 ### April 26 - Current
 
 -   Set up project page in BioJava Wiki
+-   Decision has been made to start working on the originally proposed
+    APIs with only the addition of amino acid composition.
+-   Arranged to have weekly skype meeting every Tuesday 1600 London time
+    (GMT +1) with both Mentors, Peter and Andreas.
 
 Skype call notes
 ----------------
