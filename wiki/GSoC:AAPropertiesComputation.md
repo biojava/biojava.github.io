@@ -69,7 +69,9 @@ Progress Log
 
 -   Set up project page in BioJava Wiki
 -   Decision has been made to start working on the originally proposed
-    APIs with only the addition of amino acid composition.
+    APIs with only the addition of amino acid composition. More
+    properties will be considered if there is time left after the
+    completion of these properties.
 -   Arranged to have weekly skype meeting every Tuesday 1600 London time
     (GMT +1) with both Mentors, Peter and Andreas.
 
