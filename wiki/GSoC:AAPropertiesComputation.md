@@ -154,6 +154,8 @@ Progress Log
     APIs with only the addition of amino acid composition. More
     properties will be considered if there is time left after the
     completion of these properties.
+-   Created a BioJava SVN account and successfully checkout biojava3 as
+    Maven Projects.
 
 Skype call notes
 ----------------
