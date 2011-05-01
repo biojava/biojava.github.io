@@ -46,7 +46,7 @@ this property will generate.
 
 -   Amino acid composition (20)
 -   Dipeptide acid compostion (400)
--   Net Charge
+-   Net Charge (1)
 
 ### PROFEAT properties
 
