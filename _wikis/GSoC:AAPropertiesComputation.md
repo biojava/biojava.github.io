@@ -22,6 +22,86 @@ EMBOSS and BioPerl, but only some are currently available in BioJava3.
 The aim of this project is to port or produce new implementations of
 standard algorithms for a range of calculations within BioJava3.
 
+Properties
+----------
+
+Listing the properties that could be considered for implementing. Mainly
+based on the original proposal, PROFEAT and Sirius PSB. We welcome more
+ideas for additional/removal of properties. Note: The semi-circle
+bracket () after the name of a property indicates the number of values
+this property will generate.
+
+### Originally proposed properties
+
+-   Molecular weight (1)
+-   Extinction coefficient (2 – Assumes Cys are reduced and assumes Cys
+    form cystines)
+-   Instability index (1)
+-   Aliphatic index (1)
+-   Grand Average of Hydropathy (1)
+-   Isoelectric point (1)
+-   Number of amino acids in the protein (1)
+
+### Other obvious properties to consider
+
+-   Amino acid composition (20)
+-   Dipeptide acid compostion (400)
+-   Net Charge
+
+### PROFEAT properties
+
+Sequences are first transformed into representation of different
+attribute and each attribute has 3 groups. In PROFEAT, there are 7
+different attributes.
+
+-   Hydrophobicity (Polar, Neutral, Hydrophobicity)
+-   Normalized van der Waals volume (Range 0 – 2.78, 2.95 – 4.0, 4.03 –
+    8.08)
+-   Polarity (Value 4.9 – 6.2, 8.0 – 9.2, 10.4 – 13.0)
+-   Polarizability (Value 0 – 1.08, 0.128 – 0.186, 0.219 – 0.409)
+-   Charge (Positive, Neutral, Negative)
+-   Secondary structure (Helix, Strand, Coil)
+-   Solvent accessibility (Buried, Exposed, Intermediate)
+
+After transformation, PROFEAT computes three type of properties
+
+-   Composition (3 \* 7 = 21)
+-   Transition (3 \* 7 = 21) – [1\<-\>2, 1\<-\>3, 2\<-\>3]
+    -   A transition from class 1 to 2 is the percent frequency with
+        which 1 is followed by 2 or 2 is followed by 1 in the
+        transformed sequence
+-   Distribution (5 \* 7 = 105)
+    -   It measures the position percent in the whole sequence of
+        encoded residue for first residue, 25%, 50%, 75%, 100%.
+
+### Other PROFEAT properties
+
+PROFEAT also computes a series of properties based on autocorrelations
+and sequence-order which are harder to comprehend. Please see PROFEAT
+[manual](http://jing.cz3.nus.edu.sg/prof/prof_manual.pdf) for details.
+
+-   Normalized Moreau-Broto autocorrelation (240)
+-   Moran autocorrelation (240)
+-   Geary autocorrelation (240)
+-   Sequence-order-coupling number (60)
+-   Quasi-sequence-order descriptors (100)
+
+### Sirius PSB properties
+
+Likewise, Sirius PSB transforms sequences accordingly to their
+respective grouping based on the different attributes. However, it
+computes different properties from them.
+
+-   Number of AA in (or Size) the maximum region (1 \* 7 = 7)
+-   Value of the maximum region (1 \* 7 = 7)
+-   Location of the maximum region (2 \* 7 = 14) – start and end
+
+Note: Maximum region is the region that has the highest value of a
+particular grouping. E.g. the most hydrophobic region in the sequence
+
+-   Number of regions with at least size X (1 \* 7 = 7)
+-   Number of regions with at least value Y (1 \* 7 = 7)
+
 Timeline
 --------
 
@@ -29,7 +109,7 @@ Timeline
 
 *April 25 to June 12* - Deliverables: APIs
 
--   Research and finalize with mentor the properties to be included
+-   Research and finalize with mentors the properties to be included
 -   Start coding of APIs while writing the documentation concurrently
 
 ### Phase 2 (3 Weeks)
@@ -68,12 +148,13 @@ Progress Log
 ### April 26 - Current
 
 -   Set up project page in BioJava Wiki
+-   Arranged to have weekly skype meeting every Tuesday 1600 London time
+    (GMT +1) with both Mentors, Peter and Andreas.
+-   Suggests properties to consider for this project.
 -   Decision has been made to start working on the originally proposed
     APIs with only the addition of amino acid composition. More
     properties will be considered if there is time left after the
     completion of these properties.
--   Arranged to have weekly skype meeting every Tuesday 1600 London time
-    (GMT +1) with both Mentors, Peter and Andreas.
 
 Skype call notes
 ----------------
