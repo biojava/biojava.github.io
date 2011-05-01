@@ -25,7 +25,7 @@ Note: The semi-circle bracket () after the name of a property indicates the numb
 ===Other obvious properties to consider===
 * Amino acid composition (20)
 * Dipeptide acid compostion (400)
-* Net Charge
+* Net Charge (1)
 
 ===PROFEAT properties===
 Sequences are first transformed into representation of different attribute and each attribute has 3 groups. In PROFEAT, there are 7 different attributes.
