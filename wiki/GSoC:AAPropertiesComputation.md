@@ -95,10 +95,9 @@ computes different properties from them.
 -   Number of AA in (or Size) the maximum region (1 \* 7 = 7)
 -   Value of the maximum region (1 \* 7 = 7)
 -   Location of the maximum region (2 \* 7 = 14) – start and end
-
-Note: Maximum region is the region that has the highest value of a
-particular grouping. E.g. the most hydrophobic region in the sequence
-
+    -   Note: Maximum region is the region that has the highest value of
+        a particular grouping. E.g. the most hydrophobic region in the
+        sequence
 -   Number of regions with at least size X (1 \* 7 = 7)
 -   Number of regions with at least value Y (1 \* 7 = 7)
 
