@@ -12,7 +12,7 @@ Ah Fu, Peter, Andreas
 Installation Issues
 -------------------
 
-Installation issues, what maven projects to use ?
+Installation issues, what maven plugins to use ?
 
 ` m2eclipse, m2eclipse-extras, subclipse`
 
