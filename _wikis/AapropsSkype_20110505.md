@@ -28,4 +28,9 @@ Ah Fu: set up user page on wiki
 
 Andreas: introduce Ah Fu on mailing list
 
-Ah Fu: mail biojava-dev for priorities of properties
+Ah Fu:
+
+-   mail biojava-dev for priorities of properties
+-   develop high level interfaces for the main physico-chemical
+    properties
+
