@@ -113,6 +113,8 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 
 ===May 5 - Current===
 
+* Completed initialization. Ready to start coding.
+
 
 == Skype call notes ==
 
