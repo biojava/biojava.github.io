@@ -24,6 +24,7 @@ Prerequisite
     subversion (latest version: 1.6)
 
 Update for Eclipse Helios SR2 (May 2011)
+----------------------------------------
 
 The above plugins are still available and work fine, however, below are
 the few important particulars.
@@ -53,14 +54,13 @@ the few important particulars.
 
 -   When adding the URL of BioJava development repository do not add the
     actual folder you want to check out, otherwise you may not be able
-    to checkout it as maven project.
+    to checkout it as maven project. For example if you want to checkout
 
-For example if you want to checkout Insert non-formatted text here
-
-*svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/*
+`svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/`
 
 use
-*svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live*
+
+`svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live`
 
 as the repository URL and then navigate to trunk in the Eclipse SVN
 explorer.
