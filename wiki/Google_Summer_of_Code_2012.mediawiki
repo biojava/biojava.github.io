@@ -10,6 +10,8 @@ Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at
 
 ==== Amino acids physico-chemical properties calculation ====
 
+Project page: [[GSoC:AAPropertiesComputation]]
+
 ;Rationale 
 :The calculation of simple physico-chemical properties for biopolymers is an important tool in the arsenal of molecular biologist. Theoretically calculated quantities like extinction coefficients, isoelectric points, hydrophobicities and instability indices are useful guides as to how a molecule behaves in an experiment. Many tools for calculating these properties exist, including widely used open-source implementations in EMBOSS and BioPerl, but only some are currently available in BioJava3. The aim of this project is to port or produce new implementations of standard algorithms for a range of calculations within BioJava3.
 
