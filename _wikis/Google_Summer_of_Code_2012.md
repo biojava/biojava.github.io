@@ -22,6 +22,8 @@ details about the program.
 
 #### Amino acids physico-chemical properties calculation
 
+Project page: <GSoC:AAPropertiesComputation>
+
 Rationale  
 The calculation of simple physico-chemical properties for biopolymers is
 an important tool in the arsenal of molecular biologist. Theoretically
