@@ -144,7 +144,7 @@ Timeline
 Progress Log
 ------------
 
-### April 26 - Current
+### April 26 - May 4 (Week 1)
 
 -   Set up project page in BioJava Wiki
 -   Arranged to have weekly skype meeting every Tuesday 1600 London time
@@ -156,6 +156,8 @@ Progress Log
     completion of these properties.
 -   Created a BioJava SVN account and successfully checkout biojava3 as
     Maven Projects.
+
+### May 5 - Current
 
 Skype call notes
 ----------------
