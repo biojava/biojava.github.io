@@ -8,6 +8,33 @@
 
 * Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
 
+
+Update for Eclipse Helios SR2 (May 2011)
+
+The above plugins are still available and work fine, however, below are the few important particulars. 
+
+* Make sure you have full JDK 1.6 installed, JRE will not be sufficient (some ''Maven'' plugins will not work)
+
+* After JDK installation point Eclipse to the JDK location. For this edit ''eclipse.ini'' found in the Eclipse root directory. Insert ''-vm'' keyword with the location of your JDK and make sure that this keyword precedes ''-vmargs'' (!) for example
+
+   -vm
+   C:/Java/jdk1.6.23/bin
+   -vmargs
+   -Xms40m
+   -Xmx512m
+
+* If you work on any other operating system but win32, you will have to install JavaHL library for the ''subclipse'' plugin manually. More information about it can be found here: [http://subclipse.tigris.org/wiki/JavaHL http://subclipse.tigris.org/wiki/JavaHL]
+
+* When adding the URL of BioJava development repository do not add the actual folder you want to check out, otherwise you may not be able to checkout it as maven project.
+
+For example if you want to checkout <nowiki>Insert non-formatted text here</nowiki>
+
+''svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/''
+
+use ''svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live''
+
+as the repository URL and then navigate to trunk in the Eclipse SVN explorer.
+
 == Installation ==
 
 * In the SVN Repository Exploring view: Right click on the folder <i>/biojava/biojava-live/trunk</i> and select Check  Out as Maven project
