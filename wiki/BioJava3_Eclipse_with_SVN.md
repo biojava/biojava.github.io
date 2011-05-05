@@ -29,6 +29,13 @@ Update for Eclipse Helios SR2 (May 2011)
 The above plugins are still available and work fine, however, below are
 the few important particulars.
 
+-   Use update URLs from the plugins web site, do not use Eclipse market
+    place, as in that case you will have to install all the components
+    of the plugin manually and it will be very easy to forget to install
+    something important, besides it does not always work.
+
+<!-- -->
+
 -   Make sure you have full JDK 1.6 installed, JRE will not be
     sufficient (some *Maven* plugins will not work)
 
