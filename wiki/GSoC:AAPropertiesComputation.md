@@ -5,7 +5,7 @@ title: GSoC:AAPropertiesComputation
 **Amino Acids Physico-Chemical Properties Calculation**
 
 *[Google Summer of Code](Google Summer of Code "wikilink") Project by
-[Chuan Hock Koh]*
+[Chuan Hock Koh](Chuan Hock Koh "wikilink")*
 
 *Mentored by [Peter Troshin](http://biojava.org/wiki/User:Ptroshin)*
 

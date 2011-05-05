@@ -1,6 +1,6 @@
 '''Amino Acids Physico-Chemical Properties Calculation'''
 
-''[[Google Summer of Code]] Project by [Chuan Hock Koh]''
+''[[Google Summer of Code]] Project by [[Chuan Hock Koh]]''
 
 ''Mentored by [http://biojava.org/wiki/User:Ptroshin Peter Troshin]''
 
