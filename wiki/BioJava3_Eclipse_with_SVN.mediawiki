@@ -9,7 +9,7 @@
 * Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
 
 
-Update for Eclipse Helios SR2 (May 2011)
+== Update for Eclipse Helios SR2 (May 2011) ==
 
 The above plugins are still available and work fine, however, below are the few important particulars. 
 
@@ -25,13 +25,10 @@ The above plugins are still available and work fine, however, below are the few 
 
 * If you work on any other operating system but win32, you will have to install JavaHL library for the ''subclipse'' plugin manually. More information about it can be found here: [http://subclipse.tigris.org/wiki/JavaHL http://subclipse.tigris.org/wiki/JavaHL]
 
-* When adding the URL of BioJava development repository do not add the actual folder you want to check out, otherwise you may not be able to checkout it as maven project.
-
-For example if you want to checkout <nowiki>Insert non-formatted text here</nowiki>
-
-''svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/''
-
-use ''svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live''
+* When adding the URL of BioJava development repository do not add the actual folder you want to check out, otherwise you may not be able to checkout it as maven project. For example if you want to checkout 
+ svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/
+use 
+ svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live
 
 as the repository URL and then navigate to trunk in the Eclipse SVN explorer.
 
