@@ -10,6 +10,8 @@ Ah Fu, Peter, Andreas
 
 == Outlook for this week ==
 
- mail biojava-dev for feedback
+ Ah Fu: set up user page on wiki
+ Andreas: introduce Ah Fu on mailing list
+ Ah Fu: mail biojava-dev for priorities of properties
 
  discuss high level issues on mailing list, technical details in private
