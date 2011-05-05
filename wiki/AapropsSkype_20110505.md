@@ -30,6 +30,8 @@ Andreas: introduce Ah Fu on mailing list
 
 Ah Fu:
 
+-   add biojava3-aa-prop module to the top level maven configuration
+    file
 -   mail biojava-dev for priorities of properties
 -   develop high level interfaces for the main physico-chemical
     properties
