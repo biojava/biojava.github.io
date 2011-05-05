@@ -159,6 +159,8 @@ Progress Log
 
 ### May 5 - Current
 
+-   Completed initialization. Ready to start coding.
+
 Skype call notes
 ----------------
 
