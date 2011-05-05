@@ -32,7 +32,8 @@ Ah Fu:
 
 -   add biojava3-aa-prop module to the top level maven configuration
     file
--   mail biojava-dev for priorities of properties
+-   mail biojava-dev for priorities of properties, ask for ideas for any
+    new properties
 -   develop high level interfaces for the main physico-chemical
     properties
 
