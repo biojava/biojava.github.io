@@ -91,33 +91,6 @@ Prlic](User:Andreas "wikilink")
 
 ------------------------------------------------------------------------
 
-#### Extend Sequence Viewer code to become a client for the Distributed Annotation System
-
-  
-The Sequence Viewer [1](https://github.com/biojava/RCSB_SequenceViewer)
-is a project that can display protein annotations projected onto various
-types of protein sequences (PDB, UniProt, etc). So far all annotations
-are loaded from flat files or local databases. The goal of this project
-is to extend this viewer to add support for the [Distributed Annotation
-System](http://www.biodas.org) (DAS).
-
-Challenges  
-Existing components that enable DAS communication will be used to extend
-the sequence drawing code base. The code is currently single threaded.
-In order to enable efficient data display a multi-threaded layer and an
-event model will be added.
-
-Degree of difficulty and needed skills  
-
-Medium to Difficult. Pre-existing experience with multi threaded
-programming will be of benefit. The sequence code is complex and
-requires some Java experience to efficiently extend the existing
-components.
-
-Mentor  
-
-[Andreas Prlic](User:Andreas "wikilink"), co-mentor (?)
-
 Previous Years
 --------------
 
