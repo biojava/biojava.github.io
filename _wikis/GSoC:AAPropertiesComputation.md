@@ -160,6 +160,10 @@ Progress Log
 Skype call notes
 ----------------
 
+Weekly skype calls are on Thursday 08 AM PST
+
+[May 5th](aapropsSkype_20110505 "wikilink")
+
 References
 ----------
 
