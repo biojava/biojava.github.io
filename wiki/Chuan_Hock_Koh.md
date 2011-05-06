@@ -15,8 +15,10 @@ He has contributed three open source software to
 [SourceForge](http://sourceforge.net/).
 
 1) [Sirius PSB](http://sourceforge.net/projects/siriuspsb/) - a software
-to carry out sequence (DNA or protein) analysis. 2)
-[MIRACH](http://sourceforge.net/projects/mirach/) - a Model Checker for
-Biological Pathway Models. 3)
-[DA](http://sourceforge.net/projects/datassimilation/) - a software to
-carry out parameters estimation using data assimilation.
+to carry out sequence (DNA or protein) analysis.
+
+2) [MIRACH](http://sourceforge.net/projects/mirach/) - a Model Checker
+for Biological Pathway Models.
+
+3) [DA](http://sourceforge.net/projects/datassimilation/) - a software
+to carry out parameters estimation using data assimilation.
