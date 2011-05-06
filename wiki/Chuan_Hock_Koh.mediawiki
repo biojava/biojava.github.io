@@ -1,6 +1,7 @@
 [http://compbio.ddns.comp.nus.edu.sg/~ChuanHockKoh/index.html Chuan Hock Koh] is a Ph.D. candidate at the [http://www.nus.edu.sg/ National University of Singapore] under a scholarship from the [http://www.nus.edu.sg/ngs/NGSS.html National University of Singapore Graduate School for Integrative Sciences and Engineering]. He received his B.S. in Computational Biology from the National University of Singapore in 2008.
 
-He has contributed three software to [http://sourceforge.net/ SourceForge].
+He has contributed three open source software to [http://sourceforge.net/ SourceForge].
+
 1) [http://sourceforge.net/projects/siriuspsb/ Sirius PSB] - a software to carry out sequence (DNA or protein) analysis.
 2) [http://sourceforge.net/projects/mirach/ MIRACH] - a Model Checker for Biological Pathway Models.
 3) [http://sourceforge.net/projects/datassimilation/ DA] - a software to carry out parameters estimation using data assimilation.
