@@ -159,6 +159,9 @@ Progress Log
 ### May 5 - Current
 
 -   Completed initialization. Ready to start coding.
+-   Introduced to the biojava developer mailing list.
+-   Request for input from biojava developer mailing list on this
+    project.
 
 Skype call notes
 ----------------
