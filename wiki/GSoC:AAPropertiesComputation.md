@@ -162,6 +162,7 @@ Progress Log
 -   Introduced to the biojava developer mailing list.
 -   Request for input from biojava developer mailing list on this
     project.
+-   Prepared first draft of the interface methods for the properties.
 
 Skype call notes
 ----------------
