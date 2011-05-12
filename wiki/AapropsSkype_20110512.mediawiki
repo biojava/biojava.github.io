@@ -1,3 +1,5 @@
+[[GSoC:AAPropertiesComputation|back to project]]
+
 == Participants: ==
 
 Ah Fu, Peter, Andreas
