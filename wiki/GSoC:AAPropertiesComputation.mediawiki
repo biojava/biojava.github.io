@@ -114,9 +114,12 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 ===May 5 - Current===
 
 * Completed initialization. Ready to start coding.
+* Created a user page for myself on BioJava Wiki.
 * Introduced to the biojava developer mailing list.
-* Request for input from biojava developer mailing list on this project.
-* Committed the first draft of the interface methods for the basic physico-chemical properties
+* Request for input and suggestion from biojava developer mailing list on this project.
+* Committed the first draft of the interface class for the basic physico-chemical properties.
+* Updated interface class for basic physico-chemical properties based on Mentors' feedback.
+* Learned and better understand how to use Maven on Eclipse.
 
 == Skype call notes ==
 
