@@ -2,6 +2,8 @@
 title: AapropsSkype 20110512
 ---
 
+[back to project](GSoC:AAPropertiesComputation "wikilink")
+
 Participants:
 -------------
 
