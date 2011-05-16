@@ -156,7 +156,7 @@ Progress Log
 -   Created a BioJava SVN account and successfully checkout biojava3 as
     Maven Projects.
 
-### May 5 - Current
+### May 5 - May 12 (Week 2)
 
 -   Completed initialization. Ready to start coding.
 -   Created a user page for myself on BioJava Wiki.
@@ -168,6 +168,10 @@ Progress Log
 -   Updated interface class for basic physico-chemical properties based
     on Mentors' feedback.
 -   Learned and better understand how to use Maven on Eclipse.
+
+### May 13 - Current (Week 3)
+
+-   Gathered websites/publications needed for constraints.
 
 Skype call notes
 ----------------
