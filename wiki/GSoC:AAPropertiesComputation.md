@@ -172,6 +172,10 @@ Progress Log
 ### May 13 - Current (Week 3)
 
 -   Gathered websites/publications needed for constraints.
+-   Refactoring packages and classes for more readability.
+-   Learning to properly document work according to set standard.
+-   Finalizing the approach for implementation.
+-   Initial implementation of a few properties.
 
 Skype call notes
 ----------------
