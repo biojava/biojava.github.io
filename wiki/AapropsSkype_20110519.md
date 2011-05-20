@@ -16,13 +16,14 @@ Bad connection on Skype had to preliminary terminate the meeting.
 
 Ah Fu:
 
-` write up remaining questions in email `  
-` correct javadoc `  
-` start implementing the methods of BasicProperties interface`  
-` read on about JUnit `  
-` write test cases for the newly implemented methods`  
-` try making Google Talk to work as backup option for phone calls`
+-   write up remaining questions in email
+-   correct javadoc
+-   start implementing the methods of BasicProperties interface
+-   read on about JUnit
+-   write test cases for the newly implemented methods
+-   try making Google Talk to work as backup option for phone calls
 
 Peter:
 
-` address Ah Fu questions`
+-   address Ah Fu questions
+
