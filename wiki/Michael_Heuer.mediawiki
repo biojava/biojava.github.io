@@ -21,4 +21,7 @@ For source code contributions (note, only commits against the biojava-live svn t
 
 
 For additional data analysis and visualization libraries, see http://www.dishevelled.org
+
+
+For the Cytoscape plugin for venn diagrams, see http://www.dishevelled.org/venn-cytoscape-plugin
 [[Category:People]]
