@@ -121,7 +121,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Updated interface class for basic physico-chemical properties based on Mentors' feedback.
 * Learned and better understand how to use Maven on Eclipse.
 
-===May 13 - Current (Week 3)===
+===May 13 - May 20 (Week 3)===
 
 * Gathered websites/publications needed for constraints.
 * Refactoring packages and classes for more readability.
