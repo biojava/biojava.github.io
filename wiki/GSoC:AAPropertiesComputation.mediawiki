@@ -129,6 +129,12 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Finalizing the approach for implementation.
 * Initial implementation of a few properties.
 
+===May 21 - Current (Week 4)===
+
+* Implemented all basic properties.
+* Verified them manually.
+* Implemented adaptor methods for all basic properties.
+
 == Skype call notes ==
 
 Weekly skype calls are on Thursday 08 AM PST
