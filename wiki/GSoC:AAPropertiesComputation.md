@@ -177,6 +177,12 @@ Progress Log
 -   Finalizing the approach for implementation.
 -   Initial implementation of a few properties.
 
+### May 21 - Current (Week 4)
+
+-   Implemented all basic properties.
+-   Verified them manually.
+-   Implemented adaptor methods for all basic properties.
+
 Skype call notes
 ----------------
 
