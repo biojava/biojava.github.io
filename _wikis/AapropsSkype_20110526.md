@@ -22,11 +22,10 @@ ah fu to send by email with more detail
 Peter
 -----
 
-- suggestions:
+- suggestions: use Task panel in Eclipse, can be used to address TODO
+comments
 
-`use Task panel in Eclipse, can be used to address TODO comments`
-
-- comment commits in repository
+- comment SVN commits
 
 - add a couple of new methods for easier access for the users
 
