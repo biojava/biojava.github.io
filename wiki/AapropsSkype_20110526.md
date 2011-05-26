@@ -33,6 +33,10 @@ Peter
 Outlook for this week
 ---------------------
 
-- work on TODOs in the code - develop junit test cases for all the
-methods - mentor input required for validation of methods - improve
-methods
+- work on TODOs in the code
+
+- develop junit test cases for all the methods
+
+- mentor input required for validation of methods
+
+- improve methods
