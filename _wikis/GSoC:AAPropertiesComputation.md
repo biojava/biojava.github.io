@@ -210,6 +210,11 @@ Progress Log
 -   Implemented an additional properties, absorbance.
 -   Also implemented adaptor methods for making computation of
     absorbance more user friendly.
+-   Implemented JUnit test cases for all properties.
+    -   Based on <http://au.expasy.org/cgi-bin/protparam> and
+        <http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp>
+    -   However, many does not pass assertEquals due to precision
+        problem.
 
 Skype call notes
 ----------------
