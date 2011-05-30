@@ -177,7 +177,7 @@ Progress Log
 -   Finalizing the approach for implementation.
 -   Initial implementation of a few properties.
 
-### May 21 - May 27
+### May 21 - May 27 (Week 4)
 
 -   Implemented all basic properties.
 -   Verified them manually based on three web tools.
@@ -194,6 +194,8 @@ Progress Log
     -   Isoelectric Point
     -   Net Charge
     -   Amino Acid Composition
+
+### May 28 - Current (Week 5)
 
 Skype call notes
 ----------------
