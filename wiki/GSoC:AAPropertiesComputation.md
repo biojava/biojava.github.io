@@ -177,11 +177,23 @@ Progress Log
 -   Finalizing the approach for implementation.
 -   Initial implementation of a few properties.
 
-### May 21 - Current (Week 4)
+### May 21 - May 27
 
 -   Implemented all basic properties.
--   Verified them manually.
+-   Verified them manually based on three web tools.
+    -   <http://au.expasy.org/tools/protparam.html>
+    -   <http://au.expasy.org/tools/pi_tool.html>
+    -   <http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator.asp>
 -   Implemented adaptor methods for all basic properties.
+-   Basic properties includes the following
+    -   Molecular Weight
+    -   Extinction Coefficient
+    -   Instability Index
+    -   Apliphatic Index
+    -   Average Hydropathy
+    -   Isoelectric Point
+    -   Net Charge
+    -   Amino Acid Composition
 
 Skype call notes
 ----------------
