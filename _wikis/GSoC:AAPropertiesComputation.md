@@ -197,6 +197,17 @@ Progress Log
 
 ### May 28 - Current (Week 5)
 
+-   Added several additional adaptor methods to make usage more user
+    friendly.
+    -   public static final double getEnrichment(String sequence, char
+        aminoAcidCode)
+    -   public static final double getEnrichment(String sequence, String
+        aminoAcidCode)
+    -   public static final Map<String, Double>
+        getAACompositionString(String sequence)
+    -   public static final Map<Character, Double>
+        getAACompositionChar(String sequence)
+
 Skype call notes
 ----------------
 
