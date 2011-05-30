@@ -207,6 +207,9 @@ Progress Log
         getAACompositionString(String sequence)
     -   public static final Map<Character, Double>
         getAACompositionChar(String sequence)
+-   Implemented an additional properties, absorbance.
+-   Also implemented adaptor methods for making computation of
+    absorbance more user friendly.
 
 Skype call notes
 ----------------
