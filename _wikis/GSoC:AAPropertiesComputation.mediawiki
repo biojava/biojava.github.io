@@ -158,6 +158,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Implemented JUnit test cases for all properties. 
 ** Based on http://au.expasy.org/cgi-bin/protparam and http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp
 ** However, many does not pass assertEquals due to precision problem.
+* Added Javadoc for Constraints.java and PeptideProperties.java
 
 == Skype call notes ==
 
