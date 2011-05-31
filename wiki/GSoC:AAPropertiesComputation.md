@@ -215,6 +215,7 @@ Progress Log
         <http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp>
     -   However, many does not pass assertEquals due to precision
         problem.
+-   Added Javadoc for Constraints.java and PeptideProperties.java
 
 Skype call notes
 ----------------
