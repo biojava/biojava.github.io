@@ -195,7 +195,7 @@ Progress Log
     -   Net Charge
     -   Amino Acid Composition
 
-### May 28 - Current (Week 5)
+### May 28 - June 2 (Week 5)
 
 -   Added several additional adaptor methods to make usage more user
     friendly.
@@ -216,6 +216,14 @@ Progress Log
     -   However, many does not pass assertEquals due to precision
         problem.
 -   Added Javadoc for Constraints.java and PeptideProperties.java
+
+### June 3 - Current (Week 6)
+
+-   Removed Java docs from repository.
+-   Slightly modified current adaptor methods to allow user to decide on
+    the number of decimal places required for their usage
+-   Added adaptor methods with default decimal places
+-   All JUnit test cases passes now.
 
 Skype call notes
 ----------------

@@ -147,7 +147,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 ** Net Charge
 ** Amino Acid Composition
 
-===May 28 - Current (Week 5)===
+===May 28 - June 2 (Week 5)===
 * Added several additional adaptor methods to make usage more user friendly.
 ** public static final double getEnrichment(String sequence, char aminoAcidCode)
 ** public static final double getEnrichment(String sequence, String aminoAcidCode)
@@ -159,6 +159,12 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 ** Based on http://au.expasy.org/cgi-bin/protparam and http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp
 ** However, many does not pass assertEquals due to precision problem.
 * Added Javadoc for Constraints.java and PeptideProperties.java
+
+===June 3 - Current (Week 6)===
+* Removed Java docs from repository. 
+* Slightly modified current adaptor methods to allow user to decide on the number of decimal places required for their usage
+* Added adaptor methods with default decimal places
+* All JUnit test cases passes now.
 
 == Skype call notes ==
 
