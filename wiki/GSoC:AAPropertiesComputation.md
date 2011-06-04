@@ -238,6 +238,11 @@ Progress Log
             are considered to be invalid.
     -   public final static String cleanSequence(String) - this method
         replaces any invalid character in sequence with '-'.
+-   Added more test cases when invalid input are given to properties
+    generating methods.
+    -   Adjusted methods to handle such cases.
+    -   If input protein sequence is null, a null exception will be
+        thrown.
 
 Skype call notes
 ----------------
