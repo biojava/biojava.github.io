@@ -224,6 +224,20 @@ Progress Log
     the number of decimal places required for their usage
 -   Added adaptor methods with default decimal places
 -   All JUnit test cases passes now.
+-   Added a new class, Utils under aaproperties with main objective to
+    provide some utility methods that does not belong to any other
+    available classes.
+-   Added the following methods into Utils.
+    -   public final static double roundToDecimals(double, int) - this
+        method enable the rounding of value to desired decimal places.
+    -   public final static boolean
+        doesSequenceContainInvalidChar(String) - this method checks if
+        the sequence contains invalid character. Return true if invalid
+        character exists, false otherwise.
+        -   Any character outside of the standard 20 amino acid codes
+            are considered to be invalid.
+    -   public final static String cleanSequence(String) - this method
+        replaces any invalid character in sequence with '-'.
 
 Skype call notes
 ----------------
