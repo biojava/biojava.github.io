@@ -8,7 +8,7 @@ You can get the latest version [[Biojava:Download_1.8|BioJava1 (v1.8.1) (require
 
 You can also integrate BioJava with  NetBeans IDE. To find out how follow this [[How_to_integrate_BioJava_in_NetBeans_IDE|link]].
 
-A step by step guide on 'How to integrate BioJava in Nebtbeans' is [[File:BioJava-Installation Guide.png|link]].
+A step by step guide on 'How to integrate BioJava in Nebtbeans' is [[BioJava-Installation Guide.png|link]].
 
 == Installation ==
 
