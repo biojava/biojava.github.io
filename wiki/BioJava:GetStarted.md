@@ -25,6 +25,9 @@ area](Biojava:Download_1.8 "wikilink") .
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 
+A step by step guide on 'How to integrate BioJava in Nebtbeans' is
+[link](BioJava-Installation Guide "wikilink").
+
 Installation
 ------------
 
