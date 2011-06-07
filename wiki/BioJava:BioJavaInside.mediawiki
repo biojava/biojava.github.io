@@ -11,7 +11,7 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.derkholm.net/thomas/dazzle Dazzle]: A BioJava based DAS server.
 
-* [http://www.inforsense.com/biosense.html Biosense]: A commercial informatics offering from [http://www.inforsense.com/ Inforsense] that uses BioJava under the hood.
+* [http://www.idbs.com/InforSenseSuite/BioSense BioSense]: A plugin for the InforSense Suite, an analytics software platform by [http://www.idbs.com/ IDBS] that unitizes BioJava.
 
 * [http://www.bioclipse.net Bioclipse]: A free, open source, workbench for chemo- and bioinformatics with powerful editing and visualization capabilities for molecules, sequences, proteins, spectra etc.
 
@@ -33,7 +33,7 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://lajolla.sourceforge.net LaJolla] Structural alignment of RNA and proteins using an index structure for fast alignment of thousands of structures. Including an easy to use command line interface. Open source at Sourceforge.
 
-* [http://www.geneinfinity.org/genbeans/index.html GenBeans]: A rich client platform for bioinformatics primarily focused on molecular biology and sequence analysis. 
+* [http://www.geneinfinity.org/genbeans/index.html GenBeans]: A rich client platform for bioinformatics primarily focused on molecular biology and sequence analysis.
 
 == Publications ==
 BioJava has been used in the following publications. If you know of other publications please add them.
