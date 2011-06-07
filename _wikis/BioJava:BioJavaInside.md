@@ -27,9 +27,9 @@ projects please add them to the list.
 
 <!-- -->
 
--   [Biosense](http://www.inforsense.com/biosense.html): A commercial
-    informatics offering from [Inforsense](http://www.inforsense.com/)
-    that uses BioJava under the hood.
+-   [BioSense](http://www.idbs.com/InforSenseSuite/BioSense): A plugin
+    for the InforSense Suite, an analytics software platform by
+    [IDBS](http://www.idbs.com/) that unitizes BioJava.
 
 <!-- -->
 
