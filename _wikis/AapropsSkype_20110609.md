@@ -10,11 +10,14 @@ Ah Fu, Peter, Andreas
 Junit tests
 -----------
 
-`last week not all tests passed,that's fixed. Also testing of extreme values was added. `
+last week not all tests passed,that's fixed. Also testing of extreme
+values was added.
 
-`Peter: don't catch (expected) exceptions in junit tests, use annotations instead.`  
-  
-`rounding: probably the best approach is to use String.format() or DecimalFormat.`
+Peter: don't catch (expected) exceptions in junit tests, use annotations
+instead.
+
+rounding: probably the best approach is to use String.format() or
+DecimalFormat.
 
 XML parsing
 -----------
