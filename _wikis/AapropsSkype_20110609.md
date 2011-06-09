@@ -22,21 +22,25 @@ DecimalFormat.
 XML parsing
 -----------
 
-`some difficulties: What is the best approach about doing this?`
+some difficulties: What is the best approach about doing this?
 
-`- first approach was use XMLspy to generate Schema from XML file.`
+- first approach was use XMLspy to generate Schema from XML file.
 
-`- Peter: better to create the class first and then auto-generate XML from that.`
+- Peter: better to create the class first and then auto-generate XML
+from that.
 
-`- Start with a new elements class that captures the elements in the periodic table `
+- Start with a new elements class that captures the elements in the
+periodic table
 
-`- Use Jaxb to export to XML`
+- Use Jaxb to export to XML
 
-`- Create loader  `
+- Create loader
 
-`- later add a compound class`
+- later add a compound class
 
-`- make sure to add side-chains to amino acids`
+- make sure to add side-chains to amino acids
+
+Peter will send out an example of how he thinks this should be done
 
 Outlook for this week
 ---------------------
