@@ -37,3 +37,7 @@ XML parsing
 
 Outlook for this week
 ---------------------
+
+`- XML representation of Elements`
+
+`- finish up junit tests`
