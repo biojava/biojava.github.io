@@ -217,12 +217,12 @@ Progress Log
         problem.
 -   Added Javadoc for Constraints.java and PeptideProperties.java
 
-### June 3 - Current (Week 6)
+### June 3 - June 10 (Week 6)
 
 -   Removed Java docs from repository.
 -   Slightly modified current adaptor methods to allow user to decide on
-    the number of decimal places required for their usage
--   Added adaptor methods with default decimal places
+    the number of decimal places required for their usage.
+-   Added adaptor methods with default decimal places.
 -   All JUnit test cases passes now.
 -   Added a new class, Utils under aaproperties with main objective to
     provide some utility methods that does not belong to any other
@@ -243,6 +243,14 @@ Progress Log
     -   Adjusted methods to handle such cases.
     -   If input protein sequence is null, a null exception will be
         thrown.
+
+### June 11 - Current (Week 7)
+
+Remove all catch exception in test cases and replace them with expected
+= NullPointerException.class. Added several test methods to accommodate
+this. Change all adaptor methods to return full precision by default.
+Only fix the precision for the test cases to ensure they will not fail
+due to precision problem.
 
 Skype call notes
 ----------------
