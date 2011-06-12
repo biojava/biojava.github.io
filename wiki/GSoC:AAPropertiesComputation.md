@@ -252,6 +252,12 @@ Progress Log
 -   Change all adaptor methods to return full precision by default.
 -   Only fix the precision for the test cases to ensure they will not
     fail due to precision problem.
+-   Created a new package - org.biojava3.aaproperties.xml
+    -   Created two classes under this package - IsotopeType.java and
+        IsotopeTable.java.
+    -   The purpose of these package and classes are initial effort to
+        learn and utilize JAXB for properties' value definition in
+        particular for molecular weight.
 
 Skype call notes
 ----------------
