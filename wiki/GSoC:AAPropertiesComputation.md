@@ -246,11 +246,12 @@ Progress Log
 
 ### June 11 - Current (Week 7)
 
-Remove all catch exception in test cases and replace them with expected
-= NullPointerException.class. Added several test methods to accommodate
-this. Change all adaptor methods to return full precision by default.
-Only fix the precision for the test cases to ensure they will not fail
-due to precision problem.
+-   Remove all catch exception in test cases and replace them with
+    expected = NullPointerException.class.
+-   Added several test methods to accommodate this.
+-   Change all adaptor methods to return full precision by default.
+-   Only fix the precision for the test cases to ensure they will not
+    fail due to precision problem.
 
 Skype call notes
 ----------------
