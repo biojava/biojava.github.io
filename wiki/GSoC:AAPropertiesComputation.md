@@ -258,6 +258,11 @@ Progress Log
     -   The purpose of these package and classes are initial effort to
         learn and utilize JAXB for properties' value definition in
         particular for molecular weight.
+-   Populated two elements based on Peter's Element class.
+-   Create a ElementTester to test the generated xml and its computed
+    standard atomic weight.
+-   Also created several classes to prepare for the generation of
+    additional physiochemical-related properties.
 
 Skype call notes
 ----------------
