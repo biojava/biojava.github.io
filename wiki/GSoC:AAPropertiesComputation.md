@@ -69,7 +69,7 @@ After transformation, PROFEAT computes three type of properties
     -   A transition from class 1 to 2 is the percent frequency with
         which 1 is followed by 2 or 2 is followed by 1 in the
         transformed sequence
--   Distribution (5 \* 7 = 105)
+-   Distribution (3 \* 5 \* 7 = 105)
     -   It measures the position percent in the whole sequence of
         encoded residue for first residue, 25%, 50%, 75%, 100%.
 
