@@ -262,7 +262,9 @@ Progress Log
 -   Create a ElementTester to test the generated xml and its computed
     standard atomic weight.
 -   Also created several classes to prepare for the generation of
-    additional physiochemical-related properties.
+    PROFEAT properties.
+-   Finished implementing APIs for generating PROFEAT properties and
+    also added adaptor method for the ease of utilizing them
 
 Skype call notes
 ----------------
