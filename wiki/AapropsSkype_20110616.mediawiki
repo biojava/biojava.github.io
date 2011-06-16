@@ -1,0 +1,9 @@
+==Participants:==
+
+Ah Fu, Peter, Andreas 
+
+== Cruisecontrol == 
+
+notifications don't work, Andreas will investigate
+
+==
