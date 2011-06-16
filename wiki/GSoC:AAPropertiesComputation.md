@@ -276,7 +276,8 @@ Weekly skype calls are on Thursday 08 AM PST
 19th](aapropsSkype_20110519 "wikilink") [May
 26th](aapropsSkype_20110526 "wikilink") [June
 2nd](aapropsSkype_20110602 "wikilink") [June
-9th](aapropsSkype_20110609 "wikilink")
+9th](aapropsSkype_20110609 "wikilink") [June
+16th](aapropsSkype_20110616 "wikilink")
 
 References
 ----------
