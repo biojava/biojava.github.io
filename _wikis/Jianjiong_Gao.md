@@ -2,11 +2,9 @@
 title: Jianjiong Gao
 ---
 
-[Jianjiong Gao](http://web.missouri.edu/~jg722/) is a PhD student in [Xu
-Group](http://digbio.missouri.edu/) at [University of
-Missouri](http://www.missouri.edu/). His research is focusing on
-Bioinformatics, specifically computational proteomics and
-post-translational modification.
+[Dr. Jianjiong Gao](http://www.linkedin.com/in/jjgao) is a Research
+Scholar in Dr. Chris Sander's Lab at [MSKCC](http://www.mskcc.org/). His
+research is focusing on computational systems biology for cancer.
 
 He joined BioJava as a Google Summer of Code <sup>TM</sup> 2010 student
 on the project [*BioJava Packages for Identification, Classification,
