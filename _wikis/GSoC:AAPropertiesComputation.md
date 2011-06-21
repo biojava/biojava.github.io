@@ -244,7 +244,7 @@ Progress Log
     -   If input protein sequence is null, a null exception will be
         thrown.
 
-### June 11 - Current (Week 7)
+### June 11 - June 18 (Week 7)
 
 -   Remove all catch exception in test cases and replace them with
     expected = NullPointerException.class.
@@ -265,6 +265,15 @@ Progress Log
     PROFEAT properties.
 -   Finished implementing APIs for generating PROFEAT properties and
     also added adaptor method for the ease of utilizing them
+
+### June 19 - Current (Week 8)
+
+-   Removed Utils.roundToDecimals from PeptidePropertiesImpl.java
+-   Embedded all data from the element information website
+-   Create Test Cases to ensure data are properly embedded
+-   Create new methods to enable the usage of user specified xml file to
+    compute molecular mass
+-   Wrote test cases for these newly created methods
 
 Skype call notes
 ----------------
