@@ -271,6 +271,9 @@ Progress Log
 -   Removed Utils.roundToDecimals from PeptidePropertiesImpl.java
 -   Embedded all data from the element information website
 -   Create Test Cases to ensure data are properly embedded
+-   Generated XML files for Element Mass and Amino Acid Composition.
+-   Able to read in XML files for Element Mass and Amino Acid
+    Composition into Java via JAXB.
 -   Create new methods to enable the usage of user specified xml file to
     compute molecular mass
 -   Wrote test cases for these newly created methods
