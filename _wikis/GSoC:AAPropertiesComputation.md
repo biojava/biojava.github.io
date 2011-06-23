@@ -283,14 +283,16 @@ Skype call notes
 
 Weekly skype calls are on Thursday 08 AM PST
 
-[May 5th](aapropsSkype_20110505 "wikilink") [May
-12th](aapropsSkype_20110512 "wikilink") [May
-19th](aapropsSkype_20110519 "wikilink") [May
-26th](aapropsSkype_20110526 "wikilink") [June
-2nd](aapropsSkype_20110602 "wikilink") [June
-9th](aapropsSkype_20110609 "wikilink") [June
-16th](aapropsSkype_20110616 "wikilink") [June
-23th](aapropsSkype_20110623 "wikilink")
+` `[`May` `5th`](aapropsSkype_20110505 "wikilink")  
+` `[`May` `12th`](aapropsSkype_20110512 "wikilink")  
+` `[`May` `19th`](aapropsSkype_20110519 "wikilink")  
+` `[`May` `26th`](aapropsSkype_20110526 "wikilink")  
+` `[`June` `2nd`](aapropsSkype_20110602 "wikilink")  
+` `[`June` `9th`](aapropsSkype_20110609 "wikilink")  
+` `[`June` `16th`](aapropsSkype_20110616 "wikilink")  
+` `[`June` `23th`](aapropsSkype_20110623 "wikilink")
+
+The next skype call is on Wednesday the 29 of June, the same time.
 
 References
 ----------
