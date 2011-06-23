@@ -201,14 +201,16 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 
 Weekly skype calls are on Thursday 08 AM PST
 
-[[aapropsSkype_20110505|May 5th]]
-[[aapropsSkype_20110512|May 12th]]
-[[aapropsSkype_20110519|May 19th]]
-[[aapropsSkype_20110526|May 26th]]
-[[aapropsSkype_20110602|June 2nd]]
-[[aapropsSkype_20110609|June 9th]]
-[[aapropsSkype_20110616|June 16th]]
-[[aapropsSkype_20110623|June 23th]]
+  [[aapropsSkype_20110505|May 5th]]
+  [[aapropsSkype_20110512|May 12th]]
+  [[aapropsSkype_20110519|May 19th]]
+  [[aapropsSkype_20110526|May 26th]]
+  [[aapropsSkype_20110602|June 2nd]]
+  [[aapropsSkype_20110609|June 9th]]
+  [[aapropsSkype_20110616|June 16th]]
+  [[aapropsSkype_20110623|June 23th]]
+
+The next skype call is on Wednesday the 29 of June, the same time.
 
 ==References==
 
