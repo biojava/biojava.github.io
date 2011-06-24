@@ -266,7 +266,7 @@ Progress Log
 -   Finished implementing APIs for generating PROFEAT properties and
     also added adaptor method for the ease of utilizing them
 
-### June 19 - Current (Week 8)
+### June 19 - June 23 (Week 8)
 
 -   Removed Utils.roundToDecimals from PeptidePropertiesImpl.java
 -   Embedded all data from the element information website
@@ -277,6 +277,8 @@ Progress Log
 -   Create new methods to enable the usage of user specified xml file to
     compute molecular mass
 -   Wrote test cases for these newly created methods
+
+### June 24 - Current (Week 9)
 
 Skype call notes
 ----------------
