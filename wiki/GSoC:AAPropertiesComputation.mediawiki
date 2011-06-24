@@ -188,7 +188,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Also created several classes to prepare for the generation of PROFEAT properties.
 * Finished implementing APIs for generating PROFEAT properties and also added adaptor method for the ease of utilizing them
 
-===June 19 - Current (Week 8)===
+===June 19 - June 23 (Week 8)===
 * Removed Utils.roundToDecimals from PeptidePropertiesImpl.java
 * Embedded all data from the element information website
 * Create Test Cases to ensure data are properly embedded
@@ -196,6 +196,8 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Able to read in XML files for Element Mass and Amino Acid Composition into Java via JAXB.
 * Create new methods to enable the usage of user specified xml file to compute molecular mass
 * Wrote test cases for these newly created methods
+
+===June 24 - Current (Week 9)===
 
 == Skype call notes ==
 
