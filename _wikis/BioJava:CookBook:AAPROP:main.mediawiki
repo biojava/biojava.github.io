@@ -69,4 +69,14 @@ for(String aa:composition.keySet()){
 ==Short Example 6: Computing of all other physiochemical properties==
 
 <java>
+String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+System.out.println("Absorbance (Cys Reduced): " + PeptideProperties.getAbsorbance(sequence, true));
+System.out.println("Absorbance (Cys Not Reduced): " + PeptideProperties.getAbsorbance(sequence, false));
+System.out.println("Extinction Coefficient (Cys Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, true));
+System.out.println("Extinction Coefficient (Cys Not Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, false));
+System.out.println("Instability Index: " + PeptideProperties.getInstabilityIndex(sequence));
+System.out.println("Apliphatic Index: " + PeptideProperties.getApliphaticIndex(sequence));
+System.out.println("Average Hydropathy Value: " + PeptideProperties.getAvgHydropathy(sequence));
+System.out.println("Isoelectric Point: " + PeptideProperties.getIsoelectricPoint(sequence));
+System.out.println("Net Charge at pH 7: " + PeptideProperties.getNetCharge(sequence));
 </java>
