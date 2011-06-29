@@ -31,4 +31,4 @@ the current state of the project.
 
 next calls:
 
-July 6th July 12th July 21st
+July 6th July 13th July 21st
