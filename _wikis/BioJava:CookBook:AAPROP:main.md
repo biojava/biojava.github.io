@@ -33,8 +33,8 @@ Short Example 1: Computing molecular weight using default values
 
 <java> String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-System.out.println(PeptideProperties.getMolecularWeight(sequence));
-</java>
+System.out.println("Molecular Weight: " +
+PeptideProperties.getMolecularWeight(sequence)); </java>
 
 Short Example 2: Computing molecular weight using user-defined values via XML
 -----------------------------------------------------------------------------
@@ -44,8 +44,9 @@ Short Example 2: Computing molecular weight using user-defined values via XML
 File elementMassFile = new File("./src/main/resources/ElementMass.xml");
 File aminoAcidCompositionFile = new
 File("./src/main/resources/AminoAcidComposition.xml");
-System.out.println(PeptideProperties.getMolecularWeight(sequence,
-elementMassFile, aminoAcidCompositionFile)); </java>
+System.out.println("Molecular Weight: " +
+PeptideProperties.getMolecularWeight(sequence, elementMassFile,
+aminoAcidCompositionFile)); </java>
 
 Short Example 3: Computing molecular weight for multiple sequences via XML
 --------------------------------------------------------------------------
@@ -66,6 +67,14 @@ aminoAcidCompositionFile);
 
 for(String sequence:sequences){
 
-`   System.out.println(PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));`
+`   System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));`
 
 } </java>
+
+Short Example 4: Computing composition of specific amino acid
+-------------------------------------------------------------
+
+<java> String sequence =
+"QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+System.out.println("Composition of A: " +
+PeptideProperties.getEnrichment(sequence, "A")); </java>
