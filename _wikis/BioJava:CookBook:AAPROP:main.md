@@ -78,3 +78,21 @@ Short Example 4: Computing composition of specific amino acid
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 System.out.println("Composition of A: " +
 PeptideProperties.getEnrichment(sequence, "A")); </java>
+
+Short Example 5: Computing composition of all amino acid characters
+-------------------------------------------------------------------
+
+<java> String sequence =
+"QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+Map<String, Double> composition =
+PeptideProperties.getAACompositionString(sequence); for(String
+aa:composition.keySet()){
+
+`   System.out.println("Composition of " + aa + ": " + composition.get(aa));`
+
+} </java>
+
+Short Example 6: Computing of all other physiochemical properties
+-----------------------------------------------------------------
+
+<java> </java>
