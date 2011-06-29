@@ -14,4 +14,21 @@ BioJava provides a set of APIs to generate some commonly used physiochemical pro
    <li>Composition of the 20 standard amino acid</li>
 </ul>
 
-The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader] class.
+The class providing the core functionality for this is the IPeptideProperties class.
+
+== Short Example: the quickest way to read a local file ==
+
+<java>
+ // also works for gzip compressed files
+ String filename =  "path/to/pdbfile.ent" ;
+ 
+ PDBFileReader pdbreader = new PDBFileReader();
+
+ try{
+
+     Structure struc = pdbreader.getStructure(filename);
+     
+ } catch (Exception e){
+     e.printStackTrace();
+ }
+</java>
