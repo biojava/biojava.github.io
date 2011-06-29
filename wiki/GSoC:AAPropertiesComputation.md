@@ -311,7 +311,8 @@ Weekly skype calls are on Thursday 08 AM PST
 ` `[`June` `2nd`](aapropsSkype_20110602 "wikilink")  
 ` `[`June` `9th`](aapropsSkype_20110609 "wikilink")  
 ` `[`June` `16th`](aapropsSkype_20110616 "wikilink")  
-` `[`June` `23th`](aapropsSkype_20110623 "wikilink")
+` `[`June` `23th`](aapropsSkype_20110623 "wikilink")  
+` `[`June` `29th`](aapropsSkype_20110629 "wikilink")
 
 The next skype call is on Wednesday the 29 of June, the same time.
 
