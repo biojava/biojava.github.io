@@ -7,7 +7,8 @@ title: BioJava:CookBook:AAPROP:main
 BioJava provides a set of APIs to generate some commonly used
 physiochemical properties. They are
 
--   Molecular Weight
+-   [Molecular
+    Weight](http://biojava.org/wiki/BioJava:CookBook:AAPROP:netcharge)
 -   Absorbance
 -   Extinction Coefficient
 -   Instability Index
