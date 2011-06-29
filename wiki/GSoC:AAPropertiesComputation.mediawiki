@@ -198,6 +198,14 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Wrote test cases for these newly created methods
 
 ===June 24 - Current (Week 9)===
+* Created ValidationEventHandler which allows the xml file to be validated
+* Validates xml files before they are unmarshal
+* Added an additional method to auto find a elementMass file in default location
+* Generated the schema for aminoacidcomposition.xsd
+* Change the XML file structure such that the element weight is directly recorded instead of computed
+* Remove all the test cases for the computation of the abundance.
+* Successfully generated an XML schema for ElementMass.xsd and AminoAcidComposition.xsd
+* Remove abundance from ElementMass.xml
 
 == Skype call notes ==
 
