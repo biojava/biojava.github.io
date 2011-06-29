@@ -97,6 +97,14 @@ visualisation
 -   [How can I find residues binding a
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
 
+### Physiochemical Properties Computation
+
+*Required modules*': *biojava3-aa-prop, biojava3-structure and
+biojava3-core*
+
+-   [How can I compute physiochemical
+    properties?](BioJava:CookBook:AAPROP:main "wikilink")
+
 ### biojava3-protmod
 
 **Required modules**: *biojava3-protmod, biojava-structure*
