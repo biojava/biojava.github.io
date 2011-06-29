@@ -19,5 +19,5 @@ There is a boolean parameter to be set - assumeCysReduced.
 If assumeCysReduced is set to true, (Cys count) will always be 0.  
 If assumeCysReduced is set to false, Every pair of Cystine will be
 counted as 1.  
-This approach is based on
+Our approach is based on
 [here](http://web.expasy.org/protparam/protparam-doc.html).
