@@ -292,6 +292,12 @@ Progress Log
 -   Successfully generated an XML schema for ElementMass.xsd and
     AminoAcidComposition.xsd
 -   Remove abundance from ElementMass.xml
+-   Created in Cookbook with short examples showing how to utilize the
+    APIs
+-   How each properties are computed are also given (excluding
+    Instability Index and Net Charge due to syntax technicalities)
+-   Also added a test class in Maven to ensure that the short examples
+    given are error-free
 
 Skype call notes
 ----------------
