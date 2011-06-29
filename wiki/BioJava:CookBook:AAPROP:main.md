@@ -96,7 +96,7 @@ Short Example 6: Computing of all other physiochemical properties
 -----------------------------------------------------------------
 
 <java> String sequence =
-"QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+"QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTRECMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 System.out.println("Absorbance (Cys Reduced): " +
 PeptideProperties.getAbsorbance(sequence, true));
 System.out.println("Absorbance (Cys Not Reduced): " +
