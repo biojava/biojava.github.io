@@ -4,4 +4,4 @@ The isoelectric point, pI, is the pH at which the net charge of the peptide is z
 If the charge is > 0, the next pH to check is 7 + 3.5.<br/>
 If the charge is < 0 then pH 7 - 3.5 is checked.<br/> 
 This is repeated, using increments/decrements half the size of the previous, until the modulus of the charge found is less than or equal to 0.0000001.<br/>
-Our approach is derived from [http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI here].
+Our approach is based on [http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI here].
