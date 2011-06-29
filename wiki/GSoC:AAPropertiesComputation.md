@@ -314,7 +314,9 @@ Weekly skype calls are on Thursday 08 AM PST
 ` `[`June` `23th`](aapropsSkype_20110623 "wikilink")  
 ` `[`June` `29th`](aapropsSkype_20110629 "wikilink")
 
-The next skype call is on Wednesday the 29 of June, the same time.
+Dues to both mentors attending to ISMB the next conference calls will be
+as flows 6, 13 (Peter & Ah Fu only), 21 of July at 16 PM BST, then
+resuming as usual.
 
 References
 ----------
