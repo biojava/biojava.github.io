@@ -19,5 +19,24 @@ physiochemical properties. They are
 -   Composition of the 20 standard amino acid
 
 The class providing the core functionality for this is the
-[PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html)
-class.
+IPeptideProperties class.
+
+Short Example: the quickest way to read a local file
+----------------------------------------------------
+
+<java>
+
+`// also works for gzip compressed files`  
+`String filename =  "path/to/pdbfile.ent" ;`  
+  
+`PDBFileReader pdbreader = new PDBFileReader();`
+
+`try{`
+
+`    Structure struc = pdbreader.getStructure(filename);`  
+`    `  
+`} catch (Exception e){`  
+`    e.printStackTrace();`  
+`}`
+
+</java>
