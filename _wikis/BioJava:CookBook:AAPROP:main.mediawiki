@@ -20,7 +20,7 @@ The class providing the core functionality for this is the IPeptideProperties cl
 
 <java>
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-System.out.println(PeptideProperties.getMolecularWeight(sequence));
+System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence));
 </java>
 
 ==Short Example 2: Computing molecular weight using user-defined values via XML==
@@ -29,7 +29,7 @@ System.out.println(PeptideProperties.getMolecularWeight(sequence));
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 File elementMassFile = new File("./src/main/resources/ElementMass.xml");
 File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposition.xml");
-System.out.println(PeptideProperties.getMolecularWeight(sequence, elementMassFile, aminoAcidCompositionFile));
+System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence, elementMassFile, aminoAcidCompositionFile));
 </java>
 
 ==Short Example 3: Computing molecular weight for multiple sequences via XML==
@@ -45,6 +45,13 @@ File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposit
 AminoAcidCompositionTable table = PeptideProperties.obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile);
 
 for(String sequence:sequences){
-    System.out.println(PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));
+    System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));
 }
+</java>
+
+==Short Example 4: Computing composition of specific amino acid==
+
+<java>
+String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+System.out.println("Composition of A: " + PeptideProperties.getEnrichment(sequence, "A"));
 </java>
