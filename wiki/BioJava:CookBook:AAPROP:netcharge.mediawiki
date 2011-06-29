@@ -1,1 +1,3 @@
 ===How is Net Charge computed?===
+
+<math>sum_{i=1}^{10} t_i</math>
