@@ -97,12 +97,12 @@ visualisation
 -   [How can I find residues binding a
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
 
-### Physiochemical Properties Computation
+### Physico-Chemical Properties Computation
 
 **Required modules**: *biojava3-aa-prop, biojava3-structure and
 biojava3-core*
 
--   [How can I compute physiochemical
+-   [How can I compute physico-chemical
     properties?](BioJava:CookBook:AAPROP:main "wikilink")
 -   [How is Molecular Weight
     computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
