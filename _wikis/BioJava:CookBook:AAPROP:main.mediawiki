@@ -2,14 +2,14 @@
 
 BioJava provides a set of APIs to generate some commonly used physiochemical properties. They are 
 <ul>
-   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:netcharge Molecular Weight]</li>
-   <li>Absorbance</li>
-   <li>Extinction Coefficient</li>
-   <li>Instability Index</li>
-   <li>Apliphatic Index</li>
-   <li>Average Hydropathy Value</li>
-   <li>Isoelectric Point</li>
-   <li>Net Charge at pH 7</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:molecularweight Molecular Weight]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbance Absorbance]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:extinctioncoefficient Extinction Coefficient]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:instabilityindex Instability Index]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:apliphaticindex Apliphatic Index]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:averagehydropathy Average Hydropathy Value]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:isoelectricpoint Isoelectric Point]</li>
+   <li>[http://biojava.org/wiki/BioJava:CookBook:AAPROP:netcharge Net Charge at pH 7]</li>
    <li>Composition of specified amino acid</li>
    <li>Composition of the 20 standard amino acid</li>
 </ul>
