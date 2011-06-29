@@ -16,19 +16,35 @@ BioJava provides a set of APIs to generate some commonly used physiochemical pro
 
 The class providing the core functionality for this is the IPeptideProperties class.
 
-== Short Example: the quickest way to read a local file ==
+==Short Example 1: Computing molecular weight using default values ==
 
 <java>
- // also works for gzip compressed files
- String filename =  "path/to/pdbfile.ent" ;
- 
- PDBFileReader pdbreader = new PDBFileReader();
+String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+System.out.pritnln(PeptideProperties.getMolecularWeight(sequence));
+</java>
 
- try{
+==Short Example 2: Computing molecular weight using user-defined values via XML==
 
-     Structure struc = pdbreader.getStructure(filename);
-     
- } catch (Exception e){
-     e.printStackTrace();
- }
+<java>
+String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+File elementMassFile = new File("./src/main/resources/ElementMass.xml");
+File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposition.xml");
+System.out.println(PeptideProperties.getMolecularWeight(sequence, elementMassFile, aminoAcidCompositionFile));
+</java>
+
+==Short Example 3: Computing molecular weight for multiple sequences via XML==
+
+<java>
+String[] sequences = new String[3];
+sequences[0] = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+sequences[1] = "KMKILELPFASGDLSMLVLLPDEVSDLERIEKTINFEKLTEWTNPNTMEKRRVKVYLPQMKIEEKYNLTS";
+sequences[2] = "VLMALGMTDLFIPSANLTGISSAESLKISQAVHGAFMELSEDGIEMAGSTGVIEDIKHSPESEQFRADHP";
+
+File elementMassFile = new File("./src/main/resources/ElementMass.xml");
+File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposition.xml");
+AminoAcidCompositionTable table = PeptideProperties.obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile);
+
+for(String sequence:sequences){
+    System.out.println(PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));
+}
 </java>
