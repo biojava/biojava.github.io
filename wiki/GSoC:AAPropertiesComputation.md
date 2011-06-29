@@ -278,7 +278,7 @@ Progress Log
     compute molecular mass
 -   Wrote test cases for these newly created methods
 
-### June 24 - Current (Week 9)
+### June 24 - June 29 (Week 9)
 
 -   Created ValidationEventHandler which allows the xml file to be
     validated
@@ -298,6 +298,14 @@ Progress Log
     Instability Index and Net Charge due to syntax technicalities)
 -   Also added a test class in Maven to ensure that the short examples
     given are error-free
+
+### June 30 - Current (Week 10)
+
+-   Added several methods in different classes to enable the usable of
+    methods that does not need to specify location of ElementMass.xml
+-   Improve the CookbookTester.java to combine shortExample 4 and 5 plus
+    utilizing methods that do not need to explicitly specify
+    ElementMass.xml in shortExamples 2 and 3
 
 Skype call notes
 ----------------
