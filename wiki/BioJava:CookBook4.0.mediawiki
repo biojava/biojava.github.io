@@ -60,6 +60,12 @@ If you re-use code from the cookbook please cite:
 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physiochemical properties?]]
 * [[BioJava:CookBook:AAPROP:molecularweight|How is Molecular Weight computed?]]
+* [[BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient|How are Absorbance and Extinction Coefficient computed?]]
+* [[BioJava:CookBook:AAPROP:instabilityindex|How is Instability Index computed?]]
+* [[BioJava:CookBook:AAPROP:apliphaticindex|How is Apliphatic Index computed?]]
+* [[BioJava:CookBook:AAPROP:averagehydropathyvalue|How is Average Hydropathy computed?]]
+* [[BioJava:CookBook:AAPROP:isoelectricpoint|How is Isoelectric Point computed?]]
+* [[BioJava:CookBook:AAPROP:netcharge|How is Net Charge computed?]]
 
 === biojava3-protmod ===
 
