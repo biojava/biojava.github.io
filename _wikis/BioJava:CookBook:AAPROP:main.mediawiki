@@ -69,7 +69,7 @@ for(String aa:composition.keySet()){
 ==Short Example 6: Computing of all other physiochemical properties==
 
 <java>
-String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTRECMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 System.out.println("Absorbance (Cys Reduced): " + PeptideProperties.getAbsorbance(sequence, true));
 System.out.println("Absorbance (Cys Not Reduced): " + PeptideProperties.getAbsorbance(sequence, false));
 System.out.println("Extinction Coefficient (Cys Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, true));
