@@ -2,14 +2,14 @@
 
 BioJava provides a set of APIs to generate some commonly used physiochemical properties. They are 
 <ul>
-   <li>Molecular weight</li>
+   <li>Molecular Weight</li>
    <li>Absorbance</li>
-   <li>Extinction coefficient</li>
-   <li>Instability index</li>
-   <li>Apliphatic index</li>
-   <li>Average hydropathy value</li>
-   <li>Isoelectric point</li>
-   <li>Net charge at pH 7</li>
+   <li>Extinction Coefficient</li>
+   <li>Instability Index</li>
+   <li>Apliphatic Index</li>
+   <li>Average Hydropathy Value</li>
+   <li>Isoelectric Point</li>
+   <li>Net Charge at pH 7</li>
    <li>Composition of specified amino acid</li>
    <li>Composition of the 20 standard amino acid</li>
 </ul>
