@@ -104,6 +104,8 @@ biojava3-core*
 
 -   [How can I compute physiochemical
     properties?](BioJava:CookBook:AAPROP:main "wikilink")
+-   [How is Molecular Weight
+    computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
 
 ### biojava3-protmod
 
