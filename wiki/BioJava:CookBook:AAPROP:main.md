@@ -9,15 +9,15 @@ physiochemical properties. They are
 
 -   [Molecular
     Weight](http://biojava.org/wiki/BioJava:CookBook:AAPROP:molecularweight)
--   [Absorbance](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbance)
+-   [Absorbance](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
 -   [Extinction
-    Coefficient](http://biojava.org/wiki/BioJava:CookBook:AAPROP:extinctioncoefficient)
+    Coefficient](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
 -   [Instability
     Index](http://biojava.org/wiki/BioJava:CookBook:AAPROP:instabilityindex)
 -   [Apliphatic
     Index](http://biojava.org/wiki/BioJava:CookBook:AAPROP:apliphaticindex)
 -   [Average Hydropathy
-    Value](http://biojava.org/wiki/BioJava:CookBook:AAPROP:averagehydropathy)
+    Value](http://biojava.org/wiki/BioJava:CookBook:AAPROP:averagehydropathyvalue)
 -   [Isoelectric
     Point](http://biojava.org/wiki/BioJava:CookBook:AAPROP:isoelectricpoint)
 -   [Net Charge at pH
