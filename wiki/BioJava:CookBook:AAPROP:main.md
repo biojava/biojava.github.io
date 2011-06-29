@@ -2,7 +2,7 @@
 title: BioJava:CookBook:AAPROP:main
 ---
 
-### How can I compute physiochemical properties?
+### How can I compute physico-chemical properties?
 
 BioJava provides a set of APIs to generate some commonly used
 physiochemical properties. They are
@@ -71,47 +71,51 @@ for(String sequence:sequences){
 
 } </java>
 
-Short Example 4: Computing composition of specific amino acid
--------------------------------------------------------------
+Short Example 4: Computing composition of protein sequence
+----------------------------------------------------------
 
 <java> String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+
+//Enrichment of a specific amino acid type
 System.out.println("Composition of A: " +
-PeptideProperties.getEnrichment(sequence, "A")); </java>
+PeptideProperties.getEnrichment(sequence, "A"));
 
-Short Example 5: Computing composition of all amino acid characters
--------------------------------------------------------------------
-
-<java> String sequence =
-"QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-Map<String, Double> composition =
-PeptideProperties.getAACompositionString(sequence); for(String
-aa:composition.keySet()){
+//Enrichment of a list of amino acid types Map<String, Double>
+composition = PeptideProperties.getAACompositionString(sequence);
+for(String aa:composition.keySet()){
 
 `   System.out.println("Composition of " + aa + ": " + composition.get(aa));`
 
 } </java>
 
-Short Example 6: Computing of all other physiochemical properties
------------------------------------------------------------------
+Short Example 5: Computing of all other physico-chemical properties
+-------------------------------------------------------------------
 
 <java> String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTRECMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-System.out.println("Absorbance (Cys Reduced): " +
+
+//Absorbance System.out.println("Absorbance (Cys Reduced): " +
 PeptideProperties.getAbsorbance(sequence, true));
 System.out.println("Absorbance (Cys Not Reduced): " +
 PeptideProperties.getAbsorbance(sequence, false));
-System.out.println("Extinction Coefficient (Cys Reduced): " +
-PeptideProperties.getExtinctionCoefficient(sequence, true));
-System.out.println("Extinction Coefficient (Cys Not Reduced): " +
-PeptideProperties.getExtinctionCoefficient(sequence, false));
-System.out.println("Instability Index: " +
+
+//Extinction Coefficient System.out.println("Extinction Coefficient (Cys
+Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence,
+true)); System.out.println("Extinction Coefficient (Cys Not Reduced):
+" + PeptideProperties.getExtinctionCoefficient(sequence, false));
+
+//Instability Index System.out.println("Instability Index: " +
 PeptideProperties.getInstabilityIndex(sequence));
-System.out.println("Apliphatic Index: " +
+
+//Apliphatic Index System.out.println("Apliphatic Index: " +
 PeptideProperties.getApliphaticIndex(sequence));
-System.out.println("Average Hydropathy Value: " +
-PeptideProperties.getAvgHydropathy(sequence));
-System.out.println("Isoelectric Point: " +
+
+//Average Hydropathy Value System.out.println("Average Hydropathy Value:
+" + PeptideProperties.getAvgHydropathy(sequence));
+
+//Isoelectric Point System.out.println("Isoelectric Point: " +
 PeptideProperties.getIsoelectricPoint(sequence));
-System.out.println("Net Charge at pH 7: " +
+
+//Net Charge System.out.println("Net Charge at pH 7: " +
 PeptideProperties.getNetCharge(sequence)); </java>
