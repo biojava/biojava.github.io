@@ -19,5 +19,5 @@ Prepare a mail for sending out to the biojava mailing list, reporting on the cur
 next calls:
 
 July 6th
-July 12th
+July 13th
 July 21st
