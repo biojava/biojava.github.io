@@ -99,7 +99,7 @@ visualisation
 
 ### Physiochemical Properties Computation
 
-*Required modules*': *biojava3-aa-prop, biojava3-structure and
+**Required modules**: *biojava3-aa-prop, biojava3-structure and
 biojava3-core*
 
 -   [How can I compute physiochemical
