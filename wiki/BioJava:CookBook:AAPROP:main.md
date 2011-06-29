@@ -48,8 +48,8 @@ System.out.println("Molecular Weight: " +
 PeptideProperties.getMolecularWeight(sequence, elementMassFile,
 aminoAcidCompositionFile)); </java>
 
-Short Example 3: Computing molecular weight for multiple sequences via XML
---------------------------------------------------------------------------
+Short Example 3: Computing molecular weight for multiple sequences
+------------------------------------------------------------------
 
 <java> String[] sequences = new String[3]; sequences[0] =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
