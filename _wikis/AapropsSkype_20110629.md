@@ -15,6 +15,9 @@ main progress: cookbook, several svn commits.
 Current question is where to locate element mass file. where can the
 file be loaded from. Use standard maven location
 
+Topics
+------
+
 Cookbook: We have several new cookbook pages. quick discussion how we
 can improve them.
 
