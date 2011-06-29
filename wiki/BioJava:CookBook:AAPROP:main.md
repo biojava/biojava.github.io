@@ -33,7 +33,7 @@ Short Example 1: Computing molecular weight using default values
 
 <java> String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-System.out.pritnln(PeptideProperties.getMolecularWeight(sequence));
+System.out.println(PeptideProperties.getMolecularWeight(sequence));
 </java>
 
 Short Example 2: Computing molecular weight using user-defined values via XML
