@@ -1,1 +1,15 @@
 ===How are Absorbance and Extinction Coefficient computed?===
+
+==Extinction Coefficient==
+
+Extinct(Prot) = (Tyr count)*Ext(Tyr) + (Trp count)*Ext(Trp) + (Cys count)*Ext(Cys) where Ext(Tyr) = 1490, Ext(Trp) = 5500, Ext(Cys) = 125
+
+==Absorbance== 
+
+Absorb(Prot) = Extinct(Prot) / Molecular_Weight
+
+
+There is a boolean parameter to be set - assumeCysReduced.<br/> 
+If assumeCysReduced is set to true, (Cystine count) will always be 0.<br/>
+If assumeCysReduced is set to false, Every pair of Cystine will be counted as 1.<br/>
+This approach is based on [http://web.expasy.org/protparam/protparam-doc.html here].
