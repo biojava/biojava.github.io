@@ -106,6 +106,18 @@ biojava3-core*
     properties?](BioJava:CookBook:AAPROP:main "wikilink")
 -   [How is Molecular Weight
     computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
+-   [How are Absorbance and Extinction Coefficient
+    computed?](BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
+-   [How is Instability Index
+    computed?](BioJava:CookBook:AAPROP:instabilityindex "wikilink")
+-   [How is Apliphatic Index
+    computed?](BioJava:CookBook:AAPROP:apliphaticindex "wikilink")
+-   [How is Average Hydropathy
+    computed?](BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
+-   [How is Isoelectric Point
+    computed?](BioJava:CookBook:AAPROP:isoelectricpoint "wikilink")
+-   [How is Net Charge
+    computed?](BioJava:CookBook:AAPROP:netcharge "wikilink")
 
 ### biojava3-protmod
 
