@@ -12,4 +12,4 @@ Absorb(Prot) = Extinct(Prot) / Molecular_Weight
 There is a boolean parameter to be set - assumeCysReduced.<br/> 
 If assumeCysReduced is set to true, (Cys count) will always be 0.<br/>
 If assumeCysReduced is set to false, Every pair of Cystine will be counted as 1.<br/>
-This approach is based on [http://web.expasy.org/protparam/protparam-doc.html here].
+Our approach is based on [http://web.expasy.org/protparam/protparam-doc.html here].
