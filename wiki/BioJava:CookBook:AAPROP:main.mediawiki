@@ -1,0 +1,17 @@
+===How can I compute physiochemical properties?===
+
+BioJava provides a set of APIs to generate some commonly used physiochemical properties. They are 
+<ul>
+   <li>Molecular weight</li>
+   <li>Absorbance</li>
+   <li>Extinction coefficient</li>
+   <li>Instability index</li>
+   <li>Apliphatic index</li>
+   <li>Average hydropathy value</li>
+   <li>Isoelectric point</li>
+   <li>Net charge at pH 7</li>
+   <li>Composition of specified amino acid</li>
+   <li>Composition of the 20 standard amino acid</li>
+</ul>
+
+The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader] class.
