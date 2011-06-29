@@ -197,7 +197,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Create new methods to enable the usage of user specified xml file to compute molecular mass
 * Wrote test cases for these newly created methods
 
-===June 24 - Current (Week 9)===
+===June 24 - June 29 (Week 9)===
 * Created ValidationEventHandler which allows the xml file to be validated
 * Validates xml files before they are unmarshal
 * Added an additional method to auto find a elementMass file in default location
@@ -209,6 +209,10 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Created in Cookbook with short examples showing how to utilize the APIs
 * How each properties are computed are also given (excluding Instability Index and Net Charge due to syntax technicalities)
 * Also added a test class in Maven to ensure that the short examples given are error-free
+
+===June 30 - Current (Week 10)===
+* Added several methods in different classes to enable the usable of methods that does not need to specify location of ElementMass.xml
+* Improve the CookbookTester.java to combine shortExample 4 and 5 plus utilizing methods that do not need to explicitly specify ElementMass.xml in shortExamples 2 and 3
 
 == Skype call notes ==
 
