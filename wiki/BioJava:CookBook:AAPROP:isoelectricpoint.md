@@ -11,5 +11,5 @@ If the charge is \< 0 then pH 7 - 3.5 is checked.
 This is repeated, using increments/decrements half the size of the
 previous, until the modulus of the charge found is less than or equal to
 0.0000001.  
-Our approach is derived from
+Our approach is based on
 [here](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).
