@@ -1,4 +1,4 @@
-===How can I compute physiochemical properties?===
+=== How can I compute physiochemical properties? ===
 
 BioJava provides a set of APIs to generate some commonly used physiochemical properties. They are 
 <ul>
