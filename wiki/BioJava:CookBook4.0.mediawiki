@@ -56,7 +56,7 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:PDB:ligands|How can I find residues binding a ligand?]]
 
 === Physiochemical Properties Computation ===
-''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
+'''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physiochemical properties?]]
 
