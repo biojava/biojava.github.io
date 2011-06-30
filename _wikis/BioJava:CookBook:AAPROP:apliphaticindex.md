@@ -2,7 +2,7 @@
 title: BioJava:CookBook:AAPROP:apliphaticindex
 ---
 
-### How is Apliphatic Index computed?
+### How is Aliphatic Index computed?
 
 The aliphatic index of a protein is defined as the relative volume
 occupied by aliphatic side chains (alanine, valine, isoleucine, and
