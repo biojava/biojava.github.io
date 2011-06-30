@@ -110,7 +110,7 @@ biojava3-core*
     computed?](BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
 -   [How is Instability Index
     computed?](BioJava:CookBook:AAPROP:instabilityindex "wikilink")
--   [How is Apliphatic Index
+-   [How is Aliphatic Index
     computed?](BioJava:CookBook:AAPROP:apliphaticindex "wikilink")
 -   [How is Average Hydropathy
     computed?](BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
