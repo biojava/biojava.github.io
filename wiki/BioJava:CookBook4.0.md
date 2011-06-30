@@ -111,7 +111,7 @@ biojava3-core*
 -   [How is Instability Index
     computed?](BioJava:CookBook:AAPROP:instabilityindex "wikilink")
 -   [How is Aliphatic Index
-    computed?](BioJava:CookBook:AAPROP:apliphaticindex "wikilink")
+    computed?](BioJava:CookBook:AAPROP:aliphaticindex "wikilink")
 -   [How is Average Hydropathy
     computed?](BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
 -   [How is Isoelectric Point
