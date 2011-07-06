@@ -1,3 +1,5 @@
+===ElementMass.xml===
+
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:elements xmlns:ns2="http://biojava.org">
     <element mass="1.00794" atomicnumber="1" symbol="H" name="Hydrogen">
