@@ -65,7 +65,10 @@ AminoAcidCompositionTable table =
 PeptideProperties.obtainAminoAcidCompositionTable(elementMassFile,
 aminoAcidCompositionFile);
 
-for(String sequence:sequences){
+//The difference between this example and short example 2 is that the
+elementMassFile and aminoAcidCompositionFile will be only parsed once
+and stored in AminoAcidCompositionTable for quick and easy reuse in the
+computation of multiple sequences. for(String sequence:sequences){
 
 `   System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));`
 
