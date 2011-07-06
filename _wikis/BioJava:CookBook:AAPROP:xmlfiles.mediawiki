@@ -6,6 +6,15 @@ There are two XML files which you would need to define in order to customize mas
 
 2) AminoAcidComposition - This file should define all the elements and isotopes that are contained for each Amino Acid.
 
+===Descriptions===
+
+* Required Attributes in AminoAcidComposition XML file
+** In the AminoAcidComposition XML file, the "symbol" attribute is a critical attribute. It should be a single character and its case do not matter but it should not be repeated.
+** The "name" attribute in the AminoAcidComposition XML file is another important attribute. The spelling of the "name" is case-sensitive and user need to ensure that it is define in the ElementMass XML file.
+** The "count" attribute must be greater than 0.
+
+* Required Attributes in ElementMass XML file
+
 ===Standard===
 
 For ease of use, the <b>standard</b> mass of elements and isotopes are already saved in [[BioJava:CookBook:AAPROP:ElementMass.xml|ElementMass.xml]]. <br/>
