@@ -299,7 +299,7 @@ Progress Log
 -   Also added a test class in Maven to ensure that the short examples
     given are error-free
 
-### June 30 - Current (Week 10)
+### June 30 - July 7 (Week 10)
 
 -   Added several methods in different classes to enable the usable of
     methods that does not need to specify location of ElementMass.xml
@@ -317,6 +317,13 @@ Progress Log
 -   Add CookBook pages on how Net Charge and Instability Index are
     computed.
 -   Defined the standard and minimum XML files in the CookBook
+
+### July 8 - Current (Week 11)
+
+-   Clean up the codes on Computing Molecular Weights
+-   Change the Minimum XML files to more compact
+-   Change the naming of several XML attributes to more intuitive and
+    generic terms
 
 Skype call notes
 ----------------
