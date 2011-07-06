@@ -5,22 +5,13 @@ title: BioJava:CookBook:AAPROP:instabilityindex
 ### How is Instability Index computed?
 
 The instability index provides an estimate of the stability of proteins
-in a test tube. The authors of this method have assigned a weight value
-of instability to each of the 400 different dipeptides (DIWV). Using
-these weight values it is possible to compute an instability index (II)
-which is defined as:
+in a test tube. It is computed using the following formulae.
 
-`                  i=L-1`
+![](InstabilityIndexFormulae.png "InstabilityIndexFormulae.png")
 
-II = (10/L) \* Sum DIWV(x[i]x[i+1])
+`    where L is the length of sequence and DIWV is the instability weight value for the dipeptide starting in position i.`
 
-`                  i=1`
-
-I\(10/L ∑_(i=1)^(L-1)▒〖DIWV〖(x〗_i,x_(i+1))〗\)nstability Index=
-
-`    where: L is the length of sequence`
-
-`           DIWV(x[i]x[i+1]) is the instability weight value for the dipeptide starting in position i.`
-
-A protein whose instability index is smaller than 40 is predicted as
-stable, a value above 40 predicts that the protein may be unstable.
+The DIWV value for dipeptides are based on this
+[paper](http://peds.oxfordjournals.org/content/4/2/155.abstract). For
+more information, please refer to
+[this](http://web.expasy.org/protparam/protparam-doc.html).
