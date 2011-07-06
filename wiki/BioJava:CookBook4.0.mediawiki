@@ -60,7 +60,7 @@ If you re-use code from the cookbook please cite:
 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physico-chemical properties?]]
 * [[BioJava:CookBook:AAPROP:molecularweight|How are Molecular Weight computed?]]
-* [[BioJava:CookBook:AAPROP:xmlfile|How should I define the XML files to customize mass of Amino Acids in the computation of Molecular Weight?]]
+* [[BioJava:CookBook:AAPROP:xmlfiles|How should I define the XML files to customize mass of Amino Acids in the computation of Molecular Weight?]]
 * [[BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient|How are Absorbance and Extinction Coefficient computed?]]
 * [[BioJava:CookBook:AAPROP:instabilityindex|How are Instability Index computed?]]
 * [[BioJava:CookBook:AAPROP:aliphaticindex|How are Aliphatic Index computed?]]
