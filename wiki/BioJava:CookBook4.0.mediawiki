@@ -59,13 +59,14 @@ If you re-use code from the cookbook please cite:
 '''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physico-chemical properties?]]
-* [[BioJava:CookBook:AAPROP:molecularweight|How is Molecular Weight computed?]]
+* [[BioJava:CookBook:AAPROP:molecularweight|How are Molecular Weight computed?]]
+* [[BioJava:CookBook:AAPROP:xmlfile|How should I define the XML files to customize mass of Amino Acids in the computation of Molecular Weight?]]
 * [[BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient|How are Absorbance and Extinction Coefficient computed?]]
-* [[BioJava:CookBook:AAPROP:instabilityindex|How is Instability Index computed?]]
-* [[BioJava:CookBook:AAPROP:aliphaticindex|How is Aliphatic Index computed?]]
+* [[BioJava:CookBook:AAPROP:instabilityindex|How are Instability Index computed?]]
+* [[BioJava:CookBook:AAPROP:aliphaticindex|How are Aliphatic Index computed?]]
 * [[BioJava:CookBook:AAPROP:averagehydropathyvalue|How is Average Hydropathy computed?]]
-* [[BioJava:CookBook:AAPROP:isoelectricpoint|How is Isoelectric Point computed?]]
-* [[BioJava:CookBook:AAPROP:netcharge|How is Net Charge computed?]]
+* [[BioJava:CookBook:AAPROP:isoelectricpoint|How are Isoelectric Point computed?]]
+* [[BioJava:CookBook:AAPROP:netcharge|How are Net Charge computed?]]
 
 === biojava3-protmod ===
 
