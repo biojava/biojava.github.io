@@ -13,21 +13,18 @@ and isotopes.
 2) AminoAcidComposition - This file should define all the elements and
 isotopes that are contained for each Amino Acid.
 
-### Descriptions
+### Required Attributes in XML files
 
--   Required Attributes in AminoAcidComposition XML file
-    -   In the AminoAcidComposition XML file, the "symbol" attribute is
-        a critical attribute. It should be a single character and its
-        case do not matter but it should not be repeated.
-    -   The "name" attribute in the AminoAcidComposition XML file is
-        another important attribute. The spelling of the "name" is
-        case-sensitive and user need to ensure that it is define in the
-        ElementMass XML file.
-    -   The "count" attribute must be greater than 0.
+-   AminoAcidComposition
+    -   "symbol" - Single character and case-insensitive but must not be
+        repeated.
+    -   "name" - Case-sensitive and must be defined in the ElementMass
+        XML file.
+    -   "count" - Must be greater than 0.
 
 <!-- -->
 
--   Required Attributes in ElementMass XML file
+-   ElementMass
 
 ### Standard
 
