@@ -210,7 +210,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * How each properties are computed are also given (excluding Instability Index and Net Charge due to syntax technicalities)
 * Also added a test class in Maven to ensure that the short examples given are error-free
 
-===June 30 - Current (Week 10)===
+===June 30 - July 7 (Week 10)===
 * Added several methods in different classes to enable the usable of methods that does not need to specify location of ElementMass.xml
 * Improve the CookbookTester.java to combine shortExample 4 and 5 plus utilizing methods that do not need to explicitly specify ElementMass.xml in shortExamples 2 and 3
 * Added annotations for AminoAcidComposition.java and Element.java.
@@ -220,6 +220,11 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Checked that all Elements and Isotopes used in AminoAcidComposition.xml can be found in ElementMass.xml
 * Add CookBook pages on how Net Charge and Instability Index are computed.
 * Defined the standard and minimum XML files in the CookBook
+
+===July 8 - Current (Week 11)===
+* Clean up the codes on Computing Molecular Weights
+* Change the Minimum XML files to more compact
+* Change the naming of several XML attributes to more intuitive and generic terms
 
 == Skype call notes ==
 
