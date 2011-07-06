@@ -312,6 +312,11 @@ Progress Log
     instead so as to made the XML files annotated to requirements.
 -   Adjust the XML requirements and made attributes as optional if
     possible
+-   Checked that all Elements and Isotopes used in
+    AminoAcidComposition.xml can be found in ElementMass.xml
+-   Add CookBook pages on how Net Charge and Instability Index are
+    computed.
+-   Defined the standard and minimum XML files in the CookBook
 
 Skype call notes
 ----------------
