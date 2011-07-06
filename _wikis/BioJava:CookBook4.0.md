@@ -108,7 +108,7 @@ biojava3-core*
     computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
 -   [How should I define the XML files to customize mass of Amino Acids
     in the computation of Molecular
-    Weight?](BioJava:CookBook:AAPROP:xmlfile "wikilink")
+    Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink")
 -   [How are Absorbance and Extinction Coefficient
     computed?](BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
 -   [How are Instability Index
