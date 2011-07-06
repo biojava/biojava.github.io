@@ -6,8 +6,12 @@ There are two XML files which you would need to define in order to customize mas
 
 2) AminoAcidComposition - This file should define all the elements and isotopes that are contained for each Amino Acid.
 
+===Standard===
+
 For ease of use, the <b>standard</b> mass of elements and isotopes are already saved in [[BioJava:CookBook:AAPROP:ElementMass.xml|ElementMass.xml]]. 
 Likewise, the <b>standard</b> composition of amino acids are also stored in [[BioJava:CookBook:AAPROP:AminoAcidComposition.xml|AminoAcidComposition.xml]].
+
+===Minimum===
 
 Also, for ease of understanding and manipulation, we have also defined another two files which are the <b>minimum</b> requirements for the above two files.
 [[BioJava:CookBook:AAPROP:MinElementMass.xml|MinElementMass.xml]] and [[BioJava:CookBook:AAPROP:MinAminoAcidComposition.xml|MinAminoAcidComposition.xml]].

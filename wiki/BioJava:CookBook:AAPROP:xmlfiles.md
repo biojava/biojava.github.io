@@ -13,12 +13,16 @@ and isotopes.
 2) AminoAcidComposition - This file should define all the elements and
 isotopes that are contained for each Amino Acid.
 
+### Standard
+
 For ease of use, the <b>standard</b> mass of elements and isotopes are
 already saved in
 [ElementMass.xml](BioJava:CookBook:AAPROP:ElementMass.xml "wikilink").
 Likewise, the <b>standard</b> composition of amino acids are also stored
 in
 [AminoAcidComposition.xml](BioJava:CookBook:AAPROP:AminoAcidComposition.xml "wikilink").
+
+### Minimum
 
 Also, for ease of understanding and manipulation, we have also defined
 another two files which are the <b>minimum</b> requirements for the
