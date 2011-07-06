@@ -4,6 +4,8 @@ title: BioJava:CookBook:AAPROP:ElementMass.xml
 
 ### ElementMass.xml
 
+<xml>
+
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:elements xmlns:ns2="http://biojava.org">
 
@@ -461,4 +463,4 @@ title: BioJava:CookBook:AAPROP:ElementMass.xml
 `       `<isotope weight="207.9766521" neutronsnum="208" name="Lead-208"/>  
 `   `</element>
 
-</ns2:elements>
+</ns2:elements> </xml>
