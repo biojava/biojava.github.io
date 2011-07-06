@@ -17,7 +17,7 @@ isotopes that are contained for each Amino Acid.
 
 For ease of use, the <b>standard</b> mass of elements and isotopes are
 already saved in
-[ElementMass.xml](BioJava:CookBook:AAPROP:ElementMass.xml "wikilink").
+[ElementMass.xml](BioJava:CookBook:AAPROP:ElementMass.xml "wikilink").  
 Likewise, the <b>standard</b> composition of amino acids are also stored
 in
 [AminoAcidComposition.xml](BioJava:CookBook:AAPROP:AminoAcidComposition.xml "wikilink").
