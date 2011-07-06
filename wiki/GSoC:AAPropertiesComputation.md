@@ -306,6 +306,12 @@ Progress Log
 -   Improve the CookbookTester.java to combine shortExample 4 and 5 plus
     utilizing methods that do not need to explicitly specify
     ElementMass.xml in shortExamples 2 and 3
+-   Added annotations for AminoAcidComposition.java and Element.java.
+-   Simplified MolecularWeight.xml and ElementMass.xml.
+-   Work around JAXB inability to handle Map<K, V> and used List<E>
+    instead so as to made the XML files annotated to requirements.
+-   Adjust the XML requirements and made attributes as optional if
+    possible
 
 Skype call notes
 ----------------
