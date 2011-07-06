@@ -213,6 +213,10 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 ===June 30 - Current (Week 10)===
 * Added several methods in different classes to enable the usable of methods that does not need to specify location of ElementMass.xml
 * Improve the CookbookTester.java to combine shortExample 4 and 5 plus utilizing methods that do not need to explicitly specify ElementMass.xml in shortExamples 2 and 3
+* Added annotations for AminoAcidComposition.java and Element.java.
+* Simplified MolecularWeight.xml and ElementMass.xml.
+* Work around JAXB inability to handle Map<K, V> and used List<E> instead so as to made the XML files annotated to requirements.
+* Adjust the XML requirements and made attributes as optional if possible
 
 == Skype call notes ==
 
