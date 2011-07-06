@@ -26,7 +26,7 @@ in
 
 Also, for ease of understanding and manipulation, we have also defined
 another two files which are the <b>minimum</b> requirements for the
-above two files.
+above two files.  
 [MinElementMass.xml](BioJava:CookBook:AAPROP:MinElementMass.xml "wikilink")
 and
 [MinAminoAcidComposition.xml](BioJava:CookBook:AAPROP:MinAminoAcidComposition.xml "wikilink").
