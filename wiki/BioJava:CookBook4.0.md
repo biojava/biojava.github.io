@@ -44,6 +44,9 @@ How Do I....?
 
 -   [Overview of
     biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
+-   [How do I Convert Profile object into Multiple Sequence Object to be
+    used in the
+    TreeConstructor?](BioJava:CookBook:Phylo:Overview "wikilink")
 
 **Required modules**: ''biojava3-core **Required external library**:
 *forester.jar*
