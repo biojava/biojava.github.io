@@ -21,6 +21,7 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:genome:Overview|Overview of biojava3-genome?]]
 === biojava3-phylo ===
 * [[BioJava:CookBook:Phylo:Overview|Overview of biojava3-phylo?]]
+* [[BioJava:CookBook:Phylo:Overview|How do I Convert Profile object into Multiple Sequence Object to be used in the TreeConstructor?]]
 
 '''Required modules''': ''biojava3-core 
 '''Required external library''': ''forester.jar''
