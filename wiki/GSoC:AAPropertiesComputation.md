@@ -324,6 +324,14 @@ Progress Log
 -   Change the Minimum XML files to more compact
 -   Change the naming of several XML attributes to more intuitive and
     generic terms
+-   Created two advanced XML files to demonstrate how to define modified
+    amino acids such as radioactive labelled and phosphorylation.
+-   Did a simple test case for these advanced XML files as well.
+-   Check the attribute values to ensure that symbols are single
+    character and do not repeat themselves.
+-   Also check to ensure that element/isotope names define are also
+    found in ElementMass XMl file.
+-   Mass and counts are also checked to make sure that they are \> 0.
 
 Skype call notes
 ----------------
