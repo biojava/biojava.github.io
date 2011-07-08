@@ -26,7 +26,7 @@ isotopes that are contained for each Amino Acid.
 
 -   ElementMass
     -   "name" - Case-senstitive.
-    -   "mass" - Mass of the element/isotope.
+    -   "mass" - Mass of the element/isotope. Must be greater than 0.
 
 ### Standard
 
