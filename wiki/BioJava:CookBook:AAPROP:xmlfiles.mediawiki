@@ -14,6 +14,8 @@ There are two XML files which you would need to define in order to customize mas
 ** "count" - Must be greater than 0.
 
 * ElementMass
+** "name" - Case-senstitive.
+** "mass" - Mass of the element/isotope.
 
 ===Standard===
 
