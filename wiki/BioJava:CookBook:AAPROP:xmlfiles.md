@@ -45,3 +45,12 @@ needed.
 [MinElementMass.xml](BioJava:CookBook:AAPROP:MinElementMass.xml "wikilink")
 and
 [MinAminoAcidComposition.xml](BioJava:CookBook:AAPROP:MinAminoAcidComposition.xml "wikilink").
+
+### Advanced
+
+For advance users who would like to use modified amino acids such as
+radioactive labelled or phosphorylated, another two XML files
+demonstrating this have also been defined.
+[AdvancedElementMass.xml](BioJava:CookBook:AAPROP:AdvancedElementMass.xml "wikilink")
+and
+[AdvancedAminoAcidComposition.xml](BioJava:CookBook:AAPROP:AdvancedAminoAcidComposition.xml "wikilink").
