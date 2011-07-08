@@ -18,6 +18,8 @@ isotopes that are contained for each Amino Acid.
 -   AminoAcidComposition
     -   "symbol" - Single character and case-insensitive but must not be
         repeated.
+        -   Note: This symbol will be used in identifying characters in
+            protein sequence to the amino acid it defines.
     -   "name" - Case-sensitive and must be defined in the ElementMass
         XML file.
     -   "count" - Must be greater than 0.
