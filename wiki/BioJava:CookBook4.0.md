@@ -49,7 +49,7 @@ How Do I....?
 
 -   [How do I convert Profile object into Multiple Sequence Alignment
     object to be use in the
-    TreeConstructor](BioJava:CookBook:Phylo:Conversion of Profile object into MSA object "wikilink")
+    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
 
 **Required modules**: ''biojava3-core **Required external library**:
 *forester.jar*
