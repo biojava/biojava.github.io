@@ -233,6 +233,8 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Emailed the BioJava community reporting the current status of the project and also looking for feedback and suggestions on the project.
 * Implemented the first draft of the command prompt executable.
 
+===July 14 - Current (Week 12)===
+
 == Skype call notes ==
 
 Weekly skype calls are on Thursday 08 AM PST
