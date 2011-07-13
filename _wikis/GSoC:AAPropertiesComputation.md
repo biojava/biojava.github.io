@@ -330,7 +330,7 @@ Progress Log
 -   Check the attribute values to ensure that symbols are single
     character and do not repeat themselves.
 -   Also check to ensure that element/isotope names define are also
-    found in ElementMass XMl file.
+    found in ElementMass XML file.
 -   Mass and counts are also checked to make sure that they are \> 0.
 
 Skype call notes
