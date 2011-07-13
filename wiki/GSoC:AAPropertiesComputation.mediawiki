@@ -221,7 +221,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Add CookBook pages on how Net Charge and Instability Index are computed.
 * Defined the standard and minimum XML files in the CookBook
 
-===July 8 - Current (Week 11)===
+===July 8 - July 13 (Week 11)===
 * Clean up the codes on Computing Molecular Weights
 * Change the Minimum XML files to more compact
 * Change the naming of several XML attributes to more intuitive and generic terms
@@ -230,6 +230,8 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Check the attribute values to ensure that symbols are single character and do not repeat themselves.
 * Also check to ensure that element/isotope names define are also found in ElementMass XML file.
 * Mass and counts are also checked to make sure that they are > 0.
+* Emailed the BioJava community reporting the current status of the project and also looking for feedback and suggestions on the project.
+* Implemented the first draft of the command prompt executable.
 
 == Skype call notes ==
 
