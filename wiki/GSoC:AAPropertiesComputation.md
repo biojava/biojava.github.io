@@ -337,6 +337,8 @@ Progress Log
     project.
 -   Implemented the first draft of the command prompt executable.
 
+### July 14 - Current (Week 12)
+
 Skype call notes
 ----------------
 
