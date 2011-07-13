@@ -318,7 +318,7 @@ Progress Log
     computed.
 -   Defined the standard and minimum XML files in the CookBook
 
-### July 8 - Current (Week 11)
+### July 8 - July 13 (Week 11)
 
 -   Clean up the codes on Computing Molecular Weights
 -   Change the Minimum XML files to more compact
@@ -332,6 +332,10 @@ Progress Log
 -   Also check to ensure that element/isotope names define are also
     found in ElementMass XML file.
 -   Mass and counts are also checked to make sure that they are \> 0.
+-   Emailed the BioJava community reporting the current status of the
+    project and also looking for feedback and suggestions on the
+    project.
+-   Implemented the first draft of the command prompt executable.
 
 Skype call notes
 ----------------
