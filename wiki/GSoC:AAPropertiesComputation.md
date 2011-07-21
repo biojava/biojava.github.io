@@ -347,7 +347,7 @@ Progress Log
 -   Set default decimal place to 4. Possible to change with -d argument.
 -   Change to use BioJava FASTA reader.
 -   Created CommandPromptTester.java to do testing of CommandPrompt.java
--   Improved Help - Tries to mimic "man" in unix.
+-   Improved Help - Follows unix "man" style.
 
 Skype call notes
 ----------------
