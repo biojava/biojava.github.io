@@ -339,6 +339,15 @@ Progress Log
 
 ### July 14 - Current (Week 12)
 
+-   Created a new class ModifiedAminoAcidCompoundSet which enables any
+    symbols to be specified in XML file to represent amino acids and
+    modified amino acids.
+-   Added three examples on how to run the tool.
+-   Change output file to optional and default to standard output.
+-   Set default decimal place to 4. Possible to change with -d argument.
+-   Change to use BioJava FASTA reader.
+-   Created CommandPromptTester.java to do testing of CommandPrompt.java
+
 Skype call notes
 ----------------
 
