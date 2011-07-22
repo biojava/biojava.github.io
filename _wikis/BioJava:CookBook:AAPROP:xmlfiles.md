@@ -16,7 +16,7 @@ isotopes that are contained for each Amino Acid.
 ### Required Attributes in XML files
 
 -   AminoAcidComposition
-    -   "symbol" - Single character and case-insensitive but must not be
+    -   "symbol" - Single character and case-sensitive but must not be
         repeated.
         -   Note: This symbol will be used in identifying characters in
             protein sequence to the amino acid it defines.
