@@ -32,3 +32,4 @@ Also, for ease of understanding and manipulation, we have also defined another t
 
 For advance users who would like to use modified amino acids such as radioactive labelled or phosphorylated, another two XML files demonstrating this have also been defined.
 [[BioJava:CookBook:AAPROP:AdvancedElementMass.xml|AdvancedElementMass.xml]] and [[BioJava:CookBook:AAPROP:AdvancedAminoAcidComposition.xml|AdvancedAminoAcidComposition.xml]].
+Note: The symbols used to identify the amino acids are case-sensitive. Also, any characters including number and special characters such as '!@#$%^&*)(' etc are allowed to enable users to define a large numbers of modified amino acids.
