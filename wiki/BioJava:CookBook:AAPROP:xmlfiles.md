@@ -56,3 +56,7 @@ demonstrating this have also been defined.
 [AdvancedElementMass.xml](BioJava:CookBook:AAPROP:AdvancedElementMass.xml "wikilink")
 and
 [AdvancedAminoAcidComposition.xml](BioJava:CookBook:AAPROP:AdvancedAminoAcidComposition.xml "wikilink").
+Note: The symbols used to identify the amino acids are case-sensitive.
+Also, any characters including number and special characters such as
+'!@\#$%^&\*)(' etc are allowed to enable users to define a large numbers
+of modified amino acids.
