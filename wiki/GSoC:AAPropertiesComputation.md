@@ -364,7 +364,8 @@ Weekly skype calls are on Thursday 08 AM PST
 ` `[`June` `23th`](aapropsSkype_20110623 "wikilink")  
 ` `[`June` `29th`](aapropsSkype_20110629 "wikilink")  
 ` `[`July` `6th`](aapropsSkype_20110706 "wikilink")  
-` `[`July` `13th`](aapropsSkype_20110713 "wikilink")
+` `[`July` `13th`](aapropsSkype_20110713 "wikilink")  
+` `[`July` `21st`](aapropsSkype_20110721 "wikilink")
 
 Dues to both mentors attending to ISMB the next conference calls will be
 as flows 6, 13 (Peter & Ah Fu only), 21 of July at 16 PM BST, then
