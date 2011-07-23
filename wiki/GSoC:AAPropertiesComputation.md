@@ -20,8 +20,7 @@ properties exist, including widely used open-source implementations in
 EMBOSS and BioPerl, but only some are currently available in BioJava3.
 The aim of this project is to port or produce new implementations of
 standard algorithms for a range of calculations within BioJava3 and make
-them available in various forms such as APIs, executables and web
-service.
+them available in various levels (APIs, executable and web service).
 
 Properties
 ----------
