@@ -11,15 +11,17 @@ title: GSoC:AAPropertiesComputation
 
 *Co-mentored by [Andreas Prlic](Andreas Prlic "wikilink")*
 
-The calculation of simple physico-chemical properties for biopolymers is
-an important tool in the arsenal of molecular biologist. Theoretically
+The calculation of physico-chemical properties for biopolymers is an
+important tool in the arsenal of molecular biologist. Theoretically
 calculated quantities like extinction coefficients, isoelectric points,
 hydrophobicities and instability indices are useful guides as to how a
 molecule behaves in an experiment. Many tools for calculating these
 properties exist, including widely used open-source implementations in
 EMBOSS and BioPerl, but only some are currently available in BioJava3.
 The aim of this project is to port or produce new implementations of
-standard algorithms for a range of calculations within BioJava3.
+standard algorithms for a range of calculations within BioJava3 and make
+them available in various forms such as APIs, executables and web
+service.
 
 Properties
 ----------
