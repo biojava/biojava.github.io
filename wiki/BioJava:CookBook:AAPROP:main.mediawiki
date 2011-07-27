@@ -20,7 +20,8 @@ The class providing the core functionality for this is the IPeptideProperties cl
 
 <java>
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence));
+boolean ignoreCase = true;
+System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence, ignoreCase));
 </java>
 
 ==Short Example 2: Computing molecular weight using user-defined values==
@@ -29,7 +30,8 @@ System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(s
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 File elementMassFile = new File("./src/main/resources/ElementMass.xml");
 File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposition.xml");
-System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence, elementMassFile, aminoAcidCompositionFile));
+boolean ignoreCase = true;
+System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeight(sequence, elementMassFile, aminoAcidCompositionFile, ignoreCase));
 </java>
 
 ==Short Example 3: Computing molecular weight for multiple sequences==
@@ -42,12 +44,13 @@ sequences[2] = "VLMALGMTDLFIPSANLTGISSAESLKISQAVHGAFMELSEDGIEMAGSTGVIEDIKHSPESEQ
 
 File elementMassFile = new File("./src/main/resources/ElementMass.xml");
 File aminoAcidCompositionFile = new File("./src/main/resources/AminoAcidComposition.xml");
-AminoAcidCompositionTable table = PeptideProperties.obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile);
+boolean ignoreCase = true;
+AminoAcidCompositionTable table = PeptideProperties.obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile, ignoreCase);
 
 //The difference between this example and short example 2 is that the elementMassFile and aminoAcidCompositionFile will be only parsed once 
 //and stored in AminoAcidCompositionTable for quick and easy reuse in the computation of multiple sequences.
 for(String sequence:sequences){
-    System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeightBasedOnXML(sequence, table));
+    System.out.println("Molecular Weight: " + PeptideProperties.getMolecularWeightBasedOnXML(sequence, table, ignoreCase));
 }
 </java>
 
@@ -55,12 +58,13 @@ for(String sequence:sequences){
 
 <java>
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
-		
+boolean ignoreCase = true;
+
 //Enrichment of a specific amino acid type
-System.out.println("Composition of A: " + PeptideProperties.getEnrichment(sequence, "A"));
+System.out.println("Composition of A: " + PeptideProperties.getEnrichment(sequence, "A", ignoreCase));
 		
 //Enrichment of a list of amino acid types
-Map<String, Double> composition = PeptideProperties.getAACompositionString(sequence);
+Map<String, Double> composition = PeptideProperties.getAACompositionString(sequence, ignoreCase);
 for(String aa:composition.keySet()){
 	System.out.println("Composition of " + aa + ": " + composition.get(aa));
 }
@@ -70,27 +74,28 @@ for(String aa:composition.keySet()){
 
 <java>
 String sequence = "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTRECMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
+boolean ignoreCase = true;
 		
 //Absorbance
-System.out.println("Absorbance (Cys Reduced): " + PeptideProperties.getAbsorbance(sequence, true));
-System.out.println("Absorbance (Cys Not Reduced): " + PeptideProperties.getAbsorbance(sequence, false));
+System.out.println("Absorbance (Cys Reduced): " + PeptideProperties.getAbsorbance(sequence, true, ignoreCase));
+System.out.println("Absorbance (Cys Not Reduced): " + PeptideProperties.getAbsorbance(sequence, false, ignoreCase));
 		
 //Extinction Coefficient
-System.out.println("Extinction Coefficient (Cys Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, true));
-System.out.println("Extinction Coefficient (Cys Not Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, false));
+System.out.println("Extinction Coefficient (Cys Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, true, ignoreCase));
+System.out.println("Extinction Coefficient (Cys Not Reduced): " + PeptideProperties.getExtinctionCoefficient(sequence, false, ignoreCase));
 		
 //Instability Index
-System.out.println("Instability Index: " + PeptideProperties.getInstabilityIndex(sequence));
+System.out.println("Instability Index: " + PeptideProperties.getInstabilityIndex(sequence, ignoreCase));
 		
 //Apliphatic Index
-System.out.println("Apliphatic Index: " + PeptideProperties.getApliphaticIndex(sequence));
+System.out.println("Apliphatic Index: " + PeptideProperties.getApliphaticIndex(sequence, ignoreCase));
 		
 //Average Hydropathy Value
-System.out.println("Average Hydropathy Value: " + PeptideProperties.getAvgHydropathy(sequence));
+System.out.println("Average Hydropathy Value: " + PeptideProperties.getAvgHydropathy(sequence, ignoreCase));
 		
 //Isoelectric Point
-System.out.println("Isoelectric Point: " + PeptideProperties.getIsoelectricPoint(sequence));
+System.out.println("Isoelectric Point: " + PeptideProperties.getIsoelectricPoint(sequence, ignoreCase));
 		
 //Net Charge
-System.out.println("Net Charge at pH 7: " + PeptideProperties.getNetCharge(sequence));
+System.out.println("Net Charge at pH 7: " + PeptideProperties.getNetCharge(sequence, ignoreCase));
 </java>
