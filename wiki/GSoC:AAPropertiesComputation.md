@@ -338,7 +338,7 @@ Progress Log
     project.
 -   Implemented the first draft of the command prompt executable.
 
-### July 14 - Current (Week 12)
+### July 14 - July 21 (Week 12)
 
 -   Created a new class ModifiedAminoAcidCompoundSet which enables any
     symbols to be specified in XML file to represent amino acids and
@@ -349,6 +349,19 @@ Progress Log
 -   Change to use BioJava FASTA reader.
 -   Created CommandPromptTester.java to do testing of CommandPrompt.java
 -   Improved Help - Follows unix "man" style.
+
+### July 22 - Current (Week 13)
+
+-   Updated the cookbook on using extended XML file and
+    ModifiedAACompoundSet
+-   Split up the CommandPrompt run to be more "unit" style
+-   Had always assumed that cases are ignored, hence had to change many
+    method to consider case difference
+-   Introduced another class CaseFreeAminoAcidCompoundSet to ignore
+    cases
+-   By default, set ignore case. If they provide the XML file, then
+    cases will be differentiated
+-   Update the cookbook on Command Prompt
 
 Skype call notes
 ----------------
