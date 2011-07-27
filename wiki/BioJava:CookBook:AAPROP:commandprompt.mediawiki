@@ -5,11 +5,11 @@
 
 === Manual ===
 <b>NAME</b>
-	<p>An executable to generate physico-chemical properties of protein sequences.</p>
+	<pre>An executable to generate physico-chemical properties of protein sequences.</pre>
 
-EXAMPLES
-	java -jar AAProperties.jar -i test.fasta -a
-		Generates all possible properties.
+<b>EXAMPLES</b>
+	<pre>java -jar AAProperties.jar -i test.fasta -a
+		Generates all possible properties.</pre>
 
 	java -jar AAProperties.jar -i test.fasta -1 -3 -7
 		Generates only molecular weight, extinction coefficient and isoelectric point.

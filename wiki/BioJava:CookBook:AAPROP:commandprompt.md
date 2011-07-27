@@ -11,13 +11,12 @@ title: BioJava:CookBook:AAPROP:commandprompt
 
 <b>NAME</b>
 
-An executable to generate physico-chemical properties of protein
-sequences.
+    An executable to generate physico-chemical properties of protein sequences.
 
-EXAMPLES
+<b>EXAMPLES</b>
 
-`   java -jar AAProperties.jar -i test.fasta -a`  
-`       Generates all possible properties.`
+    java -jar AAProperties.jar -i test.fasta -a
+            Generates all possible properties.
 
 `   java -jar AAProperties.jar -i test.fasta -1 -3 -7`  
 `       Generates only molecular weight, extinction coefficient and isoelectric point.`
