@@ -1,0 +1,49 @@
+---
+title: BioJava:CookBook:AAPROP:commandprompt
+---
+
+### How can I compute physico-chemical properties using Command Prompt?
+
+1) Download AAProperties.jar 2) Study the Manual section below
+
+### Manual
+
+NAME
+
+`   An executable to generate physico-chemical properties of protein sequences.`
+
+EXAMPLES
+
+`   java -jar AAProperties.jar -i test.fasta -a`  
+`       Generates all possible properties.`
+
+`   java -jar AAProperties.jar -i test.fasta -1 -3 -7`  
+`       Generates only molecular weight, extinction coefficient and isoelectric point.`
+
+`   java -jar AAProperties.jar -i test.fasta -0 A -0 N -1`  
+`       Generates composition of two specific amino acid symbol and molecular weight.`
+
+OPTIONS
+
+`   Required`  
+`       -i location of input FASTA file`
+
+`   Optional`  
+`       -o location of output file [standard output (default)]`  
+`       -f output format [csv (default) or tsv]`  
+`       -x location of Amino Acid Composition XML file for defining amino acid composition`  
+`       -y location of Element Mass XML file for defining mass of elements`  
+`       -d number of decimals (int) [4 (default)]`
+
+`   Provide at least one of them`  
+`       -a compute properties of option 1-9`  
+`       -1 compute molecular weight`  
+`       -2 compute absorbance`  
+`       -3 compute extinction coefficient`  
+`       -4 compute instability index`  
+`       -5 compute apliphatic index`  
+`       -6 compute average hydropathy value`  
+`       -7 compute isoelectric point`  
+`       -8 compute net charge at pH 7`  
+`       -9 compute composition of 20 standard amino acid (A, R, N, D, C, E, Q, G, H, I, L, K, M, F, P, S, T, W, Y, V)`  
+`       -0 compute composition of specific amino acid symbol`
