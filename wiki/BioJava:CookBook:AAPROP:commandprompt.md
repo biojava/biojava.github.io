@@ -4,13 +4,15 @@ title: BioJava:CookBook:AAPROP:commandprompt
 
 ### How can I compute physico-chemical properties using Command Prompt?
 
-1) Download AAProperties.jar 2) Study the Manual section below
+1) Download AAProperties.jar  
+2) Study the Manual section below  
 
 ### Manual
 
-NAME
+NAME  
 
-`   An executable to generate physico-chemical properties of protein sequences.`
+An executable to generate physico-chemical properties of protein
+sequences.
 
 EXAMPLES
 
