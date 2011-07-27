@@ -108,8 +108,10 @@ visualisation
 **Required modules**: *biojava3-aa-prop, biojava3-structure and
 biojava3-core*
 
--   [How can I compute physico-chemical
-    properties?](BioJava:CookBook:AAPROP:main "wikilink")
+-   [How can I compute physico-chemical properties via
+    APIs?](BioJava:CookBook:AAPROP:main "wikilink")
+-   [How can I compute physico-chemical properties using Command
+    Prompt?](BioJava:CookBook:AAPROP:commandprompt "wikilink")
 -   [How are Molecular Weight
     computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
 -   [How should I define the XML files to customize mass of Amino Acids
