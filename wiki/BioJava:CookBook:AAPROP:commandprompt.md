@@ -9,7 +9,7 @@ title: BioJava:CookBook:AAPROP:commandprompt
 
 ### Manual
 
-NAME  
+<b>NAME</b>
 
 An executable to generate physico-chemical properties of protein
 sequences.
