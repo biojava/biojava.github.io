@@ -1,11 +1,11 @@
 === How can I compute physico-chemical properties using Command Prompt? ===
 
-1) Download AAProperties.jar
-2) Study the Manual section below
+1) Download AAProperties.jar<br>
+2) Study the Manual section below<br>
 
 === Manual ===
-NAME
-	An executable to generate physico-chemical properties of protein sequences.
+NAME<br>
+	<p>An executable to generate physico-chemical properties of protein sequences.
 
 EXAMPLES
 	java -jar AAProperties.jar -i test.fasta -a
