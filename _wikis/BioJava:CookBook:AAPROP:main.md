@@ -2,7 +2,7 @@
 title: BioJava:CookBook:AAPROP:main
 ---
 
-### How can I compute physico-chemical properties?
+### How can I compute physico-chemical properties via APIs?
 
 BioJava provides a set of APIs to generate some commonly used
 physiochemical properties. They are
