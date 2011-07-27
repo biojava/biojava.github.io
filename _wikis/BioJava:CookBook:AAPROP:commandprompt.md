@@ -16,15 +16,15 @@ title: BioJava:CookBook:AAPROP:commandprompt
 <b>EXAMPLES</b>
 
     java -jar AAProperties.jar -i test.fasta -a
-            Generates all possible properties.
+        Generates all possible properties.
 
-`   java -jar AAProperties.jar -i test.fasta -1 -3 -7`  
-`       Generates only molecular weight, extinction coefficient and isoelectric point.`
+    java -jar AAProperties.jar -i test.fasta -1 -3 -7
+            Generates only molecular weight, extinction coefficient and isoelectric point.
 
 `   java -jar AAProperties.jar -i test.fasta -0 A -0 N -1`  
 `       Generates composition of two specific amino acid symbol and molecular weight.`
 
-OPTIONS
+<b>OPTIONS</b>
 
 `   Required`  
 `       -i location of input FASTA file`
