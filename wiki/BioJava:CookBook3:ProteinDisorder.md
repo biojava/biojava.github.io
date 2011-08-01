@@ -22,12 +22,10 @@ float[] rawProbabilityScores = Jronn.getDisorderScores(fsequence);
 Example 2: Calculate the probability of disorder for every residue in the sequence for all proteins from the FASTA input file
 -----------------------------------------------------------------------------------------------------------------------------
 
-<java>
-
-`   final List`<FastaSequence>` sequences = SequenceUtil.readFasta(new FileInputStream("src/test/resources/fasta.in"));`  
-`   Map`<FastaSequence, float[]>` rawProbabilityScores = Jronn.getDisorderScores(sequences); `
-
-</java>
+<java> final List<FastaSequence> sequences = SequenceUtil.readFasta(new
+FileInputStream("src/test/resources/fasta.in"));
+Map<FastaSequence, float[]> rawProbabilityScores =
+Jronn.getDisorderScores(sequences); </java>
 
 Example 3: Get the disordered regions of the protein for a single protein sequence
 ----------------------------------------------------------------------------------
