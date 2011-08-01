@@ -30,13 +30,13 @@ Jronn.getDisorderScores(sequences); </java>
 Example 3: Get the disordered regions of the protein for a single protein sequence
 ----------------------------------------------------------------------------------
 
-<java>
+<java> FastaSequence fsequence = new FastaSequence("Prot1",
+"LLRGRHLMNGTMIMRPWNFLNDHHFPKFFPHLIEQQAIWLADWWRKKHC" +
 
-`    Range[] ranges = Jronn.getDisorder(new FastaSequence("Prot1", "LLRGRHLMNGTMIMRPWNFLNDHHFPKFFPHLIEQQAIWLADWWRKKHC" +`  
 `               "RPLPTRAPTMDQWDHFALIQKHWTANLWFLTFPFNDKWGWIWFLKDWTPGSADQAQRACTWFFCHGHDTN" +`  
-`               "CQIIFEGRNAPERADPMWTGGLNKHIIARGHFFQSNKFHFLERKFCEMAEIERPNFTCRTLDCQKFPWDDP" ));`
+`               "CQIIFEGRNAPERADPMWTGGLNKHIIARGHFFQSNKFHFLERKFCEMAEIERPNFTCRTLDCQKFPWDDP");`
 
-</java>
+Range[] ranges = Jronn.getDisorder(fsequence); </java>
 
 Example 4: Calculate the disordered regions for the proteins from FASTA file
 ----------------------------------------------------------------------------
