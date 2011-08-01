@@ -15,14 +15,14 @@ based on the Java implementation of
 
 This code has been originally developed for use with
 [JABAWS](http://www.compbio.dundee.ac.uk/jabaws). We call this code
-*JRONN*. This code is based on the C implementation of RONN algorithm
-and uses the same model data, therefore gives the same predictions. Main
+*JRONN*. *JRONN* is based on the C implementation of RONN algorithm and
+uses the same model data, therefore gives the same predictions. Main
 motivation behind JRONN development was providing an implementation of
 RONN more suitable to use by the automated analysis pipelines and web
 services.
 
-Robert Esnouf has kindly allowed us to explore his code and share the
-results with the community.
+Robert Esnouf has kindly allowed us to explore the RONN code and share
+the results with the community.
 
 Original version of RONN is described in Yang,Z.R., Thomson,R.,
 McMeil,P. and Esnouf,R.M. (2005) RONN: the bio-basis function neural
