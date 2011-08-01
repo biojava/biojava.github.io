@@ -20,12 +20,14 @@ Options supported by the command line executable
         Input file can contain one or more FASTA formatted sequences.
 
     All OPTIONS are optional
+
     Supported OPTIONS are: 
         -o=output file
         -d=disorder value
         -f=V or H 
         -s=statistics file
         -n=number of threads to use
+
     OPTION DETAILED DESCRIPTION:
         -o full path to the output file, if not specified 
         standard out is used
