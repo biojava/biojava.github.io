@@ -9,9 +9,8 @@ BioJava provide a module *biojava3-protein-disorder* for prediction
 disordered regions from protein sequence.
 
 Biojava3-protein-disorder module for now contains one method for the
-prediction of disordered regions from protein sequence. This method is
-based on the Java implementation of
-[RONN](http://www.strubi.ox.ac.uk/RONN) predictor.
+prediction of disordered regions. This method is based on the Java
+implementation of [RONN](http://www.strubi.ox.ac.uk/RONN) predictor.
 
 This code has been originally developed for use with
 [JABAWS](http://www.compbio.dundee.ac.uk/jabaws). We call this code
