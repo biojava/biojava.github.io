@@ -41,9 +41,8 @@ Range[] ranges = Jronn.getDisorder(fsequence); </java>
 Example 4: Calculate the disordered regions for the proteins from FASTA file
 ----------------------------------------------------------------------------
 
-<java>
-
-`     final List`<FastaSequence>` sequences = SequenceUtil.readFasta(new FileInputStream("src/test/resources/fasta.in"));`  
-`     Map`<FastaSequence, Range[]>` ranges = Jronn.getDisorder(sequences);`
+<java> final List<FastaSequence> sequences = SequenceUtil.readFasta(new
+FileInputStream("src/test/resources/fasta.in"));
+Map<FastaSequence, Range[]> ranges = Jronn.getDisorder(sequences);
 
 </java>
