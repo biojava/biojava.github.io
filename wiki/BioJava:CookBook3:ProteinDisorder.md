@@ -26,6 +26,9 @@ network technique applied to the detection of natively disordered
 regions in proteins. Bioinformatics 21:
 3369-3376](http://bioinformatics.oxfordjournals.org/content/21/16/3369.full)
 
+Examples of use are provided below. For more information please refer to
+JronnExample testcases.
+
 Example 1: Calculate the probability of disorder for every residue in the sequence
 ----------------------------------------------------------------------------------
 
