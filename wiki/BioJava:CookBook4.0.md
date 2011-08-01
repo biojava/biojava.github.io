@@ -132,7 +132,7 @@ biojava3-core*
 
 ### biojava3-protein-disorder
 
--   [How can I predict disordered regions on the protein
+-   [How can I predict disordered regions of the protein using its
     sequence?](BioJava:CookBook3:ProteinDisorder "wikilink")
 -   [Can I use the predictor from the command
     line?](BioJava:CookBook3:ProteinDisorderCLI "wikilink")
