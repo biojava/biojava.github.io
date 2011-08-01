@@ -71,6 +71,10 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:AAPROP:isoelectricpoint|How are Isoelectric Point computed?]]
 * [[BioJava:CookBook:AAPROP:netcharge|How are Net Charge computed?]]
 
+=== biojava3-protein-disorder ===
+
+* [[BioJava:CookBook3:ProteinDisorder|How can I predict disordered regions on the protein sequence?]]
+
 === biojava3-protmod ===
 
 '''Required modules''': ''biojava3-protmod, biojava-structure''
