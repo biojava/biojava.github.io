@@ -11,10 +11,10 @@ disordered regions from protein sequence.
 Biojava3-protein-disorder module for now contains one method for the
 prediction of disordered regions from protein sequence. This method is
 based on the Java implementation of
-[|RONN](http://www.strubi.ox.ac.uk/RONN "wikilink") predictor.
+[RONN](http://www.strubi.ox.ac.uk/RONN) predictor.
 
-This code has been originally developed for use with [JABAWS
-2](http://www.compbio.dundee.ac.uk/jabaws "wikilink"). We call this code
+This code has been originally developed for use with
+[JABAWS](http://www.compbio.dundee.ac.uk/jabaws). We call this code
 *JRONN*. This code is based on the C implementation of RONN algorithm
 and uses the same model data, therefore gives the same predictions. Main
 motivation behind JRONN development was providing an implementation of
