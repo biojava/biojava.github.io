@@ -23,10 +23,11 @@ services.
 Robert Esnouf has kindly allowed us to explore the RONN code and share
 the results with the community.
 
-Original version of RONN is described in Yang,Z.R., Thomson,R.,
+Original version of RONN is described in [Yang,Z.R., Thomson,R.,
 McMeil,P. and Esnouf,R.M. (2005) RONN: the bio-basis function neural
 network technique applied to the detection of natively disordered
-regions in proteins Bioinformatics 21: 3369-3376
+regions in proteins. Bioinformatics 21:
+3369-3376](http://bioinformatics.oxfordjournals.org/content/21/16/3369.full)
 
 Example 1: Calculate the probability of disorder for every residue in the sequence
 ----------------------------------------------------------------------------------
