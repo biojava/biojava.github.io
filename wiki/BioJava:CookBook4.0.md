@@ -130,6 +130,11 @@ biojava3-core*
 -   [How are Net Charge
     computed?](BioJava:CookBook:AAPROP:netcharge "wikilink")
 
+### biojava3-protein-disorder
+
+-   [How can I predict disordered regions on the protein
+    sequence?](BioJava:CookBook3:ProteinDisorder "wikilink")
+
 ### biojava3-protmod
 
 **Required modules**: *biojava3-protmod, biojava-structure*
