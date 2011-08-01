@@ -11,13 +11,12 @@ disordered regions from protein sequence.
 Example 1: Calculate the probability of disorder for every residue in the sequence
 ----------------------------------------------------------------------------------
 
-<java> float[] rawProbabilityScores = Jronn.getDisorderScores(new
-FastaSequence("name",
+<java> FastaSequence fsequence = new FastaSequence("name",
 "LLRGRHLMNGTMIMRPWNFLNDHHFPKFFPHLIEQQAIWLADWWRKKHC" +
 
-`               "RPLPTRAPTMDQWDHFALIQKHWTANLWFLTFPFNDKWGWIWFLKDWTPGSADQAQRACTWFFCHGHDTN" +`  
-`));`
+`               "RPLPTRAPTMDQWDHFALIQKHWTANLWFLTFPFNDKWGWIWFLKDWTPGSADQAQRACTWFFCHGHDTN");`
 
+float[] rawProbabilityScores = Jronn.getDisorderScores(fsequence);
 </java>
 
 Example 2: Calculate the probability of disorder for every residue in the sequence for all proteins from the FASTA input file
