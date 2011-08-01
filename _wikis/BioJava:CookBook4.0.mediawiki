@@ -74,6 +74,7 @@ If you re-use code from the cookbook please cite:
 === biojava3-protein-disorder ===
 
 * [[BioJava:CookBook3:ProteinDisorder|How can I predict disordered regions on the protein sequence?]]
+* [[BioJava:CookBook3:ProteinDisorderCLI|Can I use the predictor from the command line?]]
 
 === biojava3-protmod ===
 
