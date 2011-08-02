@@ -350,7 +350,7 @@ Progress Log
 -   Created CommandPromptTester.java to do testing of CommandPrompt.java
 -   Improved Help - Follows unix "man" style.
 
-### July 22 - Current (Week 13)
+### July 22 - July 29 (Week 13)
 
 -   Updated the cookbook on using extended XML file and
     ModifiedAACompoundSet
@@ -362,6 +362,14 @@ Progress Log
 -   By default, set ignore case. If they provide the XML file, then
     cases will be differentiated
 -   Update the cookbook on Command Prompt
+
+### July 30 - Current (Week 14)
+
+-   Only consider cases difference for Molecular Weight. Revert all
+    cases consideration for other properties.
+-   Managed to link up with JABAWS via SVN. However, there exists a
+    strange problem. Could only link up from home but not university
+    network.
 
 Skype call notes
 ----------------
