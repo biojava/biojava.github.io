@@ -250,9 +250,20 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * By default, set ignore case. If they provide the XML file, then cases will be differentiated
 * Update the cookbook on Command Prompt
 
-===July 30 - Current (Week 14)===
+===July 30 - August 4 (Week 14)===
 * Only consider cases difference for Molecular Weight. Revert all cases consideration for other properties.
-* Managed to link up with JABAWS via SVN. However, there exists a strange problem. Could only link up from home but not university network.
+* Managed to link up with JABAWS via SVN. Could only checkout but not able to commit.
+* Able to commit after some configuration efforts.
+* Committed initial attempt to provide AAProperties as a service in JABAWS.
+* Added AAProperties.jar into jabaws/binaries/windows.
+* Added AAProperties description to conf/Executable.properties.
+* Created AAPropertiesLimits.xml and AAPropertiesParameters.xml.
+* Created AAProperties.java under compbio.runner.sequence and extends SkeletalExecutable<AAProperties>
+
+===August 5 - Current (Week 15)===
+* Wrote the parser for AAProperties.jar under JABAWS.
+* Prepared test case for the parser.
+* Uploaded a sample output of AAProperties.jar for testing purposes.
 
 == Skype call notes ==
 
