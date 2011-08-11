@@ -383,6 +383,16 @@ Progress Log
 -   Wrote the parser for AAProperties.jar under JABAWS.
 -   Prepared test case for the parser.
 -   Uploaded a sample output of AAProperties.jar for testing purposes.
+-   Change the return type of parseAAProp to ScoreManager
+-   Adjust the configuration of pom.xml to generate a jar file with
+    org.biojava3.aaproperties.CommandPrompt as the main class. However,
+    need to rename it to AAProperties.jar
+-   Added SequenceName in the output of AAProperties.jar (in the first
+    column)
+-   Modify the SequenceUtil.AAprop result parser to cater for the change
+    above in the AAProperties.jar output
+-   Managed to rename in the configuration of pom.xml to generate a jar
+    file with name that includes AAProperties.
 
 Skype call notes
 ----------------
