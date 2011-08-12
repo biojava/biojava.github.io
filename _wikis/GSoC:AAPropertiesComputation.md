@@ -413,7 +413,7 @@ Weekly skype calls are on Thursday 08 AM PST
 ` `[`July` `21st`](aapropsSkype_20110721 "wikilink")  
 ` `[`July` `28th`](aapropsSkype_20110728 "wikilink")  
 ` `[`August` `4th`](aapropsSkype_20110804 "wikilink")  
-` `[`August` `12th`](aapropsSkype_20110804 "wikilink")
+` `[`August` `12th`](aapropsSkype_20110812 "wikilink")
 
 References
 ----------
