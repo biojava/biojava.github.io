@@ -15,8 +15,7 @@ overview over new modules:
 
 = Molecular Weight calculations =
 
-
-= Overview of last year's summer of code project re. Protein Modifications
+Overview of last year's summer of code project re. Protein Modifications (Peter Rose)
  - Resid
  - PSI-MOD ontology (combination of resid and another db called delta-mass) collects differences in mass for every protein modification
  - We created an XML file that describes protein modifications in he PDB. Cross references to Resid and PSI-MOD. If there is ag a phosphorylated serin, it describes what atoms are connected.
