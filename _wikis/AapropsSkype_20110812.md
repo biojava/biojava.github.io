@@ -23,8 +23,8 @@ overview over new modules:
 Molecular Weight calculations
 =============================
 
-= Overview of last year's summer of code project re. Protein
-Modifications
+Overview of last year's summer of code project re. Protein Modifications
+(Peter Rose)
 
 `- Resid`  
 `- PSI-MOD ontology (combination of resid and another db called delta-mass) collects differences in mass for every protein modification`  
