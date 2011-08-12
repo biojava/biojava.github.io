@@ -27,9 +27,8 @@ Molecular Weight calculations
 Modifications
 
 `- Resid`  
-`- PSI-MOD ontology (combination of resid and another db called delta-mass) collects differences in mass for every protein modification`
-
-`- we created an XML file that describes protein modifications in he PDB. Cross references to Resid and PSI-MOD. If there is ag a phosphorylated serin, it describes what atoms are connected.`  
+`- PSI-MOD ontology (combination of resid and another db called delta-mass) collects differences in mass for every protein modification`  
+`- We created an XML file that describes protein modifications in he PDB. Cross references to Resid and PSI-MOD. If there is ag a phosphorylated serin, it describes what atoms are connected.`  
 `- Student last year wrote a program that would take a PDB file, scan through it and detect all modifications that are there.`  
 `- used on the PDB web site to visualize the results.`
 
