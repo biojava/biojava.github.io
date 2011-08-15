@@ -9,6 +9,9 @@ physiochemical properties. They are
 
 -   [Molecular
     Weight](http://biojava.org/wiki/BioJava:CookBook:AAPROP:molecularweight)
+    (See also: [How to define the XML files to customize mass of Amino
+    Acids in the computation of Molecular
+    Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
 -   [Absorbance](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
 -   [Extinction
     Coefficient](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
