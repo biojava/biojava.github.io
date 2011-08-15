@@ -1,5 +1,6 @@
 ===How are Physico-Chemical Properties computed?===
 The computation methods used for various properties can be found in the following links:
+* [[BioJava:CookBook:AAPROP:molecularweight|How are Molecular Weight computed?]]
 * [[BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient|How are Absorbance and Extinction Coefficient computed?]]
 * [[BioJava:CookBook:AAPROP:instabilityindex|How are Instability Index computed?]]
 * [[BioJava:CookBook:AAPROP:aliphaticindex|How are Aliphatic Index computed?]]
