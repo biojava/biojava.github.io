@@ -182,8 +182,8 @@ Progress Log
 
 -   Implemented all basic properties.
 -   Verified them manually based on three web tools.
-    -   <http://au.expasy.org/tools/protparam.html>
-    -   <http://au.expasy.org/tools/pi_tool.html>
+    -   <http://web.expasy.org/protparam/>
+    -   <http://web.expasy.org/compute_pi/>
     -   <http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator.asp>
 -   Implemented adaptor methods for all basic properties.
 -   Basic properties includes the following
