@@ -112,11 +112,6 @@ biojava3-core*
     APIs?](BioJava:CookBook:AAPROP:main "wikilink")
 -   [How can I compute physico-chemical properties using Command
     Prompt?](BioJava:CookBook:AAPROP:commandprompt "wikilink")
--   [How are Molecular Weight
-    computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
--   [How should I define the XML files to customize mass of Amino Acids
-    in the computation of Molecular
-    Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink")
 
 ### biojava3-protein-disorder
 
