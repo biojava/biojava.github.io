@@ -260,7 +260,7 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Created AAPropertiesLimits.xml and AAPropertiesParameters.xml.
 * Created AAProperties.java under compbio.runner.sequence and extends SkeletalExecutable<AAProperties>
 
-===August 5 - Current (Week 15)===
+===August 5 - August 12 (Week 15)===
 * Wrote the parser for AAProperties.jar under JABAWS.
 * Prepared test case for the parser.
 * Uploaded a sample output of AAProperties.jar for testing purposes.
@@ -269,6 +269,14 @@ Likewise, Sirius PSB transforms sequences accordingly to their respective groupi
 * Added SequenceName in the output of AAProperties.jar (in the first column)
 * Modify the SequenceUtil.AAprop result parser to cater for the change above in the AAProperties.jar output 
 * Managed to rename in the configuration of pom.xml to generate a jar file with name that includes AAProperties.
+
+===August 13 - Current (Week 16)===
+* Completed the integration of AAProperties.jar with JABAWS
+* Checked all links on http://biojava.org/wiki/GSoC:AAPropertiesComputation  
+* Rectified two links http://web.expasy.org/protparam/ and http://web.expasy.org/compute_pi/
+* Checked all links on http://biojava.org/wiki/BioJava:CookBook under Physico-Chemical Properties Computation
+* Linked up the executable jar file on maven to Cookbook
+* Simplified the section under Physico-Chemical Properties Computation on http://biojava.org/wiki/BioJava:CookBook
 
 == Skype call notes ==
 
