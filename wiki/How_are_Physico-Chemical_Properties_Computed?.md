@@ -7,6 +7,8 @@ title: How are Physico-Chemical Properties Computed?
 The computation methods used for various properties can be found in the
 following links:
 
+-   [How are Molecular Weight
+    computed?](BioJava:CookBook:AAPROP:molecularweight "wikilink")
 -   [How are Absorbance and Extinction Coefficient
     computed?](BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
 -   [How are Instability Index
