@@ -117,18 +117,6 @@ biojava3-core*
 -   [How should I define the XML files to customize mass of Amino Acids
     in the computation of Molecular
     Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink")
--   [How are Absorbance and Extinction Coefficient
-    computed?](BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
--   [How are Instability Index
-    computed?](BioJava:CookBook:AAPROP:instabilityindex "wikilink")
--   [How are Aliphatic Index
-    computed?](BioJava:CookBook:AAPROP:aliphaticindex "wikilink")
--   [How is Average Hydropathy
-    computed?](BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
--   [How are Isoelectric Point
-    computed?](BioJava:CookBook:AAPROP:isoelectricpoint "wikilink")
--   [How are Net Charge
-    computed?](BioJava:CookBook:AAPROP:netcharge "wikilink")
 
 ### biojava3-protein-disorder
 
