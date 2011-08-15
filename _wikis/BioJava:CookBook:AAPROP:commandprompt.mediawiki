@@ -1,6 +1,6 @@
 === How can I compute physico-chemical properties using Command Prompt? ===
 
-1) Download AAProperties.jar<br>
+1) Download [http://www.biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.2-SNAPSHOT/biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar] and rename it to AAProperties.jar<br>
 2) Study the Manual section below<br>
 
 === Manual ===
