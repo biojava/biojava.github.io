@@ -8,6 +8,8 @@ title: BioJava:CookBook:AAPROP:commandprompt
 [biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar](http://www.biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.2-SNAPSHOT/biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar)
 and rename it to AAProperties.jar  
 2) Study the Manual section below  
+Note: [Test.fasta](Test.fasta "wikilink") is available if you would like
+some test sequences.
 
 ### Manual
 
