@@ -51,6 +51,10 @@ ignoreCase = true; System.out.println("Molecular Weight: " +
 PeptideProperties.getMolecularWeight(sequence, elementMassFile,
 aminoAcidCompositionFile, ignoreCase)); </java>
 
+(See also: [How to define the XML files to customize mass of Amino Acids
+in the computation of Molecular
+Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
+
 Short Example 3: Computing molecular weight for multiple sequences
 ------------------------------------------------------------------
 
