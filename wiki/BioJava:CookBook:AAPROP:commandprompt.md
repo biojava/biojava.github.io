@@ -4,7 +4,9 @@ title: BioJava:CookBook:AAPROP:commandprompt
 
 ### How can I compute physico-chemical properties using Command Prompt?
 
-1) Download AAProperties.jar  
+1) Download
+[biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar](http://www.biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.2-SNAPSHOT/biojava3-aa-prop-3.0.2-SNAPSHOT-jar-with-dependencies.jar)
+and rename it to AAProperties.jar  
 2) Study the Manual section below  
 
 ### Manual
