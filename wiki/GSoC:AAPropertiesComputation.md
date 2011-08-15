@@ -406,6 +406,10 @@ Progress Log
 -   Linked up the executable jar file on maven to Cookbook
 -   Simplified the section under Physico-Chemical Properties Computation
     on <http://biojava.org/wiki/BioJava:CookBook>
+-   Added dummy id to be allowed in the xml file of
+    AminoAcidComposition.
+    -   It will be used in future as an option to compute the mass of
+        amino acid instead of based only on elements.
 
 Skype call notes
 ----------------
