@@ -59,11 +59,8 @@ If you re-use code from the cookbook please cite:
 
 === Physico-Chemical Properties Computation ===
 '''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
-
 * [[BioJava:CookBook:AAPROP:main|How can I compute physico-chemical properties via APIs?]]
 * [[BioJava:CookBook:AAPROP:commandprompt|How can I compute physico-chemical properties using Command Prompt?]]
-* [[BioJava:CookBook:AAPROP:molecularweight|How are Molecular Weight computed?]]
-* [[BioJava:CookBook:AAPROP:xmlfiles|How should I define the XML files to customize mass of Amino Acids in the computation of Molecular Weight?]]
 
 === biojava3-protein-disorder ===
 
