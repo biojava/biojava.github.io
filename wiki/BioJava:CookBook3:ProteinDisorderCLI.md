@@ -11,6 +11,10 @@ executable JAR file and run using <java> java -jar <jar_file_name>
 repository
 [biojava3-protein-disorder-3.0.2-SNAPSHOT.jar](http://www.biojava.org/download/maven/org/biojava/biojava3-protein-disorder/)
 
+Alternatively if you want to integrate the predictor into your code you
+can use [ API functions](BioJava:CookBook3:ProteinDisorder "wikilink")
+to perform the calculations.
+
 Options supported by the command line executable
 ------------------------------------------------
 
