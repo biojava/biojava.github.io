@@ -6,6 +6,8 @@ java -jar <jar_file_name>
 </java>
 command. The jar file can be downloaded from the BioJava repository [http://www.biojava.org/download/maven/org/biojava/biojava3-protein-disorder/ biojava3-protein-disorder-3.0.2-SNAPSHOT.jar]
 
+Alternatively if you want to integrate the predictor into your code you can use [[BioJava:CookBook3:ProteinDisorder | API functions]] to perform the calculations.
+
 ==Options supported by the command line executable==
 
 <pre>
