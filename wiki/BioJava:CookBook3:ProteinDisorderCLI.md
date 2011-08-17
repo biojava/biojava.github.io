@@ -7,7 +7,9 @@ Can I use the (protein disorder) predictor from the command line?
 
 BioJava module *biojava3-protein-disorder* can be compiled into a single
 executable JAR file and run using <java> java -jar <jar_file_name>
-</java> command.
+</java> command. The jar file can be downloaded from the BioJava
+repository
+[biojava3-protein-disorder-3.0.2-SNAPSHOT.jar](http://www.biojava.org/download/maven/org/biojava/biojava3-protein-disorder/)
 
 Options supported by the command line executable
 ------------------------------------------------
