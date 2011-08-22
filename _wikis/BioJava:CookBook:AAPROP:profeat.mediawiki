@@ -3,14 +3,16 @@
 BioJava provides a set of APIs to generate PROFEAT properties.<br>
 
 PROFEAT generate properties of a protein sequence based on its converted attributes.<br/>
- * The seven different attributes are<p/>
- * Hydrophobicity (Polar, Neutral, Hydrophobicity)<br/>
- * Normalized van der Waals volume (Range 0 - 2.78, 2.95 - 4.0, 4.03 - 8.08)<br/>
- * Polarity (Value 4.9 - 6.2, 8.0 - 9.2, 10.4 - 13.0)<br/>
- * Polarizability (Value 0 - 1.08, 0.128 - 0.186, 0.219 - 0.409)<br/>
- * Charge (Positive, Neutral, Negative)<br/>
- * Secondary structure (Helix, Strand, Coil)<br/>
- * Solvent accessibility (Buried, Exposed, Intermediate)<br/>
+<ul>
+ <li>The seven different attributes are</li>
+ <li>Hydrophobicity (Polar, Neutral, Hydrophobicity)</li>
+ <li>Normalized van der Waals volume (Range 0 - 2.78, 2.95 - 4.0, 4.03 - 8.08)</li>
+ <li>Polarity (Value 4.9 - 6.2, 8.0 - 9.2, 10.4 - 13.0)</li>
+ <li>Polarizability (Value 0 - 1.08, 0.128 - 0.186, 0.219 - 0.409)</li>
+ <li>Charge (Positive, Neutral, Negative)</li>
+ <li>Secondary structure (Helix, Strand, Coil)</li>
+ <li>Solvent accessibility (Buried, Exposed, Intermediate)</li>
+</ul>
 
 Please see [http://nar.oxfordjournals.org/content/34/suppl_2/W32.abstract PROFEAT] for more information about these properties.<br>
 
@@ -46,8 +48,6 @@ for(ATTRIBUTE a:attribute2Transition2Double.keySet()){
 	System.out.println();
 }
 </java>
-
-(See also: [[BioJava:CookBook:AAPROP:xmlfiles|How to define the XML files to customize mass of Amino Acids in the computation of Molecular Weight?]])
 
 ==Short Example 3: Computing the position with respect to the sequence where the given distribution of the grouping can be found==
 
