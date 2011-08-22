@@ -394,7 +394,7 @@ Progress Log
 -   Managed to rename in the configuration of pom.xml to generate a jar
     file with name that includes AAProperties.
 
-### August 13 - Current (Week 16)
+### August 13 - August 19 (Week 16)
 
 -   Completed the integration of AAProperties.jar with JABAWS
 -   Checked all links on
@@ -410,6 +410,16 @@ Progress Log
     AminoAcidComposition.
     -   It will be used in future as an option to compute the mass of
         amino acid instead of based only on elements.
+
+### August 20 - Current (Week 17)
+
+-   Shifted Profeat related classes to new packages called
+    aaproperties.profeat and aaproperties.profeat.convertor
+-   Added package-info.java for all packages
+-   Create a test class to test PROFEAT properties
+-   Added documentation in Cookbook on how to use PROFEAT properties API
+-   Update the BioJava community on what is achieved for this Google
+    Summer of Code project
 
 Skype call notes
 ----------------
