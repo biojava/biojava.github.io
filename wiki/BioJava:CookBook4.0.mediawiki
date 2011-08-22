@@ -61,7 +61,7 @@ If you re-use code from the cookbook please cite:
 '''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physico-chemical properties via APIs?]]
 * [[BioJava:CookBook:AAPROP:commandprompt|How can I compute physico-chemical properties using Command Prompt?]]
-* [[BioJava:CookBook:AAPROP:main|How can I compute PROFEAT properties via APIs?]]
+* [[BioJava:CookBook:AAPROP:profeat|How can I compute PROFEAT properties via APIs?]]
 
 === biojava3-protein-disorder ===
 
