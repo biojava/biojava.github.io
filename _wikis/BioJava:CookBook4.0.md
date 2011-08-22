@@ -113,7 +113,7 @@ biojava3-core*
 -   [How can I compute physico-chemical properties using Command
     Prompt?](BioJava:CookBook:AAPROP:commandprompt "wikilink")
 -   [How can I compute PROFEAT properties via
-    APIs?](BioJava:CookBook:AAPROP:main "wikilink")
+    APIs?](BioJava:CookBook:AAPROP:profeat "wikilink")
 
 ### biojava3-protein-disorder
 
