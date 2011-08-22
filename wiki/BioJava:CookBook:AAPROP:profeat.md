@@ -7,15 +7,16 @@ title: BioJava:CookBook:AAPROP:profeat
 BioJava provides a set of APIs to generate PROFEAT properties.  
  PROFEAT generate properties of a protein sequence based on its
 converted attributes.  
- \* The seven different attributes are
 
-`* Hydrophobicity (Polar, Neutral, Hydrophobicity)`  
-` * Normalized van der Waals volume (Range 0 - 2.78, 2.95 - 4.0, 4.03 - 8.08)`  
-` * Polarity (Value 4.9 - 6.2, 8.0 - 9.2, 10.4 - 13.0)`  
-` * Polarizability (Value 0 - 1.08, 0.128 - 0.186, 0.219 - 0.409)`  
-` * Charge (Positive, Neutral, Negative)`  
-` * Secondary structure (Helix, Strand, Coil)`  
-` * Solvent accessibility (Buried, Exposed, Intermediate)`  
+-   The seven different attributes are
+-   Hydrophobicity (Polar, Neutral, Hydrophobicity)
+-   Normalized van der Waals volume (Range 0 - 2.78, 2.95 - 4.0, 4.03 -
+    8.08)
+-   Polarity (Value 4.9 - 6.2, 8.0 - 9.2, 10.4 - 13.0)
+-   Polarizability (Value 0 - 1.08, 0.128 - 0.186, 0.219 - 0.409)
+-   Charge (Positive, Neutral, Negative)
+-   Secondary structure (Helix, Strand, Coil)
+-   Solvent accessibility (Buried, Exposed, Intermediate)
 
 Please see
 [PROFEAT](http://nar.oxfordjournals.org/content/34/suppl_2/W32.abstract)
@@ -59,10 +60,6 @@ a:attribute2Transition2Double.keySet()){
 `   System.out.println();`
 
 } </java>
-
-(See also: [How to define the XML files to customize mass of Amino Acids
-in the computation of Molecular
-Weight?](BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
 
 Short Example 3: Computing the position with respect to the sequence where the given distribution of the grouping can be found
 ------------------------------------------------------------------------------------------------------------------------------
