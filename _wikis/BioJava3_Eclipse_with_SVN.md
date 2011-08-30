@@ -88,9 +88,22 @@ explorer.
 I downloaded the Eclipse j2ee version (OSX Lion) and used the Eclipse
 Marketplace to find and install the following plugins:
 
-`-subclipse `  
-`-m2eclipse extras (SVN team integration)`  
-`-m2eclipse (seems to have been automatically installed..?)`  
-`-SvnKit Client Adapter (from Yoxos Marketplace, needs to be switched in Preferences->Team->SVN, SVN Interface ->SVNKit, Pure Java )`
+from Eclipse Marketplace:
+
+`- Subclipse `  
+`- Maven Integration for Eclipse`  
+`- Maven Integration for Eclipse WTP (probably  not needed, but I do a lot of web stuff, so I added it)`
+
+- m2e-subclipse (SCM connector, bring Maven and subclipse together) from
+Yoxos Marketplace
+
+`- SvnKit Client Adapter (needs to be enabled in Preferences->Team->SVN, SVN Interface ->SVNKit, Pure Java )`  
+
+To check out BioJava you can do: new -\> Maven -\>checkout project from
+SCM, add biojava URL to .../biojava-live/trunk, press finish
+
+A useful blog article providing more help for how to install Maven is
+here:
+[1](http://www.shareyourwork.org/roller/ralphsjavablog/entry/eclipse_indigo_maven_and_svn)
 
 --[Andreas](User:Andreas "wikilink") 04:43, 30 August 2011 (UTC)
