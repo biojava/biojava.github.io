@@ -8,8 +8,14 @@
 
 * Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
 
+== Installation ==
 
-== Update for Eclipse Helios SR2 (May 2011) ==
+* In the SVN Repository Exploring view: Right click on the folder <i>/biojava/biojava-live/trunk</i> and select Check  Out as Maven project
+
+
+= Details for specific Eclipse Versions ==
+
+=== Update for Eclipse Helios SR2 (May 2011) ===
 
 The above plugins are still available and work fine, however, below are the few important particulars. 
 
@@ -34,6 +40,12 @@ use
 
 as the repository URL and then navigate to trunk in the Eclipse SVN explorer.
 
-== Installation ==
+=== Eclipse Indigo (August 29th 2011) ===
 
-* In the SVN Repository Exploring view: Right click on the folder <i>/biojava/biojava-live/trunk</i> and select Check  Out as Maven project
+I downloaded the Eclipse j2ee version (OSX Lion) and used the Eclipse Marketplace to find and install the following plugins:
+
+ -subclipse 
+ -m2eclipse extras (SVN team integration)
+ -m2eclipse (seems to have been automatically installed..?)
+ -SvnKit Client Adapter (from Yoxos Marketplace, needs to be switched in Preferences->Team->SVN, SVN Interface ->SVNKit, Pure Java )
+--[[User:Andreas|Andreas]] 04:43, 30 August 2011 (UTC)
