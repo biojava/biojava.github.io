@@ -48,7 +48,8 @@ from Eclipse Marketplace:
  - Subclipse 
  - Maven Integration for Eclipse
  - Maven Integration for Eclipse WTP (probably  not needed, but I do a lot of web stuff, so I added it)
--  m2e-subclipse (SCM connector, bring Maven and subclipse together)
+ - m2e-subclipse (SCM connector, bring Maven and subclipse together)
+
 from Yoxos Marketplace
  - SvnKit Client Adapter (needs to be enabled in Preferences->Team->SVN, SVN Interface ->SVNKit, Pure Java )
  
