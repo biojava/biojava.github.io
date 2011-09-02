@@ -25,6 +25,10 @@ Module: biojava3-genome: Lead: Any Yates
 
 Module: biojava3-ws: Lead: Sylvain Foisy
 
+Module: biojava3-aa-prop: Lead: Chuan Hock Koh
+
+Module: biojava3-protein-disorder: Lead: Peter Troshin
+
 Legacy BioJava 1.8
 ------------------
 
