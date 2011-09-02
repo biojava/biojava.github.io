@@ -20,7 +20,7 @@ BioJava:
 
 Other noteworthy improvements:
 
-`- protein-structure: Improved handling of protein domains: Now supports SCOP. New functionality for automated prediction of protein domains, based on Protein Domain Parser.`  
+`- protein-structure: Improved handling of protein domains: Now supports `*`SCOP`*`. New functionality for automated prediction of protein domains, based on Protein Domain Parser.`  
 `- Minor improvements and bug fixes in several other modules.`
 
 View the <BioJava:Modules> page for a list of current modules.
