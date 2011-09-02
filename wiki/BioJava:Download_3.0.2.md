@@ -98,4 +98,3 @@ Getting older versions
 -   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 
-3.0.2
