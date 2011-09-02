@@ -2,6 +2,28 @@
 title: Current events
 ---
 
+BioJava 3.0.2 released
+----------------------
+
+BioJava 3.0.2 was released on September 2nd 2011 and is available from
+<BioJava:Download>.
+
+BioJava 3.0.2 adds new modules and enhances the capabilities of BioJava:
+
+`- biojava3-aa-prop: This new module allows the calculation of physico chemical and other properties of protein sequences.`  
+`- biojava3-protein-disorder: A new module for the prediction of disordered regions in proteins. It based on a Java implementation of the RONN predictor.`
+
+Other noteworthy improvements:
+
+`- protein-structure: Improved handling of protein domains: Now with better support for SCOP. New functionality for automated prediction of protein domains, based on Protein Domain Parser.`  
+`- Improvements and bug fixes in several modules.`
+
+Currently, up to 8 different people are making commits per month. This
+gives an indication how active Biojava is being developed. The two new
+modules are based on the work of Ah Fu (Chuan Hock Koh) and Peter
+Troshin, which happened around this year's Google Summer of Code. Thanks
+to everybody who made this new release possible!
+
 Google Summer of Code 2011
 --------------------------
 
