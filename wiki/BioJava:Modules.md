@@ -8,8 +8,8 @@ BioJava Modules
 The following list of modules for BioJava have been defined and the
 following people have stepped up to become module leader:
 
-BioJava 3.0
------------
+BioJava 3.0.X
+-------------
 
 Module: biojava3-core Lead: Scooter Willis
 
