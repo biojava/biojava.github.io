@@ -88,3 +88,18 @@ version of this example. I don't know how to fix this.
 
 --[Peter Illés](User:Peter Illés "wikilink") 09:18, 6 September 2011
 (UTC)
+
+------------------------------------------------------------------------
+
+Fixed by using
+
+`           RemotePairwiseAlignmentProperties rqb = new RemoteQBlastAlignmentProperties();`  
+`           rqb.setAlignementOption("PROGRAM", "blastn");`  
+`           rqb.setAlignementOption("DATABASE", "nr");`  
+`           rqb.setAlignementOption("OTHER_ADVANCED", "");`
+
+instead of
+
+`       RemoteQBlastAlignmentProperties rqb = new RemoteQBlastAlignmentProperties();`  
+`       rqb.setBlastProgram("blastn");`  
+`       rqb.setBlastDatabase("nr");`
