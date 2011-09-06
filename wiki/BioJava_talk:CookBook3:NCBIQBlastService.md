@@ -79,3 +79,7 @@ Btw no 2: my pleasure. Only via your feedbacks can we improve on this
 code :-)
 
 --[Foisys](User:Foisys "wikilink") 19:34, 22 February 2011 (UTC)
+
+I am getting the very same problem (The key named PROGRAM is not set in
+this RemoteQBlastOutputProperties object) with the legacy (Biojava 1.8)
+version of this example. I don't know how to fix this.
