@@ -106,15 +106,15 @@ Ok. I managed solving the previous issue by doing:
 
 But now i get to following error:
 
-java.lang.NumberFormatException: For input string: ""
-
-`   at java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)`  
-`   at java.lang.Long.parseLong(Long.java:431)`  
-`   at java.lang.Long.parseLong(Long.java:468)`  
-`   at org.biojavax.bio.alignment.blast.RemoteQBlastService.sendActualAlignementRequest(RemoteQBlastService.java:170)`  
-`   at org.biojavax.bio.alignment.blast.RemoteQBlastService.sendAlignmentRequest(RemoteQBlastService.java:233)`  
-`   at blast.BlastDNASearch.`<init>`(BlastDNASearch.java:41)`  
-`   at main.Main.main(Main.java:12)`
+java.lang.NumberFormatException: For input string: "" at
+java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
+at java.lang.Long.parseLong(Long.java:431) at
+java.lang.Long.parseLong(Long.java:468) at
+org.biojavax.bio.alignment.blast.RemoteQBlastService.sendActualAlignementRequest(RemoteQBlastService.java:170)
+at
+org.biojavax.bio.alignment.blast.RemoteQBlastService.sendAlignmentRequest(RemoteQBlastService.java:233)
+at blast.BlastDNASearch.\<init\>(BlastDNASearch.java:41) at
+main.Main.main(Main.java:12)
 
 I use this input file:
 
