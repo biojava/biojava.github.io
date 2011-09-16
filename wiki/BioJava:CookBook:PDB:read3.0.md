@@ -4,6 +4,33 @@ title: BioJava:CookBook:PDB:read3.0
 
 ### How do I read a PDB file?
 
+The easiest way - AtomCache
+---------------------------
+
+The easiest way is to use the AtomCache class for accessing PDB files:
+<java>
+
+`       // by default PDB files will be stored in a temporary directory`
+
+`       // there are two ways of configuring a directory, that can get re-used multiple times:`  
+`       // A) set the environment variable PDB_DIR`  
+`       // B) call cache.setPath(path) `  
+`       AtomCache cache = new AtomCache();`  
+`       `  
+`       try {`  
+`           // alternative: try d4hhba_ 4hhb.A 4hhb.A:1-100`  
+`           Structure s = cache.getStructure("4hhb");`  
+`           System.out.println(s);`  
+`       }  catch (Exception e) {`  
+`           `  
+`           e.printStackTrace();`  
+`       }`
+
+</java>
+
+Getting more control
+--------------------
+
 BioJava provides a PDB file parser, that reads the content of a PDB file
 into a flexible data model for managing protein structural data. It is
 possible to
