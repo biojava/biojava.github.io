@@ -42,8 +42,8 @@ The class providing the core functionality for this is the
 [PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html)
 class.
 
-Short Example: the quickest way to read a local file
-----------------------------------------------------
+Short Example: how to read a local file
+---------------------------------------
 
 <java>
 
