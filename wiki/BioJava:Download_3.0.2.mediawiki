@@ -21,8 +21,17 @@ View the [[BioJava:Modules]] page for a list of current modules.
 == Maven Download ==
 BioJava 3.0.2 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
 
-You can add the BioJava repository by adding the following XML to your project .pom file:
+You can add the BioJava repository by adding the following XML to your project pom.xml file:
 <pre>
+        <dependencies>
+                ...
+                <dependency>
+                        <groupId>org.biojava</groupId>
+                        <artifactId>biojava3-core</artifactId>
+                        <version>3.0.2</version>
+                </dependency>
+                <!-- other biojava jars as needed -->
+        </dependencies>
 	<repositories>
 		...
 		<repository>
