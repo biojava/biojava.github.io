@@ -33,8 +33,17 @@ process. We are providing a BioJava specific Maven repository at
 <http://biojava.org/download/maven/> .
 
 You can add the BioJava repository by adding the following XML to your
-project .pom file:
+project pom.xml file:
 
+            <dependencies>
+                    ...
+                    <dependency>
+                            <groupId>org.biojava</groupId>
+                            <artifactId>biojava3-core</artifactId>
+                            <version>3.0.2</version>
+                    </dependency>
+                    <!-- other biojava jars as needed -->
+            </dependencies>
         <repositories>
             ...
             <repository>
