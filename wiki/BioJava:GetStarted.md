@@ -28,6 +28,14 @@ this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 A step by step guide on 'How to integrate BioJava in Nebtbeans IDE' is
 [here](BioJava-Installation_Guide.png "wikilink").
 
+Maven
+-----
+
+BioJava used [Maven](http://maven.apache.org/) as a build and
+distribution system. If you are new to Maven, take a look at the
+[Getting Started with
+Maven](http://maven.apache.org/guides/getting-started/index.html) guide.
+
 Installation
 ------------
 
