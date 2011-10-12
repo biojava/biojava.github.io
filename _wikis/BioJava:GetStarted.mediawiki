@@ -10,6 +10,10 @@ You can also integrate BioJava with  NetBeans IDE. To find out how follow this [
 
 A step by step guide on 'How to integrate BioJava in Nebtbeans IDE' is [[BioJava-Installation_Guide.png|here]].
 
+== Maven ==
+
+BioJava used [http://maven.apache.org/ Maven] as a build and distribution system. If you are new to Maven, take a look at the [http://maven.apache.org/guides/getting-started/index.html Getting Started with Maven] guide.
+
 == Installation ==
 
 None of these .jar files need to be unpacked for normal use -- simply place them in a convenient directory.
