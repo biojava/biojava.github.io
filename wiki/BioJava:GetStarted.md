@@ -31,10 +31,36 @@ A step by step guide on 'How to integrate BioJava in Nebtbeans IDE' is
 Maven
 -----
 
-BioJava used [Maven](http://maven.apache.org/) as a build and
+BioJava uses[Maven](http://maven.apache.org/) as a build and
 distribution system. If you are new to Maven, take a look at the
 [Getting Started with
 Maven](http://maven.apache.org/guides/getting-started/index.html) guide.
+
+We are providing a BioJava specific Maven repository at
+<http://biojava.org/download/maven/> .
+
+You can add the BioJava repository by adding the following XML to your
+project pom.xml file:
+
+            <repositories>
+            ...
+            <repository>
+                <id>biojava-maven-repo</id>
+                <name>BioJava repository</name>
+                <url>http://www.biojava.org/download/maven/</url>           
+            </repository>
+        </repositories>
+
+            <dependencies>
+                    ...
+                    <dependency>
+                            <groupId>org.biojava</groupId>
+                            <artifactId>biojava3-core</artifactId>
+                            <version>3.0.2</version>
+                    </dependency>
+                    <!-- other biojava jars as needed -->
+            </dependencies>
+        
 
 Installation
 ------------
