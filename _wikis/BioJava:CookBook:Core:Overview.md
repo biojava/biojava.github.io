@@ -28,7 +28,7 @@ sequence. Once you have the gene sequence you should be able to easily
 extract intron sequences or sequence data flanking the gene sequence for
 analysis. By leveraging the REST or Web Services of public data sources
 like Uniprot or NCBI we want the api to hide these implementation
-details but offer enough flexibility that other public or prive data
+details but offer enough flexibility that other public or private data
 sources can be easily integrated into BioJava3.
 
 An additional design goal is to keep the size of biojava3-core module as
