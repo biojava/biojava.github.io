@@ -44,3 +44,15 @@ Example: identify phosphorylation sites in a structure
 `   return phosphosites;`
 
 } </java>
+
+See also
+--------
+
+<div style="-moz-column-count:3; column-count:3;">
+-   [How can I get the list of supported protein
+    modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+-   [How can I define a new protein
+    modification?](BioJava:CookBook3:AddProtMod "wikilink")
+
+</div>
+
