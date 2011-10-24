@@ -74,7 +74,7 @@ See also
 
 <div style="-moz-column-count:3; column-count:3;">
 -   [How can I identify protein modifications in a
-    structure](BioJava:CookBook3:ProtMod&action "wikilink")
+    structure](BioJava:CookBook3:ProtMod "wikilink")
 -   [How can I define a new protein
     modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
