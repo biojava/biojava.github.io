@@ -50,7 +50,7 @@ ProteinModificationRegistry.allModifications();
 ProteinModificationRegistry.getByResidId("AA0151");
 
 // a set of protein modifications by PSI-MOD ID mods =
-ProteinModificationRegistry.getByPsimodId("MOD:00160");
+ProteinModificationRegistry.getByPsimodId("MOD:00305");
 
 // a set of protein modifications by PDBCC ID mods =
 ProteinModificationRegistry.getByPdbccId("SEP");
@@ -65,8 +65,7 @@ ProteinModificationRegistry.getByOccurrenceType(ModificationOccurrenceType.NATUR
 ProteinModificationRegistry.getByKeyword("phosphoprotein");
 
 // a set of protein modifications by involved components. mods =
-ProteinModificationRegistry.getByComponent(Component.of("FAD",
-ComponentType.LIGAND));
+ProteinModificationRegistry.getByComponent(Component.of("FAD"));
 
 </java>
 
