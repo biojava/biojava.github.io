@@ -16,8 +16,8 @@ Example: define and register disulfide bond in Java code
 
 <java> // define the involved components, in this case two cystines
 (CYS) List<Component> components = new ArrayList<Component>(2);
-components.add(Component.of("CYS", ComponentType.AMINOACID));
-components.add(Component.of("CYS", ComponentType.AMINOACID));
+components.add(Component.of("CYS"));
+components.add(Component.of("CYS"));
 
 // define the atom linkages between the components, in this case the SG
 atoms on both CYS groups ModificationLinkage linkage = new
