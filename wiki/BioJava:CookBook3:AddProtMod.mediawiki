@@ -77,3 +77,9 @@ ProteinModificationRegistry.register(mod);
 FileInputStream fis = new FileInputStream("path/to/file");
 ProteinModificationXmlReader.registerProteinModificationFromXml(fis);
 </java>
+
+==See also==
+<div style="-moz-column-count:3; column-count:3;">
+* [[BioJava:CookBook3:ProtMod|How can I identify protein modifications in a structure?]]
+* [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
+</div>
