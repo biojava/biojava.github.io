@@ -97,3 +97,15 @@ Example: definedisulfide bond in XML file and register by Java code
 <java> FileInputStream fis = new FileInputStream("path/to/file");
 ProteinModificationXmlReader.registerProteinModificationFromXml(fis);
 </java>
+
+See also
+--------
+
+<div style="-moz-column-count:3; column-count:3;">
+-   [How can I identify protein modifications in a
+    structure?](BioJava:CookBook3:ProtMod "wikilink")
+-   [How can I get the list of supported protein
+    modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+
+</div>
+
