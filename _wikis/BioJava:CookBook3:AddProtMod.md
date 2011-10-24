@@ -73,12 +73,11 @@ Example: definedisulfide bond in XML file and register by Java code
 `           `<Id>`MOD:00034`</Id>  
 `           `<Name>`L-cystine (cross-link)`</Name>  
 `       `</CrossReference>  
-`       `<Formula>`C 6 H 8 N 2 O 2 S 2`</Formula>  
 `       `<Condition>  
-`           `<Component type="AminoAcid" label="1">  
+`           `<Component component="1">  
 `               `<Id source="PDBCC">`CYS`</Id>  
 `           `</Component>  
-`           `<Component type="AminoAcid" label="2">  
+`           `<Component component="2">  
 `               `<Id source="PDBCC">`CYS`</Id>  
 `           `</Component>  
 `           `<Bond>  
