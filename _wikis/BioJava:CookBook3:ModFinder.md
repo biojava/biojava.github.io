@@ -66,8 +66,8 @@ public static void main(String[] args) {
 `       }`
 
 `       // identify all phosphosites from PDB:3MVJ and print them`  
-`       String pdbId = "3MVJ";`  
-`       Structure struc = reader.getStructureById(pdbId);`  
+`       pdbId = "3MVJ";`  
+`       struc = reader.getStructureById(pdbId);`  
 `       List`<ResidueNumber>` psites = identifyPhosphosites(struc);`  
 `       for (ResidueNumber psite : psites) {`  
 `           System.out.println(psite.toString());`  
