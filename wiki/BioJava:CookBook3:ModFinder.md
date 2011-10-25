@@ -60,7 +60,7 @@ public static void main(String[] args) {
 `       // identify all modificaitons from PDB:1CAD and print them`  
 `       String pdbId = "1CAD";`  
 `       Structure struc = reader.getStructureById(pdbId);`  
-`       Set`<ModifiedCompound>` mcs = identifyAllModfications(struc)`  
+`       Set`<ModifiedCompound>` mcs = identifyAllModfications(struc);`  
 `       for (ModifiedCompound mc : mcs) {`  
 `           System.out.println(mc.toString());`  
 `       }`
