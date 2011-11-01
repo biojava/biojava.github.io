@@ -29,6 +29,10 @@ Module: biojava3-aa-prop: Lead: Chuan Hock Koh
 
 Module: biojava3-protein-disorder: Lead: Peter Troshin
 
+If you are looking for a BioJava related project, consider contributing
+one of the missing [Feature
+Requests](BioJava3_Feature_Requests "wikilink")
+
 Legacy BioJava 1.8
 ------------------
 
