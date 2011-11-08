@@ -127,7 +127,7 @@ biojava3-core*
 **Required modules**: *biojava3-modfinder, biojava-structure*
 
 -   [How can I identify protein modifications in a 3D
-    struture?](BioJava:CookBook3:ProtMod "wikilink")
+    struture?](BioJava:CookBook3:ModFinder "wikilink")
 -   [How can I get the list of supported protein
     modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
 -   [How can I define and register a new protein
