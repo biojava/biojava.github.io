@@ -5,7 +5,7 @@ title: BioJava:CookBook3:ModFinder
 How can I identify protein modifications in a structure?
 --------------------------------------------------------
 
-BioJava provide a module *biojava3-protmod* for identification of
+BioJava provide a module *biojava3-modfinder* for identification of
 protein pre-, co-, and post-translational modifications from structures.
 [A list of protein
 modifications](BioJava:CookBook3:SupportedProtMod "wikilink") has been
