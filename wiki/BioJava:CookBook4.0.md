@@ -122,7 +122,7 @@ biojava3-core*
 -   [Can I use the predictor from the command
     line?](BioJava:CookBook3:ProteinDisorderCLI "wikilink")
 
-### biojava3-modfinder
+### Protein Modification Identification
 
 **Required modules**: *biojava3-modfinder, biojava-structure*
 
