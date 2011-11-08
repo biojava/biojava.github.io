@@ -10,7 +10,7 @@ Module: biojava3-structure Lead: Andreas Prlic
 
 Module: biojava3-alignment: Lead: Mark Chapman
 
-Module: biojava3-protmod: Lead: Jianjiong Gao
+Module: biojava3-modfinder: Lead: Jianjiong Gao
 
 Module: biojava3-phylo: Lead: Scooter Willis
 
