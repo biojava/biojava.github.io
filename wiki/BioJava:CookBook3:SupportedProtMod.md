@@ -6,7 +6,7 @@ How can I get the list of supported protein modifications?
 ----------------------------------------------------------
 
 The protmod module contains [an XML
-file](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/biojava3-protmod/src/main/resources/org/biojava3/protmod),
+file](http://code.open-bio.org/svnweb/index.cgi/biojava/browse/biojava-live/trunk/biojava3-modfinder/src/main/resources/org/biojava3/protmod),
 defining a list of protein modifications, retrieved from [Protein Data
 Bank Chemical Component Dictrionary](http://www.wwpdb.org/ccd.html),
 [RESID](http://www.ebi.ac.uk/RESID/), and
