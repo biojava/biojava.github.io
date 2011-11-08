@@ -68,9 +68,9 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook3:ProteinDisorder|How can I predict disordered regions of the protein using its sequence?]]
 * [[BioJava:CookBook3:ProteinDisorderCLI|Can I use the predictor from the command line?]]
 
-=== biojava3-protmod ===
+=== biojava3-modfinder ===
 
-'''Required modules''': ''biojava3-protmod, biojava-structure''
+'''Required modules''': ''biojava3-modfinder, biojava-structure''
 
 * [[BioJava:CookBook3:ProtMod|How can I identify protein modifications in a 3D struture?]]
 * [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
