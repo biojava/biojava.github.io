@@ -147,8 +147,11 @@ other publications please add them.
 <pubmed name="vernikos2008">18071028</pubmed>
 <pubmed name="liang2008">17054788</pubmed>
 <pubmed name="chalk2008">18397893</pubmed>
-<pubmed name="gront2008">18227118</pubmed> <pubmed name="Prlic2010">
-20937596 </pubmed> <pubmed name="Rose2011">21036868</pubmed>
+<pubmed name="gront2008">18227118</pubmed>
+
+See above for a link to all recent citations on Google Scholar.
+
+### 2009
 
 Bauer, R.; Rother, K.; Moor, P.; Reinert, K.; Steinke, T.; Bujnicki, J.
 M.; Preissner, R. Fast Structural Alignment of Biomolecules Using a Hash
