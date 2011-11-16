@@ -94,13 +94,11 @@ projects please add them to the list.
 Publications
 ------------
 
-In 2008 we published our first Application note, since then the number
-of citations has gone up significantly.
+In 2008 we published our first Application note. As of Nov. 2011 Google
+Scholar [counts more than 90
+citations](http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en).
 
 <pubmed name="BioJava2008"> 18689808 </pubmed>
-
-As of Nov. 2011 Google Scholar [counts more than 90
-citations](http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en).
 
 Below a list of publications in which BioJava has been used. If you know
 of other publications please add them.
