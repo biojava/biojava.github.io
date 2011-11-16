@@ -139,8 +139,11 @@ other publications please add them.
 <pubmed > 17068077</pubmed> <pubmed > 17288609 </pubmed> <pubmed >
 17238282</pubmed> <pubmed > 17237069 </pubmed> <pubmed >
 17332025</pubmed> <pubmed > 17400476</pubmed> <pubmed >
-17537825</pubmed> <pubmed > 17316423</pubmed> <pubmed >
-18061398</pubmed> <pubmed name="zajac2008">18061398</pubmed>
+17537825</pubmed> <pubmed > 17316423</pubmed>
+
+### 2008
+
+<pubmed > 18061398</pubmed> <pubmed name="zajac2008">18061398</pubmed>
 <pubmed name="vernikos2008">18071028</pubmed>
 <pubmed name="liang2008">17054788</pubmed>
 <pubmed name="chalk2008">18397893</pubmed>
