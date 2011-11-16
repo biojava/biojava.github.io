@@ -94,8 +94,16 @@ projects please add them to the list.
 Publications
 ------------
 
-BioJava has been used in the following publications. If you know of
-other publications please add them.
+In 2008 we published our first Application note, since then the number
+of citations has gone up significantly.
+
+<pubmed name="BioJava2008"> 18689808 </pubmed>
+
+As of Nov. 2011 Google Scholar [counts more than 90
+citations](http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en).
+
+Below a list of publications in which BioJava has been used. If you know
+of other publications please add them.
 
 <pubmed name="hidalgo1998"> 9564045 </pubmed>
 <pubmed name="jacobs2000">10592251 </pubmed>
