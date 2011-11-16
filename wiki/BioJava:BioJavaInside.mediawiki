@@ -78,6 +78,7 @@ BioJava has been used in the following publications. If you know of other public
 <pubmed > 16288651 </pubmed>
 
 === 2006 ===
+
 <pubmed > 16845037 </pubmed>
 <pubmed > 17002805 </pubmed>
 <pubmed > 16925840 </pubmed>
@@ -95,6 +96,9 @@ BioJava has been used in the following publications. If you know of other public
 <pubmed > 16817977</pubmed>
 <pubmed > 16837528</pubmed>
 <pubmed > 16872539</pubmed>
+
+=== 2007 ===
+
 <pubmed > 17068077</pubmed>
 <pubmed > 17288609 </pubmed>
 <pubmed > 17238282</pubmed>
