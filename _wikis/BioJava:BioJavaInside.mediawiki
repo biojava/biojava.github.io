@@ -43,6 +43,9 @@ BioJava has been used in the following publications. If you know of other public
 <pubmed name="xie2000">12761070</pubmed>
 <pubmed> 12016048</pubmed>
 <pubmed> 12493080 </pubmed>
+
+===2005=== 
+
 <pubmed > 12626717</pubmed>
 <pubmed > 12967955 </pubmed>
 <pubmed > 15130816 </pubmed>
