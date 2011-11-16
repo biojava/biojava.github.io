@@ -97,72 +97,41 @@ Publications
 BioJava has been used in the following publications. If you know of
 other publications please add them.
 
-<biblio>
-
-1.  hidalgo1998 pmid=9564045
-2.  jacobs2000 pmid=10592251
-3.  xie2000 pmid=12761070
-4.  schrieber2002 pmid=12016048
-5.  bussow2002 pmid=12493080
-6.  aerts2003 pmid=12626717
-7.  bernado2003 pmid=12967955
-8.  brown2003 pmid=15130816
-9.  carbone2003 pmid=14594704
-10. gurvich2003 pmid=14592990
-11. huang2003 pmid=14668218
-12. sugawara2003 pmid=12824432
-13. zuyderduyn pmid=14583100
-14. aerts2004 pmid=15044242
-15. dong2004 pmid=15215471
-16. down2004 pmid=15369604
-17. hajarnavis2004 pmid=15247332
-18. hertz-folwer2004 pmid=14681429
-19. an2005 pmid=15610565
-20. carbone2005 pmid=15537809
-21. down2005 pmid=15760844
-22. finack2005 pmid=15572471
-23. gorban2005 pmid=15984937
-24. gouret2005 pmid=16083500
-25. kersey2005 pmid=15608201
-26. pain2005 pmid=15640145
-27. prlic2005 pmid=16204122
-28. pudimat2005 pmid=15905283
-29. spindel2005 pmid=16288651
-30. bindewald2006 pmid=16845037
-31. down2006 pmid=17002805
-32. carter2006 pmid=16925840
-33. gille2006 pmid=16469097
-34. hasan2006 pmid=16789813
-35. hasan2006 pmid=16990246
-36. lee2006 pmid=16402215
-37. liang2006 pmid=17054788
-38. lu2006 pmid=16260186
-39. mcdonald2006 pmid=17000643
-40. powel2006 pmid=16423288
-41. ross2006 pmid=16845480
-42. schmidt2006 pmid=16817977
-43. vernicos2006 pmid=16837528
-44. vizcaino2006 pmid=16872539
-45. andreeva2007 pmid=17068077
-46. bui2007 pmid=17288609
-47. down2007 pmid=17238282
-48. gewehr2007 pmid=17237069
-49. hanekamp2007 pmid=17332025
-50. makias2007 pmid=17400476
-51. nikolajewa2007 pmid=17537825
-52. spjuth2007 pmid=17316423
-53. zajac2008 pmid=18061398
-54. vernikos2008 pmid=18071028
-55. liang2008 pmid=17054788
-56. chalk2008 pmid=18397893
-57. gront2008 pmid=18227118
-
-</biblio>
+<pubmed name="hidalgo1998"> 9564045 </pubmed>
+<pubmed name="jacobs2000">10592251 </pubmed>
+<pubmed name="xie2000">12761070</pubmed> <pubmed> 12016048</pubmed>
+<pubmed> 12493080 </pubmed> <pubmed > 12626717</pubmed> <pubmed >
+12967955 </pubmed> <pubmed > 15130816 </pubmed> <pubmed > 14594704
+</pubmed> <pubmed > 14592990 </pubmed> <pubmed > 14668218</pubmed>
+<pubmed > 12824432 </pubmed> <pubmed > 14583100</pubmed> <pubmed >
+15044242 </pubmed> <pubmed > 15215471 </pubmed> <pubmed > 15369604
+</pubmed> <pubmed > 15247332 </pubmed> <pubmed > 14681429 </pubmed>
+<pubmed > 15610565 </pubmed> <pubmed > 15537809</pubmed> <pubmed >
+15760844</pubmed> <pubmed > 15572471 </pubmed> <pubmed > 15984937
+</pubmed> <pubmed > 16083500 </pubmed> <pubmed > 15608201 </pubmed>
+<pubmed > 15640145 </pubmed> <pubmed > 16204122 </pubmed> <pubmed >
+15905283 </pubmed> <pubmed > 16288651 </pubmed> <pubmed > 16845037
+</pubmed> <pubmed > 17002805 </pubmed> <pubmed > 16925840 </pubmed>
+<pubmed > 16469097</pubmed> <pubmed > 16789813</pubmed> <pubmed >
+16990246</pubmed> <pubmed > 16402215</pubmed> <pubmed > 17054788
+</pubmed> <pubmed > 16260186 </pubmed> <pubmed > 17000643</pubmed>
+<pubmed > 16423288</pubmed> <pubmed > 16845480 </pubmed> <pubmed >
+16817977 </pubmed> <pubmed > 16845480</pubmed> <pubmed >
+16817977</pubmed> <pubmed > 16837528</pubmed> <pubmed >
+16872539</pubmed> <pubmed > 17068077</pubmed> <pubmed > 17288609
+</pubmed> <pubmed > 17238282</pubmed> <pubmed > 17237069 </pubmed>
+<pubmed > 17332025</pubmed> <pubmed > 17400476</pubmed> <pubmed >
+17537825</pubmed> <pubmed > 17316423</pubmed> <pubmed >
+18061398</pubmed> <pubmed name="zajac2008">18061398</pubmed>
+<pubmed name="vernikos2008">18071028</pubmed>
+<pubmed name="liang2008">17054788</pubmed>
+<pubmed name="chalk2008">18397893</pubmed>
+<pubmed name="gront2008">18227118</pubmed>
 
 Bauer, R.; Rother, K.; Moor, P.; Reinert, K.; Steinke, T.; Bujnicki, J.
 M.; Preissner, R. Fast Structural Alignment of Biomolecules Using a Hash
 Table, N-Grams and String Descriptors. *Algorithms* **2009**, 2,
 692-709. [open access full text](http://www.mdpi.com/1999-4893/2/2/692)
 
-More biojava publications can be found in [Google
+More biojava publications can be found at [Google
 Scholar](http://scholar.google.com/scholar?q=biojava).
