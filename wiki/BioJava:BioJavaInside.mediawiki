@@ -44,7 +44,7 @@ BioJava has been used in the following publications. If you know of other public
 <pubmed> 12016048</pubmed>
 <pubmed> 12493080 </pubmed>
 
-===2005=== 
+===2003=== 
 
 <pubmed > 12626717</pubmed>
 <pubmed > 12967955 </pubmed>
