@@ -12,4 +12,8 @@ This is repeated, using increments/decrements half the size of the
 previous, until the modulus of the charge found is less than or equal to
 0.0000001.  
 Our approach is based on
-[here](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).
+[here](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).  
+Do note that the pKa values referenced are based on Lehninger Principles
+of Biochemistry, Third Edition.  
+Currently in the process of updating to 4th Edition.  
+
