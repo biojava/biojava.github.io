@@ -11,4 +11,8 @@ the following formulae.
 
 In BioJava, the default pH used is 7.0. For more details and pKa values
 of amino acids used, please refer to this
-[website](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#NetCharge).
+[website](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#NetCharge).  
+Do note that the pKa values referenced are based on Lehninger Principles
+of Biochemistry, Third Edition.  
+Currently in the process of updating to 4th Edition.  
+
