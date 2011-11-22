@@ -20,7 +20,7 @@ OR
 
 2) Innovagen -
 [2](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).  
-Do note that the pKa values referenced are based on Lehninger Principles
-of Biochemistry, Third Edition.  
+Do note that the pKa values referenced by Innovagen are based on
+Lehninger Principles of Biochemistry, Third Edition.  
 Currently in the process of updating to 4th Edition.  
 
