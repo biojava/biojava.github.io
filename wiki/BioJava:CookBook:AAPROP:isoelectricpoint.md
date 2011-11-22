@@ -10,8 +10,15 @@ If the charge is \> 0, the next pH to check is 7 + 3.5.
 If the charge is \< 0 then pH 7 - 3.5 is checked.  
 This is repeated, using increments/decrements half the size of the
 previous, until the modulus of the charge found is less than or equal to
-0.0000001.  
-Our approach is based on
+0.0001.  
+ pKa values used can be chosen between the following two websites with
+ExPASy being the default one.
+
+1) ExPASy - ProtParam [1](http://web.expasy.org/protparam/)
+
+OR
+
+2)
 [here](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).  
 Do note that the pKa values referenced are based on Lehninger Principles
 of Biochemistry, Third Edition.  
