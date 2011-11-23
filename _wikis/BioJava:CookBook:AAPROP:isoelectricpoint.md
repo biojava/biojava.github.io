@@ -11,16 +11,12 @@ If the charge is \< 0 then pH 7 - 3.5 is checked.
 This is repeated, using increments/decrements half the size of the
 previous, until the modulus of the charge found is less than or equal to
 0.0001.  
- pKa values used can be chosen between the following two websites with
+ pKa values used can be chosen between the following two sources with
 ExPASy being the default one.
 
 1) ExPASy - ProtParam [1](http://web.expasy.org/protparam/)
 
 OR
 
-2) Innovagen
-[2](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI).  
-Do note that the pKa values referenced by Innovagen are based on
-Lehninger Principles of Biochemistry, Third Edition.  
-Currently in the process of updating to 4th Edition.  
-
+2) A.Lehninger, Principles of Biochemistry, 4th Edition (2005), Chapter
+3, page 78, Table 3-1.
