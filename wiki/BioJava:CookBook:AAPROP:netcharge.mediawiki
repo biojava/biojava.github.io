@@ -6,12 +6,10 @@ The Net Charge of a protein sequence at a certain pH is computed using the follo
 
 In BioJava, the default pH used is 7.0. 
 
-pKa values used can be chosen between the following two websites with ExPASy being the default one.
+pKa values used can be chosen between the following two sources with ExPASy being the default one.
 
 1) ExPASy - ProtParam [http://web.expasy.org/protparam/]
 
 OR
 
-2) Innovagen [http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator-notes.asp#PI].<br/>
-Do note that the pKa values referenced by Innovagen are based on Lehninger Principles of Biochemistry, Third Edition.<br/>
-Currently in the process of updating to 4th Edition.<br/>
+2) A.Lehninger, Principles of Biochemistry, 4th Edition (2005), Chapter 3, page78, Table 3-1.
