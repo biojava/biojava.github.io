@@ -1,3 +1,5 @@
+== Calculating a local alignment ==
+
 <java>
 public static void main(String[] args){
 		String targetSeq = "CACGTTTCTTGTGGCAGCTTAAGTTTGAATGTCATTTCTTCAATGGGACGGA"+
@@ -7,6 +9,7 @@ public static void main(String[] args){
 			  "CGGGGTTGGTGAGAGCTTCACAGTGCAGCGGCGAG";
 		DNASequence target = new DNASequence(targetSeq,
 				AmbiguityDNACompoundSet.getDNACompoundSet());
+		
 		String querySeq = "ACGAGTGCGTGTTTTCCCGCCTGGTCCCCAGGCCCCCTTTCCGTCCTCAGGAA"+
 			  "GACAGAGGAGGAGCCCCTCGGGCTGCAGGTGGTGGGCGTTGCGGCGGCGGCCGGTTAAGGT"+
 			  "TCCCAGTGCCCGCACCCGGCCCACGGGAGCCCCGGACTGGCGGCGTCACTGTCAGTGTCTT"+
@@ -32,3 +35,4 @@ public static void main(String[] args){
 		System.out.println(psa);
 	}
 </java>
+AmbiguityDNA COmpound Set allows not only ACTG, but also ambiguity codes, also known as [http://en.wikipedia.org/wiki/FASTA_format#Sequence_representation IUB Code]
