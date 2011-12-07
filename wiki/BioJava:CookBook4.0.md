@@ -62,12 +62,12 @@ biojava3-phylo* **Required external library**: *forester.jar*
 -   [How can I calculate a Pairwise Sequence
     Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
     Needleman Wunsch)
+-   [How can I calculate a Pairwise Sequence Alignment with DNA
+    sequences](BioJava;CookBook3:PSA_DNA "wikilink")?
 -   [How can I create a Multiple Sequence
     Alignment](BioJava:CookBook3:MSA "wikilink")?
 -   [How can I profile the time and memory requirements of a Multiple
     Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
--   [How can I calculate a Pairwise Sequence Alignment with DNA
-    sequences](BioJava;CookBook3:PSA_DNA "wikilink")?
 
 ### Protein Structure
 
