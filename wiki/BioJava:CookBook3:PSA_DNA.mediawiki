@@ -35,4 +35,4 @@ public static void main(String[] args){
 		System.out.println(psa);
 	}
 </java>
-AmbiguityDNA COmpound Set allows not only ACTG, but also ambiguity codes, also known as [http://en.wikipedia.org/wiki/FASTA_format#Sequence_representation IUB Code]
+AmbiguityDNA Compound Set allows not only ACTG, but also ambiguity codes, also known as [http://en.wikipedia.org/wiki/FASTA_format#Sequence_representation IUB Code]
