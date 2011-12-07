@@ -40,6 +40,6 @@ Calculating a local alignment
 `       System.out.println(psa);`  
 `   }`
 
-</java> AmbiguityDNA COmpound Set allows not only ACTG, but also
+</java> AmbiguityDNA Compound Set allows not only ACTG, but also
 ambiguity codes, also known as [IUB
 Code](http://en.wikipedia.org/wiki/FASTA_format#Sequence_representation)
