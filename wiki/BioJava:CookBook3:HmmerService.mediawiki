@@ -1,4 +1,4 @@
-A simple demo that fetches a protein sequence from the UniProt web site, submits it to the Hmmer3 service and prints the results.
+A simple demo that fetches a protein sequence from the UniProt web site, submits it to the [http://hmmer.janelia.org/ Hmmer3 service] and prints the results.
 
 <java>
 /* 
