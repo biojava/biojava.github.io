@@ -3,7 +3,8 @@ title: BioJava:CookBook3:HmmerService
 ---
 
 A simple demo that fetches a protein sequence from the UniProt web site,
-submits it to the Hmmer3 service and prints the results.
+submits it to the [Hmmer3 service](http://hmmer.janelia.org/) and prints
+the results.
 
 <java> /\*
 
