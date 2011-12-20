@@ -16,6 +16,7 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:Core:Overview|Overview of biojava3-core?]]
 * [[BioJava:CookBook:Core:Sequences|How are sequences created?]]
 * [[BioJava:CookBook:Core:FastaReadWrite|How do I read or write Fasta files?]]
+* [[BioJava:CookBook:Core:SequenceFeaturePanel|How do I view Features on a sequence?]]
 
 === biojava3-genome ===
 * [[BioJava:CookBook:genome:Overview|Overview of biojava3-genome?]]

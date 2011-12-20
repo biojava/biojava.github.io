@@ -34,6 +34,8 @@ How Do I....?
     created?](BioJava:CookBook:Core:Sequences "wikilink")
 -   [How do I read or write Fasta
     files?](BioJava:CookBook:Core:FastaReadWrite "wikilink")
+-   [How do I view Features on a
+    sequence?](BioJava:CookBook:Core:SequenceFeaturePanel "wikilink")
 
 ### biojava3-genome
 
