@@ -82,6 +82,7 @@ If you re-use code from the cookbook please cite:
 '''Required modules''': ''biojava3-core, biojava-ws''
 
 * [[BioJava:CookBook3:NCBIQBlastService|How can I use NCBI's QBlast service ?]]
+* [[BioJava:CooBook3:HmmerService|How can I get Pfam annotations for a protein sequence using the Hmmer3 service?]]
 
 == Legacy 1.7 CookBook ==
 
