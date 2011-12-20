@@ -1,0 +1,14 @@
+---
+title: BioJava:CookBook:Core:SequenceFeaturePanel
+---
+
+How to create feature?
+
+Take a look at QuantityFeature and TextFeature in the core module as
+examples for how to create Features.
+
+A SequenceFeaturePanel is available in the BioJava SVN at
+
+    /biojava/biojava3-sequence-gui
+
+It allows to create dynamic Panels like this:
