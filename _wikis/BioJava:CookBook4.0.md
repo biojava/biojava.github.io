@@ -32,6 +32,8 @@ How Do I....?
     biojava3-core?](BioJava:CookBook:Core:Overview "wikilink")
 -   [How are sequences
     created?](BioJava:CookBook:Core:Sequences "wikilink")
+-   [How do I compare two DNA Sequences and create a consensus
+    sequence?](BioJava:CookBook:Core:SequenceCompare "wikilink")
 -   [How do I read or write Fasta
     files?](BioJava:CookBook:Core:FastaReadWrite "wikilink")
 -   [How do I view Features on a
