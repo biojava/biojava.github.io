@@ -53,18 +53,4 @@ You can now compile and run BioJava programs using the ''javac'' and ''java'' co
 
 If you want to modify BioJava, you can obtain a copy of the source code from the download areas. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute source code via either the [http://biojava.org/download/maven/ Maven repository] or an [[CVS_to_SVN_Migration| anonymous SVN checkout]].
 
-BioJava is now built using [http://maven.apache.org/ Apache Maven]. 
-
-== Building the demo programs ==
-
-The source distribution contains a number of small demo programs. Once you have a working ''biojava.jar'' on your classpath, these can be compiled directly using ''javac'' from the demos directory.
-
-  (unix)
-  cd demos
-  javac seq/TestEmbl.java
-  java seq.TestEmbl seq/AL121903.embl
-  
-  (windows)
-  cd demos
-  javac seq\TestEmbl.java
-  java seq.TestEmbl seq\AL121903.embl
+BioJava is now built using [http://maven.apache.org/ Apache Maven].

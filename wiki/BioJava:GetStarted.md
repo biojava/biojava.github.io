@@ -95,20 +95,3 @@ format. You can also obtain up-to-the-minute source code via either the
 SVN checkout](CVS_to_SVN_Migration "wikilink").
 
 BioJava is now built using [Apache Maven](http://maven.apache.org/).
-
-Building the demo programs
---------------------------
-
-The source distribution contains a number of small demo programs. Once
-you have a working *biojava.jar* on your classpath, these can be
-compiled directly using *javac* from the demos directory.
-
-` (unix)`  
-` cd demos`  
-` javac seq/TestEmbl.java`  
-` java seq.TestEmbl seq/AL121903.embl`  
-` `  
-` (windows)`  
-` cd demos`  
-` javac seq\TestEmbl.java`  
-` java seq.TestEmbl seq\AL121903.embl`
