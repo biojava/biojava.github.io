@@ -17,6 +17,7 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[Andreas Prlic|Andreas Prlic]]
 * [[Dickson Guedes|Dickson S. Guedes]]
 * [[Francois Pepin|Francois Pepin]]
+* [[Jianjiong Gao]]
 
 == Core Team ==
 The core team are a group of dedicated volunteers who keep BioJava running. You can find out more about them [[Core Team|here]].
