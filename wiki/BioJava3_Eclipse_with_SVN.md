@@ -9,14 +9,15 @@ Prerequisite
 
 <!-- -->
 
--   Make sure you have Java 1.6 installed. (if you are on oSX 10.4.x
-    install [soylatte](http://landonf.bikemonkey.org/static/soylatte/)
+-   Make sure you have Java 1.6 installed. (if you are on OSX 10.4.x,
+    install [soylatte](http://landonf.bikemonkey.org/static/soylatte/))
 
 <!-- -->
 
--   Install the [m2eclipse](http://m2eclipse.sonatype.org/) Maven
-    eclipse plugin. Be sure to include SCM integration, offered through
-    the m2eclipse-extras package.
+-   Install the [m2eclipse](http://eclipse.org/m2e/) Maven eclipse
+    plugin (previously hosted by
+    [Sonatype](http://m2eclipse.sonatype.org/)). Be sure to include SCM
+    integration, offered through the m2eclipse-extras package.
 
 <!-- -->
 
@@ -31,9 +32,7 @@ Installation
     project
 
 Details for specific Eclipse Versions
-=====================================
-
-=
+-------------------------------------
 
 ### Update for Eclipse Helios SR2 (May 2011)
 
@@ -107,3 +106,42 @@ here:
 [1](http://www.shareyourwork.org/roller/ralphsjavablog/entry/eclipse_indigo_maven_and_svn)
 
 --[Andreas](User:Andreas "wikilink") 04:43, 30 August 2011 (UTC)
+
+Anonymous access with Git
+-------------------------
+
+In the past, anonymous access to BioJava source code via SVN has been
+problematic. Alternatively, you can retrieve the source code from the
+read-only [BioJava github mirror](https://github.com/biojava) using
+Eclipse.
+
+*Requirements:*
+
+-   Java 6 (1.6) JDK
+-   Eclipse Indigo (3.7) or greater
+-   m2eclipse (Eclipse [update
+    site](http://download.eclipse.org/technology/m2e/releases))
+-   EGit (pre-installed with Indigo)
+-   Maven SCM Handler for EGit (m2e-egit) from Eclipse Marketplace
+
+*Additional setup:*
+
+-   Edit your eclipse.ini file to use the Java JDK as your VM
+    (instructions above, required for Maven)
+-   If necessary, [set the HOME environment
+    variable](http://wiki.eclipse.org/EGit/User_Guide#Setting_up_the_Home_Directory_on_Windows)
+    (required for EGit)
+
+*Import the BioJava Maven project from Git ([StackOverflow
+answer](http://stackoverflow.com/questions/4869815/importing-a-maven-project-into-eclipse-from-git)):*
+
+-   Open the Git Repository perspective
+-   Clone the BioJava git repository
+    (http://github.com/biojava/biojava.git)
+-   Expand the cloned repository, right-click "Working directory", and
+    pick "Import Maven Projects..."
+-   Open the Java perspective
+-   Select all of the projects, right-click and choose "Team \> Share
+    Project", select "Git", and check the "Use or create repository in
+    parent folder of project" box
+
