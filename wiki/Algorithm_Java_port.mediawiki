@@ -10,8 +10,7 @@ We would be interested in having Java ports of the following algorithms:
 === Couple of tools that might be useful for porting to Java ===
 
 This software is available for $119 with a 15 day return.
-http://www.tangiblesoftwaresolutions.com/Product_Details/CPlusPlus_to_Java_
-Converter_Details.html?gclid=CIO3xLrYjK4CFQ2R7Qod2gldgg
+http://www.tangiblesoftwaresolutions.com/Product_Details/CPlusPlus_to_Java_Converter_Details.html
 It won't do perfect code but will get you close.
 
 This is also an interesting approach http://code.google.com/p/cibyl/ where
