@@ -26,4 +26,5 @@ Previous Years
 --------------
 
 [Google Summer of Code 2011](Google Summer of Code 2011 "wikilink")
+
 [Google Summer of Code 2010](Google Summer of Code 2010 "wikilink")

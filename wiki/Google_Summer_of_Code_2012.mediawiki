@@ -11,5 +11,7 @@ Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at
 ----
 
 == Previous Years ==
+
 [[Google Summer of Code 2011]]
+
 [[Google Summer of Code 2010]]
