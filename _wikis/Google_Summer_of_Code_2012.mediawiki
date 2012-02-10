@@ -47,5 +47,5 @@ A standalone Java library will be developed and an API for other Java programs t
 ----
 
 == Previous Years ==
-
+[[Google Summer of Code 2011]]
 [[Google Summer of Code 2010]]
