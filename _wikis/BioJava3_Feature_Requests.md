@@ -10,7 +10,8 @@ contributing any of these please contact the biojava-dev mailing list.
 `- Genbank parser `  
 `- Stockholm file format parser`  
 `- CATH parser`  
-`- Balibase`
+`- Balibase`  
+`- UniProt (XML/txt)`
 
 You can also take a look at the current list of [ BioJava
 Modules](BioJava:Modules#BioJava_3.0.X "wikilink") and suggest other
