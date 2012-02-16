@@ -145,6 +145,8 @@ biojava3-core*
 
 -   [How can I use NCBI's QBlast service
     ?](BioJava:CookBook3:NCBIQBlastService "wikilink")
+-   [How can I use Blast XML Output in my
+    program?](BioJava:CookBook3:ParsingBlastXMLOutput "wikilink")
 -   [How can I get Pfam annotations for a protein sequence using the
     Hmmer3 service?](BioJava:CookBook3:HmmerService "wikilink")
 
