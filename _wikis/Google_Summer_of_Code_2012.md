@@ -20,7 +20,21 @@ details about the program.
 
 ### Project Proposals
 
-------------------------------------------------------------------------
+#### New File Parsers for BioJava
+
+- Genbank
+
+- UniProt
+
+#### Take BioJava into the Cloud
+
+- Hadoop-ify some of the BioJava modules
+
+#### Port an Algorithm to Java
+
+- Blast
+
+- Hmmer
 
 Previous Years
 --------------
