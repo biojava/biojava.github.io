@@ -2,7 +2,7 @@
 
 The Open Bioinformatics foundation is [http://www.open-bio.org/wiki/Google_Summer_of_Code participating again in this year's Google Summer of Code].
 
-We are accepting applicants for projects for BioJava. If you want to propose a project, have a look at the [[BioJava:Modules]] page, for areas which are currently under development.
+We are accepting applicants for projects for BioJava. If you want to propose a project, have a look at the [[BioJava:Modules]] page, for areas which are currently under development. Also take a look at the [[BioJava3_Feature_Requests|Feature Requests]] page.
 
 Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at the Open Bioinformatics Foundation] and the [http://code.google.com/soc main Google Summer of Code page] for more details about the program.
 
