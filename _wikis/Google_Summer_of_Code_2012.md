@@ -11,7 +11,8 @@ Code](http://www.open-bio.org/wiki/Google_Summer_of_Code).
 
 We are accepting applicants for projects for BioJava. If you want to
 propose a project, have a look at the <BioJava:Modules> page, for areas
-which are currently under development.
+which are currently under development. Also take a look at the [Feature
+Requests](BioJava3_Feature_Requests "wikilink") page.
 
 Please read the [GSoC page at the Open Bioinformatics
 Foundation](http://www.open-bio.org/wiki/Google_Summer_of_Code) and the
