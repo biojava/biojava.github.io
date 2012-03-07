@@ -54,7 +54,7 @@ follow)
 
 #### Take BioJava into the Cloud
 
-- Hadoop-ify some of the BioJava modules
+- Hadoop-ify and/or Map-Reduce some of the BioJava modules
 
 #### Port an Algorithm to Java
 
