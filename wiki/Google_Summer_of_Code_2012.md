@@ -58,9 +58,27 @@ follow)
 
 #### Port an Algorithm to Java
 
-- Blast
+Both Blast and Hmmer have had recent rewrites
+Blast+(http://www.ncbi.nlm.nih.gov/staff/tao/URLAPI/unix\_setup.html)
+C++ and Hmmer(http://hmmer.janelia.org/software) C. This is an excellent
+opportunity for a computer scientist with a strong background in
+programming languages and pattern matching to gain first hand knowledge
+of two software packages that drive the foundation of bioinformatics.
 
-- Hmmer
+- Blast <http://en.wikipedia.org/wiki/BLAST>
+
+- Hmmer <http://en.wikipedia.org/wiki/HMMER>
+
+By porting these algorithms to Java the development community will be
+able to easily integrate the functionality into future applications.
+Currently, working with Blast involves a web service call to an external
+BLAST server or kicking off the BLAST executable and then parsing the
+output.
+
+Converting C or C++ source code by hand is not a trivial undertaking and
+it is recommended that a C/C++ to Java conversion tool be used to do as
+much of the work as possible. It is also an option to consider a JNI
+approach for integrating these applications into Java.
 
 Previous Years
 --------------
