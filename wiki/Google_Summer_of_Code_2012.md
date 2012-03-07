@@ -31,12 +31,13 @@ real work with the data. At least this is often the case in
 Bioinformatics.
 
 Yet, writing the file parsers is a tedious job that has to be done with
-care and consideration to achieve reliability and performance. So it is
-best to be done as a main task rather the afterthought of some other
-process. So if you want to help us to improve BioJava and spare users
-from a lot of complicate work choose this project! There is plenty of
-scope for multi-threaded programming, advanced IO and complicated data
-structures to choose from, all depends on what you want.
+care and consideration to achieve reliability, easy of use and
+performance. So it is best to be done as a main task rather the
+afterthought of some other process. So if you want to help us to improve
+BioJava and spare users from a lot of complicate work choose this
+project! There is plenty of scope for multi-threaded programming,
+advanced IO and complicated data structures to choose from, all depends
+on what you want.
 
 - UniProt
 
@@ -51,6 +52,8 @@ parsers with the aim to provide and example for people that is easy to
 follow)
 
 - Tidy up existing parsers in BioJava, namely FASTA and FASTQ parsers
+
+This project is be suitable to a confident Java developer.
 
 #### Take BioJava into the Cloud
 
