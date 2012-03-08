@@ -48,7 +48,6 @@ By porting these algorithms to Java the development community will be able to ea
 
 Converting C or C++ source code by hand is not a trivial undertaking and it is recommended that a C/C++ to Java conversion tool be used to do as much of the work as possible. It is also an option to consider a JNI approach for integrating these applications into Java.
 
-
 Mentors for this project are Andreas Prlic and Peter Troshin.
 
 == Previous Years ==
