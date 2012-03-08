@@ -55,6 +55,8 @@ follow)
 
 This project is be suitable to a confident Java developer.
 
+Mentors for this project is Peter Troshin and Andreas Prlic
+
 #### Take BioJava into the Cloud
 
 - Hadoop-ify and/or Map-Reduce some of the BioJava modules
