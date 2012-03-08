@@ -43,13 +43,13 @@ If this all fine up to here, we are ready for release.
     corresponding directories in the /branches and /tags directories of
     the svn repository.
 
-`svn cp -m "branching 1.8 release" \`  
+`svn cp -m "branching 1.8.2 release" \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_8-branch`
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_8_2-branch`
 
-`svn cp -m "tagging 1.8 release" \`  
+`svn cp -m "tagging 1.8.2 release" \`  
 ` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_8`
+` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_8_2`
 
 -   Verify that all went well
 
@@ -71,7 +71,7 @@ If this all fine up to here, we are ready for release.
 
 -   prepare the biojava-all.jar bundle
 
-`cd dist; jar cvf biojava-1.8-all.jar biojava-1.8`
+`cd dist; jar cvf biojava-1.8.2-all.jar biojava-1.8.2`
 
 ### Copy files to portal.open-bio.org
 
@@ -84,7 +84,7 @@ If this all fine up to here, we are ready for release.
 
 -   Copy file biojava-all.jar
 
-`scp biojava-1.8-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/all`
+`scp biojava-1.8.2-all.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/all`
 
 **Back in your local checkout**
 
@@ -92,11 +92,11 @@ If this all fine up to here, we are ready for release.
     longer.
 -   Make the doc release bundle
 
-`ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.8-doc.jar docs/`
+`ant clean; ant javadocs-all; cd ant-build; jar cvf biojava-1.8.2-doc.jar docs/`
 
 -   Copy file biojava-doc.jar
 
-`scp biojava-1.8-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/doc/biojava-docs.jar`
+`scp biojava-1.8.2-doc.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/doc/biojava-docs.jar`
 
 -   Prepare the bin release:
 
@@ -108,8 +108,8 @@ If this all fine up to here, we are ready for release.
 
 -   Prepare the src release:
 
-`ant clean; cd .. ; jar cvf biojava-1.8-src.jar biojava-live`  
-`scp biojava-1.8-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/src/`
+`ant clean; cd .. ; jar cvf biojava-1.8.2-src.jar biojava-live`  
+`scp biojava-1.8.2-src.jar username@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj18/src/`
 
 ### Update Javadoc docu on portal.open-bio.org
 
