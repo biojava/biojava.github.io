@@ -55,7 +55,7 @@ follow)
 
 This project is be suitable to a confident Java developer.
 
-Mentors for this project is Peter Troshin and Andreas Prlic
+Mentors for this project are Peter Troshin and Andreas Prlic
 
 #### Take BioJava into the Cloud
 
