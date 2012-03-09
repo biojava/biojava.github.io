@@ -203,7 +203,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   @Override`  
 `   public void fastq(final Fastq fastq)`  
 `   {`  
-`     phredSequences.add(FastqTools.createPhredSequence(fastq));`  
+`     sequences.add(FastqTools.createPhredSequence(fastq));`  
 `   }`  
 ` });`
 
