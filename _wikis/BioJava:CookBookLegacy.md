@@ -139,6 +139,8 @@ How Do I....?
     write them as Fasta](Biojava:Cookbook:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
     Sequence](Biojava:Cookbook:SeqIO:ABItoSequence "wikilink")?
+-   [How do I work with nextgen sequencing reads in FASTQ
+    format](Biojava:Cookbook:SeqIO:FASTQ "wikilink")?
 -   [How does sequence I/O work in
     BioJava](Biojava:Cookbook:SeqIO:Echo "wikilink")?
 
