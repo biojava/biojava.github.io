@@ -76,6 +76,7 @@ And lets not forget this new [[BioJava:CookBookItaliano|Italian]] translation (t
 * [[Biojava:Cookbook:SeqIO:ReadGESBiojavax|How do I read a GenBank/EMBL/UniProt/FASTA/INSDseq file]]?
 * [[Biojava:Cookbook:SeqIO:GBtoFasta|How do I extract GenBank/EMBL/UniProt/FASTA/INSDseq sequences and write them as Fasta]]?
 * [[Biojava:Cookbook:SeqIO:ABItoSequence|How do I turn an ABI sequence trace into a BioJava Sequence]]?
+* [[Biojava:Cookbook:SeqIO:FASTQ|How do I work with nextgen sequencing reads in FASTQ format]]?
 * [[Biojava:Cookbook:SeqIO:Echo|How does sequence I/O work in BioJava]]?
 
 === Annotations ===
