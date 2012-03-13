@@ -4,6 +4,7 @@ The org.biojava.bio.program.fastq package provides support for reading and writi
 
 The following code snippets demonstrate how to use the APIs for common use cases.
 
+
 ===Convert between FASTQ variants===
 
 <java>
@@ -11,6 +12,7 @@ FastqReader fastqReader = new IlluminaFastqReader();
 FastqWriter fastqWriter = new SangerFastqWriter();
 fastqWriter.write(new File("sanger.fastq"), fastqReader.read(new File("illumina.fastq")));
 </java>
+
 
 ===Convert only long sequences===
 
@@ -27,6 +29,7 @@ for (Fastq fastq : fastqReader.read(new File("illumina.fastq")))
   }
 }
 </java>
+
 
 ===Convert between FASTQ variants using streaming API===
 
@@ -45,6 +48,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
     }
   });
 </java>
+
 
 ===Convert only long sequences using streaming API===
 
@@ -67,6 +71,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
   });
 </java>
 
+
 ===Count sequences===
 
 <java>
@@ -79,6 +84,7 @@ for (Fastq fastq : fastqReader.read(new File("illumina.fastq")))
 }
 System.out.println(count);
 </java>
+
 
 ===Count sequences using streaming API===
 
@@ -98,6 +104,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
 System.out.println(count.get());
 </java>
 
+
 ===Count sequences using low-level API===
 
 <java>
@@ -115,6 +122,7 @@ fastqReader.parse(inputSupplier, new ParseAdapter()
   });
 System.out.println(count.get());
 </java>
+
 
 ===Pattern match description lines using low-level API===
 
@@ -136,6 +144,7 @@ fastqReader.parse(inputSupplier, new ParseAdapter()
   });
 </java>
 
+
 ===Create Sequences from FASTQ sequences===
 
 <java>
@@ -147,6 +156,7 @@ for (Fastq fastq : fastqReader.read(new File("sanger.fastq")))
   sequences.add(FastqTools.createSequence(fastq));
 }
 </java>
+
 
 ===Create Sequences with streaming API===
 
@@ -165,6 +175,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
   });
 </java>
 
+
 ===Create PhredSequences ([DNAxInteger] symbols) from FASTQ sequences===
 
 <java>
@@ -176,6 +187,7 @@ for (Fastq fastq : fastqReader.read(new File("sanger.fastq")))
   phredSequences.add(FastqTools.createPhredSequence(fastq));
 }
 </java>
+
 
 ===Create PhredSequences ([DNAxInteger] symbols) using streaming API===
 
@@ -193,6 +205,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
     }
   });
 </java>
+
 
 ===Calculate mean p scores using streaming API===
 
@@ -222,6 +235,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
     }
   });
 </java>
+
 
 ===Calculate mean p scores using streaming API and double array===
 
