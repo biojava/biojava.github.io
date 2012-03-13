@@ -200,6 +200,42 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 </java>
 
+### Create DNASequences with quality scores in QualityFeature from FASTQ sequences with streaming API
+
+<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
+List<DNASequence> sequences = new LinkedList<DNASequence>();
+
+fastqReader.stream(inputSupplier, new StreamListener()
+
+` {`  
+`   @Override`  
+`   public void fastq(final Fastq fastq)`  
+`   {`  
+`     sequences.add(FastqTools.createDNASequence(fastq));`  
+`   }`  
+` });`
+
+</java>
+
+### Create DNASequences with quality scores in QualityFeature and error probabilities in QuantityFeature from FASTQ sequences with streaming API
+
+<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
+List<DNASequence> sequences = new LinkedList<DNASequence>();
+
+fastqReader.stream(inputSupplier, new StreamListener()
+
+` {`  
+`   @Override`  
+`   public void fastq(final Fastq fastq)`  
+`   {`  
+`     sequences.add(FastqTools.createDNASequenceWithQualityScoresAndErrorProbabilities(fastq));`  
+`   }`  
+` });`
+
+</java>
+
 ### Calculate mean p scores using streaming API
 
 <java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
