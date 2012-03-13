@@ -139,6 +139,14 @@ biojava3-core*
 -   [How can I define and register a new protein
     modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
+### biojava3-sequencing
+
+**Required modules**: *biojava3-core* **Required external library**:
+*guava-11.0.1.jar*
+
+-   [How do I work with nextgen sequencing reads in FASTQ
+    format?](Biojava:CookBook3:FASTQ "wikilink")
+
 ### biojava3-ws
 
 **Required modules**: *biojava3-core, biojava-ws*

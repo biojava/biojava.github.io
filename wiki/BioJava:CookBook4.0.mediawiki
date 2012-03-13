@@ -79,6 +79,13 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
 * [[BioJava:CookBook3:AddProtMod|How can I define and register a new protein modification?]]
 
+=== biojava3-sequencing ===
+
+'''Required modules''': ''biojava3-core''
+'''Required external library''': ''guava-11.0.1.jar''
+
+* [[Biojava:CookBook3:FASTQ|How do I work with nextgen sequencing reads in FASTQ format?]]
+
 === biojava3-ws ===
 
 '''Required modules''': ''biojava3-core, biojava-ws''
