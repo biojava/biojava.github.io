@@ -61,7 +61,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
     {
       if (fastq.getSequence().length() > 16)
       {
-        fastqWriter.append(fastq);
+        fastqWriter.append(fileWriter, fastq);
       }
     }
   });
