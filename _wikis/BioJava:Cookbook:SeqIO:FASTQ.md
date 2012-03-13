@@ -49,7 +49,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   @Override`  
 `   public void fastq(final Fastq fastq)`  
 `   {`  
-`     fastqWriter.append(fastq);`  
+`     fastqWriter.append(fileWriter, fastq);`  
 `   }`  
 ` });`
 
