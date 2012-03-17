@@ -12,6 +12,13 @@ About
 *BioJava* 3.0.3 has been released and is available using Maven from
 [<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
 
+### New Features
+
+`- significant improvements to the web service module (ncbi blast and hmmer web services)`  
+`- "new" fastq parser (ported from the biojava 1 series to version 3)`  
+`- support for SIFTS-PDB to UniProt mapping `  
+`- as well as numerous improvements all over the place.`
+
 View the <BioJava:Modules> page for a list of current modules.
 
 Maven Download
