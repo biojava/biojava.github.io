@@ -11,6 +11,7 @@ BioJava 3.0.3 requires <b>Java 1.6</b> or later.
  - "new" fastq parser (ported from the biojava 1 series to version 3)
  - support for SIFTS-PDB to UniProt mapping 
  - as well as numerous improvements all over the place.
+ - Protmod module renamed to modfinder
 
 View the [[BioJava:Modules]] page for a list of current modules.
 

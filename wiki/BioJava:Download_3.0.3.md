@@ -17,7 +17,8 @@ About
 `- significant improvements to the web service module (ncbi blast and hmmer web services)`  
 `- "new" fastq parser (ported from the biojava 1 series to version 3)`  
 `- support for SIFTS-PDB to UniProt mapping `  
-`- as well as numerous improvements all over the place.`
+`- as well as numerous improvements all over the place.`  
+`- Protmod module renamed to modfinder`
 
 View the <BioJava:Modules> page for a list of current modules.
 
