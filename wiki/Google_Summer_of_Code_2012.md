@@ -39,19 +39,14 @@ project! There is plenty of scope for multi-threaded programming,
 advanced IO and complicated data structures to choose from, all depends
 on what you want.
 
-- UniProt
-
-- [HMMER 3](http://hmmer.janelia.org)
-
-- [Phylip](http://evolution.genetics.washington.edu/phylip.html)
-
-- [MrBayes](http://mrbayes.sourceforge.net)
-
-- Genbank (using XML format as input and one of the standard Java XML
-parsers with the aim to provide and example for people that is easy to
-follow)
-
-- Tidy up existing parsers in BioJava, namely FASTA and FASTQ parsers
+-   UniProt
+-   [HMMER 3](http://hmmer.janelia.org)
+-   [Phylip](http://evolution.genetics.washington.edu/phylip.html)
+-   [MrBayes](http://mrbayes.sourceforge.net)
+-   Genbank (using XML format as input and one of the standard Java XML
+    parsers with the aim to provide and example for people that is easy
+    to follow)
+-   Tidy up existing parsers in BioJava, namely FASTA and FASTQ parsers
 
 This project is be suitable to a confident Java developer.
 
@@ -59,7 +54,7 @@ Mentors for this project are Peter Troshin and Andreas Prlic
 
 #### Take BioJava into the Cloud
 
-- Hadoop-ify and/or Map-Reduce some of the BioJava modules
+-   Hadoop-ify and/or Map-Reduce some of the BioJava modules
 
 #### Port an Algorithm to Java
 
@@ -70,9 +65,8 @@ opportunity for a computer scientist with a strong background in
 programming languages and pattern matching to gain first hand knowledge
 of two software packages that drive the foundation of bioinformatics.
 
-- Blast <http://en.wikipedia.org/wiki/BLAST>
-
-- Hmmer <http://en.wikipedia.org/wiki/HMMER>
+-   Blast <http://en.wikipedia.org/wiki/BLAST>
+-   Hmmer <http://en.wikipedia.org/wiki/HMMER>
 
 By porting these algorithms to Java the development community will be
 able to easily integrate the functionality into future applications.
