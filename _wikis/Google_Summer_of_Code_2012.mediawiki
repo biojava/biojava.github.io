@@ -15,17 +15,12 @@ In the ideal word one would like to import the data from one program directly in
 Yet, writing the file parsers is a tedious job that has to be done with care and consideration to achieve reliability, easy of use and performance. So it is best to be done as a main task rather the afterthought of some other process. So if you want to help us to improve BioJava and spare users from a lot of complicate work choose this project!
 There is plenty of scope for multi-threaded programming, advanced IO and complicated data structures to choose from, all depends on what you want. 
 
-- UniProt
-
-- [http://hmmer.janelia.org HMMER 3]
-
-- [http://evolution.genetics.washington.edu/phylip.html Phylip]  
-
-- [http://mrbayes.sourceforge.net MrBayes]
-
-- Genbank (using XML format as input and one of the standard Java XML parsers with the aim to provide and example for people that is easy to follow)
-
-- Tidy up existing parsers in BioJava, namely FASTA and FASTQ parsers
+* UniProt
+* [http://hmmer.janelia.org HMMER 3]
+* [http://evolution.genetics.washington.edu/phylip.html Phylip]  
+* [http://mrbayes.sourceforge.net MrBayes]
+* Genbank (using XML format as input and one of the standard Java XML parsers with the aim to provide and example for people that is easy to follow)
+* Tidy up existing parsers in BioJava, namely FASTA and FASTQ parsers
 
 This project is be suitable to a confident Java developer.
 
@@ -33,16 +28,15 @@ Mentors for this project are Peter Troshin and Andreas Prlic
 
 ==== Take BioJava into the Cloud ====
 
-- Hadoop-ify and/or Map-Reduce some of the BioJava modules
+* Hadoop-ify and/or Map-Reduce some of the BioJava modules
 
 ==== Port an Algorithm to Java ====
 
 Both Blast and Hmmer have had recent rewrites Blast+(http://www.ncbi.nlm.nih.gov/staff/tao/URLAPI/unix_setup.html) C++ and Hmmer(http://hmmer.janelia.org/software) C. 
 This is an excellent opportunity for a computer scientist with a strong background in programming languages and pattern matching to gain first hand knowledge of two software packages that drive the foundation of bioinformatics.  
 
-- Blast http://en.wikipedia.org/wiki/BLAST
-
-- Hmmer http://en.wikipedia.org/wiki/HMMER
+* Blast http://en.wikipedia.org/wiki/BLAST
+* Hmmer http://en.wikipedia.org/wiki/HMMER
 
 By porting these algorithms to Java the development community will be able to easily integrate the functionality into future applications. Currently, working with Blast involves a web service call to an external BLAST server or kicking off the BLAST executable and then parsing the output. 
 
