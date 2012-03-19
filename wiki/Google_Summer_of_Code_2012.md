@@ -66,6 +66,9 @@ programming languages and pattern matching to gain first hand knowledge
 of two software packages that drive the foundation of bioinformatics.
 
 -   Blast <http://en.wikipedia.org/wiki/BLAST>
+-   HMMER (but read the [talk
+    page](Talk:Google_Summer_of_Code_2012#HMMER "wikilink") for some
+    caveats)
 
 By porting these algorithms to Java the development community will be
 able to easily integrate the functionality into future applications.

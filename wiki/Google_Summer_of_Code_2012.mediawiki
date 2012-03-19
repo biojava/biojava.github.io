@@ -36,7 +36,7 @@ Both Blast and Hmmer have had recent rewrites Blast+(http://www.ncbi.nlm.nih.gov
 This is an excellent opportunity for a computer scientist with a strong background in programming languages and pattern matching to gain first hand knowledge of two software packages that drive the foundation of bioinformatics.  
 
 * Blast http://en.wikipedia.org/wiki/BLAST
-
+* HMMER (but read the [[Talk:Google_Summer_of_Code_2012#HMMER|talk page]] for some caveats)
 
 By porting these algorithms to Java the development community will be able to easily integrate the functionality into future applications. Currently, working with Blast involves a web service call to an external BLAST server or kicking off the BLAST executable and then parsing the output. 
 
