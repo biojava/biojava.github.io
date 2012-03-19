@@ -81,7 +81,13 @@ it is recommended that a C/C++ to Java conversion tool be used to do as
 much of the work as possible. It is also an option to consider a JNI
 approach for integrating these applications into Java.
 
-Mentors for this project are Andreas Prlic and Peter Troshin.
+There are some issues with licensing if we attempt to port GPLed code to
+BioJava LGPL. Before starting such a project the project mentors will
+discuss with the copyright holder if a dual licensing of the code is
+possible.
+
+Mentors for this project are Andreas Prlic, Peter Troshin, Scooter
+Willis.
 
 Previous Years
 --------------
