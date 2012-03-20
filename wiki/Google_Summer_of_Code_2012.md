@@ -89,6 +89,31 @@ possible.
 Mentors for this project are Andreas Prlic, Peter Troshin, Scooter
 Willis.
 
+#### BioJava Sequence Diagram Module
+
+This project is to implement a sequence diagram module in BioJava3 by
+re-engineering [the code of RCSB PDB Sequence
+Diagram](http://code.open-bio.org/RCSB_SequenceViewer/?root=biojava).
+While the current RCSB PDB Sequence Diagram provides a great visual
+presentation of protein sequence annotations
+([example](http://www.pdb.org/pdb/explore/remediatedSequence.do?structureId=2YER)),
+it is tightly coupled to 3-D structures. The aim of this project is to
+design and implement a new framework for sequence annotation
+visualization (by refactoring the current code) with following features:
+
+-   It is for any general sequences (protein, DNA, ...)
+-   It supports annotations that currently supported by the RCSB
+    Sequence Diagram such as protein domain, protein secondary
+    structure, etc.
+-   One can easily extend it for new sequence annotations
+-   One can easily add new visualization styles
+
+Optionally, if time allows, add support for visualizing annotations from
+[Distributed Annotation System
+(DAS)](http://www.biodas.org/wiki/Main_Page).
+
+Mentors for this project are Jianjiong Gao and Andreas Prlic.
+
 Previous Years
 --------------
 
