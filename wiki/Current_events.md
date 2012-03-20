@@ -2,6 +2,39 @@
 title: Current events
 ---
 
+BioJava 3.0.3 released
+----------------------
+
+BioJava 3.0.3 was released on March 16th and is available from
+<BioJava:Download>.
+
+BioJava 3.0.3 has been released and is available from
+<http://www.biojava.org/wiki/BioJava:Download> as well as from the
+BioJava maven repository at <http://www.biojava.org/download/maven/> .
+
+New Features
+
+BioJava 3.0.3 adds several new features
+
+- Significant improvements for the web service module (ncbi blast and
+hmmer web services)
+
+- Fastq parser (ported from the biojava 1 series to version 3)
+
+- Support for SIFTS-PDB to UniProt mapping
+
+- Improved support for working with external protein domain definitions
+
+- Protmod module renamed to modfinder
+
+- Numerous improvements all over the place (several hundred commits
+since last release)
+
+- We are also working on an update for the legacy biojava 1.8 series.
+
+This release would not have been possible with contributions from
+numerous people, thanks to all for their support!
+
 BioJava 3.0.2 released
 ----------------------
 
