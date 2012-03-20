@@ -2,6 +2,13 @@
 title: Current events
 ---
 
+BioJava at Google Summer of Code 2012
+-------------------------------------
+
+BioJava is participating at this years' Google Summer of Code again.
+Find out more about it at
+[Google\_Summer\_of\_Code](Google_Summer_of_Code "wikilink")
+
 BioJava 3.0.3 released
 ----------------------
 
