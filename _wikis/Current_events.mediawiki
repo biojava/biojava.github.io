@@ -1,3 +1,7 @@
+== BioJava at Google Summer of Code 2012 ==
+
+BioJava is participating at this years' Google Summer of Code again. Find out more about it at [[Google_Summer_of_Code]]
+
 == BioJava 3.0.3 released ==
 BioJava 3.0.3 was released on March 16th and is available from [[BioJava:Download]].
 
