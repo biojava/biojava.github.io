@@ -1,4 +1,4 @@
-== Introduction ==
+== BioJava at GSoC Introduction ==
 
 The Open Bioinformatics foundation is [http://www.open-bio.org/wiki/Google_Summer_of_Code participating again in this year's Google Summer of Code].
 
