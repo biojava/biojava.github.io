@@ -2,8 +2,8 @@
 title: Google Summer of Code 2012
 ---
 
-Introduction
-------------
+BioJava at GSoC Introduction
+----------------------------
 
 The Open Bioinformatics foundation is [participating again in this
 year's Google Summer of
