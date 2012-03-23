@@ -54,6 +54,12 @@ If you like to make your application stand out I'd suggest a short
 [coding exercise](coding exercise "wikilink"). The quality of your
 solution is going to be a significant factor in the selection process.
 
+Part of your work on this project would be to unify various FASTA
+parsers available in BioJava, so please investigate the existing FASTA
+and FASTQ parsers in the current version of BioJava and write up a
+proposal on how you are going to unify them. Make this proposal part of
+your GSOC application.
+
 Mentors for this project are Peter Troshin and Andreas Prlic
 
 #### Take BioJava into the Cloud
