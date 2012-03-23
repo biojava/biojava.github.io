@@ -51,8 +51,8 @@ on what you want.
 This project is be suitable to a confident Java developer.
 
 If you like to make your application stand out I'd suggest a short
-[coding exercise]. The quality of your solution is going to be a
-significant factor in the selection process.
+[coding exercise](coding exercise "wikilink"). The quality of your
+solution is going to be a significant factor in the selection process.
 
 Mentors for this project are Peter Troshin and Andreas Prlic
 
