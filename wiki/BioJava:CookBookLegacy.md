@@ -2,12 +2,12 @@
 title: BioJava:CookBookLegacy
 ---
 
-BioJava 3.0 release
--------------------
+BioJava 3.\* release
+--------------------
 
-Many things changed in the BioJava 3.0 release. The cookbook for the new
-API is available from here: <BioJava:CookBook3.0> The content on this
-page is still available to support the legacy code base, which is now
+BioJava 3 is a major re-write of BioJava 1. The cookbook for the new API
+is available from here: <BioJava:CookBook3.0> The content on this page
+is still available to support the legacy code base, which is now
 available through the biojava-legacy project in the BioJava SVN.
 
 BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry
