@@ -8,7 +8,7 @@ BioJava legacy 1.8.2 has been released and is available using Maven from http://
 Over the last year BioJava has undergone a major re-write. A new code base has been started under the codename [[BioJava:Download|BioJava 3]]. The old BioJava code (or BioJava 1 or BioJava Legacy) has been modularized into small, re-usable components and is available for download on this page.
 
 == Maven Download ==
-BioJava Legacy 1.8.1 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
+BioJava Legacy 1.8.2 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
 
 You can add the BioJava repository by adding the following XML to your project .pom file:
 <pre>
