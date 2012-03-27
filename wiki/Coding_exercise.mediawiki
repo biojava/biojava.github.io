@@ -21,7 +21,7 @@ Write a FASTA writer
 
 ===Submission===
 
-Please submit your completed exercise to '''gsocexercise at gmail dot com''' by the 10 of April inclusive. Your submission should be a ZIP archive that contains an executable JAR file with your FASTA parser and writer as well as 
+Please submit your completed exercise to '''gsocexercise at gmail dot com''' by Friday the 6 of April inclusive. Your submission should be a ZIP archive that contains an executable JAR file with your FASTA parser and writer as well as 
 * your source files in the ''src'' directory
 * your documentation files in the ''docs'' directory 
 * the test data file named data.fasta up to 10Kb in size 
