@@ -40,16 +40,9 @@ project .pom file:
 Manual Download
 ---------------
 
-**Download the entire project at once:**
+**Download the entire maven project at once:**
 
-| Description                          | Archive                                                                                                          | SHA1 checksum                                                                                                              | PGP signature                                                                                                            |
-|--------------------------------------|------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| Binary distribution, tar.gz format   | [biojava-legacy-1.8.2.tar.gz](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.tar.gz)                   | [biojava-legacy-1.8.2.tar.gz.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.tar.gz.sha1)                   | [biojava-legacy-1.8.2.tar.gz.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.tar.gz.asc)                   |
-| Binary distribution, zip format      | [biojava-legacy-1.8.2.zip](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.zip)                         | [biojava-legacy-1.8.2.zip.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.zip.sha1)                         | [biojava-legacy-1.8.2.zip.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2.zip.asc)                         |
-| Source distribution, tar.gz format   | [biojava-legacy-1.8.2-src.tar.gz](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.tar.gz)           | [biojava-legacy-1.8.2-src.tar.gz.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.tar.gz.sha1)           | [biojava-legacy-1.8.2-src.tar.gz.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.tar.gz.asc)           |
-| Source distribution, zip format      | [biojava-legacy-1.8.2-src.zip](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.zip)                 | [biojava-legacy-1.8.2-src.zip.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.zip.sha1)                 | [biojava-legacy-1.8.2-src.zip.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-src.zip.asc)                 |
-| Javadoc documentation, tar.gz format | [biojava-legacy-1.8.2-javadocs.tar.gz](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.tar.gz) | [biojava-legacy-1.8.2-javadocs.tar.gz.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.tar.gz.sha1) | [biojava-legacy-1.8.2-javadocs.tar.gz.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.tar.gz.asc) |
-| Javadoc documentation, zip format    | [biojava-legacy-1.8.2-javadocs.zip](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.zip)       | [biojava-legacy-1.8.2-javadocs.zip.sha1](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.zip.sha1)       | [biojava-legacy-1.8.2-javadocs.zip.asc](http://biojava.org/download/bj1.8.2/biojava-legacy-1.8.2-javadocs.zip.asc)       |
+[bj1.8.1-all](http://biojava.org/download/bj1.8.1/bj1.8.1-all.tar.gz)
 
 **Or each module individually:** (faster if you just want the jars)
 
@@ -90,7 +83,6 @@ Necessary libraries are available in maven repositories
     building biojava.jar)
 -   commons-pool-1.1.jar: Only required for legacy BioSQL access (and
     building biojava.jar)
--   guava-11.0.1.jar: Required for sequencing module
 -   jgrapht-jdk1.5.jar: Only required for NEXUS file parsing (and
     building biojava.jar)
 
