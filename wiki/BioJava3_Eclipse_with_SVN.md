@@ -105,7 +105,9 @@ A useful blog article providing more help for how to install Maven is
 here:
 [1](http://www.shareyourwork.org/roller/ralphsjavablog/entry/eclipse_indigo_maven_and_svn)
 
---[Andreas](User:Andreas "wikilink") 04:43, 30 August 2011 (UTC)
+Here some instructions for where to find the various eclipse plugins:
+[2](https://wiki.openmrs.org/display/docs/Step+by+Step+Installation+for+Developers) --[Andreas](User:Andreas "wikilink")
+04:43, 30 August 2011 (UTC)
 
 Anonymous access with Git
 -------------------------
