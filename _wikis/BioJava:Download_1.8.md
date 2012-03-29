@@ -21,7 +21,7 @@ and is available for download on this page.
 Maven Download
 --------------
 
-BioJava Legacy 1.8.2 requires [Maven](http://maven.apache.org/) for the
+BioJava Legacy 1.8.1 requires [Maven](http://maven.apache.org/) for the
 build process. We are providing a BioJava specific Maven repository at
 <http://biojava.org/download/maven/> .
 
