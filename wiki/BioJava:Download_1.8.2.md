@@ -74,9 +74,9 @@ api](http://www.biojava.org/docs/api1.8.2/)
 Release Dates
 -------------
 
-BioJava 1.8 has been released on December 28th, 2010.
-
-BioJava 1.8.2 has been released on March 22th, 2012.
+BioJava 1.8 has been released on December 28th, 2010. BioJava 1.8.1 has
+been released on February 13th, 2011. BioJava 1.8.2 has been released on
+March 22th, 2012.
 
 Support libraries
 -----------------
@@ -97,6 +97,8 @@ Necessary libraries are available in maven repositories
 Getting older versions
 ----------------------
 
+-   The legacy release of 1.8.1 can be found
+    [here](BioJava:Download 1.8.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7.1 can be found
     [here](BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7 can be found
