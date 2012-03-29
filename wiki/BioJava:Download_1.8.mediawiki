@@ -1,6 +1,6 @@
-This page offers downloads for the <b>BioJava Legacy 1.8.2 release</b>. 
+This page offers downloads for the <b>BioJava Legacy 1.8.1 release</b>. 
 
-BioJava Legacy 1.8.2 requires <b>Java 1.5</b> or later. 
+BioJava Legacy 1.8.1 requires <b>Java 1.5</b> or later. 
 
 == About ==
 BioJava legacy 1.8.2 has been released and is available using Maven from http://biojava.org/download/maven/
@@ -88,7 +88,7 @@ You can also browse the documentation at [http://www.biojava.org/docs/api1.8/ Bi
 ==Release Dates==
 BioJava 1.8 has been released on December 28th, 2010.
 
-BioJava 1.8.2 has been released on March 22th, 2012.
+BioJava 1.8.1 has been released on February 13th, 2011.
 
 == Support libraries ==
 Necessary libraries are available in maven repositories
