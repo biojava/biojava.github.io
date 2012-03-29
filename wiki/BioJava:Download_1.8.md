@@ -9,7 +9,7 @@ BioJava Legacy 1.8.1 requires <b>Java 1.5</b> or later.
 About
 -----
 
-BioJava legacy 1.8.2 has been released and is available using Maven from
+BioJava legacy 1.8.1 has been released and is available using Maven from
 <http://biojava.org/download/maven/>
 
 Over the last year BioJava has undergone a major re-write. A new code
