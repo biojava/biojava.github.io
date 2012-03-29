@@ -68,8 +68,8 @@ Manual Download
 Browse API docs
 ---------------
 
-You can also browse the documentation at [BioJava Legacy 1.8
-api](http://www.biojava.org/docs/api1.8/)
+You can also browse the documentation at [BioJava Legacy 1.8.2
+api](http://www.biojava.org/docs/api1.8.2/)
 
 Release Dates
 -------------
