@@ -121,7 +121,7 @@ You can add the BioJava repository by adding the following XML to your project .
 |}
 
 == Browse API docs ==
-You can also browse the documentation at [http://www.biojava.org/docs/api1.8.2/ BioJava Legacy 1.8.2 api]
+You can also browse the documentation at [http://www.biojava.org/docs/api1.8/ BioJava Legacy 1.8 api]
 
 ==Release Dates==
 BioJava 1.8 has been released on December 28th, 2010.
