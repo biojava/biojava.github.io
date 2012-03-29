@@ -125,7 +125,7 @@ You can also browse the documentation at [http://www.biojava.org/docs/api1.8.2/ 
 
 ==Release Dates==
 BioJava 1.8 has been released on December 28th, 2010.
-
+BioJava 1.8.1 has been released on February 13th, 2011. 
 BioJava 1.8.2 has been released on March 22th, 2012.
 
 == Support libraries ==
@@ -138,6 +138,7 @@ Necessary libraries are available in maven repositories
 *  jgrapht-jdk1.5.jar: Only required for NEXUS file parsing (and building biojava.jar)
 
 == Getting older versions ==
+* The legacy release of 1.8.1 can be found [[BioJava:Download 1.8.1|here]] (requires Java 1.5+)
 * The legacy release of 1.7.1 can be found [[BioJava:Download 1.7.1|here]] (requires Java 1.5+)
 * The legacy release of 1.7 can be found [[BioJava:Download 1.7|here]] (requires Java 1.5+)
 * The legacy release of 1.6 can be found [[BioJava:Download 1.6|here]] (requires Java 1.5+)
