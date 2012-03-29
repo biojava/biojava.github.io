@@ -37,49 +37,49 @@ You can add the BioJava repository by adding the following XML to your project .
 ! Javadoc Jar
 |-
 | alignment 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8.2/alignment-1.8.2.jar  alignment-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8.2/alignment-1.8.2-sources.jar  alignment-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/alignment/1.8.2/alignment-1.8.2-javadoc.jar  alignment-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1.jar  alignment-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-sources.jar  alignment-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/alignment/1.8.1/alignment-1.8.1-javadoc.jar  alignment-1.8.1-javadoc.jar]
 |-
 | biosql 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8.2/biosql-1.8.2.jar biosql-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8.2/biosql-1.8.2-sources.jar biosql-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biosql/1.8.2/biosql-1.8.2-javadoc.jar biosql-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1.jar biosql-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1-sources.jar biosql-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biosql/1.8.1/biosql-1.8.1-javadoc.jar biosql-1.8.1-javadoc.jar]
 |-
 | blast 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8.2/blast-1.8.2.jar blast-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8.2/blast-1.8.2-sources.jar blast-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/blast/1.8.2/blast-1.8.2-javadoc.jar blast-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1.jar blast-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1-sources.jar blast-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/blast/1.8.1/blast-1.8.1-javadoc.jar blast-1.8.1-javadoc.jar]
 |-
 | bytecode
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.2/bytecode-1.8.2.jar bytecode-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.2/bytecode-1.8.2-sources.jar bytecode-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.2/bytecode-1.8.2-javadoc.jar bytecode-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1.jar bytecode-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1-sources.jar bytecode-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/bytecode/1.8.1/bytecode-1.8.1-javadoc.jar bytecode-1.8.1-javadoc.jar]
 |-
 | core
-| [http://biojava.org/download/maven/org/biojava/core/1.8.2/core-1.8.2.jar core-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/core/1.8.2/core-1.8.2-sources.jar core-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/core/1.8.2/core-1.8.2-javadoc.jar core-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1.jar core-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1-sources.jar core-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/core/1.8.1/core-1.8.1-javadoc.jar core-1.8.1-javadoc.jar]
 |-
 | das
-| [http://biojava.org/download/maven/org/biojava/das/1.8.2/das-1.8.2.jar das-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/das/1.8.2/das-1.8.2-sources.jar das-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/das/1.8.2/das-1.8.2-javadoc.jar das-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1.jar das-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1-sources.jar das-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/das/1.8.1/das-1.8.1-javadoc.jar das-1.8.1-javadoc.jar]
 |-
 | gui
-| [http://biojava.org/download/maven/org/biojava/gui/1.8.2/gui-1.8.2.jar gui-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/gui/1.8.2/gui-1.8.2-sources.jar gui-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/gui/1.8.2/gui-1.8.2-javadoc.jar gui-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1.jar gui-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1-sources.jar gui-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/gui/1.8.1/gui-1.8.1-javadoc.jar gui-1.8.1-javadoc.jar]
 |-
 | phylo
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8.2/phylo-1.8.2.jar phylo-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8.2/phylo-1.8.2-sources.jar phylo-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/phylo/1.8.2/phylo-1.8.2-javadoc.jar phylo-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1.jar phylo-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1-sources.jar phylo-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/phylo/1.8.1/phylo-1.8.1-javadoc.jar phylo-1.8.1-javadoc.jar]
 |-
 | sequencing
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.2/sequencing-1.8.2.jar sequencing-1.8.2.jar] 
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.2/sequencing-1.8.2-sources.jar sequencing-1.8.2-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.2/sequencing-1.8.2-javadoc.jar sequencing-1.8.2-javadoc.jar]
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1.jar sequencing-1.8.1.jar] 
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1-sources.jar sequencing-1.8.1-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/sequencing/1.8.1/sequencing-1.8.1-javadoc.jar sequencing-1.8.1-javadoc.jar]
 |}
 
 == Browse API docs ==
