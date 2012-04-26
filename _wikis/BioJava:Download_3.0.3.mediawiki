@@ -113,7 +113,6 @@ BioJava 3.0.3 has been released on March 16th 2012
 * The legacy release of 3.0.2 can be found [[BioJava:Download 3.0.2|here]] (requires Java 1.6+)
 * The legacy release of 3.0.1 can be found [[BioJava:Download 3.0.1|here]] (requires Java 1.6+)
 * The legacy release of 3.0 can be found [[BioJava:Download 3.0|here]] (requires Java 1.5+)
-* The legacy release of 1.8.2 can be found [[BioJava:Download 1.8.2|here]] (requires Java 1.5+)
 * The legacy release of 1.8 can be found [[BioJava:Download 1.8|here]] (requires Java 1.5+)
 * The legacy release of 1.7.1 can be found [[BioJava:Download 1.7.1|here]] (requires Java 1.5+)
 * The legacy release of 1.7 can be found [[BioJava:Download 1.7|here]] (requires Java 1.5+)
