@@ -48,3 +48,29 @@ spot in the gel
 best regards
 
 jayron
+
+Problem with ScoreMatrix class
+------------------------------
+
+Dear All,
+
+When I try to create an object of ScoreMatrix class it gives me error
+like can not find symbol constructor ScoreMatrix. I have already set the
+phylo jar in my path.
+
+import org.biojava3.phylo.\*;
+
+class TestPhylo {
+
+`   public static void main(String s[])`  
+`   {`  
+`       ScoreMatrix obj=new ScoreMatrix();`  
+`   }`
+
+}
+
+Need an urgent solution.
+
+With Regards
+
+Subrata Sinha
