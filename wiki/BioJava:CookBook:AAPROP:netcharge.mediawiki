@@ -4,7 +4,7 @@ The Net Charge of a protein sequence at a certain pH is computed using the follo
 
 [[File:NetChargeFormulae.png]]
 
-In BioJava, the default pH used is 7.0. 
+In BioJava, the default pH used is 7.0.
 
 pKa values used can be chosen between the following two sources with ExPASy being the default one.
 
