@@ -20,3 +20,4 @@ OR
 
 2) A.Lehninger, Principles of Biochemistry, 4th Edition (2005), Chapter
 3, page 78, Table 3-1.
+[2](http://www.innovagen.se/custom-peptide-synthesis/peptide-property-calculator/peptide-property-calculator.asp)
