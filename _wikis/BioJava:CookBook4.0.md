@@ -26,7 +26,9 @@ If you re-use code from the cookbook please cite:
 How Do I....?
 -------------
 
-### biojava3-core
+### Core Module - Working with Sequences
+
+**Required modules**: *biojava3-core*
 
 -   [Overview of
     biojava3-core?](BioJava:CookBook:Core:Overview "wikilink")
@@ -77,26 +79,7 @@ visualisation
 -   [How can I find residues binding a
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
 
-### biojava3-genome
-
--   [Overview of
-    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
-
-### biojava3-phylo
-
-**Required modules**: ''biojava3-core **Required external library**:
-*forester.jar*
-
--   [Overview of
-    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
-
-<!-- -->
-
--   [How do I convert Profile object into Multiple Sequence Alignment
-    object to be use in the
-    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
-
-### biojava3-alignment
+### Pairwise and Multiple Sequence Alignment
 
 **Required modules**: *biojava3-alignment, biojava3-core,
 biojava3-phylo* **Required external library**: *forester.jar*
@@ -111,6 +94,35 @@ biojava3-phylo* **Required external library**: *forester.jar*
 -   [How can I profile the time and memory requirements of a Multiple
     Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
 
+### Genome
+
+**Required modules**: *biojava3-genome*
+
+-   [Overview of
+    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
+
+### Sequencing
+
+**Required modules**: *biojava3-core*,*biojava3-sequencing* **Required
+external library**: *guava-11.0.1.jar*
+
+-   [How do I work with nextgen sequencing reads in FASTQ
+    format?](Biojava:CookBook3:FASTQ "wikilink")
+
+### Phylogenetic tree
+
+**Required modules**: ''biojava3-core **Required external library**:
+*forester.jar*
+
+-   [Overview of
+    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
+
+<!-- -->
+
+-   [How do I convert Profile object into Multiple Sequence Alignment
+    object to be use in the
+    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
+
 ### Physico-Chemical Properties Computation
 
 **Required modules**: *biojava3-aa-prop, biojava3-structure and
@@ -123,7 +135,9 @@ biojava3-core*
 -   [How can I compute PROFEAT properties via
     APIs?](BioJava:CookBook:AAPROP:profeat "wikilink")
 
-### biojava3-protein-disorder
+### Protein Disorder
+
+**Required modules**: *biojava3-protein-disorder*
 
 -   [How can I predict disordered regions of the protein using its
     sequence?](BioJava:CookBook3:ProteinDisorder "wikilink")
@@ -141,15 +155,7 @@ biojava3-core*
 -   [How can I define and register a new protein
     modification?](BioJava:CookBook3:AddProtMod "wikilink")
 
-### biojava3-sequencing
-
-**Required modules**: *biojava3-core* **Required external library**:
-*guava-11.0.1.jar*
-
--   [How do I work with nextgen sequencing reads in FASTQ
-    format?](Biojava:CookBook3:FASTQ "wikilink")
-
-### biojava3-ws
+### Remote Web Service Calls
 
 **Required modules**: *biojava3-core, biojava-ws*
 
