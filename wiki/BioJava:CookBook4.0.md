@@ -46,6 +46,9 @@ How Do I....?
 
 ### biojava3-phylo
 
+**Required modules**: ''biojava3-core **Required external library**:
+*forester.jar*
+
 -   [Overview of
     biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
 
@@ -54,9 +57,6 @@ How Do I....?
 -   [How do I convert Profile object into Multiple Sequence Alignment
     object to be use in the
     TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
-
-**Required modules**: ''biojava3-core **Required external library**:
-*forester.jar*
 
 ### biojava3-alignment
 

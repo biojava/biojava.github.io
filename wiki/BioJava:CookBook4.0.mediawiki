@@ -22,12 +22,12 @@ If you re-use code from the cookbook please cite:
 === biojava3-genome ===
 * [[BioJava:CookBook:genome:Overview|Overview of biojava3-genome?]]
 === biojava3-phylo ===
+'''Required modules''': ''biojava3-core 
+'''Required external library''': ''forester.jar''
+
 * [[BioJava:CookBook:Phylo:Overview|Overview of biojava3-phylo?]]
 
 *[[BioJava:CookBook:Phylo:ProfileToMSA|How do I convert Profile object into Multiple Sequence Alignment object to be use in the TreeConstructor]]
-
-'''Required modules''': ''biojava3-core 
-'''Required external library''': ''forester.jar''
 
 === biojava3-alignment ===
 
