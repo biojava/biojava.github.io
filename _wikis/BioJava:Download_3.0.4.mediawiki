@@ -104,7 +104,7 @@ You can add the BioJava repository by adding the following XML to your project p
 You can also browse the documentation at [http://www.biojava.org/docs/api3.0.4/ BioJava 3.0.4 api]
 
 ==Release Date==
-BioJava 3.0.4 has been released on March 16th 2012
+BioJava 3.0.4 has been released on May 21st 2012
 
 == Getting older versions ==
 
