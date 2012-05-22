@@ -4,8 +4,8 @@ title: BioJava:CookBook:PDBP:BerkeleySCOP
 
 BioJava supports by default the original SCOP version from the UK
 (currently at version 1.75). As of version 3.0.4 it also allows to work
-with the newer (version 1.75A) version of SCOP that is available from
-Berkeley.
+with the newer (version 1.75A) version of SCOP that is [available from
+Berkeley](http://scop.berkeley.edu/).
 
 <java>
 
