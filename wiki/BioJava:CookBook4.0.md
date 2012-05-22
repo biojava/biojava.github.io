@@ -39,40 +39,6 @@ How Do I....?
 -   [How do I view Features on a
     sequence?](BioJava:CookBook:Core:SequenceFeaturePanel "wikilink")
 
-### biojava3-genome
-
--   [Overview of
-    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
-
-### biojava3-phylo
-
-**Required modules**: ''biojava3-core **Required external library**:
-*forester.jar*
-
--   [Overview of
-    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
-
-<!-- -->
-
--   [How do I convert Profile object into Multiple Sequence Alignment
-    object to be use in the
-    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
-
-### biojava3-alignment
-
-**Required modules**: *biojava3-alignment, biojava3-core,
-biojava3-phylo* **Required external library**: *forester.jar*
-
--   [How can I calculate a Pairwise Sequence
-    Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
-    Needleman Wunsch)
--   [How can I calculate a Pairwise Sequence Alignment with DNA
-    sequences](BioJava;CookBook3:PSA_DNA "wikilink")?
--   [How can I create a Multiple Sequence
-    Alignment](BioJava:CookBook3:MSA "wikilink")?
--   [How can I profile the time and memory requirements of a Multiple
-    Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
-
 ### Protein Structure
 
 **Required modules**: *biojava3-structure, biojava3-alignment*
@@ -110,6 +76,40 @@ visualisation
     SCOP?](BioJava:CookBook:PDBP:BerkeleySCOP "wikilink")
 -   [How can I find residues binding a
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
+
+### biojava3-genome
+
+-   [Overview of
+    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
+
+### biojava3-phylo
+
+**Required modules**: ''biojava3-core **Required external library**:
+*forester.jar*
+
+-   [Overview of
+    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
+
+<!-- -->
+
+-   [How do I convert Profile object into Multiple Sequence Alignment
+    object to be use in the
+    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
+
+### biojava3-alignment
+
+**Required modules**: *biojava3-alignment, biojava3-core,
+biojava3-phylo* **Required external library**: *forester.jar*
+
+-   [How can I calculate a Pairwise Sequence
+    Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
+    Needleman Wunsch)
+-   [How can I calculate a Pairwise Sequence Alignment with DNA
+    sequences](BioJava;CookBook3:PSA_DNA "wikilink")?
+-   [How can I create a Multiple Sequence
+    Alignment](BioJava:CookBook3:MSA "wikilink")?
+-   [How can I profile the time and memory requirements of a Multiple
+    Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
 
 ### Physico-Chemical Properties Computation
 
