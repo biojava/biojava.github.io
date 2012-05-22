@@ -14,7 +14,7 @@ About
 
 ### New Features
 
-`- This is mainly a bug fix release addressing issues in the structure and protein disorder modules`  
+`- This is mainly a bug fix release addressing issues in the protein structure and disorder modules`  
 `- One new feature: SCOP data can now be either accessed from the original SCOP site in the UK or the Berkeley version.`
 
 View the <BioJava:Modules> page for a list of current modules.
