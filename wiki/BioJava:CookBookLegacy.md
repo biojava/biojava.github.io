@@ -10,6 +10,11 @@ is available from here: <BioJava:CookBook3.0> The content on this page
 is still available to support the legacy code base, which is now
 available through the biojava-legacy project in the BioJava SVN.
 
+BioJava 1 reference
+-------------------
+
+If you use BioJava 1 please cite:
+
 BioJava In Anger - A Tutorial and Recipe Book for Those in a Hurry
 ------------------------------------------------------------------
 
