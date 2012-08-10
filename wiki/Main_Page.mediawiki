@@ -6,7 +6,7 @@ BioJava is [[BioJava:License|licensed under LGPL 2.1]].
 
 '''Please cite:'''
 
-{{Reference}}
+{{Reference2012}}
 
 == Current Events ==
 
