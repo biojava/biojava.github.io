@@ -2,6 +2,32 @@
 title: Current events
 ---
 
+BioJava 2012 paper published
+----------------------------
+
+The latest BioJava paper describing the version 3 series has been
+published and is now available online.
+
+Thanks to all developers for their contributions, it would not have been
+possible without them!
+
+[Abstract
+<http://bioinformatics.oxfordjournals.org/cgi/content/abstract/bts494?ijkey=BzJOy9GgM2XNw07&keytype=ref>]
+
+[PDF
+<http://bioinformatics.oxfordjournals.org/cgi/reprint/bts494?ijkey=BzJOy9GgM2XNw07&keytype=ref>]
+
+Citation:
+
+BioJava: an open-source framework for bioinformatics in 2012
+
+Andreas Prlic; Andrew Yates; Spencer E. Bliven; Peter W. Rose; Julius
+Jacobsen; Peter V. Troshin; Mark Chapman; Jianjiong Gao; Chuan Hock Koh;
+Sylvain Foisy; Richard Holland; Gediminas Rimsa; Michael L. Heuer; H.
+Brandstatter-Muller; Philip E. Bourne; Scooter Willis
+
+Bioinformatics 2012; doi: 10.1093/bioinformatics/bts494
+
 BioJava 3.0.4 released
 ----------------------
 
