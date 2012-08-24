@@ -20,6 +20,7 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:Core:FastaReadWrite|How do I read or write Fasta files?]]
 * [[BioJava:CookBook:Core:SequenceFeaturePanel|How do I view Features on a sequence?]]
 
+
 === Protein Structure ===
 
 '''Required modules''': ''biojava3-structure,  biojava3-alignment'' 
