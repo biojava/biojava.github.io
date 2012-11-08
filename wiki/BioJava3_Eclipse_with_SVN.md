@@ -21,8 +21,10 @@ Prerequisite
 
 <!-- -->
 
--   Install the [subclipse](http://subclipse.tigris.org/) plugin for
-    subversion (latest version: 1.6)
+-   Install [Subversive](http://www.eclipse.org/subversive/) through
+    eclipse update site (it's the official eclipse plugin), or install
+    [subclipse](http://subclipse.tigris.org/) plugin for subversion
+    instead (latest versions: 1.8.16 and 1.6.18).
 
 Installation
 ------------
