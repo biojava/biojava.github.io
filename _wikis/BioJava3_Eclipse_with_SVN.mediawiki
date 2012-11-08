@@ -6,7 +6,7 @@
 
 * Install the [http://eclipse.org/m2e/ m2eclipse] Maven eclipse plugin (previously hosted by [http://m2eclipse.sonatype.org/ Sonatype]). Be sure to include SCM integration, offered through the m2eclipse-extras package.
 
-* Install the [http://subclipse.tigris.org/ subclipse] plugin for subversion (latest version: 1.6)
+* Install [http://www.eclipse.org/subversive/ Subversive] through eclipse update site (it's the official eclipse plugin), or install [http://subclipse.tigris.org/ subclipse] plugin for subversion instead (latest versions: 1.8.16 and 1.6.18).
 
 == Installation ==
 
