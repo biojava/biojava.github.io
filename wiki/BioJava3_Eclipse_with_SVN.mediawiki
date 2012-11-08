@@ -15,6 +15,22 @@
 
 == Details for specific Eclipse Versions ==
 
+=== Update for Eclipse Juno (I use Juno SR1)(October 2012) ===
+There used to be some conflicts with SVN connectors, but thank God, things are good now.
+Now, it's as simple as this:
+
+* From Help menu select "Install new software..."
+* select the Juno update site option (Juno - http://download.eclipse.org/releases/juno)
+* Check "m2e - Maven Integration for Eclipse", and "Subversive SVN Team Provider"
+* Go through the regular process (next, accept, & restart)
+* After installing both plugins, from File menu, select new --> project... --> "Checkout Maven Projects from SCM" (as shown in the picture).
+* beside the '''SCM URL''' label, there is a drop down box for SCM type, and a text field for URL. In the first time, the drop down box will be empty...
+* you will find a small line below containing "Find more SCM connectors in the m2e Marketplace". Click m2e Marketplace.
+* In the "m2e team providers" section, select "m2e-Subversive", then the next/accept/etc. process.
+* When you start first call to SVN-based operation, eclipse will show you a window asking you to choose a connector. The safest way is to select SVNkit (pure java implementation). This choice will not install any conflicting binaries to your system, also, being Java-based, it is OS independent.. you will keep your head from all hassle related to win32/64 compatibility and such stuff.
+* congratulations! Everything is ready now. Go back to the "Checkout Maven Projects from SCM", you will see an SVN option in the dropdown box. Select it, key in the URl, and import.
+
+----
 === Update for Eclipse Helios SR2 (May 2011) ===
 
 The above plugins are still available and work fine, however, below are the few important particulars. 
