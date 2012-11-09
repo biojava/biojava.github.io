@@ -60,8 +60,14 @@ things are good now. Now, it's as simple as this:
     be empty...
 -   you will find a small line below containing "Find more SCM
     connectors in the m2e Marketplace". Click m2e Marketplace.
--   In the "m2e team providers" section, select "m2e-Subversive", then
-    the next/accept/etc. process.
+-   In the "m2e team providers" section, select "m2e-Subversive",
+
+![](M2E Subversive Handler.png "M2E Subversive Handler.png")
+
+then the next/accept/etc. process.
+
+![](M2E Subversive Handler1.png "M2E Subversive Handler1.png")
+
 -   When you start first call to SVN-based operation, eclipse will show
     you a window asking you to choose a connector. The safest way is to
     select SVNkit (pure java implementation). This choice will not
@@ -71,6 +77,8 @@ things are good now. Now, it's as simple as this:
 -   congratulations! Everything is ready now. Go back to the "Checkout
     Maven Projects from SCM", you will see an SVN option in the dropdown
     box. Select it, key in the URl, and import.
+
+![](Checkout Maven Project through SCM (populated).png "Checkout Maven Project through SCM (populated).png")
 
 ------------------------------------------------------------------------
 
