@@ -50,6 +50,10 @@ things are good now. Now, it's as simple as this:
 -   After installing both plugins, from File menu, select new --\>
     project... --\> "Checkout Maven Projects from SCM" (as shown in the
     picture).
+    ![](Importing Maven Project.png "fig:Importing Maven Project.png")
+
+![](Checkout Maven Project through SCM.png "Checkout Maven Project through SCM.png")
+
 -   beside the **SCM URL** label, there is a drop down box for SCM type,
     and a text field for URL. In the first time, the drop down box will
     be empty...
