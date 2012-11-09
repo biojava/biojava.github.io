@@ -62,6 +62,11 @@ unavailable for access.
 If a SVN client error occurs for longer than 20 minutes, please report
 this to: support@helpdesk.open-bio.org
 
+For Eclipse Users
+=================
+
+`For more details on how to setup eclipse plugins needed and to checkout Biojava code, see `[`BioJava3_eclipse`](BioJava3_eclipse "wikilink")`.`
+
 Maven SNAPSHOT builds
 =====================
 

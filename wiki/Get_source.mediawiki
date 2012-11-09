@@ -28,6 +28,7 @@ A list of all available projects in SVN can be obtained with:
  
  svn list http://code.open-bio.org/repos/biojava
 
+
 ===Troubleshooting Anonymous SVN===
 
 If you encounter an error while using the SVN client or SVN Web interface, the likely cause is that our server is in the middle of replicating the repository from the primary source. While the mirror and replication process occurs, it is not unusual for SVN client functionality to break temporarily.
@@ -38,6 +39,9 @@ The final step of our codebase replication process is to explicitly re-verify th
     * Anonymous SVN repositories are verified and repaired (if necessary) every 20 minutes 
 
 If a SVN client error occurs for longer than 20 minutes, please report this to: support@helpdesk.open-bio.org
+
+=For Eclipse Users=
+ For more details on how to setup eclipse plugins needed and to checkout Biojava code, see [[BioJava3_eclipse]].
 
 = Maven SNAPSHOT builds =
 
