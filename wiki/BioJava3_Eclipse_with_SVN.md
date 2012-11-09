@@ -47,10 +47,11 @@ things are good now. Now, it's as simple as this:
 -   Check "m2e - Maven Integration for Eclipse", and "Subversive SVN
     Team Provider"
 -   Go through the regular process (next, accept, & restart)
--   After installing both plugins, from File menu, select new --\>
-    project... --\> "Checkout Maven Projects from SCM" (as shown in the
-    picture).
-    ![](Importing Maven Project.png "fig:Importing Maven Project.png")
+-   After installing both plugins, from File menu, select import...
+
+![](Importing Maven Project.png "Importing Maven Project.png")
+
+-   "Checkout Maven Projects from SCM" looks like this.
 
 ![](Checkout Maven Project through SCM.png "Checkout Maven Project through SCM.png")
 
