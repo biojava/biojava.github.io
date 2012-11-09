@@ -76,7 +76,8 @@ then the next/accept/etc. process.
     hassle related to win32/64 compatibility and such stuff.
 -   congratulations! Everything is ready now. Go back to the "Checkout
     Maven Projects from SCM", you will see an SVN option in the dropdown
-    box. Select it, key in the URl, and import.
+    box. Select it, key in the URl, and import (here I use the
+    developer's access URL, which might be different from yours).
 
 ![](Checkout Maven Project through SCM (populated).png "Checkout Maven Project through SCM (populated).png")
 
