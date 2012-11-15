@@ -212,7 +212,7 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   @Override`  
 `   public void fastq(final Fastq fastq)`  
 `   {`  
-`     sequences.add(FastqTools.createDNASequence(fastq));`  
+`     sequences.add(FastqTools.createDNASequenceWithQualityScores(fastq));`  
 `   }`  
 ` });`
 
