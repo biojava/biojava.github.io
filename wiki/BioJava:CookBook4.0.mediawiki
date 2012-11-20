@@ -42,7 +42,7 @@ If you re-use code from the cookbook please cite:
 * [[BioJava:CookBook:PDB:SCOP|How can I load data from the SCOP classification?]]
 * [[BioJava:CookBook:PDBP:BerkeleySCOP|How can I work with the Berkeley version of SCOP?]]
 * [[BioJava:CookBook:PDB:ligands|How can I find residues binding a ligand?]]
-
+* [[BioJava:CookBook:PDB:bioassembly|How to work with biological assemblies of proteins]]
 
 === Pairwise and Multiple Sequence Alignment  ===
 
