@@ -95,10 +95,9 @@ If you re-use code from the cookbook please cite:
 
 '''Required modules''': ''biojava3-modfinder, biojava-structure''
 
-* [[BioJava:CookBook3:ModFinder|How can I identify protein modifications in a 3D struture?]]
+* [[BioJava:CookBook3:ModFinder|How can I identify protein modifications in a 3D structure?]]
 * [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
 * [[BioJava:CookBook3:AddProtMod|How can I define and register a new protein modification?]]
-
 
 === Remote Web Service Calls ===
 
