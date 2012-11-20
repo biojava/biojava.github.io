@@ -4,8 +4,8 @@ title: BioJava:CookBook:PDB:read3.0
 
 ### How do I read a PDB file?
 
-The easiest way - AtomCache
----------------------------
+The easiest way - AtomCache and StructureIO
+-------------------------------------------
 
 The easiest way is to use the AtomCache class for accessing PDB files:
 <java>
@@ -25,6 +25,18 @@ The easiest way is to use the AtomCache class for accessing PDB files:
 `           `  
 `           e.printStackTrace();`  
 `       }`
+
+</java>
+
+As of BioJava 3.0.5 there is also a new StructureIO utility class.
+<java> import org.biojava3.structure.StructureIO;
+
+`           Structure s1 = StructureIO.getStructure("4hhb");`
+
+`           Structure bioAssembly = StructureIO.getBiologicalAssembly("1stp",1);`
+
+`           // set the PDB path in StructureIO`  
+`           StructureIO.setPdbPath("/tmp/");`
 
 </java>
 
