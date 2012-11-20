@@ -78,6 +78,8 @@ visualisation
     SCOP?](BioJava:CookBook:PDBP:BerkeleySCOP "wikilink")
 -   [How can I find residues binding a
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
+-   [How to work with biological assemblies of
+    proteins](BioJava:CookBook:PDB:bioassembly "wikilink")
 
 ### Pairwise and Multiple Sequence Alignment
 
