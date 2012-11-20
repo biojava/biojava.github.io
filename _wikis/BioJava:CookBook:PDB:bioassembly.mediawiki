@@ -3,7 +3,11 @@ Since BioJava 3.0.5 the protein structure modules can parse the biological assem
 For more information about the differences between the asymmetric unit and the biological assembly see 
 [http://www.pdb.org/pdb/101/static101.do?p=education_discussion/Looking-at-Structures/bioassembly_tutorial.html a tutorial at RCSB PDB]
 
+An comparison of the asymmetric unit and the biological assembly of Streptavidin is shown in this screenshot: It compares the asymmetric unit of [http://www.rcsb.org/pdb/explore/explore.do?structureId=1stp PDB ID 1STP] (left side) with its biological assembly (right side).
 
+[[Image:Asym_biounit.png]]
+
+Here some example code how to load the biological assembly:
 
 <java>		
 			// good examples: 1stp 1gav 1hv4 1hho 7dfr 3fad  1qqp
@@ -22,7 +26,9 @@ For more information about the differences between the asymmetric unit and the b
 			
 			// DNA 173D .. 2
 			
+			// we load the bio assembly info out of the PDB files
 			BioUnitDataProviderFactory.setBioUnitDataProvider(BioUnitDataProviderFactory.pdbProviderClassName);
+
 			//Structure bioAssembly = StructureIO.getBiologicalAssembly("4A1I",2);	
 			
 			Structure bioAssembly = StructureIO.getBiologicalAssembly("1ei7",1);
