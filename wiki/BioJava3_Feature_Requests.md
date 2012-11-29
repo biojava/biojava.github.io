@@ -8,8 +8,6 @@ If you are looking for a programming project and are interested in
 contributing any of these please contact the biojava-dev mailing list.
 
 `- Genbank parser `  
-`- Stockholm file format parser`  
-`- CATH parser`  
 `- Balibase`  
 `- UniProt (XML/txt)`
 
