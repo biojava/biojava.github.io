@@ -66,11 +66,21 @@ build javadoc:
 
 `cd biojava-svn/target/checkout/target/site/`
 
-` mv apidocs/ api3.0.3[andreas@emmy site]$ tar cvf api3.0.3.tar api3.0.3/`  
-  
-`gzip api3.0.3.tar[andreas@emmy site]$ scp api3.0.3.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/docs`
+` mv apidocs/ api3.0.3`
 
-[andreas@portal docs]$ rm api[andreas@portal docs]$ ln -s api3.0.3 api
+` tar cvf api3.0.3.tar api3.0.3/`  
+  
+` gzip api3.0.3.tar`
+
+` scp api3.0.3.tar.gz username@cloudportal.open-bio.org:/home/websites/biojava.org/html/static/docs/`
+
+`ssh andreas@cloudportal.open-bio.org`
+
+`cd /home/websites/biojava.org/html/static/docs/`
+
+` rm api`  
+  
+` ln -s api3.0.3 api`
 
 [andreas@emmy target]$ pwd/opt/cruise/projects/biojava-svn/target
 [andreas@emmy target]$ mv checkout/ bj3.0.3 [andreas@emmy target]$ tar
