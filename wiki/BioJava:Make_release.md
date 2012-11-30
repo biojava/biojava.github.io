@@ -26,7 +26,8 @@ Make sure you have access to a server that has the ssh keys setup for
 cloudportal.open-bio.org. If you need help with that, talk to
 root@open-bio.org.
 
-### On release date
+On release date
+---------------
 
 **Verify code base**
 
@@ -35,7 +36,7 @@ root@open-bio.org.
 -   Make sure the auto-build page (cruisecontrol) does not report any
     problems
 
-**Make maven release**
+### Make maven release
 
 the release process is very straightforward nowadays.
 
@@ -51,26 +52,23 @@ something went wrong you can reset the release process by doing:
 
 `mvn release:rollback`
 
-**Prepare and release javadoc files**
+### Prepare and release javadoc files
 
-enter biojava-svn/target/checkout/
+`cd biojava-svn/target/checkout/`
 
 remove .svn files (fore preparing -all file)
 
-find ./ -name ".svn" | xargs rm -Rf
+`find ./ -name ".svn" | xargs rm -Rf`
 
 build javadoc:
 
-mvn site
+`mvn site`
 
-cd biojava-svn/target/checkout/target/site/
+`cd biojava-svn/target/checkout/target/site/`
 
-on build machine: andreas@emmy site]$ mv apidocs/ api3.0.3[andreas@emmy
-site]$ tar cvf api3.0.3.tar api3.0.3/
-
-andreas@emmy site]$ gzip api3.0.3.tar[andreas@emmy site]$ scp
-api3.0.3.tar.gz
-andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/docs
+` mv apidocs/ api3.0.3[andreas@emmy site]$ tar cvf api3.0.3.tar api3.0.3/`  
+  
+`gzip api3.0.3.tar[andreas@emmy site]$ scp api3.0.3.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/docs`
 
 [andreas@portal docs]$ rm api[andreas@portal docs]$ ln -s api3.0.3 api
 
