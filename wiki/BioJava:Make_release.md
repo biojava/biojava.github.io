@@ -110,11 +110,11 @@ back to your local machine
 
 ### Javadocs
 
-`cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/`
+`cd biojava-svn/target/bj3.0.4/`
 
 `mvn clean install source:jar javadoc:jar deploy javadoc:aggregate`
 
-`cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/target/site/apidocs`
+`cd biojava-svn/target/bj3.0.4/target/site/apidocs`
 
 ### Copy files to portal.open-bio.org
 
