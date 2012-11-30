@@ -78,7 +78,9 @@ build javadoc:
 
 `cd /home/websites/biojava.org/html/static/docs/`
 
-` rm api`  
+`tar zxvf api3.0.4.tar.gz`
+
+`rm api`  
   
 ` ln -s api3.0.3 api`
 
