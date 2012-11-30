@@ -20,6 +20,12 @@ semi-automatic.
 
 -   Announce release deadlines on mailing list
 
+### Prepare your release server
+
+Make sure you have access to a server that has the ssh keys setup for
+cloudportal.open-bio.org. If you need help with that, talk to
+root@open-bio.org.
+
 ### On release date
 
 **Verify code base**
@@ -28,50 +34,59 @@ semi-automatic.
     (there usually are some).
 -   Make sure the auto-build page (cruisecontrol) does not report any
     problems
--   Run
 
-`ant clean; ant runtests`
+**Make maven release**
 
--   make sure there are no broken tests being reported.
--   fix anything that needs to be fixed prior to release.
+the release process is very straightforward nowadays.
 
-If this all fine up to here, we are ready for release.
+`mvn release:clean `
 
-**Branch and Tag SVN**
+`mvn release:prepare `
 
--   Branch and tag the svn directories. svn copy the trunk to the
-    corresponding directories in the /branches and /tags directories of
-    the svn repository.
+`mvn release:perform`
 
-`svn cp -m "branching 1.8.2 release" \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches/release-1_8_2-branch`
+**Prepare and release javadoc files**
 
-`svn cp -m "tagging 1.8.2 release" \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk \`  
-` svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags/release-1_8_2`
+enter biojava-svn/target/checkout/
 
--   Verify that all went well
+remove .svn files (fore preparing -all file)
 
-`svn list svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/branches`  
-`svn list svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/tags`
+find ./ -name ".svn" | xargs rm -Rf
 
-**Build the release**
+build javadoc:
 
--   edit the build.xml file and change the **version** field to the
-    number of the current release.
--   Run
+mvn site
 
-`ant clean; ant dist`
+cd /opt/cruise/projects/biojava-svn/target/checkout/target/site/apidocs/
 
--   check that the javadocs have been built ok, first page should show
-    the number of the current release/
+on emmy andreas@emmy site]$ mv apidocs/ api3.0.3[andreas@emmy site]$ tar
+cvf api3.0.3.tar api3.0.3/
 
-`open `[`file:///path/to/your/local/dir/biojava-live/dist/biojava-1.8/doc/biojava/index.html`](file:///path/to/your/local/dir/biojava-live/dist/biojava-1.8/doc/biojava/index.html)
+andreas@emmy site]$ gzip api3.0.3.tar[andreas@emmy site]$ scp
+api3.0.3.tar.gz
+andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/docs
 
--   prepare the biojava-all.jar bundle
+[andreas@portal docs]$ rm api[andreas@portal docs]$ ln -s api3.0.3 api
 
-`cd dist; jar cvf biojava-1.8.2-all.jar biojava-1.8.2`
+[andreas@emmy target]$ pwd/opt/cruise/projects/biojava-svn/target
+[andreas@emmy target]$ mv checkout/ bj3.0.3 [andreas@emmy target]$ tar
+zcvf bj3.0.3.tar.gz bj3.0.3
+
+[andreas@emmy target]$ mv bj3.0.3.tar.gz biojava-3.0.3-all.tar.gz
+
+on portal.open-bio cd /home/websites/biojava.org/html/static/download
+
+mkdir bj3.0.3
+
+emmy: scp biojava-3.0.3-all.tar.gz
+andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3
+
+GOOGLE DOCS:
+
+cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/ mvn clean install
+source:jar javadoc:jar deploy javadoc:aggregate
+
+cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/target/site/apidocs
 
 ### Copy files to portal.open-bio.org
 
