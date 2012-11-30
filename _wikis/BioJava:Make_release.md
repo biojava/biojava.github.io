@@ -88,25 +88,33 @@ now log into the couldportal server:
 
 and back to your local machine...
 
-[andreas@emmy target]$ pwd/opt/cruise/projects/biojava-svn/target
-[andreas@emmy target]$ mv checkout/ bj3.0.3 [andreas@emmy target]$ tar
-zcvf bj3.0.3.tar.gz bj3.0.3
+### Create the biojava-all bundle
 
-[andreas@emmy target]$ mv bj3.0.3.tar.gz biojava-3.0.3-all.tar.gz
+in biojava-svn/target
 
-on portal.open-bio cd /home/websites/biojava.org/html/static/download
+`mv checkout/ bj3.0.3`
 
-mkdir bj3.0.3
+`tar zcvf bj3.0.3.tar.gz bj3.0.3`
 
-emmy: scp biojava-3.0.3-all.tar.gz
-andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3
+`mv bj3.0.3.tar.gz biojava-3.0.3-all.tar.gz`  
 
-GOOGLE DOCS:
+on portal.open-bio
 
-cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/ mvn clean install
-source:jar javadoc:jar deploy javadoc:aggregate
+`cd /home/websites/biojava.org/html/static/download`
 
-cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/target/site/apidocs
+`mkdir bj3.0.3`
+
+back to your local machine
+
+`scp biojava-3.0.3-all.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3`
+
+### Javadocs
+
+`cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/`
+
+`mvn clean install source:jar javadoc:jar deploy javadoc:aggregate`
+
+`cd /opt/cruise/projects/biojava-svn/target/bj3.0.4/target/site/apidocs`
 
 ### Copy files to portal.open-bio.org
 
