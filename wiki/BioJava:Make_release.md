@@ -74,6 +74,8 @@ build javadoc:
 
 ` scp api3.0.3.tar.gz username@cloudportal.open-bio.org:/home/websites/biojava.org/html/static/docs/`
 
+now log into the couldportal server:
+
 `ssh andreas@cloudportal.open-bio.org`
 
 `cd /home/websites/biojava.org/html/static/docs/`
@@ -82,7 +84,9 @@ build javadoc:
 
 `rm api`  
   
-` ln -s api3.0.3 api`
+`ln -s api3.0.3 api`
+
+and back to your local machine...
 
 [andreas@emmy target]$ pwd/opt/cruise/projects/biojava-svn/target
 [andreas@emmy target]$ mv checkout/ bj3.0.3 [andreas@emmy target]$ tar
