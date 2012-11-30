@@ -45,6 +45,12 @@ the release process is very straightforward nowadays.
 
 `mvn release:perform`
 
+If all three steps work fine, the biggest part of the release has been
+completed!. The next steps are just updates of documentation. If
+something went wrong you can reset the release process by doing:
+
+`mvn release:rollback`
+
 **Prepare and release javadoc files**
 
 enter biojava-svn/target/checkout/
@@ -57,10 +63,10 @@ build javadoc:
 
 mvn site
 
-cd /opt/cruise/projects/biojava-svn/target/checkout/target/site/apidocs/
+cd biojava-svn/target/checkout/target/site/
 
-on emmy andreas@emmy site]$ mv apidocs/ api3.0.3[andreas@emmy site]$ tar
-cvf api3.0.3.tar api3.0.3/
+on build machine: andreas@emmy site]$ mv apidocs/ api3.0.3[andreas@emmy
+site]$ tar cvf api3.0.3.tar api3.0.3/
 
 andreas@emmy site]$ gzip api3.0.3.tar[andreas@emmy site]$ scp
 api3.0.3.tar.gz
