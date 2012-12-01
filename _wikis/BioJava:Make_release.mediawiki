@@ -91,11 +91,15 @@ back to your local machine
 
 === Javadocs ===
 
+this is how to enable analytics in javadocs
+
  cd biojava-svn/target/bj3.0.4/
 
  mvn clean install source:jar javadoc:jar deploy javadoc:aggregate
 
  cd biojava-svn/target/bj3.0.4/target/site/apidocs
+
+upload apidocs
 
 === Update the wikipedia pages to link to the new release===
 
