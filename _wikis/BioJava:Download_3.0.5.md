@@ -14,10 +14,10 @@ About
 
 ### New Features
 
-- New parser for CATH classification - New parser for Stockholm file
-format - Significantly improved representation of biological assemblies
-of protein structures. Now can re-create biological assembly from
-asymmetric unit - Several bug fixes.
+`- New parser for CATH classification`  
+`- New parser for Stockholm file format`  
+`- Significantly improved representation of biological assemblies of protein structures. Now can re-create biological assembly from asymmetric unit`  
+`- Several bug fixes.`
 
 View the <BioJava:Modules> page for a list of current modules.
 
