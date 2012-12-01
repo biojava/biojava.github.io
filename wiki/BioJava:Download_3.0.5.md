@@ -77,7 +77,7 @@ api](http://www.biojava.org/docs/api3.0.5/)
 Release Date
 ------------
 
-BioJava 3.0.5 has been released on May 21st 2012
+BioJava 3.0.5 has been released on November 30th 2012
 
 Getting older versions
 ----------------------
