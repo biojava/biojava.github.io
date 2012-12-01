@@ -5,7 +5,7 @@ title: Current events
 BioJava 3.0.5 released
 ----------------------
 
-BioJava 3.0.45was released on Nov 30th 2012 and is available from
+BioJava 3.0.5 was released on Nov 30th 2012 and is available from
 <BioJava:Download> as well as from the BioJava maven repository at
 [<http://www.biojava.org/download/maven/>](http://www.biojava.org/download/maven/)
 .
