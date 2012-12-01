@@ -119,11 +119,11 @@ back to your local machine
 ### Update the wikipedia pages to link to the new release
 
 Create a new download file for the release. (I copied
-<BioJava:Download_1.6> to <BioJava:Download_1.7>). Modify the new page
-to the latest data.
+<BioJava:Download_3.0.4> to <BioJava:Download_3.0.5>). Modify the new
+page to the latest data.
 
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
-page to <BioJava:Download_1.8>)
+page to <BioJava:Download_3.0.5>)
 
 Update the <MediaWiki:Sidebar> to point to the new Javadoc api
 
