@@ -97,25 +97,6 @@ back to your local machine
 
  cd biojava-svn/target/bj3.0.4/target/site/apidocs
 
-=== Update Javadoc docu on portal.open-bio.org===
-
-Almost done... The last thing is to update the public javadoc files.
-For this, we need to recompile the javadocs and add a hook to the google analytics tracker, we are using on the website. use the modified [[BioJava:my_build_biojava|my_build_biojava.xml]]. (update the version variable in the file to your release number)
- ant -buildfile my_build_biojava.xml javadocs-biojava
-Then copy the newly created javadoc files to the public server.
- cd ant-build/docs/; tar cvf javadocs-server.tar ./biojava/
- scp javadocs-server.tar username@portal.open-bio.org:~/
-The files are now in your home directory on the server. Untar the files on portal.open-bio.org:
- tar xvf javadocs-server.tar
-The files are now in your home directory on the server. We need to hook them into the frontend:
- cd /home/websites/biojava.org/html/static/docs/
- mkdir api18
- cp -r ~/biojava/* ./api18/
-verify that all went ok by pointing your browser to
- http://www.biojava.org/docs/api18/
-update the symbolic link to the javadoc api
- point /home/websites/biojava.org/html/static/docs/api to api18
-
 === Update the wikipedia pages to link to the new release===
 
 Create a new download file for the release. (I copied [[BioJava:Download_1.6]] to [[BioJava:Download_1.7]]). Modify the new page to the latest data.
