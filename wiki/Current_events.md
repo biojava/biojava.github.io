@@ -2,6 +2,21 @@
 title: Current events
 ---
 
+BioJava 3.0.5 released
+----------------------
+
+BioJava 3.0.45was released on Nov 30th 2012 and is available from
+<BioJava:Download> as well as from the BioJava maven repository at
+[<http://www.biojava.org/download/maven/>](http://www.biojava.org/download/maven/)
+.
+
+New Features:
+
+- New parser for CATH classification - New parser for Stockholm file
+format - Significantly improved representation of biological assemblies
+of protein structures. Now can re-create biological assembly from
+asymmetric unit - Several bug fixes.
+
 BioJava 2012 paper published
 ----------------------------
 
