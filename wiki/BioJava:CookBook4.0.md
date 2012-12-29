@@ -86,6 +86,8 @@ visualisation
 **Required modules**: *biojava3-alignment, biojava3-core,
 biojava3-phylo* **Required external library**: *forester.jar*
 
+-   [How can I read a Sequence Alignment in Stockholm
+    format](BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
 -   [How can I calculate a Pairwise Sequence
     Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
     Needleman Wunsch)
