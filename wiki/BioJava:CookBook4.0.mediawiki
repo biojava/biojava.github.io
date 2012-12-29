@@ -49,11 +49,11 @@ If you re-use code from the cookbook please cite:
 '''Required modules''': ''biojava3-alignment, biojava3-core,  biojava3-phylo''
 '''Required external library''': ''forester.jar''
 
+* [[BioJava:CookBook3:Stockholm|How can I read a Sequence Alignment in Stockholm format]]? (Pfam, Rfam)
 * [[BioJava:CookBook3:PSA|How can I calculate a Pairwise Sequence Alignment]]? (Smith Waterman, Needleman Wunsch)
 * [[BioJava;CookBook3:PSA_DNA|How can I calculate a Pairwise Sequence Alignment with DNA sequences]]?
 * [[BioJava:CookBook3:MSA|How can I create a Multiple Sequence Alignment]]?
 * [[BioJava:CookBook3:MSAProfiler|How can I profile the time and memory requirements of a Multiple Sequence Alignment]]?
-
 
 === Genome ===
 '''Required modules''': ''biojava3-genome''
