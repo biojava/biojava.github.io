@@ -20,6 +20,9 @@ multiple structure objects file, or an InputStream.
 `       StockholmFileParser parser = new StockholmFileParser();`  
 `       String pathName= "stockholmFilePathAndName";`  
 `       StockholmStructure structure = parser.parse(pathName);`  
+`           `  
+`       //use read structures`  
+`           `  
 `   } catch (IOException e) {`  
 `       e.printStackTrace();`  
 `   } catch (Exception e) {`  
