@@ -59,7 +59,7 @@ multiple structure objects file, or an InputStream.
 
 } </java>
 
-### Some times you need to manage the input stream in a place other than where it was created
+### Some times you need to manage the parser in a place other than where it was created
 
 For example, you can create a StockholmFileParser somewhere in the code
 <java>
@@ -78,7 +78,7 @@ For example, you can create a StockholmFileParser somewhere in the code
 
 </java>
 
-then you use the created parser somewhere else in the code
+Then you use the created parser somewhere else in the code
 
 <java>
 
