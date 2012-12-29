@@ -12,6 +12,9 @@ public static void main(String[] args){
 		StockholmFileParser parser = new StockholmFileParser();
 		String pathName= "stockholmFilePathAndName";
 		StockholmStructure structure = parser.parse(pathName);
+			
+		//use read structures
+			
 	} catch (IOException e) {
 		e.printStackTrace();
 	} catch (Exception e) {
@@ -19,7 +22,6 @@ public static void main(String[] args){
 	}
 }
 </java>
-
 
 ===Also you can read multiple files as follows===
 
