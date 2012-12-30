@@ -62,10 +62,12 @@ multiple structure objects file, or an InputStream.
 
 } </java>
 
-### Some times you need to manage the parser in a place other than where it was created
+### Some times you don't have a reference to the file or input stream
 
-For example, you can create a StockholmFileParser somewhere in the code
-<java>
+Some times you use the parser in a place other than where it was
+created.
+
+For example, you can create a StockholmFileParser in a function <java>
 
 `   public StockholmFileParser getStockholmFileParser(String filePathName) {`  
 `       StockholmFileParser parser = new StockholmFileParser();`  
@@ -81,9 +83,8 @@ For example, you can create a StockholmFileParser somewhere in the code
 
 </java>
 
-Then you use the created parser somewhere else in the code
-
-<java>
+Then you use the created parser in another function, where you don't
+have a reference to its underling data source <java>
 
 `   public void usePArser(StockholmFileParser parser) {`  
 `       final int MAX_PER_ITTERATION = 10;`  
