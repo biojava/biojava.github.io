@@ -5,7 +5,7 @@ title: BioJava:CookBook3:Stockholm
 How to Read Multiple Sequence Alignment files in Stockholm format
 -----------------------------------------------------------------
 
-StockholmFileParser is a used t read MSA files written in Stockholm file
+StockholmFileParser is used to read MSA files written in Stockholm file
 format. This example demonstrates how you can read one or more
 StockholmStructure object(s) from a Stockholm file.
 
