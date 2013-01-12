@@ -86,7 +86,7 @@ For example, you can create a StockholmFileParser in a function <java>
 Then you use the created parser in another function, where you don't
 have a reference to its underling data source <java>
 
-`   public void usePArser(StockholmFileParser parser) {`  
+`   public void useParser(StockholmFileParser parser) {`  
 `       final int MAX_PER_ITTERATION = 10;`  
 `       List`<StockholmStructure>` structures;`  
 `       long count= 0;`  
