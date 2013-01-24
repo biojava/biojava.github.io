@@ -10,8 +10,6 @@ BioJava is [[BioJava:License|licensed under LGPL 2.1]].
 
 == Current Events ==
 
-BioJava is accepting applications for the [[Google_Summer_of_Code|Google Summer of Code 2012]]
-
 <table style="width:100%; vertical-align: top">
 <tr style="vertical-align: top;">
 <td style="width: 25%; vertical-align: top;">
