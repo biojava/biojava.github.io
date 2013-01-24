@@ -2,9 +2,15 @@
 
 BioJava has two main mailing lists :
  
- * [http://www.biojava.org/mailman/listinfo/biojava-l biojava-l]
+ * [http://lists.open-bio.org/mailman/listinfo/biojava-l biojava-l]
 
+ * [http://lists.open-bio.org/mailman/listinfo/biojava-dev biojava-dev]
+
+<!-- disable until server has been fixed
+ * [http://www.biojava.org/mailman/listinfo/biojava-l biojava-l]
  * [http://www.biojava.org/mailman/listinfo/biojava-dev biojava-dev]
+  -->
+
 
 In order to avoid SPAM both lists only accept postings from list members. Anybody can become a list member, so please subscribe before you post. If you send without being subscribed your mail might get stuck in the moderation loop, which can cause several weeks of delay (no fun to read through all that spam).
 
