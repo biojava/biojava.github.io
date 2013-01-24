@@ -7,9 +7,9 @@ BioJava Mailing Lists
 
 BioJava has two main mailing lists :
 
-`* `[`biojava-l`](http://www.biojava.org/mailman/listinfo/biojava-l)
+`* `[`biojava-l`](http://lists.open-bio.org/mailman/listinfo/biojava-l)
 
-`* `[`biojava-dev`](http://www.biojava.org/mailman/listinfo/biojava-dev)
+`* `[`biojava-dev`](http://lists.open-bio.org/mailman/listinfo/biojava-dev)
 
 In order to avoid SPAM both lists only accept postings from list
 members. Anybody can become a list member, so please subscribe before
