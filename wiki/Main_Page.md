@@ -19,9 +19,6 @@ BioJava is [licensed under LGPL 2.1](BioJava:License "wikilink").
 Current Events
 --------------
 
-BioJava is accepting applications for the [Google Summer of Code
-2012](Google_Summer_of_Code "wikilink")
-
 <table style="width:100%; vertical-align: top">
 <tr style="vertical-align: top;">
 <td style="width: 25%; vertical-align: top;">
