@@ -7,3 +7,10 @@ If you want to propose a project, have a look at the [[BioJava:Modules]] page, f
 Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at the Open Bioinformatics Foundation] and the [http://code.google.com/soc main Google Summer of Code page] for more details about the program.
 
 === Project Proposals ===
+
+
+== Previous Years ==
+
+[[Google Summer of Code 2011]]
+
+[[Google Summer of Code 2010]]
