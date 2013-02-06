@@ -21,3 +21,10 @@ Foundation](http://www.open-bio.org/wiki/Google_Summer_of_Code) and the
 details about the program.
 
 ### Project Proposals
+
+Previous Years
+--------------
+
+[Google Summer of Code 2011](Google Summer of Code 2011 "wikilink")
+
+[Google Summer of Code 2010](Google Summer of Code 2010 "wikilink")
