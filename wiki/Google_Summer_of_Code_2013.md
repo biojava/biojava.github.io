@@ -6,8 +6,8 @@ BioJava at GSoC Introduction
 ----------------------------
 
 Google has not announced yet if there will be a Google Summer of Code
-2013. This page is in preparation in case GSoC will happen again this
-year.
+2013. This page is to prepare possible projects for if/when the GSoC
+announcement comes out.
 
 If you want to propose a project, have a look at the <BioJava:Modules>
 page, for areas which are currently under development. Also take a look
