@@ -23,6 +23,14 @@ variants.](http://www.ncbi.nlm.nih.gov/pubmed/20015970)
 Cock PJ, Fields CJ, Goto N, Heuer ML, Rice PM.  
 Nucleic Acids Res. 2009 Dec 16.  
 PMID: 20015970  
+ [BioJava: an open-source framework for bioinformatics in
+2012.](http://www.ncbi.nlm.nih.gov/pubmed/22877863)  
+Prlić A, Yates A, Bliven SE, Rose PW, Jacobsen J, Troshin PV, Chapman M,
+Gao J, Koh CH, Foisy S, Holland R, Rimsa G, Heuer ML,
+Brandstätter-Müller H, Bourne PE, Willis S.  
+Bioinformatics. 2012 Oct 15;28(20):2693-5. doi:
+10.1093/bioinformatics/bts494. Epub 2012 Aug 9.  
+PMID: 22877863  
 
 For source code contributions (note, only commits against the
 biojava-live svn trunk are shown), see
