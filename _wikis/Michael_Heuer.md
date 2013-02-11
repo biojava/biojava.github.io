@@ -33,5 +33,5 @@ biojava-live svn trunk are shown), see
 For additional data analysis and visualization libraries, see
 <http://www.dishevelled.org>
 
-For the Cytoscape plugin for venn diagrams, see
-<http://www.dishevelled.org/venn-cytoscape-plugin>
+For the Cytoscape 2.x plugin and 3.x app for Venn and Euler diagrams,
+see <http://apps.cytoscape.org/apps/vennandeulerdiagrams>
