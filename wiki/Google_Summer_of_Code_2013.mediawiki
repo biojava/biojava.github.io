@@ -21,6 +21,8 @@ This project is be suitable to a confident Java developer.
 
 Please send your proposals to the BioJava dev mailing list early, so we can discuss them in details.
 
+P.S. Actually you are not limited to the old versions of BioJava, there are plenty of small little known Java projects in the Bioinformatics field which can be of interest to a wider user community. You can integrate them as a whole or cannibalize them and extract something useful on its own. You are more than welcome to optimize and improve the code while porting it to BioJava as you see fit.
+
 == Previous Years ==
 
 [[Google Summer of Code 2012]]
