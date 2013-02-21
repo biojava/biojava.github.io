@@ -22,6 +22,21 @@ details about the program.
 
 ### Project Proposals
 
+#### Port the BioJava 1 or 2 functinality to BioJava 3
+
+As you might have noticed some functionality present in BioJava 1/2 is
+missing from the BioJava 3. This is not because this functionality is
+obsolete or not needed; this is because nobody had time to refactor it
+to work in the BioJava 3.
+
+So your challenge is to identify such functionality and write a proposal
+where you specify
+
+-   What functionality you are going to port
+-   How you are going to do that (e.g. what needs changing)
+
+This project is be suitable to a confident Java developer.
+
 Previous Years
 --------------
 
