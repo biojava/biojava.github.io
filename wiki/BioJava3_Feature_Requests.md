@@ -9,7 +9,8 @@ contributing any of these please contact the biojava-dev mailing list.
 
 `- Genbank parser `  
 `- Balibase`  
-`- UniProt (XML/txt)`
+`- UniProt (XML/txt)`  
+`- port the BioJava 1 Chromatogram parser to BioJava 3`
 
 You can also take a look at the current list of [ BioJava
 Modules](BioJava:Modules#BioJava_3.0.X "wikilink") and suggest other
