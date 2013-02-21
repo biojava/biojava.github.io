@@ -5,5 +5,7 @@ If you are looking for a programming project and are interested in contributing 
  - Genbank parser 
  - Balibase
  - UniProt (XML/txt)
+ - port the BioJava 1 Chromatogram parser to BioJava 3
+
 
 You can also take a look at the current list of [[BioJava:Modules#BioJava_3.0.X| BioJava Modules]] and suggest other missing features.
