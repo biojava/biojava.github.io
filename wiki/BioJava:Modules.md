@@ -68,21 +68,14 @@ Module: biojava-biosql Lead: Richard Holland
 
 Module: biojava-das : Lead: Jonathan Warren
 
-`- probably deprecate the old DAS code in BJ and replace it with`  
-`= the up to date Dasobert library`  
-`-update dasobert code to 1.6 and make smaller`  
-`-add further support for getting new information contained in the registry (validation, on the fly validation, sources by types and cvId).`
+`- probably deprecate the old DAS code in BJ and replace it with the up to date Dasobert library`  
+`- update dasobert code to 1.6 and make smaller`  
+`- add further support for getting new information contained in the registry (validation, on the fly validation, sources by types and cvId).`
 
 Module: biojava-structure Lead: Andreas Prlic
 
 `- add secondary structure assignment`  
 `- better integration with 3D viewers (Jmol, RCSB viewers)`
-
-Module: biojava-sequencing Lead: Michael Heuer
-
-`- merge FASTQ support from 1.7.1 branch to trunk`  
-`- provide facade for Fastq --> Biojava sequence with quality scores`  
-`- review FASTQ IO interfaces, compare design with Richard's biojava3`
 
 Module: biojava-web services:
 
@@ -90,8 +83,10 @@ Module: biojava-web services:
 `- also what about REST vs. SOAP? To be discussed. People who expressed interest are:`  
 `- Niall Haslam,Scooter Willis, Sylvain Foisy`
 
-Module?: biojava-ws-blast Module?: biojava-ws-biolit
+Module?: biojava-ws-blast
+
+Module?: biojava-ws-biolit
 
 Proposed Module: biojava-j2ee Lead: Mark Schreiber
 
-`- This would probably take the form of SessionBeans and WebServices that can be deployed to Glassfish/ JBoss etc to provide biological services  for people who want to make client server or SOA apps.`
+`- This would probably take the form of SessionBeans and WebServices that can be deployed to Glassfish/ JBoss etc to provide biological services for people who want to make client server or SOA apps.`
