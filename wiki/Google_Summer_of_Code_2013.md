@@ -37,6 +37,9 @@ where you specify
 
 This project is be suitable to a confident Java developer.
 
+Please send your proposals to the BioJava dev mailing list early, so we
+can discuss it in details.
+
 Previous Years
 --------------
 
