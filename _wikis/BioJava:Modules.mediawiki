@@ -14,7 +14,7 @@ Module: biojava3-modfinder: Lead: Jianjiong Gao
 
 Module: biojava3-phylo: Lead: Scooter Willis
 
-Module: biojava3-genome: Lead: Any Yates
+Module: biojava3-genome: Lead: Andy Yates
 
 Module: biojava3-ws: Lead: Sylvain Foisy
 
