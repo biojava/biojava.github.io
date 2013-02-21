@@ -19,7 +19,7 @@ So your challenge is to identify such functionality and write a proposal where y
 
 This project is be suitable to a confident Java developer.
 
-Please send your proposals to the BioJava dev mailing list early, so we can discuss it in details.
+Please send your proposals to the BioJava dev mailing list early, so we can discuss them in details.
 
 == Previous Years ==
 
