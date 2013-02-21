@@ -2,7 +2,7 @@
 title: GSoC:AAPropertiesComputation
 ---
 
-**Amino Acids Physico-Chemical Properties Calculation**
+**Amino Acids Physicochemical Properties Calculation**
 
 *[Google Summer of Code](Google Summer of Code "wikilink") Project by
 [Chuan Hock Koh](Chuan Hock Koh "wikilink")*
@@ -11,7 +11,7 @@ title: GSoC:AAPropertiesComputation
 
 *Co-mentored by [Andreas Prlic](Andreas Prlic "wikilink")*
 
-The calculation of physico-chemical properties for biopolymers is an
+The calculation of physicochemical properties for biopolymers is an
 important tool in the arsenal of molecular biologist. Theoretically
 calculated quantities like extinction coefficients, isoelectric points,
 hydrophobicities and instability indices are useful guides as to how a
@@ -165,8 +165,8 @@ Progress Log
 -   Request for input and suggestion from biojava developer mailing list
     on this project.
 -   Committed the first draft of the interface class for the basic
-    physico-chemical properties.
--   Updated interface class for basic physico-chemical properties based
+    physicochemical properties.
+-   Updated interface class for basic physicochemical properties based
     on Mentors' feedback.
 -   Learned and better understand how to use Maven on Eclipse.
 
@@ -402,9 +402,9 @@ Progress Log
 -   Rectified two links <http://web.expasy.org/protparam/> and
     <http://web.expasy.org/compute_pi/>
 -   Checked all links on <http://biojava.org/wiki/BioJava:CookBook>
-    under Physico-Chemical Properties Computation
+    under Physicochemical Properties Computation
 -   Linked up the executable jar file on maven to Cookbook
--   Simplified the section under Physico-Chemical Properties Computation
+-   Simplified the section under Physicochemical Properties Computation
     on <http://biojava.org/wiki/BioJava:CookBook>
 -   Added dummy id to be allowed in the xml file of
     AminoAcidComposition.
