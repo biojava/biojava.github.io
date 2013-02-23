@@ -23,8 +23,6 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 **Please cite:**
 
-If you re-use code from the cookbook please cite:
-
 How Do I....?
 -------------
 
