@@ -8,8 +8,6 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 
 '''Please cite:'''
 
-If you re-use code from the cookbook please cite:
-
 {{Reference2012}}
 
 == How Do I....? ==
