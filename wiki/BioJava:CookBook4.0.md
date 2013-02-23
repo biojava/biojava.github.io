@@ -21,6 +21,8 @@ If you have any suggestions, questions or comments contact the [biojava
 mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
 go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
+**Please cite:**
+
 If you re-use code from the cookbook please cite:
 
 How Do I....?

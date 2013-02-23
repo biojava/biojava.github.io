@@ -6,9 +6,11 @@ The page was inspired by various programming cookbooks and follows a "How do I..
 
 If you have any suggestions, questions or comments contact the [mailto:biojava-l@biojava.org biojava mailing list]. To subscribe to this list go [http://biojava.org/mailman/listinfo/biojava-l here]
 
+'''Please cite:'''
+
 If you re-use code from the cookbook please cite:
 
-{{Reference}}
+{{Reference2012}}
 
 == How Do I....? ==
 
