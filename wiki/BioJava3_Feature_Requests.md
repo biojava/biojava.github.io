@@ -13,6 +13,9 @@ contributing any of these please contact the biojava-dev mailing list.
 `- port the BioJava 1 Chromatogram parser to BioJava 3`  
 `- Variation APIs that bring together Ensembl Variation, VCF file format, GFF3+GVF file format, samtools, Picard, GATK, etc.`
 
+There are also a number of algorithms where we would be interested in
+[Java ports](Algorithm_Java_port "wikilink").
+
 You can also take a look at the current list of [ BioJava
 Modules](BioJava:Modules#BioJava_3.0.X "wikilink") and suggest other
 missing features.
