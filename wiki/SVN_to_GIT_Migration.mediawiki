@@ -10,7 +10,7 @@ At the end of March 2013, BioJava will move from SVN to GIT for version control.
 
 == Current Situation ==
 
-The primary BioJava SVN repository requires an ssh account for each developer. As described in [http://biojava.org/w/index.php?title=Developer_Code_Access&oldid=5082 Developer Code Access]), the repository url is 
+The primary BioJava SVN repository requires an ssh account for each developer. As described in [http://biojava.org/w/index.php?title=Developer_Code_Access&oldid=5082 Developer Code Access], the repository url is 
 
   svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/
 
@@ -26,7 +26,7 @@ A commit hook is used to update a github mirror after each commit. This reposito
   svn up biojava/trunk
   
 Neither of these methods are recommended, although they have been suggested to work around open-bio.org server problems.
- 
+
 == Developers ==
 
 === Linking SVN to GIT ===

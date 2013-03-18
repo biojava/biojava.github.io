@@ -20,7 +20,7 @@ Current Situation
 
 The primary BioJava SVN repository requires an ssh account for each
 developer. As described in [Developer Code
-Access](http://biojava.org/w/index.php?title=Developer_Code_Access&oldid=5082)),
+Access](http://biojava.org/w/index.php?title=Developer_Code_Access&oldid=5082),
 the repository url is
 
 ` svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/`
