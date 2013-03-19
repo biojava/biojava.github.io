@@ -92,6 +92,22 @@ become too high for the administrators.
 Migration Plan
 --------------
 
+On some date TBD:
+
+1.  Generate authors file for svn2git based on known github accounts or
+    email addresses
+2.  Set SVN to read-only
+3.  Delete the existing git repository. All forks of the current repo
+    will become incompatible.
+4.  Use svn2git tool to create a new git repository, converting author
+    information along the way
+5.  All developers checkout git repositories & begin pushing changes to
+    github
+
+It is unfortunate that the 12 existing forks (plus local clones) will be
+incompatible, but none of the public forks have diverged significantly
+from the trunk so this should be acceptable.
+
 References
 ----------
 
