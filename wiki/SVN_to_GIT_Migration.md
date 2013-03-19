@@ -2,8 +2,10 @@
 title: SVN to GIT Migration
 ---
 
-At the end of March 2013, BioJava will move from SVN to GIT for version
-control.
+Around the end of March 2013, BioJava will move from SVN to GIT for
+version control. This page should be viewed as a proposal for how the
+migration process will progress. It is a work in progress. Please share
+your comments on the talk page or on the mailing list.
 
 Benefits of the move
 --------------------
