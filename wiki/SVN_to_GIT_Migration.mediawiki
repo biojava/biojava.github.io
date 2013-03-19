@@ -52,6 +52,15 @@ Current developers may find it easier to submit push requests rather than join t
 
 == Migration Plan ==
 
+On some date TBD:
+
+# Generate authors file for svn2git based on known github accounts or email addresses
+# Set SVN to read-only
+# Delete the existing git repository. All forks of the current repo will become incompatible.
+# Use svn2git tool to create a new git repository, converting author information along the way
+# All developers checkout git repositories & begin pushing changes to github
+
+It is unfortunate that the 12 existing forks (plus local clones) will be incompatible, but none of the public forks have diverged significantly from the trunk so this should be acceptable.
 
 == References ==
 <references/>
