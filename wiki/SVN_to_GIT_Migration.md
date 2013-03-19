@@ -108,6 +108,54 @@ It is unfortunate that the 12 existing forks (plus local clones) will be
 incompatible, but none of the public forks have diverged significantly
 from the trunk so this should be acceptable.
 
+Projects
+--------
+
+Unlike SVN, each project will have a separate repository under the
+BioJava organization. Only actively developed projects will be moved to
+github, with inactive projects (eg DASRepository) remaining on the
+read-only SVN server. Specifically, the following projects will be moved
+to github:
+
+-   biojava-live, renamed to biojava
+-   biojava-legacy
+-   RCSB\_SequenceViewer, renamed to RCSB-SequenceViewer
+-   RCSB Viewers, renamed to RCSB-Viewers
+
+Repository Layout
+-----------------
+
+The github repository for each project will contain the following
+branches, based on a variant of the [git-flow
+model](http://nvie.com/posts/a-successful-git-branching-model/):
+
+1.  **dev** Current development branch, corresponding to SVN trunk. All
+    active developers are free to make commits directly to this branch,
+    as well as merging feature branches and pull requests
+2.  **release** By definition, any commit to this branch counts as a
+    release. Each commit should be tagged with a new version number, eg
+    'v3.1.0', and should result in a new set of jar files getting
+    uploaded to the wiki. Only project leads should commit to this
+    branch.
+
+Additionally, any number of feature branches may be present should
+developers wish to collaborate on specific features. The **release**
+branch will be marked as the default branch, so that casual users can
+get the latest stable version via a simple
+
+` git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
+
+This does mean that developers with push permission need to be very
+careful that they are committing to the **dev** branch, since otherwise
+they are implicitly releasing untested code to the public. Hopefully the
+lack of a **master** branch will force people to think twice about where
+they are committing.
+
+Specific branches for each release (eg a release-3.1.0 branch containing
+only bugfixes) could also be used. However, past releases have mostly
+not had significant bug fixes during testing, so this may be unnecessary
+complexity.
+
 References
 ----------
 
