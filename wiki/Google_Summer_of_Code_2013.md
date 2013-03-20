@@ -47,6 +47,8 @@ integrate them as a whole or cannibalize them and extract something
 useful on its own. You are more than welcome to optimize and improve the
 code while porting it to BioJava as you see fit.
 
+------------------------------------------------------------------------
+
 #### Improve structural alignment datastructures to support topology-independent alignments
 
 BioJava contains a number of algorithms for aligning protein structures.
@@ -76,6 +78,21 @@ performance considerations. A successful proposal should consider not
 only the new data structure, but also suggest a plan for integrating it
 into existing methods, particularly in the biojava3-structure and
 biojava3-structure-gui modules.
+
+------------------------------------------------------------------------
+
+#### Topology Diagrams of Protein Structures
+
+Topology diagrams are useful for visualising the arrangement and
+connectivity of secondary structure elements of proteins. We are
+currently not aware of an easy to use Java implementation of software
+for drawing such diagrams. The goal of this project would be to use the
+available tools from biojava (load structures, define secondary
+structure) and implement a layout algorithm that would arrange a
+representation of secondary structure elements in a way so it can be
+easily used for various visualisation libraries. Depending on the speed
+of progress a visualisation layer could be added on top of this (e.g
+HTML5 vector graphics, JPanel, etc.).
 
 Previous Years
 --------------
