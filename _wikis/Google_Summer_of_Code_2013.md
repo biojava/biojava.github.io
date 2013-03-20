@@ -22,6 +22,8 @@ details about the program.
 
 ### Project Proposals
 
+------------------------------------------------------------------------
+
 #### Port the BioJava 1 or 2 functionality to BioJava 3
 
 As you might have noticed some functionality present in BioJava 1/2 is
