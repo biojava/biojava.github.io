@@ -64,7 +64,6 @@ The Genome Variation Format (GVF) is a text file format for describing sequence 
 http://www.sequenceontology.org/resources/gvf_1.02.html
 http://www.sequenceontology.org/resources/gff3.html
 
-
 Some support for these file specifications is already present in various bioinformatics libraries (and in fact biojava3 already provides GFF3 support); it would be desireable to pull these together behind a set of common APIs in biojava3.
 
 == Previous Years ==
