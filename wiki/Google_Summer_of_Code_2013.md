@@ -96,6 +96,32 @@ easily used for various visualisation libraries. Depending on the speed
 of progress a visualisation layer could be added on top of this (e.g
 HTML5 vector graphics, JPanel, etc.).
 
+------------------------------------------------------------------------
+
+#### Sequence Variation
+
+Several similar file specifications exist for dealing with sequence
+variation, including:
+
+VCF (Variant Call Format) is a text file format used by the 1000 Genomes
+project and others for representing variation against a reference
+sequence.
+
+<http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41>
+
+The Genome Variation Format (GVF) is a text file format for describing
+sequence variants at nucleotide resolution relative to a reference
+genome. GVF is a type of GFF3 file with additional pragmas and
+attributes specified.
+
+<http://www.sequenceontology.org/resources/gvf_1.02.html>
+<http://www.sequenceontology.org/resources/gff3.html>
+
+Some support for these file specifications is already present in various
+bioinformatics libraries (and in fact biojava3 already provides GFF3
+support); it would be desireable to pull these together behind a set of
+common APIs in biojava3.
+
 Previous Years
 --------------
 
