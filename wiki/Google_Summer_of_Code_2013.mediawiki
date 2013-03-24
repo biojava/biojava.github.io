@@ -6,6 +6,16 @@ If you want to propose a project, have a look at the [[BioJava:Modules]] page, f
 
 Please read the [http://www.open-bio.org/wiki/Google_Summer_of_Code GSoC page at the Open Bioinformatics Foundation] and the [http://code.google.com/soc main Google Summer of Code page] for more details about the program.
 
+=== Mentor List ===
+
+The following developers are possible Mentors for 2013:
+
+* Peter Troshin
+* Spencer Bliven
+* Michael Heuer
+* Andreas Prlic
+
+
 === Project Proposals ===
 
 ----
@@ -25,6 +35,12 @@ Please send your proposals to the BioJava dev mailing list early, so we can disc
 
 P.S. Actually you are not limited to the old versions of BioJava, there are plenty of small little known Java projects in the Bioinformatics field which can be of interest to a wider user community. You can integrate them as a whole or cannibalize them and extract something useful on its own. You are more than welcome to optimize and improve the code while porting it to BioJava as you see fit.
 
+'''Possible Mentors''' 
+
+Peter Troshin  
+2nd mentor : not yet assigned
+
+
 ----
 
 ==== Improve structural alignment datastructures to support topology-independent alignments ====
@@ -43,11 +59,21 @@ Your challenge is to propose and implement a data structure for storing structur
 
 This project requires an understanding of basic data structures and performance considerations. A successful proposal should consider not only the new data structure, but also suggest a plan for integrating it into existing methods, particularly in the biojava3-structure and biojava3-structure-gui modules.
 
+'''Possible Mentors'''  
+
+Spencer Bliven 
+2nd mentor: not yet assigned
+
 ----
 
 ==== Topology Diagrams of Protein Structures ====
 
 Topology diagrams are useful for visualising the arrangement and connectivity of secondary structure elements of proteins. We are currently not aware of an easy to use Java implementation of software for drawing such diagrams. The goal of this project would be to use the available tools from biojava (load structures, define secondary structure) and implement a layout algorithm that would arrange a representation of secondary structure elements in a way so it can be easily used for various visualisation libraries.  Depending on the speed of progress a visualisation layer could be added on top of this (e.g HTML5 vector graphics, JPanel, etc.).
+
+'''Possible Mentors'''  
+
+Andreas Prlic 
+2nd mentor: not yet assigned
 
 ----
 
@@ -65,6 +91,11 @@ http://www.sequenceontology.org/resources/gvf_1.02.html
 http://www.sequenceontology.org/resources/gff3.html
 
 Some support for these file specifications is already present in various bioinformatics libraries (and in fact biojava3 already provides GFF3 support); it would be desireable to pull these together behind a set of common APIs in biojava3.
+
+'''Possible Mentors'''  
+
+Michael Heuer  
+2nd mentor: not yet assigned
 
 == Previous Years ==
 
