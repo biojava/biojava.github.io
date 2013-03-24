@@ -21,6 +21,15 @@ Foundation](http://www.open-bio.org/wiki/Google_Summer_of_Code) and the
 [main Google Summer of Code page](http://code.google.com/soc) for more
 details about the program.
 
+### Mentor List
+
+The following developers are possible Mentors for 2013:
+
+-   Peter Troshin
+-   Spencer Bliven
+-   Michael Heuer
+-   Andreas Prlic
+
 ### Project Proposals
 
 ------------------------------------------------------------------------
@@ -49,6 +58,10 @@ field which can be of interest to a wider user community. You can
 integrate them as a whole or cannibalize them and extract something
 useful on its own. You are more than welcome to optimize and improve the
 code while porting it to BioJava as you see fit.
+
+**Possible Mentors**
+
+Peter Troshin 2nd mentor : not yet assigned
 
 ------------------------------------------------------------------------
 
@@ -82,6 +95,10 @@ only the new data structure, but also suggest a plan for integrating it
 into existing methods, particularly in the biojava3-structure and
 biojava3-structure-gui modules.
 
+**Possible Mentors**
+
+Spencer Bliven 2nd mentor: not yet assigned
+
 ------------------------------------------------------------------------
 
 #### Topology Diagrams of Protein Structures
@@ -96,6 +113,10 @@ representation of secondary structure elements in a way so it can be
 easily used for various visualisation libraries. Depending on the speed
 of progress a visualisation layer could be added on top of this (e.g
 HTML5 vector graphics, JPanel, etc.).
+
+**Possible Mentors**
+
+Andreas Prlic 2nd mentor: not yet assigned
 
 ------------------------------------------------------------------------
 
@@ -122,6 +143,10 @@ Some support for these file specifications is already present in various
 bioinformatics libraries (and in fact biojava3 already provides GFF3
 support); it would be desireable to pull these together behind a set of
 common APIs in biojava3.
+
+**Possible Mentors**
+
+Michael Heuer 2nd mentor: not yet assigned
 
 Previous Years
 --------------
