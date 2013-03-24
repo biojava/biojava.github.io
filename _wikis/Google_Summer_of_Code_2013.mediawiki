@@ -68,7 +68,18 @@ Spencer Bliven
 
 ==== Topology Diagrams of Protein Structures ====
 
-Topology diagrams are useful for visualising the arrangement and connectivity of secondary structure elements of proteins. We are currently not aware of an easy to use Java implementation of software for drawing such diagrams. The goal of this project would be to use the available tools from biojava (load structures, define secondary structure) and implement a layout algorithm that would arrange a representation of secondary structure elements in a way so it can be easily used for various visualisation libraries.  Depending on the speed of progress a visualisation layer could be added on top of this (e.g HTML5 vector graphics, JPanel, etc.).
+
+'''Rationale'''
+
+Topology diagrams are useful for visualising the arrangement and connectivity of secondary structure elements of proteins. We are currently not aware of an easy to use Java implementation of software for drawing such diagrams. 
+
+'''Approach & Goals'''
+
+The goal of this project would be to use the available tools from biojava (load structures, define secondary structure) and implement a layout algorithm that would arrange a representation of secondary structure elements in a way so it can be easily used for various visualisation libraries.  Depending on the speed of progress a visualisation layer could be added on top of this (e.g HTML5 vector graphics, JPanel, etc.).
+
+'''Difficulty and needed skills'''
+
+This project requires some algorithmic knowledge for developing the layout-algorithm for the secondary structure elements.
 
 '''Possible Mentors'''  
 
