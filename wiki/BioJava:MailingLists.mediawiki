@@ -45,6 +45,3 @@ All bug reports should contain:
 * A stack trace of any exception (complete if possible).
 * Example code that exposes the bug.
 * Accession number of a record that causes I/O problems (if appropriate).
-
-== Search the mail archives ==
-To search any of the O|B|F email archives click [http://search.open-bio.org here].
