@@ -25,9 +25,9 @@ of help, announcements, expressions of appreciation, bugs found in
 release code and requests for features.
 
 `* To post or receive list email you need to `[`sign`
-`up`](http://www.biojava.org/mailman/listinfo/biojava-l)` for the list.`  
+`up`](http://lists.open-bio.org/mailman/listinfo/biojava-l)` for the list.`  
 `* Post general issues to `[`biojava-l@biojava.org`](mailto:biojava-l@biojava.org)`.`  
-`* You can also `[`view`](http://www.biojava.org/pipermail/biojava-l)` the archive.`
+`* You can also `[`view`](http://lists.open-bio.org/pipermail/biojava-l/)` the archive.`
 
 biojava-dev developers list
 ---------------------------
