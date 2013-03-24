@@ -24,9 +24,9 @@ This list is intended for general discussion, advice, questions, offers of help,
 == biojava-dev developers list ==
 This list is intended for more technical discussions about API design, bugs in CVS development code, performance issues and things that might not be of interest to the more casual user.
 
- * To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-dev sign up] for the list.
+ * To post or receive list email you need to [http://lists.open-bio.org/mailman/listinfo/biojava-dev sign up] for the list.
  * Post general issues to [mailto:biojava-dev@biojava.org biojava-dev@biojava.org].
- * You can also [http://www.biojava.org/pipermail/biojava-dev view] the archive.
+ * You can also [http://lists.open-bio.org/pipermail/biojava-dev/ view] the archive.
 
 == List rules ==
 * Post in text format only. If you post in HTML or RTF the antispam software is likely to quarantine your email for at least a week.

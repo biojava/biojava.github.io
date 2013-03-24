@@ -37,9 +37,9 @@ bugs in CVS development code, performance issues and things that might
 not be of interest to the more casual user.
 
 `* To post or receive list email you need to `[`sign`
-`up`](http://www.biojava.org/mailman/listinfo/biojava-dev)` for the list.`  
+`up`](http://lists.open-bio.org/mailman/listinfo/biojava-dev)` for the list.`  
 `* Post general issues to `[`biojava-dev@biojava.org`](mailto:biojava-dev@biojava.org)`.`  
-`* You can also `[`view`](http://www.biojava.org/pipermail/biojava-dev)` the archive.`
+`* You can also `[`view`](http://lists.open-bio.org/pipermail/biojava-dev/)` the archive.`
 
 List rules
 ----------
