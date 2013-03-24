@@ -75,8 +75,3 @@ All bug reports should contain:
 -   Accession number of a record that causes I/O problems (if
     appropriate).
 
-Search the mail archives
-------------------------
-
-To search any of the O|B|F email archives click
-[here](http://search.open-bio.org).
