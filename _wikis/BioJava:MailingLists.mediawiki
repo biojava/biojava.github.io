@@ -17,9 +17,9 @@ In order to avoid SPAM both lists only accept postings from list members. Anybod
 == biojava-l general discussion list ==
 This list is intended for general discussion, advice, questions, offers of help, announcements, expressions of appreciation, bugs found in release code and requests for features.
 
- * To post or receive list email you need to [http://www.biojava.org/mailman/listinfo/biojava-l sign up] for the list.
+ * To post or receive list email you need to [http://lists.open-bio.org/mailman/listinfo/biojava-l sign up] for the list.
  * Post general issues to [mailto:biojava-l@biojava.org biojava-l@biojava.org].
- * You can also [http://www.biojava.org/pipermail/biojava-l view] the archive.
+ * You can also [http://lists.open-bio.org/pipermail/biojava-l/ view] the archive.
 
 == biojava-dev developers list ==
 This list is intended for more technical discussions about API design, bugs in CVS development code, performance issues and things that might not be of interest to the more casual user.
