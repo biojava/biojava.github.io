@@ -133,6 +133,8 @@ Andreas Prlic 2nd mentor: not yet assigned
 
 #### Sequence Variation
 
+**Rationale**
+
 Several similar file specifications exist for dealing with sequence
 variation, including:
 
@@ -154,6 +156,25 @@ Some support for these file specifications is already present in various
 bioinformatics libraries (and in fact biojava3 already provides GFF3
 support); it would be desireable to pull these together behind a set of
 common APIs in biojava3.
+
+**Approach & Goals**
+
+-   Consider existing open source VCF and GVF implementations ([Genotype
+    Analysis Toolkit, GATK](http://www.broadinstitute.org/gatk/),
+    [VCFTools](http://vcftools.sourceforge.net/),
+    [Picard](http://picard.sourceforge.net/),
+    [GVF-Parser](https://github.com/srynobio/GVF-Parser), etc.)
+-   Design APIs for common entities (Allele, Genotype, Haplotype, etc.)
+-   Create adaptors to third party implementations or implement support
+    directly in Biojava3
+
+**Difficulty and needed skills**
+
+Moderate difficulty.
+
+Strength in API design, the ability to learn from existing codebases,
+and experience with Java and other languages (i.e. Perl and Python) will
+be necessary.
 
 **Possible Mentors**
 
