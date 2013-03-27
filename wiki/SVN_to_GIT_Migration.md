@@ -94,7 +94,7 @@ become too high for the administrators.
 Migration Plan
 --------------
 
-On some date TBD:
+On Sat, April 29, 2013:
 
 1.  Generate authors file for svn2git based on known github accounts or
     email addresses
