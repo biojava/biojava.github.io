@@ -52,7 +52,7 @@ Current developers may find it easier to submit push requests rather than join t
 
 == Migration Plan ==
 
-On some date TBD:
+On Sat, April 29, 2013:
 
 # Generate authors file for svn2git based on known github accounts or email addresses
 # Set SVN to read-only
