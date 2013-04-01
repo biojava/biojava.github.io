@@ -8,7 +8,7 @@ BioJava at GSoC Introduction
 BioJava is applying to take part in this year's Google Summer of Code
 again as part of the OBF - the Open Bioinformatics Foundation. See [this
 year's GSoC page of the
-OBF](https://github.com/OBF/GSoC/wiki/Google-Summer-of-Code-2013).
+OBF](http://www.open-bio.org/wiki/Google_Summer_of_Code).
 
 If you want to propose a project, have a look at the <BioJava:Modules>
 page, for areas which are currently under development. Also take a look
