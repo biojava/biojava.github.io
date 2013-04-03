@@ -26,14 +26,12 @@ You can add your own data files to this structure, either at the top level or in
 
 You can download a complete `skeleton' webapp with all these files in place from the Dazzle homepage. In this case, you just need to unpack the skeleton, configure your datasources, then follow the deployment instructions below. Alternatively, you can download the source and compile your own. If so, you will need the following:
 
- BioJava (current version)
-    Available from [[BioJava:download]]. 
- BioJava bytecode library
-    Binaries can be downloaded from BioJava.org. Also in [[CVS_to_SVN_Migration|BioJava SVN]].
- servlet.jar
-    The Java Servlet 2.3 API files. This should be included with your Servlet container distribution. 
-    These are only needed for compiling Dazzle: when you deploy the servlet, it should automatically 
-    pick up servlet API classes from the servlet container. 
+* BioJava (current version)
+**    Available from [[BioJava:download]]. 
+* BioJava bytecode library
+**    Binaries can be downloaded from BioJava.org or built from [[Get source|source code]].
+* servlet.jar
+**    The Java Servlet 2.3 API files. This should be included with your Servlet container distribution. These are only needed for compiling Dazzle: when you deploy the servlet, it should automatically pick up servlet API classes from the servlet container. 
 
 The current Dazzle sourcecode is available from the BioJava Subversion repository. Follow the instructions there to connect to the server and check out the dazzle module. You will need to copy all the libraries above into the dazzle directory, then use the supplied ANT build-script to compile the code.
 
