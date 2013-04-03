@@ -115,8 +115,8 @@ Se si ha la necessità di modificare BioJava, si può ottenere una copia
 del codice sorgente dalla [Source
 directory](http://www.biojava.org/download/source) dell'area download. I
 sorgenti sono distribuiti nel formato .tar.gz. L'ultima versione del
-codice (aggiornata al minuto) si può reperire tramite svn qui: [
-anonymous SVN checkout](CVS_to_SVN_Migration "wikilink").
+codice (aggiornata al minuto) si può reperire tramite svn qui: [Get
+source](Get source "wikilink").
 
 BioJava è compilato utilizzando *ant* build tool, l'equivalente Java
 della famosa utilità Make. Scaricare e utilizzare l'ultima versione di
