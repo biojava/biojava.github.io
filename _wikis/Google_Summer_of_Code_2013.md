@@ -67,6 +67,8 @@ Peter Troshin 2nd mentor : not yet assigned
 
 #### Improve structural alignment datastructures to support topology-independent alignments
 
+Rationale  
+
 BioJava contains a number of algorithms for aligning protein structures.
 In the most general case, an alignment consists of a mapping between
 residues of two (or more) proteins. However, for historical and
@@ -82,6 +84,8 @@ Additionally, the class to store structural alignments (AFPChain)
 contains a number of unneccessary, poorly documented, or
 algorithm-specific parameters which should be removed or refactored.
 
+Approach & Goals  
+
 Your challenge is to propose and implement a data structure for storing
 structure alignments which
 
@@ -89,13 +93,18 @@ structure alignments which
 -   Efficiently utilizes memory
 -   Has good performance for common tasks
 
+Difficulty and needed skills  
+
+Moderate technical difficulty, but requires strong planning and abstract
+thinking.
+
 This project requires an understanding of basic data structures and
 performance considerations. A successful proposal should consider not
 only the new data structure, but also suggest a plan for integrating it
 into existing methods, particularly in the biojava3-structure and
 biojava3-structure-gui modules.
 
-**Possible Mentors**
+Possible Mentors  
 
 Spencer Bliven 2nd mentor: not yet assigned
 
