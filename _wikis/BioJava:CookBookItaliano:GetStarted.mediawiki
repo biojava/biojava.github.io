@@ -1,3 +1,4 @@
+{{Outdated|reason=the [[SVN to GIT Migration|migration to Github]] and [[BioJava:MavenMigration|Maven]]}}
 == Introduzione ==
 
 BioJava può essere eseguito su qualsiasi computer che abbia una Java Virtual Machine conforme alle specifiche J2SE 1.4 (o superiore). Java è disponibile per Linux, Windows, Solaris ed è possibile ottenerlo da [http://java.sun.com/javase/downloads/index.jsp Sun's java website]. Versioni recenti di MacOS X includono Java come standard. Java è anche disponibile per altre piattaforme: in caso di dubbi contattare il proprio rivenditore. I file binare di BioJava sono distribuiti in formato .jar (Java ARchive).
@@ -61,7 +62,7 @@ A questo punto sarà possibile compilare ed eseguire i programmi BioJava utilizz
 
 == Come compilare BioJava a partire da zero ==
 
-Se si ha la necessità di modificare BioJava, si può ottenere una copia del codice sorgente dalla [http://www.biojava.org/download/source Source directory] dell'area download. I sorgenti sono distribuiti nel formato .tar.gz. L'ultima versione del codice (aggiornata al minuto) si può reperire tramite svn qui: [[CVS_to_SVN_Migration| anonymous SVN checkout]].
+Se si ha la necessità di modificare BioJava, si può ottenere una copia del codice sorgente dalla [http://www.biojava.org/download/source Source directory] dell'area download. I sorgenti sono distribuiti nel formato .tar.gz. L'ultima versione del codice (aggiornata al minuto) si può reperire tramite svn qui: [[Get source]].
 
 BioJava è compilato utilizzando ''ant'' build tool, l'equivalente Java della famosa utilità Make. Scaricare e utilizzare l'ultima versione di ''ant'' (attualmente la 1.7.1). E' disponibile a questo [http://ant.apache.org link].
 
