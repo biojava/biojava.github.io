@@ -91,7 +91,7 @@ Building your own
 If you want to modify BioJava, you can obtain a copy of the source code
 from the download areas. Source releases are distributed in .tar.gz
 format. You can also obtain up-to-the-minute source code via either the
-[Maven repository](http://biojava.org/download/maven/) or an [ anonymous
-SVN checkout](CVS_to_SVN_Migration "wikilink").
+[Maven repository](http://biojava.org/download/maven/) or from
+[github](Get source "wikilink").
 
 BioJava is now built using [Apache Maven](http://maven.apache.org/).
