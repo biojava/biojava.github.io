@@ -158,6 +158,21 @@ only bugfixes) could also be used. However, past releases have mostly
 not had significant bug fixes during testing, so this may be unnecessary
 complexity.
 
+Missing History
+---------------
+
+The SVN repository used SVN 1.4, which does not store information about
+moves and merges. This made it extremely difficult to deal with the
+major refactoring that occurred as part of the [Maven
+Migration](BioJava:MavenMigration "wikilink"). As a result, no history
+prior to September 2009 (r7227) was migrated to Git. This is
+unfortunate, but it would have been extremely difficult and
+time-consuming to document all the large moves and refactors from
+BioJava's history in a way consistent with git.
+
+The anonymous SVN will continue to be accessible as documentation of the
+full history in SVN.
+
 References
 ----------
 
