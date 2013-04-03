@@ -102,8 +102,7 @@ Building your own
 If you want to modify BioJava, you can obtain a copy of the source code
 from the [Maven repository](http://biojava.org/download/maven/) of the
 download area. Source releases are distributed in .tar.gz format. You
-can also obtain up-to-the-minute source code via an [ anonymous SVN
-checkout](CVS_to_SVN_Migration "wikilink").
+can also obtain up-to-the-minute [source code](Get source "wikilink").
 
 Since version 1.8, BioJava Legacy 1.8 requires
 [Maven](http://maven.apache.org/) for the build process. We are also
