@@ -1,3 +1,4 @@
+{{Outdated|reason=the [[SVN to GIT Migration|migration to Github]]}}
 == Download latest automated builds for BioJava ==
 
 BioJava developers frequently fix bugs or add new features in the [[CVS_to_SVN_Migration|BioJava SVN repository]]. You can either obtain an [[CVS_to_SVN_Migration|anonymous SVN checkout]] or download an automated build based on the latest SVN content.
