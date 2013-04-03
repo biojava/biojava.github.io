@@ -2,73 +2,77 @@
 title: Get source
 ---
 
-Check out code from SVN
-=======================
+BioJava is hosted on [Github](https://github.com/biojava/biojava/). The
+preferred method for checking out the source is with git, although it is
+also possible to use subversion.
 
-BioJava requires [Subversion](http://subversion.tigris.org/) (SVN) and
-[Maven](http://maven.apache.org/) for checking out the code and creating
-a build. Access is possible either via
+Getting the latest release code
+===============================
 
-`- Anonymous SVN or GIT access or`  
-`- Developer SVN access (ssh account required) or`  
-`- BioJava SNAPSHOT builds (anonymous, Maven required)`
+BioJava can be accessed several ways
 
-Downloading and updating code via Anonymous SVN
-===============================================
+-   Git
+-   SVN (not recommended)
+-   [Download binaries](BioJava:Download "wikilink")
+-   Directly from [Maven](http://maven.apache.org/)
 
-The code.open-bio.org server offers up read-only copies of source code
-repositories via anonymous SVN. A list of code repositories available
-via SVN can be seen here: <http://code.open-bio.org/?root=biojava>
+Using git
+---------
 
-### Checking out the latest BioJava code
+The latest stable release version of BioJava is available through git
+using the following command:
 
-The following example shows how to obtain the latest BioJava codebase
-snapshot using anonymous SVN, it will check out the latest copy of
-biojava-live/ from the "SVN trunk" and will locally store it in a
-directory named "biojava" on your system:
+`git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
 
-`svn co `[`http://code.open-bio.org/repos/biojava/biojava-live/trunk`](http://code.open-bio.org/repos/biojava/biojava-live/trunk)` ./biojava`
+This can also be done directly from within Eclipse. Instructions are
+available at [BioJava3 eclipse](BioJava3 eclipse "wikilink").
 
-Anonymous checkouts are now hosted at [read only mirror at
-github](http://github.com/biojava/biojava). As such you can of course
-also use git to get a copy of the code:
+Using SVN
+---------
 
-`git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)  
-
-finally there is also a SVN interface to github:
+If you prefer to use SVN, code can also be accessed using Github's SVN
+bridge.[1](https://github.com/blog/1178-collaborating-on-github-with-subversion)
 
 `svn co `[`http://svn.github.com/biojava/biojava.git`](http://svn.github.com/biojava/biojava.git)` ./biojava`
 
-A list of all available projects in SVN can be obtained with:
+Maven Release builds
+--------------------
 
-`svn list `[`http://code.open-bio.org/repos/biojava`](http://code.open-bio.org/repos/biojava)
+In order to use BioJava in your Maven projects, add the following lines
+to your project .pom file:
 
-### Troubleshooting Anonymous SVN
+    <repositories>
+        <repository>
+            <id>biojava-maven-repo</id>
+            <name>BioJava repository</name>
+            <url>http://www.biojava.org/download/maven/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
-If you encounter an error while using the SVN client or SVN Web
-interface, the likely cause is that our server is in the middle of
-replicating the repository from the primary source. While the mirror and
-replication process occurs, it is not unusual for SVN client
-functionality to break temporarily.
+You can then add any of the biojava modules as a dependency for your
+project and Maven will automatically fetch the relevant jar files.
 
-The final step of our codebase replication process is to explicitly
-re-verify the health and status of each repository, this process takes a
-few moments but while it occurs the repository is "locked" and
-unavailable for access.
+Getting the latest development code
+===================================
 
-`   * Anonymous SVN repositories are updated/mirrored hourly from the primary developer server`  
-`   * Anonymous SVN repositories are verified and repaired (if necessary) every 20 minutes `
+BioJava generally releases two to three times a year. To get the latest
+features and bug fixes, you can use the devel branch.
 
-If a SVN client error occurs for longer than 20 minutes, please report
-this to: support@helpdesk.open-bio.org
+` git clone -b devel `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
 
-For Eclipse Users
-=================
+or from an existing git repository
 
-`For more details on how to setup eclipse plugins needed and to checkout Biojava code, see `[`BioJava3_eclipse`](BioJava3_eclipse "wikilink")`.`
+`git checkout devel`
+
+All developers should use the devel branch for publishing changes.
+Details for how to contribute changes back to BioJava are available at
+[Developer\_Code\_Access](Developer_Code_Access "wikilink").
 
 Maven SNAPSHOT builds
-=====================
+---------------------
 
 BioJava now also provides SNAPSHOT builds of the latest code base. This
 is created automatically by the automated build system at
@@ -90,22 +94,29 @@ the following lines to your project .pom file:
         </repository>
     </repositories>
 
-Downloading and updating code via Developer SVN
-===============================================
+History
+=======
 
-For getting write access to BioJava you need a developer account on
-dev.open-bio.org. Details for how developers can check out the
-read/write enabled SVN see at
-[Developer\_Code\_Access](Developer_Code_Access "wikilink")
+At its conception, BioJava was stored on a CVS repository and built
+using Ant. Since then, several major refactoring have occurred leading
+to the current layout as a set of Maven modules stored on github.
 
-Links
-=====
+BioJava migrated to Git
+-----------------------
 
-See also the [SVN developers page in the OBF
-wiki](http://www.open-bio.org/wiki/SVN-Developers)
+BioJava was migrated to git in April 2013 (see [SVN to GIT
+Migration](SVN to GIT Migration "wikilink")). History prior to September
+2009 was not migrated. The old SVN repositories are still available for
+anonymous SVN access, but are closed to new commits. The repository can
+be [browsed online](http://code.open-bio.org/?root=biojava) or checked
+out using
 
-Repository News
-===============
+`svn co `[`http://code.open-bio.org/repos/biojava/biojava-live/trunk`](http://code.open-bio.org/repos/biojava/biojava-live/trunk)` ./biojava`
+
+Developers who previously had write access to SVN can also view the
+archive at the old development server (requires ssh access)
+
+`svn co svn+ssh://dev.open-bio.org/home/svn-repositories/biojava/biojava-live/trunk/ ./biojava-live`
 
 BioJava migrated to Maven
 -------------------------
