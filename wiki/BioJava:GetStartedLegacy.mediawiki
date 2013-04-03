@@ -1,3 +1,4 @@
+{{Outdated|reason=the [[SVN to GIT Migration|migration to Github]]}}
 == Introduction ==
 Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the continuation of the old BioJava core while a new code base, BioJava 3, is currently being developed. As of the concurrent release of BioJava 1.8.2 and BioJava 3.0.3, many functionalities are still not available in BioJava 3 and differences between their respective sequence models may make BioJava 1 a valid option for your project.
 
