@@ -1,3 +1,4 @@
+{{Outdated|reason=the [[SVN to GIT Migration|migration to Github]]}}
 =BioJava 3=
 
 ==Status==
