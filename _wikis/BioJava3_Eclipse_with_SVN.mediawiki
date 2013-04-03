@@ -1,3 +1,4 @@
+{{outdated|info=For a current version, see [[BioJava3 eclipse]]}}
 == Prerequisite ==
 
 * Make sure you have a copy of the latest eclipse (Galileo)
