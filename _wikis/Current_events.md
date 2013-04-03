@@ -2,6 +2,13 @@
 title: Current events
 ---
 
+BioJava moves to Github
+-----------------------
+
+As of April 3, 2013, [Github](http://github.com/biojava) is the primary
+repository for BioJava. See [SVN to GIT
+Migration](SVN to GIT Migration "wikilink") for more info.
+
 BioJava 3.0.5 released
 ----------------------
 

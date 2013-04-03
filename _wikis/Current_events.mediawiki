@@ -1,3 +1,8 @@
+== BioJava moves to Github ==
+
+As of April 3, 2013, [http://github.com/biojava Github] is the primary repository for BioJava. See [[SVN to GIT Migration]] for more info.
+
+
 == BioJava 3.0.5 released ==
 
 BioJava 3.0.5 was released on Nov 30th 2012 and is available from
