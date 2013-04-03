@@ -1,1 +1,19 @@
-#REDIRECT [[BioJava3 Eclipse with SVN]]
+Eclipse is a common IDE for using BioJava.
+
+== Prerequisites ==
+
+# Download Eclipse from [http://www.eclipse.org/ http://www.eclipse.org/]. Several flavors are available, which come with different pre-installed plugins. We recommend starting with 'Eclipse IDE for Java Developers'.
+# Install the following plugins. See [[#Plugin Installation]] below for detailed instructions.
+#* m2e - Maven Integration for Eclipse
+#* Eclipse EGit
+#* m2e-egit SCM Handler
+
+== Cloning the repository ==
+
+We recommend [[Contributing to BioJava#Forking Biojava|creating a fork]] on github for day-to-day development. In the following instructions you should substitute something like 'https://github.com/<username>/biojava.git' for the repository URL. If you don't want to make a fork (for instance, if you don't plan to make any changes), you can follow the instructions below exactly.
+
+''TODO: write instructions''
+
+== Plugin Installation ==
+
+''This section needs to be expanded with specific instructions for installing plugins using either Marketplace or directly from the Install software menu.''
