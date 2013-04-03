@@ -52,7 +52,7 @@ You can now compile and run BioJava programs using the ''javac'' and ''java'' co
 
 ==  Building your own ==
 
-If you want to modify BioJava, you can obtain a copy of the source code from the [http://biojava.org/download/maven/ Maven repository] of the download area. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute source code via an [[CVS_to_SVN_Migration| anonymous SVN checkout]].
+If you want to modify BioJava, you can obtain a copy of the source code from the [http://biojava.org/download/maven/ Maven repository] of the download area. Source releases are distributed in .tar.gz format. You can also obtain up-to-the-minute [[Get source|source code]].
 
 Since version 1.8, BioJava Legacy 1.8 requires [http://maven.apache.org/ Maven] for the build process. We are also providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
 
