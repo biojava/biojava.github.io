@@ -131,9 +131,9 @@ The github repository for each project will contain the following
 branches, based on a variant of the [git-flow
 model](http://nvie.com/posts/a-successful-git-branching-model/):
 
-1.  **dev** Current development branch, corresponding to SVN trunk. All
-    active developers are free to make commits directly to this branch,
-    as well as merging feature branches and pull requests
+1.  **devel** Current development branch, corresponding to SVN trunk.
+    All active developers are free to make commits directly to this
+    branch, as well as merging feature branches and pull requests
 2.  **release** By definition, any commit to this branch counts as a
     release. Each commit should be tagged with a new version number, eg
     'v3.1.0', and should result in a new set of jar files getting
@@ -148,10 +148,10 @@ get the latest stable version via a simple
 ` git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
 
 This does mean that developers with push permission need to be very
-careful that they are committing to the **dev** branch, since otherwise
-they are implicitly releasing untested code to the public. Hopefully the
-lack of a **master** branch will force people to think twice about where
-they are committing.
+careful that they are committing to the **devel** branch, since
+otherwise they are implicitly releasing untested code to the public.
+Hopefully the lack of a **master** branch will force people to think
+twice about where they are committing.
 
 Specific branches for each release (eg a release-3.1.0 branch containing
 only bugfixes) could also be used. However, past releases have mostly
