@@ -3,7 +3,7 @@ Eclipse is a common IDE for using BioJava.
 == Prerequisites ==
 
 # Download Eclipse from [http://www.eclipse.org/ http://www.eclipse.org/]. Several flavors are available, which come with different pre-installed plugins. We recommend starting with 'Eclipse IDE for Java Developers'.
-# Install the following plugins. See [[#Plugin Installation]] below for detailed instructions.
+# Install the following plugins. See [[#Plugin Installation|Plugin Installation]] below for detailed instructions.
 #* m2e - Maven Integration for Eclipse
 #* Eclipse EGit
 #* m2e-egit SCM Handler
