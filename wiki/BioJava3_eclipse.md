@@ -48,9 +48,6 @@ with more versions of Eclipse.
 ### 1. Install Maven m2e
 
 1.  In eclipse, go to
-    <span style="font:monospace; background:#FFFFCC;"><span style="background:#FFFFCC; border: solid 1px #FFCC00;">
-    Help</span>\><span style="background:#FFFFCC; border: solid 1px #FFCC00;">Install
-    New Software...</span></tt>
 
 ### 2. Install EGit
 
