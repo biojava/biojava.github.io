@@ -48,6 +48,14 @@ with more versions of Eclipse.
 ### 1. Install Maven m2e
 
 1.  In eclipse, go to
+2.  Choose '--All Available Sites--' from the 'Work with' dropdown
+3.  Search for 'm2e' and check the box next to 'm2e - Maven Integration
+    for Eclipse' under Collaboration
+4.  Click 'Next', accept the license, and finish the installation
+5.  Restart Eclipse at the prompt
+
+If everything went smoothly, after reboot the 'Welcome' screen should
+mention 'Maven Integration for Eclipse'.
 
 ### 2. Install EGit
 
