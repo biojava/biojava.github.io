@@ -47,6 +47,9 @@ with more versions of Eclipse.
 
 ### 1. Install Maven m2e
 
+![Screenshot of Install New Software dialog after selecting m2e for
+install.](Install_m2e.png "Screenshot of Install New Software dialog after selecting m2e for install.")
+
 1.  In eclipse, go to
 2.  Choose '--All Available Sites--' from the 'Work with' dropdown
 3.  Search for 'm2e' and check the box next to 'm2e - Maven Integration
