@@ -23,6 +23,12 @@ Recent versions of Eclipse come with the Marketplace plugin, which can be used t
 === 1. Install Maven m2e ===
 
 # In eclipse, go to {{menu2|Help|Install New Software...}}
+# Choose '--All Available Sites--' from the 'Work with' dropdown
+# Search for 'm2e' and check the box next to 'm2e - Maven Integration for Eclipse' under Collaboration
+# Click 'Next', accept the license, and finish the installation
+# Restart Eclipse at the prompt
+
+If everything went smoothly, after reboot the 'Welcome' screen should mention 'Maven Integration for Eclipse'.
 
 === 2. Install EGit ===
 
