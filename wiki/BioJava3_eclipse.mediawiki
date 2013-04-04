@@ -42,3 +42,10 @@ Installing egit is very similar to installing m2e.
 After rebooting, the Welcome screen should have a section about Git.
 
 === 3. Install the SCM Handler ===
+
+# Go to {{menu2|File|Import...}}
+# In the Maven category, select 'Check out Maven Projects from SCM' and click Next
+# At this point, the Git connector is not installed, so the 'SCM URL' dropdown will either be blank or will only contain other SCM connectors like SVN. Click 'Find more SCM connectors in the m2e Marketplace'
+# Search for 'egit' in the 'Install m2e connectors' dialog. Check the 'm2e-egit' connector and click Finish.
+# Click through the installer dialog and license. The security warning about unsigned content is safe to ignore.
+# Restart eclipse (last time!)
