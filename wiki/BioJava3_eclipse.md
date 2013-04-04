@@ -12,7 +12,7 @@ Prerequisites
     flavors are available, which come with different pre-installed
     plugins. We recommend starting with 'Eclipse IDE for Java
     Developers'.
-2.  Install the following plugins. See [\#Plugin
+2.  Install the following plugins. See [Plugin
     Installation](#Plugin_Installation "wikilink") below for detailed
     instructions.
     -   m2e - Maven Integration for Eclipse
