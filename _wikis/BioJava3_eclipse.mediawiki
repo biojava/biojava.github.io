@@ -21,7 +21,7 @@ We recommend [[Contributing to BioJava#Forking Biojava|creating a fork]] on gith
 Recent versions of Eclipse come with the Marketplace plugin, which can be used to find and install additional plugins. Feel free to install the prerequisites from Marketplace. This tutorial uses the older method of installing plugins directly from their repositories, which is compatible with more versions of Eclipse.
 
 === 1. Install Maven m2e ===
-[[File:Install_m2e.png|thumb|400px|Screenshot of Install New Software dialog after selecting m2e for install.]]
+[[File:Install_m2e.png|thumb|300px|Screenshot of Install New Software dialog after selecting m2e for install.]]
 # In eclipse, go to {{menu2|Help|Install New Software...}}
 # Choose '--All Available Sites--' from the 'Work with' dropdown
 # Search for 'm2e' and check the box next to 'm2e - Maven Integration for Eclipse' under Collaboration
