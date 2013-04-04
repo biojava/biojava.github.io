@@ -51,3 +51,5 @@ After rebooting, the Welcome screen should have a section about Git.
 # Search for 'egit' in the 'Install m2e connectors' dialog. Check the 'm2e-egit' connector and click Finish.
 # Click through the installer dialog and license. The security warning about unsigned content is safe to ignore.
 # Restart eclipse (last time!)
+
+Eclipse should now be ready to get the latest checkout of BioJava. See [[#Cloning the repository|Cloning the repository]] above.
