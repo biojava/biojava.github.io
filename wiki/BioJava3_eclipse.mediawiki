@@ -22,7 +22,7 @@ Recent versions of Eclipse come with the Marketplace plugin, which can be used t
 
 === 1. Install Maven m2e ===
 
-# In eclipse, go to <span style="font:monospace; background:#FFFFCC;"><span style="background:#FFFFCC; border: solid 1px #FFCC00;"> Help</span>><span style="background:#FFFFCC; border: solid 1px #FFCC00;">Install New Software...</span></tt>
+# In eclipse, go to {{menu2|Help|Install New Software...}}
 
 === 2. Install EGit ===
 
