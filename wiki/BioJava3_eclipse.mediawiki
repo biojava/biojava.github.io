@@ -17,3 +17,13 @@ We recommend [[Contributing to BioJava#Forking Biojava|creating a fork]] on gith
 == Plugin Installation ==
 
 ''This section needs to be expanded with specific instructions for installing plugins using either Marketplace or directly from the Install software menu.''
+
+Recent versions of Eclipse come with the Marketplace plugin, which can be used to find and install additional plugins. Feel free to install the prerequisites from Marketplace. This tutorial uses the older method of installing plugins directly from their repositories, which is compatible with more versions of Eclipse.
+
+=== 1. Install Maven m2e ===
+
+# In eclipse, go to <span style="font:monospace; background:#FFFFCC;"><span style="background:#FFFFCC; border: solid 1px #FFCC00;"> Help</span>><span style="background:#FFFFCC; border: solid 1px #FFCC00;">Install New Software...</span></tt>
+
+=== 2. Install EGit ===
+
+=== 3. Install the SCM Handler ===
