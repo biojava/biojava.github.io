@@ -42,7 +42,9 @@ Installing egit is very similar to installing m2e.
 After rebooting, the Welcome screen should have a section about Git.
 
 === 3. Install the SCM Handler ===
-
+[[File:EGit SCM install 1.png|thumb|300px|The {{menu|Import...}} dialog. [[#3. Install the SCM Handler|Step 1]]]]
+[[File:EGit SCM install 2.png|thumb|300px|Link to the m2e Marketplace, without any SCM connectors installed. [[#3. Install the SCM Handler|Step 3]]]]
+[[File:EGit SCM install 3.png|thumb|300px|Installing m2e-egit from the m2e Marketplace [[#3. Install the SCM Handler|Step 4]]]]
 # Go to {{menu2|File|Import...}}
 # In the Maven category, select 'Check out Maven Projects from SCM' and click Next
 # At this point, the Git connector is not installed, so the 'SCM URL' dropdown will either be blank or will only contain other SCM connectors like SVN. Click 'Find more SCM connectors in the m2e Marketplace'
