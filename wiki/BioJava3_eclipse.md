@@ -75,6 +75,14 @@ After rebooting, the Welcome screen should have a section about Git.
 
 ### 3. Install the SCM Handler
 
+![The dialog. [Step
+1](#3._Install_the_SCM_Handler "wikilink")](EGit SCM install 1.png "fig:The  dialog. Step 1")
+![Link to the m2e Marketplace, without any SCM connectors installed.
+[Step
+3](#3._Install_the_SCM_Handler "wikilink")](EGit SCM install 2.png "fig:Link to the m2e Marketplace, without any SCM connectors installed. Step 3")
+![Installing m2e-egit from the m2e Marketplace [Step
+4](#3._Install_the_SCM_Handler "wikilink")](EGit SCM install 3.png "fig:Installing m2e-egit from the m2e Marketplace Step 4")
+
 1.  Go to
 2.  In the Maven category, select 'Check out Maven Projects from SCM'
     and click Next
