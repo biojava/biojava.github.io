@@ -31,5 +31,14 @@ Recent versions of Eclipse come with the Marketplace plugin, which can be used t
 If everything went smoothly, after reboot the 'Welcome' screen should mention 'Maven Integration for Eclipse'.
 
 === 2. Install EGit ===
+Installing egit is very similar to installing m2e.
+
+# In eclipse, go to {{menu2|Help|Install New Software...}}
+# Choose '--All Available Sites--' from the 'Work with' dropdown
+# Search for 'egit' and check the box next to 'Eclipse EGit' under Collaboration
+# Click 'Next', accept the license, and finish the installation
+# Restart Eclipse at the prompt
+
+After rebooting, the Welcome screen should have a section about Git.
 
 === 3. Install the SCM Handler ===
