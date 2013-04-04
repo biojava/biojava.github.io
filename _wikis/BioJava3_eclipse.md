@@ -96,3 +96,5 @@ After rebooting, the Welcome screen should have a section about Git.
     about unsigned content is safe to ignore.
 6.  Restart eclipse (last time!)
 
+Eclipse should now be ready to get the latest checkout of BioJava. See
+[Cloning the repository](#Cloning_the_repository "wikilink") above.
