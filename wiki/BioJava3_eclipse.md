@@ -152,3 +152,13 @@ After rebooting, the Welcome screen should have a section about Git.
 
 Eclipse should now be ready to get the latest checkout of BioJava. See
 [Cloning the repository](#Cloning_the_repository "wikilink") above.
+
+Configuring EGit
+----------------
+
+You should set your git name and email in Eclipse.
+
+1.  Go to Eclipse Preferences
+2.  View
+3.  In the 'User Settings' tab, update your name and email.
+
