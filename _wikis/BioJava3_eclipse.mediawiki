@@ -15,7 +15,7 @@ We recommend [[Contributing to BioJava#Forking Biojava|creating a fork]] on gith
 Option 1:
 ''Try these instructions first. If they don't work, try option 2.''
 <!-- These instructions should work and are simple, but don't work for me on ubuntu. They fail with 'No Maven projects found'~~~~ -->
-# Go to {{menu2|File|Import...}}
+# Go to {{menu|File|Import...}}
 # In the Maven category, select 'Check out Maven Projects from SCM' and click Next.
 # Select 'git' in the dropdown box. If 'git' is not an option, make sure you have the m2e-egit connector installed as descripted below.
 # Add the URL for your biojava repository on github. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>Make sure that 'Checkout All Projects' is selected and click Finish.
@@ -24,7 +24,7 @@ Option 2:
 ''These instructions are more difficult, but may work if Option 1 fails.''
 
 # Open the Git Repository View
-## Go to {{menu3|Window|Show View|Other...}}
+## Go to {{menu|Window|Show View|Other...}}
 ## Under 'Git', select 'Git Repositories'
 # Clone your git repository. The following is the easiest way to do this from within Eclipse, but you could also get a local clone via the command line and then add it as a local repository.
 ## Click the 'Clone Git Repository' icon in the Git Repository View
@@ -37,7 +37,7 @@ Option 2:
 ## Select all modules and click Finish
 # Initiate git tracking for the projects
 ## Select all biojava modules in the Project Explorer
-## Right click and select {{menu2|Team|Share Project...}}
+## Right click and select {{menu|Team|Share Project...}}
 ## Select 'Git' and click Next
 ## Select 'Use or create repository in parent folder of project'. This will use the local repository you cloned previously for your source code
 ## Finished!
@@ -52,7 +52,7 @@ Recent versions of Eclipse come with the Marketplace plugin, which can be used t
 
 === 1. Install Maven m2e ===
 [[File:Install_m2e.png|thumb|300px|Screenshot of Install New Software dialog after selecting m2e for install.]]
-# In eclipse, go to {{menu2|Help|Install New Software...}}
+# In eclipse, go to {{menu|Help|Install New Software...}}
 # Choose '--All Available Sites--' from the 'Work with' dropdown
 # Search for 'm2e' and check the box next to 'm2e - Maven Integration for Eclipse' under Collaboration
 # Click 'Next', accept the license, and finish the installation
@@ -63,7 +63,7 @@ If everything went smoothly, after reboot the 'Welcome' screen should mention 'M
 === 2. Install EGit ===
 Installing egit is very similar to installing m2e.
 
-# In eclipse, go to {{menu2|Help|Install New Software...}}
+# In eclipse, go to {{menu|Help|Install New Software...}}
 # Choose '--All Available Sites--' from the 'Work with' dropdown
 # Search for 'egit' and check the box next to 'Eclipse EGit' under Collaboration
 # Click 'Next', accept the license, and finish the installation
@@ -75,7 +75,7 @@ After rebooting, the Welcome screen should have a section about Git.
 [[File:EGit SCM install 1.png|thumb|300px|The {{menu|Import...}} dialog. [[#3. Install the SCM Handler|Step 1]]]]
 [[File:EGit SCM install 2.png|thumb|300px|Link to the m2e Marketplace, without any SCM connectors installed. [[#3. Install the SCM Handler|Step 3]]]]
 [[File:EGit SCM install 3.png|thumb|300px|Installing m2e-egit from the m2e Marketplace [[#3. Install the SCM Handler|Step 4]]]]
-# Go to {{menu2|File|Import...}}
+# Go to {{menu|File|Import...}}
 # In the Maven category, select 'Check out Maven Projects from SCM' and click Next
 # At this point, the Git connector is not installed, so the 'SCM URL' dropdown will either be blank or will only contain other SCM connectors like SVN. Click 'Find more SCM connectors in the m2e Marketplace'
 # Search for 'egit' in the 'Install m2e connectors' dialog. Check the 'm2e-egit' connector and click Finish.
@@ -88,5 +88,5 @@ Eclipse should now be ready to get the latest checkout of BioJava. See [[#Clonin
 
 You should set your git name and email in Eclipse.
 # Go to Eclipse Preferences
-# View {{menu3|Team|Git|Configuration}}
+# View {{menu|Team|Git|Configuration}}
 # In the 'User Settings' tab, update your name and email.
