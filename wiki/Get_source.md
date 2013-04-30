@@ -4,7 +4,10 @@ title: Get source
 
 BioJava is hosted on [Github](https://github.com/biojava/biojava/). The
 preferred method for checking out the source is with git, although it is
-also possible to use subversion.
+also possible to use subversion. This page contains general instructions
+for getting the BioJava source. Users of the Eclipse IDE can see more
+detailed instructions at [BioJava3
+eclipse](BioJava3 eclipse "wikilink").
 
 Getting the latest release code
 ===============================
