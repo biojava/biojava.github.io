@@ -72,7 +72,7 @@ Option 2: *These instructions are more difficult, but may work if Option
     3.  Optionally add your Github username and password, then click
         Next.
     4.  Select which branches to include. If you plan to commit any
-        changes, we recommend only tracking the 'devel' branch, so you
+        changes, we recommend only tracking the 'master' branch, so you
         don't accidentally initiate a release. If you want the last
         stable version, you can select 'release' instead. Click Next.
     5.  Choose a destination directory (outside your Eclipse workspace),
