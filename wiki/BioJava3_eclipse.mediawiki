@@ -19,6 +19,13 @@ Option 1:
 # In the Maven category, select 'Check out Maven Projects from SCM' and click Next.
 # Select 'git' in the dropdown box. If 'git' is not an option, make sure you have the m2e-egit connector installed as descripted below.
 # Add the URL for your biojava repository on github. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>Make sure that 'Checkout All Projects' is selected and click Finish.
+# Initiate git tracking for the projects
+## Select all biojava modules in the Project Explorer
+## Right click and select {{menu|Team|Share Project...}}
+## Select 'Git' and click Next
+## Select 'Use or create repository in parent folder of project'. This will make ''{Eclipse Workspace}/biojava'' into the local git repository.
+
+Finished!
 
 Option 2:
 ''These instructions are more difficult, but may work if Option 1 fails.''

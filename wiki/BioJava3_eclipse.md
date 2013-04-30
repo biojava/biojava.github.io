@@ -44,6 +44,16 @@ Option 1: *Try these instructions first. If they don't work, try option
 
     Make sure that 'Checkout All Projects' is selected and click Finish.
 
+5.  Initiate git tracking for the projects
+    1.  Select all biojava modules in the Project Explorer
+    2.  Right click and select
+    3.  Select 'Git' and click Next
+    4.  Select 'Use or create repository in parent folder of project'.
+        This will make *{Eclipse Workspace}/biojava* into the local git
+        repository.
+
+Finished!
+
 Option 2: *These instructions are more difficult, but may work if Option
 1 fails.*
 
