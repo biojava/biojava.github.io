@@ -37,7 +37,7 @@ Option 2:
 ## Click the 'Clone Git Repository' icon in the Git Repository View
 ## Add the URL of your biojava repository on github. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>
 ## Optionally add your Github username and password, then click Next.
-## Select which branches to include. If you plan to commit any changes, we recommend only tracking the 'devel' branch, so you don't accidentally initiate a release. If you want the last stable version, you can select 'release' instead. Click Next.
+## Select which branches to include. If you plan to commit any changes, we recommend only tracking the 'master' branch, so you don't accidentally initiate a release. If you want the last stable version, you can select 'release' instead. Click Next.
 ## Choose a destination directory (outside your Eclipse workspace), double-check your selection of Initial branch, and click Finish
 # Import Maven projects from the git repository.
 ## Right click on the biojava git repository in the Git Repositories viewer. Select 'Import Maven Projects...'
