@@ -23,10 +23,10 @@ Assume you are working in local fork, and that you have a remote 'main'
 which points to the main biojava repository:
 
 `$ git remote -v`  
-`main    `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)` (fetch)`  
-`main    `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)` (push)`  
-`origin  `[`https://github.com/`](https://github.com/)<username>`/biojava-sbliven.git (fetch)`  
-`origin  `[`https://github.com/`](https://github.com/)<username>`/biojava-sbliven.git (push)`
+`main    https://github.com/biojava/biojava.git (fetch)`  
+`main    https://github.com/biojava/biojava.git (push)`  
+`origin  https://github.com/<username>/biojava-sbliven.git (fetch)`  
+`origin  https://github.com/<username>/biojava-sbliven.git (push)`
 
 You've started a branch 'feature' and made a few commits, so now your
 repository now looks like this:
