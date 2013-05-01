@@ -80,6 +80,10 @@ visualisation
     ligand?](BioJava:CookBook:PDB:ligands "wikilink")
 -   [How to work with biological assemblies of
     proteins](BioJava:CookBook:PDB:bioassembly "wikilink")
+-   [How to get information using RCSB's RESTful
+    services](BioJava:CookBook:PDB:restful "wikilink")
+-   [How do I calculate the true length of a
+    structure?](BioJava:CookBook:PDB:restful "wikilink")
 
 ### Pairwise and Multiple Sequence Alignment
 
