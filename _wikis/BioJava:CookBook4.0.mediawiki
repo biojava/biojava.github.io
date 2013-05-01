@@ -43,6 +43,8 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 * [[BioJava:CookBook:PDBP:BerkeleySCOP|How can I work with the Berkeley version of SCOP?]]
 * [[BioJava:CookBook:PDB:ligands|How can I find residues binding a ligand?]]
 * [[BioJava:CookBook:PDB:bioassembly|How to work with biological assemblies of proteins]]
+* [[BioJava:CookBook:PDB:restful|How to get information using RCSB's RESTful services]]
+* [[BioJava:CookBook:PDB:restful|How do I calculate the true length of a structure?]]
 
 === Pairwise and Multiple Sequence Alignment  ===
 
