@@ -121,8 +121,8 @@ to github:
 
 -   biojava-live, renamed to biojava
 -   biojava-legacy
--   RCSB\_SequenceViewer, renamed to RCSB-SequenceViewer
--   RCSB Viewers, renamed to RCSB-Viewers
+-   RCSB\_SequenceViewer, renamed to rcsb-sequenceviewer
+-   RCSB Viewers, renamed to rcsb-viewers
 
 Repository Layout
 -----------------
@@ -131,7 +131,7 @@ The github repository for each project will contain the following
 branches, based on a variant of the [git-flow
 model](http://nvie.com/posts/a-successful-git-branching-model/):
 
-1.  **devel** Current development branch, corresponding to SVN trunk.
+1.  **master** Current development branch, corresponding to SVN trunk.
     All active developers are free to make commits directly to this
     branch, as well as merging feature branches and pull requests
 2.  **release** By definition, any commit to this branch counts as a
@@ -141,17 +141,11 @@ model](http://nvie.com/posts/a-successful-git-branching-model/):
     branch.
 
 Additionally, any number of feature branches may be present should
-developers wish to collaborate on specific features. The **release**
-branch will be marked as the default branch, so that casual users can
-get the latest stable version via a simple
+developers wish to collaborate on specific features. The **master**
+branch will be marked as the default branch. This is analogous to
+checking out trunk from svn to get the most recent code:
 
 ` git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
-
-This does mean that developers with push permission need to be very
-careful that they are committing to the **devel** branch, since
-otherwise they are implicitly releasing untested code to the public.
-Hopefully the lack of a **master** branch will force people to think
-twice about where they are committing.
 
 Specific branches for each release (eg a release-3.1.0 branch containing
 only bugfixes) could also be used. However, past releases have mostly
@@ -162,11 +156,13 @@ Missing History
 ---------------
 
 The SVN repository used SVN 1.4, which does not store information about
-moves and merges. This made it extremely difficult to deal with the
-major refactoring that occurred as part of the [Maven
-Migration](BioJava:MavenMigration "wikilink"). As a result, no history
-prior to September 2009 (r7227) was migrated to Git. This is
-unfortunate, but it would have been extremely difficult and
+merges. This made it extremely difficult to deal with the major
+refactoring that occurred as part of the [Maven
+Migration](BioJava:MavenMigration "wikilink"). Another problem was that
+a number of branches don't contain the full trunk (only a single
+project), and git lacks a mechanism to deal with partial checkouts. As a
+result, no history prior to September 2009 (r7227) was migrated to Git.
+This is unfortunate, but it would have been extremely difficult and
 time-consuming to document all the large moves and refactors from
 BioJava's history in a way consistent with git.
 
