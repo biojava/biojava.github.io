@@ -2,7 +2,7 @@
 
 BioJava will run on any computer with a Java virtual machine complying to the Java 2 Standard Edition (J2SE) 1.6 (or later) specifications. Java implementations for Linux, Windows, and Solaris are available to download from [http://www.oracle.com/technetwork/java/ Oracle's java website]. Recent versions of MacOS X include a suitable Java implementation as standard. Java is also available on many other platforms: if in doubt, contact your vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version [[Biojava:Download|BioJava3 (v3.0.4) (requires Java 1.6+)]] from the [[Biojava:Download|download area]].
+You can get the latest version [[Biojava:Download|BioJava3 (v3.0.5) (requires Java 1.6+)]] from the [[Biojava:Download|download area]].
 
 You can get the latest version [[Biojava:Download_1.8|BioJava1 (v1.8.2) (requires Java 1.5+)]] from the [[Biojava:Download_1.8|BJ1 download area]] . 
 
@@ -32,7 +32,7 @@ You can add the BioJava repository by adding the following XML to your project p
                 <dependency>
                         <groupId>org.biojava</groupId>
                         <artifactId>biojava3-core</artifactId>
-                        <version>3.0.2</version>
+                        <version>3.0.5</version>
                 </dependency>
                 <!-- other biojava jars as needed -->
         </dependencies>
