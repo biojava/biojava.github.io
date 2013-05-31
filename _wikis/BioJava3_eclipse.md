@@ -43,6 +43,10 @@ Option 1: *Try these instructions first. If they don't work, try option
         https://github.com/biojava/biojava.git
 
     Make sure that 'Checkout All Projects' is selected and click Finish.
+    Eclipse will download the source code in the background, indicated
+    by the progress bar in the lower right corner. After a few minutes
+    the Package Explorer pane should populate with the BioJava
+    submodules.
 
 5.  Initiate git tracking for the projects
     1.  Select all biojava modules in the Project Explorer
@@ -81,7 +85,10 @@ Option 2: *These instructions are more difficult, but may work if Option
 3.  Import Maven projects from the git repository.
     1.  Right click on the biojava git repository in the Git
         Repositories viewer. Select 'Import Maven Projects...'
-    2.  Select all modules and click Finish
+    2.  Select all modules and click Finish. Eclipse will download the
+        source code in the background, indicated by the progress bar in
+        the lower right corner. After a few minutes the Package Explorer
+        pane should populate with the BioJava submodules.
 
 4.  Initiate git tracking for the projects
     1.  Select all biojava modules in the Project Explorer
