@@ -18,7 +18,7 @@ Option 1:
 # Go to {{menu|File|Import...}}
 # In the Maven category, select 'Check out Maven Projects from SCM' and click Next.
 # Select 'git' in the dropdown box. If 'git' is not an option, make sure you have the m2e-egit connector installed as descripted below.
-# Add the URL for your biojava repository on github. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>Make sure that 'Checkout All Projects' is selected and click Finish.
+# Add the URL for your biojava repository on github. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>Make sure that 'Checkout All Projects' is selected and click Finish. Eclipse will download the source code in the background, indicated by the progress bar in the lower right corner. After a few minutes the Package Explorer pane should populate with the BioJava submodules.
 # Initiate git tracking for the projects
 ## Select all biojava modules in the Project Explorer
 ## Right click and select {{menu|Team|Share Project...}}
@@ -41,7 +41,7 @@ Option 2:
 ## Choose a destination directory (outside your Eclipse workspace), double-check your selection of Initial branch, and click Finish
 # Import Maven projects from the git repository.
 ## Right click on the biojava git repository in the Git Repositories viewer. Select 'Import Maven Projects...'
-## Select all modules and click Finish
+## Select all modules and click Finish. Eclipse will download the source code in the background, indicated by the progress bar in the lower right corner. After a few minutes the Package Explorer pane should populate with the BioJava submodules.
 # Initiate git tracking for the projects
 ## Select all biojava modules in the Project Explorer
 ## Right click and select {{menu|Team|Share Project...}}
