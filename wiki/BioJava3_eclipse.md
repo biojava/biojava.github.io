@@ -23,7 +23,7 @@ Cloning the repository
 ----------------------
 
 We recommend [creating a
-fork](Contributing to BioJava#Forking_Biojava "wikilink") on github for
+fork](https://help.github.com/articles/fork-a-repo) on github for
 day-to-day development. In the following instructions you should
 substitute something like '<https://github.com/><username>/biojava.git'
 for the repository URL. If you don't want to make a fork (for instance,
