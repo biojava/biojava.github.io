@@ -10,7 +10,7 @@ Eclipse is a common IDE for using BioJava.
 
 == Cloning the repository ==
 
-We recommend [[Contributing to BioJava#Forking Biojava|creating a fork]] on github for day-to-day development. In the following instructions you should substitute something like 'https://github.com/<username>/biojava.git' for the repository URL. If you don't want to make a fork (for instance, if you don't plan to make any changes), you can follow the instructions below exactly.
+We recommend [https://help.github.com/articles/fork-a-repo creating a fork] on github for day-to-day development. In the following instructions you should substitute something like 'https://github.com/<username>/biojava.git' for the repository URL. If you don't want to make a fork (for instance, if you don't plan to make any changes), you can follow the instructions below exactly.
 
 Option 1:
 ''Try these instructions first. If they don't work, try option 2.''
