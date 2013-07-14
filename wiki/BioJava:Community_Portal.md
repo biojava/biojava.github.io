@@ -28,6 +28,7 @@ yourself an entry here (this is Wiki after all).
 -   [Andreas Prlic](Andreas Prlic "wikilink")
 -   [Dickson S. Guedes](Dickson Guedes "wikilink")
 -   [Francois Pepin](Francois Pepin "wikilink")
+-   [Amr AL-HOSSARY](Amr AL-HOSSARY "wikilink")
 -   [Jianjiong Gao](Jianjiong Gao "wikilink")
 
 Core Team
