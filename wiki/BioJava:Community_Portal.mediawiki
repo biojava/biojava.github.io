@@ -17,6 +17,7 @@ The following people have contributed to BioJava in some way. If you've contribu
 * [[Andreas Prlic|Andreas Prlic]]
 * [[Dickson Guedes|Dickson S. Guedes]]
 * [[Francois Pepin|Francois Pepin]]
+* [[Amr AL-HOSSARY|Amr AL-HOSSARY]]
 * [[Jianjiong Gao]]
 
 == Core Team ==
