@@ -47,13 +47,15 @@ build javadoc:
 
  cd biojava-svn/target/checkout/target/site/
 
-  mv apidocs/ api3.0.3
+Here we assume the version nr. of the current release is 3.0.7.
 
-  tar cvf api3.0.3.tar api3.0.3/
+  mv apidocs/ api3.0.7
+
+  tar cvf api3.0.3.tar api3.0.7/
  
-  gzip api3.0.3.tar
+  gzip api3.0.7.tar
 
-  scp api3.0.3.tar.gz username@cloudportal.open-bio.org:/home/websites/biojava.org/html/static/docs/
+  scp api3.0.7.tar.gz username@cloudportal.open-bio.org:/home/websites/biojava.org/html/static/docs/
 
 now log into the couldportal server:
 
