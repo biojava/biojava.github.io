@@ -54,7 +54,7 @@ something went wrong you can reset the release process by doing:
 
 ### Prepare and release javadoc files
 
-`cd biojava-svn/target/checkout/`
+`cd biojava-git/target/checkout/`
 
 remove .svn files (fore preparing -all file)
 
