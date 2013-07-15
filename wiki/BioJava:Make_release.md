@@ -56,9 +56,9 @@ something went wrong you can reset the release process by doing:
 
 `cd biojava-git/target/checkout/`
 
-remove .svn files (fore preparing -all file)
+remove .git files (for preparing -all file)
 
-`find ./ -name ".svn" | xargs rm -Rf`
+`find ./ -name ".git" | xargs rm -Rf`
 
 build javadoc:
 
