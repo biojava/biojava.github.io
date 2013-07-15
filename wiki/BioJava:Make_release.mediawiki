@@ -89,7 +89,7 @@ on portal.open-bio
 
 back to your local machine
 
- scp biojava-3.0.7-all.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3
+ scp biojava-3.0.7-all.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.7
 
 === Javadocs ===
 
