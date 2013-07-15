@@ -15,8 +15,6 @@ New Features:
 `- We moved our development to Github.`  
 `- many bug fixes and minor improvements`
 
-New Features:
-
 BioJava moves to Github
 -----------------------
 
