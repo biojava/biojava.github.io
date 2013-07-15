@@ -82,11 +82,11 @@ now log into the couldportal server:
 
 `cd /home/websites/biojava.org/html/static/docs/`
 
-`tar zxvf api3.0.4.tar.gz`
+`tar zxvf api3.0.7.tar.gz`
 
 `rm api`  
   
-`ln -s api3.0.3 api`
+`ln -s api3.0.7 api`
 
 and back to your local machine...
 
