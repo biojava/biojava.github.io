@@ -1,7 +1,18 @@
+== BioJava 3.0.6 released ==
+
+BioJava 3.0.6 was released on July 15th 2013 and is available from 
+[[BioJava:Download]] as well as from the
+BioJava maven repository at [http://www.biojava.org/download/maven/ http://www.biojava.org/download/maven/] .
+
+New Features:
+ - We moved our development to Github.
+ - many bug fixes and minor improvements
+
+New Features:
+
 == BioJava moves to Github ==
 
 As of April 3, 2013, [http://github.com/biojava Github] is the primary repository for BioJava. See [[SVN to GIT Migration]] for more info.
-
 
 == BioJava 3.0.5 released ==
 

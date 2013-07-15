@@ -2,6 +2,21 @@
 title: Current events
 ---
 
+BioJava 3.0.6 released
+----------------------
+
+BioJava 3.0.6 was released on July 15th 2013 and is available from
+<BioJava:Download> as well as from the BioJava maven repository at
+[<http://www.biojava.org/download/maven/>](http://www.biojava.org/download/maven/)
+.
+
+New Features:
+
+`- We moved our development to Github.`  
+`- many bug fixes and minor improvements`
+
+New Features:
+
 BioJava moves to Github
 -----------------------
 
