@@ -75,21 +75,21 @@ and back to your local machine...
 
 in biojava-svn/target
 
- mv checkout/ bj3.0.3
+ mv checkout/ bj3.0.7
 
- tar zcvf bj3.0.3.tar.gz bj3.0.3
+ tar zcvf bj3.0.7.tar.gz bj3.0.7
 
- mv bj3.0.3.tar.gz biojava-3.0.3-all.tar.gz
+ mv bj3.0.7.tar.gz biojava-3.0.7-all.tar.gz
  
 on portal.open-bio
 
  cd /home/websites/biojava.org/html/static/download
 
- mkdir bj3.0.3
+ mkdir bj3.0.7
 
 back to your local machine
 
- scp biojava-3.0.3-all.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3
+ scp biojava-3.0.7-all.tar.gz andreas@portal.open-bio.org:/home/websites/biojava.org/html/static/download/bj3.0.3
 
 === Javadocs ===
 
