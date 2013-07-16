@@ -31,7 +31,7 @@ multiple structure objects file, or an InputStream.
 
 } </java>
 
-### Also you can read multiple files as follows
+### Also you can read multiple alignments within the same file as follows
 
 <java> public static void main(String[] args){
 
