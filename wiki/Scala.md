@@ -29,7 +29,7 @@ add the following to the dependencies section of your pom.xml file.
 
 Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
-[BioJava:CookBook3:PSA\_DNA].
+<BioJava:CookBook3:PSA_DNA>.
 
 `/**`  
 ` * Demo of using BioJava from scala code. Performs a simple sequence alignment.`  
