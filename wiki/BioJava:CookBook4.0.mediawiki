@@ -53,7 +53,7 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 
 * [[BioJava:CookBook3:Stockholm|How can I read a Sequence Alignment in Stockholm format]]? (Pfam, Rfam)
 * [[BioJava:CookBook3:PSA|How can I calculate a Pairwise Sequence Alignment]]? (Smith Waterman, Needleman Wunsch)
-* [[BioJava;CookBook3:PSA_DNA|How can I calculate a Pairwise Sequence Alignment with DNA sequences]]?
+* [[BioJava:CookBook3:PSA_DNA|How can I calculate a Pairwise Sequence Alignment with DNA sequences]]?
 * [[BioJava:CookBook3:MSA|How can I create a Multiple Sequence Alignment]]?
 * [[BioJava:CookBook3:MSAProfiler|How can I profile the time and memory requirements of a Multiple Sequence Alignment]]?
 
@@ -108,7 +108,6 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 * [[BioJava:CookBook3:NCBIQBlastService|How can I use NCBI's QBlast service ?]]
 * [[BioJava:CookBook3:ParsingBlastXMLOutput|How can I use Blast XML Output in my program?]]
 * [[BioJava:CookBook3:HmmerService|How can I get Pfam annotations for a protein sequence using the Hmmer3 service?]]
-
 
 == Legacy 1.7 CookBook ==
 
