@@ -12,7 +12,7 @@ Make sure that the BioJava jar files are included in the classpath for your scal
      <version>3.0.6</version>
  </dependency>
 
-Java classes can be imported and used in scala code without modification. For instance, here is a scala version of [BioJava:CookBook3:PSA_DNA].
+Java classes can be imported and used in scala code without modification. For instance, here is a scala version of [[BioJava:CookBook3:PSA_DNA]].
 
  /**
   * Demo of using BioJava from scala code. Performs a simple sequence alignment.
@@ -58,5 +58,4 @@ Java classes can be imported and used in scala code without modification. For in
    }
  }
 
- 
 == Including BioScala code in Java ==
