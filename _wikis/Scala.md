@@ -75,5 +75,90 @@ modification. For instance, here is a scala version of
 `  }`  
 `}`
 
-Including BioScala code in Java
--------------------------------
+Including ScaBio code in Java
+-----------------------------
+
+Including Scala code from Java is equally easy. For example, ScaBio
+contains an implementation of the [Nussinov
+algorithm](wp:Nucleic acid structure prediction#Dynamic_programming_algorithms "wikilink")
+for RNA secondary structure prediction. This algorithm is not yet
+present in BioJava.
+
+First, include the ScaBio jars and dependencies in your classpath. If
+using maven this is quite simple. Add the required packages to your
+pom.xml:
+
+<dependency>  
+`    `<groupId>`net.gumbix`</groupId>  
+`    `<artifactId>`scabio-demo`</artifactId>  
+`    `<version>`0.1-SNAPSHOT`</version>  
+</dependency>
+
+Scala objects and methods can now be used from Java code. To display
+ScaBio's RNA secondary structure visualization too, for instance, just
+call the appropriate method.
+
+`public class RNAStruct2DViewer {`  
+`   public static void main(String[] args) {`  
+`       net.gumbix.bioinf.struct.RNAStruct2DViewer.main(args);`  
+`   }`  
+`}`
+
+Here is a more complex example to output the results of the RNA
+secondary structure prediction in a simple text format.
+
+`import java.util.List;`  
+`import net.gumbix.bioinf.struct.AbstractNussinov;`  
+`import net.gumbix.bioinf.struct.NussinovDecision;`  
+`import net.gumbix.bioinf.struct.NussinovEnergy;`  
+`import net.gumbix.bioinf.struct.NussinovState;`  
+`import net.gumbix.dynpro.Idx;`  
+`import net.gumbix.dynpro.PathEntry;`  
+`import scala.collection.JavaConversions;`  
+  
+`public class RNAStructPredictor {`  
+`   public static void main(String[] args) {`  
+`       String s = "UGGGAAGGUUUUGGAACCC";`  
+`       AbstractNussinov dp = new NussinovEnergy(s);`  
+`       Idx idx = new Idx(0, dp.n()-1);`  
+`       scala.collection.immutable.List`<PathEntry<NussinovDecision>`> solution = dp.solution(idx);`  
+  
+`       String topology = rnaTopologyString(solution, dp.n());`  
+  
+`       System.out.println(s);`  
+`       System.out.println(topology);`  
+`   }`  
+  
+`   /**`  
+`    * Get a topology string for the given RNA secondary structure prediction`  
+`    * @param s The solved RNA secondary structure from ScaBio`  
+`    * @return A string of '(', ')', and '-' giving the paired RNA residues`  
+`    */`  
+`   public static String rnaTopologyString(scala.collection.immutable.List`<PathEntry<NussinovDecision>`> s,int len) {`  
+`       //Wrap scala list as a Java collection for ease of use`  
+`       List`<PathEntry<NussinovDecision>`> solution = JavaConversions.seqAsJavaList(s);`  
+  
+`       // All nucleotides are initially unpaired`  
+`       StringBuffer str = new StringBuffer(len);`  
+`       for(int i=0;i`<len;i++) {
+            str.append('-');
+        }
+ 
+        // Assign parentheses for paired nucleotides
+        for(PathEntry<NussinovDecision>` entry : solution) {`  
+`           NussinovDecision decision = entry.decision();`  
+`           if( decision.move() == NussinovState.PAIR() ) { // focus on nucleotide pairs`  
+`               Idx pair = decision.idx(); // stores indices of the bound pair`  
+`               str.setCharAt(pair.i(), '(');`  
+`               str.setCharAt(pair.j(), ')');`  
+`           }`  
+`       }`  
+  
+`       return str.toString();`  
+`   }`  
+`}`
+
+Running the code produces the following output:
+
+`UGGGAAGGUUUUGGAACCC`  
+`-(((((--))((--)))))`
