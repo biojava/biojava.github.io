@@ -9,8 +9,9 @@ import org.biojava3.core.sequence.DNASequence; import
 org.biojava3.core.sequence.ProteinSequence; import
 org.biojava3.core.sequence.compound.AminoAcidCompound; import
 org.biojava3.core.sequence.compound.AminoAcidCompoundSet; import
-org.biojava3.core.sequence.compound.DNACompoundSet; import
-org.biojava3.core.sequence.compound.NucleotideCompound; import
+org.biojava3.core.sequence.compound.DNACompoundSet
+
+import org.biojava3.core.sequence.compound.NucleotideCompound; import
 org.biojava3.core.sequence.loader.GenbankProxySequenceReader;
 
 public class GenbankRead {
@@ -25,13 +26,18 @@ public static void main(String[] args) throws Exception{
 `   = new GenbankProxySequenceReader`<AminoAcidCompound>`("/tmp", "NP_000257", AminoAcidCompoundSet.getAminoAcidCompoundSet());`  
 `   ProteinSequence proteinSequence = new ProteinSequence(genbankProteinReader);`  
 `   genbankProteinReader.getHeaderParser().parseHeader(genbankProteinReader.getHeader(), proteinSequence);`  
-`   System.out.println("Sequence" + "(" + proteinSequence.getAccession() + "," + proteinSequence.getLength() + ")=" + proteinSequence.getSequenceAsString().substring(0, 10) + "...");`
+`   System.out.println("Sequence" + "(" + proteinSequence.getAccession() + "," + proteinSequence.getLength() + ")=" +`
+
+proteinSequence.getSequenceAsString().substring(0, 10) + "...");
 
 `   GenbankProxySequenceReader`<NucleotideCompound>` genbankDNAReader `  
 `   = new GenbankProxySequenceReader`<NucleotideCompound>`("/tmp", "NM_001126", DNACompoundSet.getDNACompoundSet());`  
 `   DNASequence dnaSequence = new DNASequence(genbankDNAReader);`  
 `   genbankDNAReader.getHeaderParser().parseHeader(genbankDNAReader.getHeader(), dnaSequence);`  
-`   System.out.println("Sequence" + "(" + dnaSequence.getAccession() + "," + dnaSequence.getLength() + ")=" + dnaSequence.getSequenceAsString().substring(0, 10) + "...");`  
+`   System.out.println("Sequence" + "(" + dnaSequence.getAccession() + "," + dnaSequence.getLength() + ")=" +`
+
+dnaSequence.getSequenceAsString().substring(0, 10) + "...");
+
 `   /*`  
 `    * Method 2: With the GenbankReaderHelper`  
 `    */`  
