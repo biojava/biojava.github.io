@@ -2,6 +2,11 @@
 title: BioJava:CookBook:Core:GenbankRead
 ---
 
+How to Read a Genbank File with Biojava3
+========================================
+
+<java>
+
 import java.io.File; import java.io.FileInputStream; import
 java.util.LinkedHashMap;
 
@@ -78,4 +83,4 @@ dnaSequence.getSequenceAsString().substring(0, 10) + "...");
 `   is.close();`  
 `   System.out.println(protSequences);`
 
-}
+} </java>

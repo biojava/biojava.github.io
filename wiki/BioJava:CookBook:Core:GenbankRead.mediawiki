@@ -1,3 +1,5 @@
+=How to Read a Genbank File with Biojava3=
+<java>
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -73,3 +75,4 @@ dnaSequence.getSequenceAsString().substring(0, 10) + "...");
 	System.out.println(protSequences);
 
 }
+</java>
