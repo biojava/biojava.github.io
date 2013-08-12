@@ -38,6 +38,8 @@ How Do I....?
     sequence?](BioJava:CookBook:Core:SequenceCompare "wikilink")
 -   [How do I read or write Fasta
     files?](BioJava:CookBook:Core:FastaReadWrite "wikilink")
+-   [How do I read Genbank
+    files?](BioJava:CookBook:Core:GenbankRead "wikilink")
 -   [How do I view Features on a
     sequence?](BioJava:CookBook:Core:SequenceFeaturePanel "wikilink")
 
