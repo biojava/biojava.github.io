@@ -18,8 +18,8 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 * [[BioJava:CookBook:Core:Sequences|How are sequences created?]]
 * [[BioJava:CookBook:Core:SequenceCompare|How do I compare two DNA Sequences and create a consensus sequence?]]
 * [[BioJava:CookBook:Core:FastaReadWrite|How do I read or write Fasta files?]]
+* [[BioJava:CookBook:Core:GenbankRead|How do I read Genbank files?]]
 * [[BioJava:CookBook:Core:SequenceFeaturePanel|How do I view Features on a sequence?]]
-
 
 === Protein Structure ===
 
