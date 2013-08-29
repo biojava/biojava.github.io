@@ -28,14 +28,24 @@ build process. We are providing a BioJava specific Maven repository at
 You can add the BioJava repository by adding the following XML to your
 project .pom file:
 
-        <repositories>
-            ...
-            <repository>
-                <id>biojava-maven-repo</id>
-                <name>BioJava repository</name>
-                <url>http://www.biojava.org/download/maven/</url>           
-            </repository>
-        </repositories>
+      <repositories>
+        ...
+        <repository>
+          <id>biojava-maven-repo</id>
+          <name>BioJava repository</name>
+          <url>http://www.biojava.org/download/maven/</url>
+        </repository>
+      </repositories>
+
+and then include BioJava module dependencies such as:
+
+      <dependencies>
+        <dependency>
+          <groupId>org.biojava</groupId>
+          <artifactId>core</artifactId>
+          <version>1.8.4</version>
+        </dependency>
+      </dependencies>
 
 Manual Download
 ---------------
