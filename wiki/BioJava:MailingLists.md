@@ -68,8 +68,8 @@ Bugs in released code should be reported via
 
 All bug reports should contain:
 
--   BioJava version (eg 1.6).
--   OS (eg Linux, OSX 10.4, Windows XP, SuSE 9.2 etc).
+-   BioJava version (eg 3.0.6).
+-   OS (eg Linux, OSX 10.8, Windows XP, SuSE 9.2 etc).
 -   A stack trace of any exception (complete if possible).
 -   Example code that exposes the bug.
 -   Accession number of a record that causes I/O problems (if
