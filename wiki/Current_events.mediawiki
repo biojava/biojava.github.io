@@ -1,3 +1,14 @@
+== BioJava 1.8.4 released ==
+
+BioJava/BioJava1/biojava-legacy 1.8.4 was released on August 27th 2013 and is available from
+[[BioJava:Download_1.8.4]] as well as from the
+BioJava maven repository at [http://www.biojava.org/download/maven/ http://www.biojava.org/download/maven/] .
+
+New Features:
+ - We moved our development to Github
+ - Minor improvements to the sequencing module
+ - Build/release fixes
+
 == BioJava 3.0.6 released ==
 
 BioJava 3.0.6 was released on July 15th 2013 and is available from 
