@@ -9,7 +9,7 @@ To find out more about BioJava 1, check any of the following entry points:
 == Installation ==
 BioJava 1 will run on any computer with a Java virtual machine complying to the Java 2 Standard Edition (J2SE) 1.5 (or later) specifications. Java implementations for Linux, Windows, and Solaris are available to download from [http://www.oracle.com/technetwork/java/ Oracle's java website]. Recent versions of MacOS X include a suitable Java implementation as standard. Java is also available on many other platforms: if in doubt, contact your vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version here[[Biojava:Download_1.8.4|BioJava 1.8.4 (requires Java 1.5+)]]. 
+You can get the latest version from the download page [[Biojava:Download_1.8.4|BioJava 1.8.4 (requires Java 1.5+)]]. 
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow this [[How_to_integrate_BioJava_in_NetBeans_IDE|link]].
 
