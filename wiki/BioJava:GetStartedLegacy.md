@@ -8,7 +8,7 @@ Introduction
 Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the
 continuation of the old BioJava core while a new code base, BioJava 3,
 is currently being developed. As of the concurrent release of BioJava
-1.8.2 and BioJava 3.0.3, many functionalities are still not available in
+1.8.4 and BioJava 3.0.6, many functionalities are still not available in
 BioJava 3 and differences between their respective sequence models may
 make BioJava 1 a valid option for your project.
 
@@ -35,8 +35,8 @@ MacOS X include a suitable Java implementation as standard. Java is also
 available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version [BioJava 1.8 (requires Java
-1.5+)](Biojava:Download_1.8 "wikilink") from the [download
+You can get the latest version [BioJava 1.8.4 (requires Java
+1.5+)](Biojava:Download_1.8.4 "wikilink") from the [download
 area](Biojava:Download "wikilink") .
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
@@ -91,9 +91,9 @@ consult your Java vendor.
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the
 [tutorial](BioJava:Tutorial "wikilink"), [API
-documentation](http://www.biojava.org/docs/api1.8/) and the [BioJava in
-anger](BioJava:Cookbook "wikilink") section . Finally, you can learn a
-lot about BioJava by trying the demo programs included in the source
+documentation](http://www.biojava.org/docs/api1.8.4/) and the [BioJava
+in anger](BioJava:Cookbook "wikilink") section . Finally, you can learn
+a lot about BioJava by trying the demo programs included in the source
 distribution (see below).
 
 Building your own
