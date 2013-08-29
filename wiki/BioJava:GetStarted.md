@@ -55,7 +55,7 @@ project pom.xml file:
                     <dependency>
                             <groupId>org.biojava</groupId>
                             <artifactId>biojava3-core</artifactId>
-                            <version>3.0.5</version>
+                            <version>3.0.6</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
             </dependencies>
