@@ -29,7 +29,6 @@ You can add the BioJava repository by adding the following XML to your
 project .pom file:
 
       <repositories>
-        ...
         <repository>
           <id>biojava-maven-repo</id>
           <name>BioJava repository</name>
