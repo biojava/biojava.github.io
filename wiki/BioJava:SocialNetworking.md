@@ -25,5 +25,5 @@ contributor just a user or interested party.
 Ohloh
 -----
 
-The open source social networking site Ohloh has a BioJava projet page
+The open source social networking site Ohloh has a BioJava project page
 at [<http://www.ohloh.net/p/biojava>](http://www.ohloh.net/p/biojava)

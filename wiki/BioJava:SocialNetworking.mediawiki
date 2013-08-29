@@ -13,4 +13,4 @@ Developers of the BioJava open-source bioinformatics project.
 To join the BioJava linkedin group: You need to be a linkedin member. You then need to find the group and ask to join. You don't need to be a contributor just a user or interested party.
 
 ==Ohloh==
-The open source social networking site Ohloh has a BioJava projet page at [http://www.ohloh.net/p/biojava http://www.ohloh.net/p/biojava]
+The open source social networking site Ohloh has a BioJava project page at [http://www.ohloh.net/p/biojava http://www.ohloh.net/p/biojava]
