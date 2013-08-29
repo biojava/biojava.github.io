@@ -6,7 +6,7 @@ BioJava 3.\* release
 --------------------
 
 BioJava 3 is a major re-write of BioJava 1. The cookbook for the new API
-is available from here: <BioJava:CookBook> The content on this page is
+is available from here: <BioJava:CookBook>. The content on this page is
 still available to support the legacy code base, which is now available
 through the biojava-legacy project on Github at
 [<https://github.com/biojava/biojava-legacy>](https://github.com/biojava/biojava-legacy).
