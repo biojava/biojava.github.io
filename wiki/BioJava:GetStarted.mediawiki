@@ -12,7 +12,7 @@ A step by step guide on 'How to integrate BioJava in Netbeans IDE' is [[BioJava-
 
 == Maven ==
 
-BioJava uses[http://maven.apache.org/ Maven] as a build and distribution system. If you are new to Maven, take a look at the [http://maven.apache.org/guides/getting-started/index.html Getting Started with Maven] guide.
+BioJava uses [http://maven.apache.org/ Maven] as a build and distribution system. If you are new to Maven, take a look at the [http://maven.apache.org/guides/getting-started/index.html Getting Started with Maven] guide.
 
 We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
 
