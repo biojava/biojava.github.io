@@ -2,12 +2,12 @@
 title: Current events
 ---
 
-BioJava 1.8.4 released
-----------------------
+BioJava legacy 1.8.4 released
+-----------------------------
 
-BioJava/BioJava1/biojava-legacy 1.8.4 was released on August 27th 2013
-and is available from <BioJava:Download_1.8.4> as well as from the
-BioJava maven repository at
+BioJava legacy 1.8.4 was released on August 27th 2013 and is available
+from <BioJava:Download_1.8.4> as well as from the BioJava maven
+repository at
 [<http://www.biojava.org/download/maven/>](http://www.biojava.org/download/maven/)
 .
 
