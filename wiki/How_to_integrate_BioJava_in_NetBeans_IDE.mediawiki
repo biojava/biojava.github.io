@@ -41,7 +41,7 @@ NetBeans comes in default with the necessary plugins to use Maven, so no plugins
 We recommend [https://help.github.com/articles/fork-a-repo creating a fork] on github for day-to-day development. In the following instructions you should substitute something like 'https://github.com/<username>/biojava.git' for the repository URL. If you don't want to make a fork (for instance, if you don't plan to make any changes), you can follow the instructions below exactly.
 #Download and install NetBeans from https://netbeans.org/downloads/.
 #Go to {{menu|Team|Git|Clone..}}
-#Add the URL for your biojava repository on github, and press next. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>
+#Add the URL for your BioJava repository on github, and press next. For instance, to checkout the main repository, use <pre>https://github.com/biojava/biojava.git</pre>
 #Select master* from the Select Remote Branches list, and press next.
 #If you don't want to make any changes, press finish.
 #Wait for BioJava to be cloned.
