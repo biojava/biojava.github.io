@@ -65,7 +65,7 @@ below exactly.
 
 1.  Download and install NetBeans from
     <https://netbeans.org/downloads/>.
-2.  Go to
+2.  Go to .
 3.  Add the URL for your BioJava repository on github, and press next.
     For instance, to checkout the main repository, use
         https://github.com/biojava/biojava.git
