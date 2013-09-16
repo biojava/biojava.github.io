@@ -50,3 +50,31 @@ provides help during coding:
 -   Reference as well the location of source code and javadocs.
 -   Click OK; BioJava code is now accessible.
 
+### Option 3 - Download BioJava using Maven
+
+NetBeans comes in default with the necessary plugins to use Maven, so no
+plugins need to be installed.
+
+We recommend [creating a
+fork](https://help.github.com/articles/fork-a-repo) on github for
+day-to-day development. In the following instructions you should
+substitute something like '<https://github.com/><username>/biojava.git'
+for the repository URL. If you don't want to make a fork (for instance,
+if you don't plan to make any changes), you can follow the instructions
+below exactly.
+
+1.  Download and install NetBeans from
+    <https://netbeans.org/downloads/>.
+2.  Go to
+3.  Add the URL for your biojava repository on github, and press next.
+    For instance, to checkout the main repository, use
+        https://github.com/biojava/biojava.git
+
+4.  Select master\* from the Select Remote Branches list, and press
+    next.
+5.  If you don't want to make any changes, press finish.
+6.  Wait for BioJava to be cloned.
+7.  Open the cloned project.
+8.  Right-click on the BioJava project, and select .
+9.  Once the build complete, you are ready to start using BioJava!
+
