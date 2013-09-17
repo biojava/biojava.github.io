@@ -54,6 +54,8 @@ visualisation
     file?](BioJava:CookBook:PDB:read3.0 "wikilink")
 -   [How can I parse a .mmcif
     file?](BioJava:CookBook:PDB:mmcif "wikilink")
+-   [What is the BioJava structure
+    datamodel?](BioJava:CookBook:PDB:datamodel "wikilink")
 -   [How can I access the atoms in a
     structure?](BioJava:CookBook:PDB:atoms "wikilink")
 -   [How can I do calculations on
