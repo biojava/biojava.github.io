@@ -103,10 +103,9 @@ property
 
         -DPDB_DIR=/wherever/you/want/
 
-<h2 id="from-pdb-to-mmcif">
 From PDB to mmCIF
+-----------------
 
-</h2>
 By default BioJava is using the PDB file format for parsing data. In
 order to switch it to use mmCIF, we can take control over the underlying
 <a href="http://www.biojava.org/docs/api/org/biojava/bio/structure/align/util/AtomCache.html">AtomCache</a>
@@ -130,12 +129,14 @@ which manages your PDB (and btw. also SCOP, CATH) installations.
 As you can see, the AtomCache will again download the missing mmCIF file
 for 4HHB in the background.
 
-<h2 id="low-level-access">
 Low level access
+----------------
 
-</h2>
-If you want to learn how to use the BioJava mmCIF parser to populate
-your own data structure, let's first take a look this lower-level code:
+By default the file content will be loaded into the BioJava data
+structures. The parser contains a built-in event model, which allows to
+load your own, custom data structures. For this you will require to
+implement the [MMcifConsumer
+interface](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
 
 <java> @since 1.7
 
