@@ -137,24 +137,35 @@ Low level access
 If you want to learn how to use the BioJava mmCIF parser to populate
 your own data structure, let's first take a look this lower-level code:
 
-            InputStream inStream =  new FileInputStream(fileName);
-     
-            MMcifParser parser = new SimpleMMcifParser();
-     
-            SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();
-     
-            // The Consumer builds up the BioJava - structure object.
-            // you could also hook in your own and build up you own data model.          
-            parser.addMMcifConsumer(consumer);
-     
-            try {
-                parser.parse(new BufferedReader(new InputStreamReader(inStream)));
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-     
-            // now get the protein structure.
-            Structure cifStructure = consumer.getStructure();
+<java> @since 1.7
+
+`   public static void main(String[] args){`
+
+`       String fileName = args[0];`  
+`       `  
+`       InputStream inStream =  new FileInputStream(fileName);`  
+`       `  
+`       MMcifParser parser = new SimpleMMcifParser();`
+
+`       SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();`
+
+`       // The Consumer builds up the BioJava - structure object.`  
+`               // you could also hook in your own and build up you own data model.          `  
+`       parser.addMMcifConsumer(consumer);`
+
+`       try {`  
+`           parser.parse(new BufferedReader(new InputStreamReader(inStream)));`  
+`       } catch (IOException e){`  
+`           e.printStackTrace();`  
+`       }`
+
+`               // now get the protein structure.`  
+`       Structure cifStructure = consumer.getStructure();`  
+`                     `
+
+}
+
+</java>
 
 The parser operates similar to a XML parser by triggering "events". The
 [SimpleMMcifConsumer](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/SimpleMMcifConsumer.html)
@@ -167,31 +178,6 @@ interface and add it to the
 [SimpleMMcifParser](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/SimpleMMcifParser.html).
 
             parser.addMMcifConsumer(myOwnConsumerImplementation);
-
-### How do I read a .mmcif file?
-
-[mmcif](http://ndbserver.rutgers.edu/mmcif/index.html) is an alternative
-file format to PDB files. The mmcif files are parsed into the same
-BioJava data structure as the [PDB
-files](BioJava:CookBook:PDB:read "wikilink"). The example below
-demonstrates how to load the content into the BioJava data model for
-protein structures.
-
-To parse an mmCif file do the following: <java> @since 1.7
-
-`   public static void main(String[] args){`  
-`       String file = "/path/to/myfile.cif.gz";`  
-`       StructureIOFile pdbreader = new MMCIFFileReader();`  
-`       try {`  
-`           Structure s = pdbreader.getStructure(file);`  
-`           System.out.println(s);`  
-`           System.out.println(s.toPDB());`  
-`       } catch (IOException e) {`  
-`           e.printStackTrace();`  
-`       }`  
-`   }`
-
-</java>
 
 Parse into custom data structures
 ---------------------------------
