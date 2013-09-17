@@ -56,12 +56,8 @@ visualisation
     file?](BioJava:CookBook:PDB:mmcif "wikilink")
 -   [What is the BioJava structure
     datamodel?](BioJava:CookBook:PDB:datamodel "wikilink")
--   [How can I access the atoms in a
-    structure?](BioJava:CookBook:PDB:atoms "wikilink")
 -   [How can I do calculations on
     atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
--   [How to work with Groups (AminoAcid, Nucleotide,
-    Hetatom)?](BioJava:CookBook:PDB:groups "wikilink")
 -   [How can I access the header information of a PDB
     file?](BioJava:CookBook:PDB:header "wikilink")
 -   [How does BioJava deal with SEQRES and ATOM
