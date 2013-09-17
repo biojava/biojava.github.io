@@ -180,46 +180,6 @@ interface and add it to the
 
             parser.addMMcifConsumer(myOwnConsumerImplementation);
 
-Parse into custom data structures
----------------------------------
-
-By default the file content will be loaded into the BioJava data
-structures. The parser contains a built-in event model, which allows to
-load your own, custom data structures. For this you will require to
-implement the [MMcifConsumer
-interface](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
-If you don;t have that, just use the SimpleMMcifConsumer
-
-<java> @since 1.7
-
-`   public static void main(String[] args){`
-
-`       String fileName = args[0];`  
-`       `  
-`       InputStream inStream =  new FileInputStream(fileName);`  
-`       `  
-`       MMcifParser parser = new SimpleMMcifParser();`
-
-`       SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();`
-
-`       // The Consumer builds up the BioJava - structure object.`  
-`               // you could also hook in your own and build up you own data model.          `  
-`       parser.addMMcifConsumer(consumer);`
-
-`       try {`  
-`           parser.parse(new BufferedReader(new InputStreamReader(inStream)));`  
-`       } catch (IOException e){`  
-`           e.printStackTrace();`  
-`       }`
-
-`               // now get the protein structure.`  
-`       Structure cifStructure = consumer.getStructure();`  
-`                     `
-
-}
-
-</java>
-
 For more info on how to work with the BioJava structure data model see
 <BioJava:CookBook:PDB:atoms>.
 
