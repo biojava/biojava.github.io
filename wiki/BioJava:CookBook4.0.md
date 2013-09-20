@@ -50,6 +50,10 @@ How Do I....?
 **Optional external library** : *JmolApplet.jar* for the 3D
 visualisation
 
+See also the [BioJava 3
+tutorial](https://github.com/biojava/biojava3-tutorial/tree/master/structure)
+for an introduction into the protein structure modules.
+
 -   [How can I parse a PDB
     file?](BioJava:CookBook:PDB:read3.0 "wikilink")
 -   [How can I parse a .mmcif
