@@ -27,6 +27,8 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 '''Optional module''' : ''biojava3-structure-gui'' for the 3D visualisation
 '''Optional external library''' : ''JmolApplet.jar'' for the 3D visualisation
 
+See also the [https://github.com/biojava/biojava3-tutorial/tree/master/structure BioJava 3 tutorial] for an introduction into the protein structure modules.
+
 * [[BioJava:CookBook:PDB:read3.0|How can I parse a PDB file?]]
 * [[BioJava:CookBook:PDB:mmcif|How can I parse a .mmcif file?]]
 * [[BioJava:CookBook:PDB:datamodel|What is the BioJava structure datamodel?]]
