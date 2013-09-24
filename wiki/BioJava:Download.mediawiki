@@ -1,1 +1,1 @@
-#redirect [[BioJava:Download_3.0.6]]
+#redirect [[BioJava:Download_3.0.7]]
