@@ -2,6 +2,22 @@
 title: Current events
 ---
 
+BioJava 3.0.7 released
+----------------------
+
+BioJava 3.0.7 was released on September 23rd and is available from
+<BioJava:Download> as well as from the BioJava maven repository at
+[<http://www.biojava.org/download/maven/>](http://www.biojava.org/download/maven/)
+.
+
+new features:
+
+`- added a basic genbank parser `  
+`- fixed a problem with translating codons with N`  
+`- now can infer bonds in protein structures`  
+`- added support to parse mmcif records for organism and expression system`  
+`- many small bug fixes and improvements`
+
 BioJava Legacy 1.8.4 released
 -----------------------------
 
