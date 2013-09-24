@@ -14,10 +14,11 @@ About
 
 ### New Features
 
-- added a basic genbank parser - fixed a problem with translating codons
-with N - now can infer bonds in protein structures - added support to
-parse mmcif records for organism and expression system - many small bug
-fixes and improvements
+`- added a basic genbank parser`  
+`- fixed a problem with translating codons with N`  
+`- now can infer bonds in protein structures`  
+`- added support to parse mmcif records for organism and expression system`  
+`- many small bug fixes and improvements`
 
 View the <BioJava:Modules> page for a list of current modules.
 
