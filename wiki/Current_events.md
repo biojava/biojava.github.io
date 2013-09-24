@@ -13,7 +13,7 @@ BioJava 3.0.7 was released on September 23rd and is available from
 new features:
 
 `- added a basic genbank parser `  
-`- fixed a problem with translating codons with N`  
+`- fixed a problem when translating codons with N`  
 `- now can infer bonds in protein structures`  
 `- added support to parse mmcif records for organism and expression system`  
 `- many small bug fixes and improvements`
