@@ -39,7 +39,7 @@ for (Fastq fastq : fastqReader.read(new File("illumina.fastq"))) {
 ### Convert between FASTQ variants using streaming API
 
 <java> FastqReader fastqReader = new IlluminaFastqReader();
-IlluminaInputSupplier inputSupplier = Files.newReaderSupplier(new
+InputSupplier inputSupplier = Files.newReaderSupplier(new
 File("illumina.fastq")); final FastqWriter fastqWriter = new
 SangerFastqWriter(); final FileWriter fileWriter = new FileWriter(new
 File("sanger.fastq"))));
