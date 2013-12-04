@@ -1,6 +1,6 @@
 The following features are missing from the current BioJava3.
 
-If you are looking for a programming project and are interested in contributing any of these please contact the biojava-dev mailing list.
+If you are looking for a programming project and are interested in contributing any of these please contact the biojava-dev mailing list, or browse open feature requests on [https://github.com/biojava/biojava/issues/ Github].
 
 * Balibase
 * UniProt (XML/txt)
