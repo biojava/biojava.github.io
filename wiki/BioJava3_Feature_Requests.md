@@ -7,7 +7,6 @@ The following features are missing from the current BioJava3.
 If you are looking for a programming project and are interested in
 contributing any of these please contact the biojava-dev mailing list.
 
--   Genbank parser
 -   Balibase
 -   UniProt (XML/txt)
 -   port the BioJava 1 Chromatogram parser to BioJava 3
