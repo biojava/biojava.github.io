@@ -60,4 +60,8 @@ GenericFastaHeaderFormat.getHeader, which first attempts to write the
 OriginalHeader from the sequence, and otherwise writes the accessionID.
 If neither of these properties are defined, the description will be
 blank and it will not be possible to read the file into a HashMap, as
-with the FastaReader and FastaReaderHelper, above.
+with the FastaReader and FastaReaderHelper, above. These properties can
+be set with
+[Sequence.setOriginalHeader](http://www.biojava.org/docs/api/org/biojava3/core/sequence/template/AbstractSequence.html#setOriginalHeader(java.lang.String))
+and
+[Sequence.setAccession](http://www.biojava.org/docs/api/org/biojava3/core/sequence/template/AbstractSequence.html#setAccession(org.biojava3.core.sequence.AccessionID)).
