@@ -1,3 +1,11 @@
+BioJava 3 tutorial:
+
+The BioJava 3 tutorial is being hosted and developed at the [https://github.com/biojava/biojava3-tutorial BioJava tutorial project on github].
+
+
+
+BioJava legacy tutorials:
+
 The following tutorials are currently available - more are always welcome! While reading these, you will probably also want to refer to the JavaDoc API documentation ([http://www.biojava.org/docs/api1.8.4/ latest biojava 1.8.x]).
 
 * Sequence basics
