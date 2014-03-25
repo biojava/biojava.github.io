@@ -78,7 +78,7 @@ api](http://www.biojava.org/docs/api3.0.8/)
 Release Date
 ------------
 
-BioJava 3.0.8 has been released on September 23rd 2013
+BioJava 3.0.8 has been released on March 25th 2014
 
 Getting older versions
 ----------------------
