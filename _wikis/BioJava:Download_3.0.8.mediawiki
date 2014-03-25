@@ -1,0 +1,130 @@
+This page offers downloads for the <b>BioJava 3.0.8 release</b>. 
+
+BioJava 3.0.8 requires <b>Java 1.6</b> or later. 
+
+== About ==
+''BioJava'' 3.0.8 has been released and is available using Maven from
+[http://biojava.org/download/maven/ http://biojava.org/download/maven/]
+
+===New Features===
+
+ - added a basic genbank parser
+ - fixed a problem when translating codons with N
+ - now can infer bonds in protein structures
+ - added support to parse mmcif records for organism and expression system
+ - many small bug fixes and improvements
+
+
+
+View the [[BioJava:Modules]] page for a list of current modules.
+
+== Maven Download ==
+BioJava 3.0.8 requires [http://maven.apache.org/ Maven] for the build process. We are providing a BioJava specific Maven repository at http://biojava.org/download/maven/ .
+
+You can add the BioJava repository by adding the following XML to your project pom.xml file:
+<pre>
+        <dependencies>
+                ...
+                <dependency>
+                        <groupId>org.biojava</groupId>
+                        <artifactId>biojava3-core</artifactId>
+                        <version>3.0.8</version>
+                </dependency>
+                <!-- other biojava jars as needed -->
+        </dependencies>
+	<repositories>
+		...
+		<repository>
+			<id>biojava-maven-repo</id>
+			<name>BioJava repository</name>
+			<url>http://www.biojava.org/download/maven/</url>			
+		</repository>
+	</repositories>
+</pre>
+
+== Manual Download ==
+
+.tar.gz containing all jars, source and javadocs: [http://biojava.org/download/bj3.0.8/biojava-3.0.8-all.tar.gz biojava-3.0.8-all]
+
+{|
+|+
+! Module
+! Binary Jar
+! Source Jar
+! Javadoc Jar
+|-
+| biojava3-core 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0.8/biojava3-core-3.0.8.jar biojava3-core-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0.8/biojava3-core-3.0.8-sources.jar biojava3-core-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-core/3.0.8/biojava3-core-3.0.8-javadoc.jar biojava3-core-3.0.8-javadoc.jar]
+|-
+| biojava3-alignment 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0.8/biojava3-alignment-3.0.8.jar biojava3-alignment-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0.8/biojava3-alignment-3.0.8-sources.jar biojava3-alignment-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-alignment/3.0.8/biojava3-alignment-3.0.8-javadoc.jar biojava3-alignment-3.0.8-javadoc.jar]
+|-
+| biojava3-genome 
+| [http://biojava.org/download/maven/org/biojava/biojava3-genome/3.0.8/biojava3-genome-3.0.8.jar biojava3-genome-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-genome/3.0.8/biojava3-genome-3.0.8-sources.jar biojava3-genome-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-genome/3.0.8/biojava3-genome-3.0.8-javadoc.jar biojava3-genome-3.0.8-javadoc.jar]
+|-
+| biojava3-structure 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure/3.0.8/biojava3-structure-3.0.8.jar biojava3-structure-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure/3.0.8/biojava3-structure-3.0.8-sources.jar biojava3-structure-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure/3.0.8/biojava3-structure-3.0.8-javadoc.jar biojava3-structure-3.0.8-javadoc.jar]
+|-
+| biojava3-structure-gui 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure-gui/3.0.8/biojava3-structure-gui-3.0.8.jar biojava3-structure-gui-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure-gui/3.0.8/biojava3-structure-gui-3.0.8-sources.jar biojava3-structure-gui-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-structure-gui/3.0.8/biojava3-structure-gui-3.0.8-javadoc.jar biojava3-structure-gui-3.0.8-javadoc.jar]
+|-
+| biojava3-phylo 
+| [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0.8/biojava3-phylo-3.0.8.jar biojava3-phylo-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0.8/biojava3-phylo-3.0.8-sources.jar biojava3-phylo-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-phylo/3.0.8/biojava3-phylo-3.0.8-javadoc.jar biojava3-phylo-3.0.8-javadoc.jar]
+|-
+| biojava3-modfinder 
+| [http://biojava.org/download/maven/org/biojava/biojava3-modfinder/3.0.8/biojava3-modfinder-3.0.8.jar biojava3-modfinder-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-modfinder/3.0.8/biojava3-modfinder-3.0.8-sources.jar biojava3-modfinder-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-modfinder/3.0.8/biojava3-modfinder-3.0.8-javadoc.jar biojava3-modfinder-3.0.8-javadoc.jar]
+|-
+| biojava3-ws 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0.8/biojava3-ws-3.0.8.jar biojava3-ws-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0.8/biojava3-ws-3.0.8-sources.jar biojava3-ws-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-ws/3.0.8/biojava3-ws-3.0.8-javadoc.jar biojava3-ws-3.0.8-javadoc.jar]
+|-
+| biojava3-aa-prop 
+| [http://biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.8/biojava3-aa-prop-3.0.8.jar biojava3-aa-prop-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.8/biojava3-aa-prop-3.0.8-sources.jar biojava3-aa-prop-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-aa-prop/3.0.8/biojava3-aa-prop-3.0.8-javadoc.jar biojava3-aa-prop-3.0.8-javadoc.jar]
+|-
+| biojava3-protein-disorder 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protein-disorder/3.0.8/biojava3-protein-disorder-3.0.8.jar biojava3-protein-disorder-3.0.8.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protein-disorder/3.0.8/biojava3-protein-disorder-3.0.8-sources.jar biojava3-protein-disorder-3.0.8-sources.jar] 
+| [http://biojava.org/download/maven/org/biojava/biojava3-protein-disorder/3.0.8/biojava3-protein-disorder-3.0.8-javadoc.jar biojava3-protein-disorder-3.0.8-javadoc.jar]
+
+|}
+
+== Browse API docs ==
+You can also browse the documentation at [http://www.biojava.org/docs/api3.0.8/ BioJava 3.0.8 api]
+
+==Release Date==
+BioJava 3.0.8 has been released on September 23rd 2013
+
+== Getting older versions ==
+* The legacy release of 3.0.7 can be found [[BioJava:Download 3.0.7|here]] (requires Java 1.6+)
+* The legacy release of 3.0.6 can be found [[BioJava:Download 3.0.6|here]] (requires Java 1.6+)
+* The legacy release of 3.0.5 can be found [[BioJava:Download 3.0.5|here]] (requires Java 1.6+)
+* The legacy release of 3.0.4 can be found [[BioJava:Download 3.0.4|here]] (requires Java 1.6+)
+* The legacy release of 3.0.3 can be found [[BioJava:Download 3.0.3|here]] (requires Java 1.6+)
+* The legacy release of 3.0.2 can be found [[BioJava:Download 3.0.2|here]] (requires Java 1.6+)
+* The legacy release of 3.0.1 can be found [[BioJava:Download 3.0.1|here]] (requires Java 1.6+)
+* The legacy release of 3.0 can be found [[BioJava:Download 3.0|here]] (requires Java 1.5+)
+* The legacy release of 1.8 can be found [[BioJava:Download 1.8|here]] (requires Java 1.5+)
+* The legacy release of 1.7.1 can be found [[BioJava:Download 1.7.1|here]] (requires Java 1.5+)
+* The legacy release of 1.7 can be found [[BioJava:Download 1.7|here]] (requires Java 1.5+)
+* The legacy release of 1.6 can be found [[BioJava:Download 1.6|here]] (requires Java 1.5+)
+* The legacy release of 1.5 can be found [[BioJava:Download 1.5|here]] (requires Java 1.4.2+)
+* The legacy release of 1.4 can be found [[BioJava:Download 1.4|here]]
+* The legacy release 1.3 can be found [[BioJava:Download 1.3|here]].
+* Older releases of BioJava can be found in the [http://www.biojava.org/download/ download area].
