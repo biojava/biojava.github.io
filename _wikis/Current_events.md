@@ -2,6 +2,43 @@
 title: Current events
 ---
 
+BioJava 3.0.8 released
+----------------------
+
+BioJava 3.0.8 was released on March 25th 2014 and is available from
+<BioJava:Download> as well as from the BioJava maven repository at
+<http://www.biojava.org/download/maven/>
+
+This release includes a lot of new features as well as numerous bug
+fixes and improvements.
+
+New Features:
+
+`- new Genbank writer`  
+`- new parser for Karyotype file from UCSC`  
+`- new parser for Gene locations from UCSC `  
+`- new parser for Gene names file from genenames.org`  
+`- new module for Cox regression code for survival analysis`  
+`- new calculation of accessible surface area (ASA)`  
+`- new module for parsing .OBO files (ontologies)`  
+`- improved representation of SCOP and Berkeley-SCOP classifications`  
+
+For a detailed comparison see here:
+<https://github.com/biojava/biojava/compare/biojava-3.0.7>...biojava-3.0.8
+
+This release would not have been possible without contributions from 13
+developers, thanks to all for their support!
+
+About BioJava:
+
+BioJava is a mature open-source project that provides a framework for
+processing of biological data. BioJava contains powerful analysis and
+statistical routines, tools for parsing common file formats, and
+packages for manipulating sequences and 3D structures. It enables rapid
+bioinformatics application development in the Java programming language.
+
+Happy BioJava-ing,
+
 BioJava 3.0.7 released
 ----------------------
 
