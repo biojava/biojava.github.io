@@ -34,8 +34,6 @@ language.
 
 Happy BioJava-ing,
 
-
-
 == BioJava 3.0.7 released ==
 
 BioJava 3.0.7 was released on September 23rd and is available from 
