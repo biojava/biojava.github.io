@@ -14,11 +14,19 @@ About
 
 ### New Features
 
-`- added a basic genbank parser`  
-`- fixed a problem when translating codons with N`  
-`- now can infer bonds in protein structures`  
-`- added support to parse mmcif records for organism and expression system`  
-`- many small bug fixes and improvements`
+This release includes a lot of new features as well as numerous bug
+fixes and improvements.
+
+New Features:
+
+`- new Genbank writer`  
+`- new parser for Karyotype file from UCSC`  
+`- new parser for Gene locations from UCSC `  
+`- new parser for Gene names file from genenames.org`  
+`- new module for Cox regression code for survival analysis`  
+`- new calculation of accessible surface area (ASA)`  
+`- new module for parsing .OBO files (ontologies)`  
+`- improved representation of SCOP and Berkeley-SCOP classifications`
 
 View the <BioJava:Modules> page for a list of current modules.
 
