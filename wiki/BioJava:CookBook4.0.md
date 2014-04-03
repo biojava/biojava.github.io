@@ -182,4 +182,4 @@ Legacy 1.8.x CookBook
 ---------------------
 
 The CookBook for the legacy 1.8.x code base is available from
-<BioJava:LegacyCookBook>.
+<BioJava:CookBookLegacy>.
