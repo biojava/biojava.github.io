@@ -107,6 +107,9 @@ Getting older versions
     [here](BioJava:Download 3.0.1 "wikilink") (requires Java 1.6+)
 -   The legacy release of 3.0 can be found
     [here](BioJava:Download 3.0 "wikilink") (requires Java 1.5+)
+-   The legacy release of 1.8.5 can be found [BioJava:Download
+    1.8.5[here](BioJava:Download 1.8.5[here "wikilink") (requires Java
+    1.5+)
 -   The legacy release of 1.8.4 can be found
     [here](BioJava:Download 1.8.4 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.2 can be found
