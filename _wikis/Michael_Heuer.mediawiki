@@ -28,4 +28,8 @@ For source code contributions (note, only commits against the biojava-live svn t
 For additional data analysis and visualization libraries, see http://www.dishevelled.org
 
 
+For the Cytoscape 3.x Variation app, see https://github.com/heuermh/variation-cytoscape3-app or http://www.dishevelled.org/variation-cytoscape3-app
+
+For the Cytoscape 3.x Worm Plot app, see http://apps.cytoscape.org/apps/wormplot
+
 For the Cytoscape 2.x plugin and 3.x app for Venn and Euler diagrams, see http://apps.cytoscape.org/apps/vennandeulerdiagrams
