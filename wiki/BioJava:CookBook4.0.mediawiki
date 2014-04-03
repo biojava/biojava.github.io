@@ -112,4 +112,4 @@ See also the [https://github.com/biojava/biojava3-tutorial/tree/master/structure
 
 == Legacy 1.8.x CookBook ==
 
-The CookBook for the legacy 1.8.x code base is available from [[BioJava:LegacyCookBook]].
+The CookBook for the legacy 1.8.x code base is available from [[BioJava:CookBookLegacy]].
