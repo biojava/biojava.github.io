@@ -36,7 +36,7 @@ and then include BioJava module dependencies such as:
 == Manual Download ==
 '''Download the entire project:'''
 
-[http://biojava.org/download/bj1.8.4/biojava-legacy-1.8.5-all.tar.gz  biojava-legacy-1.8.5-all.tar.gz] 
+[http://biojava.org/download/bj1.8.5/biojava-legacy-1.8.5-all.tar.gz  biojava-legacy-1.8.5-all.tar.gz] 
 
 == Browse API docs ==
 You can also browse the documentation at [http://www.biojava.org/docs/api1.8.5/ BioJava Legacy 1.8.5 api]
