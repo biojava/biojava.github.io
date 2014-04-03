@@ -178,8 +178,8 @@ biojava3-core*
 -   [How can I get Pfam annotations for a protein sequence using the
     Hmmer3 service?](BioJava:CookBook3:HmmerService "wikilink")
 
-Legacy 1.7 CookBook
--------------------
+Legacy 1.8.x CookBook
+---------------------
 
-The CookBook for the legacy 1.X code base is available from
-<BioJava:CookBook1.7>.
+The CookBook for the legacy 1.8.x code base is available from
+<BioJava:LegacyCookBook>.
