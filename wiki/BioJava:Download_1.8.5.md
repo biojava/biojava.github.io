@@ -51,7 +51,7 @@ Manual Download
 
 **Download the entire project:**
 
-[biojava-legacy-1.8.5-all.tar.gz](http://biojava.org/download/bj1.8.4/biojava-legacy-1.8.5-all.tar.gz)
+[biojava-legacy-1.8.5-all.tar.gz](http://biojava.org/download/bj1.8.5/biojava-legacy-1.8.5-all.tar.gz)
 
 Browse API docs
 ---------------
