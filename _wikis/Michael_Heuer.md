@@ -34,19 +34,19 @@ Bioinformatics. 2012 Oct 15;28(20):2693-5. doi:
 10.1093/bioinformatics/bts494. Epub 2012 Aug 9.  
 PMID: 22877863  
 
-For source code contributions (note, only commits against the
-biojava-live svn trunk are shown), see
+For source code contributions, see
 <http://www.ohloh.net/accounts/heuermh>
 
 For additional data analysis and visualization libraries, see
 <http://www.dishevelled.org>
 
-For the Cytoscape 3.x Variation app, see
-<https://github.com/heuermh/variation-cytoscape3-app> or
-<http://www.dishevelled.org/variation-cytoscape3-app>
+For the Cytoscape 2.x plugin and 3.x app for Venn and Euler diagrams,
+see <http://apps.cytoscape.org/apps/vennandeulerdiagrams>
 
 For the Cytoscape 3.x Worm Plot app, see
 <http://apps.cytoscape.org/apps/wormplot>
 
-For the Cytoscape 2.x plugin and 3.x app for Venn and Euler diagrams,
-see <http://apps.cytoscape.org/apps/vennandeulerdiagrams>
+For the Cytoscape 3.x Variation app, see
+<https://github.com/heuermh/variation-cytoscape3-app>
+
+For everything else, see <https://github.com/heuermh>
