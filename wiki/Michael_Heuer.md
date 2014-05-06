@@ -45,7 +45,7 @@ For the Cytoscape 3.x Worm Plot app, see
 <http://apps.cytoscape.org/apps/wormplot>
 
 For the Cytoscape 3.x Variation app, see
-<https://github.com/heuermh/variation-cytoscape3-app>
+<http://apps.cytoscape.org/variation>
 
 For everything else, see <https://github.com/heuermh>
 
