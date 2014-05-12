@@ -2,20 +2,20 @@
 title: BioJava3 Feature Requests
 ---
 
-The following features are missing from the current BioJava3.
+Feature requests and bug reports should be added as [Github
+issues](https://github.com/biojava/biojava/issues/). We welcome all
+feature requests, both large and small.
 
-If you are looking for a programming project and are interested in
-contributing any of these please contact the biojava-dev mailing list,
-or browse open feature requests on
-[Github](https://github.com/biojava/biojava/issues/).
+Some example feature requests:
 
--   Balibase
+-   Balibase [[\#119](https://github.com/biojava/biojava/issues/119)]
 -   UniProt (XML/txt)
 -   port the BioJava 1 Chromatogram parser to BioJava 3
+    [[\#120](https://github.com/biojava/biojava/issues/120)]
 -   Variation APIs that bring together Ensembl Variation, VCF file
     format, GFF3+GVF file format, samtools, Picard, GATK, etc.
--   SCOP2 parser (See [Github
-    issue](https://github.com/biojava/biojava/issues/82))
+    [[\#121](https://github.com/biojava/biojava/issues/121)]
+-   SCOP2 parser [[\#82](https://github.com/biojava/biojava/issues/82)]
 
 There are also a number of algorithms where we would be interested in
 [Java ports](Algorithm_Java_port "wikilink").
