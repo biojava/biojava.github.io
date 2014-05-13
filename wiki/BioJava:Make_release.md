@@ -20,11 +20,44 @@ semi-automatic.
 
 -   Announce release deadlines on mailing list
 
-### Prepare your release server
+### Configure Authentication Keys
 
-Make sure you have access to a server that has the ssh keys setup for
-cloudportal.open-bio.org. If you need help with that, talk to
-root@open-bio.org.
+To complete the release you need permission to scp files to the maven
+repository on cloudportal.open-bio.org. If you need help with that, talk
+to root@open-bio.org. Make sure you have ssh keys set up to log in, and
+that you are a member of the apache group so that you can write to the
+web directory.
+
+You also need to configure maven with your username and identity file.
+In ~/.m2/settings.xml (on the build machine), add or merge the following
+xml:
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+     http://maven.apache.org/xsd/settings-1.0.0.xsd">  
+`    `<localRepository/>  
+`    `<interactiveMode/>  
+`    `<usePluginRegistry/>  
+`    `<offline/>  
+`    `<pluginGroups/>  
+`    `<mirrors/>  
+`    `<proxies/>  
+`    `<profiles/>  
+`    `<activeProfiles/>  
+`    `<servers>  
+`        `<server>  
+`            `<id>`biojava-maven-repo`</id>  
+`            `<username>`username`</username>  
+`            `<privateKey>`/full/path/to/.ssh/id_rsa`</privateKey>  
+`        `</server>  
+`    `</servers>  
+</settings>
+
+Maven reports 'Auth Error' in the release:perform stage if you keys are
+not properly set up. Permissions errors mean that authentication was
+successful but you can not write to the correct location (for instance,
+if a maven-metadata.xml exists from a previous build by another user).
 
 On release date
 ---------------
