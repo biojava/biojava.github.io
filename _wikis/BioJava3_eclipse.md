@@ -99,6 +99,20 @@ Option 2: *These instructions are more difficult, but may work if Option
         your source code
     5.  Finished!
 
+Option 3: *Cloning from command line and importing into eclipse, doesn't
+require SCM handler.*
+
+1.  Clone biojava from command line
+        git clone https://github.com/biojava/biojava.git
+
+2.  Go to
+    1.  Browse to the root directory of your cloned biojava project
+    2.  Click OK and then Finish
+
+3.  You are done! now eclipse will automatically detect all the pom.xml
+    files (the maven config files) and will understand that it is a
+    maven and a git-tracked project.
+
 You should now have source to all the biojava modules (biojava3-core,
 biojava3-structure, etc). Viewing the history for any file should show
 you all commits since 2009 which have contributed to that file.
