@@ -15,7 +15,7 @@ available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
 You can get the latest version of BioJava3 from the download page
-[BioJava3 (v3.0.6) (requires Java 1.6+)](Biojava:Download "wikilink").
+[BioJava3 (v3.0.8) (requires Java 1.6+)](Biojava:Download "wikilink").
 
 You can get the latest version of BioJava (a.k.a. BioJava1,
 biojava-legacy) from the download page [BioJava1 (v1.8.4) (requires Java
