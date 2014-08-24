@@ -18,7 +18,7 @@ import org.biojava3.core.util.ConcurrencyTools;
 public class CookbookMSA {
 
     public static void main(String[] args) {
-        String[] ids = new String[] {"Q21691", "Q21495", "O48771"};
+        String[] ids = new String[] {"Q21691", "A8WS47", "O48771"};
         try {
             multipleSequenceAlignment(ids);
         } catch (Exception e){
