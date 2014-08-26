@@ -69,75 +69,93 @@ On release date
 -   Make sure the auto-build page (cruisecontrol) does not report any
     problems
 
+Clean checkout
+--------------
+
+Create a clean clone on a machine with ssh keys set up to access
+cloudportal.open-bio.org (and associated maven settings; see above).
+
+`git clone git@github.com:biojava/biojava.git bj3.0.7`
+
 ### Make maven release
 
-the release process is very straightforward nowadays.
+the release process is very straightforward nowadays. It is rather
+time-consuming, as maven runs all tests during each step.
 
-`mvn release:clean `
-
-`mvn release:prepare `
-
+`mvn release:clean `  
+`mvn release:prepare `  
 `mvn release:perform`
 
-If all three steps work fine, the biggest part of the release has been
-completed!. The next steps are just updates of documentation. If
-something went wrong you can reset the release process by doing:
+The second and third steps set up your local git repository and deploy
+jar files for each module to cloudportal. If something goes wrong, you
+can technically run \`mvn release:rollback\`, but it is easier to just
+reset your git repository to master.
 
-`mvn release:rollback`
+`git reset --hard origin/master`
+
+### Push to Github
+
+If all three steps work fine, push the tag to github and merge it to
+releases. Note that I'm assuming origin refers to the central biojava
+repository.
+
+<span style="color:red">Note: double check these commands</span>
+
+`git pull master #merge any commits that occurred while releasing`  
+`git push --tags origin master #push the new master (with updated pom) and new tags`
+
+`git checkout release`  
+`git merge biojava-3.0.7`  
+`git diff biojava-3.0.7 release #shouldn't print anything`  
+`git push origin release`
+
+Now the release is official!
 
 ### Prepare and release javadoc files
 
-`cd biojava-git/target/checkout/`
-
-remove .git files (for preparing -all file)
-
-`find ./ -name ".git" | xargs rm -Rf`
+(Still in git checkout, e.g. bj3.0.7 if you're following along or
+biojava-git/target/checkout/ if you're andreas)
 
 build javadoc:
 
 `mvn site`
 
-`cd biojava-svn/target/checkout/target/site/`
-
 Here we assume the version nr. of the current release is 3.0.7.
 
-` mv apidocs/ api3.0.7`
-
-` tar cvf api3.0.3.tar api3.0.7/`  
-  
-` gzip api3.0.7.tar`
-
+` cd target/site/`  
+` mv apidocs/ api3.0.7`  
+` tar czvf api3.0.3.tar.gz api3.0.7/`  
 ` scp api3.0.7.tar.gz username@cloudportal.open-bio.org:/home/websites/biojava.org/html/static/docs/`
 
 now log into the couldportal server:
 
-`ssh andreas@cloudportal.open-bio.org`
-
-`cd /home/websites/biojava.org/html/static/docs/`
-
-`tar zxvf api3.0.7.tar.gz`
-
-`rm api`  
+`ssh andreas@cloudportal.open-bio.org`  
   
+`cd /home/websites/biojava.org/html/static/docs/`  
+`tar zxvf api3.0.7.tar.gz`  
+`rm api`  
 `ln -s api3.0.7 api`
 
 and back to your local machine...
 
 ### Create the biojava-all bundle
 
-in biojava-svn/target
+If needed, rename your git checkout to bj3.0.7
 
 `mv checkout/ bj3.0.7`
 
-`tar zcvf bj3.0.7.tar.gz bj3.0.7`
+remove .git files
 
-`mv bj3.0.7.tar.gz biojava-3.0.7-all.tar.gz`  
+`rm -rf .git .gitignore .travis.yml KEYS ignore.txt`
+
+Create -all tarball
+
+`cd ..`  
+`tar czvf bj3.0.7-all.tar.gz bj3.0.7`  
 
 on portal.open-bio
 
-`cd /home/websites/biojava.org/html/static/download`
-
-`mkdir bj3.0.7`
+`mkdir /home/websites/biojava.org/html/static/download/bj3.0.7`
 
 back to your local machine
 
@@ -155,7 +173,7 @@ this is how to enable analytics in javadocs
 
 upload apidocs
 
-### Update the wikipedia pages to link to the new release
+### Update the wiki pages to link to the new release
 
 Create a new download file for the release. (I copied
 <BioJava:Download_3.0.4> to <BioJava:Download_3.0.5>). Modify the new
@@ -165,6 +183,9 @@ Update <BioJava:Download> (Change the redirect on the BioJava:Download
 page to <BioJava:Download_3.0.5>)
 
 Update the <MediaWiki:Sidebar> to point to the new Javadoc api
+
+Update the main page via <Template:BioJava_Documentation> and
+<Template:CookBook>
 
 ### AND FINALLY
 
