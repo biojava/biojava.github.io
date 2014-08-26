@@ -4,7 +4,8 @@ title: BioJava:Download 3.1.0
 
 This page offers downloads for the <b>BioJava 3.1.0 release</b>.
 
-BioJava 3.1.0 requires <b>Java 1.6</b> or later.
+BioJava 3.1.0 requires <b>Java 6 or 7</b>. Users of Java 8 should
+download the latest [BioJava 4.0.0-SNAPSHOT](Get source "wikilink").
 
 About
 -----
