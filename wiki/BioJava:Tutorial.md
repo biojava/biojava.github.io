@@ -6,7 +6,9 @@ BioJava 3 tutorial:
 
 The BioJava 3 tutorial is being hosted and developed at the [BioJava
 tutorial project on
-github](https://github.com/biojava/biojava3-tutorial).
+github](https://github.com/biojava/biojava3-tutorial). The [BioJava
+Cookbook](BioJava:CookBook "wikilink") offers cookbook-style tutorials
+about performing many common tasks in BioJava.
 
 BioJava legacy tutorials:
 
@@ -40,8 +42,9 @@ latest biojava ]).
 -   [Approaches to Web Development for
     Bioinformatics](http://biojava.org/download/WebDevelopmentBioinformatics.pdf)
 
-The [BioJava in Anger](BioJava:CookBook "wikilink") page offers
-cookbook-style tutorials about performing many common tasks in BioJava.
+The [BioJava Legacy Cookbook](BioJava:CookBookLegacy "wikilink") offers
+cookbook-style tutorials about performing many common tasks in BioJava
+1.
 
 Additionally, a number of small demo programs can be found in the
 `demos` directory of the BioJava source distribution.
