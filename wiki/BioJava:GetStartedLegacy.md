@@ -8,9 +8,9 @@ Introduction
 Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the
 continuation of the old BioJava core while a new code base, BioJava 3,
 is currently being developed. As of the concurrent release of BioJava
-1.8.5 and BioJava 3.0.8, many functionalities are still not available in
-BioJava 3 and differences between their respective sequence models may
-make BioJava 1 a valid option for your project.
+and BioJava , many functionalities are still not available in BioJava 3
+and differences between their respective sequence models may make
+BioJava 1 a valid option for your project.
 
 To find out more about BioJava 1, check any of the following entry
 points:
@@ -35,8 +35,8 @@ MacOS X include a suitable Java implementation as standard. Java is also
 available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version from the download page [BioJava 1.8.5
-(requires Java 1.5+)](Biojava:Download_1.8.5 "wikilink").
+You can get the latest version from the download page [BioJava (requires
+Java 1.5+)](Biojava:Download_{{current version legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
@@ -90,10 +90,10 @@ consult your Java vendor.
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the
 [tutorial](BioJava:Tutorial "wikilink"),
-[documentation](http://www.biojava.org/docs/api1.8.5API) and the
-[BioJava in anger](BioJava:Cookbook "wikilink") section . Finally, you
-can learn a lot about BioJava by trying the demo programs included in
-the source distribution (see below).
+[<http://www.biojava.org/docs/api> API documentation] and the [Legacy
+Cookbook](BioJava:CookBookLegacy "wikilink") section. Finally, you can
+learn a lot about BioJava by trying the demo programs included in the
+source distribution (see below).
 
 Building your own
 -----------------
