@@ -12,8 +12,8 @@ BioJava legacy tutorials:
 
 The following tutorials are currently available - more are always
 welcome! While reading these, you will probably also want to refer to
-the JavaDoc API documentation ([latest biojava
-1.8.x](http://www.biojava.org/docs/api1.8.4/)).
+the JavaDoc API documentation ([<http://www.biojava.org/docs/api>/
+latest biojava ]).
 
 -   Sequence basics
     -   [Symbols and
