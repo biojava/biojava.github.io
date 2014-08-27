@@ -15,11 +15,11 @@ available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
 You can get the latest version of BioJava3 from the download page
-[BioJava3 (v3.0.8) (requires Java 1.6+)](Biojava:Download "wikilink").
+[BioJava3 (v) (requires Java 1.6+)](Biojava:Download "wikilink").
 
 You can get the latest version of BioJava (a.k.a. BioJava1,
-biojava-legacy) from the download page [BioJava1 (v1.8.4) (requires Java
-1.5+)](Biojava:Download_1.8.4 "wikilink").
+biojava-legacy) from the download page [BioJava1 (v) (requires Java
+1.5+)](Biojava:Download_{{current version legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
@@ -55,7 +55,7 @@ project pom.xml file:
                     <dependency>
                             <groupId>org.biojava</groupId>
                             <artifactId>biojava3-core</artifactId>
-                            <version>3.0.8</version>
+                            <version>3.1.0</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
             </dependencies>
