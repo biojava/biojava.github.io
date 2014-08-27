@@ -182,15 +182,13 @@ page to the latest data.
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
 page to <BioJava:Download_3.0.5>)
 
-Update the <MediaWiki:Sidebar> to point to the new Javadoc api
+Update [Template:Current version](Template:Current version "wikilink"),
+which should change all the references on the home page, sidebar, etc.
 
-Update the main page via <Template:BioJava_Documentation> and
-<Template:CookBook>
-
-Add release announcement to [Current events](Current events "wikilink")
-
-Search for additional references to the old version: [Advanced
-Search](http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search=3.0.8)
+Double check that there are no additional references to the old version
+using an
+[<http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search>=
+Advanced Search].
 
 ### AND FINALLY
 
