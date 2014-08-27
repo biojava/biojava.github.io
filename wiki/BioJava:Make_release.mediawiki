@@ -146,13 +146,9 @@ Create a new download file for the release. (I copied [[BioJava:Download_3.0.4]]
 
 Update [[BioJava:Download]] (Change the redirect on the BioJava:Download page to [[BioJava:Download_3.0.5]])
 
-Update the [[MediaWiki:Sidebar]] to point to the new Javadoc api
+Update [[Template:Current version]], which should change all the references on the home page, sidebar, etc.
 
-Update the main page via [[Template:BioJava_Documentation]] and [[Template:CookBook]]
-
-Add release announcement to [[Current events]]
-
-Search for additional references to the old version: [http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search=3.0.8 Advanced Search]
+Double check that there are no additional references to the old version using an [http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search={{current version}} Advanced Search].
 
 === AND FINALLY ===
 
