@@ -1,5 +1,5 @@
 == Introduction ==
-Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the continuation of the old BioJava core while a new code base, BioJava 3, is currently being developed. As of the concurrent release of BioJava 1.8.5 and BioJava 3.0.8, many functionalities are still not available in BioJava 3 and differences between their respective sequence models may make BioJava 1 a valid option for your project.
+Welcome to BioJava 1 or BioJava Legacy. BioJava Legacy is the continuation of the old BioJava core while a new code base, BioJava 3, is currently being developed. As of the concurrent release of BioJava {{current version legacy}} and BioJava {{current version}}, many functionalities are still not available in BioJava 3 and differences between their respective sequence models may make BioJava 1 a valid option for your project.
 
 To find out more about BioJava 1, check any of the following entry points:
 * [[BioJava:Tutorial|Tutorial]] to learn about symbols, sequence, and events.
@@ -9,7 +9,7 @@ To find out more about BioJava 1, check any of the following entry points:
 == Installation ==
 BioJava 1 will run on any computer with a Java virtual machine complying to the Java 2 Standard Edition (J2SE) 1.5 (or later) specifications. Java implementations for Linux, Windows, and Solaris are available to download from [http://www.oracle.com/technetwork/java/ Oracle's java website]. Recent versions of MacOS X include a suitable Java implementation as standard. Java is also available on many other platforms: if in doubt, contact your vendor. BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version from the download page [[Biojava:Download_1.8.5|BioJava 1.8.5 (requires Java 1.5+)]]. 
+You can get the latest version from the download page [[Biojava:Download_{{current version legacy}}|BioJava {{current version legacy}} (requires Java 1.5+)]]. 
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow this [[How_to_integrate_BioJava_in_NetBeans_IDE|link]].
 
@@ -47,7 +47,7 @@ In some distributions of Biojava, you need to specify biojava.jar instead of bio
 
 It is also possible to "install" JAR files onto your system by copying them into your Java installation's extensions directory. On most Unix systems, this is named ''${JAVA_HOME}/jre/lib/ext''. On Mac OS X there is a per-user extensions directory called ''~/Library/Java/Extensions'' (you may have to create this directory yourself). For other platforms, consult your Java vendor.
 
-You can now compile and run BioJava programs using the ''javac'' and ''java'' commands. You might like to look at the [[BioJava:Tutorial|tutorial]], [http://www.biojava.org/docs/api1.8.5API documentation] and the [[BioJava:Cookbook |BioJava in anger]] section . Finally, you can learn a lot about BioJava by trying the demo programs included in the source distribution (see below).
+You can now compile and run BioJava programs using the ''javac'' and ''java'' commands. You might like to look at the [[BioJava:Tutorial|tutorial]], [http://www.biojava.org/docs/api{{current version legacy}} API documentation] and the [[BioJava:CookBookLegacy |Legacy Cookbook]] section. Finally, you can learn a lot about BioJava by trying the demo programs included in the source distribution (see below).
 
 ==  Building your own ==
 
