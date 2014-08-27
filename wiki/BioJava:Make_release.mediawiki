@@ -150,6 +150,9 @@ Update the [[MediaWiki:Sidebar]] to point to the new Javadoc api
 
 Update the main page via [[Template:BioJava_Documentation]] and [[Template:CookBook]]
 
+Add release announcement to [[Current events]]
+
+Search for additional references to the old version: [http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search=3.0.8 Advanced Search]
 
 === AND FINALLY ===
 
