@@ -1,3 +1,24 @@
+== BioJava 3.1.0 released ==
+
+BioJava 3.1.0 was released on August 25th 2014 and is available from
+http://biojava.org/wiki/BioJava:Download as well as from the
+BioJava maven repository at http://www.biojava.org/download/maven/
+
+While most development is going towards the upcoming 4.0.0 release, this release provides bug fixes and a few new features:
+
+* CE-CP version 1.4, with additional parameters
+* Update to SCOPe 2.04
+* Improvements in FASTQ parsing
+* Fix bugs in PDB parsing
+* Minor fixes in structure alignments
+
+For a detailed comparison see here:
+https://github.com/biojava/biojava/compare/biojava-3.0.8...biojava-3.1.0
+
+This version is compatible with Java 6 and 7. If you're using Java 8, please use the latest snapshot build. Snapshots are now available from Maven central just by setting your pom.xml file to version '4.0.0-SNAPSHOT'!
+
+Thanks to the contributors who submitted code to this release–heuermh, Elinow, Siarhei, sbliven and andreasprlic–and to those who contributed to the 4.0.0 branch!
+
 == BioJava 3.0.8 released ==
 
 BioJava 3.0.8 was released on March 25th 2014 and is available from
