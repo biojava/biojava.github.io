@@ -71,6 +71,7 @@ BioJava 1.9.0 has been released on June 25th, 2014.
 Getting older versions
 ----------------------
 
+-   [here](BioJava:Download 1.9.1 "wikilink")
 -   The legacy release of 1.8.5 can be found
     [here](BioJava:Download 1.8.5 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.4 can be found
