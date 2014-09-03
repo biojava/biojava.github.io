@@ -43,7 +43,8 @@ Manual Download
 
 **Download the entire project:**
 
-[biojava-legacy-1.9.0-all.tar.gz](http://biojava.org/download/bj1.9.0/biojava-legacy-1.9.0-all.tar.gz)
+[biojava-legacy-1.9.1.zip](https://github.com/biojava/biojava-legacy/archive/biojava-legacy-1.9.1.zip)
+[biojava-legacy-1.9.1.tar.gz](https://github.com/biojava/biojava-legacy/archive/biojava-legacy-1.9.1.tar.gz)
 
 Browse API docs
 ---------------
