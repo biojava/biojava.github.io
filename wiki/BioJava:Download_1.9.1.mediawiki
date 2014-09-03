@@ -27,7 +27,8 @@ Search the Maven Central repository http://search.maven.org/#search|ga|1|g%3A%22
 == Manual Download ==
 '''Download the entire project:'''
 
-[http://biojava.org/download/bj1.9.0/biojava-legacy-1.9.0-all.tar.gz  biojava-legacy-1.9.0-all.tar.gz] 
+[https://github.com/biojava/biojava-legacy/archive/biojava-legacy-1.9.1.zip  biojava-legacy-1.9.1.zip]
+[https://github.com/biojava/biojava-legacy/archive/biojava-legacy-1.9.1.tar.gz  biojava-legacy-1.9.1.tar.gz]
 
 == Browse API docs ==
 You can also browse the documentation at [http://www.biojava.org/docs/api1.9.1/ BioJava Legacy 1.9.1 api]
