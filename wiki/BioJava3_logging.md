@@ -16,7 +16,7 @@ BioJava Logging Usage Policy
         avoided and toString() is not called if the logging statement is
         filtered.
         -   Meaning if logging level is set to INFO, then all strings in
-            any debug statements will not be concatenated/toString()’d
+            any DEBUG statements will not be concatenated/toString()’d
         -   Also, calls to `isDebugEnabled()` or DEBUG constant is not
             necessary and redundant
     -   Enhances readability/conciseness

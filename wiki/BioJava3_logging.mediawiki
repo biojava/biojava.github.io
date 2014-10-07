@@ -8,7 +8,7 @@
 *** Note, use current (this) class’ name
 * Use SLF4J substitution pattern (<code>‘{}’</code>)
 ** Most importantly, for efficiency. String concatenation is avoided and toString() is not called if the logging statement is filtered.
-*** Meaning if logging level is set to INFO, then all strings in any debug statements will not be concatenated/toString()’d
+*** Meaning if logging level is set to INFO, then all strings in any DEBUG statements will not be concatenated/toString()’d
 *** Also, calls to <code>isDebugEnabled()</code> or DEBUG constant is not necessary and redundant
 ** Enhances readability/conciseness
 ** Example:  <code>logger.info("Protein Sequence: {}, Peptide Properties: {}", pSequence.getAccession(), peptide.getIsoelectricPoint(pSequence));</code>
