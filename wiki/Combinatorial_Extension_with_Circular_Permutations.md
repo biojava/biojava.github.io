@@ -16,8 +16,12 @@ or [Molecule of the
 Month](http://www.pdb.org/pdb/101/motm.do?momID=124&evtc=Suggest&evta=Moleculeof%20the%20Month&evtl=TopBar)
 articles.
 
-Additional documentation of structural alignments, including CE-CP
-alignments, is found in the [BioJava
-Tutorial](https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md).
-To use CE-CP programmatically, see the [CeCPMain class
-documentation](http://www.biojava.org/docs/api/org/biojava/bio/structure/align/ce/CeCPMain.html).
+See Also
+--------
+
+-   [BioJava
+    Tutorial](https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md)
+    on structural alignments, including CE-CP
+-   The [CeCPMain class
+    documentation](http://www.biojava.org/docs/api/org/biojava/bio/structure/align/ce/CeCPMain.html)
+
