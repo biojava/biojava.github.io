@@ -6,4 +6,7 @@ permutations, see the
 [http://en.wikipedia.org/wiki/Circular_permutation_in_proteins Wikipedia] or [http://www.pdb.org/pdb/101/motm.do?momID=124&evtc=Suggest&evta=Moleculeof%20the%20Month&evtl=TopBar Molecule of the Month]
 articles.
 
-Additional documentation of structural alignments, including CE-CP alignments, is found in the [https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md BioJava Tutorial]. To use CE-CP programmatically, see the [http://www.biojava.org/docs/api/org/biojava/bio/structure/align/ce/CeCPMain.html CeCPMain class documentation].
+==See Also==
+
+* [https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md BioJava Tutorial] on structural alignments, including CE-CP
+* The [http://www.biojava.org/docs/api/org/biojava/bio/structure/align/ce/CeCPMain.html CeCPMain class documentation]
