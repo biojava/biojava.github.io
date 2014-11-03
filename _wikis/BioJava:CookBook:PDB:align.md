@@ -91,3 +91,9 @@ Tool](http://www.rcsb.org/pdb/workbench/workbench.do).
     Circular permutation. Can be detected when running CE in the
     circular permutation mode.
 
+See Also
+========
+
+-   The BioJava Tutorial on [Structure
+    Alignment](https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md)
+
