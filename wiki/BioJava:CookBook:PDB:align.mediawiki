@@ -17,6 +17,8 @@ The structure alignment possibilities of BioJava are going to be greatly enhance
 
 [[BioJava:CookBook:PDB:FATCAT_Algorithm]]
 
+[[Combinatorial Extension with Circular Permutations]]
+
 === Alignment with BioJava 1.7 ===
 
 BioJava 1.7 contains an unpublished structure alignment algorithm. For more information on it, please see here:

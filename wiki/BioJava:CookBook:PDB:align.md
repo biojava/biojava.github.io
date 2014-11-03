@@ -43,6 +43,9 @@ documentation how to use these is available from
 
 <BioJava:CookBook:PDB:FATCAT_Algorithm>
 
+[Combinatorial Extension with Circular
+Permutations](Combinatorial Extension with Circular Permutations "wikilink")
+
 ### Alignment with BioJava 1.7
 
 BioJava 1.7 contains an unpublished structure alignment algorithm. For
