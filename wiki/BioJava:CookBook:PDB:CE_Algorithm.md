@@ -130,3 +130,10 @@ This CE implementation allows to specify a couple of custom parameters.
     optimization.
 
 back to <BioJava:CookBook:PDB:align>
+
+See also
+========
+
+-   [Combinatorial Extension with Circular
+    Permutations](Combinatorial Extension with Circular Permutations "wikilink")
+

@@ -101,3 +101,6 @@ This CE implementation allows to specify a couple of custom parameters.
 #     boolean '''showAFPRanges'''; (default false) A print flag that allows to view the ranges of the inital AFPs, prior to alignment optimization.
 
 back to [[BioJava:CookBook:PDB:align]]
+
+= See also =
+* [[Combinatorial Extension with Circular Permutations]]
