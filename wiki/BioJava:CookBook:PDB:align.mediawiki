@@ -39,3 +39,6 @@ The protein structure modules of BioJava3 are used on the RCSB PDB web site for 
 # 4hhb.A vs. 4hhb.B See how the visualisation tools in BioJava can also display a superposition of the '''ligands''' in an alignment. ([http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=4hhb.A&mol=4hhb.B Example])
 # 1a64.A vs. 1hng.B . Domain swapping. In this example the similarity between the two chains can best be found using the FATCAT-flexible algorithm (Compare these examples: [http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_fatcat_flexible&mol=1hng.B&mol=1a64.A FATCAT-flexible] vs. [http://www.rcsb.org/pdb/workbench/workbench.do?action=pw_ce&mol=1HNG.B&mol=1A64.A CE]
 # [http://www.rcsb.org/pdb/workbench/showPrecalcAlignment.do?action=pw_ce_cp&pdb1=1VHR&chain1=A&pdb2=2IHB&chain2=A  1vhr.A vs 2ihb.A]. Circular permutation. Can be detected when running CE in the circular permutation mode.
+
+= See Also =
+* The BioJava Tutorial on [https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md Structure Alignment]
