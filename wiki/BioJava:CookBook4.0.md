@@ -23,6 +23,12 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 
 **Please cite:**
 
+Tutorial
+--------
+
+Many topics are also covered in the [BioJava 3
+tutorial](https://github.com/biojava/biojava3-tutorial).
+
 How Do I....?
 -------------
 
@@ -49,10 +55,6 @@ How Do I....?
 **Optional module** : *biojava3-structure-gui* for the 3D visualisation
 **Optional external library** : *JmolApplet.jar* for the 3D
 visualisation
-
-See also the [BioJava 3
-tutorial](https://github.com/biojava/biojava3-tutorial/tree/master/structure)
-for an introduction into the protein structure modules.
 
 -   [How can I parse a PDB
     file?](BioJava:CookBook:PDB:read3.0 "wikilink")
