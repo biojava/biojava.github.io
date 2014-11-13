@@ -91,6 +91,12 @@ projects please add them to the list.
     client platform for bioinformatics primarily focused on molecular
     biology and sequence analysis.
 
+<!-- -->
+
+-   [eQuant](http://bioservices.hs-mittweida.de/equant/): A model
+    quality assessment server to state the reliability of protein
+    structures.
+
 Publications
 ------------
 
