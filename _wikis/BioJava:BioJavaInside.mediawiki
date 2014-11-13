@@ -1,6 +1,6 @@
 '''If you use BioJava in an application or publication please cite:'''
 
-{{Reference}}
+{{Reference2012}}
 
 == Projects ==
 The following projects make use of BioJava. If you know of other projects please add them to the list.
