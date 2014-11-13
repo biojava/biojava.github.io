@@ -39,7 +39,7 @@ The following projects make use of BioJava. If you know of other projects please
 
 == Publications ==
 
-In 2008 we published our first Application note. As of Nov. 2011 Google Scholar [http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en counts more than 90 citations].
+In 2008 we published our first Application note. As of Nov. 2014 Google Scholar [http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en counts more than 170 citations].
 
 <pubmed name="BioJava2008"> 18689808 </pubmed>
 
