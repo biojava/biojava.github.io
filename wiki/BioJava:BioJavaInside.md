@@ -100,8 +100,8 @@ projects please add them to the list.
 Publications
 ------------
 
-In 2008 we published our first Application note. As of Nov. 2011 Google
-Scholar [counts more than 90
+In 2008 we published our first Application note. As of Nov. 2014 Google
+Scholar [counts more than 170
 citations](http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en).
 
 <pubmed name="BioJava2008"> 18689808 </pubmed>
