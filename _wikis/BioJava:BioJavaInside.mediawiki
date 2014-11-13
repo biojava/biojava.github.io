@@ -35,6 +35,8 @@ The following projects make use of BioJava. If you know of other projects please
 
 * [http://www.geneinfinity.org/genbeans/index.html GenBeans]: A rich client platform for bioinformatics primarily focused on molecular biology and sequence analysis.
 
+* [http://bioservices.hs-mittweida.de/equant/ eQuant]: A model quality assessment server to state the reliability of protein structures.
+
 == Publications ==
 
 In 2008 we published our first Application note. As of Nov. 2011 Google Scholar [http://scholar.google.com/scholar?cites=3048631375755320177&as_sdt=2005&sciodt=0,5&hl=en counts more than 90 citations].
