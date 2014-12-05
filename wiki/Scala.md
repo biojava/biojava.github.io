@@ -27,6 +27,13 @@ add the following to the dependencies section of your pom.xml file.
 `    `<version>`3.0.6`</version>  
 </dependency>
 
+If you are using [SBT](http://www.scala-sbt.org/) to build your Scala
+project just add the following to your sbt file.
+
+`libraryDependencies += "org.biojava" % "biojava3-core" % "3.1.0"`  
+  
+`resolvers += "BioJava repository" at "`[`http://www.biojava.org/download/maven/`](http://www.biojava.org/download/maven/)`"`
+
 Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
 <BioJava:CookBook3:PSA_DNA>.
