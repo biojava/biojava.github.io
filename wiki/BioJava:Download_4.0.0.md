@@ -12,7 +12,26 @@ About
 -----
 
 *BioJava* 4.0.0 has been released and is available using Maven from
-[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
+[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/).
+
+This release contains over 430 commits from 17 authors:
+[@andreasprlic](https://www.github.com/andreasprlic)
+[@benjamintboyle](https://www.github.com/benjamintboyle)
+[@christiam](https://www.github.com/christiam)
+[@dmyersturnbull](https://www.github.com/dmyersturnbull)
+[@Elinow](https://www.github.com/Elinow)
+[@emckee2006](https://www.github.com/emckee2006)
+[@jgrzebyta](https://www.github.com/jgrzebyta)
+[@josemduarte](https://www.github.com/josemduarte)
+[@kevinwu1](https://www.github.com/kevinwu1)
+[@pibizza](https://www.github.com/pibizza)
+[@heuermh](https://www.github.com/heuermh)
+[@paolopavan](https://www.github.com/paolopavan)
+[@parit](https://www.github.com/parit)
+[@pwrose](https://www.github.com/pwrose)
+[@willishf](https://www.github.com/willishf)
+[@sbliven](https://www.github.com/sbliven)
+[@sroughley](https://www.github.com/sroughley)
 
 ### New Features
 
