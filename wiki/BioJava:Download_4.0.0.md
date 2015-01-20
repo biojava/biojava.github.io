@@ -57,7 +57,6 @@ New Features:
 -   biojava3-core
     -   Improved Genbank parser, including support for feature records,
         qualifiers, and nested locations. (@paolopavan and @jgrzebyta)
-    -   Improvements to
 -   biojava3-structure
     -   Better support for crystallographic information, including
         crystallographic operators, unit cells, and protein-protein
