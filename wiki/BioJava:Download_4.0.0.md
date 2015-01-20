@@ -25,10 +25,30 @@ clearly documented replacement method.
 
 New Features:
 
--   New Genbank parser
--   Consistent error logging. SLF4J is used for logging and provides
-    adaptors for all major logging implementations.
--   ...
+-   General
+    -   Consistent error logging. SLF4J is used for logging and provides
+        adaptors for all major logging implementations. (many
+        contributors, including @benjamintboyle and @josemduarte)
+    -   Removed deprecated methods
+    -   Expanded the [BioJava
+        tutorial](https://github.com/biojava/biojava3-tutorial/)
+        (@andreasprlic, @josemduarte, and @sbliven)
+    -   Updated dependencies where applicable
+    -   Available on Maven Central (@andreasprlic and @heuermh)
+-   biojava3-core
+    -   Improved Genbank parser, including support for feature records,
+        qualifiers, and nested locations. (@paolopavan and @jgrzebyta)
+    -   Improvements to
+-   biojava3-structure
+    -   Better support for crystallographic information, including
+        crystallographic operators, unit cells, and protein-protein
+        interfaces. (@josemduarte)
+    -   Better organization of downloaded structure files (set using the
+        PDB\_DIR and PDB\_CACHE\_DIR environmental variables) (@sbliven)
+    -   Better command-line tools for structure alignment (@sbliven)
+    -   Support for large structures (memory permitting) and
+        multi-character chain IDs.
+    -   Default to mmCIF file format, as recommended by the wwPDB
 
 View the <BioJava:Modules> page for a list of current modules.
 
