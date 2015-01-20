@@ -29,9 +29,9 @@ This release contains over 430 commits from 17 authors:
 [@paolopavan](https://www.github.com/paolopavan)
 [@parit](https://www.github.com/parit)
 [@pwrose](https://www.github.com/pwrose)
-[@willishf](https://www.github.com/willishf)
 [@sbliven](https://www.github.com/sbliven)
 [@sroughley](https://www.github.com/sroughley)
+[@willishf](https://www.github.com/willishf)
 
 ### New Features
 
