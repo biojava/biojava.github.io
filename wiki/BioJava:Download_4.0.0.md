@@ -57,6 +57,10 @@ New Features:
 -   biojava3-core
     -   Improved Genbank parser, including support for feature records,
         qualifiers, and nested locations. (@paolopavan and @jgrzebyta)
+    -   Minor change to global sequence alignments. Gap initiation
+        penalties are now not assessed at the beginning and end of
+        sequences (@josemduarte
+        [45235c0](https://github.com/biojava/biojava/commit/45235c07b7f2d056274565a021b86d3ee2c5f76c))
 -   biojava3-structure
     -   Better support for crystallographic information, including
         crystallographic operators, unit cells, and protein-protein
