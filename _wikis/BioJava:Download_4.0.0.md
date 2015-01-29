@@ -21,7 +21,6 @@ This release contains over
 [@benjamintboyle](https://www.github.com/benjamintboyle)
 [@christiam](https://www.github.com/christiam)
 [@dmyersturnbull](https://www.github.com/dmyersturnbull)
-[@Elinow](https://www.github.com/Elinow)
 [@emckee2006](https://www.github.com/emckee2006)
 [@jgrzebyta](https://www.github.com/jgrzebyta)
 [@josemduarte](https://www.github.com/josemduarte)
