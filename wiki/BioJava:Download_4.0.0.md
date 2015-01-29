@@ -65,6 +65,7 @@ New Features:
         PDB\_DIR and PDB\_CACHE\_DIR environmental variables) (@sbliven)
     -   Better command-line tools for structure alignment (@sbliven)
     -   New algorithm for symmetry detection in biological assemblies
+        (@pwrose)
     -   Support for large structures (memory permitting) and
         multi-character chain IDs.
     -   Default to mmCIF file format, as recommended by the wwPDB
