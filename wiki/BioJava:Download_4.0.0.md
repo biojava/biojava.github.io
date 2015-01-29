@@ -43,7 +43,8 @@ API changes. In accordance with [semantic
 versioning](http://semver.org/) nomenclature, the jump to 4.x.x
 indicates that existing applications may need to be modified (e.g. due
 to the removal of deprecated methods). In most cases there should be a
-clearly documented replacement method.
+clearly documented replacement method. See below for details on how to
+upgrade.
 
 New Features:
 
