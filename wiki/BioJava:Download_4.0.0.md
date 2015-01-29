@@ -78,29 +78,20 @@ Maven Download
 --------------
 
 BioJava 4.0.0 requires [Maven](http://maven.apache.org/) for the build
-process. We are providing a BioJava specific Maven repository at
-<http://biojava.org/download/maven/> .
+process. All BioJava jar files are available via Maven Central as of
+this release.
 
 You can add the BioJava repository by adding the following XML to your
 project pom.xml file:
 
             <dependencies>
-                    ...
                     <dependency>
                             <groupId>org.biojava</groupId>
                             <artifactId>biojava3-core</artifactId>
                             <version>4.0.0</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
-            </dependencies>
-        <repositories>
-            ...
-            <repository>
-                <id>biojava-maven-repo</id>
-                <name>BioJava repository</name>
-                <url>http://www.biojava.org/download/maven/</url>           
-            </repository>
-        </repositories>
+            </dependencies> 
 
 Manual Download
 ---------------
