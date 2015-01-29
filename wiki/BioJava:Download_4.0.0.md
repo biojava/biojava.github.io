@@ -76,7 +76,7 @@ New Features:
 
 View the <BioJava:Modules> page for a list of current modules.
 
-How to upgrade
+How to Upgrade
 --------------
 
 Since we renamed all package names to be consistent across the whole
