@@ -74,6 +74,14 @@ New Features:
 
 View the <BioJava:Modules> page for a list of current modules.
 
+Upgrading
+---------
+
+Since we renamed all package names to be consistent across the whole
+project, there will be import errors when upgrading to the latest
+version of the jars. These can automatically get resolved by IDEs such
+as Eclipse or IntelliJ by selecting the **Optimize Import** menu item.
+
 Maven Download
 --------------
 
