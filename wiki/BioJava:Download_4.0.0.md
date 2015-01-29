@@ -76,8 +76,8 @@ New Features:
 
 View the <BioJava:Modules> page for a list of current modules.
 
-Upgrading
----------
+How to upgrade
+--------------
 
 Since we renamed all package names to be consistent across the whole
 project, there will be import errors when upgrading to the latest
