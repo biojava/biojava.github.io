@@ -13,7 +13,6 @@ This release contains over [https://github.com/biojava/biojava/compare/10046d889
 [https://www.github.com/benjamintboyle @benjamintboyle]
 [https://www.github.com/christiam @christiam]
 [https://www.github.com/dmyersturnbull @dmyersturnbull]
-[https://www.github.com/Elinow @Elinow]
 [https://www.github.com/emckee2006 @emckee2006]
 [https://www.github.com/jgrzebyta @jgrzebyta]
 [https://www.github.com/josemduarte @josemduarte]
