@@ -1,3 +1,4 @@
+<pre>
 find . -iname '*.java' -exec grep -L 'http://www.gnu.org/copyleft/lesser.html' '{}' ';' |
 while read file; do
     cat >tmp.java <<END
@@ -25,3 +26,4 @@ END
     cat "$file" >> tmp.java
     mv tmp.java "$file"
 done
+</pre>
