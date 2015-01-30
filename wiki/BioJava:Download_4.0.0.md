@@ -105,7 +105,7 @@ BioJava 4.0.0 requires [Maven](http://maven.apache.org/) for the build
 process. All BioJava jar files are available via Maven Central as of
 this release.
 
-You can add the BioJava repository by adding the following XML to your
+You can create a BioJava dependency by adding the following XML to your
 project pom.xml file:
 
             <dependencies>
