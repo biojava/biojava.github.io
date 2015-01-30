@@ -2,8 +2,6 @@
 title: BioJava:Download 4.0.0
 ---
 
-` `*`This` `page` `is` `a` `draft` `for` `an` `upcoming` `release`*
-
 This page offers downloads for the <b>BioJava 4.0.0 release</b>.
 
 BioJava 4.0.0 is compatible with <b>Java 6, 7, and 8</b>.
