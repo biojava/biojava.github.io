@@ -2,5 +2,5 @@
 title: BioJava:Download
 ---
 
-1.  redirect <BioJava:Download_3.1.0>
+1.  redirect <BioJava:Download_4.0.0>
 
