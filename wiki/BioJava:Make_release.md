@@ -19,6 +19,10 @@ semi-automatic.
 ### Prior to release
 
 -   Announce release deadlines on mailing list
+-   Run optimize imports across whole project
+-   Make sure all java classes have the copyright statement by running
+    [BioJava:EnsureCopyrightHeader
+    this](BioJava:EnsureCopyrightHeader this "wikilink") shell script
 
 ### Configure Authentication Keys
 
