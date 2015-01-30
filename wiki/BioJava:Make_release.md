@@ -22,14 +22,23 @@ semi-automatic.
 
 ### Configure Authentication Keys
 
-To complete the release you need permission to scp files to the maven
-repository on cloudportal.open-bio.org. If you need help with that, talk
-to root@open-bio.org. Make sure you have ssh keys set up to log in, and
-that you are a member of the apache group so that you can write to the
-web directory.
+You need to configure the following 3 items for performing a full
+release 1) OSS Sonatype login (OSS Jira account login) 2) PGP signature
+for code signing (only can upload signed jars to OSS Sonatype) 3) SSH
+keys for cloudportal.open-bio.org
 
-You also need to configure maven with your username and identity file.
-In ~/.m2/settings.xml (on the build machine), add or merge the following
+#### OSS Sonatype login
+
+As of release 4.0.0 we moved our repository hosting from biojava's web
+server to Maven Central. To push releases there, you need to first get
+an account set up at the [OSS Sonatype
+Jira](https://issues.sonatype.org). One of the people who already have
+permission (currently @andreasprlic and @heuermh) can request to add you
+to the already existing biojava project. The BioJava pom.xml is set up
+correctly to upload the jars for you, as long as you set up your login:
+
+You need to configure maven with your username and identity file. In
+~/.m2/settings.xml (on the build machine), add or merge the following
 xml:
 
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
@@ -47,9 +56,9 @@ xml:
 `    `<activeProfiles/>  
 `    `<servers>  
 `        `<server>  
-`            `<id>`biojava-maven-repo`</id>  
+`            `<id>`sonatype-nexus-staging`</id>  
 `            `<username>`username`</username>  
-`            `<privateKey>`/full/path/to/.ssh/id_rsa`</privateKey>  
+`            `<password>`pwd`</password>  
 `        `</server>  
 `    `</servers>  
 </settings>
@@ -58,6 +67,24 @@ Maven reports 'Auth Error' in the release:perform stage if you keys are
 not properly set up. Permissions errors mean that authentication was
 successful but you can not write to the correct location (for instance,
 if a maven-metadata.xml exists from a previous build by another user).
+
+More information about using the Maven release plugin to push to OSS
+Sonatype is
+[<http://blog.sonatype.com/2013/09/simplified-releases-to-the-central-repository-with-nexus/>\#.VMsj7l7F-kc
+here].
+
+#### BioJava web server SSH key
+
+To complete the release you need permission to scp files to the maven
+repository on cloudportal.open-bio.org. If you need help with that, talk
+to root@open-bio.org. Make sure you have ssh keys set up to log in, and
+that you are a member of the apache group so that you can write to the
+web directory.
+
+#### PGP Signature
+
+Set up a PGP signature for code signing. For documentation how to do
+this see [here](https://www.gnupg.org/gph/en/manual/c14.html).
 
 On release date
 ---------------
