@@ -35,7 +35,7 @@ You need to configure maven with your username and identity file. In ~/.m2/setti
      <activeProfiles/>
      <servers>
          <server>
-             <id>sonatype-nexus-staging</id>
+             <id>ossrh</id>
              <username>username</username>
              <password>pwd</password>
          </server>
