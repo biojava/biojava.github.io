@@ -145,7 +145,7 @@ api](http://www.biojava.org/docs/api4.0.0/)
 Release Date
 ------------
 
-BioJava 4.0.0 has been released on Xxxx 00th, 2015
+BioJava 4.0.0 has been released on January 30th, 2015
 
 Getting older versions
 ----------------------
