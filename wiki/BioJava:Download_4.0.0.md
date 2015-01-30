@@ -13,7 +13,7 @@ About
 Maven Central as well as manual download (see below).
 
 This release contains over
-[<https://github.com/biojava/biojava/compare/10046d889888be9fe9de458140ff092367dda2de>...master
+[<https://github.com/biojava/biojava/compare/10046d889888be9fe9de458140ff092367dda2de>...biojava-4.0.0
 500] commits from 17 authors:
 
 [@andreasprlic](https://www.github.com/andreasprlic)
