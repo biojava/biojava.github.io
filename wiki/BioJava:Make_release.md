@@ -56,7 +56,7 @@ xml:
 `    `<activeProfiles/>  
 `    `<servers>  
 `        `<server>  
-`            `<id>`sonatype-nexus-staging`</id>  
+`            `<id>`ossrh`</id>  
 `            `<username>`username`</username>  
 `            `<password>`pwd`</password>  
 `        `</server>  
