@@ -2,6 +2,72 @@
 title: Current events
 ---
 
+BioJava 4.0.0 released
+----------------------
+
+BioJava 4.0.0 has been released and is available using Maven from Maven
+Central as well as manual download (see below).
+
+This release contains over 500 commits from 17 authors:
+
+@andreasprlic @benjamintboyle @christiam @dmyersturnbull @Elinow
+@emckee2006 @jgrzebyta @josemduarte @kevinwu1 @pibizza @heuermh
+@paolopavan @parit @pwrose @sbliven @sroughley @willishf
+
+New Features
+
+BioJava 4.0.0 is a major release, with many new features as well as core
+API changes. In accordance with semantic versioning nomenclature, the
+jump to 4.x.x indicates that existing applications may need to be
+modified (e.g. due to the removal of deprecated methods). In most cases
+there should be a clearly documented replacement method. See below for
+details on how to upgrade.
+
+New Features:
+
+-   General
+    -   Consistent error logging. SLF4J is used for logging and provides
+        adaptors for all major logging implementations. (many
+        contributors, including @benjamintboyle and @josemduarte)
+    -   Improved handling of exceptions
+    -   Removed deprecated methods
+    -   Expanded the BioJava tutorial (@andreasprlic, @josemduarte, and
+        @sbliven)
+    -   Updated dependencies where applicable
+    -   Available on Maven Central (@andreasprlic and @heuermh)
+-   biojava3-core
+    -   Improved Genbank parser, including support for feature records,
+        qualifiers, and nested locations. (@paolopavan and @jgrzebyta)
+-   biojava3-structure
+    -   Better support for crystallographic information, including
+        crystallographic operators, unit cells, and protein-protein
+        interfaces. (@josemduarte)
+    -   Better organization of downloaded structure files (set using the
+        PDB\_DIR and PDB\_CACHE\_DIR environmental variables) (@sbliven)
+    -   Better command-line tools for structure alignment (@sbliven)
+    -   New algorithm for symmetry detection in biological assemblies
+        (@pwrose)
+    -   New algorithm for fast contact calculation, both intra-chain and
+        inter-chain (@josemduarte)
+    -   Support for Accessible Surface Area (ASA) calculation through
+        and implementation of the Shrake & Rupley algorithm, both
+        single-thread and parallel (memory permitting) (@josemduarte)
+    -   Support for large structures (memory permitting) and
+        multi-character chain IDs.
+    -   Default to mmCIF file format, as recommended by the wwPDB
+
+This version is compatible with Java 6, 7, and 8.
+
+About BioJava:
+
+BioJava is a mature open-source project that provides a framework for
+processing of biological data. BioJava contains powerful analysis and
+statistical routines, tools for parsing common file formats, and
+packages for manipulating sequences and 3D structures. It enables rapid
+bioinformatics application development in the Java programming language.
+
+Happy BioJava-ing,
+
 BioJava 3.1.0 released
 ----------------------
 
