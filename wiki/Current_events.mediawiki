@@ -11,7 +11,7 @@ BioJava 4.0.0 is a major release, with many new features as well as core API cha
 
 * General
 ** Consistent error logging. SLF4J is used for logging and provides adaptors for all major logging implementations. (many contributors, including @benjamintboyle and @josemduarte)
-** Improved handling of exceptions
+** Improved handling of exceptions (@dmyersturnbull)
 ** Removed deprecated methods
 ** Expanded the BioJava tutorial (@andreasprlic, @josemduarte, and @sbliven)
 ** Updated dependencies where applicable
