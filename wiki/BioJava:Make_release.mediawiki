@@ -107,7 +107,7 @@ git tag -d biojava-3.0.7
 git push origin :refs/tags/biojava-3.0.7
 
 ===Prepare and release javadoc files===
-(Still in git checkout, e.g. bj3.0.7 if you're following along or biojava-git/target/checkout/ if you're andreas)
+(Still in git checkout, e.g. bj3.0.7 if you're following along or biojava/target/checkout/ if you did not mvn clean in the meanwhile)
 
 build javadoc:
 
