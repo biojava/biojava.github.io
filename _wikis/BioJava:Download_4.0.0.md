@@ -12,7 +12,7 @@ About
 -----
 
 *BioJava* 4.0.0 has been released and is available using Maven from
-[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/).
+Maven Central.
 
 This release contains over
 [<https://github.com/biojava/biojava/compare/10046d889888be9fe9de458140ff092367dda2de>...master
