@@ -84,9 +84,9 @@ How to Upgrade
 --------------
 
 Since we renamed all package names to be consistent across the whole
-project, there will be import errors when upgrading to the latest
-version of the jars. These can automatically get resolved by IDEs such
-as Eclipse or IntelliJ by selecting the **Optimize Import** menu item.
+project, there will be import errors when upgrading to this version.
+These can automatically get resolved by IDEs such as Eclipse or IntelliJ
+by selecting the **Optimize Import** menu item.
 
 The changed namespaces are:
 
