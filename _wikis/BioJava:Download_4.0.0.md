@@ -50,7 +50,7 @@ New Features:
     -   Consistent error logging. SLF4J is used for logging and provides
         adaptors for all major logging implementations. (many
         contributors, including @benjamintboyle and @josemduarte)
-    -   Improved handling of exceptions
+    -   Improved handling of exceptions (@dmyersturnbull)
     -   Removed deprecated methods
     -   Expanded the [BioJava
         tutorial](https://github.com/biojava/biojava3-tutorial/)
