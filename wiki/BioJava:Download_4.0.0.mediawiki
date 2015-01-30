@@ -92,54 +92,54 @@ You can add the BioJava repository by adding the following XML to your project p
 ! Javadoc Jar
 |-
 | biojava-core 
-| [http://biojava.org/download/maven/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0.jar biojava-core-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0-sources.jar biojava-core-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0-javadoc.jar biojava-core-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0.jar biojava-core-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0-sources.jar biojava-core-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-core/4.0.0/biojava-core-4.0.0-javadoc.jar biojava-core-4.0.0-javadoc.jar]
 |-
 | biojava-alignment 
-| [http://biojava.org/download/maven/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0.jar biojava-alignment-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0-sources.jar biojava-alignment-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0-javadoc.jar biojava-alignment-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0.jar biojava-alignment-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0-sources.jar biojava-alignment-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-alignment/4.0.0/biojava-alignment-4.0.0-javadoc.jar biojava-alignment-4.0.0-javadoc.jar]
 |-
 | biojava-genome 
-| [http://biojava.org/download/maven/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0.jar biojava-genome-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0-sources.jar biojava-genome-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0-javadoc.jar biojava-genome-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0.jar biojava-genome-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0-sources.jar biojava-genome-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-genome/4.0.0/biojava-genome-4.0.0-javadoc.jar biojava-genome-4.0.0-javadoc.jar]
 |-
 | biojava-structure 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0.jar biojava-structure-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0-sources.jar biojava-structure-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0-javadoc.jar biojava-structure-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0.jar biojava-structure-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0-sources.jar biojava-structure-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure/4.0.0/biojava-structure-4.0.0-javadoc.jar biojava-structure-4.0.0-javadoc.jar]
 |-
 | biojava-structure-gui 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0.jar biojava-structure-gui-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0-sources.jar biojava-structure-gui-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0-javadoc.jar biojava-structure-gui-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0.jar biojava-structure-gui-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0-sources.jar biojava-structure-gui-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-structure-gui/4.0.0/biojava-structure-gui-4.0.0-javadoc.jar biojava-structure-gui-4.0.0-javadoc.jar]
 |-
 | biojava-phylo 
-| [http://biojava.org/download/maven/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0.jar biojava-phylo-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0-sources.jar biojava-phylo-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0-javadoc.jar biojava-phylo-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0.jar biojava-phylo-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0-sources.jar biojava-phylo-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-phylo/4.0.0/biojava-phylo-4.0.0-javadoc.jar biojava-phylo-4.0.0-javadoc.jar]
 |-
 | biojava-modfinder 
-| [http://biojava.org/download/maven/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0.jar biojava-modfinder-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0-sources.jar biojava-modfinder-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0-javadoc.jar biojava-modfinder-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0.jar biojava-modfinder-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0-sources.jar biojava-modfinder-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-modfinder/4.0.0/biojava-modfinder-4.0.0-javadoc.jar biojava-modfinder-4.0.0-javadoc.jar]
 |-
 | biojava-ws 
-| [http://biojava.org/download/maven/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0.jar biojava-ws-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0-sources.jar biojava-ws-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0-javadoc.jar biojava-ws-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0.jar biojava-ws-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0-sources.jar biojava-ws-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-ws/4.0.0/biojava-ws-4.0.0-javadoc.jar biojava-ws-4.0.0-javadoc.jar]
 |-
 | biojava-aa-prop 
-| [http://biojava.org/download/maven/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0.jar biojava-aa-prop-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0-sources.jar biojava-aa-prop-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0-javadoc.jar biojava-aa-prop-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0.jar biojava-aa-prop-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0-sources.jar biojava-aa-prop-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-aa-prop/4.0.0/biojava-aa-prop-4.0.0-javadoc.jar biojava-aa-prop-4.0.0-javadoc.jar]
 |-
 | biojava-protein-disorder 
-| [http://biojava.org/download/maven/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0.jar biojava-protein-disorder-4.0.0.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0-sources.jar biojava-protein-disorder-4.0.0-sources.jar] 
-| [http://biojava.org/download/maven/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0-javadoc.jar biojava-protein-disorder-4.0.0-javadoc.jar]
+| [https://repo1.maven.org/maven2/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0.jar biojava-protein-disorder-4.0.0.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0-sources.jar biojava-protein-disorder-4.0.0-sources.jar] 
+| [https://repo1.maven.org/maven2/org/biojava/biojava-protein-disorder/4.0.0/biojava-protein-disorder-4.0.0-javadoc.jar biojava-protein-disorder-4.0.0-javadoc.jar]
 
 |}
 
