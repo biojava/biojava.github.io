@@ -52,6 +52,7 @@ New Features:
     -   Consistent error logging. SLF4J is used for logging and provides
         adaptors for all major logging implementations. (many
         contributors, including @benjamintboyle and @josemduarte)
+    -   Improved handling of exceptions
     -   Removed deprecated methods
     -   Expanded the [BioJava
         tutorial](https://github.com/biojava/biojava3-tutorial/)
@@ -70,6 +71,11 @@ New Features:
     -   Better command-line tools for structure alignment (@sbliven)
     -   New algorithm for symmetry detection in biological assemblies
         (@pwrose)
+    -   New algorithm for fast contact calculation, both intra-chain and
+        inter-chain (@josemduarte)
+    -   Support for Accessible Surface Area (ASA) calculation through
+        and implementation of the Shrake & Rupley algorithm, both
+        single-thread and parallel (memory permitting) (@josemduarte)
     -   Support for large structures (memory permitting) and
         multi-character chain IDs.
     -   Default to mmCIF file format, as recommended by the wwPDB
@@ -84,6 +90,14 @@ project, there will be import errors when upgrading to the latest
 version of the jars. These can automatically get resolved by IDEs such
 as Eclipse or IntelliJ by selecting the **Optimize Import** menu item.
 
+The changed namespaces are:
+
+-   Package namespace: all packages have been renamed to
+    `org.biojava.nbio.modulename.*`. This is for all modules including
+    **structure** and **structure-gui**
+-   Module names and maven artifacts: all prefixed with `biojava-`, e.g.
+    `biojava-core`, `biojava-alignment`
+
 Maven Download
 --------------
 
@@ -97,7 +111,7 @@ project pom.xml file:
             <dependencies>
                     <dependency>
                             <groupId>org.biojava</groupId>
-                            <artifactId>biojava3-core</artifactId>
+                            <artifactId>biojava-core</artifactId>
                             <version>4.0.0</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
