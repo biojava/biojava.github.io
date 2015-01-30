@@ -21,9 +21,7 @@ modified (e.g. due to the removal of deprecated methods). In most cases
 there should be a clearly documented replacement method. See below for
 details on how to upgrade.
 
--   -   New Features:\*\*\*
-
-<!-- -->
+**New Features:**
 
 -   General
     -   Consistent error logging. SLF4J is used for logging and provides
@@ -58,14 +56,12 @@ details on how to upgrade.
 
 This version is compatible with Java 6, 7, and 8.
 
--   -   Upgrading \*\*\*
+**Upgrading** Since we renamed all package names to be consistent across
+the whole project, there will be import errors when upgrading to this
+version. These can automatically get resolved by IDEs such as Eclipse or
+IntelliJ by selecting the Optimize Import menu item.
 
-Since we renamed all package names to be consistent across the whole
-project, there will be import errors when upgrading to this version.
-These can automatically get resolved by IDEs such as Eclipse or IntelliJ
-by selecting the Optimize Import menu item.
-
--   -   About BioJava:\*\*\*
+**About BioJava:**
 
 BioJava is a mature open-source project that provides a framework for
 processing of biological data. BioJava contains powerful analysis and
