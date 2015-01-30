@@ -120,6 +120,9 @@ reset your git repository to master.
 
 `git reset --hard origin/master`
 
+AP: I recommend NOT to do git reset, once files have been uploaded to
+sonatype. release:rollback will clean up for you.
+
 ### Push to Github
 
 If all three steps work fine, push the tag to github and merge it to
