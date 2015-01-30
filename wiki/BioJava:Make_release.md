@@ -125,9 +125,13 @@ sonatype. release:rollback will clean up for you.
 
 ### Push to Github
 
-If all three steps work fine, push the tag to github and merge it to
-releases. Note that I'm assuming origin refers to the central biojava
-repository.
+If all three steps work fine, the maven release plugin will push on your
+behalf to Github.
+
+If there is a problem, here how to add the release tag by hand:
+
+push the tag to github and merge it to releases. Note that I'm assuming
+origin refers to the central biojava repository.
 
 <span style="color:red">Note: double check these commands</span>
 
@@ -139,7 +143,9 @@ repository.
 `git diff biojava-3.0.7 release #shouldn't print anything`  
 `git push origin release`
 
-Now the release is official!
+And here how to delete a release tag again:
+
+git tag -d biojava-3.0.7 git push origin :refs/tags/biojava-3.0.7
 
 ### Prepare and release javadoc files
 

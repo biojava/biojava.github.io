@@ -83,7 +83,12 @@ AP: I recommend NOT to do git reset, once files have been uploaded to sonatype. 
 
 ===Push to Github===
 
-If all three steps work fine, push the tag to github and merge it to releases. Note that I'm assuming origin refers to the central biojava repository.
+If all three steps work fine, the maven release plugin will push on your behalf to Github.
+
+
+If there is a problem, here how to add the release tag by hand:
+
+push the tag to github and merge it to releases. Note that I'm assuming origin refers to the central biojava repository.
 
 <span style="color:red">Note: double check these commands</span>
 
@@ -95,7 +100,11 @@ If all three steps work fine, push the tag to github and merge it to releases. N
  git diff biojava-3.0.7 release #shouldn't print anything
  git push origin release
 
-Now the release is official!
+
+And here how to delete a release tag again:
+
+git tag -d biojava-3.0.7
+git push origin :refs/tags/biojava-3.0.7
 
 ===Prepare and release javadoc files===
 (Still in git checkout, e.g. bj3.0.7 if you're following along or biojava-git/target/checkout/ if you're andreas)
