@@ -27,7 +27,7 @@ details on how to upgrade.
     -   Consistent error logging. SLF4J is used for logging and provides
         adaptors for all major logging implementations. (many
         contributors, including @benjamintboyle and @josemduarte)
-    -   Improved handling of exceptions
+    -   Improved handling of exceptions (@dmyersturnbull)
     -   Removed deprecated methods
     -   Expanded the BioJava tutorial (@andreasprlic, @josemduarte, and
         @sbliven)
