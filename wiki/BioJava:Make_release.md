@@ -126,7 +126,9 @@ sonatype. release:rollback will clean up for you.
 ### Push to Github
 
 If all three steps work fine, the maven release plugin will push on your
-behalf to Github.
+behalf to Github and release the jars on OSS Sonatype. Note:
+<mvn:release> takes about 1 hour since the bandwith to upload at OSS
+Sonatype is limited.
 
 If there is a problem, here how to add the release tag by hand:
 
@@ -145,7 +147,8 @@ origin refers to the central biojava repository.
 
 And here how to delete a release tag again:
 
-git tag -d biojava-3.0.7 git push origin :refs/tags/biojava-3.0.7
+`git tag -d biojava-3.0.7 `  
+`git push origin :refs/tags/biojava-3.0.7`
 
 ### Prepare and release javadoc files
 

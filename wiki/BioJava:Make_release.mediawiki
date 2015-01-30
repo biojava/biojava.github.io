@@ -83,7 +83,7 @@ AP: I recommend NOT to do git reset, once files have been uploaded to sonatype. 
 
 ===Push to Github===
 
-If all three steps work fine, the maven release plugin will push on your behalf to Github.
+If all three steps work fine, the maven release plugin will push on your behalf to Github and release the jars on OSS Sonatype. Note: mvn:release takes about 1 hour since the bandwith to upload at OSS Sonatype is limited.
 
 
 If there is a problem, here how to add the release tag by hand:
@@ -103,8 +103,8 @@ push the tag to github and merge it to releases. Note that I'm assuming origin r
 
 And here how to delete a release tag again:
 
-git tag -d biojava-3.0.7
-git push origin :refs/tags/biojava-3.0.7
+ git tag -d biojava-3.0.7 
+ git push origin :refs/tags/biojava-3.0.7
 
 ===Prepare and release javadoc files===
 (Still in git checkout, e.g. bj3.0.7 if you're following along or biojava/target/checkout/ if you did not mvn clean in the meanwhile)
