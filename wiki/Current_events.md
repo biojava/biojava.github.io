@@ -6,7 +6,7 @@ BioJava 4.0.0 released
 ----------------------
 
 BioJava 4.0.0 has been released and is available using Maven from Maven
-Central as well as manual download (see below).
+Central as well as through manual download.
 
 This release contains over 500 commits from 17 authors:
 
