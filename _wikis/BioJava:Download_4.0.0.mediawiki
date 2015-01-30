@@ -67,7 +67,7 @@ The changed namespaces are:
 == Maven Download ==
 BioJava 4.0.0 requires [http://maven.apache.org/ Maven] for the build process. All BioJava jar files are available via Maven Central as of this release.
 
-You can add the BioJava repository by adding the following XML to your project pom.xml file:
+You can create a BioJava dependency by adding the following XML to your project pom.xml file:
 <pre>
         <dependencies>
                 <dependency>
