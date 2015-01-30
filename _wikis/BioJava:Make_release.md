@@ -209,7 +209,7 @@ this is how to enable analytics in javadocs
 
 `cd biojava-svn/target/bj3.0.7/`
 
-`mvn clean install source:jar javadoc:jar deploy javadoc:aggregate`
+`mvn clean install source:jar javadoc:jar javadoc:aggregate`
 
 `cd biojava-svn/target/bj3.0.7/target/site/apidocs`
 
