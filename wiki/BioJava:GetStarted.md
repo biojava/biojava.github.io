@@ -35,8 +35,7 @@ distribution system. If you are new to Maven, take a look at the
 [Getting Started with
 Maven](http://maven.apache.org/guides/getting-started/index.html) guide.
 
-We are providing a BioJava specific Maven repository at
-<http://biojava.org/download/maven/> .
+BioJava, as of release 4.0.0 is available through Maven Central.
 
 You can add the BioJava repository by adding the following XML to your
 project pom.xml file:
