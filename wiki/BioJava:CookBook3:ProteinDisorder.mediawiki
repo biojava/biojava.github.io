@@ -1,7 +1,7 @@
 ==How can I predict disordered regions on a protein sequence?==
 
-BioJava provide a module ''biojava3-protein-disorder'' for prediction disordered regions from a protein sequence.
-Biojava3-protein-disorder module for now contains one method for the prediction of disordered regions. This method is based on the Java implementation of [http://www.strubi.ox.ac.uk/RONN RONN] predictor. 
+BioJava provide a module ''biojava-protein-disorder'' for prediction disordered regions from a protein sequence.
+Biojava-protein-disorder module for now contains one method for the prediction of disordered regions. This method is based on the Java implementation of [http://www.strubi.ox.ac.uk/RONN RONN] predictor. 
 
 This code has been originally developed for use with [http://www.compbio.dundee.ac.uk/jabaws JABAWS]. We call this code  ''JRONN''. ''JRONN'' is based on the C implementation of RONN algorithm and uses the same model data, therefore gives the same predictions. JRONN based on RONN version 3.1 which is still current in time of writing (August 2011). Main motivation behind JRONN development was providing an implementation of RONN more suitable to use by the automated analysis pipelines and web services.  Robert Esnouf has kindly allowed us to explore the RONN code and share the results with the community. 
 
