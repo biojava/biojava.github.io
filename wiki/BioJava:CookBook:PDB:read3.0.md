@@ -29,14 +29,14 @@ The easiest way is to use the AtomCache class for accessing PDB files:
 </java>
 
 As of BioJava 3.0.5 there is also a new StructureIO utility class.
-<java> import org.biojava3.structure.StructureIO;
+<java> import org.biojava.nbio.structure.StructureIO;
 
-`           Structure s1 = StructureIO.getStructure("4hhb");`
+`       Structure s1 = StructureIO.getStructure("4hhb");`
 
-`           Structure bioAssembly = StructureIO.getBiologicalAssembly("1stp",1);`
+`       Structure bioAssembly = StructureIO.getBiologicalAssembly("1stp",1);`
 
-`           // set the PDB path in StructureIO`  
-`           StructureIO.setPdbPath("/tmp/");`
+`       // set the PDB path in StructureIO`  
+`       StructureIO.setPdbPath("/tmp/");`
 
 </java>
 
