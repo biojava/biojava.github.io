@@ -258,11 +258,11 @@ Example: How to parse a local file
 
 This example shows how to read a PDB file from your file system, obtain
 a [Structure
-object](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html)
+object](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Structure.html)
 and iterate over the
-[Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html)
+[Groups](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Group.html)
 that are contained in the file. For more examples of how to access the
-[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
+[Atoms](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Atom.html)
 please go to <BioJava:CookBook:PDB:atoms>. For more info on how the
 parser deals with SEQRES and ATOM records please see
 <BioJava:CookBook:PDB:seqres> <java>

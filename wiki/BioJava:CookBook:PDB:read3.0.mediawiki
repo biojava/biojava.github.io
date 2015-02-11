@@ -219,8 +219,8 @@ public void loadStructureFromCache(){
 
 == Example: How to parse a local file ==
 
-This example shows how to read a PDB file from your file system, obtain a [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure object] and iterate over 
-the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html Groups] that are contained in the file. For more examples of how to access the [http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html Atoms] 
+This example shows how to read a PDB file from your file system, obtain a [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Structure.html Structure object] and iterate over 
+the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Group.html Groups] that are contained in the file. For more examples of how to access the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Atom.html Atoms] 
 please go to [[BioJava:CookBook:PDB:atoms]]. For more info on how the parser deals with SEQRES and ATOM records please
 see  [[BioJava:CookBook:PDB:seqres]] 
 <java>
