@@ -41,7 +41,7 @@ BioJava provides a PDB file parser, that reads the content of a PDB file into a 
    <li>work with local PDB file installations.</li>
 </ul>
 
-The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader] class.
+The class providing the core functionality for this is the [http://www.biojava.org/docs/api/index.html?org/biojava/nbio/structure/io/PDBFileReader.html PDBFileReader] class.
 
 == Short Example: how to read a local file ==
 
