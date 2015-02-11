@@ -11,54 +11,39 @@ availabe via the
 class that can be accessed from
 [structure.getCompounds()](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html).
 
-<java> @since 1.6 public static void main(String[] args){
+<java>
 
+`   public static void main(String[] args) throws Exception {`  
+`       `  
 `       String code =  "1aoi";`
 
-`       PDBFileReader pdbreader = new PDBFileReader();`  
-`       pdbreader.setPath("/Path/To/PDBFiles/");`  
-`       pdbreader.setParseSecStruc(true);`  
-`       pdbreader.setAlignSeqRes(true);`  
-`       pdbreader.setAutoFetch(true);`
-
-`       try{`  
-`           Structure struc = pdbreader.getStructureById(code);`  
-`           Map`<String,Object>` m = struc.getHeader();`
-
-`           Set`<String>` keys = m.keySet();`  
-`           for (String key: keys) {`  
-`               System.out.println(key +": " +  m.get(key));`  
-`           }`
-
-`           System.out.println("available compounds:");`  
-`           List`<Compound>` compounds = struc.getCompounds();`  
-`           for (Compound compound:compounds){`  
-`               System.out.println(compound);`  
-`           }`  
-`           `
-
-`       } catch (Exception e) {`  
-`           e.printStackTrace();`  
+`       AtomCache cache = new AtomCache();`  
+`       `  
+`       Structure struc = cache.getStructure(code);`  
+`       `  
+`       PDBHeader header = struc.getPDBHeader();`  
+`       `  
+`       System.out.println(header.toString());`  
+`       `  
+`       System.out.println("available compounds:");`  
+`       List`<Compound>` compounds = struc.getCompounds();`  
+`       for (Compound compound:compounds){`  
+`           System.out.println(compound);`  
 `       }`  
+`       `  
 `   }`
 
 </java>
 
 gives the following output:
 
-    title: COMPLEX BETWEEN NUCLEOSOME CORE PARTICLE (H3,H4,H2A,H2B) AND 146 BP LONG DNA FRAGMENT 
-    technique: X-RAY DIFFRACTION 
-    classification: DNA BINDING PROTEIN/DNA
-    depDate: 03-JUL-97
-    modDate: 01-APR-03
-    idCode: 1AOI
-    resolution: 2.8
+    Description: DNA BINDING PROTEIN/DNA BioAssemblies: {} NrBioAssemblies: 0 ExperimentalTechniques: [X-RAY DIFFRACTION] Classification: DNA BINDING PROTEIN/DNA DepDate: Thu Jul 03 00:00:00 CEST 1997 IdCode: 1AOI ModDate: Tue Feb 24 00:00:00 CET 2009 Title: COMPLEX BETWEEN NUCLEOSOME CORE PARTICLE (H3,H4,H2A,H2B) AND 146 BP LONG DNA FRAGMENT CrystallographicInfo: [P 21 21 21 - 106.04 181.78 110.12, 90.00 90.00 90.00] Resolution: 2.8 Rfree: 0.302 Authors: K.Luger,A.W.Maeder,R.K.Richmond,D.F.Sargent,T.J.Richmond 
     available compounds:
-    Compound: 1 HISTONE H3 Chains: ChainId: A E Engineered: YES OrganismScientific: XENOPUS LAEVIS OrganismCommon: AFRICAN CLAWED FROG ExpressionSystem: ESCHERICHIA COLI Fragment: HISTONE H3 
-    Compound: 2 HISTONE H4 Chains: ChainId: B F Engineered: YES OrganismScientific: XENOPUS LAEVIS OrganismCommon: AFRICAN CLAWED FROG ExpressionSystem: ESCHERICHIA COLI ExpressionSystemOtherDetails: SYNTHETIC GENE, OPTIMIZED CODON USAGE FOR Fragment: HISTONE H4 
-    Compound: 3 HISTONE H2A Chains: ChainId: C G Engineered: YES OrganismScientific: XENOPUS LAEVIS OrganismCommon: AFRICAN CLAWED FROG ExpressionSystem: ESCHERICHIA COLI Fragment: HISTONE H2A 
-    Compound: 4 HISTONE H2B Chains: ChainId: D H Engineered: YES Mutation: YES OrganismScientific: XENOPUS LAEVIS OrganismCommon: AFRICAN CLAWED FROG ExpressionSystem: ESCHERICHIA COLI Fragment: HISTONE H2B 
-    Compound: 5 PALINDROMIC 146 BP DNA REPEAT 8/9 FROM HUMAN X- CHROMOSOME ALPHA SATELLITE DNA Chains: ChainId: I J Engineered: YES Synthetic: YES 
+    Compound: 1 (PALINDROMIC 146 BP DNA REPEAT 8/9 FROM HUMAN X-CHROMOSOME ALPHA SATELLITE DNA) chains: I,J
+    Compound: 2 (HISTONE H3) chains: A,E
+    Compound: 3 (HISTONE H4) chains: B,F
+    Compound: 4 (HISTONE H2A) chains: C,G
+    Compound: 5 (HISTONE H2B) chains: D,H
 
 Next: <BioJava:CookBook:PDB:seqres> - How to deal with SEQRES and ATOM
 records
