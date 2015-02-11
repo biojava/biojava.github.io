@@ -51,7 +51,7 @@ possible to
 -   work with local PDB file installations.
 
 The class providing the core functionality for this is the
-[PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/bio/structure/io/PDBFileReader.html)
+[PDBFileReader](http://www.biojava.org/docs/api/index.html?org/biojava/nbio/structure/io/PDBFileReader.html)
 class.
 
 Short Example: how to read a local file
