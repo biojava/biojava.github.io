@@ -8,8 +8,8 @@ compared are already pre-aligned.
 <java> package org.biojava3.cookbook;
 
 import java.util.ArrayList; import
-org.biojava3.core.sequence.DNASequence; import
-org.biojava3.core.sequence.compound.AmbiguityDNACompoundSet;
+org.biojava.nbio.core.sequence.DNASequence; import
+org.biojava.nbio.core.sequence.compound.AmbiguityDNACompoundSet;
 
 public class SequenceComparer {
 
