@@ -5,19 +5,19 @@ title: BioJava:CookBook:PDB:FATCAT Algorithm
 FATCAT Algorithm
 ================
 
-The upcoming BioJava 3 release will provide a BioJava version of the
-**FATCAT** algorithm, originally developed by Yuzhen Ye and A. Godzik.
+Biojava 3+ provides a BioJava version of the **FATCAT** algorithm,
+originally developed by Yuzhen Ye and A. Godzik.
 [http://www.ncbi.nlm.nih.gov/pubmed/14534198 original
 publication](http://www.ncbi.nlm.nih.gov/pubmed/14534198 original publication "wikilink").
 
 User Interface
 ==============
 
-**Required modules**: *biojava3-structure, biojava3-structure-gui,
+**Required modules**: *biojava-structure, biojava-structure-gui,
 alignment*
 
 A user interface for running structure alignments manually is available
-through the biojava3-structure-gui modules. <java> public static void
+through the biojava-structure-gui modules. <java> public static void
 main(String[] args) {
 
 `       System.setProperty("PDB_DIR","/tmp/");`  
@@ -32,9 +32,9 @@ file system PDB files are stored.
 Local Execution
 ===============
 
-**Required modules**: *biojava3-structure, alignment*
+**Required modules**: *biojava-structure, alignment*
 
-Using BioJava3 it is possible to align any set of atoms with the FATCAT
+Using BioJava it is possible to align any set of atoms with the FATCAT
 algorithm. This example demonstrates how to align two protein chains and
 edit some of the parameters.
 
