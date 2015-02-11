@@ -12,13 +12,18 @@ Access to the SEQRES groups is possible via [http://www.biojava.org/docs/api/org
 Example:
 <java>
 import java.util.List;
-import org.biojava.bio.structure.*;
-import org.biojava.bio.structure.io.FileParsingParameters;
-import org.biojava.bio.structure.io.PDBFileReader;
+import org.biojava.nbio.structure.Chain;
+import org.biojava.nbio.structure.Group;
+import org.biojava.nbio.structure.GroupType;
+import org.biojava.nbio.structure.Structure;
+import org.biojava.nbio.structure.io.FileParsingParameters;
+import org.biojava.nbio.structure.io.PDBFileReader;
+import org.biojava.nbio.structure.io.LocalPDBDirectory.FetchBehavior;
 
 public class SeqResCookBook {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception {
+		
 		String code =  "1aoi";
  
 		PDBFileReader pdbreader = new PDBFileReader();
@@ -26,35 +31,36 @@ public class SeqResCookBook {
 		params.setParseSecStruc(true);// parse the secondary structure information from PDB file
 		params.setAlignSeqRes(true);  // align SEQRES and ATOM records
 		pdbreader.setFileParsingParameters(params);
-		pdbreader.setAutoFetch(true);    // fetch PDB files from web if they can't be found locally
-		pdbreader.setPath(System.getProperty("java.io.tmpdir")); // or replace with path to PDB directory
- 
-		try{
-			Structure struc = pdbreader.getStructureById(code);
- 
-			System.out.println("The SEQRES and ATOM information is available via the chains:");
- 
-			int modelnr = 0 ; // also is 0 if structure is an XRAY structure.
- 
-			List<Chain> chains = struc.getChains(modelnr);
-			for (Chain cha:chains){
-				List<Group> agr = cha.getAtomGroups("amino");
-				List<Group> hgr = cha.getAtomGroups("hetatm");
-				List<Group> ngr = cha.getAtomGroups("nucleotide");
-				
-				System.out.print("chain: >"+cha.getChainID()+"<");
-				System.out.print(" length SEQRES: " +cha.getSeqResLength());
-				System.out.print(" length ATOM: " +cha.getAtomLength());
-				System.out.print(" aminos: " +agr.size());
-				System.out.print(" hetatms: "+hgr.size());
-				System.out.println(" nucleotides: "+ngr.size());  
-			}
- 
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		pdbreader.setFetchBehavior(FetchBehavior.FETCH_FILES);   // fetch PDB files from web if they can't be found locally
+
+
+		Structure struc = pdbreader.getStructureById(code);
+
+		System.out.println("The SEQRES and ATOM information is available via the chains:");
+
+		int modelnr = 0 ; // also is 0 if structure is an XRAY structure.
+
+		List<Chain> chains = struc.getChains(modelnr);
+		for (Chain cha:chains){
+			List<Group> agr = cha.getAtomGroups(GroupType.AMINOACID);
+			List<Group> hgr = cha.getAtomGroups(GroupType.HETATM);
+			List<Group> ngr = cha.getAtomGroups(GroupType.NUCLEOTIDE);
+
+			System.out.print("chain: >"+cha.getChainID()+"<");
+			System.out.print(" length SEQRES: " +cha.getSeqResLength());
+			System.out.print(" length ATOM: " +cha.getAtomLength());
+			System.out.print(" aminos: " +agr.size());
+			System.out.print(" hetatms: "+hgr.size());
+			System.out.println(" nucleotides: "+ngr.size());  
 		}
+
+
 	}
+
+	
 }
+
 </java>
 
 
