@@ -21,10 +21,10 @@ Description of Blast URLAPI and its parameters can be found at [http://www.ncbi.
 The following sample program is slightly modified demo program from biojava3-ws module's demo package:
 
 <java>
-import static org.biojava3.ws.alignment.qblast.BlastAlignmentParameterEnum.ENTREZ_QUERY;
+import static org.biojava.nbio.ws.alignment.qblast.BlastAlignmentParameterEnum.ENTREZ_QUERY;
 import java.io.*;
-import org.biojava3.core.sequence.io.util.IOUtils;
-import org.biojava3.ws.alignment.qblast.*;
+import org.biojava.nbio.core.sequence.io.util.IOUtils;
+import org.biojava.nbio.ws.alignment.qblast.*;
 
 public class NCBIQBlastServiceDemo {
 

@@ -59,9 +59,10 @@ The following sample program is slightly modified demo program from
 biojava3-ws module's demo package:
 
 <java> import static
-org.biojava3.ws.alignment.qblast.BlastAlignmentParameterEnum.ENTREZ\_QUERY;
-import java.io.\*; import org.biojava3.core.sequence.io.util.IOUtils;
-import org.biojava3.ws.alignment.qblast.\*;
+org.biojava.nbio.ws.alignment.qblast.BlastAlignmentParameterEnum.ENTREZ\_QUERY;
+import java.io.\*; import
+org.biojava.nbio.core.sequence.io.util.IOUtils; import
+org.biojava.nbio.ws.alignment.qblast.\*;
 
 public class NCBIQBlastServiceDemo {
 
