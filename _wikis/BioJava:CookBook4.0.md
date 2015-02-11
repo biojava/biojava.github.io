@@ -112,7 +112,7 @@ external library** : *JmolApplet.jar* for the 3D visualisation
 **Required modules**: *biojava-genome*
 
 -   [Overview of
-    biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
+    biojava-genome?](BioJava:CookBook:genome:Overview "wikilink")
 
 ### Sequencing
 
