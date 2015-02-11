@@ -37,8 +37,7 @@ Using BioJava it is possible to align any set of atoms with the FATCAT algorithm
        String name2 = "1tim.B";
            
        AtomCache cache = new AtomCache(pdbFilePath, isSplit);
-
-<java>               
+              
        Structure structure1 = null;
        Structure structure2 = null;
 
