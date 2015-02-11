@@ -62,8 +62,7 @@ Many topics are also covered in the [https://github.com/biojava/biojava-tutorial
 
 === Genome ===
 '''Required modules''': ''biojava-genome''
-* [[BioJava:CookBook:genome:Overview|Overview of biojava3-genome?]]
-
+* [[BioJava:CookBook:genome:Overview|Overview of biojava-genome?]]
 
 === Sequencing ===
 
