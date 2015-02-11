@@ -5,8 +5,8 @@ title: BioJava:CookBook3:ProteinDisorder
 How can I predict disordered regions on a protein sequence?
 -----------------------------------------------------------
 
-BioJava provide a module *biojava3-protein-disorder* for prediction
-disordered regions from a protein sequence. Biojava3-protein-disorder
+BioJava provide a module *biojava-protein-disorder* for prediction
+disordered regions from a protein sequence. Biojava-protein-disorder
 module for now contains one method for the prediction of disordered
 regions. This method is based on the Java implementation of
 [RONN](http://www.strubi.ox.ac.uk/RONN) predictor.
