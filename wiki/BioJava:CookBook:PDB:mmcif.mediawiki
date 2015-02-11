@@ -18,26 +18,15 @@ BioJava is open source and you can get the code from [https://github.com/biojava
 
 BioJava uses [http://maven.apache.org/ Maven] as a build and distribution system. If you are new to Maven, take a look at the [http://maven.apache.org/guides/getting-started/index.html Getting Started with Maven] guide.
 
-We are providing a BioJava specific Maven repository at (http://biojava.org/download/maven/) .
-
-You can add the BioJava repository by adding the following XML to your project pom.xml file:
+As of version 4, BioJava is available in maven central. Thus you just need to include this in your pom.xml file:
 
 <pre>
-        <repositories>
-		...
-		<repository>
-			<id>biojava-maven-repo</id>
-			<name>BioJava repository</name>
-			<url>http://www.biojava.org/download/maven/</url>			
-		</repository>
-	</repositories>
-
         <dependencies>
                 ...
                 <dependency>
                         <groupId>org.biojava</groupId>
-                        <artifactId>biojava3-structure</artifactId>
-                        <version>3.0.7-SNAPSHOT</version>
+                        <artifactId>biojava-structure</artifactId>
+                        <version>4.0.0-SNAPSHOT</version>
                 </dependency>
                 <!-- other biojava jars as needed -->
         </dependencies>
@@ -65,6 +54,14 @@ If you already have a local PDB installation, you can configure where BioJava sh
 <pre>
     -DPDB_DIR=/wherever/you/want/
 </pre>
+
+or by setting an environment variable
+
+<pre>
+export PDB_DIR=/wherever/you/want/
+</pre>
+
+Note that the layout of files in those directories will mimick the "divided" layout in the official PDB ftp repository.
 
 ==From PDB to mmCIF==
 <p>By default BioJava is using the PDB file format for parsing data. In order to switch it to use mmCIF, we can take control over the underlying <a href="http://www.biojava.org/docs/api/org/biojava/bio/structure/align/util/AtomCache.html">AtomCache</a> which manages your PDB (and btw. also SCOP, CATH) installations.</p>
