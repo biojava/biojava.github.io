@@ -14,7 +14,7 @@ manuscript](http://peds.oxfordjournals.org/cgi/content/short/11/9/739 original m
 User Interface
 ==============
 
-**Required modules**: *biojava3-structure, biojava3-structure-gui,
+**Required modules**: *biojava-structure, biojava-structure-gui,
 alignment*
 
 A user interface for running structure alignments manually is available
@@ -33,9 +33,9 @@ file system PDB files are stored.
 Local Execution
 ===============
 
-**Required modules**: *biojava3-structure, alignment*
+**Required modules**: *biojava-structure, alignment*
 
-**Optional module** : *biojava3-structure-gui* for the 3D visualisation
+**Optional module** : *biojava-structure-gui* for the 3D visualisation
 
 Using BioJava3 it is possible to align any set of atoms with the CE
 algorithm. This example demonstrates how to align two protein chains and
