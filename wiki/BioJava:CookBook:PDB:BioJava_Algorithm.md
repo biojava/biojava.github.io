@@ -3,8 +3,8 @@ title: BioJava:CookBook:PDB:BioJava Algorithm
 ---
 
 This is the example of how to use the structure alignment algorithm with
-the BioJava 1.7 release. The new BioJava3 contains an implementation of
-the CE and FATCAT algorithms as well.
+the BioJava 1.7 release. BioJava \>3 contains an implementation of the
+CE and FATCAT algorithms as well.
 
 Biojava 1.7 algorithm
 =====================
