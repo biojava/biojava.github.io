@@ -31,7 +31,7 @@ Also know as "overlaying" is a process of fitting two (equivalent) sets of Atoms
 
 === Where is it being used ? ===
 
-The protein structure modules of BioJava3 are used on the RCSB PDB web site for the [http://www.rcsb.org/pdb/workbench/workbench.do Protein Comparison Tool].
+The protein structure modules of BioJava are used on the RCSB PDB web site for the [http://www.rcsb.org/pdb/workbench/workbench.do Protein Comparison Tool].
 
 === Interesting test proteins ===
 

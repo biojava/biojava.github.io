@@ -64,7 +64,7 @@ javadoc.
 
 ### Where is it being used ?
 
-The protein structure modules of BioJava3 are used on the RCSB PDB web
+The protein structure modules of BioJava are used on the RCSB PDB web
 site for the [Protein Comparison
 Tool](http://www.rcsb.org/pdb/workbench/workbench.do).
 
