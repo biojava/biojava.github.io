@@ -24,13 +24,13 @@ page](http://www.spice-3d.org/hibernatePDB/examples.jsp)
 
 <java>
 
-import org.biojava.bio.structure.Chain; import
-org.biojava.bio.structure.Compound; import
-org.biojava.bio.structure.Group; import
-org.biojava.bio.structure.Structure; import
-org.biojava.bio.structure.hibernate.HibernateUtil; import
-org.biojava.bio.structure.hibernate.StructureFile; import
-org.biojava.bio.structure.io.PDBFileReader; import
+import org.biojava.nbio.structure.Chain; import
+org.biojava.nbio.structure.Compound; import
+org.biojava.nbio.structure.Group; import
+org.biojava.nbio.structure.Structure; import
+org.biojava.nbio.structure.hibernate.HibernateUtil; import
+org.biojava.nbio.structure.hibernate.StructureFile; import
+org.biojava.nbio.structure.io.PDBFileReader; import
 org.hibernate.HibernateException; import org.hibernate.Session; import
 java.io.File; import java.io.FileFilter; import java.util.ArrayList;
 import java.util.List;
