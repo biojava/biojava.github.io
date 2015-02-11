@@ -46,10 +46,10 @@ Example: identify phosphorylation sites in a structure
 Demo code to run the above methods
 ----------------------------------
 
-<java> import org.biojava.bio.structure.ResidueNumber; import
-org.biojava.bio.structure.Structure; import
-org.biojava.bio.structure.io.PDBFileReader; import
-org.biojava3.protmod.structure.ProteinModificationIdentifier;
+<java> import org.biojava.nbio.structure.ResidueNumber; import
+org.biojava.nbio.structure.Structure; import
+org.biojava.nbio.structure.io.PDBFileReader; import
+org.biojava.nbio.protmod.structure.ProteinModificationIdentifier;
 
 public static void main(String[] args) {
 
