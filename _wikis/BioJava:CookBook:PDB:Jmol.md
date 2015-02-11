@@ -59,8 +59,8 @@ import java.awt.Container; import java.awt.Dimension; import
 java.awt.Graphics; import java.awt.Rectangle; import
 java.awt.event.WindowAdapter; import java.awt.event.WindowEvent; import
 javax.swing.JFrame; import javax.swing.JPanel; import
-org.biojava.bio.structure.Structure; import
-org.biojava.bio.structure.io.PDBFileReader; import
+org.biojava.nbio.structure.Structure; import
+org.biojava.nbio.structure.io.PDBFileReader; import
 org.jmol.adapter.smarter.SmarterJmolAdapter; import
 org.jmol.api.JmolAdapter; import org.jmol.api.JmolSimpleViewer;
 
