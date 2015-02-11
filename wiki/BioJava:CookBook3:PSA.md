@@ -10,16 +10,17 @@ Global alignment
 
 <java>
 
-package org.biojava3.alignment;
+package org.biojava.nbio.alignment;
 
 import java.net.URL;
 
-import org.biojava3.alignment.Alignments.PairwiseSequenceAlignerType;
-import org.biojava3.alignment.template.SequencePair; import
-org.biojava3.alignment.template.SubstitutionMatrix; import
-org.biojava3.core.sequence.ProteinSequence; import
-org.biojava3.core.sequence.compound.AminoAcidCompound; import
-org.biojava3.core.sequence.io.FastaReaderHelper;
+import
+org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;
+import org.biojava.nbio.alignment.template.SequencePair; import
+org.biojava.nbio.alignment.template.SubstitutionMatrix; import
+org.biojava.nbio.core.sequence.ProteinSequence; import
+org.biojava.nbio.core.sequence.compound.AminoAcidCompound; import
+org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 
 public class CookbookAlignPairGlobal {
 
@@ -56,16 +57,17 @@ Local alignment
 
 <java>
 
-package org.biojava3.alignment;
+package org.biojava.nbio.alignment;
 
 import java.net.URL;
 
-import org.biojava3.alignment.Alignments.PairwiseSequenceAlignerType;
-import org.biojava3.alignment.template.SequencePair; import
-org.biojava3.alignment.template.SubstitutionMatrix; import
-org.biojava3.core.sequence.ProteinSequence; import
-org.biojava3.core.sequence.compound.AminoAcidCompound; import
-org.biojava3.core.sequence.io.FastaReaderHelper;
+import
+org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;
+import org.biojava.nbio.alignment.template.SequencePair; import
+org.biojava.nbio.alignment.template.SubstitutionMatrix; import
+org.biojava.nbio.core.sequence.ProteinSequence; import
+org.biojava.nbio.core.sequence.compound.AminoAcidCompound; import
+org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 
 public class CookbookAlignPairLocal {
 
@@ -109,13 +111,14 @@ package org.biojava3.alignment;
 
 import java.net.URL; import java.util.ArrayList; import java.util.List;
 
-import org.biojava3.alignment.Alignments.PairwiseSequenceAlignerType;
-import org.biojava3.alignment.template.SequencePair; import
-org.biojava3.alignment.template.SubstitutionMatrix; import
-org.biojava3.core.sequence.ProteinSequence; import
-org.biojava3.core.sequence.compound.AminoAcidCompound; import
-org.biojava3.core.sequence.io.FastaReaderHelper; import
-org.biojava3.core.util.ConcurrencyTools;
+import
+org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;
+import org.biojava.nbio.alignment.template.SequencePair; import
+org.biojava.nbio.alignment.template.SubstitutionMatrix; import
+org.biojava.nbio.core.sequence.ProteinSequence; import
+org.biojava.nbio.core.sequence.compound.AminoAcidCompound; import
+org.biojava.nbio.core.sequence.io.FastaReaderHelper; import
+org.biojava.nbio.core.util.ConcurrencyTools;
 
 public class CookbookAlignAllGlobal {
 
@@ -162,13 +165,14 @@ package org.biojava3.alignment;
 
 import java.net.URL; import java.util.ArrayList; import java.util.List;
 
-import org.biojava3.alignment.Alignments.PairwiseSequenceAlignerType;
-import org.biojava3.alignment.template.SequencePair; import
-org.biojava3.alignment.template.SubstitutionMatrix; import
-org.biojava3.core.sequence.ProteinSequence; import
-org.biojava3.core.sequence.compound.AminoAcidCompound; import
-org.biojava3.core.sequence.io.FastaReaderHelper; import
-org.biojava3.core.util.ConcurrencyTools;
+import
+org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;
+import org.biojava.nbio.alignment.template.SequencePair; import
+org.biojava.nbio.alignment.template.SubstitutionMatrix; import
+org.biojava.nbio.core.sequence.ProteinSequence; import
+org.biojava.nbio.core.sequence.compound.AminoAcidCompound; import
+org.biojava.nbio.core.sequence.io.FastaReaderHelper; import
+org.biojava.nbio.core.util.ConcurrencyTools;
 
 public class CookbookAlignAllLocal {
 
