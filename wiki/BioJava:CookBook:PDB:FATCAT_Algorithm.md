@@ -49,10 +49,8 @@ edit some of the parameters.
 `      String name1 = "1cdg.A";`  
 `      String name2 = "1tim.B";`  
 `          `  
-`      AtomCache cache = new AtomCache(pdbFilePath, isSplit);`
-
-<java>
-
+`      AtomCache cache = new AtomCache(pdbFilePath, isSplit);`  
+`             `  
 `      Structure structure1 = null;`  
 `      Structure structure2 = null;`
 
