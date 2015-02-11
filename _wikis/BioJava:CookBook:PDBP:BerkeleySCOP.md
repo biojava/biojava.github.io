@@ -10,9 +10,9 @@ Berkeley](http://scop.berkeley.edu/).
 
 <java>
 
-import org.biojava.bio.structure.scop.BerkeleyScopInstallation; import
-org.biojava.bio.structure.scop.ScopDatabase; import
-org.biojava.bio.structure.scop.ScopFactory;
+import org.biojava.nbio.structure.scop.BerkeleyScopInstallation; import
+org.biojava.nbio.structure.scop.ScopDatabase; import
+org.biojava.nbio.structure.scop.ScopFactory;
 
 /\*\* A demo for how to use the Berkeley version of SCOP instead of the
 default UK-SCOP
