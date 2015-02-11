@@ -1,6 +1,6 @@
-== BioJava Cookbook for release 3.*==
+== BioJava Cookbook for release 4.*==
 
-BioJava 3 is a major re-write of BioJava 1. As such many things work differently. This cookbook provides examples how to work with the new codebase.
+BioJava 3+ is a major re-write of BioJava 1. As such many things work differently. This cookbook provides examples how to work with the new codebase.
 
 The page was inspired by various programming cookbooks and follows a "How do I...?" type approach. Each "How do I?" is linked to some example code that does what you want and sometimes more. Basically if you find the code you want and copy and paste it into your program you should be up and running quickly. I have endeavoured to over document the code to make it more obvious what I am doing so some of the code might look a bit bloated.
 
@@ -12,13 +12,13 @@ If you have any suggestions, questions or comments contact the [mailto:biojava-l
 
 == Tutorial ==
 
-Many topics are also covered in the [https://github.com/biojava/biojava3-tutorial BioJava 3 tutorial].
+Many topics are also covered in the [https://github.com/biojava/biojava-tutorial BioJava tutorial].
 
 == How Do I....? ==
 
 ===  Core Module - Working with Sequences ===
-'''Required modules''': ''biojava3-core''
-* [[BioJava:CookBook:Core:Overview|Overview of biojava3-core?]]
+'''Required modules''': ''biojava-core''
+* [[BioJava:CookBook:Core:Overview|Overview of biojava-core?]]
 * [[BioJava:CookBook:Core:Sequences|How are sequences created?]]
 * [[BioJava:CookBook:Core:SequenceCompare|How do I compare two DNA Sequences and create a consensus sequence?]]
 * [[BioJava:CookBook:Core:FastaReadWrite|How do I read or write Fasta files?]]
@@ -27,8 +27,8 @@ Many topics are also covered in the [https://github.com/biojava/biojava3-tutoria
 
 === Protein Structure ===
 
-'''Required modules''': ''biojava3-structure,  biojava3-alignment'' 
-'''Optional module''' : ''biojava3-structure-gui'' for the 3D visualisation
+'''Required modules''': ''biojava-structure,  biojava-alignment'' 
+'''Optional module''' : ''biojava-structure-gui'' for the 3D visualisation
 '''Optional external library''' : ''JmolApplet.jar'' for the 3D visualisation
 
 * [[BioJava:CookBook:PDB:read3.0|How can I parse a PDB file?]]
@@ -51,7 +51,7 @@ Many topics are also covered in the [https://github.com/biojava/biojava3-tutoria
 
 === Pairwise and Multiple Sequence Alignment  ===
 
-'''Required modules''': ''biojava3-alignment, biojava3-core,  biojava3-phylo''
+'''Required modules''': ''biojava-alignment, biojava-core,  biojava-phylo''
 '''Required external library''': ''forester.jar''
 
 * [[BioJava:CookBook3:Stockholm|How can I read a Sequence Alignment in Stockholm format]]? (Pfam, Rfam)
@@ -61,13 +61,13 @@ Many topics are also covered in the [https://github.com/biojava/biojava3-tutoria
 * [[BioJava:CookBook3:MSAProfiler|How can I profile the time and memory requirements of a Multiple Sequence Alignment]]?
 
 === Genome ===
-'''Required modules''': ''biojava3-genome''
+'''Required modules''': ''biojava-genome''
 * [[BioJava:CookBook:genome:Overview|Overview of biojava3-genome?]]
 
 
 === Sequencing ===
 
-'''Required modules''': ''biojava3-core'',''biojava3-sequencing''
+'''Required modules''': ''biojava-core'',''biojava-sequencing''
 '''Required external library''': ''guava-11.0.1.jar''
 
 * [[Biojava:CookBook3:FASTQ|How do I work with nextgen sequencing reads in FASTQ format?]]
@@ -75,30 +75,30 @@ Many topics are also covered in the [https://github.com/biojava/biojava3-tutoria
 
 === Phylogenetic tree ===
 
-'''Required modules''': ''biojava3-core 
+'''Required modules''': ''biojava-core 
 '''Required external library''': ''forester.jar''
 
-* [[BioJava:CookBook:Phylo:Overview|Overview of biojava3-phylo?]]
+* [[BioJava:CookBook:Phylo:Overview|Overview of biojava-phylo?]]
 
 *[[BioJava:CookBook:Phylo:ProfileToMSA|How do I convert Profile object into Multiple Sequence Alignment object to be use in the TreeConstructor]]
 
 
 === Physico-Chemical Properties Computation ===
-'''Required modules''': ''biojava3-aa-prop, biojava3-structure and biojava3-core'' 
+'''Required modules''': ''biojava-aa-prop, biojava-structure and biojava-core'' 
 * [[BioJava:CookBook:AAPROP:main|How can I compute physico-chemical properties via APIs?]]
 * [[BioJava:CookBook:AAPROP:commandprompt|How can I compute physico-chemical properties using Command Prompt?]]
 * [[BioJava:CookBook:AAPROP:profeat|How can I compute PROFEAT properties via APIs?]]
 
 
 === Protein Disorder  ===
-'''Required modules''': ''biojava3-protein-disorder''
+'''Required modules''': ''biojava-protein-disorder''
 * [[BioJava:CookBook3:ProteinDisorder|How can I predict disordered regions of the protein using its sequence?]]
 * [[BioJava:CookBook3:ProteinDisorderCLI|Can I use the predictor from the command line?]]
 
 
 === Protein Modification Identification ===
 
-'''Required modules''': ''biojava3-modfinder, biojava-structure''
+'''Required modules''': ''biojava-modfinder, biojava-structure''
 
 * [[BioJava:CookBook3:ModFinder|How can I identify protein modifications in a 3D structure?]]
 * [[BioJava:CookBook3:SupportedProtMod|How can I get the list of supported protein modifications?]]
@@ -106,7 +106,7 @@ Many topics are also covered in the [https://github.com/biojava/biojava3-tutoria
 
 === Remote Web Service Calls ===
 
-'''Required modules''': ''biojava3-core, biojava-ws''
+'''Required modules''': ''biojava-core, biojava-ws''
 
 * [[BioJava:CookBook3:NCBIQBlastService|How can I use NCBI's QBlast service ?]]
 * [[BioJava:CookBook3:ParsingBlastXMLOutput|How can I use Blast XML Output in my program?]]
