@@ -4,7 +4,7 @@ The BioJava 3 release provides a version of the '''Combinatorial Extension Algor
 
 =User Interface=
 
-'''Required modules''': ''biojava3-structure, biojava3-structure-gui, alignment''
+'''Required modules''': ''biojava-structure, biojava-structure-gui, alignment''
 
 A user interface for running structure alignments manually is available through the biojava3-structure-gui modules.
 <java>
@@ -19,9 +19,9 @@ The ''PDB_DIR'' property allows to specify the path, where in the local file sys
 
 =Local Execution=
 
-'''Required modules''': ''biojava3-structure,  alignment''
+'''Required modules''': ''biojava-structure,  alignment''
 
-'''Optional module''' : ''biojava3-structure-gui'' for the 3D visualisation
+'''Optional module''' : ''biojava-structure-gui'' for the 3D visualisation
 
 Using BioJava3 it is possible to align any set of atoms with the CE algorithm. This example demonstrates how to align two protein chains and edit some of the parameters.
 
