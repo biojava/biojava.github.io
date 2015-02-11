@@ -2,10 +2,10 @@
 title: BioJava:CookBook4.0
 ---
 
-BioJava Cookbook for release 3.\*
+BioJava Cookbook for release 4.\*
 ---------------------------------
 
-BioJava 3 is a major re-write of BioJava 1. As such many things work
+BioJava 3+ is a major re-write of BioJava 1. As such many things work
 differently. This cookbook provides examples how to work with the new
 codebase.
 
@@ -26,18 +26,18 @@ go [here](http://biojava.org/mailman/listinfo/biojava-l)
 Tutorial
 --------
 
-Many topics are also covered in the [BioJava 3
-tutorial](https://github.com/biojava/biojava3-tutorial).
+Many topics are also covered in the [BioJava
+tutorial](https://github.com/biojava/biojava-tutorial).
 
 How Do I....?
 -------------
 
 ### Core Module - Working with Sequences
 
-**Required modules**: *biojava3-core*
+**Required modules**: *biojava-core*
 
 -   [Overview of
-    biojava3-core?](BioJava:CookBook:Core:Overview "wikilink")
+    biojava-core?](BioJava:CookBook:Core:Overview "wikilink")
 -   [How are sequences
     created?](BioJava:CookBook:Core:Sequences "wikilink")
 -   [How do I compare two DNA Sequences and create a consensus
@@ -51,10 +51,9 @@ How Do I....?
 
 ### Protein Structure
 
-**Required modules**: *biojava3-structure, biojava3-alignment*
-**Optional module** : *biojava3-structure-gui* for the 3D visualisation
-**Optional external library** : *JmolApplet.jar* for the 3D
-visualisation
+**Required modules**: *biojava-structure, biojava-alignment* **Optional
+module** : *biojava-structure-gui* for the 3D visualisation **Optional
+external library** : *JmolApplet.jar* for the 3D visualisation
 
 -   [How can I parse a PDB
     file?](BioJava:CookBook:PDB:read3.0 "wikilink")
@@ -93,8 +92,8 @@ visualisation
 
 ### Pairwise and Multiple Sequence Alignment
 
-**Required modules**: *biojava3-alignment, biojava3-core,
-biojava3-phylo* **Required external library**: *forester.jar*
+**Required modules**: *biojava-alignment, biojava-core, biojava-phylo*
+**Required external library**: *forester.jar*
 
 -   [How can I read a Sequence Alignment in Stockholm
     format](BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
@@ -110,14 +109,14 @@ biojava3-phylo* **Required external library**: *forester.jar*
 
 ### Genome
 
-**Required modules**: *biojava3-genome*
+**Required modules**: *biojava-genome*
 
 -   [Overview of
     biojava3-genome?](BioJava:CookBook:genome:Overview "wikilink")
 
 ### Sequencing
 
-**Required modules**: *biojava3-core*,*biojava3-sequencing* **Required
+**Required modules**: *biojava-core*,*biojava-sequencing* **Required
 external library**: *guava-11.0.1.jar*
 
 -   [How do I work with nextgen sequencing reads in FASTQ
@@ -125,11 +124,11 @@ external library**: *guava-11.0.1.jar*
 
 ### Phylogenetic tree
 
-**Required modules**: ''biojava3-core **Required external library**:
+**Required modules**: ''biojava-core **Required external library**:
 *forester.jar*
 
 -   [Overview of
-    biojava3-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
+    biojava-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
 
 <!-- -->
 
@@ -139,8 +138,8 @@ external library**: *guava-11.0.1.jar*
 
 ### Physico-Chemical Properties Computation
 
-**Required modules**: *biojava3-aa-prop, biojava3-structure and
-biojava3-core*
+**Required modules**: *biojava-aa-prop, biojava-structure and
+biojava-core*
 
 -   [How can I compute physico-chemical properties via
     APIs?](BioJava:CookBook:AAPROP:main "wikilink")
@@ -151,7 +150,7 @@ biojava3-core*
 
 ### Protein Disorder
 
-**Required modules**: *biojava3-protein-disorder*
+**Required modules**: *biojava-protein-disorder*
 
 -   [How can I predict disordered regions of the protein using its
     sequence?](BioJava:CookBook3:ProteinDisorder "wikilink")
@@ -160,7 +159,7 @@ biojava3-core*
 
 ### Protein Modification Identification
 
-**Required modules**: *biojava3-modfinder, biojava-structure*
+**Required modules**: *biojava-modfinder, biojava-structure*
 
 -   [How can I identify protein modifications in a 3D
     structure?](BioJava:CookBook3:ModFinder "wikilink")
@@ -171,7 +170,7 @@ biojava3-core*
 
 ### Remote Web Service Calls
 
-**Required modules**: *biojava3-core, biojava-ws*
+**Required modules**: *biojava-core, biojava-ws*
 
 -   [How can I use NCBI's QBlast service
     ?](BioJava:CookBook3:NCBIQBlastService "wikilink")
