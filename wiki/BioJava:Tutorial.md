@@ -2,9 +2,9 @@
 title: BioJava:Tutorial
 ---
 
-BioJava 3 tutorial:
+BioJava 4 tutorial:
 
-The BioJava 3 tutorial is being hosted and developed at the [BioJava
+The BioJava 4 tutorial is being hosted and developed at the [BioJava
 tutorial project on
 github](https://github.com/biojava/biojava3-tutorial). The [BioJava
 Cookbook](BioJava:CookBook "wikilink") offers cookbook-style tutorials
