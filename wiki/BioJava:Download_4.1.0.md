@@ -14,12 +14,11 @@ Maven Central as well as manual download (see below).
 
 This release contains over
 [<https://github.com/biojava/biojava/compare/5131f3aaff5a5bbbf221f5f52cfe3b849a002d87>...biojava-4.1.0
-240] commits from 8 authors
+240] commits from 8 contributors.
 
 ### New Features
 
-BioJava 4.1.0 is mostly a bug fix release, however a few new features
-have been added.
+BioJava 4.1.0 offers a few new features, as well several bug-fixes.
 
 New Features:
 
