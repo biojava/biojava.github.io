@@ -15,8 +15,8 @@ New Features:
 
 * New algorithm for multiple structure alignments
 * Improved visualization of structural alignments in Jmol
-* Now with support for ECOD classification
-* Better mmCIF support: now writing supported, better parsing
+* Support for the ECOD protein classification
+* Better mmCIF support: limited write support, better parsing
 
 View the [[BioJava:Modules]] page for a list of current modules.
 
