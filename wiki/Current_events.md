@@ -16,7 +16,8 @@ New Features:
 
 -   New algorithm for multiple structure alignments
 -   Improved visualization of structural alignments in Jmol
--   Now with support for ECOD classification
+-   Support for the ECOD protein classification
+-   Better mmCIF support: limited write support, better parsing
 
 BioJava 4.0.0 released
 ----------------------
