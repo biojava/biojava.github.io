@@ -2,10 +2,10 @@
 
 The SEQRES records in a PDB file contain the amino acid or nucleic acid sequence of residues in each chain of the macromolecule that was studied. The ATOM records provide the coordinates for those residues that were possible to observe.
 In order to join this information, Biojava aligns the SEQRES and the ATOM records for each chain. This is optional and can be 
-enabled or disabled by using the [http://www.biojava.org/docs/api/org/biojava/bio/structure/io/PDBFileReader.html PDBFileReader.setAlignSeqRes()] method. By default this alignment will be calculated.
+enabled or disabled by using the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/PDBFileReader.html PDBFileReader.setAlignSeqRes()] method. By default this alignment will be calculated.
 
-Access to the ATOM groups is possible via [http://www.biojava.org/docs/api/org/biojava/bio/structure/Chain.html Chain.getAtomGroups()].
-Access to the SEQRES groups is possible via [http://www.biojava.org/docs/api/org/biojava/bio/structure/Chain.html Chain.getSeqResGroups()]. Groups derived from SEQRES groups will be empty (i.e. they will not contain Atoms), unless they could be mapped to the ATOM records, in which case the full ATOM information can be accessed.
+Access to the ATOM groups is possible via [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Chain.html Chain.getAtomGroups()].
+Access to the SEQRES groups is possible via [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Chain.html Chain.getSeqResGroups()]. Groups derived from SEQRES groups will be empty (i.e. they will not contain Atoms), unless they could be mapped to the ATOM records, in which case the full ATOM information can be accessed.
 
 
 
