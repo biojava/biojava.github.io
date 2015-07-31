@@ -34,7 +34,7 @@ This works for both NMR and X-ray based structures and by default the first mode
 
 == Working with atoms ==
 
-Different ways are provided how to access the data contained in a [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure]. If you want to directly access an array of [http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html Atoms] you can use the utility class called [http://www.biojava.org/docs/api/org/biojava/bio/structure/StructureTools.html StructureTools]
+Different ways are provided how to access the data contained in a [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Structure.html Structure]. If you want to directly access an array of [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Atom.html Atoms] you can use the utility class called [http://www.biojava.org/docs/api/org/biojava/nbio/structure/StructureTools.html StructureTools]
 
 <pre>
 
@@ -46,12 +46,12 @@ Different ways are provided how to access the data contained in a [http://www.bi
 
 == Working with groups ==
 
-The [http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html Group] interface defines all methods common to a group of atoms. There are 3 
+The [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Group.html Group] interface defines all methods common to a group of atoms. There are 3 
 types of Groups:
 
-* [http://www.biojava.org/docs/api/org/biojava/bio/structure/AminoAcid.html AminoAcid]
-* [http://www.biojava.org/docs/api/org/biojava/bio/structure/NucleotideImpl.html Nucleotide]
-* [http://www.biojava.org/docs/api/org/biojava/bio/structure/HetatomImpl.html Hetatom]
+* [http://www.biojava.org/docs/api/org/biojava/nbio/structure/AminoAcid.html AminoAcid]
+* [http://www.biojava.org/docs/api/org/biojava/nbio/structure/NucleotideImpl.html Nucleotide]
+* [http://www.biojava.org/docs/api/org/biojava/nbio/structure/HetatomImpl.html Hetatom]
 
 In order to get all amino acids that have been observed in a PDB chain, you can use the following utility method:
 
@@ -127,7 +127,7 @@ Bye default BioJava ships with a minimal representation of standard amino acids,
 # fetch missing Chemical Component definitions on the fly (small download and parsing delays every time a new chemical compound is found), or
 # Load all definitions at startup (slow startup, but then no further delays later on, requires more memory)
 
-You can enable the first behaviour by doing using the [http://www.biojava.org/docs/api/org/biojava/bio/structure/io/FileParsingParameters.html FileParsingParameters] class:
+You can enable the first behaviour by doing using the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/FileParsingParameters.html FileParsingParameters] class:
 
 <pre>
             AtomCache cache = new AtomCache();
@@ -147,7 +147,7 @@ You can enable the first behaviour by doing using the [http://www.biojava.org/do
             Structure structure = StructureIO.getStructure(...);
 </pre>
 
-If you want to enable the second behaviour (slow loading of all chem comps at startup, but no further small delays later on) you can use the same code but change the behaviour by switching the [http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/ChemCompProvider.html ChemCompProvider] implementation in the [http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/ChemCompGroupFactory.html ChemCompGroupFactory]
+If you want to enable the second behaviour (slow loading of all chem comps at startup, but no further small delays later on) you can use the same code but change the behaviour by switching the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/mmcif/ChemCompProvider.html ChemCompProvider] implementation in the [http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/mmcif/ChemCompGroupFactory.html ChemCompGroupFactory]
 
 <pre>    
      ChemCompGroupFactory.setChemCompProvider(new AllChemCompProvider());
