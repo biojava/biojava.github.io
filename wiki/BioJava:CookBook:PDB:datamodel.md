@@ -52,11 +52,11 @@ Working with atoms
 ------------------
 
 Different ways are provided how to access the data contained in a
-[Structure](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html).
+[Structure](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Structure.html).
 If you want to directly access an array of
-[Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
+[Atoms](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Atom.html)
 you can use the utility class called
-[StructureTools](http://www.biojava.org/docs/api/org/biojava/bio/structure/StructureTools.html)
+[StructureTools](http://www.biojava.org/docs/api/org/biojava/nbio/structure/StructureTools.html)
 
 
         // get all C-alpha atoms in the structure
@@ -66,13 +66,13 @@ Working with groups
 -------------------
 
 The
-[Group](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html)
+[Group](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Group.html)
 interface defines all methods common to a group of atoms. There are 3
 types of Groups:
 
--   [AminoAcid](http://www.biojava.org/docs/api/org/biojava/bio/structure/AminoAcid.html)
--   [Nucleotide](http://www.biojava.org/docs/api/org/biojava/bio/structure/NucleotideImpl.html)
--   [Hetatom](http://www.biojava.org/docs/api/org/biojava/bio/structure/HetatomImpl.html)
+-   [AminoAcid](http://www.biojava.org/docs/api/org/biojava/nbio/structure/AminoAcid.html)
+-   [Nucleotide](http://www.biojava.org/docs/api/org/biojava/nbio/structure/NucleotideImpl.html)
+-   [Hetatom](http://www.biojava.org/docs/api/org/biojava/nbio/structure/HetatomImpl.html)
 
 In order to get all amino acids that have been observed in a PDB chain,
 you can use the following utility method:
@@ -152,7 +152,7 @@ good to tell the library to either
     delays later on, requires more memory)
 
 You can enable the first behaviour by doing using the
-[FileParsingParameters](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/FileParsingParameters.html)
+[FileParsingParameters](http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/FileParsingParameters.html)
 class:
 
                 AtomCache cache = new AtomCache();
@@ -174,9 +174,9 @@ class:
 If you want to enable the second behaviour (slow loading of all chem
 comps at startup, but no further small delays later on) you can use the
 same code but change the behaviour by switching the
-[ChemCompProvider](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/ChemCompProvider.html)
+[ChemCompProvider](http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/mmcif/ChemCompProvider.html)
 implementation in the
-[ChemCompGroupFactory](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/ChemCompGroupFactory.html)
+[ChemCompGroupFactory](http://www.biojava.org/docs/api/org/biojava/nbio/structure/io/mmcif/ChemCompGroupFactory.html)
 
         
          ChemCompGroupFactory.setChemCompProvider(new AllChemCompProvider());
