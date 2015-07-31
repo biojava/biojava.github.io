@@ -8,7 +8,7 @@ BioJava at its core is a collection of file parsers and (in some cases) data mod
 
 == The main hierarchy ==
 
-BioJava provides a flexible data structure for managing protein structural data. The [http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html Structure] class is the main container.
+BioJava provides a flexible data structure for managing protein structural data. The [http://www.biojava.org/docs/api/org/biojava/nbio/structure/Structure.html Structure] class is the main container.
 
 A Structure has a hierarchy of sub-objects:
 
