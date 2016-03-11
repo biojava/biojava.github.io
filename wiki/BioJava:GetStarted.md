@@ -46,7 +46,7 @@ project pom.xml file:
                     <dependency>
                             <groupId>org.biojava</groupId>
                             <artifactId>biojava-core</artifactId>
-                            <version>4.1.0</version>
+                            <version>4.2.0</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
             </dependencies>
