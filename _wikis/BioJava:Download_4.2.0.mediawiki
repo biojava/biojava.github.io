@@ -5,7 +5,7 @@ BioJava 4.2.0 is compatible with <b>Java 7 and 8</b>.
 == About ==
 ''BioJava'' 4.2.0 has been released and is available using Maven from Maven Central as well as manual download (see below).
 
-This release contains over [https://github.com/biojava/biojava/compare/5131f3aaff5a5bbbf221f5f52cfe3b849a002d87...biojava-4.2.0 240] commits from 8 contributors.
+This release contains over [https://github.com/biojava/biojava/compare/6f8d796fee92edbbcd001c33cdae4f15c5480741...biojava-4.2.0 750] commits from 10 contributors.
 
 ===New Features===
 
