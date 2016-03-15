@@ -4,7 +4,8 @@ tags:
  - People
 ---
 
-Michael Heuer has been a Biojava contributor since 2000.
+Michael Heuer, a researcher at UC Berkeley AMP Lab
+(http://bdgenomics.org), has been a Biojava contributor since 2000.
 
 Michael presented Biojava at BOSC 2005, Biojava spinoff project StAX
 (http://stax.sf.net) in a lightning talk at BOSC 2005, and Biojava at
