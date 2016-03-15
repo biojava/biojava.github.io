@@ -19,7 +19,7 @@ BioJava 4.2.0 offers many new features, as well several bug-fixes.
 * New SearchIO framework including blast xml parser
 
 ;Biojava-structure
-* Secondary structure assignment using DSSP
+* Secondary structure assignment (DSSP compatible)
 * Multiple Structure Alignments
 ** New MultipleStructureAlignment datastructure supporting flexible and order-independent alignments
 ** MultipleMC algorithm
