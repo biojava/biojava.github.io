@@ -45,7 +45,7 @@ Biojava-structure
 -   Include CE-Symm algorithm for finding internal symmetry
     (Myers-Turnbull, 2014)
 -   Replaced internal graph datastructures with Jgraph
--   Unified StructureIdentifier framework (... complete ....)
+-   Unified StructureIdentifier framework
 -   Improved chemical component framework, now by default providing full
     chemical description by using DownloadChemCompProvider
 -   Optimised memory usage of Residue/Atoms
