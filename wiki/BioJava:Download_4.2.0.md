@@ -14,13 +14,62 @@ Maven Central as well as manual download (see below).
 
 This release contains over
 [<https://github.com/biojava/biojava/compare/6f8d796fee92edbbcd001c33cdae4f15c5480741>...biojava-4.2.0
-750] commits from 10 contributors.
+750] commits from 16 contributors.
 
 ### New Features
 
-BioJava 4.2.0 offers a few new features, as well several bug-fixes.
+BioJava 4.2.0 offers many new features, as well several bug-fixes.
 
-New Features:
+General  
+
+-   Requires Java 7
+-   Better logging with SLF4J
+
+Biojava-Core  
+
+-   New SearchIO framework including blast xml parser
+
+Biojava-structure  
+
+-   Secondary structure assignment using DSSP
+-   Multiple Structure Alignments
+    -   New MultipleStructureAlignment datastructure supporting flexible
+        and order-independent alignments
+    -   MultipleMC algorithm
+        -   Can use any pairwise StructureAlignment implementation
+    -   serialize and parse multiple structure alignments as XML files,
+        output as Text, FatCat, FASTA, Rotation Matrices, etc.
+-   More complete mmCIF and cif parsing
+    -   Parse bonds, sites, charges
+    -   Better support for non-deposited pdb and mmcif files
+-   Include CE-Symm algorithm for finding internal symmetry
+    (Myers-Turnbull, 2014)
+-   Replaced internal graph datastructures with Jgraph
+-   Unified StructureIdentifier framework (... complete ....)
+-   Improved chemical component framework, now by default providing full
+    chemical description by using DownloadChemCompProvider
+-   Optimised memory usage of Residue/Atoms
+
+Biojava-structure-gui  
+
+-   MultipleAlignmentGUI for visualizing Multiple Structure Alignments
+    with Jmol
+-   SymmetryDisplay for visualizing internal symmetry
+
+Biojava-Phylo  
+
+-   Use Forester 1.038
+-   Significant bug fixes
+-   use SubstitutionMatrices in the core module (instead of imported
+    Jalview matrices),
+-   use Sequence and Compound classes from the alignment module
+-   provide some Wrapper methods to communicate with forester,
+-   decouple distance matrix calculation from tree constructor,
+-   provide methods for common distance matrix calculations and
+    framework for user-defined distances,
+-   update the forester version to have the correct NJ tree constructor
+    AND
+-   correct some of the tree evaluator statistics.
 
 View the <BioJava:Modules> page for a list of current modules.
 
