@@ -31,7 +31,7 @@ Biojava-Core
 
 Biojava-structure  
 
--   Secondary structure assignment using DSSP
+-   Secondary structure assignment (DSSP compatible)
 -   Multiple Structure Alignments
     -   New MultipleStructureAlignment datastructure supporting flexible
         and order-independent alignments
