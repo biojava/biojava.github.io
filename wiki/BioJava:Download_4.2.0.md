@@ -128,9 +128,6 @@ Getting older versions
 ----------------------
 
 -   The release of 4.1.0 can be found
-    [here](BioJava:Download 4.2.0 "wikilink") (requires Java 1.6, 1.7,
-    or 1.8)
--   The release of 4.0.0 can be found
     [here](BioJava:Download 4.1.0 "wikilink") (requires Java 1.6, 1.7,
     or 1.8)
 -   The release of 4.0.0 can be found
