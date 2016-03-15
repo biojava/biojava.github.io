@@ -148,8 +148,7 @@ You can also browse the documentation at [http://www.biojava.org/docs/api4.2.0/ 
 BioJava 4.2.0 has been released on March 10th, 2015
 
 == Getting older versions ==
-* The release of 4.1.0 can be found [[BioJava:Download 4.2.0|here]] (requires Java 1.6, 1.7, or 1.8)
-* The release of 4.0.0 can be found [[BioJava:Download 4.1.0|here]] (requires Java 1.6, 1.7, or 1.8)
+* The release of 4.1.0 can be found [[BioJava:Download 4.1.0|here]] (requires Java 1.6, 1.7, or 1.8)
 * The release of 4.0.0 can be found [[BioJava:Download 4.0.0|here]] (requires Java 1.6, 1.7, or 1.8)
 * The release of 3.1.0 can be found [[BioJava:Download 3.1.0|here]] (requires Java 1.6 or 1.7)
 * The release of 3.0.8 can be found [[BioJava:Download 3.0.8|here]] (requires Java 1.6+)
