@@ -64,7 +64,9 @@ layout: landing
 								<h2>Please cite<br />
 								</h2>
 								<p>
-								  {% include citation.md %}
+								  {% capture my-citation %}{% include citation.md %}{% endcapture %}
+								  {{ my-citation | markdownify }}
+
 								</p>
 							</div>
 						</section>
