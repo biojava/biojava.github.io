@@ -58,3 +58,6 @@ markdown: kramdown
 #sass:
 #  style: compressed
 
+# Release settings
+release:
+ version: 4.2.0
