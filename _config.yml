@@ -4,7 +4,9 @@
 # Site settings
 title: BioJava 
 description: |
-  BioJava is an open-source project dedicated to providing a Java framework for processing biological data.
+  BioJava is an open-source project
+  dedicated to providing a Java framework
+  for processing biological data.
 owner: BioJava
 first_published: 2000 
 email: biojava-l@biojava.org
