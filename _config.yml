@@ -63,7 +63,5 @@ release:
  version: 4.2.0
 
 collections:
- wiki:
-  output:true
+- wiki
  
-  
