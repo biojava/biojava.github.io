@@ -8,13 +8,12 @@
         <div id="menu">
           <ul>
             <li><a href="index.html">Home</a></li>
-	    {% for category in site.categories %}
-	        {% for my_page in category %}
+	        {% for my_page in site.pages %}
                  {% if my_page.title  %}
                   <li>{{ mypage.category }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
                 {% endif %}
               {% endfor %}
-            {% endfor %}
+        
             <li><a href="#">Sign Up</a></li>
             <li><a href="#">Log In</a></li>
             <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}"
