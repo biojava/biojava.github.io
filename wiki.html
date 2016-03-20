@@ -4,25 +4,24 @@ layout: page
 
 <div class="home">
 
-  <section>
-    <header>
-      <h4>Wiki Pages</h4>
+
+      <h3>Wiki Pages</h3>
       <p>The following pages have been imported from the legacy mediawiki instance</p>
-    </header>
-    
 
-  <h3>
-    <ul>
+   
       {% for my_page in site.pages.wiki %}
-  <li>
-    <a href="{{ my_page.url }}">{{ my_page.title }}</a>
-  </li>
+      <p>
+	<ul>
+	  <li>
+	    <a href="{{ my_page.url }}">{{ my_page.title }}</a>
+	  </li>
+	</ul>
+      </p>
+      
   {% endfor %}
-  </ul>
-    
-  </h3>
 
-</section>
+
+
   
   </div>
 
