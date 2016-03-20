@@ -102,10 +102,14 @@ Matrix is taken as input. Graphics allow to draw tree with the drawLine
 function. Match7 will be the main class for the call of NewClass having
 functions for UPGMA and NJ.
 
-<java> package ClusteringAlgorithms public class Match7 { public static
-void main(String[] args) {
+```
+<java> package ClusteringAlgorithms;
 
-double[][] ds1 = {{},
+public class Match7 {
+
+public static void main(String[] args) {
+
+`double[][] ds1 = {   {  },`
 
 `              {3.5},`  
 `              {17.0,14.0},`  
@@ -126,6 +130,7 @@ double[][] ds1 = {{},
 }
 
 </java>
+```
 
 <java>
 
