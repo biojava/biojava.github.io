@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:MSA
-layout: Generic
+layout: default
 ---
 
 How to create a Multiple Sequence Alignment in BioJava

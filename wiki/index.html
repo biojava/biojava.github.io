@@ -13,13 +13,15 @@ layout: default
 
   <h3>
     <ul>
-  {% for wiki in site.wiki %}
+      {% for my_page in site.pageswiki %}
+            {% if my_page.title %}
   <li>
-    <a href="{{ wiki.url }}">{{ wiki.title }}</a>
+    <a href="{{ my_page.url }}">{{ my_page.title }}</a>
   </li>
+        {% endif %}
   {% endfor %}
   </ul>
-
+    
   </h3>
 
 </section>
