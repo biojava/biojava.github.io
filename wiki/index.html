@@ -1,7 +1,21 @@
-<ul>
+---
+layout: default
+---
+
+<div class="home">
+
+  <p>HOWTOs</p>
+
+  <h3>
+    <ul>
   {% for wiki in site.wiki %}
   <li>
     <a href="{{ wiki.url }}">{{ wiki.title }}</a>
   </li>
   {% endfor %}
   </ul>
+
+  </h3>
+
+  </div>
+
