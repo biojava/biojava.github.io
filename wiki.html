@@ -7,16 +7,17 @@ title: Wiki Pages
 
       <p>The following pages have been imported from the legacy mediawiki instance</p>
 
-      {% for my_page in site.wikis.pages %}
+      {% for my_page in site.wikis %}
       <p>
 	<ul>
 	  <li>
-	    <a href="{{ my_page.url }}">{{ my_page.title }}</a>
+	    {{ my_page.categories }} <a href="{{ site.baseurl }}{{ my_page.url }}">{{ my_page.title }}</a>
+
 	  </li>
 	</ul>
       </p>
       
-  {% endfor %}
+      {% endfor %}
 
 
 
