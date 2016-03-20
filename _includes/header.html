@@ -11,7 +11,7 @@
 	    {% for category in site.categories %}
 	        {% for my_page in category %}
                  {% if my_page.title  %}
-                  <li>{{ category }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
+                  <li>{{ mypage.category }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
                 {% endif %}
               {% endfor %}
             {% endfor %}
