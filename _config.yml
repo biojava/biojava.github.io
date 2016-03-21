@@ -68,4 +68,11 @@ collections:
    output: true
    permalink: /wikis/:path/
    post_dirs: false
+   layout: page
 
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+    values:
+      layout: page
