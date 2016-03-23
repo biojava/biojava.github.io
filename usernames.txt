@@ -4,8 +4,8 @@ Chuan Hock Koh	Chuan Hock Koh <kohchuanhock@gmail.com>
 Draeger	   Andreas Draeger <andreas.draeger@uni-tuebingen.de>
 Foisys	   Sylvain Foisy <sylvain.foisy@diploide.net>
 Guedes	   Dickson Guedes <guedes@guedesoft.net>
-Heuermh	   Michael Heuer <heuermh@gmail.com>
-Jgao	   Jianjiong Gao <jianjiong.gao@gmail.com >
+Heuermh	   Michael Heuer <heuermh@acm.org>
+Jgao	   Jianjiong Gao <jianjiong.gao@gmail.com>
 Mark	   Mark Schreiber <markjschreiber@gmail.com>
 Jmduarte Jose Manuel Duarte <jose.m.duarte@gmail.com>
 Jose Jose Manuel Duarte <jose.m.duarte@gmail.com>
