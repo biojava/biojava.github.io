@@ -1,3 +1,0 @@
-* Each file should contain the  [[BioJava3_license]]  LGPL copyright statement.
-
-* For Eclipse developers, here a Code template: [[BioJava3_eclipse_template]]

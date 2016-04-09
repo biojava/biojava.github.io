@@ -1,2 +1,0 @@
------
-<small>Please mail any comments or suggestions to the author or to the [mailto:biojava-l@biojava.org biojava-l] mailing list.</small>
