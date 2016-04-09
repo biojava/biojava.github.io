@@ -5,9 +5,9 @@ echo $now
 branchname="master_$now"
 echo $branchname
 
-git checkout -b $branchname master    # create and switch to the release branch
-git push -u origin $branchname        # push the release branch to the remote and track it
-git checkout prepare_conversion       # switch to branch that is before mediawiki conversion
+#git checkout -b $branchname master    # create and switch to the release branch
+#git push -u origin $branchname        # push the release branch to the remote and track it
+#git checkout prepare_conversion       # switch to branch that is before mediawiki conversion
 
 # perform conversion
 #../mediawiki_to_git_md/convert.py mediawiki_dump.xml
