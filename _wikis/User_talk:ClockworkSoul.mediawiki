@@ -1,0 +1,8 @@
+{| width=100% cellspacing=8 style="background: none;" 
+| style="border: 1px solid #CC9; background-color: #F8EABA; -moz-border-radius: 10px;" |
+<center><font color="#EBEFFF">&mdash;</font><font color="#DDE1FF">&mdash;</font><font color="#CDD0FF">&mdash;</font><font color="#BEC1FF">&mdash;</font><font color="#ADB0FF">&mdash;</font><font color="#9EA0FF">&mdash;</font><font color="#8E90FF">&mdash;</font><font color="#7E80FF">&mdash;</font><font color="#6E70FF">&mdash;</font><font color="#5E60FF">&mdash;</font><font color="#4E50FF">&mdash;</font><font color="#3F40FF">&mdash;</font><font color="#2F2FFF">&mdash;</font><font color="#1F20FF">&mdash;</font><font color="#0F0FFF">&mdash;</font>&nbsp;<font face="Times New Roman, serif" color="#000080" size="+2">M<small>Y</small>&nbsp;T<small>ALK</small>&nbsp;P<small>AGE</small></font>&nbsp;<font color="#0F0FFF">&mdash;</font><font color="#1F20FF">&mdash;</font><font color="#2F2FFF">&mdash;</font><font color="#3F40FF">&mdash;</font><font color="#4E50FF">&mdash;</font><font color="#5E60FF">&mdash;</font><font color="#6E70FF">&mdash;</font><font color="#7E80FF">&mdash;</font><font color="#8E90FF">&mdash;</font><font color="#9EA0FF">&mdash;</font><font color="#ADB0FF">&mdash;</font><font color="#BEC1FF">&mdash;</font><font color="#CDD0FF">&mdash;</font><font color="#DDE1FF">&mdash;</font><font color="#EBEFFF">&mdash;</font></center>
+<center><br/><font style="font-size: 125%;">Please, add new entries to the bottom and don't forget to sign your name by typing four tildes: <nowiki>~~~~</nowiki>.
+<br/><br/>Please, no spam.</center></font>
+</br>
+|-
+| valign=top style="border: 1px solid #CC9; background-color: #F8EABA; -moz-border-radius: 10px;" |
