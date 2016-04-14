@@ -21,7 +21,10 @@
     {% endif %}
     {{ thisyear }}
     {% if site.owner %}{{ site.owner }}{% else %}{{ site.title }}{% endif %}</li>
+    {% if page.url %}<li><a href="https://github.com/biojava/biojava.github.io/edit/master/{{ page.path }}">Edit this page</a></li>{% endif %}
     <li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
-    <li>Built with: <a href="http://jekyllrb.com" target="_blank">Jekyll</a></li>
   </ul>
 </footer>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">_uacct = "UA-1326640-1";urchinTracker();</script>
