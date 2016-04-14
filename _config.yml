@@ -2,13 +2,13 @@
 #
 
 # Site settings
-title: BioJava 
+title: BioJava
 description: |
   BioJava is an open-source project
   dedicated to providing a Java framework
   for processing biological data.
 owner: BioJava
-first_published: 2000 
+first_published: 2000
 email: biojava-l@biojava.org
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://biojava.org" # the base hostname & protocol for your site
@@ -19,7 +19,7 @@ social:
   #linkedin-square: https://linkedin.com/in/<username>
   #facebook-official: https://facebook.com/<username>
   #google-plus-square: https://plus.google.com/u/0/+<username>
-  #email: /contact/
+  email: mailto:biojava-l@biojava.org
   #flickr:
   #instagram:
   #youtube-square:
