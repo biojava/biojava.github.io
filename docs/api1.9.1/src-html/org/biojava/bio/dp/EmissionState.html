@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>package org.biojava.bio.dp;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.bio.dist.Distribution;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.utils.ChangeType;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.utils.ChangeVetoException;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.utils.Changeable;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * &lt;p&gt;<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * A state in a markov process that has an emission spectrum.<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * &lt;/p&gt;<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;p&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * These states have an associated Distribution. Within an HMM, these are the<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * states that actualy make your observed sequence. They also must supply<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * training behaviour to set the emission spectrum up.<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * &lt;/p&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> *<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @author Matthew Pocock<a name="line.41"></a>
+<span class="sourceLineNo">042</span> */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>public interface EmissionState extends State, Trainable, Changeable {<a name="line.43"></a>
+<span class="sourceLineNo">044</span>  /**<a name="line.44"></a>
+<span class="sourceLineNo">045</span>   * &lt;p&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>   * This signals that the distribution associate with an EmissionState has<a name="line.46"></a>
+<span class="sourceLineNo">047</span>   * been altered.<a name="line.47"></a>
+<span class="sourceLineNo">048</span>   * &lt;/p&gt;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>   *<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   * &lt;p&gt;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>   * If the distribution has changed its weights, then the event'e<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   * getChainedEvent method will return the event fired by the distribution. If<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * one distribution has been replaced by another, then the new and old<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   * Distributions will be in current and previous, respectively.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   * &lt;/p&gt;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>   */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>  public static final ChangeType DISTRIBUTION = new ChangeType(<a name="line.57"></a>
+<span class="sourceLineNo">058</span>    "The associated ditribution has changed",<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    "org.biojava.bio.dp.EmissionState",<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    "DISTRIBUTION"<a name="line.60"></a>
+<span class="sourceLineNo">061</span>  );<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  <a name="line.62"></a>
+<span class="sourceLineNo">063</span>  /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   * &lt;p&gt;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   * This signals that the advance array has been altered.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>   * &lt;/p&gt;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>   *<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   * &lt;p&gt;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * current and previous should hold the current and previous advances,<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * respectively.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   * &lt;/p&gt;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>   */<a name="line.72"></a>
+<span class="sourceLineNo">073</span>  public static final ChangeType ADVANCE = new ChangeType(<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    "The associated advance array has changed",<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    "org.biojava.bio.dp.EmissionState",<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    "ADVANCE"<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  );<a name="line.77"></a>
+<span class="sourceLineNo">078</span>  <a name="line.78"></a>
+<span class="sourceLineNo">079</span>  /**<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   * Determine the number of symbols this state advances along<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   * one or more symbol lists.  In the simple case, this method<a name="line.81"></a>
+<span class="sourceLineNo">082</span>   * should almost always return {1} if it is a true `emmision'<a name="line.82"></a>
+<span class="sourceLineNo">083</span>   * state, or {0} if it is a dot state which only emits a gap<a name="line.83"></a>
+<span class="sourceLineNo">084</span>   * character.  For pairwise HMMs, it will normally return {1, 1}<a name="line.84"></a>
+<span class="sourceLineNo">085</span>   * for match state, and {0, 1} or {1, 0} for a gap state.  Under<a name="line.85"></a>
+<span class="sourceLineNo">086</span>   * some circumstances it may be valid to return values other<a name="line.86"></a>
+<span class="sourceLineNo">087</span>   * than 1 or 0, but you should consider the consequences for<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * HMM architecture very carefully, and contact the authors.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   *<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * Developers may wish to return a copy of some underlying array from this method<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   * as code outside could modify the array you give<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   */<a name="line.92"></a>
+<span class="sourceLineNo">093</span>  public int[] getAdvance();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>  <a name="line.94"></a>
+<span class="sourceLineNo">095</span>  /**<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   * Set the advance array.<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   *<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * @param advance  an array of ints, specifying how many symbols are consumed<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   *        from each sequence<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * @throws ChangeVetoException  if the implementation doesn't support setting<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   *         advance, or if the change is vetoed<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>  public void setAdvance(int[] advance) throws ChangeVetoException;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>  <a name="line.104"></a>
+<span class="sourceLineNo">105</span>  /**<a name="line.105"></a>
+<span class="sourceLineNo">106</span>   * &lt;p&gt;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>   * Get the Distribution associated with this state.<a name="line.107"></a>
+<span class="sourceLineNo">108</span>   * &lt;/p&gt;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   *<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * &lt;p&gt;<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   * If the state is to be added to an HMM, then the state's emission spectrum<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   * must be compatible with the HMM - that is, their emission alphabets must<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   * match.<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   * &lt;/p&gt;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   *<a name="line.115"></a>
+<span class="sourceLineNo">116</span>   * @return the current Distribution object used by this state<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   */<a name="line.117"></a>
+<span class="sourceLineNo">118</span>  public Distribution getDistribution();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>  <a name="line.119"></a>
+<span class="sourceLineNo">120</span>  /**<a name="line.120"></a>
+<span class="sourceLineNo">121</span>   * Set the Distribution associated with this state.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   * <a name="line.122"></a>
+<span class="sourceLineNo">123</span>   * @param dis the new Distribution to use<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   * @throws ChangeVetoException  if the implementation doesn't support setting<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   *         the distribution, or if the change is vetoed<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   */<a name="line.126"></a>
+<span class="sourceLineNo">127</span>  public void setDistribution(Distribution dis)<a name="line.127"></a>
+<span class="sourceLineNo">128</span>  throws ChangeVetoException;<a name="line.128"></a>
+<span class="sourceLineNo">129</span>}<a name="line.129"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

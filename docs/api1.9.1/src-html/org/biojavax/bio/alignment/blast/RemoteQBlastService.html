@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojavax.bio.alignment.blast;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.BufferedReader;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.IOException;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.InputStream;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.InputStreamReader;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.io.OutputStreamWriter;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.net.MalformedURLException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.net.URL;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.net.URLConnection;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.HashMap;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.bio.BioException;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojavax.bio.alignment.RemotePairwiseAlignmentProperties;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojavax.bio.alignment.RemotePairwiseAlignmentService;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojavax.bio.alignment.RemotePairwiseAlignmentOutputProperties;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojavax.bio.seq.RichSequence;<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>/**<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * RemoteQBlastService - A simple way of submitting BLAST request to the QBlast<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * service at NCBI.<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * <a name="line.42"></a>
+<span class="sourceLineNo">043</span> * &lt;p&gt;<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * NCBI provides a Blast server through a CGI-BIN interface. RemoteQBlastService<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * simply encapsulates an access to it by giving users access to get/set methods<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * to fix sequence, program and database as well as advanced options.<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * &lt;/p&gt;<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * <a name="line.48"></a>
+<span class="sourceLineNo">049</span> * &lt;p&gt;<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * The philosophy behind RemoteQBlastService is to disconnect submission of<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * Blast requests from collection of Blast results. This is done so to allow a<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * user to submit multiple Blast requests while allowing recovery of the reports<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * at a later time.<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * &lt;/p&gt;<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * <a name="line.55"></a>
+<span class="sourceLineNo">056</span> * &lt;p&gt;<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * Presently, only blastall programs are accessible. blastpgp and megablast are<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * high-priorities.<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * &lt;/p&gt;<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * <a name="line.60"></a>
+<span class="sourceLineNo">061</span> * @author Sylvain Foisy, Diploide BioIT<a name="line.61"></a>
+<span class="sourceLineNo">062</span> * @since 1.8<a name="line.62"></a>
+<span class="sourceLineNo">063</span> * <a name="line.63"></a>
+<span class="sourceLineNo">064</span> */<a name="line.64"></a>
+<span class="sourceLineNo">065</span>public class RemoteQBlastService implements RemotePairwiseAlignmentService {<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>        private static String baseurl = "http://www.ncbi.nlm.nih.gov/blast/Blast.cgi";<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        private URL aUrl;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        private URLConnection uConn;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        private OutputStreamWriter fromQBlast;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        private BufferedReader rd;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        <a name="line.72"></a>
+<span class="sourceLineNo">073</span>        private String email = "anonymous@biojava.org";<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        private String tool = "biojavax";<a name="line.74"></a>
+<span class="sourceLineNo">075</span>         <a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>        private String seq = null;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        private String prog = null;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        private String db = null;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>//      private String advanced = null;<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>        private String rid;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        private long step;<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        private long start;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        private HashMap&lt;String, Long&gt; holder = new HashMap&lt;String, Long&gt;();<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>        /**<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * The constructor for a QBlast service request.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         * <a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * @throws BioException<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         *             if the NCBI URL is unresponsive<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * <a name="line.92"></a>
+<span class="sourceLineNo">093</span>         */<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        public RemoteQBlastService() throws BioException {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                try {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                        aUrl = new URL(baseurl);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                        uConn = setQBlastServiceProperties(aUrl.openConnection());<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                }<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                /*<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                 * Needed but should never be thrown since the URL is static and known<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                 * to exist<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                 */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                catch (MalformedURLException e) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                        throw new BioException(<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                        "It looks like the URL for NCBI QBlast service is wrong.\n");<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                }<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                /*<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                 * Intercept if the program can't connect to QBlast service<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                 */<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                catch (IOException e) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                        throw new BioException(<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                                        "Impossible to connect to QBlast service at this time. Check your network connection.\n");<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                }<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        }<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>        /**<a name="line.116"></a>
+<span class="sourceLineNo">117</span>         * This class is the actual worker doing all the dirty stuff related to<a name="line.117"></a>
+<span class="sourceLineNo">118</span>         * sending the Blast request to the CGI_BIN interface. It should never be<a name="line.118"></a>
+<span class="sourceLineNo">119</span>         * used as is but any method wanting to send a Blast request should manage<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         * to use it by feeding it the right parameters.<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         * <a name="line.121"></a>
+<span class="sourceLineNo">122</span>         * @param str : a &lt;code&gt;String&lt;/code&gt; representation of a sequence from either of the<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         *              three wrapper methods<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         * @param rpa :a &lt;code&gt;RemotePairwiseAlignmentProperties&lt;/code&gt; object<a name="line.124"></a>
+<span class="sourceLineNo">125</span>         * @return rid : the ID of this request on the NCBI QBlast server<a name="line.125"></a>
+<span class="sourceLineNo">126</span>         * @throws BioException if unable to connect to the NCBI QBlast service<a name="line.126"></a>
+<span class="sourceLineNo">127</span>         */<a name="line.127"></a>
+<span class="sourceLineNo">128</span>        private String sendActualAlignementRequest(String str,<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                        RemotePairwiseAlignmentProperties rpa) throws BioException {<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">131</span>                seq = "QUERY=" + str;<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                prog = "PROGRAM=" + rpa.getAlignmentOption("PROGRAM");<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                db = "DATABASE=" + rpa.getAlignmentOption("DATABASE");<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>                if (prog == null || db == null || str == null || str.length() == 0) {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                        throw new BioException(<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                                        "Impossible to execute QBlast request. One or more of sequence|database|program has not been set correctly.\n");<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>                String cmd = "CMD=Put&amp;SERVICE=plain" + "&amp;" + seq + "&amp;" + prog + "&amp;"<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                + db + "&amp;" + "FORMAT_TYPE=HTML"+"&amp;TOOL="+getTool()+"&amp;EMAIL="+getEmail();<a name="line.141"></a>
+<span class="sourceLineNo">142</span><a name="line.142"></a>
+<span class="sourceLineNo">143</span>                // This is a not so good hack to be fix by forcing key <a name="line.143"></a>
+<span class="sourceLineNo">144</span>                // checking in RemoteQBlastAlignmentProperties<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                if (rpa.getAlignmentOption("OTHER_ADVANCED") != null) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                        cmd += cmd + "&amp;" + rpa.getAlignmentOption("OTHER_ADVANCED");<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>                try {<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>                        uConn = setQBlastServiceProperties(aUrl.openConnection());<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>                        fromQBlast = new OutputStreamWriter(uConn.getOutputStream());<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>                        fromQBlast.write(cmd);<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                        fromQBlast.flush();<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>                        // Get the response<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                        rd = new BufferedReader(new InputStreamReader(uConn<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                                        .getInputStream()));<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                        String line = "";<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>                        while ((line = rd.readLine()) != null) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                                if (line.contains("RID")) {<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                                        String[] arr = line.split("=");<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                                        rid = arr[1].trim();<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                } else if (line.contains("RTOE")) {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                        String[] arr = line.split("=");<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                                        step = Long.parseLong(arr[1].trim()) * 1000;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                                        start = System.currentTimeMillis() + step;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                                }<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                                holder.put(rid, start);<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                        }<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                } catch (IOException e) {<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                        throw new BioException(<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                                        "Can't submit sequence to BLAST server at this time.\n");<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                }<a name="line.178"></a>
+<span class="sourceLineNo">179</span><a name="line.179"></a>
+<span class="sourceLineNo">180</span>                return rid;<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        }<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>        /**<a name="line.183"></a>
+<span class="sourceLineNo">184</span>         * This method is a wrapper that executes the Blast request via the Put<a name="line.184"></a>
+<span class="sourceLineNo">185</span>         * command of the CGI-BIN interface with the specified parameters and a<a name="line.185"></a>
+<span class="sourceLineNo">186</span>         * string representing the sequence. It gets the estimated time of<a name="line.186"></a>
+<span class="sourceLineNo">187</span>         * completion by capturing the value of the RTOE variable and sets a loop<a name="line.187"></a>
+<span class="sourceLineNo">188</span>         * that will check for completion of analysis at intervals specified by<a name="line.188"></a>
+<span class="sourceLineNo">189</span>         * RTOE.<a name="line.189"></a>
+<span class="sourceLineNo">190</span>         * <a name="line.190"></a>
+<span class="sourceLineNo">191</span>         * &lt;p&gt;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>         * It also capture the value for the RID variable, necessary for fetching<a name="line.192"></a>
+<span class="sourceLineNo">193</span>         * the actual results after completion.<a name="line.193"></a>
+<span class="sourceLineNo">194</span>         * &lt;/p&gt;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>         * <a name="line.195"></a>
+<span class="sourceLineNo">196</span>         * @param str : a &lt;code&gt;String&lt;/code&gt; with a sequence<a name="line.196"></a>
+<span class="sourceLineNo">197</span>         * @param rpa : a &lt;code&gt;RemotePairwiseAlignmentProperties&lt;/code&gt; object<a name="line.197"></a>
+<span class="sourceLineNo">198</span>         * @return rid : a &lt;code&gt;String&lt;/code&gt; with the request ID for this sequence<a name="line.198"></a>
+<span class="sourceLineNo">199</span>         * @throws BioException if it is not possible to sent the BLAST command<a name="line.199"></a>
+<span class="sourceLineNo">200</span>         */<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        public String sendAlignmentRequest(String str,<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                        RemotePairwiseAlignmentProperties rpa) throws BioException {<a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>                /*<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                 * sending the command to execute the Blast analysis<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                 */<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                return rid = sendActualAlignementRequest(seq, rpa);<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        }<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>        /**<a name="line.210"></a>
+<span class="sourceLineNo">211</span>         * This method is a wrapper that executes the Blast request via the Put<a name="line.211"></a>
+<span class="sourceLineNo">212</span>         * command of the CGI-BIN interface with the specified parameters and a<a name="line.212"></a>
+<span class="sourceLineNo">213</span>         * RichSequence. It gets the estimated time of completion by capturing the<a name="line.213"></a>
+<span class="sourceLineNo">214</span>         * value of the RTOE variable and sets a loop that will check for completion<a name="line.214"></a>
+<span class="sourceLineNo">215</span>         * of analysis at intervals specified by RTOE.<a name="line.215"></a>
+<span class="sourceLineNo">216</span>         * <a name="line.216"></a>
+<span class="sourceLineNo">217</span>         * &lt;p&gt;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>         * It also capture the value for the RID variable, necessary for fetching<a name="line.218"></a>
+<span class="sourceLineNo">219</span>         * the actual results after completion.<a name="line.219"></a>
+<span class="sourceLineNo">220</span>         * &lt;/p&gt;<a name="line.220"></a>
+<span class="sourceLineNo">221</span>         * <a name="line.221"></a>
+<span class="sourceLineNo">222</span>         * @param rs :a &lt;code&gt;RichSequence&lt;/code&gt; object<a name="line.222"></a>
+<span class="sourceLineNo">223</span>         * @param rpa :a &lt;code&gt;RemotePairwiseAlignmentProperties&lt;/code&gt; object<a name="line.223"></a>
+<span class="sourceLineNo">224</span>         * @return rid : a &lt;code&gt;String&lt;/code&gt; with the request ID for this sequence<a name="line.224"></a>
+<span class="sourceLineNo">225</span>         * <a name="line.225"></a>
+<span class="sourceLineNo">226</span>         * @throws BioException if it is not possible to sent the BLAST command<a name="line.226"></a>
+<span class="sourceLineNo">227</span>         */<a name="line.227"></a>
+<span class="sourceLineNo">228</span>        public String sendAlignmentRequest(RichSequence rs,<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                        RemotePairwiseAlignmentProperties rpa) throws BioException {<a name="line.229"></a>
+<span class="sourceLineNo">230</span><a name="line.230"></a>
+<span class="sourceLineNo">231</span>                seq = rs.seqString();<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>                return rid = sendActualAlignementRequest(seq, rpa);<a name="line.233"></a>
+<span class="sourceLineNo">234</span>        }<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>        /**<a name="line.236"></a>
+<span class="sourceLineNo">237</span>         * This method is a wrapper that executes the Blast request via the Put<a name="line.237"></a>
+<span class="sourceLineNo">238</span>         * command of the CGI-BIN interface with the specified parameters and a<a name="line.238"></a>
+<span class="sourceLineNo">239</span>         * GenBank GID. It gets the estimated time of completion by capturing the<a name="line.239"></a>
+<span class="sourceLineNo">240</span>         * value of the RTOE variable and sets a loop that will check for completion<a name="line.240"></a>
+<span class="sourceLineNo">241</span>         * of analysis at intervals specified by RTOE.<a name="line.241"></a>
+<span class="sourceLineNo">242</span>         * <a name="line.242"></a>
+<span class="sourceLineNo">243</span>         * &lt;p&gt;<a name="line.243"></a>
+<span class="sourceLineNo">244</span>         * It also capture the value for the RID variable, necessary for fetching<a name="line.244"></a>
+<span class="sourceLineNo">245</span>         * the actual results after completion.<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         * &lt;/p&gt;<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         * <a name="line.247"></a>
+<span class="sourceLineNo">248</span>         * @param gid :an integer with a Genbank GID<a name="line.248"></a>
+<span class="sourceLineNo">249</span>         * @param rpa :a &lt;code&gt;RemotePairwiseAlignmentProperties&lt;/code&gt; object<a name="line.249"></a>
+<span class="sourceLineNo">250</span>         * @return rid : a String with the request ID for this sequence<a name="line.250"></a>
+<span class="sourceLineNo">251</span>         * @throws BioException if it is not possible to sent the BLAST command<a name="line.251"></a>
+<span class="sourceLineNo">252</span>         */<a name="line.252"></a>
+<span class="sourceLineNo">253</span>        public String sendAlignmentRequest(int gid,<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                        RemotePairwiseAlignmentProperties rpa) throws BioException {<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>                seq = Integer.toString(gid);<a name="line.256"></a>
+<span class="sourceLineNo">257</span>                return rid = sendActualAlignementRequest(seq, rpa);<a name="line.257"></a>
+<span class="sourceLineNo">258</span>        }<a name="line.258"></a>
+<span class="sourceLineNo">259</span><a name="line.259"></a>
+<span class="sourceLineNo">260</span>        /**<a name="line.260"></a>
+<span class="sourceLineNo">261</span>         * &lt;p&gt;<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         * This method is used only for the executeBlastSearch method to check for<a name="line.262"></a>
+<span class="sourceLineNo">263</span>         * completion of request using the NCBI specified RTOE variable<a name="line.263"></a>
+<span class="sourceLineNo">264</span>         * &lt;/p&gt;<a name="line.264"></a>
+<span class="sourceLineNo">265</span>         * <a name="line.265"></a>
+<span class="sourceLineNo">266</span>         * @param id : a valid request ID<a name="line.266"></a>
+<span class="sourceLineNo">267</span>         * @param present : a representation of "now" using System.currentTimeMillis().<a name="line.267"></a>
+<span class="sourceLineNo">268</span>         * @return a boolean value telling if the request has been completed or not.<a name="line.268"></a>
+<span class="sourceLineNo">269</span>         */<a name="line.269"></a>
+<span class="sourceLineNo">270</span>        public boolean isReady(String id, long present) throws BioException {<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                boolean ready = false;<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                String check = "CMD=Get&amp;RID=" + id;<a name="line.272"></a>
+<span class="sourceLineNo">273</span><a name="line.273"></a>
+<span class="sourceLineNo">274</span>                if (holder.containsKey(id)) {<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                        /*<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                         * If present time is less than the start of the search added to<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                         * step obtained from NCBI, just do nothing ;-)<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                         * <a name="line.278"></a>
+<span class="sourceLineNo">279</span>                         * This is done so that we do not send zillions of requests to the<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                         * server. We do the waiting internally first.<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                         */<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                        if (present &lt; start) {<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                                ready = false;<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                        }<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                        /*<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                         * If we are at least step seconds in the future from the actual<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                         * call sendAlignementRequest()<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                         */<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                        else {<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                                try {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                                        uConn = setQBlastServiceProperties(aUrl.openConnection());<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>                                        fromQBlast = new OutputStreamWriter(uConn.getOutputStream());<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                                        fromQBlast.write(check);<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                        fromQBlast.flush();<a name="line.295"></a>
+<span class="sourceLineNo">296</span><a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                        rd = new BufferedReader(new InputStreamReader(uConn<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                                                        .getInputStream()));<a name="line.298"></a>
+<span class="sourceLineNo">299</span><a name="line.299"></a>
+<span class="sourceLineNo">300</span>                                        String line = "";<a name="line.300"></a>
+<span class="sourceLineNo">301</span><a name="line.301"></a>
+<span class="sourceLineNo">302</span>                                        while ((line = rd.readLine()) != null) {<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                                                if (line.contains("READY")) {<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                                                        ready = true;<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                                                } else if (line.contains("WAITING")) {<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                                                        /*<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                                                         * Else, move start forward in time... for the next<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                                                         * iteration<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                                                         */<a name="line.309"></a>
+<span class="sourceLineNo">310</span>                                                        start = present + step;<a name="line.310"></a>
+<span class="sourceLineNo">311</span>                                                        holder.put(id, start);<a name="line.311"></a>
+<span class="sourceLineNo">312</span>                                                }<a name="line.312"></a>
+<span class="sourceLineNo">313</span>                                        }<a name="line.313"></a>
+<span class="sourceLineNo">314</span>                                } catch (IOException e) {<a name="line.314"></a>
+<span class="sourceLineNo">315</span>                                        e.printStackTrace();<a name="line.315"></a>
+<span class="sourceLineNo">316</span>                                }<a name="line.316"></a>
+<span class="sourceLineNo">317</span>                        }<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                } else {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>                        throw new BioException("Impossible to check for request ID named "<a name="line.319"></a>
+<span class="sourceLineNo">320</span>                                        + id + " because it does not exists!\n");<a name="line.320"></a>
+<span class="sourceLineNo">321</span>                }<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                return ready;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>        /**<a name="line.325"></a>
+<span class="sourceLineNo">326</span>         * &lt;p&gt;<a name="line.326"></a>
+<span class="sourceLineNo">327</span>         * This method extracts the actual Blast report for this request ID. It uses<a name="line.327"></a>
+<span class="sourceLineNo">328</span>         * an object implementing the RemotePairwiseAlignmentOutputProperties<a name="line.328"></a>
+<span class="sourceLineNo">329</span>         * interface which will specify output formatting options.<a name="line.329"></a>
+<span class="sourceLineNo">330</span>         * &lt;/p&gt;<a name="line.330"></a>
+<span class="sourceLineNo">331</span>         * <a name="line.331"></a>
+<span class="sourceLineNo">332</span>         * @param id :a valid request ID<a name="line.332"></a>
+<span class="sourceLineNo">333</span>         * @param rb : a &lt;code&gt;RemotePairwiseAlignmentOutputProperties&lt;/code&gt; that<a name="line.333"></a>
+<span class="sourceLineNo">334</span>         *             will specify specific output formatting commands<a name="line.334"></a>
+<span class="sourceLineNo">335</span>         * @return an &lt;code&gt;InputStream&lt;/code&gt; that can be use any way one might<a name="line.335"></a>
+<span class="sourceLineNo">336</span>         *         desire<a name="line.336"></a>
+<span class="sourceLineNo">337</span>         * @throws BioException if it is not possible to recover the results.<a name="line.337"></a>
+<span class="sourceLineNo">338</span>         */<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        public InputStream getAlignmentResults(String id,<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                        RemotePairwiseAlignmentOutputProperties rb) throws BioException {<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                if (holder.containsKey(id)) {<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                        String srid = "CMD=Get&amp;RID=" + id + "&amp;"<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                                        + rb.getOutputOption("FORMAT_TYPE") + "&amp;"<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                                        + rb.getOutputOption("ALIGNMENT_VIEW") + "&amp;"<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                                        + rb.getOutputOption("DESCRIPTIONS") + "&amp;"<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                                        + rb.getOutputOption("ALIGNMENTS")<a name="line.346"></a>
+<span class="sourceLineNo">347</span>                                        + "&amp;TOOL="+getTool()+"&amp;EMAIL="+getEmail();<a name="line.347"></a>
+<span class="sourceLineNo">348</span><a name="line.348"></a>
+<span class="sourceLineNo">349</span>                        try {<a name="line.349"></a>
+<span class="sourceLineNo">350</span>                                uConn = setQBlastServiceProperties(aUrl.openConnection());<a name="line.350"></a>
+<span class="sourceLineNo">351</span><a name="line.351"></a>
+<span class="sourceLineNo">352</span>                                fromQBlast = new OutputStreamWriter(uConn.getOutputStream());<a name="line.352"></a>
+<span class="sourceLineNo">353</span>                                fromQBlast.write(srid);<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                                fromQBlast.flush();<a name="line.354"></a>
+<span class="sourceLineNo">355</span><a name="line.355"></a>
+<span class="sourceLineNo">356</span>                                return uConn.getInputStream();<a name="line.356"></a>
+<span class="sourceLineNo">357</span><a name="line.357"></a>
+<span class="sourceLineNo">358</span>                        } catch (IOException ioe) {<a name="line.358"></a>
+<span class="sourceLineNo">359</span>                                throw new BioException(<a name="line.359"></a>
+<span class="sourceLineNo">360</span>                                                "It is not possible to fetch Blast report from NCBI at this time.\n");<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                        }<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                } else {<a name="line.362"></a>
+<span class="sourceLineNo">363</span>                        throw new BioException(<a name="line.363"></a>
+<span class="sourceLineNo">364</span>                                        "Impossible to get output for request ID named " + id<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                                                        + " because it does not exists!\n");<a name="line.365"></a>
+<span class="sourceLineNo">366</span>                }<a name="line.366"></a>
+<span class="sourceLineNo">367</span>        }<a name="line.367"></a>
+<span class="sourceLineNo">368</span><a name="line.368"></a>
+<span class="sourceLineNo">369</span>        /**<a name="line.369"></a>
+<span class="sourceLineNo">370</span>         * A simple method to check the availability of the QBlast service<a name="line.370"></a>
+<span class="sourceLineNo">371</span>         * <a name="line.371"></a>
+<span class="sourceLineNo">372</span>         * @throws BioException if unable to connect to the NCBI QBlast service<a name="line.372"></a>
+<span class="sourceLineNo">373</span>         */<a name="line.373"></a>
+<span class="sourceLineNo">374</span>        public void printRemoteBlastInfo() throws BioException {<a name="line.374"></a>
+<span class="sourceLineNo">375</span>                try {<a name="line.375"></a>
+<span class="sourceLineNo">376</span>                        OutputStreamWriter out = new OutputStreamWriter(uConn<a name="line.376"></a>
+<span class="sourceLineNo">377</span>                                        .getOutputStream());<a name="line.377"></a>
+<span class="sourceLineNo">378</span><a name="line.378"></a>
+<span class="sourceLineNo">379</span>                        out.write("CMD=Info");<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                        out.flush();<a name="line.380"></a>
+<span class="sourceLineNo">381</span><a name="line.381"></a>
+<span class="sourceLineNo">382</span>                        // Get the response<a name="line.382"></a>
+<span class="sourceLineNo">383</span>                        BufferedReader rd = new BufferedReader(new InputStreamReader(uConn<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                                        .getInputStream()));<a name="line.384"></a>
+<span class="sourceLineNo">385</span><a name="line.385"></a>
+<span class="sourceLineNo">386</span>                        String line = "";<a name="line.386"></a>
+<span class="sourceLineNo">387</span><a name="line.387"></a>
+<span class="sourceLineNo">388</span>                        while ((line = rd.readLine()) != null) {<a name="line.388"></a>
+<span class="sourceLineNo">389</span>                                System.out.println(line);<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                        }<a name="line.390"></a>
+<span class="sourceLineNo">391</span><a name="line.391"></a>
+<span class="sourceLineNo">392</span>                        out.close();<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                        rd.close();<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                } catch (IOException e) {<a name="line.394"></a>
+<span class="sourceLineNo">395</span>                        throw new BioException(<a name="line.395"></a>
+<span class="sourceLineNo">396</span>                                        "Impossible to get info from QBlast service at this time. Check your network connection.\n");<a name="line.396"></a>
+<span class="sourceLineNo">397</span>                }<a name="line.397"></a>
+<span class="sourceLineNo">398</span>        }<a name="line.398"></a>
+<span class="sourceLineNo">399</span><a name="line.399"></a>
+<span class="sourceLineNo">400</span>        private URLConnection setQBlastServiceProperties(URLConnection conn) {<a name="line.400"></a>
+<span class="sourceLineNo">401</span><a name="line.401"></a>
+<span class="sourceLineNo">402</span>                URLConnection tmp = conn;<a name="line.402"></a>
+<span class="sourceLineNo">403</span><a name="line.403"></a>
+<span class="sourceLineNo">404</span>                conn.setDoOutput(true);<a name="line.404"></a>
+<span class="sourceLineNo">405</span>                conn.setUseCaches(false);<a name="line.405"></a>
+<span class="sourceLineNo">406</span><a name="line.406"></a>
+<span class="sourceLineNo">407</span>                tmp.setRequestProperty("User-Agent", "Biojava/RemoteQBlastService");<a name="line.407"></a>
+<span class="sourceLineNo">408</span>                tmp.setRequestProperty("Connection", "Keep-Alive");<a name="line.408"></a>
+<span class="sourceLineNo">409</span>                tmp.setRequestProperty("Content-type",<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                                "application/x-www-form-urlencoded");<a name="line.410"></a>
+<span class="sourceLineNo">411</span>                tmp.setRequestProperty("Content-length", "200");<a name="line.411"></a>
+<span class="sourceLineNo">412</span><a name="line.412"></a>
+<span class="sourceLineNo">413</span>                return tmp;<a name="line.413"></a>
+<span class="sourceLineNo">414</span>        }<a name="line.414"></a>
+<span class="sourceLineNo">415</span>    /** <a name="line.415"></a>
+<span class="sourceLineNo">416</span>     * Set the tool identifier for QBlast. Defaults to 'biojavax'.<a name="line.416"></a>
+<span class="sourceLineNo">417</span>     * @param tool the new identifier.<a name="line.417"></a>
+<span class="sourceLineNo">418</span>     */<a name="line.418"></a>
+<span class="sourceLineNo">419</span>    public void setTool(String tool) {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>        this.tool = tool;<a name="line.420"></a>
+<span class="sourceLineNo">421</span>    }<a name="line.421"></a>
+<span class="sourceLineNo">422</span><a name="line.422"></a>
+<span class="sourceLineNo">423</span>    /** <a name="line.423"></a>
+<span class="sourceLineNo">424</span>     * Get the tool identifier for QBlast. Defaults to 'biojavax'.<a name="line.424"></a>
+<span class="sourceLineNo">425</span>     * @return the identifier.<a name="line.425"></a>
+<span class="sourceLineNo">426</span>     */<a name="line.426"></a>
+<span class="sourceLineNo">427</span>    public String getTool() {<a name="line.427"></a>
+<span class="sourceLineNo">428</span>        return this.tool;<a name="line.428"></a>
+<span class="sourceLineNo">429</span>    }<a name="line.429"></a>
+<span class="sourceLineNo">430</span><a name="line.430"></a>
+<span class="sourceLineNo">431</span>    /** <a name="line.431"></a>
+<span class="sourceLineNo">432</span>     * Set the email for QBlast. Defaults to 'anonymous@biojava.org'.<a name="line.432"></a>
+<span class="sourceLineNo">433</span>     * @param email the new email.<a name="line.433"></a>
+<span class="sourceLineNo">434</span>     */<a name="line.434"></a>
+<span class="sourceLineNo">435</span>    public void setEmail(String email) {<a name="line.435"></a>
+<span class="sourceLineNo">436</span>        this.email = email;<a name="line.436"></a>
+<span class="sourceLineNo">437</span>    }<a name="line.437"></a>
+<span class="sourceLineNo">438</span><a name="line.438"></a>
+<span class="sourceLineNo">439</span>    /** <a name="line.439"></a>
+<span class="sourceLineNo">440</span>     * Get the email for QBlast. Defaults to 'anonymous@biojava.org'.<a name="line.440"></a>
+<span class="sourceLineNo">441</span>     * @return the email.<a name="line.441"></a>
+<span class="sourceLineNo">442</span>     */<a name="line.442"></a>
+<span class="sourceLineNo">443</span>    public String getEmail() {<a name="line.443"></a>
+<span class="sourceLineNo">444</span>        return this.email;<a name="line.444"></a>
+<span class="sourceLineNo">445</span>    }   <a name="line.445"></a>
+<span class="sourceLineNo">446</span>}<a name="line.446"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

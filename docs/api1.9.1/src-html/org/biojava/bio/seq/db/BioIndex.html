@@ -1,0 +1,616 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.bio.seq.db;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.BufferedReader;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.File;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.FileOutputStream;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.FileReader;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.io.FileWriter;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.io.IOException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.io.PrintStream;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.io.PrintWriter;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.io.RandomAccessFile;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.AbstractList;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import java.util.AbstractSet;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import java.util.Arrays;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import java.util.Collections;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import java.util.Comparator;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import java.util.HashMap;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import java.util.HashSet;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import java.util.Iterator;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import java.util.Map;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import java.util.Set;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import java.util.StringTokenizer;<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.biojava.bio.BioError;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.biojava.bio.BioException;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.biojava.bio.seq.io.SequenceBuilderFactory;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.biojava.bio.seq.io.SequenceFormat;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.biojava.bio.seq.io.SymbolTokenization;<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>/**<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * The original object for indexing sequence files.<a name="line.51"></a>
+<span class="sourceLineNo">052</span> *<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * &lt;p&gt;This class may not be thread-safe.&lt;/p&gt;<a name="line.53"></a>
+<span class="sourceLineNo">054</span> *<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * @author Matthew Pocock<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * @author Thomas Down<a name="line.56"></a>
+<span class="sourceLineNo">057</span> */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>public class BioIndex implements IndexStore {<a name="line.58"></a>
+<span class="sourceLineNo">059</span>  private static Comparator STRING_CASE_SENSITIVE_ORDER = new Comparator() {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    public int compare(Object a, Object b) {<a name="line.60"></a>
+<span class="sourceLineNo">061</span>      return ((Comparable) a).compareTo(b);<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    }<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  };<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>  private File indexDirectory;<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>  private int fileCount;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  private File[] fileIDToFile;<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>  private FileAsList indxList;<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>  private Set idSet = new ListAsSet();<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>  private String name;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>  private SequenceFormat format;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>  private SequenceBuilderFactory sbFactory;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  private SymbolTokenization symbolTokenization;<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>  {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    fileCount = 0;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    fileIDToFile = new File[4];<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>  public BioIndex(<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    File indexDirectory,<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    String namespace,<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    int idLength<a name="line.87"></a>
+<span class="sourceLineNo">088</span>  ) throws IOException, BioException {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    if(indexDirectory.exists()) {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>      throw new BioException(<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        "Can't create new index as directory already exists: " +<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        indexDirectory<a name="line.92"></a>
+<span class="sourceLineNo">093</span>      );<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>    // create directory<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    indexDirectory.mkdirs();<a name="line.97"></a>
+<span class="sourceLineNo">098</span><a name="line.98"></a>
+<span class="sourceLineNo">099</span>    // create BIOINDEX.dat<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>      File bioindex = new File(indexDirectory, "BIOINDEX.dat");<a name="line.101"></a>
+<span class="sourceLineNo">102</span>      bioindex.createNewFile();<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      PrintWriter pw = new PrintWriter(new FileWriter(bioindex));<a name="line.103"></a>
+<span class="sourceLineNo">104</span>      pw.println("index\tflat/1");<a name="line.104"></a>
+<span class="sourceLineNo">105</span>      pw.close();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>    // create fileids.dat<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    PrintWriter fileidsWriter;<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      File fileids = new File(indexDirectory, "fileids.dat");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>      fileids.createNewFile();<a name="line.112"></a>
+<span class="sourceLineNo">113</span>      fileidsWriter = new PrintWriter(<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        new FileWriter(<a name="line.114"></a>
+<span class="sourceLineNo">115</span>          fileids<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        )<a name="line.116"></a>
+<span class="sourceLineNo">117</span>      );<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    }<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>    // create config.dat<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    PrintWriter configWriter;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>      File config = new File(indexDirectory, "config.dat");<a name="line.123"></a>
+<span class="sourceLineNo">124</span>      config.createNewFile();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>      configWriter = new PrintWriter(new FileWriter(config));<a name="line.125"></a>
+<span class="sourceLineNo">126</span>      configWriter.println("namespace\t" + namespace);<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    }<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>    // create index file<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>      String uniqueName = "key_" + namespace + ".key";<a name="line.131"></a>
+<span class="sourceLineNo">132</span>      File unique = new File(indexDirectory, uniqueName);<a name="line.132"></a>
+<span class="sourceLineNo">133</span>      unique.createNewFile();<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>      int recordLen =<a name="line.135"></a>
+<span class="sourceLineNo">136</span>        idLength +                                   // id<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        1 +                                          // tab<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        4 +                                          // 9999 files<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        1 +                                          // tab<a name="line.139"></a>
+<span class="sourceLineNo">140</span>        String.valueOf(Long.MAX_VALUE).length() +    // space for any long<a name="line.140"></a>
+<span class="sourceLineNo">141</span>        1 +                                          // tab<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        String.valueOf(Integer.MAX_VALUE).length() + // space for any int<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        "\n".length()                                // new line (os dependant)<a name="line.143"></a>
+<span class="sourceLineNo">144</span>        ;<a name="line.144"></a>
+<span class="sourceLineNo">145</span><a name="line.145"></a>
+<span class="sourceLineNo">146</span>      indxList = new IndexFileAsList(<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        new RandomAccessFile(unique, "rw"),<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        recordLen<a name="line.148"></a>
+<span class="sourceLineNo">149</span>      );<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>      fileidsWriter.println(uniqueName + "\t" + recordLen);<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    }<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>    // other field initialization to get things going<a name="line.154"></a>
+<span class="sourceLineNo">155</span>    fileCount = 0;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    fileIDToFile = new File[4];<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>    configWriter.close();<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    fileidsWriter.close();<a name="line.159"></a>
+<span class="sourceLineNo">160</span>  }<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>  /**<a name="line.162"></a>
+<span class="sourceLineNo">163</span>   * Load an existing index file.<a name="line.163"></a>
+<span class="sourceLineNo">164</span>   *<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   * If indexDirectory does not exist, or is not a bioindex stoore, this will<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   * barf.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   */<a name="line.167"></a>
+<span class="sourceLineNo">168</span>  public BioIndex(<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    File indexDirectory<a name="line.169"></a>
+<span class="sourceLineNo">170</span>  ) throws IOException, BioException {<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    this.indexDirectory = indexDirectory;<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>    if(!indexDirectory.exists()) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>      throw new BioException(<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        "Tried to load non-existant index: " +<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        indexDirectory<a name="line.176"></a>
+<span class="sourceLineNo">177</span>      );<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    }<a name="line.178"></a>
+<span class="sourceLineNo">179</span><a name="line.179"></a>
+<span class="sourceLineNo">180</span>    // read in the global config<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>      System.out.println("Global");<a name="line.182"></a>
+<span class="sourceLineNo">183</span>      Map config = new HashMap();<a name="line.183"></a>
+<span class="sourceLineNo">184</span>      BufferedReader fi = new BufferedReader(<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        new FileReader(<a name="line.185"></a>
+<span class="sourceLineNo">186</span>          new File(indexDirectory, "config.dat")<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        )<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      );<a name="line.188"></a>
+<span class="sourceLineNo">189</span>      for(String line = fi.readLine(); line != null; line = fi.readLine()) {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>        int tab = line.indexOf("\t");<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        config.put(line.substring(0, tab), line.substring(tab + 1));<a name="line.191"></a>
+<span class="sourceLineNo">192</span>      }<a name="line.192"></a>
+<span class="sourceLineNo">193</span>      String namespace = (String) config.get("namespace");<a name="line.193"></a>
+<span class="sourceLineNo">194</span>      RandomAccessFile indxFile = new RandomAccessFile("key_" + namespace + ".key", "rw");<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      int recLen = guessRecLen(indxFile);<a name="line.195"></a>
+<span class="sourceLineNo">196</span>      indxList = new IndexFileAsList(indxFile, recLen);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>    // set up file set<a name="line.199"></a>
+<span class="sourceLineNo">200</span>    {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>      System.out.println("Files");<a name="line.201"></a>
+<span class="sourceLineNo">202</span>      fileCount = 0;<a name="line.202"></a>
+<span class="sourceLineNo">203</span>      fileIDToFile = new File[4];<a name="line.203"></a>
+<span class="sourceLineNo">204</span><a name="line.204"></a>
+<span class="sourceLineNo">205</span>      BufferedReader fi = new BufferedReader(<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        new FileReader(<a name="line.206"></a>
+<span class="sourceLineNo">207</span>          new File(indexDirectory, "fileids.dat")<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        )<a name="line.208"></a>
+<span class="sourceLineNo">209</span>      );<a name="line.209"></a>
+<span class="sourceLineNo">210</span>      for(String line = fi.readLine(); line != null; line = fi.readLine()) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        StringTokenizer sTok = new StringTokenizer("\t");<a name="line.211"></a>
+<span class="sourceLineNo">212</span>        int id = Integer.parseInt(sTok.nextToken());<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        File file = new File(sTok.nextToken());<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        long fileLength = Long.parseLong(sTok.nextToken());<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>        if(file.length() != fileLength) {<a name="line.216"></a>
+<span class="sourceLineNo">217</span>          throw new BioException("File length changed: " + file + " "<a name="line.217"></a>
+<span class="sourceLineNo">218</span>          + file.length() + " vs " + fileLength);<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>        fileIDToFile[id] = file;<a name="line.221"></a>
+<span class="sourceLineNo">222</span>      }<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>  }<a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>  private File getFileForID(int fileId) {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>    return fileIDToFile[fileId];<a name="line.227"></a>
+<span class="sourceLineNo">228</span>  }<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>  private int getIDForFile(File file) {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>    // scan list<a name="line.231"></a>
+<span class="sourceLineNo">232</span>    for(int i = 0; i &lt; fileCount; i++) {<a name="line.232"></a>
+<span class="sourceLineNo">233</span>      if(file.equals(fileIDToFile[i])) {<a name="line.233"></a>
+<span class="sourceLineNo">234</span>        return i;<a name="line.234"></a>
+<span class="sourceLineNo">235</span>      }<a name="line.235"></a>
+<span class="sourceLineNo">236</span>    }<a name="line.236"></a>
+<span class="sourceLineNo">237</span><a name="line.237"></a>
+<span class="sourceLineNo">238</span>    // extend fileIDToFile array<a name="line.238"></a>
+<span class="sourceLineNo">239</span>    if(fileCount &gt;= fileIDToFile.length) {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>      File[] tmp = new File[fileIDToFile.length + 4]; // 4 is magic number<a name="line.240"></a>
+<span class="sourceLineNo">241</span>      System.arraycopy(fileIDToFile, 0, tmp, 0, fileCount);<a name="line.241"></a>
+<span class="sourceLineNo">242</span>      fileIDToFile = tmp;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    }<a name="line.243"></a>
+<span class="sourceLineNo">244</span><a name="line.244"></a>
+<span class="sourceLineNo">245</span>    // add the unseen file to the list<a name="line.245"></a>
+<span class="sourceLineNo">246</span>    fileIDToFile[fileCount] = file;<a name="line.246"></a>
+<span class="sourceLineNo">247</span>    return fileCount++;<a name="line.247"></a>
+<span class="sourceLineNo">248</span>  }<a name="line.248"></a>
+<span class="sourceLineNo">249</span><a name="line.249"></a>
+<span class="sourceLineNo">250</span>  public String getName() {<a name="line.250"></a>
+<span class="sourceLineNo">251</span>    return this.name;<a name="line.251"></a>
+<span class="sourceLineNo">252</span>  }<a name="line.252"></a>
+<span class="sourceLineNo">253</span><a name="line.253"></a>
+<span class="sourceLineNo">254</span>  public int guessRecLen(RandomAccessFile file)<a name="line.254"></a>
+<span class="sourceLineNo">255</span>  throws IOException {<a name="line.255"></a>
+<span class="sourceLineNo">256</span>    file.seek(0l);<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    int b = 0;<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    while(b != '\n' &amp;&amp; b != '\r') {<a name="line.258"></a>
+<span class="sourceLineNo">259</span>      b  = file.read();<a name="line.259"></a>
+<span class="sourceLineNo">260</span>    }<a name="line.260"></a>
+<span class="sourceLineNo">261</span><a name="line.261"></a>
+<span class="sourceLineNo">262</span>    int offset = (int) file.getFilePointer();<a name="line.262"></a>
+<span class="sourceLineNo">263</span><a name="line.263"></a>
+<span class="sourceLineNo">264</span>    if(b == '\n') {          // \n<a name="line.264"></a>
+<span class="sourceLineNo">265</span>      return offset + 1;<a name="line.265"></a>
+<span class="sourceLineNo">266</span>    } else {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>      b = file.read();<a name="line.267"></a>
+<span class="sourceLineNo">268</span>      if(b == '\n') {        // \r\n<a name="line.268"></a>
+<span class="sourceLineNo">269</span>        return offset + 2;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>      } else {               // \r<a name="line.270"></a>
+<span class="sourceLineNo">271</span>        return offset + 1;<a name="line.271"></a>
+<span class="sourceLineNo">272</span>      }<a name="line.272"></a>
+<span class="sourceLineNo">273</span>    }<a name="line.273"></a>
+<span class="sourceLineNo">274</span>  }<a name="line.274"></a>
+<span class="sourceLineNo">275</span><a name="line.275"></a>
+<span class="sourceLineNo">276</span>  public Index fetch(String id)<a name="line.276"></a>
+<span class="sourceLineNo">277</span>  throws IllegalIDException, BioException {<a name="line.277"></a>
+<span class="sourceLineNo">278</span>    int indx = Collections.binarySearch(<a name="line.278"></a>
+<span class="sourceLineNo">279</span>      indxList,<a name="line.279"></a>
+<span class="sourceLineNo">280</span>      id,<a name="line.280"></a>
+<span class="sourceLineNo">281</span>      indxList.getComparator()<a name="line.281"></a>
+<span class="sourceLineNo">282</span>    );<a name="line.282"></a>
+<span class="sourceLineNo">283</span><a name="line.283"></a>
+<span class="sourceLineNo">284</span>    if(indx &lt; 0) {<a name="line.284"></a>
+<span class="sourceLineNo">285</span>      throw new IllegalIDException("Can't find sequence for " + id);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>    }<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>    return (Index) indxList.get(indx);<a name="line.288"></a>
+<span class="sourceLineNo">289</span>  }<a name="line.289"></a>
+<span class="sourceLineNo">290</span><a name="line.290"></a>
+<span class="sourceLineNo">291</span>  public void store(Index indx) {<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    indxList.add(indx);<a name="line.292"></a>
+<span class="sourceLineNo">293</span>  }<a name="line.293"></a>
+<span class="sourceLineNo">294</span><a name="line.294"></a>
+<span class="sourceLineNo">295</span>  public void commit()<a name="line.295"></a>
+<span class="sourceLineNo">296</span>  throws BioException {<a name="line.296"></a>
+<span class="sourceLineNo">297</span>    indxList.commit();<a name="line.297"></a>
+<span class="sourceLineNo">298</span>    try {<a name="line.298"></a>
+<span class="sourceLineNo">299</span>      // write files<a name="line.299"></a>
+<span class="sourceLineNo">300</span>      {<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        PrintStream fo = new PrintStream(<a name="line.301"></a>
+<span class="sourceLineNo">302</span>          new FileOutputStream(<a name="line.302"></a>
+<span class="sourceLineNo">303</span>            new File(indexDirectory, "fileids.dat")<a name="line.303"></a>
+<span class="sourceLineNo">304</span>          )<a name="line.304"></a>
+<span class="sourceLineNo">305</span>        );<a name="line.305"></a>
+<span class="sourceLineNo">306</span>        for(int i = 0; i &lt; fileCount; i++) {<a name="line.306"></a>
+<span class="sourceLineNo">307</span>          fo.print(i);<a name="line.307"></a>
+<span class="sourceLineNo">308</span>          fo.print('\t');<a name="line.308"></a>
+<span class="sourceLineNo">309</span>          fo.print(fileIDToFile[i]);<a name="line.309"></a>
+<span class="sourceLineNo">310</span>          fo.print('\t');<a name="line.310"></a>
+<span class="sourceLineNo">311</span>          fo.print(fileIDToFile[i].length());<a name="line.311"></a>
+<span class="sourceLineNo">312</span>          fo.println();<a name="line.312"></a>
+<span class="sourceLineNo">313</span>        }<a name="line.313"></a>
+<span class="sourceLineNo">314</span>        fo.close();<a name="line.314"></a>
+<span class="sourceLineNo">315</span>      }<a name="line.315"></a>
+<span class="sourceLineNo">316</span>    } catch (Exception e) {<a name="line.316"></a>
+<span class="sourceLineNo">317</span>      rollback();<a name="line.317"></a>
+<span class="sourceLineNo">318</span>      throw new BioException("Unable to commit. Rolled back to be safe",e);<a name="line.318"></a>
+<span class="sourceLineNo">319</span>    }<a name="line.319"></a>
+<span class="sourceLineNo">320</span>  }<a name="line.320"></a>
+<span class="sourceLineNo">321</span><a name="line.321"></a>
+<span class="sourceLineNo">322</span>  public void rollback() {<a name="line.322"></a>
+<span class="sourceLineNo">323</span>    indxList.rollback();<a name="line.323"></a>
+<span class="sourceLineNo">324</span>  }<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>  public Set getIDs() {<a name="line.326"></a>
+<span class="sourceLineNo">327</span>    return idSet;<a name="line.327"></a>
+<span class="sourceLineNo">328</span>  }<a name="line.328"></a>
+<span class="sourceLineNo">329</span><a name="line.329"></a>
+<span class="sourceLineNo">330</span>  public Set getFiles() {<a name="line.330"></a>
+<span class="sourceLineNo">331</span>    return new HashSet(Arrays.asList(fileIDToFile));<a name="line.331"></a>
+<span class="sourceLineNo">332</span>  }<a name="line.332"></a>
+<span class="sourceLineNo">333</span><a name="line.333"></a>
+<span class="sourceLineNo">334</span>  public SequenceFormat getFormat() {<a name="line.334"></a>
+<span class="sourceLineNo">335</span>    return format;<a name="line.335"></a>
+<span class="sourceLineNo">336</span>  }<a name="line.336"></a>
+<span class="sourceLineNo">337</span><a name="line.337"></a>
+<span class="sourceLineNo">338</span>  public SequenceBuilderFactory getSBFactory() {<a name="line.338"></a>
+<span class="sourceLineNo">339</span>    return sbFactory;<a name="line.339"></a>
+<span class="sourceLineNo">340</span>  }<a name="line.340"></a>
+<span class="sourceLineNo">341</span><a name="line.341"></a>
+<span class="sourceLineNo">342</span>  public SymbolTokenization getSymbolParser() {<a name="line.342"></a>
+<span class="sourceLineNo">343</span>    return symbolTokenization;<a name="line.343"></a>
+<span class="sourceLineNo">344</span>  }<a name="line.344"></a>
+<span class="sourceLineNo">345</span><a name="line.345"></a>
+<span class="sourceLineNo">346</span>  private interface Commitable {<a name="line.346"></a>
+<span class="sourceLineNo">347</span>    public void commit()<a name="line.347"></a>
+<span class="sourceLineNo">348</span>    throws BioException;<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
+<span class="sourceLineNo">350</span>    public void rollback();<a name="line.350"></a>
+<span class="sourceLineNo">351</span>  }<a name="line.351"></a>
+<span class="sourceLineNo">352</span><a name="line.352"></a>
+<span class="sourceLineNo">353</span>  // records stored as:<a name="line.353"></a>
+<span class="sourceLineNo">354</span>  // seqID(\w+) \t fileID(\w+) \t start(\d+) \t length(\d+) ' ' * \n<a name="line.354"></a>
+<span class="sourceLineNo">355</span>  private abstract class FileAsList<a name="line.355"></a>
+<span class="sourceLineNo">356</span>  extends AbstractList<a name="line.356"></a>
+<span class="sourceLineNo">357</span>    implements /* RandomAccess, */ Commitable {<a name="line.357"></a>
+<span class="sourceLineNo">358</span>    private RandomAccessFile mappedFile;<a name="line.358"></a>
+<span class="sourceLineNo">359</span>    private int commitedRecords;<a name="line.359"></a>
+<span class="sourceLineNo">360</span>    private int lastIndx;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>    private Object lastRec;<a name="line.361"></a>
+<span class="sourceLineNo">362</span>    private byte[] buffer;<a name="line.362"></a>
+<span class="sourceLineNo">363</span><a name="line.363"></a>
+<span class="sourceLineNo">364</span>    public FileAsList(RandomAccessFile mappedFile, int recordLength) {<a name="line.364"></a>
+<span class="sourceLineNo">365</span>      this.mappedFile = mappedFile;<a name="line.365"></a>
+<span class="sourceLineNo">366</span>      buffer = new byte[recordLength];<a name="line.366"></a>
+<span class="sourceLineNo">367</span>    }<a name="line.367"></a>
+<span class="sourceLineNo">368</span><a name="line.368"></a>
+<span class="sourceLineNo">369</span>    public Object get(int indx) {<a name="line.369"></a>
+<span class="sourceLineNo">370</span>      if(indx &lt; 0 || indx &gt;= size()) {<a name="line.370"></a>
+<span class="sourceLineNo">371</span>        throw new IndexOutOfBoundsException();<a name="line.371"></a>
+<span class="sourceLineNo">372</span>      }<a name="line.372"></a>
+<span class="sourceLineNo">373</span><a name="line.373"></a>
+<span class="sourceLineNo">374</span>      if(indx == lastIndx) {<a name="line.374"></a>
+<span class="sourceLineNo">375</span>        return lastRec;<a name="line.375"></a>
+<span class="sourceLineNo">376</span>      }<a name="line.376"></a>
+<span class="sourceLineNo">377</span><a name="line.377"></a>
+<span class="sourceLineNo">378</span>      long offset = indx * buffer.length;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>      try {<a name="line.379"></a>
+<span class="sourceLineNo">380</span>        mappedFile.seek(offset);<a name="line.380"></a>
+<span class="sourceLineNo">381</span>        mappedFile.readFully(buffer);<a name="line.381"></a>
+<span class="sourceLineNo">382</span>      } catch (IOException ioe) {<a name="line.382"></a>
+<span class="sourceLineNo">383</span>        throw new BioError("Failed to seek for record",ioe);<a name="line.383"></a>
+<span class="sourceLineNo">384</span>      }<a name="line.384"></a>
+<span class="sourceLineNo">385</span><a name="line.385"></a>
+<span class="sourceLineNo">386</span>      lastRec = parseRecord(buffer);<a name="line.386"></a>
+<span class="sourceLineNo">387</span>      lastIndx = indx;<a name="line.387"></a>
+<span class="sourceLineNo">388</span>      return lastRec;<a name="line.388"></a>
+<span class="sourceLineNo">389</span>    }<a name="line.389"></a>
+<span class="sourceLineNo">390</span><a name="line.390"></a>
+<span class="sourceLineNo">391</span>    public int size() {<a name="line.391"></a>
+<span class="sourceLineNo">392</span>      try {<a name="line.392"></a>
+<span class="sourceLineNo">393</span>        return (int) (mappedFile.length() / (long) buffer.length);<a name="line.393"></a>
+<span class="sourceLineNo">394</span>      } catch (IOException ioe) {<a name="line.394"></a>
+<span class="sourceLineNo">395</span>        throw new BioError("Can't read file length",ioe);<a name="line.395"></a>
+<span class="sourceLineNo">396</span>      }<a name="line.396"></a>
+<span class="sourceLineNo">397</span>    }<a name="line.397"></a>
+<span class="sourceLineNo">398</span><a name="line.398"></a>
+<span class="sourceLineNo">399</span>    public boolean add(Object o) {<a name="line.399"></a>
+<span class="sourceLineNo">400</span>      generateRecord(buffer, o);<a name="line.400"></a>
+<span class="sourceLineNo">401</span><a name="line.401"></a>
+<span class="sourceLineNo">402</span>      try {<a name="line.402"></a>
+<span class="sourceLineNo">403</span>        mappedFile.seek(mappedFile.length());<a name="line.403"></a>
+<span class="sourceLineNo">404</span>        mappedFile.write(buffer);<a name="line.404"></a>
+<span class="sourceLineNo">405</span>      } catch (IOException ioe) {<a name="line.405"></a>
+<span class="sourceLineNo">406</span>        throw new BioError("Failed to write index",ioe);<a name="line.406"></a>
+<span class="sourceLineNo">407</span>      }<a name="line.407"></a>
+<span class="sourceLineNo">408</span><a name="line.408"></a>
+<span class="sourceLineNo">409</span>      return true;<a name="line.409"></a>
+<span class="sourceLineNo">410</span>    }<a name="line.410"></a>
+<span class="sourceLineNo">411</span><a name="line.411"></a>
+<span class="sourceLineNo">412</span>    public void commit() {<a name="line.412"></a>
+<span class="sourceLineNo">413</span>      Collections.sort(indxList, indxList.getComparator());<a name="line.413"></a>
+<span class="sourceLineNo">414</span>      commitedRecords = indxList.size();<a name="line.414"></a>
+<span class="sourceLineNo">415</span>    }<a name="line.415"></a>
+<span class="sourceLineNo">416</span><a name="line.416"></a>
+<span class="sourceLineNo">417</span>    public void rollback() {<a name="line.417"></a>
+<span class="sourceLineNo">418</span>      try {<a name="line.418"></a>
+<span class="sourceLineNo">419</span>        mappedFile.setLength((long) commitedRecords * (long) buffer.length);<a name="line.419"></a>
+<span class="sourceLineNo">420</span>      } catch (Throwable t) {<a name="line.420"></a>
+<span class="sourceLineNo">421</span>        throw new BioError(<a name="line.421"></a>
+<span class="sourceLineNo">422</span>          "Could not roll back. " +<a name="line.422"></a>
+<span class="sourceLineNo">423</span>          "The index store will be in an inconsistent state " +<a name="line.423"></a>
+<span class="sourceLineNo">424</span>          "and should be discarded. File: " + mappedFile, t<a name="line.424"></a>
+<span class="sourceLineNo">425</span>        );<a name="line.425"></a>
+<span class="sourceLineNo">426</span>      }<a name="line.426"></a>
+<span class="sourceLineNo">427</span>    }<a name="line.427"></a>
+<span class="sourceLineNo">428</span><a name="line.428"></a>
+<span class="sourceLineNo">429</span>    protected abstract Object parseRecord(byte[] buffer);<a name="line.429"></a>
+<span class="sourceLineNo">430</span>    protected abstract void generateRecord(byte[] buffer, Object item);<a name="line.430"></a>
+<span class="sourceLineNo">431</span>    protected abstract Comparator getComparator();<a name="line.431"></a>
+<span class="sourceLineNo">432</span>  }<a name="line.432"></a>
+<span class="sourceLineNo">433</span><a name="line.433"></a>
+<span class="sourceLineNo">434</span>  private class IndexFileAsList extends FileAsList {<a name="line.434"></a>
+<span class="sourceLineNo">435</span>    private Comparator INDEX_COMPARATOR = new Comparator() {<a name="line.435"></a>
+<span class="sourceLineNo">436</span>      public int compare(Object a, Object b) {<a name="line.436"></a>
+<span class="sourceLineNo">437</span>        String as;<a name="line.437"></a>
+<span class="sourceLineNo">438</span>        String bs;<a name="line.438"></a>
+<span class="sourceLineNo">439</span><a name="line.439"></a>
+<span class="sourceLineNo">440</span>        if(a instanceof Index) {<a name="line.440"></a>
+<span class="sourceLineNo">441</span>          as = ((Index) a).getID();<a name="line.441"></a>
+<span class="sourceLineNo">442</span>        } else {<a name="line.442"></a>
+<span class="sourceLineNo">443</span>          as = (String) a;<a name="line.443"></a>
+<span class="sourceLineNo">444</span>        }<a name="line.444"></a>
+<span class="sourceLineNo">445</span><a name="line.445"></a>
+<span class="sourceLineNo">446</span>        if(b instanceof Index) {<a name="line.446"></a>
+<span class="sourceLineNo">447</span>          bs = ((Index) b).getID();<a name="line.447"></a>
+<span class="sourceLineNo">448</span>        } else {<a name="line.448"></a>
+<span class="sourceLineNo">449</span>          bs = (String) b;<a name="line.449"></a>
+<span class="sourceLineNo">450</span>        }<a name="line.450"></a>
+<span class="sourceLineNo">451</span><a name="line.451"></a>
+<span class="sourceLineNo">452</span>        return STRING_CASE_SENSITIVE_ORDER.compare(as, bs);<a name="line.452"></a>
+<span class="sourceLineNo">453</span>      }<a name="line.453"></a>
+<span class="sourceLineNo">454</span>    };<a name="line.454"></a>
+<span class="sourceLineNo">455</span><a name="line.455"></a>
+<span class="sourceLineNo">456</span>    public IndexFileAsList(RandomAccessFile file, int recordLength) {<a name="line.456"></a>
+<span class="sourceLineNo">457</span>      super(file, recordLength);<a name="line.457"></a>
+<span class="sourceLineNo">458</span>    }<a name="line.458"></a>
+<span class="sourceLineNo">459</span><a name="line.459"></a>
+<span class="sourceLineNo">460</span>    protected Object parseRecord(byte[] buffer) {<a name="line.460"></a>
+<span class="sourceLineNo">461</span>      int lastI = 0;<a name="line.461"></a>
+<span class="sourceLineNo">462</span>      int newI = 0;<a name="line.462"></a>
+<span class="sourceLineNo">463</span>      while(buffer[newI] != '\t') {<a name="line.463"></a>
+<span class="sourceLineNo">464</span>        newI++;<a name="line.464"></a>
+<span class="sourceLineNo">465</span>      }<a name="line.465"></a>
+<span class="sourceLineNo">466</span>      String id = new String(buffer, lastI, newI);<a name="line.466"></a>
+<span class="sourceLineNo">467</span><a name="line.467"></a>
+<span class="sourceLineNo">468</span>      while(buffer[newI] != '\t') {<a name="line.468"></a>
+<span class="sourceLineNo">469</span>        newI++;<a name="line.469"></a>
+<span class="sourceLineNo">470</span>      }<a name="line.470"></a>
+<span class="sourceLineNo">471</span>      File file = getFileForID(Integer.parseInt(new String(buffer, lastI, newI).trim()));<a name="line.471"></a>
+<span class="sourceLineNo">472</span><a name="line.472"></a>
+<span class="sourceLineNo">473</span>      while(buffer[newI] != '\t') {<a name="line.473"></a>
+<span class="sourceLineNo">474</span>        newI++;<a name="line.474"></a>
+<span class="sourceLineNo">475</span>      }<a name="line.475"></a>
+<span class="sourceLineNo">476</span>      long start = Long.parseLong(new String(buffer, lastI, newI));<a name="line.476"></a>
+<span class="sourceLineNo">477</span><a name="line.477"></a>
+<span class="sourceLineNo">478</span>      int length = Integer.parseInt(<a name="line.478"></a>
+<span class="sourceLineNo">479</span>        new String(buffer, newI + 1, buffer.length)<a name="line.479"></a>
+<span class="sourceLineNo">480</span>      );<a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>      return new SimpleIndex(file, start, length, id);<a name="line.482"></a>
+<span class="sourceLineNo">483</span>    }<a name="line.483"></a>
+<span class="sourceLineNo">484</span><a name="line.484"></a>
+<span class="sourceLineNo">485</span>    protected void generateRecord(byte[] buffer, Object item) {<a name="line.485"></a>
+<span class="sourceLineNo">486</span>      Index indx = (Index) item;<a name="line.486"></a>
+<span class="sourceLineNo">487</span><a name="line.487"></a>
+<span class="sourceLineNo">488</span>      String id = indx.getID();<a name="line.488"></a>
+<span class="sourceLineNo">489</span>      int fileID = getIDForFile(indx.getFile());<a name="line.489"></a>
+<span class="sourceLineNo">490</span>      String start = String.valueOf(indx.getStart());<a name="line.490"></a>
+<span class="sourceLineNo">491</span>      String length = String.valueOf(indx.getLength());<a name="line.491"></a>
+<span class="sourceLineNo">492</span><a name="line.492"></a>
+<span class="sourceLineNo">493</span>      int i = 0;<a name="line.493"></a>
+<span class="sourceLineNo">494</span>      byte[] str;<a name="line.494"></a>
+<span class="sourceLineNo">495</span><a name="line.495"></a>
+<span class="sourceLineNo">496</span>      str = id.getBytes();<a name="line.496"></a>
+<span class="sourceLineNo">497</span>      for(int j = 0; j &lt; str.length; j++) {<a name="line.497"></a>
+<span class="sourceLineNo">498</span>        buffer[i++] = str[j];<a name="line.498"></a>
+<span class="sourceLineNo">499</span>      }<a name="line.499"></a>
+<span class="sourceLineNo">500</span><a name="line.500"></a>
+<span class="sourceLineNo">501</span>      buffer[i++] = '\t';<a name="line.501"></a>
+<span class="sourceLineNo">502</span><a name="line.502"></a>
+<span class="sourceLineNo">503</span>      str = String.valueOf(fileID).getBytes();<a name="line.503"></a>
+<span class="sourceLineNo">504</span>      for(int j = 0; j &lt; str.length; j++) {<a name="line.504"></a>
+<span class="sourceLineNo">505</span>        buffer[i++] = str[j];<a name="line.505"></a>
+<span class="sourceLineNo">506</span>      }<a name="line.506"></a>
+<span class="sourceLineNo">507</span><a name="line.507"></a>
+<span class="sourceLineNo">508</span>      buffer[i++] = '\t';<a name="line.508"></a>
+<span class="sourceLineNo">509</span><a name="line.509"></a>
+<span class="sourceLineNo">510</span>      str = start.getBytes();<a name="line.510"></a>
+<span class="sourceLineNo">511</span>      for(int j = 0; j &lt; str.length; j++) {<a name="line.511"></a>
+<span class="sourceLineNo">512</span>        buffer[i++] = str[j];<a name="line.512"></a>
+<span class="sourceLineNo">513</span>      }<a name="line.513"></a>
+<span class="sourceLineNo">514</span><a name="line.514"></a>
+<span class="sourceLineNo">515</span>      buffer[i++] = '\t';<a name="line.515"></a>
+<span class="sourceLineNo">516</span><a name="line.516"></a>
+<span class="sourceLineNo">517</span>      str = length.getBytes();<a name="line.517"></a>
+<span class="sourceLineNo">518</span>      for(int j = 0; j &lt; str.length; j++) {<a name="line.518"></a>
+<span class="sourceLineNo">519</span>        buffer[i++] = str[j];<a name="line.519"></a>
+<span class="sourceLineNo">520</span>      }<a name="line.520"></a>
+<span class="sourceLineNo">521</span><a name="line.521"></a>
+<span class="sourceLineNo">522</span>      while(i &lt; buffer.length - 1) {<a name="line.522"></a>
+<span class="sourceLineNo">523</span>        buffer[i++] = ' ';<a name="line.523"></a>
+<span class="sourceLineNo">524</span>      }<a name="line.524"></a>
+<span class="sourceLineNo">525</span><a name="line.525"></a>
+<span class="sourceLineNo">526</span>      buffer[i] = '\n';<a name="line.526"></a>
+<span class="sourceLineNo">527</span>    }<a name="line.527"></a>
+<span class="sourceLineNo">528</span><a name="line.528"></a>
+<span class="sourceLineNo">529</span>    public Comparator getComparator() {<a name="line.529"></a>
+<span class="sourceLineNo">530</span>      return INDEX_COMPARATOR;<a name="line.530"></a>
+<span class="sourceLineNo">531</span>    }<a name="line.531"></a>
+<span class="sourceLineNo">532</span>  }<a name="line.532"></a>
+<span class="sourceLineNo">533</span><a name="line.533"></a>
+<span class="sourceLineNo">534</span>  private class ListAsSet<a name="line.534"></a>
+<span class="sourceLineNo">535</span>  extends AbstractSet {<a name="line.535"></a>
+<span class="sourceLineNo">536</span>    public Iterator iterator() {<a name="line.536"></a>
+<span class="sourceLineNo">537</span>      return indxList.iterator();<a name="line.537"></a>
+<span class="sourceLineNo">538</span>    }<a name="line.538"></a>
+<span class="sourceLineNo">539</span><a name="line.539"></a>
+<span class="sourceLineNo">540</span>    public int size() {<a name="line.540"></a>
+<span class="sourceLineNo">541</span>      return indxList.size();<a name="line.541"></a>
+<span class="sourceLineNo">542</span>    }<a name="line.542"></a>
+<span class="sourceLineNo">543</span>  }<a name="line.543"></a>
+<span class="sourceLineNo">544</span>}<a name="line.544"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

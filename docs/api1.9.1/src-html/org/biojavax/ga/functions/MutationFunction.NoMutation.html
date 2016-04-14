@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojavax.ga.functions;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.bio.dist.OrderNDistribution;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.bio.symbol.SymbolList;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.utils.ChangeListener;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.utils.ChangeType;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.utils.ChangeVetoException;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.utils.Changeable;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>/**<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * &lt;p&gt;A class that mutates a &lt;code&gt;SymbolList&lt;/code&gt;&lt;/p&gt;<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * @author Mark Schreiber<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * @version 1.0<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * @since 1.5<a name="line.36"></a>
+<span class="sourceLineNo">037</span> */<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>public interface MutationFunction extends Changeable{<a name="line.39"></a>
+<span class="sourceLineNo">040</span>   public static final double[] DEFAULT_MUTATION_PROBS = {0.0};<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>   public static final ChangeType MUTATION_PROBS =<a name="line.42"></a>
+<span class="sourceLineNo">043</span>      new ChangeType("mutation probabilities",MutationFunction.class,"MUTATION_PROBS");<a name="line.43"></a>
+<span class="sourceLineNo">044</span>   public static final ChangeType MUTATION_SPECTRUM =<a name="line.44"></a>
+<span class="sourceLineNo">045</span>      new ChangeType("mutation spectrum",MutationFunction.class,"MUTATION_SPECTRUM");<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>   public static final MutationFunction NO_MUTATION = new NoMutation();<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>  /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   * Produces a new SymbolList by mutation. Each position &lt;em&gt;i&lt;/em&gt; in the SymbolList &lt;code&gt;seq&lt;/code&gt;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>   * is mutated with probability &lt;code&gt;getMutationProbs[i]&lt;/code&gt;. The new residue is selected at random<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   * from the &lt;code&gt;Distribution mutation&lt;/code&gt;. The use of an array of probabilities<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * allows the modelling of mutational hotspots. Position 0 in the array corresponds to the<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   * probability of the first residue of &lt;code&gt;seq&lt;/code&gt; mutating.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   *<a name="line.55"></a>
+<span class="sourceLineNo">056</span>   * If the length of the array defined in &lt;code&gt;getMutationProbs()&lt;/code&gt; is shorter<a name="line.56"></a>
+<span class="sourceLineNo">057</span>   * than the length of the sequence the default behaivour of implementations will<a name="line.57"></a>
+<span class="sourceLineNo">058</span>   * be to apply the last probability to each subsequence residue. A single member<a name="line.58"></a>
+<span class="sourceLineNo">059</span>   * array will mutate all bases with equal probability.<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   *<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   * @param seq the sequence to mutate<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   * @return The mutated sequence.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   * @throws IllegalAlphabetException If the &lt;code&gt;mutationSpectrum Distribution&lt;/code&gt; is not<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   * emitting Symbols from the same &lt;code&gt;Alphabet&lt;/code&gt; as &lt;code&gt;seq&lt;/code&gt;.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   * @throws IllegalSymbolException if the &lt;code&gt;mutationSpectrum Distribution&lt;/code&gt; is not<a name="line.65"></a>
+<span class="sourceLineNo">066</span>   * conditioned with the same &lt;code&gt;Alphabet&lt;/code&gt; as the &lt;code&gt;seq Alphabet&lt;/code&gt;.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>   * @throws ChangeVetoException if &lt;code&gt;seq&lt;/code&gt; is unmodifiable<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   */<a name="line.68"></a>
+<span class="sourceLineNo">069</span>  public SymbolList mutate(SymbolList seq)<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    throws IllegalAlphabetException, ChangeVetoException, IllegalSymbolException;<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>  /**<a name="line.72"></a>
+<span class="sourceLineNo">073</span>   * Set the probability of a mutation occuring at a certain position<a name="line.73"></a>
+<span class="sourceLineNo">074</span>   * Position 0 in the array corresponds to the<a name="line.74"></a>
+<span class="sourceLineNo">075</span>   * probability of the first residue of &lt;code&gt;seq&lt;/code&gt; mutating.<a name="line.75"></a>
+<span class="sourceLineNo">076</span>   *<a name="line.76"></a>
+<span class="sourceLineNo">077</span>   * If the length of the array defined in &lt;code&gt;getMutationProbs()&lt;/code&gt; is shorter<a name="line.77"></a>
+<span class="sourceLineNo">078</span>   * than the length of the sequence the default behaivour of implementations will<a name="line.78"></a>
+<span class="sourceLineNo">079</span>   * be to apply the last probability to each subsequence residue. A single member<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   * array will mutate all bases with equal probability.<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   * @param mutationProbs an array of double values representing mutation probabilities<a name="line.81"></a>
+<span class="sourceLineNo">082</span>   * @throws ChangeVetoException if a ChangeListener vetoes the change.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>   */<a name="line.83"></a>
+<span class="sourceLineNo">084</span>  public void setMutationProbs(double[] mutationProbs) throws ChangeVetoException;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>  public double[] getMutationProbs();<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>  /**<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * Sets the &lt;code&gt;Distribution&lt;/code&gt; of &lt;code&gt;Symbols&lt;/code&gt; that will be selected<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   * from when a mutation occurs. An &lt;code&gt;OrderNDistribution&lt;/code&gt; is<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * used so that you can model a situation where the<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   * identity of the 'mutant' &lt;code&gt;Symbol&lt;/code&gt; is dependent on the original<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   * &lt;code&gt;Symbol&lt;/code&gt;. The primary use is to prevent &lt;code&gt;Symbols&lt;/code&gt; mutating to<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   * themselves. Another use would be to model transitions and transversions.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>   *<a name="line.94"></a>
+<span class="sourceLineNo">095</span>   * @param mutationSpectrum the Distribution of 'mutant' bases to choose from.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   * @throws ChangeVetoException if a ChangeListener vetoes the change.<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   */<a name="line.97"></a>
+<span class="sourceLineNo">098</span>  public void setMutationSpectrum(org.biojava.bio.dist.OrderNDistribution mutationSpectrum)throws ChangeVetoException;<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>  /**<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   *<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   * @return null if the Distribution has not been set.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   */<a name="line.103"></a>
+<span class="sourceLineNo">104</span>  public org.biojava.bio.dist.OrderNDistribution getMutationSpectrum();<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>  /**<a name="line.106"></a>
+<span class="sourceLineNo">107</span>   *<a name="line.107"></a>
+<span class="sourceLineNo">108</span>   * &lt;p&gt; Place Holder class that doesn't mutate its SymbolLists&lt;/p&gt;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   * @author Mark Schreiber<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * @version 1.0<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   */<a name="line.111"></a>
+<span class="sourceLineNo">112</span>  public static final class NoMutation implements MutationFunction{<a name="line.112"></a>
+<span class="sourceLineNo">113</span>    public double[] getMutationProbs(){return DEFAULT_MUTATION_PROBS;}<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    public OrderNDistribution getMutationSpectrum(){return null;}<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    public SymbolList mutate(SymbolList syml){return syml;}<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    public void setMutationProbs(double[] muts) throws ChangeVetoException{<a name="line.116"></a>
+<span class="sourceLineNo">117</span>      throw new ChangeVetoException("Cannot setMutationProbs for a NoMutation function");<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    }<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    public void setMutationSpectrum(OrderNDistribution odn) throws ChangeVetoException{<a name="line.119"></a>
+<span class="sourceLineNo">120</span>      throw new ChangeVetoException("Cannot set a Mutation spectrum for a NoMutation function");<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    }<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>    public boolean isUnchanging(ChangeType ct){return true;}<a name="line.123"></a>
+<span class="sourceLineNo">124</span>    public void removeChangeListener(ChangeListener c){};<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    public void addChangeListener(ChangeListener cl){};<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    public void addChangeListener(ChangeListener cl, ChangeType ct){};<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    public void removeChangeListener(ChangeListener cl, ChangeType ct){};<a name="line.127"></a>
+<span class="sourceLineNo">128</span>  }<a name="line.128"></a>
+<span class="sourceLineNo">129</span>}<a name="line.129"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

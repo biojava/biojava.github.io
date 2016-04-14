@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package org.biojavax.ga.functions;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.util.Random;<a name="line.3"></a>
+<span class="sourceLineNo">004</span><a name="line.4"></a>
+<span class="sourceLineNo">005</span>import org.biojava.bio.symbol.Edit;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import org.biojava.bio.symbol.SymbolList;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import org.biojava.utils.ChangeVetoException;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>import org.biojavax.ga.functions.AbstractMutationFunction;<a name="line.10"></a>
+<span class="sourceLineNo">011</span><a name="line.11"></a>
+<span class="sourceLineNo">012</span>/**<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * This class does a sort of mutation by exchanging two positions on the<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * chromosome. Thus it can be used for implementations where a change of the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * amount of one symbol is undesired, e.g. some TSP implementations<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * @author Susanne Merz<a name="line.17"></a>
+<span class="sourceLineNo">018</span> */<a name="line.18"></a>
+<span class="sourceLineNo">019</span>public class SwapMutationFunction extends AbstractMutationFunction {<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>        /**<a name="line.21"></a>
+<span class="sourceLineNo">022</span>         * Sets the mutation probabilities to the designated values.<a name="line.22"></a>
+<span class="sourceLineNo">023</span>         *<a name="line.23"></a>
+<span class="sourceLineNo">024</span>         * @param probabilities<a name="line.24"></a>
+<span class="sourceLineNo">025</span>         *          An array, which contains the mutation probabilities.<a name="line.25"></a>
+<span class="sourceLineNo">026</span>         */<a name="line.26"></a>
+<span class="sourceLineNo">027</span>        public SwapMutationFunction(double[] probabilities) {<a name="line.27"></a>
+<span class="sourceLineNo">028</span>                this.setMutationProbs(probabilities);<a name="line.28"></a>
+<span class="sourceLineNo">029</span>                // as we don't do a random mutation, but rather a swapping we don't need a<a name="line.29"></a>
+<span class="sourceLineNo">030</span>                // distribution<a name="line.30"></a>
+<span class="sourceLineNo">031</span>                this.setMutationSpectrum(null);<a name="line.31"></a>
+<span class="sourceLineNo">032</span>        }<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>        /*<a name="line.34"></a>
+<span class="sourceLineNo">035</span>         * (non-Javadoc)<a name="line.35"></a>
+<span class="sourceLineNo">036</span>         *<a name="line.36"></a>
+<span class="sourceLineNo">037</span>         * @see org.biojavax.ga.functions.MutationFunction#mutate(org.biojava.bio.symbol.SymbolList)<a name="line.37"></a>
+<span class="sourceLineNo">038</span>         */<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        public SymbolList mutate(SymbolList seq) throws IllegalAlphabetException,<a name="line.39"></a>
+<span class="sourceLineNo">040</span>            ChangeVetoException, IllegalSymbolException {<a name="line.40"></a>
+<span class="sourceLineNo">041</span>                int[] pos = this.generateMutationPositions(seq.length());<a name="line.41"></a>
+<span class="sourceLineNo">042</span>                if (pos[0] == pos[1] || pos[0] == 0.0) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>                        return seq;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>                }<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                Edit ed1 = new Edit(pos[0], seq.getAlphabet(), seq.symbolAt(pos[1]));<a name="line.45"></a>
+<span class="sourceLineNo">046</span>                Edit ed2 = new Edit(pos[1], seq.getAlphabet(), seq.symbolAt(pos[0]));<a name="line.46"></a>
+<span class="sourceLineNo">047</span>                seq.edit(ed1);<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                seq.edit(ed2);<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                return seq;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        }<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>        /**<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * generate an array of two positions on the chromosome that get the highest<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * values in a random choosing relative to their mutationProbability<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         *<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         * @param seqLength<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         *          the legth of the sequence used<a name="line.57"></a>
+<span class="sourceLineNo">058</span>         * @return an int[] of two positions on the sequence used.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         */<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        private int[] generateMutationPositions(int seqLength) {<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                Random n = new Random();<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                int[] positions = new int[2];<a name="line.62"></a>
+<span class="sourceLineNo">063</span>                // step 1: create an array containing a value for every position<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                // on the chromosome. The higher the number the more likely it<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                // will be choosen as position for a mutation.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                double[] tempprobs = new double[seqLength];<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                int maxIndex = getMutationProbs().length - 1;<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>                for (int i = 1; i &lt;= seqLength; i++) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                        int index = Math.min(i - 1, maxIndex);<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                        double mutProb = getMutationProbs()[index] - n.nextDouble();<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                        if (mutProb &gt;= 0) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                                tempprobs[i - 1] = mutProb;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                        } else {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                                tempprobs[i - 1] = 0;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                        }<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                }<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>                // step 2 find the two highest numbers and return their positions<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                double highest = 0;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                double second = 0;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                for (int j = 0; j &lt; tempprobs.length; j++) {<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                        double current = tempprobs[j];<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                        if (current &gt; second) {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                                // allways put highest number in pos[1], second in pos[0]<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                                if (current &gt; highest) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                                        positions[0] = positions[1];<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                                        second = highest;<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                                        positions[1] = j + 1;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                                        highest = current;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                                } else {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                                        second = current;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                                        positions[0] = j + 1;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                                }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>                        }<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                }<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                // switch places so the lower number is in pos[0]<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                if (positions[0] &gt; positions[1]) {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                        int temp = positions[0];<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                        positions[0] = positions[1];<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                        positions[1] = temp;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                }<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>                return positions;<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>        }<a name="line.107"></a>
+<span class="sourceLineNo">108</span><a name="line.108"></a>
+<span class="sourceLineNo">109</span>}<a name="line.109"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

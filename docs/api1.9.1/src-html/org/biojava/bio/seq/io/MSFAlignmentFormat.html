@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.seq.io;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.BufferedReader;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.FileReader;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.OutputStream;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.io.PrintStream;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.Iterator;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.LinkedHashMap;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.util.Vector;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.regex.Matcher;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.regex.Pattern;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.bio.BioException;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.bio.alignment.Alignment;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.bio.alignment.SimpleAlignment;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.bio.seq.DNATools;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.bio.seq.ProteinTools;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.biojava.bio.symbol.FiniteAlphabet;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.biojava.bio.symbol.Symbol;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.biojava.bio.symbol.SymbolList;<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>/**<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author raemig<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @author Thomas Down<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @author Keith James<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @author Nimesh Singh<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * @author Mark Schreiber<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * @author Matthew Pocock<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * @author Bradford Powell<a name="line.51"></a>
+<span class="sourceLineNo">052</span> */<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>public class MSFAlignmentFormat implements AlignmentFormat {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        private static final boolean DEBUGPRINT = false;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        private static final int DNA = 1;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        private static final int PROTEIN = 2;<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>        public MSFAlignmentFormat() {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        }<a name="line.60"></a>
+<span class="sourceLineNo">061</span><a name="line.61"></a>
+<span class="sourceLineNo">062</span>        /**<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         * used to quick test the code<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * <a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * @param args<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        public static void main(String[] args) {<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                String filename;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                if (args.length &lt; 1) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                        filename = "SimpleMSF.msf"; // change to your favorite<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                } else {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                        filename = args[0];<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                }<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                try {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                        BufferedReader reader = new BufferedReader(new FileReader(filename));<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                        MSFAlignmentFormat MSFAlignmentFormat1 = new MSFAlignmentFormat();<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                        MSFAlignmentFormat1.read(reader);<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                } catch (Exception E) {<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                }<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        }<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>        /**<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         * Reads an MSF Alignment File<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         * <a name="line.84"></a>
+<span class="sourceLineNo">085</span>         * @param reader<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         *            The file reader<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         * @return Alignment A SimpleAlignment consisting of the sequences in the<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         *         file.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         */<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        public Alignment read(BufferedReader reader) {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                Vector sequenceNames = new Vector();<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                String sequenceName = null;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                StringBuffer sequenceData[] = null;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                int startOfData = 0; // the start of the sequence data in the line<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                int currSeqCount = 0; // which sequence data you are currently trying to<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                // get<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                try {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                        Pattern mtc = Pattern<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                                        .compile("(Name:|NAME:)\\s+(.*?)\\s+(oo|OO|Len:|LEN:)");<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                        Pattern removewhitespace = Pattern.compile("\\s");<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                        // REMatch rem = null;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                        String line = reader.readLine();<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                        // parse past header<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                        while (line.toUpperCase().indexOf("NAME:") == -1) {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                line = reader.readLine();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                        }<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                        // read each name (between Name: and Len:<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                        while ((line.indexOf("//") == -1) &amp;&amp; ((line.trim()).length() != 0)) {<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                                Matcher matcher = mtc.matcher(line);<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                                if (!matcher.find()) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                                        break;<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                                } // end of sequence names<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                                // sequenceName = line.substring(rem.getSubStartIndex(1),<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                                // rem.getSubEndIndex(1));<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                                if ((line.trim()).length() == 0) {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                                        break;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                                }<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                                sequenceName = matcher.group(2).trim();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                                sequenceNames.add(sequenceName);<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span>                                line = reader.readLine();<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                        }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                        sequenceData = new StringBuffer[sequenceNames.size()];<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                        for (int it = 0; it &lt; sequenceNames.size(); it++) {<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                                sequenceData[it] = new StringBuffer();<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                        }<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                        // until you get a line that matches the first sequence<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                        while (line.indexOf((String) sequenceNames.get(0)) == -1) {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                                line = reader.readLine();<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                        }<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                        // now you on the first line of the sequence data<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                        while (line != null) {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                                for (currSeqCount = 0; currSeqCount &lt; sequenceNames.size(); currSeqCount++) {// you<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                                        // could<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                                        // also<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                                        // check<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                                        // for<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                        // order<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                                        // of<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                        // names<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                        if (line.indexOf((String) sequenceNames.get(currSeqCount)) == -1) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                                                break;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                                        } // error<a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144"></a>
+<span class="sourceLineNo">145</span>                                        startOfData = line.indexOf((String) sequenceNames<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                                        .get(currSeqCount))<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                                                        + ((String) sequenceNames.get(currSeqCount))<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                                                                        .length();<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                                        line = (line.substring(startOfData));<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                                        line = removewhitespace.matcher(line).replaceAll("");<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                                        sequenceData[currSeqCount].append(line); // make into string<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                                        // buffer<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                                        line = reader.readLine();<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                                        if ((currSeqCount &lt; sequenceNames.size() - 1)<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                                                        &amp;&amp; (line.trim().length() == 0)) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                                                break;<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                                        } // could be an error<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                                }<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                                // until you get a line that matches the first sequence<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                                while ((line != null)<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                                                &amp;&amp; (line.indexOf((String) sequenceNames.get(0)) == -1)) // ||<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                                // (<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                                // (line.trim())<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                                // .length()&gt;0<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                                // )<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                                // )<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                                {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                        line = reader.readLine();<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                }<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                        }<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        // print them out for testing<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                        if (DEBUGPRINT) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                                for (currSeqCount = 0; currSeqCount &lt; sequenceNames.size(); currSeqCount++) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                                        System.out.println((String) sequenceNames.get(currSeqCount)<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                                                        + ":" + sequenceData[currSeqCount]);<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                                }<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                        }<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                        // check DNA, RNA or Prot<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                        StringBuffer testString = new StringBuffer();<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                        for (currSeqCount = 0; currSeqCount &lt; sequenceNames.size(); currSeqCount++) {<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                                testString.append(sequenceData[currSeqCount]);<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        }<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                        String testStringUpper = testString.toString().toUpperCase();<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>                        // now parse through them and create gapped symbol lists<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                        LinkedHashMap sequenceDataMap = new LinkedHashMap();<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                        FiniteAlphabet alph = null;<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>                        for (int i = 0; i &lt; testStringUpper.length(); i++) {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                                char c = testStringUpper.charAt(i);<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                                if (c == 'F' || c == 'L' || c == 'I' || c == 'P' || c == 'Q'<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                                                || c == 'E') {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                                        alph = ProteinTools.getTAlphabet();<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                                        break;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                                }<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                        }<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                        if (alph == null) {<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                alph = DNATools.getDNA();<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                        }<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                        for (currSeqCount = 0; currSeqCount &lt; sequenceNames.size(); currSeqCount++) {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                                String sd = sequenceData[currSeqCount].toString();<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                // change stop codons to specified symbols<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                sd = sd.replace('~', '-'); // sometimes this is a term signal<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                // not a gap<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                sd = sd.replace('.', '-'); // sometimes this is a term signal<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                                // not a gap<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                                sequenceDataMap.put((String) sequenceNames.get(currSeqCount),<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                                                alph == ProteinTools.getTAlphabet() ? ProteinTools<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                                                .createGappedProteinSequence(sd,<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                                                                (String) sequenceNames<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                                                                                                .get(currSeqCount)) : DNATools<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                                                .createGappedDNASequence(sd,<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                                                                                (String) sequenceNames<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                                                                                                .get(currSeqCount)));<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                        }<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                        SimpleAlignment sa = new SimpleAlignment(sequenceDataMap);<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                        return (sa);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                } catch (Exception e) {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                        e.printStackTrace();<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                        System.err.println("MSFFormatReader " + e.getMessage());<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                        // throw (e);<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                }<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                return (null);<a name="line.223"></a>
+<span class="sourceLineNo">224</span>        } // end read it<a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>        // This is where I am writing an alignment writer<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        public void write(OutputStream os, Alignment align, int fileType)<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                        throws BioException, IllegalSymbolException {<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                PrintStream out = new PrintStream(os);<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                Object labels[] = align.getLabels().toArray();<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                int numSeqs = labels.length;<a name="line.231"></a>
+<span class="sourceLineNo">232</span>                Iterator&lt;?&gt; seqIts[] = new Iterator&lt;?&gt;[numSeqs];<a name="line.232"></a>
+<span class="sourceLineNo">233</span>                int maxLabelLength = 0;<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                for (int i = 0; i &lt; numSeqs; i++) {<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                        seqIts[i] = align.symbolListForLabel(labels[i].toString())<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                                        .iterator();<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                        if (((String) labels[i]).length() &gt; maxLabelLength) {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                                maxLabelLength = ((String) labels[i]).length();<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                        }<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                }<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                String nl = System.getProperty("line.separator");<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                SymbolTokenization toke = null;<a name="line.242"></a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span>                // really should determine the filetype based on one of the seqeunces<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                // alphabet<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span>                if (align.symbolListForLabel(labels[0].toString()).getAlphabet() == DNATools<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                                .getDNA()) {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                        fileType = DNA;<a name="line.249"></a>
+<span class="sourceLineNo">250</span><a name="line.250"></a>
+<span class="sourceLineNo">251</span>                } else if (align.symbolListForLabel(labels[0].toString()).getAlphabet() == ProteinTools<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                                .getAlphabet()<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                                || align.symbolListForLabel(labels[0].toString()).getAlphabet() == ProteinTools<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                                                .getTAlphabet()) {<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                        fileType = PROTEIN;<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                }<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>                if (fileType == DNA) {<a name="line.258"></a>
+<span class="sourceLineNo">259</span>                        out.print("PileUp" + nl);<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                        out.print(nl);<a name="line.260"></a>
+<span class="sourceLineNo">261</span>                        out.print(" MSF: " + align.length() + "  Type: ");<a name="line.261"></a>
+<span class="sourceLineNo">262</span>                        out.print("N");<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                        out.print("   Check: " + 0 + "   .." + nl);<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                        toke = DNATools.getDNA().getTokenization("token");<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                } else if (fileType == PROTEIN) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                        out.print("PileUp" + nl);<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        out.print(nl);<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                        out.print(" MSF: " + align.length() + "  Type: ");<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                        out.print("P");<a name="line.269"></a>
+<span class="sourceLineNo">270</span>                        out.print("   Check: " + 0 + "   .." + nl);<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                        toke = ProteinTools.getTAlphabet().getTokenization("token");<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                } else {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                        System.out<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                                        .println("MSFAlignment.write -- File type not recognized.");<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                        return;<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                }<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                out.print(nl);<a name="line.277"></a>
+<span class="sourceLineNo">278</span><a name="line.278"></a>
+<span class="sourceLineNo">279</span>                for (int i = 0; i &lt; numSeqs; i++) {<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                        out.print(" Name: " + labels[i]);<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                        for (int j = 0; j &lt; (maxLabelLength - ((String) labels[i]).length()); j++) {// padding<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                                out.print(" ");<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                        }<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                        out.print("  Len: " + align.length() + "        Check: " + 0<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                                        + "     Weight: " + 0 + nl); // this really should be seq<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                        // length?<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                }<a name="line.287"></a>
+<span class="sourceLineNo">288</span><a name="line.288"></a>
+<span class="sourceLineNo">289</span>                out.println(nl + "//" + nl + nl);<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                // now should print the numbering line<a name="line.290"></a>
+<span class="sourceLineNo">291</span><a name="line.291"></a>
+<span class="sourceLineNo">292</span>                while (seqIts[0].hasNext()) {<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                        for (int i = 0; i &lt; numSeqs; i++) {<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                                while (((String) labels[i]).length() &lt; maxLabelLength + 1) {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                        labels[i] = " " + labels[i];<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                                }<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                out.print(labels[i] + " ");<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                                theLabel: for (int j = 0; j &lt; 5; j++) {<a name="line.298"></a>
+<span class="sourceLineNo">299</span>                                        out.print(" ");<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                                        for (int k = 0; k &lt; 10; k++) {<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                                                if (seqIts[i].hasNext()) {<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                                                        out.print(toke.tokenizeSymbol((Symbol) seqIts[i]<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                                                                        .next()));<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                                                } else {<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                                                        break theLabel;<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                                                }<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                                        }<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                                }<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                                out.print(nl);<a name="line.309"></a>
+<span class="sourceLineNo">310</span>                        }<a name="line.310"></a>
+<span class="sourceLineNo">311</span>                        out.print(nl);<a name="line.311"></a>
+<span class="sourceLineNo">312</span>                }<a name="line.312"></a>
+<span class="sourceLineNo">313</span><a name="line.313"></a>
+<span class="sourceLineNo">314</span>        } // end write<a name="line.314"></a>
+<span class="sourceLineNo">315</span><a name="line.315"></a>
+<span class="sourceLineNo">316</span>        public void writeDna(OutputStream os, Alignment align) throws BioException,<a name="line.316"></a>
+<span class="sourceLineNo">317</span>                        IllegalSymbolException {<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                write(os, align, DNA);<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        }<a name="line.319"></a>
+<span class="sourceLineNo">320</span><a name="line.320"></a>
+<span class="sourceLineNo">321</span>        public void writeProtein(OutputStream os, Alignment align)<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                        throws BioException, IllegalSymbolException {<a name="line.322"></a>
+<span class="sourceLineNo">323</span>                write(os, align, PROTEIN);<a name="line.323"></a>
+<span class="sourceLineNo">324</span>        }<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>} // end class<a name="line.326"></a>
+<span class="sourceLineNo">327</span><a name="line.327"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
