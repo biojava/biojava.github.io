@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>package org.biojava.bio.seq.io;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.Serializable;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.HashMap;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.Iterator;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.Map;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.bio.Annotation;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.bio.BioError;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.bio.symbol.Alphabet;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.bio.symbol.AlphabetManager;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.bio.symbol.FiniteAlphabet;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.bio.symbol.Symbol;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.bio.symbol.SymbolList;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.biojava.utils.Unchangeable;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>/**<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * &lt;p&gt;Implementation of SymbolTokenization which binds symbols to<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * single unicode characters.&lt;/p&gt;<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * &lt;p&gt;Many alphabets (and all simple built-in alphabets like DNA, RNA<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * and Protein) will have an instance of CharacterTokenization<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * registered under the name 'token', so that you could say<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * &lt;code&gt;CharacterTokenization ct = (CharacterTokenization)<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * alpha.getTokenization('token');&lt;/code&gt; and expect it to work. When<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * you construct a new instance of this class for an alphabet, there<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * will be no initial associations of Symbols with characters. It is<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * your responsibility to populate the new tokenization appropriately.<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * &lt;/p&gt;<a name="line.53"></a>
+<span class="sourceLineNo">054</span> *<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * @author Thomas Down<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * @author Matthew Pocock<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * @author Greg Cox<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * @author Keith James<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * @since 1.2<a name="line.59"></a>
+<span class="sourceLineNo">060</span> */<a name="line.60"></a>
+<span class="sourceLineNo">061</span><a name="line.61"></a>
+<span class="sourceLineNo">062</span>public class CharacterTokenization<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  extends<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    Unchangeable<a name="line.64"></a>
+<span class="sourceLineNo">065</span>  implements<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    SymbolTokenization, Serializable<a name="line.66"></a>
+<span class="sourceLineNo">067</span>{<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    private Alphabet alphabet;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    private Map symbolsToCharacters = new HashMap();<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    private Map charactersToSymbols = new HashMap();<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    private transient Symbol[] tokenTable;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    private boolean caseSensitive;<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>    public CharacterTokenization(Alphabet alpha, boolean caseSensitive) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        alphabet = alpha;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        this.caseSensitive = caseSensitive;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    }<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>    public Alphabet getAlphabet() {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        return alphabet;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    }<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>    public TokenType getTokenType() {<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        return CHARACTER;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    }<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>    public Annotation getAnnotation() {<a name="line.87"></a>
+<span class="sourceLineNo">088</span>        return Annotation.EMPTY_ANNOTATION;<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    }<a name="line.89"></a>
+<span class="sourceLineNo">090</span><a name="line.90"></a>
+<span class="sourceLineNo">091</span>    /**<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     * &lt;p&gt;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * Bind a Symbol to a character.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * &lt;/p&gt;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     *<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     * &lt;p&gt;<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     * This method will ensure that when this char is observed, it resolves to<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * this symbol. If it was previously associated with another symbol, the old<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     * binding is removed.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * If this is the first time the symbol has been bound to any character,<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * then this character is taken to be the default tokenization of the<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     * Symbol. This means that when converting symbols into characters, this<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     * char will be used. If the symbol has previously been bound to another<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     * character, then this char will not be produced for the symbol when<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     * stringifying the symbol, but this symbol will be produced when tokenizing<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * this character.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     * &lt;/p&gt;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     *<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * @param s  the Symbol to bind<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     * @param c  the char to bind it to<a name="line.110"></a>
+<span class="sourceLineNo">111</span>     */<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    public void bindSymbol(Symbol s, char c) {<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        Character chr = new Character(c);<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>        if (!symbolsToCharacters.containsKey(s)) {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>            symbolsToCharacters.put(s, chr);<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        }<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        if (!charactersToSymbols.containsKey(chr)) {<a name="line.118"></a>
+<span class="sourceLineNo">119</span>            charactersToSymbols.put(chr, s);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        }<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        tokenTable = null;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>    public Symbol parseToken(String token)<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        throws IllegalSymbolException<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        if (token.length() != 1) {<a name="line.127"></a>
+<span class="sourceLineNo">128</span>            throw new IllegalSymbolException("This Tokenization only accepts single-character tokens");<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        }<a name="line.129"></a>
+<span class="sourceLineNo">130</span>        return parseTokenChar(token.charAt(0));<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    }<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>    protected Symbol[] getTokenTable() {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        if (tokenTable == null) {<a name="line.134"></a>
+<span class="sourceLineNo">135</span>            int maxChar = 0;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>            for (Iterator i = charactersToSymbols.keySet().iterator(); i.hasNext(); ) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                Character c = (Character) i.next();<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                char cv = c.charValue();<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                if (caseSensitive) {<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                    maxChar = Math.max(maxChar, cv);<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                } else {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                    maxChar = Math.max(maxChar, Character.toUpperCase(cv));<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                    maxChar = Math.max(maxChar, Character.toLowerCase(cv));<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                }<a name="line.144"></a>
+<span class="sourceLineNo">145</span>            }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span>            tokenTable = new Symbol[maxChar + 1];<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>            for (Iterator i = charactersToSymbols.entrySet().iterator(); i.hasNext(); ) {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                Map.Entry me = (Map.Entry) i.next();<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                Symbol sym = (Symbol) me.getValue();<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                Character c = (Character) me.getKey();<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                char cv = c.charValue();<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                if (caseSensitive) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                    tokenTable[cv] = sym;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                } else {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                    tokenTable[Character.toUpperCase(cv)] = sym;<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                    tokenTable[Character.toLowerCase(cv)] = sym;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                }<a name="line.159"></a>
+<span class="sourceLineNo">160</span>            }<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        }<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>        return tokenTable;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>    protected Symbol parseTokenChar(char c)<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        throws IllegalSymbolException<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        Symbol[] tokenTable = getTokenTable();<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        Symbol sym = null;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        if (c &lt; tokenTable.length) {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>            sym = tokenTable[c];<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        }<a name="line.173"></a>
+<span class="sourceLineNo">174</span>        if (sym == null) {<a name="line.174"></a>
+<span class="sourceLineNo">175</span>            throw new IllegalSymbolException("This tokenization doesn't contain character: '" + c + "'");<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        }<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>        return sym;<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>    private Character _tokenizeSymbol(Symbol s)<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        throws IllegalSymbolException<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        Character c = (Character) symbolsToCharacters.get(s);<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        if (c == null) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>            Alphabet alpha = getAlphabet();<a name="line.186"></a>
+<span class="sourceLineNo">187</span>            alphabet.validate(s);<a name="line.187"></a>
+<span class="sourceLineNo">188</span>            if (alpha instanceof FiniteAlphabet) {<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                c = (Character) symbolsToCharacters.get(AlphabetManager.getAllAmbiguitySymbol((FiniteAlphabet) alpha));<a name="line.189"></a>
+<span class="sourceLineNo">190</span>            }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>            if (c == null) {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                throw new IllegalSymbolException("No mapping for symbol " + s.getName());<a name="line.192"></a>
+<span class="sourceLineNo">193</span>            }<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        }<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>        return c;<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>    public String tokenizeSymbol(Symbol s) throws IllegalSymbolException {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>        return String.valueOf(_tokenizeSymbol(s).charValue());<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    }<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>    public String tokenizeSymbolList(SymbolList sl)<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        throws IllegalAlphabetException<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        if (sl.getAlphabet() != getAlphabet()) {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>            throw new IllegalAlphabetException("Alphabet " + sl.getAlphabet().getName() + " does not match " + getAlphabet().getName());<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        }<a name="line.208"></a>
+<span class="sourceLineNo">209</span>        StringBuffer sb = new StringBuffer();<a name="line.209"></a>
+<span class="sourceLineNo">210</span>        for (Iterator i = sl.iterator(); i.hasNext(); ) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>            Symbol sym = (Symbol) i.next();<a name="line.211"></a>
+<span class="sourceLineNo">212</span>            try {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                Character c = _tokenizeSymbol(sym);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                sb.append(c.charValue());<a name="line.214"></a>
+<span class="sourceLineNo">215</span>            } catch (IllegalSymbolException ex) {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                throw new IllegalAlphabetException(ex, "Couldn't tokenize");<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            }<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        }<a name="line.218"></a>
+<span class="sourceLineNo">219</span><a name="line.219"></a>
+<span class="sourceLineNo">220</span>        return sb.substring(0);<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    }<a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222"></a>
+<span class="sourceLineNo">223</span>    public StreamParser parseStream(SeqIOListener listener) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>        return new TPStreamParser(listener);<a name="line.224"></a>
+<span class="sourceLineNo">225</span>    }<a name="line.225"></a>
+<span class="sourceLineNo">226</span><a name="line.226"></a>
+<span class="sourceLineNo">227</span>    private class TPStreamParser implements StreamParser {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>        private SeqIOListener listener;<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        private Symbol[] buffer;<a name="line.229"></a>
+<span class="sourceLineNo">230</span><a name="line.230"></a>
+<span class="sourceLineNo">231</span>        {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>            buffer = new Symbol[256];<a name="line.232"></a>
+<span class="sourceLineNo">233</span>        }<a name="line.233"></a>
+<span class="sourceLineNo">234</span><a name="line.234"></a>
+<span class="sourceLineNo">235</span>        public TPStreamParser(SeqIOListener l) {<a name="line.235"></a>
+<span class="sourceLineNo">236</span>            this.listener = l;<a name="line.236"></a>
+<span class="sourceLineNo">237</span>        }<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>        public void characters(char[] data, int start, int len)<a name="line.239"></a>
+<span class="sourceLineNo">240</span>            throws IllegalSymbolException<a name="line.240"></a>
+<span class="sourceLineNo">241</span>        {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>            int cnt = 0;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>            while (cnt &lt; len) {<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                int bcnt = 0;<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                while (cnt &lt; len &amp;&amp; bcnt &lt; buffer.length) {<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                    buffer[bcnt++] = parseTokenChar(data[start + (cnt++)]);<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                }<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                try {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                    listener.addSymbols(getAlphabet(),<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                                        buffer,<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                                        0,<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                                        bcnt);<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                } catch (IllegalAlphabetException ex) {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                    throw new BioError( "Assertion failed: can't add symbols.", ex);<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                }<a name="line.255"></a>
+<span class="sourceLineNo">256</span>            }<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        }<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span>        public void close() {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        }<a name="line.260"></a>
+<span class="sourceLineNo">261</span>    }<a name="line.261"></a>
+<span class="sourceLineNo">262</span>}<a name="line.262"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

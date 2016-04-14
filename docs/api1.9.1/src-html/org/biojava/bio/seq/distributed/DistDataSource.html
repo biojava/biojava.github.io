@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.seq.distributed;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Set;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.bio.BioException;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.bio.seq.FeatureFilter;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.bio.seq.FeatureHolder;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.bio.seq.Sequence;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>/**<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * &lt;p&gt;Object which contributes data to a DistributedSequenceDB.&lt;/p&gt;<a name="line.32"></a>
+<span class="sourceLineNo">033</span> *<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * &lt;p&gt;DistDataSource is responsible for providing some information about what sequences exist,<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * what the SymbolList associated with it and what features are here. Typically, the objects<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * returned from DistributedSequenceDB will be composed from information from multiple<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * DistDataSource instances.&lt;/p&gt;<a name="line.37"></a>
+<span class="sourceLineNo">038</span> *<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @author Thomas Down<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @since 1.2<a name="line.40"></a>
+<span class="sourceLineNo">041</span> *<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * Take an instance of this interface and add it to a DistributedSequenceDB.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * Implement this if you have information about some seqeunces but do not wish to or can<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * not integrate this with the main sequence at source. For example, if you have some<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * locally annotated features for SwissProt entries, you could create a DistDataSource<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * providing just your features and let the DistDataSource API integrate these in software<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * with a SwissProt sequence db provider.<a name="line.48"></a>
+<span class="sourceLineNo">049</span> *<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * DistDataSource instances can provided sequence information and feature information. These<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * are integrated seperately. To provide sequences, implement hasSequence(), getSequence() and<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * ids(). ids(false).contains(id) should equal hasSequence(id). Features are provided by implementing<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * hasFeatures(), and the two getFeatures() methods. In the case where hasFeatures() returns true,<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * getFeatures() should return a FeatureHolder. If it is false, getFeatures() may raise a<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * BioException. If these rules are not followed, the results are undefined and may not be<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * consistent.<a name="line.56"></a>
+<span class="sourceLineNo">057</span> */<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>public interface DistDataSource {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>  /**<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   * Find out if this DistDataSource provides the sequence information for a sequence ID.<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   *<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   * @param id  the String id of a sequence<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   * @return true if this DistDataSource provides the primary sequence, false otherwise<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   */<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  public boolean hasSequence(String id) throws BioException;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>  <a name="line.67"></a>
+<span class="sourceLineNo">068</span>  /**<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * Find out if this DistDataSource can provide features on a sequence with a particular ID.<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   *<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   * @param id  the String id of a sequence<a name="line.71"></a>
+<span class="sourceLineNo">072</span>   * @return true if this DistDataSource provides features for the sequence, false otherwise<a name="line.72"></a>
+<span class="sourceLineNo">073</span>   */<a name="line.73"></a>
+<span class="sourceLineNo">074</span>  public boolean hasFeatures(String id) throws BioException;<a name="line.74"></a>
+<span class="sourceLineNo">075</span><a name="line.75"></a>
+<span class="sourceLineNo">076</span>  /**<a name="line.76"></a>
+<span class="sourceLineNo">077</span>   * Get all features matching a FeatureFilter provided by this DistDataSource.<a name="line.77"></a>
+<span class="sourceLineNo">078</span>   * You can simulate getFeatures(id, ff, recurse) by using the advanced FeatureFilter<a name="line.78"></a>
+<span class="sourceLineNo">079</span>   * implementations.<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   * @param ff  the FeatureFilter to search with<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   * @return a FeatureHolder with all matching filters<a name="line.81"></a>
+<span class="sourceLineNo">082</span>   *<a name="line.82"></a>
+<span class="sourceLineNo">083</span>   **/<a name="line.83"></a>
+<span class="sourceLineNo">084</span>  public FeatureHolder getFeatures(FeatureFilter ff) throws BioException;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>  <a name="line.85"></a>
+<span class="sourceLineNo">086</span>  /**<a name="line.86"></a>
+<span class="sourceLineNo">087</span>   * Get all features matching a FeatureFilter on a Sequence with an ID and recurse flats.<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * You can simulate getFeatures(ff) by adding the apropreate FeatureFilter implementations.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   *<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * @param id  the ID of the Sequence<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   * @param ff  the FeatureFilter to search with<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   * @param recurse true if we are to recurse the feature hierachy, false otherwise<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   * @return a FeatureHolder containing all feature matching<a name="line.93"></a>
+<span class="sourceLineNo">094</span>   * @throws BioException if the features could not be fetched<a name="line.94"></a>
+<span class="sourceLineNo">095</span>   *<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   */<a name="line.96"></a>
+<span class="sourceLineNo">097</span>  public FeatureHolder getFeatures(String id, FeatureFilter ff, boolean recurse) throws BioException;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>  <a name="line.98"></a>
+<span class="sourceLineNo">099</span>  /**<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * Get a Sequence object for an ID.<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   *<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   * @param id  the ID of the Sequence to fetch<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   * @return a Seqeunce if hasSequence(id) would return true<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   * @throws BioException if either the ID could not be resolved or if the<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   *         sequence could not be fetched<a name="line.105"></a>
+<span class="sourceLineNo">106</span>   */<a name="line.106"></a>
+<span class="sourceLineNo">107</span>  public Sequence getSequence(String id) throws BioException;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>  <a name="line.108"></a>
+<span class="sourceLineNo">109</span>  /**<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * &lt;p&gt;Get the complete set of sequence IDs provided by this DistDataSource.&lt;/p&gt;<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   *<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   * &lt;p&gt;If the recurse flat is true, the IDs associated with the top level will be returned.<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   * However, if it is false, then IDs should be returned for all levels of an assembly<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   * hierachy including the top level IDs.&lt;/p&gt;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   *<a name="line.115"></a>
+<span class="sourceLineNo">116</span>   * @param topLevel  if true, return top level IDs, otherwise all IDs<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   * @return a Set of String IDs<a name="line.117"></a>
+<span class="sourceLineNo">118</span>   * @throws BioException  if the IDs could not be fetched<a name="line.118"></a>
+<span class="sourceLineNo">119</span>   */<a name="line.119"></a>
+<span class="sourceLineNo">120</span>  public Set ids(boolean topLevel) throws BioException;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>}<a name="line.121"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

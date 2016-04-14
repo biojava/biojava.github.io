@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package org.biojava.bio.program.ssaha;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.io.ByteArrayOutputStream;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.io.File;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.io.IOException;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import java.io.ObjectOutputStream;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import java.io.RandomAccessFile;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import java.nio.BufferOverflowException;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import java.nio.LongBuffer;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>import java.nio.MappedByteBuffer;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>import java.nio.channels.FileChannel;<a name="line.11"></a>
+<span class="sourceLineNo">012</span><a name="line.12"></a>
+<span class="sourceLineNo">013</span>import org.biojava.bio.BioException;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import org.biojava.bio.seq.Sequence;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import org.biojava.bio.seq.SequenceIterator;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import org.biojava.bio.seq.db.SequenceDB;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.17"></a>
+<span class="sourceLineNo">018</span>import org.biojava.bio.symbol.Packing;<a name="line.18"></a>
+<span class="sourceLineNo">019</span>import org.biojava.bio.symbol.PackingFactory;<a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.biojava.utils.Constants;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.biojava.utils.io.LargeBuffer;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>/**<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * &lt;p&gt;<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * Builder for a datastore that has no practical file size limit.<a name="line.25"></a>
+<span class="sourceLineNo">026</span> * &lt;/p&gt;<a name="line.26"></a>
+<span class="sourceLineNo">027</span> *<a name="line.27"></a>
+<span class="sourceLineNo">028</span> * &lt;p&gt;<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * This implementation of the data store factory uses longs as indecies<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * internaly, so can be used with files exceeding 2 gigs in size.<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * &lt;/p&gt;<a name="line.31"></a>
+<span class="sourceLineNo">032</span> *<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * &lt;p&gt;<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * The data store file has the following structure.<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;pre&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * file: header, hash table, nameTable, hitTable<a name="line.36"></a>
+<span class="sourceLineNo">037</span> *<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * header:<a name="line.38"></a>
+<span class="sourceLineNo">039</span> *   long hashTablePos, // byte offset in file<a name="line.39"></a>
+<span class="sourceLineNo">040</span> *   long hitTablePos,  // byte offset in file<a name="line.40"></a>
+<span class="sourceLineNo">041</span> *   long nameTablePos, // byte offset in file<a name="line.41"></a>
+<span class="sourceLineNo">042</span> *   int wordLength,<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *   int serializedPackingLength,<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *   byte[] serializedPacking<a name="line.44"></a>
+<span class="sourceLineNo">045</span> *<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * hashTable:<a name="line.46"></a>
+<span class="sourceLineNo">047</span> *   long hashTableLength,<a name="line.47"></a>
+<span class="sourceLineNo">048</span> *   long[hashTableLength] hits // byte offset into hitTable<a name="line.48"></a>
+<span class="sourceLineNo">049</span> *<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * nameTable:<a name="line.50"></a>
+<span class="sourceLineNo">051</span> *   int nameTableSize, // size in bytes<a name="line.51"></a>
+<span class="sourceLineNo">052</span> *   (short nameLength, char[nameLength] name)[nameTableSize] names<a name="line.52"></a>
+<span class="sourceLineNo">053</span> *<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * hitTable:<a name="line.54"></a>
+<span class="sourceLineNo">055</span> *   long hitTableSize, // size in bytes<a name="line.55"></a>
+<span class="sourceLineNo">056</span> *   hitTableRecord[hitTableSize] hits<a name="line.56"></a>
+<span class="sourceLineNo">057</span> *<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * hitTableRecord:<a name="line.58"></a>
+<span class="sourceLineNo">059</span> *   int hitCount,<a name="line.59"></a>
+<span class="sourceLineNo">060</span> *   hitRecord[hitCount] hit<a name="line.60"></a>
+<span class="sourceLineNo">061</span> *<a name="line.61"></a>
+<span class="sourceLineNo">062</span> * hit:<a name="line.62"></a>
+<span class="sourceLineNo">063</span> *   long seqOffset, // byte offset into sequence names table<a name="line.63"></a>
+<span class="sourceLineNo">064</span> *   int pos         // biological position in sequence<a name="line.64"></a>
+<span class="sourceLineNo">065</span> * &lt;/pre&gt;<a name="line.65"></a>
+<span class="sourceLineNo">066</span> * &lt;/p&gt;<a name="line.66"></a>
+<span class="sourceLineNo">067</span> * @author Matthew Pocock<a name="line.67"></a>
+<span class="sourceLineNo">068</span> */<a name="line.68"></a>
+<span class="sourceLineNo">069</span>public class NIODataStoreFactory<a name="line.69"></a>
+<span class="sourceLineNo">070</span>implements DataStoreFactory {<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  public DataStore getDataStore(File storeFile)<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  throws IOException {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    return new NIODataStore(storeFile);<a name="line.73"></a>
+<span class="sourceLineNo">074</span>  }<a name="line.74"></a>
+<span class="sourceLineNo">075</span>  <a name="line.75"></a>
+<span class="sourceLineNo">076</span>  public DataStore buildDataStore(<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    File storeFile,<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    SequenceDB seqDB,<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    Packing packing,<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    int wordLength,<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    int threshold<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  ) throws<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    IllegalAlphabetException,<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    IOException,<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    BioException<a name="line.85"></a>
+<span class="sourceLineNo">086</span>  {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    ByteArrayOutputStream packingStream = new ByteArrayOutputStream();<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    ObjectOutputStream packingSerializer = new ObjectOutputStream(packingStream);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    packingSerializer.writeObject(packing);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    packingSerializer.flush();<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    <a name="line.91"></a>
+<span class="sourceLineNo">092</span>    final int structDataSize =<a name="line.92"></a>
+<span class="sourceLineNo">093</span>      3 * Constants.BYTES_IN_LONG + // positions<a name="line.93"></a>
+<span class="sourceLineNo">094</span>      2 * Constants.BYTES_IN_INT +  // word length &amp; packing length<a name="line.94"></a>
+<span class="sourceLineNo">095</span>      packingStream.toByteArray().length;<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    <a name="line.96"></a>
+<span class="sourceLineNo">097</span>    final long hashTablePos;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    final long hitTablePos;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    final long nameTablePos;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    <a name="line.100"></a>
+<span class="sourceLineNo">101</span>    storeFile.createNewFile();<a name="line.101"></a>
+<span class="sourceLineNo">102</span>    final RandomAccessFile store = new RandomAccessFile(storeFile, "rw");<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    final FileChannel channel = store.getChannel();<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    <a name="line.104"></a>
+<span class="sourceLineNo">105</span>    // allocate array for k-tuple -&gt; hit list<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    System.out.println("Word length:\t" + wordLength);<a name="line.106"></a>
+<span class="sourceLineNo">107</span>    int words = 1 &lt;&lt; (<a name="line.107"></a>
+<span class="sourceLineNo">108</span>      (int) packing.wordSize() *<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      (int) wordLength<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    );<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    System.out.println("Words:\t" + words);<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    <a name="line.112"></a>
+<span class="sourceLineNo">113</span>    hashTablePos = structDataSize;<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    long hashTableSize =<a name="line.114"></a>
+<span class="sourceLineNo">115</span>      Constants.BYTES_IN_LONG +        // hash table length<a name="line.115"></a>
+<span class="sourceLineNo">116</span>      words * Constants.BYTES_IN_LONG; // hash table entries<a name="line.116"></a>
+<span class="sourceLineNo">117</span>    <a name="line.117"></a>
+<span class="sourceLineNo">118</span>    System.out.println("Allocated:\t" + hashTableSize);<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    final MappedByteBuffer hashTable_MB = channel.map(<a name="line.119"></a>
+<span class="sourceLineNo">120</span>      FileChannel.MapMode.READ_WRITE,<a name="line.120"></a>
+<span class="sourceLineNo">121</span>      hashTablePos,<a name="line.121"></a>
+<span class="sourceLineNo">122</span>      hashTableSize<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    );<a name="line.123"></a>
+<span class="sourceLineNo">124</span>    final LongBuffer hashTable = hashTable_MB.asLongBuffer();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    hashTable.put(0, hashTableSize); // write length of k-tuple array<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    <a name="line.126"></a>
+<span class="sourceLineNo">127</span>    // initialize counts to zero<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    for(int i = 0; i &lt; words; i++) {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>      hashTable.put(i+1, 0);<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    }<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    hashTable.position(0);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    System.out.println("Initialized hash table");<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    <a name="line.133"></a>
+<span class="sourceLineNo">134</span>    // 1st pass<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    // writes counts as longs for each k-tuple<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    // count up the space required for sequence names<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    //<a name="line.137"></a>
+<span class="sourceLineNo">138</span>    System.out.println("First parse");<a name="line.138"></a>
+<span class="sourceLineNo">139</span>    int seqCount = 0;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    int nameChars = 0;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    for(SequenceIterator i = seqDB.sequenceIterator(); i.hasNext(); ) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>      Sequence seq = i.nextSequence();<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      System.out.println(seq.getName());<a name="line.143"></a>
+<span class="sourceLineNo">144</span>      if(seq.length() &gt; wordLength) {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        seqCount++;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>        nameChars += seq.getName().length();<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        <a name="line.147"></a>
+<span class="sourceLineNo">148</span>        int word = PackingFactory.primeWord(seq, wordLength, packing);<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        //PackingFactory.binary(word);<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        addCount(hashTable, word);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        for(int j = wordLength+2; j &lt;= seq.length(); j++) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>          word = PackingFactory.nextWord(seq, word, j, wordLength, packing);<a name="line.152"></a>
+<span class="sourceLineNo">153</span>          //PackingFactory.binary(word);<a name="line.153"></a>
+<span class="sourceLineNo">154</span>          addCount(hashTable, word);<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        }<a name="line.155"></a>
+<span class="sourceLineNo">156</span>      }<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    }<a name="line.157"></a>
+<span class="sourceLineNo">158</span>    System.out.println();<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    System.out.println("Done");<a name="line.159"></a>
+<span class="sourceLineNo">160</span>     <a name="line.160"></a>
+<span class="sourceLineNo">161</span>    // map the space for sequence names as short length, char* name<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    //<a name="line.162"></a>
+<span class="sourceLineNo">163</span>    nameTablePos = hashTablePos + hashTableSize;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    int nameTableSize =<a name="line.164"></a>
+<span class="sourceLineNo">165</span>      Constants.BYTES_IN_INT +              // bytes in table<a name="line.165"></a>
+<span class="sourceLineNo">166</span>      seqCount * Constants.BYTES_IN_SHORT + // string lengths<a name="line.166"></a>
+<span class="sourceLineNo">167</span>      nameChars * Constants.BYTES_IN_CHAR;  // characters<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    System.out.println("nameTableSize:\t" + nameTableSize);<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    final MappedByteBuffer nameTable = channel.map(<a name="line.169"></a>
+<span class="sourceLineNo">170</span>      FileChannel.MapMode.READ_WRITE,<a name="line.170"></a>
+<span class="sourceLineNo">171</span>      nameTablePos,<a name="line.171"></a>
+<span class="sourceLineNo">172</span>      nameTableSize<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    );<a name="line.173"></a>
+<span class="sourceLineNo">174</span>    nameTable.putInt(0, nameTableSize);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>    nameTable.position(Constants.BYTES_IN_INT);<a name="line.175"></a>
+<span class="sourceLineNo">176</span>    <a name="line.176"></a>
+<span class="sourceLineNo">177</span>    // add up the number of k-tuples<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    //<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    long kmersUsed = 0; // number of kmers with valid hits<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    long hitCount = 0;  // total number of individual hits<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    for(int i = 0; i &lt; words; i++) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>      long counts = hashTable.get(i + 1);<a name="line.182"></a>
+<span class="sourceLineNo">183</span>      if(counts &gt; 0 &amp;&amp; counts &lt; threshold) {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        hitCount += counts;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        kmersUsed++;<a name="line.185"></a>
+<span class="sourceLineNo">186</span>      }<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    }<a name="line.187"></a>
+<span class="sourceLineNo">188</span>    System.out.println("hitCount: " + hitCount);<a name="line.188"></a>
+<span class="sourceLineNo">189</span>    System.out.println("kmersUsed: " + kmersUsed);<a name="line.189"></a>
+<span class="sourceLineNo">190</span>    <a name="line.190"></a>
+<span class="sourceLineNo">191</span>    hitTablePos = nameTablePos + nameTableSize;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    long hitTableSize =<a name="line.192"></a>
+<span class="sourceLineNo">193</span>      (long) Constants.BYTES_IN_LONG +                            // size<a name="line.193"></a>
+<span class="sourceLineNo">194</span>      (long) hitCount * (Constants.BYTES_IN_INT + Constants.BYTES_IN_INT) +  // list elements<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      (long) kmersUsed * Constants.BYTES_IN_INT;                  // size of lists<a name="line.195"></a>
+<span class="sourceLineNo">196</span>    System.out.println("hitTableSize:\t" + hitTableSize);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    System.out.println("hitTablePos:\t" + hitTablePos);<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    <a name="line.198"></a>
+<span class="sourceLineNo">199</span>    final LargeBuffer hitTable = new LargeBuffer(<a name="line.199"></a>
+<span class="sourceLineNo">200</span>      channel,<a name="line.200"></a>
+<span class="sourceLineNo">201</span>      FileChannel.MapMode.READ_WRITE,<a name="line.201"></a>
+<span class="sourceLineNo">202</span>      hitTablePos,<a name="line.202"></a>
+<span class="sourceLineNo">203</span>      hitTableSize<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    );<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    hitTable.position(0);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>    hitTable.putLong(hitTableSize);<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    <a name="line.207"></a>
+<span class="sourceLineNo">208</span>    // write locations of hit arrays<a name="line.208"></a>
+<span class="sourceLineNo">209</span>    System.out.println("Writing pointers from hash to hits");<a name="line.209"></a>
+<span class="sourceLineNo">210</span>    long hitOffset = 0;<a name="line.210"></a>
+<span class="sourceLineNo">211</span>    for(int i = 0; i &lt; words; i++) {<a name="line.211"></a>
+<span class="sourceLineNo">212</span>      long counts = hashTable.get(i+1);<a name="line.212"></a>
+<span class="sourceLineNo">213</span>      if(counts &gt; 0 &amp;&amp; counts &lt; threshold) {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        try {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>          // record location of a block of the form:<a name="line.215"></a>
+<span class="sourceLineNo">216</span>          // n,(seqID,offset)1,(seqID,offset)2,...,(seqID,offset)n<a name="line.216"></a>
+<span class="sourceLineNo">217</span>          if(hitOffset &lt; 0) {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>            throw new IndexOutOfBoundsException("Hit offset negative");<a name="line.218"></a>
+<span class="sourceLineNo">219</span>          }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>          hashTable.put(i + 1, hitOffset); // wire hash table to hit table<a name="line.220"></a>
+<span class="sourceLineNo">221</span>          hitTable.putInt(hitOffset + Constants.BYTES_IN_LONG, 0); // initialy we have no hits<a name="line.221"></a>
+<span class="sourceLineNo">222</span>          hitOffset +=<a name="line.222"></a>
+<span class="sourceLineNo">223</span>            Constants.BYTES_IN_INT +<a name="line.223"></a>
+<span class="sourceLineNo">224</span>            counts * (Constants.BYTES_IN_INT + Constants.BYTES_IN_INT);<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        } catch (IndexOutOfBoundsException e) {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>          System.out.println("counts:\t" + counts);<a name="line.226"></a>
+<span class="sourceLineNo">227</span>          System.out.println("word:\t" + i);<a name="line.227"></a>
+<span class="sourceLineNo">228</span>          System.out.println("hitOffset:\t" + hitOffset);<a name="line.228"></a>
+<span class="sourceLineNo">229</span>          throw e;<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        }<a name="line.230"></a>
+<span class="sourceLineNo">231</span>      } else {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>        // too many hits - set the number of hits to the flag value -1<a name="line.232"></a>
+<span class="sourceLineNo">233</span>        hashTable.put(i + 1, -1);<a name="line.233"></a>
+<span class="sourceLineNo">234</span>      }<a name="line.234"></a>
+<span class="sourceLineNo">235</span>    }<a name="line.235"></a>
+<span class="sourceLineNo">236</span>    <a name="line.236"></a>
+<span class="sourceLineNo">237</span>    // 2nd parse<a name="line.237"></a>
+<span class="sourceLineNo">238</span>    // write sequence array and names<a name="line.238"></a>
+<span class="sourceLineNo">239</span>    // write hitTable<a name="line.239"></a>
+<span class="sourceLineNo">240</span>    System.out.println("2nd parse");<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    int seqNumber = 0;<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    nameTable.position(Constants.BYTES_IN_INT);<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    for(SequenceIterator i = seqDB.sequenceIterator(); i.hasNext(); ) {<a name="line.243"></a>
+<span class="sourceLineNo">244</span>      Sequence seq = i.nextSequence();<a name="line.244"></a>
+<span class="sourceLineNo">245</span>      System.out.println(seq.getName());<a name="line.245"></a>
+<span class="sourceLineNo">246</span>      seqNumber++;<a name="line.246"></a>
+<span class="sourceLineNo">247</span>      if(seq.length() &gt; wordLength) {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>        try {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>          // write sequence name length and chars into nameTable<a name="line.249"></a>
+<span class="sourceLineNo">250</span>          int namePos = nameTable.position() - Constants.BYTES_IN_INT;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>          String name = seq.getName();<a name="line.251"></a>
+<span class="sourceLineNo">252</span>          nameTable.putShort((short) name.length());<a name="line.252"></a>
+<span class="sourceLineNo">253</span>          for(int j = 0; j &lt; name.length(); j++) {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>            nameTable.putChar((char) name.charAt(j));<a name="line.254"></a>
+<span class="sourceLineNo">255</span>          }<a name="line.255"></a>
+<span class="sourceLineNo">256</span>          <a name="line.256"></a>
+<span class="sourceLineNo">257</span>          // write k-mer seq,offset<a name="line.257"></a>
+<span class="sourceLineNo">258</span>          int word = PackingFactory.primeWord(seq, wordLength, packing);<a name="line.258"></a>
+<span class="sourceLineNo">259</span>          writeRecord(hashTable, hitTable, 1, namePos, word);<a name="line.259"></a>
+<span class="sourceLineNo">260</span>          for(int j = wordLength+2; j &lt;= seq.length(); j++) {<a name="line.260"></a>
+<span class="sourceLineNo">261</span>            word = PackingFactory.nextWord(seq, word, j, wordLength, packing);<a name="line.261"></a>
+<span class="sourceLineNo">262</span>            writeRecord(hashTable, hitTable, j - wordLength, namePos, word);<a name="line.262"></a>
+<span class="sourceLineNo">263</span>          }<a name="line.263"></a>
+<span class="sourceLineNo">264</span>        } catch (BufferOverflowException e) {<a name="line.264"></a>
+<span class="sourceLineNo">265</span>          System.out.println("name:\t" + seq.getName());<a name="line.265"></a>
+<span class="sourceLineNo">266</span>          System.out.println("seqNumber:\t" + seqNumber);<a name="line.266"></a>
+<span class="sourceLineNo">267</span>          System.out.println("nt pos:\t" + nameTable.position());<a name="line.267"></a>
+<span class="sourceLineNo">268</span>          throw e;<a name="line.268"></a>
+<span class="sourceLineNo">269</span>        }<a name="line.269"></a>
+<span class="sourceLineNo">270</span>      }<a name="line.270"></a>
+<span class="sourceLineNo">271</span>    }<a name="line.271"></a>
+<span class="sourceLineNo">272</span>    System.out.println();<a name="line.272"></a>
+<span class="sourceLineNo">273</span>    System.out.println("Done");<a name="line.273"></a>
+<span class="sourceLineNo">274</span><a name="line.274"></a>
+<span class="sourceLineNo">275</span>    final MappedByteBuffer rootBuffer = channel.map(<a name="line.275"></a>
+<span class="sourceLineNo">276</span>      FileChannel.MapMode.READ_WRITE,<a name="line.276"></a>
+<span class="sourceLineNo">277</span>      0,<a name="line.277"></a>
+<span class="sourceLineNo">278</span>      structDataSize<a name="line.278"></a>
+<span class="sourceLineNo">279</span>    );<a name="line.279"></a>
+<span class="sourceLineNo">280</span>    <a name="line.280"></a>
+<span class="sourceLineNo">281</span>    rootBuffer.position(0);<a name="line.281"></a>
+<span class="sourceLineNo">282</span>    rootBuffer.putLong(hashTablePos);<a name="line.282"></a>
+<span class="sourceLineNo">283</span>    rootBuffer.putLong(hitTablePos);<a name="line.283"></a>
+<span class="sourceLineNo">284</span>    rootBuffer.putLong(nameTablePos);<a name="line.284"></a>
+<span class="sourceLineNo">285</span>    rootBuffer.putInt(wordLength);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>    rootBuffer.putInt(packingStream.toByteArray().length);<a name="line.286"></a>
+<span class="sourceLineNo">287</span>    rootBuffer.put(packingStream.toByteArray());<a name="line.287"></a>
+<span class="sourceLineNo">288</span>    <a name="line.288"></a>
+<span class="sourceLineNo">289</span>    rootBuffer.force();<a name="line.289"></a>
+<span class="sourceLineNo">290</span>    hashTable_MB.force();<a name="line.290"></a>
+<span class="sourceLineNo">291</span>    hitTable.force();<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    nameTable.force();<a name="line.292"></a>
+<span class="sourceLineNo">293</span>    <a name="line.293"></a>
+<span class="sourceLineNo">294</span>    System.out.println("Committed");<a name="line.294"></a>
+<span class="sourceLineNo">295</span>    <a name="line.295"></a>
+<span class="sourceLineNo">296</span>    return getDataStore(storeFile);<a name="line.296"></a>
+<span class="sourceLineNo">297</span>  }<a name="line.297"></a>
+<span class="sourceLineNo">298</span>  <a name="line.298"></a>
+<span class="sourceLineNo">299</span>  private void addCount(LongBuffer buffer, int word) {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>    long count = buffer.get(word+1);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>    count++;<a name="line.301"></a>
+<span class="sourceLineNo">302</span>    buffer.put(word+1, count);<a name="line.302"></a>
+<span class="sourceLineNo">303</span>  }<a name="line.303"></a>
+<span class="sourceLineNo">304</span>  <a name="line.304"></a>
+<span class="sourceLineNo">305</span>  private void writeRecord(<a name="line.305"></a>
+<span class="sourceLineNo">306</span>    LongBuffer hashTable,<a name="line.306"></a>
+<span class="sourceLineNo">307</span>    LargeBuffer hitTable,<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    int offset,<a name="line.308"></a>
+<span class="sourceLineNo">309</span>    int seqNumber,<a name="line.309"></a>
+<span class="sourceLineNo">310</span>    int word<a name="line.310"></a>
+<span class="sourceLineNo">311</span>  ) throws IOException {<a name="line.311"></a>
+<span class="sourceLineNo">312</span>    long kmerPointer = hashTable.get(word+1);<a name="line.312"></a>
+<span class="sourceLineNo">313</span>    if(kmerPointer != -1) {<a name="line.313"></a>
+<span class="sourceLineNo">314</span>      kmerPointer += Constants.BYTES_IN_LONG;<a name="line.314"></a>
+<span class="sourceLineNo">315</span><a name="line.315"></a>
+<span class="sourceLineNo">316</span>      int hitCount = hitTable.getInt(kmerPointer);<a name="line.316"></a>
+<span class="sourceLineNo">317</span>      long pos = kmerPointer + hitCount * (Constants.BYTES_IN_INT + Constants.BYTES_IN_INT) + Constants.BYTES_IN_INT;<a name="line.317"></a>
+<span class="sourceLineNo">318</span>      <a name="line.318"></a>
+<span class="sourceLineNo">319</span>      hitTable.position(pos);<a name="line.319"></a>
+<span class="sourceLineNo">320</span>      hitTable.putInt(seqNumber);<a name="line.320"></a>
+<span class="sourceLineNo">321</span>      hitTable.putInt(offset);<a name="line.321"></a>
+<span class="sourceLineNo">322</span>      hitTable.putInt(kmerPointer, hitCount + 1);<a name="line.322"></a>
+<span class="sourceLineNo">323</span>    }<a name="line.323"></a>
+<span class="sourceLineNo">324</span>  }<a name="line.324"></a>
+<span class="sourceLineNo">325</span>  <a name="line.325"></a>
+<span class="sourceLineNo">326</span>}<a name="line.326"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

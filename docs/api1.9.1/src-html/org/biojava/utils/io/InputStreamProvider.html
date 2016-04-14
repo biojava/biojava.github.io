@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                  BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * <a name="line.19"></a>
+<span class="sourceLineNo">020</span> * Created on Dec 28, 2005<a name="line.20"></a>
+<span class="sourceLineNo">021</span> *<a name="line.21"></a>
+<span class="sourceLineNo">022</span> */<a name="line.22"></a>
+<span class="sourceLineNo">023</span>package org.biojava.utils.io;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.EOFException;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.File;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.io.FileInputStream;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.io.FileNotFoundException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.io.IOException;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.io.InputStream;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.net.URL;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.Enumeration;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import java.util.jar.JarEntry;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import java.util.jar.JarFile;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import java.util.zip.GZIPInputStream;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import java.util.zip.ZipEntry;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import java.util.zip.ZipFile;<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>/** A class that provides an InputStream from a File. The file can be compressed or uncompressed. <a name="line.40"></a>
+<span class="sourceLineNo">041</span> *  <a name="line.41"></a>
+<span class="sourceLineNo">042</span> * Currently supported<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * compressions:<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * &lt;ul&gt;<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * &lt;li&gt;Gzip (extension .gz)&lt;/li&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * &lt;li&gt;Zip (extension .zip) in this case a stream to the first entry in the zip file is returned &lt;/li&gt; <a name="line.46"></a>
+<span class="sourceLineNo">047</span> * &lt;li&gt;Jar (extension .jar) same as .Zip; only stream to first entry is returned &lt;/li&gt;<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * &lt;li&gt;Z (extension .Z) compressed using the unix compress command &lt;/li&gt;<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * &lt;li&gt;for any other extension, no compression is assumed &lt;/li&gt;<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * &lt;/ul&gt;<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * <a name="line.51"></a>
+<span class="sourceLineNo">052</span> * <a name="line.52"></a>
+<span class="sourceLineNo">053</span> * @author Andreas Prlic<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * @since 1.5<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * @version %I% %G%<a name="line.55"></a>
+<span class="sourceLineNo">056</span> *<a name="line.56"></a>
+<span class="sourceLineNo">057</span> */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>public class InputStreamProvider {<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>   /**<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    * The magic number found at the start of a GZIP stream.<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    */<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   public static final int GZIP_MAGIC = 0x1f8b;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   public static final String CACHE_PROPERTY = "biojava.cache.files";<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   boolean cacheRawFiles ;<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>   FlatFileCache cache ;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   public InputStreamProvider() {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>      super();<a name="line.69"></a>
+<span class="sourceLineNo">070</span>      cacheRawFiles = false;<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>      String prop = System.getProperty(CACHE_PROPERTY);<a name="line.72"></a>
+<span class="sourceLineNo">073</span>      if ( prop != null &amp;&amp; prop.equals("true")) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>         cacheRawFiles = true;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>         cache = FlatFileCache.getInstance();<a name="line.75"></a>
+<span class="sourceLineNo">076</span>      }<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>   }<a name="line.78"></a>
+<span class="sourceLineNo">079</span><a name="line.79"></a>
+<span class="sourceLineNo">080</span>   /** get an InputStream for this file <a name="line.80"></a>
+<span class="sourceLineNo">081</span>    * <a name="line.81"></a>
+<span class="sourceLineNo">082</span>    * @param pathToFile the path of the file.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    * @return an InputStream for the file located at the path.<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    * @throws IOException<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    */<a name="line.85"></a>
+<span class="sourceLineNo">086</span>   public InputStream getInputStream(String pathToFile)<a name="line.86"></a>
+<span class="sourceLineNo">087</span>   throws IOException<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>      File f = new File(pathToFile);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>      return getInputStream(f);<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   }<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>   /** open the file and read the magic number from the beginning<a name="line.94"></a>
+<span class="sourceLineNo">095</span>    * this is used to determine the compression type<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    * <a name="line.96"></a>
+<span class="sourceLineNo">097</span>    * @param in an input stream to read from<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    * @return the magic number<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    * @throws IOException<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   private int getMagicNumber(InputStream in) <a name="line.101"></a>
+<span class="sourceLineNo">102</span>   throws IOException {<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>      int t = in.read();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>      if (t &lt; 0) throw new EOFException("Failed to read magic number");<a name="line.106"></a>
+<span class="sourceLineNo">107</span>      int magic = (t &amp; 0xff) &lt;&lt; 8;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>      t = in.read();<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      if (t &lt; 0) throw new EOFException("Failed to read magic number");<a name="line.109"></a>
+<span class="sourceLineNo">110</span>      magic += t &amp; 0xff;<a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>      return magic;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>   public InputStream getInputStream(URL u)<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   throws IOException{<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>      int magic = 0;<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span>      try {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         InputStream inStream = u.openStream(); <a name="line.122"></a>
+<span class="sourceLineNo">123</span>         magic = getMagicNumber(inStream);<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         inStream.close();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>      } catch (Exception e){<a name="line.125"></a>
+<span class="sourceLineNo">126</span>         e.printStackTrace();<a name="line.126"></a>
+<span class="sourceLineNo">127</span>      };<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>      if (magic == UncompressInputStream.LZW_MAGIC ) {<a name="line.129"></a>
+<span class="sourceLineNo">130</span>         // a Z compressed file<a name="line.130"></a>
+<span class="sourceLineNo">131</span>         return openCompressedURL(u);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>      } else if (magic == GZIP_MAGIC ) {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         return openGZIPURL(u); <a name="line.133"></a>
+<span class="sourceLineNo">134</span>      } else if ( u.toString().endsWith(".gz")) {<a name="line.134"></a>
+<span class="sourceLineNo">135</span>         return openGZIPURL(u);<a name="line.135"></a>
+<span class="sourceLineNo">136</span>      } else if ( u.toString().endsWith(".Z")) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>         // unix compressed <a name="line.137"></a>
+<span class="sourceLineNo">138</span>         return openCompressedURL(u);<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>      } else {<a name="line.140"></a>
+<span class="sourceLineNo">141</span>         InputStream inStream = u.openStream();<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         return inStream;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      }<a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144"></a>
+<span class="sourceLineNo">145</span>   }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span><a name="line.147"></a>
+<span class="sourceLineNo">148</span>   /** get an InputStream for the file<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    * <a name="line.149"></a>
+<span class="sourceLineNo">150</span>    * @param f a File<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    * @return an InputStream for the file<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    * @throws IOException<a name="line.152"></a>
+<span class="sourceLineNo">153</span>    */<a name="line.153"></a>
+<span class="sourceLineNo">154</span>   public  InputStream getInputStream(File f) <a name="line.154"></a>
+<span class="sourceLineNo">155</span>   throws IOException<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   {<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>      // use the magic numbers to determine the compression type, <a name="line.158"></a>
+<span class="sourceLineNo">159</span>      // use file extension only as 2nd choice <a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>      int magic = 0;<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>      try {<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         InputStream test = getInputStreamFromFile(f);<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         magic = getMagicNumber(test);<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         test.close();<a name="line.166"></a>
+<span class="sourceLineNo">167</span>      } catch (Exception e){<a name="line.167"></a>
+<span class="sourceLineNo">168</span>          System.err.println("Problem while loading: " + f);<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         e.printStackTrace();<a name="line.169"></a>
+<span class="sourceLineNo">170</span>      };<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>      InputStream inputStream = null;<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>      String fileName = f.getName();<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>      if (magic == UncompressInputStream.LZW_MAGIC ) {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         // a Z compressed file<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         return openCompressedFile(f);<a name="line.178"></a>
+<span class="sourceLineNo">179</span>      }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>      else if (magic == GZIP_MAGIC ) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>         return openGZIPFile(f); <a name="line.182"></a>
+<span class="sourceLineNo">183</span>      }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>      else if ( fileName.endsWith(".gz")) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>         return openGZIPFile(f);<a name="line.186"></a>
+<span class="sourceLineNo">187</span>      } <a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>      else if ( fileName.endsWith(".zip")){<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>         ZipFile zipfile = new ZipFile(f);<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>         // stream to first entry is returned ...<a name="line.193"></a>
+<span class="sourceLineNo">194</span>         ZipEntry entry;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>         Enumeration e = zipfile.entries();<a name="line.195"></a>
+<span class="sourceLineNo">196</span>         if ( e.hasMoreElements()){<a name="line.196"></a>
+<span class="sourceLineNo">197</span>            entry = (ZipEntry) e.nextElement();<a name="line.197"></a>
+<span class="sourceLineNo">198</span>            inputStream = zipfile.getInputStream(entry);<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>         } else {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>            throw new IOException ("Zip file has no entries");<a name="line.201"></a>
+<span class="sourceLineNo">202</span>         }<a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>      } <a name="line.204"></a>
+<span class="sourceLineNo">205</span><a name="line.205"></a>
+<span class="sourceLineNo">206</span>      else if ( fileName.endsWith(".jar")) {<a name="line.206"></a>
+<span class="sourceLineNo">207</span><a name="line.207"></a>
+<span class="sourceLineNo">208</span>         JarFile jarFile = new JarFile(f);<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>         // stream to first entry is returned<a name="line.210"></a>
+<span class="sourceLineNo">211</span>         JarEntry entry;<a name="line.211"></a>
+<span class="sourceLineNo">212</span>         Enumeration e = jarFile.entries();<a name="line.212"></a>
+<span class="sourceLineNo">213</span>         if ( e.hasMoreElements()){<a name="line.213"></a>
+<span class="sourceLineNo">214</span>            entry = (JarEntry) e.nextElement();<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>            inputStream = jarFile.getInputStream(entry);<a name="line.216"></a>
+<span class="sourceLineNo">217</span>         } else {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>            throw new IOException ("Jar file has no entries");<a name="line.218"></a>
+<span class="sourceLineNo">219</span>         }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>      } <a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>      else if ( fileName.endsWith(".Z")) {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>         // unix compressed <a name="line.223"></a>
+<span class="sourceLineNo">224</span>         return openCompressedFile(f);<a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>      }<a name="line.226"></a>
+<span class="sourceLineNo">227</span><a name="line.227"></a>
+<span class="sourceLineNo">228</span>      else {<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>         // no particular extension found, assume that it is an uncompressed file<a name="line.230"></a>
+<span class="sourceLineNo">231</span>         inputStream = getInputStreamFromFile(f);<a name="line.231"></a>
+<span class="sourceLineNo">232</span>      }<a name="line.232"></a>
+<span class="sourceLineNo">233</span><a name="line.233"></a>
+<span class="sourceLineNo">234</span>      return inputStream;<a name="line.234"></a>
+<span class="sourceLineNo">235</span>   }<a name="line.235"></a>
+<span class="sourceLineNo">236</span><a name="line.236"></a>
+<span class="sourceLineNo">237</span><a name="line.237"></a>
+<span class="sourceLineNo">238</span>   /** Wrapper for new FileInputStream. if System.property biojava.cache.files is set, will try to load files from memory cache.<a name="line.238"></a>
+<span class="sourceLineNo">239</span>    * <a name="line.239"></a>
+<span class="sourceLineNo">240</span>    * @param f<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    * @return<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    * @throws FileNotFoundException<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    */<a name="line.243"></a>
+<span class="sourceLineNo">244</span>   private InputStream getInputStreamFromFile(File f) throws FileNotFoundException{<a name="line.244"></a>
+<span class="sourceLineNo">245</span>      InputStream stream = null;<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span><a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>      if ( cacheRawFiles ){<a name="line.249"></a>
+<span class="sourceLineNo">250</span>         stream = cache.getInputStream(f.getAbsolutePath());<a name="line.250"></a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span>         if ( stream == null){<a name="line.252"></a>
+<span class="sourceLineNo">253</span>            cache.addToCache(f.getAbsolutePath(),f);<a name="line.253"></a>
+<span class="sourceLineNo">254</span>            stream = cache.getInputStream(f.getAbsolutePath());<a name="line.254"></a>
+<span class="sourceLineNo">255</span>         }<a name="line.255"></a>
+<span class="sourceLineNo">256</span>      }<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>      if ( stream == null)<a name="line.258"></a>
+<span class="sourceLineNo">259</span>         stream = new FileInputStream(f);                  <a name="line.259"></a>
+<span class="sourceLineNo">260</span>      <a name="line.260"></a>
+<span class="sourceLineNo">261</span>      return stream;<a name="line.261"></a>
+<span class="sourceLineNo">262</span>   }<a name="line.262"></a>
+<span class="sourceLineNo">263</span><a name="line.263"></a>
+<span class="sourceLineNo">264</span><a name="line.264"></a>
+<span class="sourceLineNo">265</span>   private InputStream openCompressedFile(File f)<a name="line.265"></a>
+<span class="sourceLineNo">266</span>   throws IOException{<a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>      InputStream is           =  getInputStreamFromFile(f);<a name="line.268"></a>
+<span class="sourceLineNo">269</span>      InputStream inputStream =  new UncompressInputStream(is);<a name="line.269"></a>
+<span class="sourceLineNo">270</span>      return inputStream;<a name="line.270"></a>
+<span class="sourceLineNo">271</span>   }<a name="line.271"></a>
+<span class="sourceLineNo">272</span><a name="line.272"></a>
+<span class="sourceLineNo">273</span>   private InputStream openCompressedURL(URL u)<a name="line.273"></a>
+<span class="sourceLineNo">274</span>   throws IOException{<a name="line.274"></a>
+<span class="sourceLineNo">275</span><a name="line.275"></a>
+<span class="sourceLineNo">276</span>      InputStream is           =  u.openStream();<a name="line.276"></a>
+<span class="sourceLineNo">277</span>      InputStream inputStream =  new UncompressInputStream(is);<a name="line.277"></a>
+<span class="sourceLineNo">278</span>      return inputStream;<a name="line.278"></a>
+<span class="sourceLineNo">279</span>   }<a name="line.279"></a>
+<span class="sourceLineNo">280</span><a name="line.280"></a>
+<span class="sourceLineNo">281</span><a name="line.281"></a>
+<span class="sourceLineNo">282</span>   private InputStream openGZIPFile(File f) <a name="line.282"></a>
+<span class="sourceLineNo">283</span>   throws IOException{<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>      InputStream is      = getInputStreamFromFile(f);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>      InputStream inputStream = new GZIPInputStream(is);<a name="line.286"></a>
+<span class="sourceLineNo">287</span>      return inputStream;<a name="line.287"></a>
+<span class="sourceLineNo">288</span>   }<a name="line.288"></a>
+<span class="sourceLineNo">289</span><a name="line.289"></a>
+<span class="sourceLineNo">290</span>   private InputStream openGZIPURL(URL u) <a name="line.290"></a>
+<span class="sourceLineNo">291</span>   throws IOException{<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>      InputStream is      = u.openStream();<a name="line.293"></a>
+<span class="sourceLineNo">294</span>      InputStream inputStream = new GZIPInputStream(is);<a name="line.294"></a>
+<span class="sourceLineNo">295</span>      return inputStream;<a name="line.295"></a>
+<span class="sourceLineNo">296</span>   }<a name="line.296"></a>
+<span class="sourceLineNo">297</span>}<a name="line.297"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
