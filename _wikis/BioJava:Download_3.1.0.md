@@ -4,14 +4,13 @@ title: BioJava:Download 3.1.0
 
 This page offers downloads for the <b>BioJava 3.1.0 release</b>.
 
-BioJava 3.1.0 requires <b>Java 6 or 7</b>. Users of Java 8 should
-download the latest [BioJava 4.0.0-SNAPSHOT](Get source "wikilink").
+BioJava 3.1.0 requires <b>Java 6 or 7</b>. 
 
 About
 -----
 
 *BioJava* 3.1.0 has been released and is available using Maven from
-[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
+[<https://github.com/biojava/maven-repo/tree/master//>](https://github.com/biojava/maven-repo/tree/master/)
 
 ### New Features
 
@@ -51,9 +50,9 @@ project pom.xml file:
         <repositories>
             ...
             <repository>
-                <id>biojava-maven-repo</id>
-                <name>BioJava repository</name>
-                <url>http://www.biojava.org/download/maven/</url>           
+                <id>biojava-legacy-repo</id>
+                <name>BioJava's Git based legacy maven repo</name>
+                <url>https://github.com/biojava/maven-repo/raw/master/</url>
             </repository>
         </repositories>
 
