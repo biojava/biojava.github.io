@@ -10,7 +10,7 @@ About
 -----
 
 *BioJava* 3.0.7 has been released and is available using Maven from
-[<http://biojava.org/download/maven/>](http://biojava.org/download/maven/)
+[<https://github.com/biojava/maven-repo/tree/master//>](https://github.com/biojava/maven-repo/tree/master/)
 
 ### New Features
 
@@ -27,7 +27,7 @@ Maven Download
 
 BioJava 3.0.7 requires [Maven](http://maven.apache.org/) for the build
 process. We are providing a BioJava specific Maven repository at
-<http://biojava.org/download/maven/> .
+<https://github.com/biojava/maven-repo/tree/master/> .
 
 You can add the BioJava repository by adding the following XML to your
 project pom.xml file:
@@ -44,9 +44,9 @@ project pom.xml file:
         <repositories>
             ...
             <repository>
-                <id>biojava-maven-repo</id>
-                <name>BioJava repository</name>
-                <url>http://www.biojava.org/download/maven/</url>           
+                <id>biojava-legacy-repo</id>
+                <name>BioJava's Git based legacy maven repo</name>
+                <url>https://github.com/biojava/maven-repo/raw/master/</url>
             </repository>
         </repositories>
 
