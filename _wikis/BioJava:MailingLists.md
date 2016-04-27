@@ -7,9 +7,9 @@ BioJava Mailing Lists
 
 BioJava has two main mailing lists :
 
-`* `[`biojava-l`](http://lists.open-bio.org/mailman/listinfo/biojava-l)
+ * [biojava-l](http://lists.open-bio.org/mailman/listinfo/biojava-l)
 
-`* `[`biojava-dev`](http://lists.open-bio.org/mailman/listinfo/biojava-dev)
+ * [biojava-dev](http://lists.open-bio.org/mailman/listinfo/biojava-dev)
 
 In order to avoid SPAM both lists only accept postings from list
 members. Anybody can become a list member, so please subscribe before
@@ -24,10 +24,9 @@ This list is intended for general discussion, advice, questions, offers
 of help, announcements, expressions of appreciation, bugs found in
 release code and requests for features.
 
-`* To post or receive list email you need to `[`sign`
-`up`](http://lists.open-bio.org/mailman/listinfo/biojava-l)` for the list.`  
-`* Post general issues to `[`biojava-l@biojava.org`](mailto:biojava-l@biojava.org)`.`  
-`* You can also `[`view`](http://lists.open-bio.org/pipermail/biojava-l/)` the archive.`
+ * To post or receive list email you need to [sign up](http://lists.open-bio.org/mailman/listinfo/biojava-l) for the list.  
+ * Post general issues to [biojava-l@biojava.org](mailto:biojava-l@biojava.org).  
+ * You can also [view](http://lists.open-bio.org/pipermail/biojava-l/) the archive.
 
 biojava-dev developers list
 ---------------------------
@@ -36,10 +35,9 @@ This list is intended for more technical discussions about API design,
 bugs in CVS development code, performance issues and things that might
 not be of interest to the more casual user.
 
-`* To post or receive list email you need to `[`sign`
-`up`](http://lists.open-bio.org/mailman/listinfo/biojava-dev)` for the list.`  
-`* Post general issues to `[`biojava-dev@biojava.org`](mailto:biojava-dev@biojava.org)`.`  
-`* You can also `[`view`](http://lists.open-bio.org/pipermail/biojava-dev/)` the archive.`
+ * To post or receive list email you need to [sign up](http://lists.open-bio.org/mailman/listinfo/biojava-dev) for the list.  
+ * Post general issues to [biojava-dev@biojava.org](mailto:biojava-dev@biojava.org).  
+ * You can also [view](http://lists.open-bio.org/pipermail/biojava-dev/) the archive.
 
 List rules
 ----------
@@ -64,11 +62,11 @@ Bug Reports
 -----------
 
 Bugs in released code should be reported via
-[Redmine](https://redmine.open-bio.org)
+[GitHub](https://github.com/biojava/biojava/issues)
 
 All bug reports should contain:
 
--   BioJava version (eg 3.0.6).
+-   BioJava version (eg 4.2.0).
 -   OS (eg Linux, OSX 10.8, Windows XP, SuSE 9.2 etc).
 -   A stack trace of any exception (complete if possible).
 -   Example code that exposes the bug.
