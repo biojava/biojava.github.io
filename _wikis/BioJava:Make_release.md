@@ -27,9 +27,9 @@ semi-automatic.
 
 You need to configure the following 3 items for performing a full
 release 
- 1) OSS Sonatype login (OSS Jira account login) 
- 2) PGP signature for code signing (only can upload signed jars to OSS Sonatype) 
- 3) Write permission to `github.com/biojava/biojava.github.io`
+ 1. OSS Sonatype login (OSS Jira account login) 
+ 2. PGP signature for code signing (only can upload signed jars to OSS Sonatype) 
+ 3. Write permission to `github.com/biojava/biojava.github.io`
 
 #### OSS Sonatype login
 
