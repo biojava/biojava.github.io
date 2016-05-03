@@ -26,9 +26,10 @@ semi-automatic.
 ### Configure Authentication Keys
 
 You need to configure the following 3 items for performing a full
-release 1) OSS Sonatype login (OSS Jira account login) 2) PGP signature
-for code signing (only can upload signed jars to OSS Sonatype) 3) SSH
-keys for cloudportal.open-bio.org
+release 
+ 1) OSS Sonatype login (OSS Jira account login) 
+ 2) PGP signature for code signing (only can upload signed jars to OSS Sonatype) 
+ 3) Write permission to `github.com/biojava/biojava.github.io`
 
 #### OSS Sonatype login
 
@@ -75,16 +76,11 @@ if a maven-metadata.xml exists from a previous build by another user).
 
 More information about using the Maven release plugin to push to OSS
 Sonatype is
-[<http://blog.sonatype.com/2013/09/simplified-releases-to-the-central-repository-with-nexus/>\#.VMsj7l7F-kc
-here].
+[here](http://blog.sonatype.com/2013/09/simplified-releases-to-the-central-repository-with-nexus/).
 
-#### BioJava web server SSH key
+#### BioJava web server project write access
 
-To complete the release you need permission to scp files to the maven
-repository on cloudportal.open-bio.org. If you need help with that, talk
-to root@open-bio.org. Make sure you have ssh keys set up to log in, and
-that you are a member of the apache group so that you can write to the
-web directory.
+Make sure you can write to `https://github.com/biojava/biojava.github.io`
 
 #### PGP Signature
 
@@ -132,7 +128,7 @@ sonatype. release:rollback will clean up for you.
 
 If all three steps work fine, the maven release plugin will push on your
 behalf to Github and release the jars on OSS Sonatype. Note:
-<mvn:release> takes about 1 hour since the bandwith to upload at OSS
+```mvn:release``` takes about 1 hour since the bandwith to upload at OSS
 Sonatype is limited.
 
 If there is a problem, here how to add the release tag by hand:
@@ -224,7 +220,7 @@ upload apidocs
 ### Update the wiki pages to link to the new release
 
 Create a new download file for the release. (I copied
-<BioJava:Download_3.0.4> to <BioJava:Download_3.0.5>). Modify the new
+`BioJava:Download_3.0.4` to `BioJava:Download_3.0.5`). Modify the new
 page to the latest data.
 
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
