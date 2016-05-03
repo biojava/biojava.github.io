@@ -44,27 +44,29 @@ You need to configure maven with your username and identity file. In
 ~/.m2/settings.xml (on the build machine), add or merge the following
 xml:
 
+```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
      http://maven.apache.org/xsd/settings-1.0.0.xsd">  
-`    `<localRepository/>  
-`    `<interactiveMode/>  
-`    `<usePluginRegistry/>  
-`    `<offline/>  
-`    `<pluginGroups/>  
-`    `<mirrors/>  
-`    `<proxies/>  
-`    `<profiles/>  
-`    `<activeProfiles/>  
-`    `<servers>  
-`        `<server>  
-`            `<id>`ossrh`</id>  
-`            `<username>`username`</username>  
-`            `<password>`pwd`</password>  
-`        `</server>  
-`    `</servers>  
+      <localRepository/>  
+      <interactiveMode/>  
+      <usePluginRegistry/>  
+      <offline/>  
+      <pluginGroups/>  
+      <mirrors/>  
+      <proxies/>  
+      <profiles/>  
+      <activeProfiles/>  
+      <servers>  
+         <server>  
+              <id>ossrh</id>  
+              <username>username</username>  
+              <password>pwd</password>  
+         </server>  
+      </servers>  
 </settings>
+```
 
 Maven reports 'Auth Error' in the release:perform stage if you keys are
 not properly set up. Permissions errors mean that authentication was
