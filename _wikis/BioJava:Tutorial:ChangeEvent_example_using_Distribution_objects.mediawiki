@@ -1,1 +1,0 @@
-#redirect [[BioJava:Tutorial:Changeability examples]]

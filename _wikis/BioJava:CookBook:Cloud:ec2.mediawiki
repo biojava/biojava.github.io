@@ -1,1 +1,0 @@
-== How do I use Biojava in the Amazon EC2 cloud? ==
