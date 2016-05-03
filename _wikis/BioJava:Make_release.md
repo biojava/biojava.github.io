@@ -142,18 +142,22 @@ origin refers to the central biojava repository.
 
 <span style="color:red">Note: double check these commands</span>
 
-`git pull master #merge any commits that occurred while releasing`  
-`git push --tags origin master #push the new master (with updated pom) and new tags`
+```
+git pull master #merge any commits that occurred while releasing
+git push --tags origin master #push the new master (with updated pom) and new tags
 
-`git checkout release`  
-`git merge biojava-3.0.7`  
-`git diff biojava-3.0.7 release #shouldn't print anything`  
-`git push origin release`
+git checkout release  
+git merge biojava-3.0.7
+git diff biojava-3.0.7 release #shouldn't print anything
+git push origin release
+```
 
 And here how to delete a release tag again:
 
-`git tag -d biojava-3.0.7 `  
-`git push origin :refs/tags/biojava-3.0.7`
+```
+git tag -d biojava-3.0.7
+git push origin :refs/tags/biojava-3.0.7
+```
 
 ### Prepare and release javadoc files
 
