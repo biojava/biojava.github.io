@@ -61,7 +61,7 @@ markdown: kramdown
 
 # Release settings
 release:
- version: 4.2.0
+ version: 4.2.1
 
 collections:
   wikis :
