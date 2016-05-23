@@ -27,17 +27,17 @@ Il existe différentes manières d'accéder aux données contenues dans un
 objet Structure. Par exemple, si vous voulez obtenir directement un
 tableau d'Atomes, utilisez le code suivant:
 
-<java>
+```java
 
 // pour obtenir tous les atomes de type Calpha dans la structure Atom[]
 caAtoms = StructureTools.getAtomArray(structure, new String[]{"CA")};
 
-</java>
+```
 
 Une autre façon de faire est d'utiliser des itérateurs pour parcourir
 les Atoms et les Groups.
 
-<java> public static int getNrAtoms(Structure s){
+```java public static int getNrAtoms(Structure s){
 
 `       int nrAtoms = 0;`  
 `       `  
@@ -51,11 +51,11 @@ les Atoms et les Groups.
 `       return nrAtoms;`  
 `   }`
 
-</java>
+```
 
 Ou comme ça:
 
-<java>
+```java
 
 `       AtomIterator iter = new AtomIterator(structure) ;`  
 `       while (iter.hasNext()) {`  
@@ -63,4 +63,4 @@ Ou comme ça:
 `           Calc.rotate(atom,rotationmatrix);`  
 `       }`
 
-</java>
+```

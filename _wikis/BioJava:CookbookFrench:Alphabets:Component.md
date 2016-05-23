@@ -28,7 +28,7 @@ Cette situation contraste avec la définition d'un *BasisSymbol*. Un
 du même *Alphabet*. de cette façon, un *BasisSymbol* peut être ambigüe.
 Pour une discussion sur les *BasisSymbols*, cliquer ici.
 
-<java> package biojava\_in\_anger;
+```java package biojava\_in\_anger;
 
 import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
@@ -56,4 +56,4 @@ public class BreakingComponents {
 `       }`  
 `   }`
 
-} </java>
+} ```

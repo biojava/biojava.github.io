@@ -14,7 +14,7 @@ it into the registry.
 Example: define and register disulfide bond in Java code
 --------------------------------------------------------
 
-<java> // define the involved components, in this case two cystines
+```java // define the involved components, in this case two cystines
 (CYS) List<Component> components = new ArrayList<Component>(2);
 components.add(Component.of("CYS"));
 components.add(Component.of("CYS"));
@@ -46,7 +46,7 @@ Collections.singletonList(linkage));
 `   .build();`
 
 //register the modification ProteinModificationRegistry.register(mod);
-</java>
+```
 
 Example: definedisulfide bond in XML file and register by Java code
 -------------------------------------------------------------------
@@ -93,9 +93,9 @@ Example: definedisulfide bond in XML file and register by Java code
 
 </ProteinModifications> </xml>
 
-<java> FileInputStream fis = new FileInputStream("path/to/file");
+```java FileInputStream fis = new FileInputStream("path/to/file");
 ProteinModificationXmlReader.registerProteinModificationFromXml(fis);
-</java>
+```
 
 See also
 --------

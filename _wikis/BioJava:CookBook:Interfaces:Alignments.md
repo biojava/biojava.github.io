@@ -35,7 +35,7 @@ AlignmentPanel class:
 
 ![](Alignment.jpg "Alignment.jpg")
 
-<java> /\*\*
+```java /\*\*
 
 `* Class to create an alignment and then display it in a viewer.`  
 `*/`
@@ -132,4 +132,4 @@ public class AlignmentPanel extends JFrame {
 
 }
 
-</java>
+```

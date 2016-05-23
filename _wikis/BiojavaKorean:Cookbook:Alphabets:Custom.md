@@ -18,7 +18,7 @@ can then be used to make
 [Distributions](http://www.biojava.org/docs/api15/org/biojava/bio/dist/Distribution.html),
 etc.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
 import java.util.\*;
 
 public class Binary {
@@ -60,4 +60,4 @@ public class Binary {
 `   System.out.println(alpha == binary);`  
 ` }`
 
-} </java>
+} ```

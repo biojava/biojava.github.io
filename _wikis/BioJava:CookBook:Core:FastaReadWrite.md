@@ -5,7 +5,7 @@ title: BioJava:CookBook:Core:FastaReadWrite
 How to Read a Fasta File with Biojava3
 ======================================
 
-<java> import java.io.File; import java.io.FileInputStream; import
+```java import java.io.File; import java.io.FileInputStream; import
 java.util.LinkedHashMap; import java.util.Map.Entry;
 
 import org.biojava.nbio.core.sequence.ProteinSequence; import
@@ -48,7 +48,7 @@ public class FastaOpen {
 
 }
 
-</java>
+```
 
 How to Write a Fasta File with Biojava3
 =======================================

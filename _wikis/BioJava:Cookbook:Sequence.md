@@ -29,7 +29,7 @@ static method from either DNATools, RNATools or ProteinTools.
 
 ### String to SymbolList
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSymbolList {
 
@@ -53,11 +53,11 @@ public class StringToSymbolList {
 `  `  
 ` }`
 
-} </java>
+} ```
 
 ### String to Sequence
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSequence {
 
@@ -79,14 +79,14 @@ public class StringToSequence {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### SymbolList to String
 
 You can call the seqString() method on either a SymbolList or a Sequence
 to get it's Stringified version.
 
-<java> import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.symbol.\*;
 
 public class SymbolListToString {
 
@@ -98,20 +98,20 @@ public class SymbolListToString {
 `   String s = sl.seqString();`  
 ` }`
 
-} </java>
+} ```
 
 The above example uses the process of 'tokenization' to create the
 String, in this case hidden in the SeqString method. Different types of
 tokenization can be used to control the output String.
 
-<java>
+```java
 
 Alphabet alph; // An alphabet SymbolList sym; //A SymbolList
 
 SymbolTokenization tok= alph.getTokenization("token"); String output =
 tok.tokenizeSymbolList(sym)
 
-</java>
+```
 
 Use "token" or "default" to represent nucleotides and amino acids in
 lower case single characters; use "alternate" to represent DNA in single

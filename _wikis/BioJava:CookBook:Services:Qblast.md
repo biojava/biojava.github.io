@@ -47,7 +47,7 @@ high in the TO DO list.
 - Do not use multiple threads to send loads of requests to NCBI. This
 would only get you into trouble, up to getting blacklisted by NCBI.
 
-<java> import java.io.BufferedReader; import java.io.FileReader; import
+```java import java.io.BufferedReader; import java.io.FileReader; import
 java.io.IOException; import java.io.InputStream; import
 java.io.InputStreamReader; import java.util.ArrayList; import
 java.util.Set;
@@ -163,4 +163,4 @@ public class RemoteQBlastServiceTest {
 `       }`  
 `   }`
 
-} </java>
+} ```

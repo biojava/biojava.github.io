@@ -24,7 +24,7 @@ feature holding itself.
 Feature templates can be created de novo or copied from an existing
 Feature. The following example shows both options.
 
-<java> import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+```java import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
 
 public class MakeAFeature {
@@ -70,4 +70,4 @@ public class MakeAFeature {
 `   }`  
 ` }`
 
-} </java>
+} ```

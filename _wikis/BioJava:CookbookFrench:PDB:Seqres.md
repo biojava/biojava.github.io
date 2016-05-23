@@ -23,7 +23,7 @@ moins qu'ils ne puissent être ramené à des informations de groupes ATOM.
 Dans un tel cas, il sera alors possible d'accéder à l'informations des
 groupes ATOM.
 
-<java>
+```java
 
 public static void main(String[] args){
 
@@ -62,7 +62,7 @@ public static void main(String[] args){
 
 }
 
-</java>
+```
 
 Ce programme produire la sortie suivante:
 

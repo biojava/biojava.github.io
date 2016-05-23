@@ -29,7 +29,7 @@ su differenti virtual machine (un ringraziamento speciale va a
 [Serialization](http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html))
 cioè BioJava funziona anche sfruttando l'RMI.
 
-<java> package biojava\_in\_anger;
+```java package biojava\_in\_anger;
 
 import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
@@ -47,4 +47,4 @@ public class Canonical {
 `   System.out.println("canonical: "+ (a1 == a2));`  
 ` }`
 
-} </java>
+} ```

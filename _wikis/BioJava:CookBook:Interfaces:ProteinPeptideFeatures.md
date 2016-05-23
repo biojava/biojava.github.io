@@ -41,7 +41,7 @@ and Domains**
 
 ------------------------------------------------------------------------
 
-<java> import org.biojava.bio.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.\*; import org.biojava.bio.symbol.\*;
 import org.biojava.bio.gui.sequence.\*; import
 org.biojava.bio.gui.sequence.tracklayout.\*; import
 org.biojava.bio.gui.glyph.\*; import org.biojava.bio.seq.\*; import
@@ -309,4 +309,4 @@ public class PeptideDigestDemo extends JFrame{
 `       }`  
 `   }`
 
-} </java>
+} ```

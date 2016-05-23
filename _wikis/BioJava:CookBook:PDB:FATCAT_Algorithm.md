@@ -17,14 +17,14 @@ User Interface
 alignment*
 
 A user interface for running structure alignments manually is available
-through the biojava-structure-gui modules. <java> public static void
+through the biojava-structure-gui modules. ```java public static void
 main(String[] args) {
 
 `       System.setProperty("PDB_DIR","/tmp/");`  
 `   `  
 `       AlignmentGui.getInstance();`
 
-} </java>
+} ```
 
 The *PDB\_DIR* property allows to specify the path, where in the local
 file system PDB files are stored.
@@ -38,7 +38,7 @@ Using BioJava it is possible to align any set of atoms with the FATCAT
 algorithm. This example demonstrates how to align two protein chains and
 edit some of the parameters.
 
-<java>
+```java
 
 `  public static void main(String[] args){`  
 `      `  
@@ -96,4 +96,4 @@ edit some of the parameters.
 `      }`  
 `  }`
 
-</java>
+```

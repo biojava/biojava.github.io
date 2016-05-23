@@ -25,7 +25,7 @@ alors créer un *SearchContentHandler* qui fera le travail en étendant
 *SearchContentAdapter* et en redéfinissant les méthodes qui prendront en
 charge les évènements qui vous intéressent.
 
-<java> import org.xml.sax.\*;
+```java import org.xml.sax.\*;
 
 import java.io.\*;
 
@@ -99,4 +99,4 @@ org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
 `   blastEcho.echo(is); `  
 ` } `
 
-} </java>
+} ```

@@ -16,7 +16,7 @@ Le programme suivant est une version modifiée d'un programme
 gracieusement offert par Matthew Pocock. Il montre comment créer une
 *Sequence* BioJava à partir d'un fichier de tracé ABI.
 
-<java> import java.io.\*; import org.biojava.bio.\*; import
+```java import java.io.\*; import org.biojava.bio.\*; import
 org.biojava.bio.program.abi.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.impl.\*; import org.biojava.bio.seq.io.\*; import
 org.biojava.bio.symbol.\*;
@@ -42,4 +42,4 @@ public class Trace2Seq {
 `   SeqIOTools.writeFasta(System.out, seq);`  
 ` }`
 
-} </java>
+} ```

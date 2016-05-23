@@ -13,7 +13,7 @@ structure alignment as calculated with <BioJava:CookBook:PDB:alignGUI>.
 The BiojavaJmol class provides a simple display of a Structure object,
 if Jmol is on the classpath.
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `       try {`
 
@@ -38,7 +38,7 @@ if Jmol is on the classpath.
 `       }`  
 `   }`
 
-</java>
+```
 
 Longer Example
 ==============
@@ -46,7 +46,7 @@ Longer Example
 This example shows how you can Integrate Jmol into your appication
 together with BioJava
 
-<java> /\*
+```java /\*
 
 Jmol.jar needs to be in your classpath for this example to work. You can
 get it from <http://jmol.sourceforge.net>
@@ -177,7 +177,7 @@ public class SimpleJmolExample {
 
 }
 
-</java>
+```
 
 For a more complex example that includes a number of classes that
 interact with Jmol on a deeper level see [the SVN repository of

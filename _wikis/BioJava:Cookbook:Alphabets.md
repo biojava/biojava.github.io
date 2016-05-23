@@ -24,7 +24,7 @@ respectively.
 
 Both of these approaches are shown in the example below
 
-<java> package biojava\_in\_anger;
+```java package biojava\_in\_anger;
 
 import org.biojava.bio.symbol.\*; import java.util.\*; import
 org.biojava.bio.seq.\*;
@@ -55,4 +55,4 @@ public class AlphabetExample {
 
 ` }`
 
-} </java>
+} ```

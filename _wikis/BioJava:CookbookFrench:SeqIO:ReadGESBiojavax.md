@@ -33,7 +33,7 @@ des formats suivant:
 **RichSequenceIO.Tools** a aussi une méthode, *readFile*, qui tentera de
 lire le fichier en devinant son format.
 
-<java> import java.io.BufferedReader; import java.io.FileReader;
+```java import java.io.BufferedReader; import java.io.FileReader;
 
 import org.biojavax.SimpleNamespace; import
 org.biojavax.bio.seq.RichSequence; import
@@ -71,4 +71,4 @@ public class ReadGES\_BJ1\_6{
 `       }`  
 `   }`
 
-} </java>
+} ```

@@ -23,7 +23,7 @@ friendlier.
 
 ### Reading GenBank
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadGB {
@@ -68,7 +68,7 @@ public class ReadGB {
 
 ### Reading SwissProt
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadSwiss {
@@ -113,7 +113,7 @@ public class ReadSwiss {
 
 ### Reading EMBL
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadEMBL {
@@ -158,7 +158,7 @@ public class ReadEMBL {
 
 ### GeneralReader (biojava 1.3 pre 1)
 
-<java> import org.biojava.bio.seq.io.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.seq.io.\*; import org.biojava.bio.seq.\*;
 import java.io.\*;
 
 public class GeneralReader {
@@ -212,7 +212,7 @@ public class GeneralReader {
 
 ### GeneralReader (biojava 1.3)
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;

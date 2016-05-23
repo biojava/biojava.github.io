@@ -24,7 +24,7 @@ utiliseriez la solution 2.
 
 ### Solution 1
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -82,11 +82,11 @@ public class CountResidues {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Solution 2
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -154,4 +154,4 @@ public class CountResidues2 {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -14,7 +14,7 @@ information content. The entropy is returned as a HashMap between each
 Symbol and its corresponding entropy. The following program calculates
 both for a very biased Distribution.
 
-<java> import java.util.\*;
+```java import java.util.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
@@ -60,4 +60,4 @@ public class Entropy {
 `   }`  
 ` }`
 
-} </java>
+} ```

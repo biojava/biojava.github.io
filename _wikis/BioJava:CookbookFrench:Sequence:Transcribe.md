@@ -10,7 +10,7 @@ faits à partir de différents *Alphabets*. Vous pouvez alors convertir
 l'ADN en ARN en utilisant la méthode statique **transcribe()** de
 *RNATools*.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class TranscribeDNAtoRNA {
 
@@ -38,4 +38,4 @@ public class TranscribeDNAtoRNA {
 `   }`  
 ` }`
 
-</java>
+```

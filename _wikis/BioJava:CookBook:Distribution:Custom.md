@@ -14,7 +14,7 @@ conditioned alphabet is 1.
 
 Contributed by Russell Smithies.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.dist.\*; import
 org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
@@ -48,11 +48,11 @@ public class DistTest {
 
 `   }`
 
-</java>
+```
 
 Create an OrderNDstribution using the newly built Dwarf Alphabet
 
-<java>
+```java
 
 `   //order of the distribution`  
 `   int order = 3;`
@@ -69,14 +69,14 @@ Create an OrderNDstribution using the newly built Dwarf Alphabet
 `   //register the Distribution with the trainer`  
 `   dtc.registerDistribution(ond);`
 
-</java>
+```
 
 This shows the creation of of a SymbolList from the Dwarf Alphabet so we
 can test our new OrderNDistribution. This is done by making, a
 UniformDistribution which is randomly sampled and adding the Symbols to
 an ArrayList. The ArrayList is then used to build the SymbolList.
 
-<java>
+```java
 
 `   //create a random symbolList of dwarves`  
 `   UniformDistribution udist = new UniformDistribution((FiniteAlphabet)dwarfAlphabet);`
@@ -91,12 +91,12 @@ an ArrayList. The ArrayList is then used to build the SymbolList.
 `   //create a symbolList to test the Distribution`  
 `   SymbolList symbl = new SimpleSymbolList(dwarfAlphabet, list);`
 
-</java>
+```
 
 The SymbolList is changed into an OrderNSymbolList to enable an
 OrderNDistribution to be made over it.
 
-<java>
+```java
 
 `   //make it into an orderNSymbolList`  
 `   symbl = SymbolListViews.orderNSymbolList(symbl, order);`
@@ -123,4 +123,4 @@ OrderNDistribution to be made over it.
 `   writer.writeDistribution(ond, new FileOutputStream("dwarf.xml"));`  
 ` }`
 
-} </java>
+} ```

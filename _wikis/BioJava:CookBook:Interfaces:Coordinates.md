@@ -22,7 +22,7 @@ program.
 [frame|center|View Sequence coordinates in a
 GUI](image:Multiview.jpg "wikilink")
 
-<java> import java.awt.\*; import java.awt.event.\*; import
+```java import java.awt.\*; import java.awt.event.\*; import
 javax.swing.\*; import org.biojava.bio.gui.sequence.\*; import
 org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
@@ -86,4 +86,4 @@ public class MultiView extends JFrame {
 `   seqPanel.setRange(new RangeLocation(1,seq.length()));`  
 ` }`
 
-} </java>
+} ```

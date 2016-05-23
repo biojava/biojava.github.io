@@ -17,7 +17,7 @@ chercher des motifs dans des *Sequences*. Le programme trouve toutes les
 instances d'un motif sur une séquence lue en format FASTA et les
 affichent en sortie standard.
 
-<java> import java.io.BufferedReader; import java.io.FileInputStream;
+```java import java.io.BufferedReader; import java.io.FileInputStream;
 import java.io.InputStreamReader; import java.util.regex.Matcher; import
 java.util.regex.Pattern;
 
@@ -132,4 +132,4 @@ public class MotifLister{
 `   }`  
 ` }`
 
-} </java>
+} ```

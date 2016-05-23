@@ -16,7 +16,7 @@ each time although its composition should be close to 25% of each
 residue. Non uniform distributions can be used to generate biased
 sequences.
 
-<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 import org.biojava.bio.seq.io.\*; import java.io.\*;
 
 public class RandomSequence {
@@ -39,4 +39,4 @@ public class RandomSequence {
 `   }`  
 ` }`
 
-} </java>
+} ```

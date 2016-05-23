@@ -20,7 +20,7 @@ succomber à la tentation de vous construire un miroir de Genbank avec
 une telle technique. Le NCBI s'en rendrait vite compte et pourrait vous
 limiter votre accès...
 
-<java> import org.biojava.bio.BioException; import
+```java import org.biojava.bio.BioException; import
 org.biojava.bio.symbol.SymbolList; import
 org.biojavax.bio.db.ncbi.GenbankRichSequenceDB; import
 org.biojavax.bio.seq.RichSequence;
@@ -52,4 +52,4 @@ public class NCBIFileReader {
 `     }`  
 `  }`
 
-} </java>
+} ```

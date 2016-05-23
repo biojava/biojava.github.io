@@ -19,7 +19,7 @@ L'utilisation d'un *FeatureBlockSequenceRenderer* et d'un
 *FeatureRenderer* sont monté dans le programme ci-dessous. Une capture
 d'écran suit le programme.
 
-<java> import java.awt.\*; import java.awt.event.\*; import
+```java import java.awt.\*; import java.awt.event.\*; import
 javax.swing.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.gui.sequence.\*;
@@ -99,7 +99,7 @@ public class FeatureView extends JFrame {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 [frame|center|Affichage des Features d'une
 séquence](image:Featview.jpg "wikilink")

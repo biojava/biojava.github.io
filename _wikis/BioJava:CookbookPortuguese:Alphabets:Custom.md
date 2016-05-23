@@ -10,7 +10,7 @@ elementos *Symbol*, zero e um. O *Symbol* customizado e o *Alphabet*
 podem ser usados para criar *SymbolList*, *Sequences*, *Distributions*,
 etc.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
 import java.util.\*;
 
 public class Binary {
@@ -52,4 +52,4 @@ public class Binary {
 `   System.out.println(alpha == binary);`  
 ` }`
 
-} </java>
+} ```

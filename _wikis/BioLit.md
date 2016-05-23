@@ -17,7 +17,7 @@ services](http://biolit.ucsd.edu/doc/rest.jsp). For an example see here:
 
 ### Source Code Examples
 
-<java>
+```java
 
 import org.rcsb.biolit.io.TermParser;
 
@@ -46,7 +46,7 @@ public class GetRelated {
 `     }`  
 `  }`
 
-} </java>
+} ```
 
 Running this code will provide you with a list of PDB that have been
 cited in the same article as

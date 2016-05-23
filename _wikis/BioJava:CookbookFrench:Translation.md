@@ -31,7 +31,7 @@ un coup d'oeil sur la [manière de choisir une portion de la
 séquence](BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
 de faire une bonne sélection.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class Translate {
 
@@ -70,4 +70,4 @@ public class Translate {
 `   }`  
 `}`
 
-} </java>
+} ```

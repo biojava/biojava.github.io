@@ -28,19 +28,19 @@ If you want to directly access an array of
 you can use the
 [StructureTools](http://www.biojava.org/docs/api/org/biojava/bio/structure/StructureTools.html)
 
-<java>
+```java
 
 // get all Calpha atoms in the structure Atom[] caAtoms =
 StructureTools.getAtomArray(structure,new String[] {"CA"});
 
-</java>
+```
 
 Another possibility is to use one of the iterators to iterate over
 [Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
 or
 [Groups](http://www.biojava.org/docs/api/org/biojava/bio/structure/Group.html).
 
-<java> public static int getNrAtoms(Structure s){
+```java public static int getNrAtoms(Structure s){
 
 `       int nrAtoms = 0;`  
 `       `  
@@ -54,9 +54,9 @@ or
 `       return nrAtoms;`  
 `   }`
 
-</java>
+```
 
-<java>
+```java
 
 `       AtomIterator iter = new AtomIterator(structure) ;`  
 `       while (iter.hasNext()) {`  
@@ -64,7 +64,7 @@ or
 `           Calc.rotate(atom,rotationmatrix);`  
 `       }`
 
-</java>
+```
 
 Next: <BioJava:CookBook:PDB:atomsCalc> - How to do calculations on
 atoms.

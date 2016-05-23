@@ -58,7 +58,7 @@ would only get you into trouble, up to getting you blacklisted by NCBI.
 The following sample program is slightly modified demo program from
 biojava3-ws module's demo package:
 
-<java> import static
+```java import static
 org.biojava.nbio.ws.alignment.qblast.BlastAlignmentParameterEnum.ENTREZ\_QUERY;
 import java.io.\*; import
 org.biojava.nbio.core.sequence.io.util.IOUtils; import
@@ -126,4 +126,4 @@ outputProps.setOutputOption(BlastOutputParameterEnum.ALIGNMENTS, "200");
 `       }`  
 `   }`
 
-} </java>
+} ```

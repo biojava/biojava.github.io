@@ -38,7 +38,7 @@ user can retrieve
 Example: retrieve registered protein modifications
 --------------------------------------------------
 
-<java> // a protein modification by ID ProteinModification mod =
+```java // a protein modification by ID ProteinModification mod =
 ProteinModificationRegistry.getById("0001");
 
 Set<ProteinModification> mods;
@@ -67,7 +67,7 @@ ProteinModificationRegistry.getByKeyword("phosphoprotein");
 // a set of protein modifications by involved components. mods =
 ProteinModificationRegistry.getByComponent(Component.of("FAD"));
 
-</java>
+```
 
 See also
 --------

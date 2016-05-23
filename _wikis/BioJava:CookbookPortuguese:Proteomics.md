@@ -16,7 +16,7 @@ simples utiliza parametros razoavelmente padroes, porém as funções
 não serão demonstradas aqui. Consulte a API do biojava para informações
 sobre estas opções.
 
-<java> import java.io.BufferedReader; import java.io.FileOutputStream;
+```java import java.io.BufferedReader; import java.io.FileOutputStream;
 import java.io.FileReader; import java.io.PrintWriter;
 
 import org.biojava.bio.BioException; import
@@ -162,4 +162,4 @@ public class CalcMass {
 `   }`  
 ` }`
 
-} </java>
+} ```

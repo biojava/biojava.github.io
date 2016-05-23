@@ -15,7 +15,7 @@ This code will be released with the next biojava release. To use it at
 the moment you will require a [recent build from
 SVN](Autobuild_events "wikilink").
 
-<java> /\*\*
+```java /\*\*
 
 `* @author Andreas Dräger, Universität Tübingen.`  
 `* @since 1.8`  
@@ -112,4 +112,4 @@ public class OBO2GraphViz {
 `       }`  
 `   }`
 
-} </java>
+} ```

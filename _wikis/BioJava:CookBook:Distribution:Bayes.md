@@ -39,7 +39,7 @@ application.
 BayesClassifier.java
 --------------------
 
-<java> /\*
+```java /\*
 
 `* BayesClassifier.java`  
 `*`  
@@ -123,12 +123,12 @@ public class BayesClassifier {
 `       return Math.log(getPriorProb(classificationName))+c.pObservation(obs);                `  
 `   }`
 
-} </java>
+} ```
 
 Classification.java
 -------------------
 
-<java> /\*
+```java /\*
 
 `* Classification.java`  
 `*`  
@@ -196,12 +196,12 @@ class Classification {
 `       return p;`  
 `   }`
 
-} </java>
+} ```
 
 TestRun.java
 ------------
 
-<java> /\*
+```java /\*
 
 `* TestRun.java`  
 `*/`
@@ -299,4 +299,4 @@ public class TestRun {
 `   }`  
 `   `
 
-} </java>
+} ```

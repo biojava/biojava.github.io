@@ -23,7 +23,7 @@ Le programme suivant démontre l'utilisation d'un *FeatureTree*. Il
 prends deux arguments: le premier est le nom du fichier, le deuxième est
 un entier désignant le format des données.
 
-<java> import java.awt.\*; import java.awt.event.\*; import java.io.\*;
+```java import java.awt.\*; import java.awt.event.\*; import java.io.\*;
 
 import javax.swing.\*;
 
@@ -106,4 +106,4 @@ public class TreeFrame extends JFrame {
 `     }`  
 ` }`
 
-} </java>
+} ```

@@ -72,7 +72,7 @@ disponibles comme *String* statiques dans la classe *TranslationTools*.
 L'exemple suivant montre comment utiliser le code génétique pour la
 traduction des gènes nucléaire chez les Euplotides (ici, UGA = Cys).
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SingleTranslationDemo {
 
@@ -105,4 +105,4 @@ public class SingleTranslationDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```

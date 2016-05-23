@@ -44,7 +44,7 @@ from the [BioJavax](BioJava:BioJavaXDocs "wikilink") extension, which
 provides several tools to work with circular locations and has been
 extensively tested.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SpecifyCircular {
 
@@ -77,4 +77,4 @@ public class SpecifyCircular {
 `   }`  
 ` }`
 
-} </java>
+} ```

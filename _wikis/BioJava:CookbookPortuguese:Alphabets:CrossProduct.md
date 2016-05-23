@@ -22,7 +22,7 @@ em um objeto *Distribution*.
 com o auxilio da Classe *Collections*. Ambas as possibilidades são
 mostradas no exemplo abaixo:
 
-<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+```java import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
 
 public class CrossProduct {
@@ -41,4 +41,4 @@ public class CrossProduct {
 `   System.out.println(codon == codon2);`  
 ` }`
 
-} </java>
+} ```

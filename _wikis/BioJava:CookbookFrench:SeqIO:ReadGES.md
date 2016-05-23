@@ -15,7 +15,7 @@ collections de séquences avec des ressources modestes.
 
 ### Lire un fichier GenBank
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadGB {
@@ -51,11 +51,11 @@ public class ReadGB {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Lire un fichier SwissProt
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadSwiss {
@@ -92,11 +92,11 @@ public class ReadSwiss {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Lire un fichier EMBL
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 import java.io.\*; import org.biojava.bio.\*; import java.util.\*;
 
 public class ReadEMBL {
@@ -132,11 +132,11 @@ public class ReadEMBL {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### GeneralReader, un lecteur générique (avec BioJava 1.3)
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -199,4 +199,4 @@ public class GeneralReader {
 `   }`  
 ` }`
 
-} </java>
+} ```

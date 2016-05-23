@@ -34,7 +34,7 @@ un gruppo di residui di una data sequenza peptidica (in questo esempio
 la sequenza contiene solamente 20 residui) sulla base della tavola
 *CIDH920105* preso dall'indice *aaindex1*:
 
-<java> public class Test {
+```java public class Test {
 
 `   public static void main(String[] args) {`  
 `             AAindexStreamReader aai = AAindexStreamReader(new FileReader("aaindex1"));`  
@@ -48,4 +48,4 @@ la sequenza contiene solamente 20 residui) sulla base della tavola
 `             System.out.println("Average hydrophobicity: " + Double.toString(hp / symbols.length()));`  
 `       }`
 
-} </java>
+} ```

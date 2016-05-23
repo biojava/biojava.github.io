@@ -30,7 +30,7 @@ FASTA.
 [link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
-<java> import java.io.BufferedReader; import java.io.File; import
+```java import java.io.BufferedReader; import java.io.File; import
 java.io.FileOutputStream; import java.io.FileReader; import
 java.io.IOException; import java.io.PrintStream; import
 java.util.NoSuchElementException;
@@ -160,4 +160,4 @@ public class Hex {
 `           + "CCAACTCAGAGCTCCCCTTCTACTTGCTCCATATGGAACCTGCTCGTTTATGGAATTTGCTCTGCCACCAGTAACAGTCA"`  
 `           + "ATAAACTTCAAGGAAAATGAAAAAAAA";`
 
-} </java>
+} ```

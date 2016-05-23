@@ -23,7 +23,7 @@ IllegalArgumentException. Segui questo
 [link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class Translate {
 
@@ -55,4 +55,4 @@ public class Translate {
 `    }`  
 `  }`
 
-} </java>
+} ```

@@ -15,7 +15,7 @@ comprendre ce qui se passe sous le capot.
 
 Il y a plusieurs façons de faire, mais une seule est présentée ici.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SingleTranslationDemo {
 
@@ -49,4 +49,4 @@ public class SingleTranslationDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```

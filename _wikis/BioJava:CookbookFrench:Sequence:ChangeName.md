@@ -16,7 +16,7 @@ agissant en wrapper, intercepte certains des appels de méthodes à la
 *Sequence* sous-jacente et donne la possibilité de changer le nom. Le
 programme suivant montre la manière de faire.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*; import
 org.biojava.bio.symbol.\*;
@@ -44,4 +44,4 @@ public class NameChange {
 `   }`  
 ` }`
 
-} </java>
+} ```

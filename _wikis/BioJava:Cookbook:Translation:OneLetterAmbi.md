@@ -15,7 +15,7 @@ amino acids in the sequence we look at).
 This sample code shows how to retrieve the 1-Letter code needed for this
 annotation at every position of the translated sequence:
 
-<java> import java.util.Iterator; import org.biojava.bio.BioException;
+```java import java.util.Iterator; import org.biojava.bio.BioException;
 import org.biojava.bio.seq.DNATools; import
 org.biojava.bio.seq.io.SymbolTokenization; import
 org.biojava.bio.symbol.Alphabet; import
@@ -63,4 +63,4 @@ public class Main {
 `       }`  
 `   }`
 
-} </java>
+} ```

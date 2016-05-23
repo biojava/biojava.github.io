@@ -21,7 +21,7 @@ L'usage d'un *RulerRenderer* et d'un *MultiLineRenderer* est montré dans
 le programme ci-dessous. Un exemple d'affichage de l'interface graphique
 se trouve sous le programme.
 
-<java> import java.awt.\*; import java.awt.event.\*; import
+```java import java.awt.\*; import java.awt.event.\*; import
 javax.swing.\*;
 
 import org.biojava.bio.gui.sequence.\*; import org.biojava.bio.seq.\*;
@@ -83,7 +83,7 @@ public class MultiView extends JFrame {
 `   seqPanel.setRange(new RangeLocation(1,seq.length()));`  
 ` }`
 
-} </java>
+} ```
 
 [frame|center|Affichage du système de coordonnées d'une
 séquence](image:Multiview.jpg "wikilink")

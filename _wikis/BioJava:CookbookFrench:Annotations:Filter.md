@@ -18,7 +18,7 @@ selon l'espèce. La même recette de base peut être utilisé, avec quelques
 modifications, pour rechercher n'importe quelle propriété d'une
 *Annotation*.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.db.\*; import org.biojava.bio.seq.io.\*;
@@ -61,4 +61,4 @@ public class FilterEMBLBySpecies {
 `   }`  
 ` }`
 
-} </java>
+} ```

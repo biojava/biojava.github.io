@@ -19,7 +19,7 @@ en question est supposé provenir. Dans le cas de la création du *Symbol*
 Y, l'ensemble (Set) utilisé comme argument contiendra les *Symbols* 'C'
 et 'T' de l*'Alphabet* ADN.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 import java.util.\*;
 
 public class Ambiguity { public static void main(String[] args) { try {
@@ -56,4 +56,4 @@ public class Ambiguity { public static void main(String[] args) { try {
 `   }`  
 ` }`
 
-} </java>
+} ```

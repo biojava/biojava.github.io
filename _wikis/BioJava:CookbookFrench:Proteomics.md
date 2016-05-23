@@ -18,7 +18,7 @@ sont pas montré ici. Consulter
 l'[API](http://www.biojava.org/docs/api14/index.html) de Biojava afin
 d'en savoir plus.
 
-<java> import java.io.BufferedReader; import java.io.FileOutputStream;
+```java import java.io.BufferedReader; import java.io.FileOutputStream;
 import java.io.FileReader; import java.io.PrintWriter;
 
 import org.biojava.bio.BioException; import
@@ -174,4 +174,4 @@ public class CalcMass {
 `   }`  
 ` }`
 
-} </java>
+} ```

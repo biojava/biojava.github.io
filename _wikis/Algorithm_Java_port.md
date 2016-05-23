@@ -8,8 +8,7 @@ Possible Java ports of Algorithms
 We would be interested in having Java ports of the following algorithms:
 
 `- Blast`  
-`- Hmmer3`  
-`- Dssp (some parts already available)`
+`- Hmmer3`
 
 ### Couple of tools that might be useful for porting to Java
 

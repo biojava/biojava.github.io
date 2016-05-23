@@ -14,7 +14,7 @@ utilisant des méthodes statiques retrouvées dans les classes *DNATools*,
 *RNATools* et *ProteinTools* respectivement. Ces deux approches sont
 utilisées dans l'exemple ci-dessous.
 
-<java> import org.biojava.bio.symbol.\*; import java.util.\*; import
+```java import org.biojava.bio.symbol.\*; import java.util.\*; import
 org.biojava.bio.seq.\*;
 
 public class AlphabetExample{
@@ -44,4 +44,4 @@ public class AlphabetExample{
 `    prot = ProteinTools.getTAlphabet();`  
 `  }`
 
-} </java>
+} ```

@@ -34,7 +34,7 @@ Seguendo questo
 [link](http://www.ncbi.nlm.nih.gov/nuccore/146274?report=genbank) è
 possibile scaricare alcuni file di esempio.
 
-<java> import java.io.BufferedReader; import java.io.FileReader;
+```java import java.io.BufferedReader; import java.io.FileReader;
 
 import org.biojavax.SimpleNamespace; import
 org.biojavax.bio.seq.RichSequence; import
@@ -72,4 +72,4 @@ public class ReadGES\_BJ1\_6{
 `       }`  
 `   }`
 
-} </java>
+} ```

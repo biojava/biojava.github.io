@@ -24,7 +24,7 @@ objects
 
 ### FastaParser.java
 
-<java> /\*
+```java /\*
 
 `* FastaParser.java`  
 `*`  
@@ -116,11 +116,11 @@ public class FastaParser {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### FastaEcho.java
 
-<java> import java.io.FileInputStream; import java.io.IOException;
+```java import java.io.FileInputStream; import java.io.IOException;
 import org.biojava.bio.program.sax.FastaSearchSAXParser; import
 org.biojava.bio.program.ssbind.SeqSimilarityAdapter; import
 org.biojava.bio.search.SearchContentAdapter; import
@@ -201,4 +201,4 @@ public class FastaEcho {
 `   fastaEcho.echo(is); `  
 ` } `
 
-} </java>
+} ```

@@ -67,7 +67,7 @@ au bon moment. Finalement, elle peut aussi être utile si vous aviez à
 écrire un objet *SeqIOListener* spécifique en vous montrant quels
 signaux vous avez à bloquer/écouter/modifier.
 
-<java> /\*
+```java /\*
 
 `* SeqIOEcho.java`  
 `*`  
@@ -222,4 +222,4 @@ public class SeqIOEcho implements SeqIOListener {
 `       `  
 `   }`
 
-} </java>
+} ```

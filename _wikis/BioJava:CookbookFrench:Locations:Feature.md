@@ -30,7 +30,7 @@ Les gabarits de *Feature* peuvent être crées de novo ou copiés à partir
 d'un *Feature* déjà existant; l'exemple qui suit montre les deux
 méthodes.
 
-<java> import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
+```java import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
 
 public class MakeAFeature {
@@ -76,4 +76,4 @@ public class MakeAFeature {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -35,7 +35,7 @@ available as static Strings in the TranslationTools class.
 The following program shows the use of the Euplotid Nuclear translation
 table (where UGA = Cys).
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class AlternateTranslation {
 
@@ -65,4 +65,4 @@ public class AlternateTranslation {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -19,7 +19,7 @@ AlignmentPanel\_II class:
 
 ![](Alignment_II.gif "Alignment_II.gif")
 
-<java> //Load the Java libraries import java.awt.\*; import
+```java //Load the Java libraries import java.awt.\*; import
 java.awt.event.\*; import java.awt.geom.\*; import java.util.\*; import
 javax.swing.\*; //Load the BioJava libraries import org.biojava.bio.\*;
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*; import
@@ -208,4 +208,4 @@ public class AlignmentPanel\_II extends JFrame {
 `   new AlignmentPanel_II();`  
 ` }`
 
-} </java>
+} ```

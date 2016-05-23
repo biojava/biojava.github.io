@@ -19,7 +19,7 @@ totale) viene sollevata una eccezione di tipo IndexOutOfBoundsException.
 
 ### Ottenere una Sub - Sequence
 
-<java>
+```java
 
 `   SymbolList symL = null;`
 
@@ -34,21 +34,21 @@ totale) viene sollevata una eccezione di tipo IndexOutOfBoundsException.
 `   //le ultime tre basi`  
 `   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
 
-</java>
+```
 
 ### Stampa una Sub - Sequence
 
-<java>
+```java
 
 `   //stampo le ultime tre basi di una SymbolList o di una Sequence`  
 `   String s = symL.subStr(symL.length() - 3, symL.length());`  
 `   System.out.println(s);`
 
-</java>
+```
 
 ### Codice completo
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SubSequencing {
 
@@ -77,4 +77,4 @@ public class SubSequencing {
 `   System.out.println(s);`  
 ` }`
 
-} </java>
+} ```

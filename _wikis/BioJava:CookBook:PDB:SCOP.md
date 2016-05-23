@@ -20,7 +20,7 @@ increase memory by adding the VM argument:
 Print all SCOP domains for a protein structure
 ----------------------------------------------
 
-<java> public void printDomainsForPDB(){
+```java public void printDomainsForPDB(){
 
 `     String cacheLocation = "/tmp/";`  
 `     String pdbId = "4HHB";`  
@@ -32,7 +32,7 @@ Print all SCOP domains for a protein structure
 
 `     System.out.println(domains);`
 
-} </java>
+} ```
 
 prints:
 
@@ -47,7 +47,7 @@ Traverse the SCOP hierarchy
 This examples loads a domain and traverses through its hierarchy in
 SCOP.
 
-<java> private void traverseHierarchy()
+```java private void traverseHierarchy()
 
 `  {`  
 `     String cacheLocation = "/tmp/";`  
@@ -69,7 +69,7 @@ SCOP.
 `     }`  
 `     `
 
-} </java>
+} ```
 
 Produces this output:
 
@@ -96,7 +96,7 @@ Produces this output:
 Print various SCOP categories
 -----------------------------
 
-<java> public void getCategories(){
+```java public void getCategories(){
 
 `     String cacheLocation = "/tmp/";`  
 `     `  
@@ -110,7 +110,7 @@ Print various SCOP categories
 `     System.out.println("Total nr. of folds:" + folds.size());  `  
 `}`
 
-</java>
+```
 
 prints
 
@@ -123,7 +123,7 @@ Load a SCOP superfamily and align the first domain against all others
 This example loads a superfamily from SCOP and aligns the first domain
 in this family against all others.
 
-<java>
+```java
 
 `public void alignSuperfamily(){`  
 `     `  
@@ -181,4 +181,4 @@ in this family against all others.
 `        }`  
 `     }`
 
-} </java>
+} ```

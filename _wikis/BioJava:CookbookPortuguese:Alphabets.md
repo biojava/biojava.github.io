@@ -17,7 +17,7 @@ métodos estáticos das Classes *DNATools*, *RNATools* e respectivamente
 
 Ambas abordagens são apresentadas no exemplo abaixo:
 
-<java> import org.biojava.bio.symbol.\*; import java.util.\*; import
+```java import org.biojava.bio.symbol.\*; import java.util.\*; import
 org.biojava.bio.seq.\*;
 
 public class AlphabetExample {
@@ -44,4 +44,4 @@ public class AlphabetExample {
 `   prot = ProteinTools.getTAlphabet();`  
 ` }`
 
-} </java>
+} ```

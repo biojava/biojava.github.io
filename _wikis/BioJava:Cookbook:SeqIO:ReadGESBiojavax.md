@@ -28,7 +28,7 @@ RNA or protein) in the following format:
 This class also has a method, *readFile*, that can read a file while
 guessing its format.
 
-<java> import java.io.BufferedReader; import java.io.FileReader;
+```java import java.io.BufferedReader; import java.io.FileReader;
 
 import org.biojavax.SimpleNamespace; import
 org.biojavax.bio.seq.RichSequence; import
@@ -66,4 +66,4 @@ public class ReadGES\_BJ1\_6{
 `       }`  
 `   }`
 
-} </java>
+} ```

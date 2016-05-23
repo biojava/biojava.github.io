@@ -23,7 +23,7 @@ puisque les classes *XMLDistributionWriter* et *XMLDistributionReader*
 sont de nouvelles additions. La version 1.3 ou plus récente est
 suffisante.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 
@@ -58,4 +58,4 @@ public class Dist2XMLandBack { public static void main(String[] args) {
 `   }`  
 ` }`
 
-} </java>
+} ```

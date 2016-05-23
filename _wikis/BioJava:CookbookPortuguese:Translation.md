@@ -21,7 +21,7 @@ uma sequência de RNA não há necessidade de transcreve-la.
 Sequence e o seu comprimento não seja divisível por três, será disparada
 uma *IllegalArgumentException*.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class Translate {
 
@@ -55,4 +55,4 @@ public class Translate {
 `    }`  
 `  }`
 
-} </java>
+} ```

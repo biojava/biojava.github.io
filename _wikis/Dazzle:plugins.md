@@ -94,7 +94,7 @@ creating a Bio::DB::GFF database and populating it with annotation data.
 
 The Ldas plugin has class name
 
-<java>org.biojava.servlets.dazzle.datasource.LdasDataSource</java>
+```javaorg.biojava.servlets.dazzle.datasource.LdasDataSource```
 
 The following properties are available:
 

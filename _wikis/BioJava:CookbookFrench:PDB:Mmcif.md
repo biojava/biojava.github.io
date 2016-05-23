@@ -16,7 +16,7 @@ PDB](BioJava:CookbookFrench:PDB:Read "wikilink").
 Pour lire un fichier en format mmCif, simplement utilisé le code
 suivant:
 
-<java> @depuis 1.7
+```java @depuis 1.7
 
 `   public static void main(String[] args){`  
 `       String file = "/path/to/myfile.cif.gz";`  
@@ -30,7 +30,7 @@ suivant:
 `       }`  
 `   }`
 
-</java>
+```
 
 Lire un fichier pour en créer un structure de données personalisée
 ------------------------------------------------------------------
@@ -42,7 +42,7 @@ votre propre modèle de données mais il vous faudra implémenter
 [l'interface
 MMcifConsumer](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html).
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `       String fileName = args[0];`  
 `       `  
@@ -69,7 +69,7 @@ MMcifConsumer](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/
 
 }
 
-</java>
+```
 
 Pour plus d'information sur le modèle de données structurale de BioJava,
 jetez un coup d'oeil [ici](BioJava:CookbookFrench:PDB:Atom "wikilink").

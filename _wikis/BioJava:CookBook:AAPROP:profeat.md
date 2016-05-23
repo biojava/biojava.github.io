@@ -27,7 +27,7 @@ IProfeatProperties class.
 Short Example 1: Computing composition of the various grouping for all seven attributes
 ---------------------------------------------------------------------------------------
 
-<java> String sequence =
+```java String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 Map<ATTRIBUTE, Map<GROUPING, Double>\> attribute2Grouping2Double =
 ProfeatProperties.getComposition(sequence); for(ATTRIBUTE
@@ -39,12 +39,12 @@ a:attribute2Grouping2Double.keySet()){
 `   System.out.println("GROUP3 = " + attribute2Grouping2Double.get(a).get(GROUPING.GROUP3));`  
 `   System.out.println();`
 
-} </java>
+} ```
 
 Short Example 2: Computing the number of transition between various grouping for all seven attribute with respect to the length of sequence
 -------------------------------------------------------------------------------------------------------------------------------------------
 
-<java> String sequence =
+```java String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 Map<ATTRIBUTE, Map<TRANSITION, Double>\> attribute2Transition2Double =
 ProfeatProperties.getTransition(sequence); for(ATTRIBUTE
@@ -59,12 +59,12 @@ a:attribute2Transition2Double.keySet()){
 `   System.out.println("2<=>3 = " + attribute2Transition2Double.get(a).get(TRANSITION.BETWEEN_23));`  
 `   System.out.println();`
 
-} </java>
+} ```
 
 Short Example 3: Computing the position with respect to the sequence where the given distribution of the grouping can be found
 ------------------------------------------------------------------------------------------------------------------------------
 
-<java> String[] sequences = new String[3]; String sequence =
+```java String[] sequences = new String[3]; String sequence =
 "QIKDLLVSSSTDLDTTLVLVNAIYFKGMWKTAFNAEDTREMPFHVTKQESKPVQMMCMNNSFNVATLPAE";
 Map<ATTRIBUTE , Map<GROUPING, Map<DISTRIBUTION, Double>\>\>
 attribute2Grouping2Distribution2Double =
@@ -76,4 +76,4 @@ a:attribute2Grouping2Distribution2Double.keySet()){
 `   System.out.println("GROUP2 = " + attribute2Grouping2Distribution2Double.get(a).get(GROUPING.GROUP2));`  
 `   System.out.println("GROUP3 = " + attribute2Grouping2Distribution2Double.get(a).get(GROUPING.GROUP3));`
 
-} </java>
+} ```

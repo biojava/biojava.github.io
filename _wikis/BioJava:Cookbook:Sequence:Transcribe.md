@@ -9,7 +9,7 @@ In BioJava DNA and RNA Sequences and SymbolLists are made using
 different Alphabets you can convert from DNA to RNA using the static
 method transcribe() in RNATools.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class TranscribeDNAtoRNA {
 
@@ -37,4 +37,4 @@ public class TranscribeDNAtoRNA {
 `     }`  
 `  }`
 
-} </java>
+} ```

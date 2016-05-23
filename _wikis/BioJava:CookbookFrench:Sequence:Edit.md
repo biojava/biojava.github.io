@@ -22,7 +22,7 @@ dépendent. La meilleure stratégie dans ce cas est de faire une copie des
 *Symbols* dans la *Sequence* ou *SymbolList* et modifier la copie. Ceci
 est démontré dans l'example de code ci-dessous.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class EditExamples {
 
@@ -81,4 +81,4 @@ public class EditExamples {
 `   System.out.println(syms.seqString());`  
 ` }`
 
-} </java>
+} ```

@@ -28,7 +28,7 @@ Learn more about this JavaWebStart example at <BioJava:Performance>
 Code
 ----
 
-<java>
+```java
 
 ` public static void main(String[] args){`
 
@@ -102,7 +102,7 @@ Code
 `           e.printStackTrace();`  
 `       }`
 
-} </java>
+} ```
 
 You can send the structure alignment for display to Jmol. see
 <BioJava:CookBook:PDB:Jmol> for more on this.

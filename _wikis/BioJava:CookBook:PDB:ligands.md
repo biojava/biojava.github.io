@@ -2,7 +2,7 @@
 title: BioJava:CookBook:PDB:ligands
 ---
 
-<java>
+```java
 
 `        //get a structure`  
 `        Structure struct = structure;`  
@@ -23,7 +23,7 @@ title: BioJava:CookBook:PDB:ligands
 `               }`  
 `           }`
 
-</java>
+```
 
 *n.b.* StructureTools.findBonds() is currently under development and
 will **not** give chemically correct answers. However, it will give very

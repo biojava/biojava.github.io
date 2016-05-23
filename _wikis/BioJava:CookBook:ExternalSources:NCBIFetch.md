@@ -20,7 +20,7 @@ shoulder and might limit your access if you are too greedy of their
 bandwith. Do not use these objects/methods to build a mirror copy of
 GenBank...
 
-<java> import org.biojava.bio.BioException; import
+```java import org.biojava.bio.BioException; import
 org.biojava.bio.symbol.SymbolList; import
 org.biojavax.bio.db.ncbi.GenbankRichSequenceDB; import
 org.biojavax.bio.seq.RichSequence;
@@ -52,4 +52,4 @@ public class NCBIFileReader {
 `     }`  
 `  }`
 
-} </java>
+} ```

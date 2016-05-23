@@ -37,7 +37,7 @@ come Stringhe costanti della classe TranslationTools.
 Il seguente programma mostra l'utilizzo della tavola di traduzione
 relativa a Euplotid Nuclear (dove UGA = Cys).
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class AlternateTranslation {
 
@@ -67,4 +67,4 @@ public class AlternateTranslation {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -46,7 +46,7 @@ tout petit programme pour accomplir la tâche en démonstration.
 BayesClassifier.java
 --------------------
 
-<java> /\*
+```java /\*
 
 `* BayesClassifier.java`  
 `*`  
@@ -135,7 +135,7 @@ public class BayesClassifier {
 Classification.java
 -------------------
 
-<java> /\*
+```java /\*
 
 `* Classification.java`  
 `*`  
@@ -209,7 +209,7 @@ class Classification {
 TestRun.java
 ------------
 
-<java> /\*
+```java /\*
 
 `* TestRun.java`  
 `*/`

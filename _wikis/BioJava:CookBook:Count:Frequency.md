@@ -16,7 +16,7 @@ BasisSymbol.
 The following program demonstrates the training of three Distributions
 with Sequences from three different Alphabets.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 import org.biojava.bio.dist.\*; import org.biojava.utils.\*; import
 java.util.\*;
 
@@ -82,4 +82,4 @@ public class Frequency {
 `   }`  
 ` }`
 
-} </java>
+} ```

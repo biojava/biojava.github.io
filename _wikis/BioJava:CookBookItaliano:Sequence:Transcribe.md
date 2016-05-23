@@ -9,7 +9,7 @@ In BioJava le Sequences/SymbolList di DNA e RNA sono generate
 utilizzando alfabeti diversi. E' possibile passare da un alfabeto DNA a
 uno RNA utilizzando il metodo transcribe() in RNATools.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class TranscribeDNAtoRNA {
 
@@ -38,4 +38,4 @@ public class TranscribeDNAtoRNA {
 `     }`  
 `  }`
 
-} </java>
+} ```

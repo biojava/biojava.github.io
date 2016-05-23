@@ -20,7 +20,7 @@ une base de données BioSQL, comment y ajouter une séquence, comme faire
 une recherche sur la base de données et comment éliminer cette séquence
 de la base de données.
 
-<java> import org.biojava.bio.BioException; import
+```java import org.biojava.bio.BioException; import
 org.biojava.bio.seq.DNATools; import org.biojava.bio.seq.Sequence;
 import org.biojava.bio.seq.db.biosql.BioSQLSequenceDB; import
 org.biojava.utils.ChangeVetoException; import
@@ -100,4 +100,4 @@ public class Connect {
 `   } `  
 ` } `
 
-} </java>
+} ```

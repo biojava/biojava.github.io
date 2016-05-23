@@ -15,7 +15,7 @@ visualiser un alignement structurel de protéines selon cette
 La classe BiojavaJmol permet l'affichage très simple d'un objet de type
 Structure, si JMol se trouve dans votre classpath.
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `       try {`
 
@@ -40,7 +40,7 @@ Structure, si JMol se trouve dans votre classpath.
 `       }`  
 `   }`
 
-</java>
+```
 
 Un exemple plus long
 --------------------
@@ -49,7 +49,7 @@ D'autres exemples plus complexes des interactions possibles entre
 BioJava et Jmol se trouve [dans le repertoire SVN de
 SPICE](http://www.derkholm.net/svn/repos/spice/trunk/src/org/biojava/spice/jmol/).
 
-<java> /\*
+```java /\*
 
 Jmol.jar doit etre dans votre classpath pour que cet exemple fonctionne.
 Vous pouvez l'obtenir a <http://jmol.sourceforge.net>
@@ -180,4 +180,4 @@ public class SimpleJmolExample {
 `       }`  
 `   }`
 
-} </java>
+} ```

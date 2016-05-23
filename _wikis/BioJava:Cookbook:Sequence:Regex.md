@@ -14,7 +14,7 @@ Java's built-in regular expression functionality.
 
 A simple program is implemented below:
 
-<java> // Biojava imports import org.biojava.bio.\*;
+```java // Biojava imports import org.biojava.bio.\*;
 
 public class AmbiguitySearch {
 
@@ -51,13 +51,13 @@ public class AmbiguitySearch {
 `       }`  
 `   }`
 
-} </java>
+} ```
 
 Alternatively, the following example from Andy Hammer demonstrates how
 the java regular expression functionality can be used directly to search
 a String object for pattern matches.
 
-<java> /\*\*
+```java /\*\*
 
 `* MotifLister.java`  
 `* Modified slightly from the original by Andy Hammer`  
@@ -170,4 +170,4 @@ import org.biojava.\* public class MotifLister{
 `   }`  
 ` }`
 
-} </java>
+} ```

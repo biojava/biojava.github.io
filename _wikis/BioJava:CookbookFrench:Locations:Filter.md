@@ -15,7 +15,7 @@ passé à travers le *FeatureFilter*.
 
 L'exemple suivant montre l'utilisation d'un *FeatureFilter* "by Type".
 
-<java> import java.util.\*;
+```java import java.util.\*;
 
 import org.biojava.bio.seq.\*;
 
@@ -41,4 +41,4 @@ public class FilterByType {
 `   }`  
 ` }`
 
-} </java>
+} ```

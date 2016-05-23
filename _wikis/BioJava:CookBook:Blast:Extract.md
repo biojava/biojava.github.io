@@ -20,7 +20,7 @@ The code snippet below shows a private method that would take a List
 produced by a BLAST or FASTA parser and then extracts the hit id
 (subject id), its bit score and its e score.
 
-<java>
+```java
 
 ` private static void formatResults(List results){`
 
@@ -40,4 +40,4 @@ produced by a BLAST or FASTA parser and then extracts the hit id
 `   }`  
 ` }`
 
-</java>
+```

@@ -21,7 +21,7 @@ and a SequenceRenderer to display the symbols in a Sequence.
 
 [frame|center|A screen shot of the GUI](image:Seqview.jpg "wikilink")
 
-<java> import java.awt.\*; import java.awt.event.\*;
+```java import java.awt.\*; import java.awt.event.\*;
 
 import javax.swing.\*;
 
@@ -85,4 +85,4 @@ public class SeqView extends JFrame {
 `   }`  
 ` }`
 
-} </java>
+} ```

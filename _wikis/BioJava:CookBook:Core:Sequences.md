@@ -8,11 +8,11 @@ examples:
 Sequence objects can be created by providing a string representation as
 an input to the constructor:
 
-<java> ProteinSequence seq = new
-ProteinSequence("MSTNPKPQRKTKRNTNRRPQDVKFPGG"); </java>
+```java ProteinSequence seq = new
+ProteinSequence("MSTNPKPQRKTKRNTNRRPQDVKFPGG"); ```
 
 Fetch a protein sequence based on a UniProt accession code from UniProt.
-<java> String uniProtID = "P26663";
+```java String uniProtID = "P26663";
 
 // we will tell the UniProt proxy class that we are expecting a sequence
 that is an amino acid AminoAcidCompoundSet set =
@@ -23,4 +23,4 @@ UniprotProxySequenceReader<AminoAcidCompound> uniprotSequence = new
 UniprotProxySequenceReader<AminoAcidCompound>(uniProtID,set);
 
 // and make a protein sequence out of it ProteinSequence seq = new
-ProteinSequence(uniprotSequence); </java>
+ProteinSequence(uniprotSequence); ```

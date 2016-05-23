@@ -16,7 +16,7 @@ objet de type *HashMap*, entre chacun des *Symbol* et son entropie
 correspondant. Le programme suivant calcule les deux paramètres pour une
 *Distribution* très biaisée.
 
-<java> import java.util.\*; import org.biojava.bio.dist.\*; import
+```java import java.util.\*; import org.biojava.bio.dist.\*; import
 org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class Entropy {
@@ -59,4 +59,4 @@ public class Entropy {
 `   }`  
 ` }`
 
-} </java>
+} ```

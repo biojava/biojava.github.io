@@ -14,13 +14,13 @@ example of taking a BioJava3 MultipleSequenceAlignment and constructing
 a Neighbor Joining tree using Percent Identity Difference to calculate
 the Distance Matrix between all sequences.
 
-<java>
+```java
 
 `           TreeConstructor`<ProteinSequence, AminoAcidCompound>` treeConstructor = new TreeConstructor`<ProteinSequence, AminoAcidCompound>`(multipleSequenceAlignment, TreeType.NJ, TreeConstructionAlgorithm.PID, new ProgessListenerStub());`  
 `           treeConstructor.process();`  
 `           String newick = treeConstructor.getNewickString(true, true);`
 
-</java>
+```
 
 The TreeConstructor class is a Biojava3 class that handles the
 complexity of using the forester library and serves as a convenience

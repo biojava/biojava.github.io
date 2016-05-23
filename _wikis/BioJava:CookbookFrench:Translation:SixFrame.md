@@ -21,7 +21,7 @@ L'exemple suivant montre un simpe programme qui traduira les six cadres
 de lecture de toutes les séquences contenues dans un fichier pour en
 imprimer les résultats sur la console en format FASTA.
 
-<java> import java.io.BufferedReader; import java.io.FileReader;
+```java import java.io.BufferedReader; import java.io.FileReader;
 
 import org.biojava.bio.Annotation; import org.biojava.bio.seq.DNATools;
 import org.biojava.bio.seq.RNATools; import
@@ -112,4 +112,4 @@ public class Hex {
 `   }`  
 ` }`
 
-} </java>
+} ```

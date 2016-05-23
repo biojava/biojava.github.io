@@ -22,7 +22,7 @@ like:
 See also the [example
 page](http://www.spice-3d.org/hibernatePDB/examples.jsp)
 
-<java>
+```java
 
 import org.biojava.nbio.structure.Chain; import
 org.biojava.nbio.structure.Compound; import
@@ -231,4 +231,4 @@ public class DemoWritePDBFiles {
 
 `   }`
 
-} </java>
+} ```

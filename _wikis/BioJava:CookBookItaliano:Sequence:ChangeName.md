@@ -21,7 +21,7 @@ ViewSequence può essere chiamata come vogliamo.
 
 Il codice sequente mostra quanto detto sopra:
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*; import
 org.biojava.bio.symbol.\*;
@@ -48,4 +48,4 @@ public class NameChange {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -39,7 +39,7 @@ une séquence de protéine (l'exemple ici contient les 20 acides aminés)
 en utilisant l'information contenue dans la table CIDH920105 du fichier
 *aaindex1*:
 
-<java> import org.biojava.seq.\*; import org.biojava.symbol.\*; import
+```java import org.biojava.seq.\*; import org.biojava.symbol.\*; import
 org.biojava.bio.proteomics.aaindex.\*;
 
 public class PropertyCalculator {
@@ -65,4 +65,4 @@ public class PropertyCalculator {
 `   System.out.println("Average hydrophobicity: " + (hp / symbols.length()));`  
 ` }`
 
-} </java>
+} ```

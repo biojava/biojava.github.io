@@ -58,7 +58,7 @@ need to block/ listen-for / modify.
 
 ### SeqIOEcho.java
 
-<java> /\*
+```java /\*
 
 `* SeqIOEcho.java`  
 `*`  
@@ -213,4 +213,4 @@ public class SeqIOEcho implements SeqIOListener {
 `       `  
 `   }`
 
-} </java>
+} ```

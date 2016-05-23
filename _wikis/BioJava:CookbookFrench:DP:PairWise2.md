@@ -73,7 +73,7 @@ méthode.
 Une démo des classes d'alignement global et local
 -------------------------------------------------
 
-<java> import java.io.File;
+```java import java.io.File;
 
 import org.biojava.bio.alignment.NeedlemanWunsch; import
 org.biojava.bio.alignment.SequenceAlignment; import

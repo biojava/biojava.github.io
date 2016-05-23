@@ -14,7 +14,7 @@ l'alphabet conditionné est de 1.
 
 Contribution de Russel Smithies.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.dist.\*; import
 org.biojava.bio.symbol.\*; import org.biojava.utils.\*;
@@ -50,12 +50,12 @@ public class DistTest {
 
 `   }`
 
-</java>
+```
 
 Créer une *OrderNDstribution* qui utilise l*'Alphabet* Dwarf fraichement
 crée.
 
-<java>
+```java
 
 `   // ordre de la distribution`  
 `   int order = 3;`
@@ -74,7 +74,7 @@ crée.
 `   // enregistrer la Distribution avec l'entraineur`  
 `   dtc.registerDistribution(ond);`
 
-</java>
+```
 
 Voici comment créer une *SymbolList* à partir de l'alphabet Dwarf pour
 pouvoir tester notre nouvelle *OrderNDistribution*. Ceci se fait en
@@ -82,7 +82,7 @@ fabriquant une *UniformDistribution* échantillonnée de manière aléatoire
 et en ajoutant les *Symbols* dans une *ArrayList*. L*'ArrayList* est
 ensuite utilisée pour construire la *SymbolList*.
 
-<java>
+```java
 
 `   // créer une SymbolList aléatoire de nains`  
 `   UniformDistribution udist = `  
@@ -98,12 +98,12 @@ ensuite utilisée pour construire la *SymbolList*.
 `   // créer une SymbolList pour tester la Distribution`  
 `   SymbolList symbl = new SimpleSymbolList(dwarfAlphabet, list);`
 
-</java>
+```
 
 La *SymbolList* est ensuite convertie en *OrderNSymbolList* pour
 permettre à une *OrderNDistribution* d'être creer avec elle.
 
-<java>
+```java
 
 `   // convertir en OrderNSymbolList`  
 `   symbl = SymbolListViews.orderNSymbolList(symbl, order);`
@@ -130,4 +130,4 @@ permettre à une *OrderNDistribution* d'être creer avec elle.
 `   writer.writeDistribution(ond, new FileOutputStream("dwarf.xml"));`  
 ` }`
 
-} </java>
+} ```

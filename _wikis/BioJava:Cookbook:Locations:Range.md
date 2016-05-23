@@ -15,7 +15,7 @@ Note that, as of BioJava 1.8, you may want to consider using
 [RichLocation](http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichLocation.html)
 from the [BioJavax](BioJava:BioJavaXDocs "wikilink") extension.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class SpecifyRange {
 
@@ -40,4 +40,4 @@ public class SpecifyRange {
 `   }`  
 ` }`
 
-} </java>
+} ```

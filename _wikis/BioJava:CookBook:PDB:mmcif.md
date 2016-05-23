@@ -133,7 +133,7 @@ load your own, custom data structures. For this you will require to
 implement the [MMcifConsumer
 interface](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
 
-<java> @since 1.7
+```java @since 1.7
 
 `   public static void main(String[] args){`
 
@@ -161,7 +161,7 @@ interface](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/MM
 
 }
 
-</java>
+```
 
 The parser operates similar to a XML parser by triggering "events". The
 [SimpleMMcifConsumer](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/SimpleMMcifConsumer.html)

@@ -20,7 +20,7 @@ readFromXML() and writeToXML() methods in DistributionTools are fairly
 new features. The cvs version or version 1.3 (when released) will be
 adequate.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 
@@ -53,4 +53,4 @@ public class Dist2XMLAndBack{
 
 ` }`
 
-} </java>
+} ```

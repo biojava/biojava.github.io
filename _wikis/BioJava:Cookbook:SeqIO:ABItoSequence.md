@@ -21,7 +21,7 @@ below.
 
 ### Reading ABI
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.program.abi.\*; import
 org.biojava.bio.seq.\*; import org.biojava.bio.seq.impl.\*; import
@@ -48,11 +48,11 @@ public class Trace2Seq {
 `   SeqIOTools.writeFasta(System.out, seq);`  
 ` }`
 
-} </java>
+} ```
 
 ### Generic Solution
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.chromatogram.\*;
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.impl.\*;
@@ -79,4 +79,4 @@ public class Trace2Seq {
 `   SeqIOTools.writeFasta(System.out, seq);`  
 ` }`
 
-} </java>
+} ```

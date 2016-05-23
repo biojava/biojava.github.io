@@ -47,7 +47,7 @@ si comportano diversamente. Per ulteriori chiarimenti sui
 seguire questo
 [link](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/BasisSymbol.html).
 
-<java> package biojava\_in\_anger;
+```java package biojava\_in\_anger;
 
 import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
@@ -74,4 +74,4 @@ public class BreakingComponents {
 `   }`  
 ` }`
 
-} </java>
+} ```

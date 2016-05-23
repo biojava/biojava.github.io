@@ -8,7 +8,7 @@ The
 [Calc](http://www.biojava.org/docs/api/org/biojava/bio/structure/Calc.html)
 class provides a set of methods that can be used for calculations.
 
-<java> public double getPhi(Group a, Group b)
+```java public double getPhi(Group a, Group b)
 
 `   throws StructureException`  
 `   {`  
@@ -26,7 +26,7 @@ class provides a set of methods that can be used for calculations.
 `       return phi ;`  
 `   }`
 
-</java>
+```
 
 BioJava contains a protein structure superimposition algorithm that is
 implemented using the BioJava structure API. To learn more about

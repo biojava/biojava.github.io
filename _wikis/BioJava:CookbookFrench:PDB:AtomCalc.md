@@ -10,7 +10,7 @@ La classe
 vous procure une série de méthodes permettant de faire divers calculs
 sur des Atomes.
 
-<java> public double getPhi(Group a, Group b)
+```java public double getPhi(Group a, Group b)
 
 `   throws StructureException`  
 `   {`  
@@ -28,7 +28,7 @@ sur des Atomes.
 `       return phi ;`  
 `   }`
 
-</java>
+```
 
 BioJava possède également une classe utilisant un algorithm de
 superposition de structure protéique. Pour en savoir plus, consultez

@@ -14,7 +14,7 @@ for you.
 
 Using this method is demonstrated below.
 
-<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 import org.biojava.bio.symbol.\*; import org.biojava.bio.\*; import
 org.biojava.utils.\*;
 
@@ -43,4 +43,4 @@ public class EqualDistributions {
 `   }`  
 ` }`
 
-} </java>
+} ```

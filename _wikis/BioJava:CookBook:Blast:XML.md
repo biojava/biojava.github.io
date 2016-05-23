@@ -15,7 +15,7 @@ performs the transformation:
 
 ### BlastXML2HTML.java
 
-<java> import java.io.ByteArrayInputStream; import
+```java import java.io.ByteArrayInputStream; import
 java.io.FileInputStream; import java.io.FileOutputStream; import
 java.io.IOException; import java.io.InputStream; import
 java.io.StringWriter;
@@ -69,7 +69,7 @@ org.xml.sax.helpers.XMLReaderFactory;
 `   }`  
 `}`
 
-</java>
+```
 
 The only way to use this class is to call a static method toHTML()
 passing the xml stream as a parameter. You can see the main method as an

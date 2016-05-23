@@ -52,7 +52,7 @@ Le programme suivant lit un fichier EMBL et donne la liste des
 différentes propriétés des Annotations. La sortie du programme est
 donnée en exemple à la fin du programme.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -82,7 +82,7 @@ public class ListAnnotations {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 Sortie du programme:
 

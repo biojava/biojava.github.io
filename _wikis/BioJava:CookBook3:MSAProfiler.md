@@ -5,7 +5,7 @@ title: BioJava:CookBook3:MSAProfiler
 How to profile the time and memory used for Multiple Sequence Alignment in BioJava
 ==================================================================================
 
-<java>
+```java
 
 package org.biojava3.alignment;
 
@@ -117,4 +117,4 @@ public class CookbookMSAProfiler {
 
 }
 
-</java>
+```

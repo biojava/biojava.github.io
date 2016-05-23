@@ -10,7 +10,7 @@ contiendra deux *Symbols*: zéro et un. L*'Alphabet* et les *Symbols* sur
 mesure peuvent alors être utilisé pour créer des *SymbolLists*, des
 *Sequences*, des *Distributions*, etc.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.\*;
 import java.util.\*;
 
 public class Binary {
@@ -53,4 +53,4 @@ public class Binary {
 `   System.out.println(alpha == binary);`  
 ` }`
 
-} </java>
+} ```

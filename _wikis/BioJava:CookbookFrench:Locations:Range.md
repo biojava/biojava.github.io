@@ -11,7 +11,7 @@ positions de départ (minimum) et de fin (maximum) d'une région sur une
 
 L'exemple suivant montre l'utilisation d'une RangeLocation.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class SpecifyRange {
 
@@ -36,4 +36,4 @@ public class SpecifyRange {
 `   }`  
 ` }`
 
-} </java>
+} ```

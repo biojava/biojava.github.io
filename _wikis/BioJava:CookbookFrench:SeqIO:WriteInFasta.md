@@ -20,7 +20,7 @@ trouve dans le package org.biojava.bio.seq.io
 
 ### Imprimer les séquences contenues dans un objet SequenceDB
 
-<java> // créer une instance de l'interface SequenceDB SequenceDB db =
+```java // créer une instance de l'interface SequenceDB SequenceDB db =
 new HashSequenceDB();
 
 // ajouter des séquences à la DB db.addSequence(seq1);
@@ -33,7 +33,7 @@ db.addSequence(seq2);
 `* STDOUT`  
 `*/`
 
-SeqIOTools.writeFasta(System.out, db); </java>
+SeqIOTools.writeFasta(System.out, db); ```
 
 ### Imprimer à partir d'un objet SequenceIterator
 
@@ -42,17 +42,17 @@ SequenceIterator qui fait l'iteration de toutes les séquences d'un
 fichier. La plupart des méthodes writeXXX() de SeqIOTools ont donc une
 version qui prends un SequenceIterator comme argument.
 
-<java> SequenceIterator iter = (SequenceIterator)
+```java SequenceIterator iter = (SequenceIterator)
 SeqIOTools.fileToBiojava(fileType,br);
 
 // écrire le tout en FASTA, (n'importe quel OutputStream est valide, pas
-juste System.out) SeqIOTools.writeFasta(System.out,iter); </java>
+juste System.out) SeqIOTools.writeFasta(System.out,iter); ```
 
 ### Imprimer une seule Sequence
 
-<java> /\* SeqIOTools a aussi une méthode qui prends une seule séquence
+```java /\* SeqIOTools a aussi une méthode qui prends une seule séquence
 
 `* pour ne pas avoir à créer une SequenceDB`  
 `*/`
 
-SeqIOTools.writeFasta(System.out,iter); </java>
+SeqIOTools.writeFasta(System.out,iter); ```

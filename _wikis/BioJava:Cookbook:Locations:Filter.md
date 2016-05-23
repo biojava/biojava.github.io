@@ -14,7 +14,7 @@ the FeatureFilter.
 
 The following example shows the use of a "byType" FeatureFilter.
 
-<java> import java.util.\*;
+```java import java.util.\*;
 
 import org.biojava.bio.seq.\*;
 
@@ -41,4 +41,4 @@ public class FilterByType {
 `   }`  
 ` }`
 
-} </java>
+} ```

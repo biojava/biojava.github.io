@@ -16,7 +16,7 @@ the use of the BioJavaX I/O framework including customizations that
 ignore things like features and comments that are not relevant to
 calculating sequence composition.
 
-<java> /\*
+```java /\*
 
 `* Composition.java`  
 `*`  
@@ -527,4 +527,4 @@ public class Composition {
 
 }
 
-</java>
+```

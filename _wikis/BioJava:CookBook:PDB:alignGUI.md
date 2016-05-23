@@ -9,13 +9,13 @@ BioJava (in SVN) contains a simple GUI for easier working with protein
 structure alignments (<BioJava:CookBook:PDB:align>). The following code
 launches the user interface:
 
-<java> import org.biojava.bio.structure.gui.\*;
+```java import org.biojava.bio.structure.gui.\*;
 
 public static void main(String[] args){
 
 `   new AlignmentGui(); `
 
-} </java>
+} ```
 
 The AlignmentGui
 ----------------

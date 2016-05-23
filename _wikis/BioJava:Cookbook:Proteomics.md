@@ -15,7 +15,7 @@ simple example uses fairly default settings but both MassCalc and
 IsoelectricPointCalc have other specialised options that are not
 demosntrated here. Consult the biojava API docs for these options.
 
-<java> import java.io.BufferedReader; import java.io.FileOutputStream;
+```java import java.io.BufferedReader; import java.io.FileOutputStream;
 import java.io.FileReader; import java.io.PrintWriter;
 
 import org.biojava.bio.BioException; import
@@ -167,4 +167,4 @@ public class CalcMass {
 `   }`  
 ` }`
 
-} </java>
+} ```

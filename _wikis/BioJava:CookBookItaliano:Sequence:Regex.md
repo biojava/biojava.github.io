@@ -16,7 +16,7 @@ regolari built-in di Java.
 
 Un semplice programma d'esempio è mostrato di seguito:
 
-<java> // Biojava imports import org.biojava.\*;
+```java // Biojava imports import org.biojava.\*;
 
 public class AmbiguitySearch {
 
@@ -59,14 +59,14 @@ public class AmbiguitySearch {
 `       }`  
 `   }`
 
-} </java>
+} ```
 
 Alternativamente, il seguente esempio proposto da Andy Hammer dimostra
 come le funzionalità delle java regular expression possono essere
 utilizzate direttamente per ricercare un oggetto Stringa per il pattern
 matching.
 
-<java> /\*\*
+```java /\*\*
 
 `* MotifLister.java`  
 `* Modified slightly from the original by Andy Hammer`  
@@ -179,4 +179,4 @@ public class MotifLister{
 `   }`  
 ` }`
 
-} </java>
+} ```

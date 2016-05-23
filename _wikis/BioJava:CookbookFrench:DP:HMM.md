@@ -22,7 +22,7 @@ BioJava.
 
 La première étape est la création du profil HMM.
 
-<java> /\*
+```java /\*
 
 `* créer un profile HMM sur un Alphabet d'ADN avec 12 "columns" et les valeurs par défaut`  
 `* pour les DistributionFactories pour construire les Distributions de transition et d'émission`  
@@ -34,15 +34,15 @@ La première étape est la création du profil HMM.
 `                     "my profilehmm");`
 
 //créer la matrice de programmation dynamique pour le modèle. dp =
-DPFactory.DEFAULT.createDP(hmm); </java>
+DPFactory.DEFAULT.createDP(hmm); ```
 
 Ici, vous feriez la lecture d'un ensemble de sÉquences qui forment
 l'ensemble d'entrainement.
 
-<java> //DB pour contenir l'ensemble d'entrainement. SequenceDB db = new
+```java //DB pour contenir l'ensemble d'entrainement. SequenceDB db = new
 HashSequenceDB();
 
-//votre code ici pour charger les sÉquences dans l'ensemble </java>
+//votre code ici pour charger les sÉquences dans l'ensemble ```
 
 Initialiser maintenant tous les paramètres du modèle à une valeur
 uniforme. Alternativement, les paramètres pourraient être déterminer de
@@ -50,7 +50,7 @@ manière aléatoire ou établis pour représenter une estimation du meilleur
 modèle possible. Utiliser ensuite l'algorithme de Baum-Welch pour
 optimiser les parametres.
 
-<java> //former le modèle pour avoir des paramètres uniformes
+```java //former le modèle pour avoir des paramètres uniformes
 ModelTrainer mt = new SimpleModelTrainer();
 
 //enregistrer le modèle à former mt.registerModel(hmm);
@@ -76,12 +76,12 @@ itérations StoppingCriteria stopper = new StoppingCriteria(){
 `* modèle vide avec un poids de 1.0 et le critère d'arret défini ci-dessus.`  
 `*/`
 
-bwt.train(db,1.0,stopper); </java>
+bwt.train(db,1.0,stopper); ```
 
 Vous trouverez ci-dessous un exemple d'évaluation d'une séquence et la
 sortie des parcours d'état.
 
-<java> SymbolList test = null;
+```java SymbolList test = null;
 
 //ici, code pour initialiser la séquence test
 
@@ -103,4 +103,4 @@ parcours d'état
 `     System.out.println(path.symbolAt(StatePath.STATES, i).getName());`  
 `   }`
 
-</java>
+```

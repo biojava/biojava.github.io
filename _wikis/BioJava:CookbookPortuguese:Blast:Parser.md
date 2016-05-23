@@ -22,7 +22,7 @@ O caminho básico é mostrado a seguir:
 A API é muito flexível para a maioria dos propósitos e a receita abaixo
 o lhe dará uma idéia de como funciona:
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.program.sax.\*; import
 org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
@@ -98,4 +98,4 @@ public class BlastParser {
 `   }`  
 ` }`
 
-} </java>
+} ```

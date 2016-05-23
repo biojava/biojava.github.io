@@ -9,7 +9,7 @@ Un *Count* se convertit simplement en *Distribution* en utilisant la
 méthode statique **countToDistribution()** de la classe
 *DistributionTools*.
 
-<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 import org.biojava.bio.symbol.\*;
 
 public class Count2Dist {
@@ -47,4 +47,4 @@ public class Count2Dist {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -18,7 +18,7 @@ sont faciles à instantier. L'exemple suivant montre comment créer une
 coordonnées biologiques. Par conséquent, la première *PointLocation*
 possible d'une *Sequence* sera à l'index 1 et non 0.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class SpecifyPoint {
 
@@ -44,4 +44,4 @@ public class SpecifyPoint {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -32,7 +32,7 @@ metodo statico dalle classi DNATools, RNATools or ProteinTools.
 
 ### Da String a SymbolList
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSymbolList {
 
@@ -56,11 +56,11 @@ public class StringToSymbolList {
 `  `  
 ` }`
 
-} </java>
+} ```
 
 ### Da String a Sequence
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSequence {
 
@@ -82,14 +82,14 @@ public class StringToSequence {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Da SymbolList a String
 
 E' possibile chiamare il metodo seqString() sia sulla classe SymbolList
 o su Sequence per ottenere una versione in forma di stringa.
 
-<java> import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.symbol.\*;
 
 public class SymbolListToString {
 
@@ -101,4 +101,4 @@ public class SymbolListToString {
 `   String s = sl.seqString();`  
 ` }`
 
-} </java>
+} ```

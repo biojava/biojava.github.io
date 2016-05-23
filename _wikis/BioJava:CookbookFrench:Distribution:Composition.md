@@ -18,7 +18,7 @@ I/O BioJavax en incluant la particularisation capable d'ignorer
 certaines informations commes les caractéristiques et les commentaires,
 sans importance pour la calcul de la composition.
 
-<java> /\*
+```java /\*
 
 `* Composition.java`  
 `*`  
@@ -529,4 +529,4 @@ public class Composition {
 
 }
 
-</java>
+```

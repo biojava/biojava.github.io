@@ -25,7 +25,7 @@ classe
 Exemple bref: la manière rapide de lire un fichier local
 --------------------------------------------------------
 
-<java>
+```java
 
 `// fonctionne egalement sur le fichiers compressés en gzip`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -40,12 +40,12 @@ Exemple bref: la manière rapide de lire un fichier local
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```
 
 Exemple: Utilisation d'une installation locale de PDB
 -----------------------------------------------------
 
-<java>
+```java
 
 `   try {`  
 `       PDBFileReader reader = new PDBFileReader();`
@@ -77,7 +77,7 @@ Exemple: Utilisation d'une installation locale de PDB
 `       e.printStackTrace();`  
 `   }`
 
-</java>
+```
 
 L'exemple ci-dessus produira la sortie suivante:
 
@@ -117,7 +117,7 @@ voir <BioJava:CookbookFrench:PDB:Atom>. Pour plus d'informations sur la
 gestion des informations SEQRES et ATOM, voir
 <BioJava:CookbookFrench:PDB:Seqres>.
 
-<java>
+```java
 
 `// fonctionne egalement avec les fichiers`  
 `// compresses par zip`  
@@ -153,4 +153,4 @@ gestion des informations SEQRES et ATOM, voir
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```

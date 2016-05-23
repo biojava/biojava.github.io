@@ -20,7 +20,7 @@ erreur de type *IndexOutOfBoundsException*.
 
 ### Obtenir une portion de Sequence
 
-<java>
+```java
 
 `   SymbolList symL = null;`
 
@@ -35,21 +35,21 @@ erreur de type *IndexOutOfBoundsException*.
 `   // obtenir les 3 derniers résidus`  
 `   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
 
-</java>
+```
 
 ### Imprimer une partie d'une Sequence
 
-<java>
+```java
 
 `   // imprimer les 3 derniers résidus d'une SymbolList ou Sequence`  
 `   String s = symL.subStr(symL.length() - 3, symL.length());`  
 `   System.out.println(s);`
 
-</java>
+```
 
 ### Code complet
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SubSequencing {
 
@@ -78,4 +78,4 @@ public class SubSequencing {
 `   System.out.println(s);`  
 ` }`
 
-} </java>
+} ```

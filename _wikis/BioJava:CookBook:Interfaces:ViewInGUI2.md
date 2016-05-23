@@ -31,7 +31,7 @@ Lastly, there is a SequenceViewerMotionListener added to the
 TranslatedSequencePanel which triggers a ToolTip to display the name of
 the gene when the mouse is over a CDS feature.
 
-![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") <java> /\*\*
+![](Viewer ScreenShot.JPG "fig:Viewer ScreenShot.JPG") ```java /\*\*
 
 `* Class to load an EMBL sequence file and display it in a viewer.`  
 `*/`
@@ -260,4 +260,4 @@ it = annotationNotes.iterator(); it.hasNext();) {
 `   }`  
 ` }`
 
-} </java>
+} ```

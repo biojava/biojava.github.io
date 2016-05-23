@@ -22,7 +22,7 @@ The basic pipeline is as follows:
 The API is very flexible however for most purposes the following simple
 recipe will get you what you want.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.program.sax.\*; import
 org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
@@ -101,4 +101,4 @@ public class BlastParser {
 `   }`  
 ` }`
 
-} </java>
+} ```

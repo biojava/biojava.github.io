@@ -46,7 +46,7 @@ pour effectuer le travail à la console.
 
 ### SimpleGibbsAligner
 
-<java> package gibbs;
+```java package gibbs;
 
 import java.util.HashMap; import java.util.Map; import java.util.Random;
 import java.util.Vector; import org.biojava.bio.BioException; import
@@ -409,11 +409,11 @@ public class SimpleGibbsAligner {
 `   return w;`  
 ` }`
 
-} </java>
+} ```
 
 ### GibbsStoppingCriteria
 
-<java> package gibbs;
+```java package gibbs;
 
 import org.biojava.bio.BioException; import
 org.biojava.bio.dist.Distribution; import
@@ -496,11 +496,11 @@ public interface GibbsStoppingCriteria {
 `   }`  
 ` }// end of converge`
 
-}// end of GibbsStoppingCriteria </java>
+}// end of GibbsStoppingCriteria ```
 
 ### SimpleGibbsAlignerDemo
 
-<java> package gibbs;
+```java package gibbs;
 
 import java.io.BufferedReader; import java.io.File; import
 java.io.FileReader; import org.biojava.bio.seq.Sequence; import
@@ -568,4 +568,4 @@ public class SimpleGibbsAlignerDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```

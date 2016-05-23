@@ -35,7 +35,7 @@ a partire da una
 [List](http://java.sun.com/j2se/1.4.2/docs/api/java/util/List.html).
 Entrambi i metodi sono mostrati nell'esempio seguente.
 
-<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+```java import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
 
 public class CrossProduct {
@@ -54,4 +54,4 @@ public class CrossProduct {
 `   System.out.println(codon == codon2);`  
 ` }`
 
-} </java>
+} ```

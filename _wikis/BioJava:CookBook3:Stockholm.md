@@ -14,7 +14,7 @@ multiple structure objects file, or an InputStream.
 
 ### To read a single object from a file, you can simply write
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `   try {`  
 `       StockholmFileParser parser = new StockholmFileParser();`  
@@ -29,11 +29,11 @@ multiple structure objects file, or an InputStream.
 `       e.printStackTrace();`  
 `   }`
 
-} </java>
+} ```
 
 ### Also you can read multiple alignments within the same file as follows
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `   try {`  
 `       StockholmFileParser parser = new StockholmFileParser();`  
@@ -60,14 +60,14 @@ multiple structure objects file, or an InputStream.
 `       e.printStackTrace();`  
 `   }`
 
-} </java>
+} ```
 
 ### Some times you don't have a reference to the file or input stream
 
 Some times you use the parser in a place other than where it was
 created.
 
-For example, you can create a StockholmFileParser in a function <java>
+For example, you can create a StockholmFileParser in a function ```java
 
 `   public StockholmFileParser getStockholmFileParser(String filePathName) {`  
 `       StockholmFileParser parser = new StockholmFileParser();`  
@@ -81,10 +81,10 @@ For example, you can create a StockholmFileParser in a function <java>
 `       return parser;`  
 `   }`
 
-</java>
+```
 
 Then you use the created parser in another function, where you don't
-have a reference to its underling data source <java>
+have a reference to its underling data source ```java
 
 `   public void useParser(StockholmFileParser parser) {`  
 `       final int MAX_PER_ITTERATION = 10;`  
@@ -107,4 +107,4 @@ have a reference to its underling data source <java>
 `       System.out.println("TOTAL COUNT = "+count);`  
 `   }`
 
-</java>
+```

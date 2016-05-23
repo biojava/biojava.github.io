@@ -19,7 +19,7 @@ Le code du parser sera dans la prochaine version de BioJava. Pour
 l'utiliser dans son état présent, il vous faudra utiliser la version du
 [serveur SVN](Autobuild_events "wikilink").
 
-<java> @since 1.7 public static void main (String[] args) {
+```java @since 1.7 public static void main (String[] args) {
 
 `       String fileName = args[0];`
 
@@ -45,4 +45,4 @@ l'utiliser dans son état présent, il vous faudra utiliser la version du
 `           e.printStackTrace();`  
 `       }`
 
-} </java>
+} ```

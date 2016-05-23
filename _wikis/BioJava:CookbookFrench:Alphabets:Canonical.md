@@ -18,7 +18,7 @@ C'est vrai même pour des *Alphabets* et des *Symbols* qui se trouvent
 sur différentes machines virtuels (grâce à un peu de magie par
 Serialization) ce qui veut dire que BioJava fonctionne à travers RMI.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class Canonical {
 
@@ -35,4 +35,4 @@ public class Canonical {
 `   System.out.println("canonical: "+ (a1 == a2));`  
 ` }`
 
-} </java>
+} ```

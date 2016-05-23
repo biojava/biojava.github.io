@@ -18,7 +18,7 @@ class.
 Short Example: the quickest way to read a local file
 ----------------------------------------------------
 
-<java>
+```java
 
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -33,12 +33,12 @@ Short Example: the quickest way to read a local file
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```
 
 Example: How to work with a local installation of PDB
 -----------------------------------------------------
 
-<java>
+```java
 
 `       try {`  
 `           PDBFileReader reader = new PDBFileReader();`
@@ -67,7 +67,7 @@ Example: How to work with a local installation of PDB
 `           e.printStackTrace();`  
 `       }`
 
-</java>
+```
 
 Will give this output:
 
@@ -104,7 +104,7 @@ that are contained in the file. For more examples of how to access the
 [Atoms](http://www.biojava.org/docs/api/org/biojava/bio/structure/Atom.html)
 please go to <BioJava:CookBook:PDB:atoms>. For more info on how the
 parser deals with SEQRES and ATOM records please see
-<BioJava:CookBook:PDB:seqres> <java>
+<BioJava:CookBook:PDB:seqres> ```java
 
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -150,7 +150,7 @@ parser deals with SEQRES and ATOM records please see
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```
 
 To learn how to serialize a Structure object to a database see
 <BioJava:CookBook:PDB:hibernate>

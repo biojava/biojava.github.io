@@ -22,7 +22,7 @@ org.biojava.bio.seq.io.
 
 ### Imprimindo uma SequenceDB
 
-<java>
+```java
 
 `     //cria uma instancia de SequenceDB interface`  
 `     SequenceDB db = new HashSequenceDB();`
@@ -38,7 +38,7 @@ org.biojava.bio.seq.io.
 `      */`  
 `     SeqIOTools.writeFasta(System.out, db);`
 
-</java>
+```
 
 ### Imprimindo de uma SequenceIterator
 
@@ -48,7 +48,7 @@ de um arquivo. A maioria dos métodos *write*XXX() da *SeqIOTools* tem
 uma versão dos métodos que recebem um *SequenceIterator* como argumento.
 ex:
 
-<java>
+```java
 
 `     SequenceIterator iter =`  
 `         (SequenceIterator)SeqIOTools.fileToBiojava(fileType, br);`
@@ -58,11 +58,11 @@ ex:
 
 `     SeqIOTools.writeFasta(System.out, iter);`
 
-</java>
+```
 
 ### Imprimindo uma única Sequence
 
-<java>
+```java
 
 `     /*`  
 `      * SeqIOTools também possui um método que recebe uma única sequencia `  
@@ -70,4 +70,4 @@ ex:
 `      */`  
 `     SeqIOTools.writeFasta(System.out, seq1);`
 
-</java>
+```

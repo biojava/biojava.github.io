@@ -22,7 +22,7 @@ static 메소드로 편리하게 접근해서 사용할 수 있다.
 
 이러한 접근 예제는 다음과 같다.
 
-<java> import org.biojava.bio.symbol.\*; import java.util.\*; import
+```java import org.biojava.bio.symbol.\*; import java.util.\*; import
 org.biojava.bio.seq.\*;
 
 public class AlphabetExample {
@@ -50,4 +50,4 @@ public class AlphabetExample {
 
 ` }`
 
-} </java>
+} ```

@@ -17,7 +17,7 @@ The following program will read in Sequences from a file and filter them
 according to their species. The same general recipe with a little
 modification could be used for any Annotation property.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.db.\*; import org.biojava.bio.seq.io.\*;
@@ -62,4 +62,4 @@ public class FilterEMBLBySpecies {
 `   }`  
 ` }`
 
-} </java>
+} ```

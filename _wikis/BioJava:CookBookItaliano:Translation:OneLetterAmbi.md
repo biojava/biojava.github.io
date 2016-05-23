@@ -18,7 +18,7 @@ Questo esempio mostra come ottenere la codifica ad una lettera
 necessaria per questo tipo di annotazione in ogni posizione della
 sequenza tradotta:
 
-<java> import java.util.Iterator; import org.biojava.bio.BioException;
+```java import java.util.Iterator; import org.biojava.bio.BioException;
 import org.biojava.bio.seq.DNATools; import
 org.biojava.bio.seq.io.SymbolTokenization; import
 org.biojava.bio.symbol.Alphabet; import
@@ -65,4 +65,4 @@ public class TranslationOneLetter {
 `       }`  
 `   }`
 
-} </java>
+} ```

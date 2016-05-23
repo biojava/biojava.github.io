@@ -4,7 +4,7 @@ title: BioJava:CookBook:PDB:mutate
 
 ### How can I mutate a residue
 
-<java>
+```java
 
 `// mutate a protein structure`  
 `// and save to file`  
@@ -41,4 +41,4 @@ title: BioJava:CookBook:PDB:mutate
 `     e.printStackTrace();`  
 ` } `
 
-</java>
+```

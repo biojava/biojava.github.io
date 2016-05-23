@@ -11,7 +11,7 @@ remove all of the Features that meet some specific requirement. In this
 example all the Features on the positive strand of the Sequence are
 erased.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -44,4 +44,4 @@ public class RemoveFeatures {
 `       }`  
 `   }`
 
-} </java>
+} ```

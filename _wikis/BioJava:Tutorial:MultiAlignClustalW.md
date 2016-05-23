@@ -15,7 +15,7 @@ First, this is how you call methods from ClustalWAlign's class.
 
 **MultAlignTest.java**
 
-<java> /\*\*
+```java /\*\*
 
 `* MultAlignTest.java`  
 `* `  
@@ -64,11 +64,11 @@ public class MultAlignTest {
 `       }`  
 `   }`
 
-} </java>
+} ```
 
 Now, the class that calls ClustalW as a external process:
 
-**ClustalWAlign.java** <java> /\*\*
+**ClustalWAlign.java** ```java /\*\*
 
 `* ClustalWAlign.java`  
 `* `  
@@ -256,4 +256,4 @@ public class ClustalWAlign {
 `       return fileBody;`  
 `   }`
 
-} </java>
+} ```

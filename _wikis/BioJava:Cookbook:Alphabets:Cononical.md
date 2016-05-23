@@ -27,7 +27,7 @@ on different virtual machines (thanks to some
 [Serialization](http://java.sun.com/j2se/1.4.2/docs/api/java/io/Serializable.html)
 magic) which means BioJava works across RMI.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class Canonical {
 
@@ -43,4 +43,4 @@ public class Canonical {
 `   System.out.println("canonical: "+ (a1 == a2));`  
 ` }`
 
-} </java>
+} ```

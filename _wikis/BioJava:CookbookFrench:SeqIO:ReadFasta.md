@@ -14,7 +14,7 @@ la plus générale en second.
 
 ### Méthode spécifique
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.db.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -51,11 +51,11 @@ public class ReadFasta {
 `   }`  
 `}`
 
-} </java>
+} ```
 
 ### Méthode générale
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.db.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -90,4 +90,4 @@ public class ReadFasta {
 `   }`  
 ` }`
 
-} </java>
+} ```

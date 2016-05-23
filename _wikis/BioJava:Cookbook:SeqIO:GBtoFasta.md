@@ -13,7 +13,7 @@ Following this
 [link](http://www.ncbi.nlm.nih.gov/nuccore/146274?report=genbank) you
 can download some example files.
 
-<java> import java.io.BufferedReader; import java.io.File; import
+```java import java.io.BufferedReader; import java.io.File; import
 java.io.FileOutputStream; import java.io.FileReader;
 
 import org.biojavax.Namespace; import org.biojavax.RichObjectFactory;
@@ -58,4 +58,4 @@ public class ReadWriteGES\_BJ1\_6{
 `       }`  
 `   }`
 
-} </java>
+} ```

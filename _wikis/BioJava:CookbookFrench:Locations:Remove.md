@@ -11,7 +11,7 @@ offert par Keith James, montre comment faire pour supprimer tous les
 *Features* rencontrant un critère donné. Dans cet exemple, tous les
 *Features* sur le brin codant sont effacés.
 
-<java> import java.io.\*; import java.util.\*; import
+```java import java.io.\*; import java.util.\*; import
 org.biojava.bio.\*;
 
 import org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
@@ -42,4 +42,4 @@ public class RemoveFeatures {
 `       }`  
 `   }`
 
-} </java>
+} ```

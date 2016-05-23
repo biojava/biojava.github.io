@@ -5,7 +5,7 @@ title: BioJava:Performance:AlignSW
 This is the source code for the [Smith Waterman performance
 example](BioJava:Performance "wikilink").
 
-<java> /\*
+```java /\*
 
 `* Jun 25, 2008 Copyright (c) ZBiT, University of Tübingen, Germany`  
 `* Compiler: JDK 1.6.0`  
@@ -60,4 +60,4 @@ public class AlignmentTest {
 `              }`  
 `      }`
 
-} </java>
+} ```

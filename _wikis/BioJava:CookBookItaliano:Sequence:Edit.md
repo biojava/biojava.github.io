@@ -20,7 +20,7 @@ invalidare le Features o le Annotations sottostanti. La migliore
 strategia da utilizzare è quella di effettuare una copia dei Symbols
 della Sequence o della SymbolList e lavorare su quella.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class EditExamples {
 
@@ -72,4 +72,4 @@ public class EditExamples {
 `   System.out.println(syms.seqString());`  
 ` }`
 
-} </java>
+} ```

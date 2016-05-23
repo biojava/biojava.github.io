@@ -15,19 +15,19 @@ part of them.
 Example: identify and print all preloaded modifications from a structure
 ------------------------------------------------------------------------
 
-<java> Set<ModifiedCompound> identifyAllModfications(Structure struc) {
+```java Set<ModifiedCompound> identifyAllModfications(Structure struc) {
 
 `   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();`  
 `   parser.identify(struc);`  
 `   Set`<ModifiedCompound>` mcs = parser.getIdentifiedModifiedCompound();`  
 `   return mcs;`
 
-} </java>
+} ```
 
 Example: identify phosphorylation sites in a structure
 ------------------------------------------------------
 
-<java> List<ResidueNumber> identifyPhosphosites(Structure struc) {
+```java List<ResidueNumber> identifyPhosphosites(Structure struc) {
 
 `   List`<ResidueNumber>` phosphosites = new ArrayList`<ResidueNumber>`();`  
 `   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();`  
@@ -41,12 +41,12 @@ Example: identify phosphorylation sites in a structure
 `   }`  
 `   return phosphosites;`
 
-} </java>
+} ```
 
 Demo code to run the above methods
 ----------------------------------
 
-<java> import org.biojava.nbio.structure.ResidueNumber; import
+```java import org.biojava.nbio.structure.ResidueNumber; import
 org.biojava.nbio.structure.Structure; import
 org.biojava.nbio.structure.io.PDBFileReader; import
 org.biojava.nbio.protmod.structure.ProteinModificationIdentifier;
@@ -76,7 +76,7 @@ public static void main(String[] args) {
 `       e.printStackTrace();`  
 `   }`
 
-} </java>
+} ```
 
 See also
 --------

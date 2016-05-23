@@ -24,7 +24,7 @@ prends une liste produite par la lecture d'un fichier BLAST ou FASTA et
 qui en extrait l'id de l'homologie (subject id), sa valeur et son score
 e.
 
-<java> private static void formatResults(List results){
+```java private static void formatResults(List results){
 
 `   //itération à travers chacun des SeqSimilaritySearchResult`  
 `   for (Iterator i = results.iterator(); i.hasNext(); ) {`  
@@ -41,4 +41,4 @@ e.
 `     }`  
 `   }`
 
-} </java>
+} ```

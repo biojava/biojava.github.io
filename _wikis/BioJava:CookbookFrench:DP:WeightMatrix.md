@@ -18,7 +18,7 @@ Le programme suivant crée une *WeightMatrix* à partir d'un alignement et
 utilise cette matrice pour annoter une *Sequence* avec un seuil minimal
 de détection de 0.1.
 
-<java> import java.util.\*; import org.biojava.bio.dist.\*; import
+```java import java.util.\*; import org.biojava.bio.dist.\*; import
 org.biojava.bio.dp.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
 
@@ -56,4 +56,4 @@ throws Exception{
 `   }`  
 ` }`
 
-} </java>
+} ```

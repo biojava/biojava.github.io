@@ -17,7 +17,7 @@ better done with BioJavax, see IOTools is in the package
 
 ### Solution 1
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.db.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -54,11 +54,11 @@ public class ReadFasta {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Solution 2
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -100,4 +100,4 @@ public class ReadFasta2 {
 `   }`  
 ` }`
 
-} </java>
+} ```

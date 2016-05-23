@@ -20,7 +20,7 @@ side) with its biological assembly (right side).
 
 Here some example code how to load the biological assembly:
 
-<java>
+```java
 
 `           // good examples: 1stp 1gav 1hv4 1hho 7dfr 3fad  1qqp`
 
@@ -54,4 +54,4 @@ Here some example code how to load the biological assembly:
 `           `  
 `           System.out.println("done!");`
 
-</java>
+```

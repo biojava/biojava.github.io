@@ -15,7 +15,7 @@ compreendendo os simbolos de qualquer alfabeto.
 O programa a seguir demonstra o treinamento de 3 (tres) Distribuições
 com sequencias de 3 (tres) alfabetos diferentes.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 import org.biojava.bio.dist.\*; import org.biojava.utils.\*; import
 java.util.\*;
 
@@ -81,4 +81,4 @@ public class Frequency {
 `   }`  
 ` }`
 
-} </java>
+} ```

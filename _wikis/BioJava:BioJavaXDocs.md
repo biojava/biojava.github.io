@@ -352,9 +352,9 @@ set this up.
 If you do decide to write your own RichObjectBuilder for whatever
 reason, you can set it to be used by RichObjectFactory like this:
 
-<java> RichObjectBuilder builder = ...; // create your own one here
+```java RichObjectBuilder builder = ...; // create your own one here
 RichObjectFactory.setRichObjectBuilder(builder); // make the factory use
-it from now on </java>
+it from now on ```
 
 If you change the default RichObjectBuilder to a different one, you must
 do so at the very beginning of your program before any call to the
@@ -408,8 +408,8 @@ classes. It applies the new cache size to every single class. Next time
 any of those classes are accessed via the RichObjectFactory, the LRU
 cache for that class will adjust to the new size.
 
-<java> RichObjectFactory.setLRUCacheSize(50); // increases the global
-LRU cache size to 50 instances per class </java>
+```java RichObjectFactory.setLRUCacheSize(50); // increases the global
+LRU cache size to 50 instances per class ```
 
 #### Class-specific LRU cache size.
 
@@ -508,7 +508,7 @@ To create a RichSequence object, you need to have all the above plus:
 If you wish to assign multiple accessions to a sequence, you must do so
 using the special term provided, like this:
 
-<java> ComparableTerm accTerm =
+```java ComparableTerm accTerm =
 RichSequence.Terms.getAdditionalAccessionTerm(); Note accession1 = new
 SimpleNote(accTerm,"A12345",1); // this note has an arbitrary rank of 1
 Note accession2 = new SimpleNote(accTerm,"Z56789",2); // this note has
@@ -519,7 +519,7 @@ rs.getNoteSet().add(accession2); // annotate the rich sequence with the
 second additional accession ... // you can annotate bioentry objects in
 exactly the same way BioEntry be = ...; // get a bioentry from somewhere
 be.getNoteSet().add(accession1); be.getNoteSet().add(accession2);
-</java>
+```
 
 See later in this document for more information on how to annotate and
 comment on sequences.
@@ -549,7 +549,7 @@ The following code snippet defines a new term "contains" in the default
 ontology, then creates a relationship that states that sequence A (the
 parent) contains sequence B (the child):
 
-<java> ComparableTerm contains =
+```java ComparableTerm contains =
 RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains"); ...
 RichSequence parent = ...; // get sequence A from somewhere RichSequence
 child = ...; // get sequence B from somewhere BioEntryRelationship
@@ -557,7 +557,7 @@ relationship = new
 SimpleBioEntryRelationship(parent,child,contains,null);
 parent.addRelationship(relationship); // add the relationship to the
 parent ... parent.removeRelationship(relationship); // you can always
-take it away again later </java>
+take it away again later ```
 
 ### Querying the relationship
 
@@ -568,7 +568,7 @@ related to.
 The following code snippet prints out all the relationships a sequence
 has with child sequences:
 
-<java> RichSequence rs = ...; // get a rich sequence from somewhere for
+```java RichSequence rs = ...; // get a rich sequence from somewhere for
 (Iterator i = rs.getRelationships().iterator(); i.hasNext(); ) {
 
 `    BioEntryRelationship br = (BioEntryRelationship)i.next();`  
@@ -578,7 +578,7 @@ has with child sequences:
 `    // print out the relationship (eg. "A contains B");`  
 `    System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());`
 
-} </java>
+} ```
 
 Reading and writing files.
 --------------------------
@@ -600,7 +600,7 @@ Here is an example of using the RichSequence.IOTools methods. The
 example reads a file in Genbank format containing some DNA sequences,
 then prints them out to standard out (the screen) in EMBL format:
 
-<java> // an input GenBank file BufferedReader br = new
+```java // an input GenBank file BufferedReader br = new
 BufferedReader(new FileReader("myGenbank.gbk")); // a namespace to
 override that in the file Namespace ns =
 RichObjectFactory.getDefaultNamespace(); // we are reading DNA sequences
@@ -611,33 +611,33 @@ while (seqs.hasNext()) {
 `   // write it in EMBL format to standard out`  
 `   RichSequence.IOTools.writeEMBL(System.out, rs, ns);                   `
 
-} </java>
+} ```
 
 If you wish to output a number of sequences in one of the XML formats,
 you have to pass a RichSequenceIterator over your collection of
 sequences in order for the XML format to group them together into a
 single file with the correct headers:
 
-<java> // an input GenBank file BufferedReader br = new
+```java // an input GenBank file BufferedReader br = new
 BufferedReader(new FileReader("myGenbank.gbk")); // a namespace to
 override that in the file Namespace ns =
 RichObjectFactory.getDefaultNamespace(); // we are reading DNA sequences
 RichSequenceIterator seqs = RichSequence.IOTools.readGenbankDNA(br,ns);
 // write the whole lot in EMBLxml format to standard out
-RichSequence.IOTools.writeEMBLxml(System.out, seqs, ns); </java>
+RichSequence.IOTools.writeEMBLxml(System.out, seqs, ns); ```
 
 If you don't know what format your input file is in, but know it could
 be one of a fixed set of acceptable formats, then you can use BioJavaX's
 format-guessing routine to attempt to read it:
 
-<java> // Not sure if your input is EMBL or Genbank? Load them both
+```java // Not sure if your input is EMBL or Genbank? Load them both
 here. Class.forName("org.biojavax.bio.seq.io.EMBLFormat");
 Class.forName("org.biojavax.bio.seq.io.GenbankFormat");
 
 // Now let BioJavaX guess which format you actually should use (using
 the default namespace) Namespace ns =
 RichObjectFactory.getDefaultNamespace(); RichSequenceIterator seqs =
-RichSequence.IOTools.readFile(new File("myfile.seq"),ns); </java>
+RichSequence.IOTools.readFile(new File("myfile.seq"),ns); ```
 
 For those who like to do things the hard way, reading and writing by
 directly using the RichStreamReader and RichStreamWriter interfaces is
@@ -687,8 +687,8 @@ classes will have similar methods.
 
 For an alphabet which does not have a tools class, you can do this:
 
-<java> Alphabet a = ...; // get an alphabet instance from somewhere
-SymbolTokenization st = a.getTokenization("token"); </java>
+```java Alphabet a = ...; // get an alphabet instance from somewhere
+SymbolTokenization st = a.getTokenization("token"); ```
 
 #### Writing using RichStreamWriter
 
@@ -712,9 +712,9 @@ convert data from one file format to another with no intermediate steps.
 If you only have one sequence to write, you can wrap it in a temporary
 RichSequenceIterator by using a call like this:
 
-<java> RichSequence rs = ...; // get sequence from somewhere
+```java RichSequence rs = ...; // get sequence from somewhere
 RichSequenceIterator it = new SingleRichSeqIterator(rs); // wrap it in
-an iterator </java>
+an iterator ```
 
 #### Example
 
@@ -722,7 +722,7 @@ The following is an example that will read some DNA sequences from a
 GenBank file and write them out to standard output (screen) as FASTA
 using the methods outlined above:
 
-<java> // sequences will be DNA sequences SymbolTokenization dna =
+```java // sequences will be DNA sequences SymbolTokenization dna =
 DNATools.getDNA().getTokenization("token"); // read Genbank
 RichSequenceFormat genbank = new GenbankFormat(); // write FASTA
 RichSequenceFormat fasta = new FastaFormat(); // compress only longer
@@ -741,7 +741,7 @@ STDOUT OutputStream output = System.out;
 RichStreamReader seqsIn = new
 RichStreamReader(input,genbank,dna,factory,bloggsNS); RichStreamWriter
 seqsOut = new RichStreamWriter(output,fasta); // one-step Genbank to
-Fasta conversion! seqsOut.writeStream(seqsIn,bloggsNS); </java>
+Fasta conversion! seqsOut.writeStream(seqsIn,bloggsNS); ```
 
 #### Line widths and eliding information
 
@@ -1195,7 +1195,7 @@ class work with the automatic format-guesser
 guessSymbolTokenization(), and add a static initializer block to your
 class, similar to this:
 
-<java> public class MyFormat extends RichSequenceFormat.BasicFormat {
+```java public class MyFormat extends RichSequenceFormat.BasicFormat {
 
 `   static {`  
 `       RichSequence.IOTools.registerFormat(MyFormat.class);`  
@@ -1203,7 +1203,7 @@ class, similar to this:
 
 `   // implement the rest of the class here ...`
 
-} </java>
+} ```
 
 ### NCBI Taxonomy data
 
@@ -1214,7 +1214,7 @@ the nodes.dmp and names.dmp files line-by-line, and returning the
 corresponding NCBITaxon object for each line of the file. An example to
 load the taxonomy data follows:
 
-<java> NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader();
+```java NCBITaxonomyLoader l = new SimpleNCBITaxonomyLoader();
 BufferedReader nodes = new BufferedReader(new FileReader("nodes.dmp"));
 BufferedReader names = new BufferedReader(new FileReader("names.dmp"));
 
@@ -1223,7 +1223,7 @@ first while ((t=l.readName(names))!=null); // then read all the names
 
 // if your LRU cache is big enough, it'll now hold fully-populated
 instances // of all the taxon objects. Not much use unless you're using
-a database! </java>
+a database! ```
 
 Note that this is most effective when using BioJavaX with Hibernate to
 persist data to the database. You do not need to do anything apart from
@@ -1257,7 +1257,7 @@ section of the file that was in error.
 The idea is that you do something like this (the example debugs the
 parsing of a FASTA file):
 
-<java> Namespace ns = RichObjectFactory.getDefaultNamespace();
+```java Namespace ns = RichObjectFactory.getDefaultNamespace();
 InputStream is = new FileInputStream("myFastaFile.fasta"); FastaFormat
 format = new FastaFormat();
 
@@ -1266,7 +1266,7 @@ BufferedReader br = new BufferedReader(new InputStreamReader(debug));
 
 SymbolTokenization symParser = format.guessSymbolTokenization(debug);
 
-format.readRichSequence(br, symParser, debug, ns); </java>
+format.readRichSequence(br, symParser, debug, ns); ```
 
 Note that you will often get bits of file repeated in the output, as the
 format runs backwards and forwards through the file between markers it
@@ -1300,7 +1300,7 @@ You can then use your class like this (see the earlier section on
 RichStreamReader for how to construct the various other objects
 required):
 
-<java> BufferedReader input = ...; // your input file Namespace ns =
+```java BufferedReader input = ...; // your input file Namespace ns =
 ...; // the namespace to read sequences into SymbolTokenization st =
 ...; // the tokenization used to parse sequence data
 
@@ -1312,7 +1312,7 @@ sequence in the file while (moreSeqsAvailable) {
 `    moreSeqsAvailable = format.readRichSequence(input, st, listener, ns);`  
 `    // your listener will have received all the information for the current sequence by this stage`
 
-} </java>
+} ```
 
 #### Constructing sequences from events
 
@@ -1329,7 +1329,7 @@ will also need to create a RichSequenceBuilderFactory implementation to
 work with it. The simplest form of such a factory (assuming a custom
 builder named CustomRichSequenceBuilder) looks like this:
 
-<java> public class CustomRichSequenceBuilderFactory implements
+```java public class CustomRichSequenceBuilderFactory implements
 RichSequenceBuilderFactory {
 
 `   public CustomRichSequenceBuilderFactory() {}`  
@@ -1337,7 +1337,7 @@ RichSequenceBuilderFactory {
 `       return new CustomRichSequenceBuilder();`  
 `   }`
 
-} </java>
+} ```
 
 ### Parsing only specific fields
 
@@ -1347,7 +1347,7 @@ can construct specialist RichSeqIOListener implementations that perform
 very specific tasks very efficiently. For instance, a listener that
 counts all the sequences in a file would look like this:
 
-<java> public class MyListener extends RichSeqIOAdapter {
+```java public class MyListener extends RichSeqIOAdapter {
 
 `   private int seqCount;`  
 `   public MyListener() { `  
@@ -1357,7 +1357,7 @@ counts all the sequences in a file would look like this:
 `   public void startSequence() { this.seqCount++; }`  
 `   public void getSeqCount() { return this.seqCount; }`
 
-} </java>
+} ```
 
 You could then call getSeqCount() on this class after parsing a file to
 find out exactly how many sequences it contained.
@@ -1474,37 +1474,37 @@ implemented by the SimpleRichLocation class.
 
 This example describes the GenBank-style location string "56":
 
-<java> Position pos = new SimplePosition(56); // the 0 is an arbitrary
+```java Position pos = new SimplePosition(56); // the 0 is an arbitrary
 value for the rank of this location RichLocation loc = new
-SimpleRichLocation(pos,0); </java>
+SimpleRichLocation(pos,0); ```
 
 This example describes the GenBank-style location string
 "(23^34)..57\>":
 
-<java> // two falses = not fuzzy at all Position min = new
+```java // two falses = not fuzzy at all Position min = new
 SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
 = fuzzy end Position max = new SimplePosition(false,true,57); // the 0
 is an arbitrary value for the rank of this location RichLocation loc =
-new SimpleRichLocation(min,max,0); </java>
+new SimpleRichLocation(min,max,0); ```
 
 This example describes the GenBank-style location string
 "complement((23^34)..57\>)":
 
-<java> // two falses = not fuzzy at all Position min = new
+```java // two falses = not fuzzy at all Position min = new
 SimplePosition(false,false,23,34,"^"); // false = non-fuzzy start, true
 = fuzzy end Position max = new SimplePosition(false,true,57);
 RichLocation loc = new
-SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND); </java>
+SimpleRichLocation(min,max,0,Strand.NEGATIVE\_STRAND); ```
 
 This example describes the GenBank-style location string
 "A12345.3:complement((23^34)..57\>)":
 
-<java> // version 3 of accession A12345 in the GenBank database CrossRef
+```java // version 3 of accession A12345 in the GenBank database CrossRef
 cr = new SimpleCrossRef("GenBank","A12345",3); // two falses = not fuzzy
 at all Position min = new SimplePosition(false,false,23,34,"^"); //
 false = non-fuzzy start, true = fuzzy end Position max = new
 SimplePosition(false,true,57); RichLocation loc = new
-SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr); </java>
+SimpleRichLocation(min,max,Strand.NEGATIVE\_STRAND,cr); ```
 
 If you require locations that cover more than one range, you must use
 the RichLocation.Tools methods to help you. If you don't, you run a
@@ -1524,10 +1524,10 @@ passed in as input.
 To construct a complex location from a set of existing RichLocation
 instances, follow this example:
 
-<java> RichLocation first = ...; // some arbitrary location RichLocation
+```java RichLocation first = ...; // some arbitrary location RichLocation
 second = ...; // some other location Collection members =
 Arrays.asList(new RichLocation[]{first,second}); RichLocation combined =
-RichLocation.Tools.construct(members); </java>
+RichLocation.Tools.construct(members); ```
 
 The construct() method will return one of four different types of
 RichLocation objects, depending on the members passed in:
@@ -1763,24 +1763,24 @@ Features
 
 The best way to create a new feature is like this:
 
-<java> // create a feature template Feature.Template templ = new
+```java // create a feature template Feature.Template templ = new
 RichFeature.Template(); // assign the feature template a location, type,
 and source templ.location = ...; templ.typeTerm = ...; templ.sourceTerm
 = ...; // assign the rest of the necessary stuff templ.annotation = new
 SimpleRichAnnotation(); templ.featureRelationshipSet = new TreeSet();
 templ.rankedCrossRefs = new TreeSet(); // get a sequence from somewhere
 RichSequence rs = ...; // make a new feature on that sequence
-RichFeature feat = rs.createFeature(RichFeature.Template()); </java>
+RichFeature feat = rs.createFeature(RichFeature.Template()); ```
 
 Alternatively, you can start with a completely empty dummy feature and
 just customise the bits you need:
 
-<java> // get a sequence RichSequence rs = ...; // make an empty feature
+```java // get a sequence RichSequence rs = ...; // make an empty feature
 RichFeature feat = RichFeature.Tools.makeEmptyFeature(); // associate
 sequence with feature feat.setParent(rs): // associate feature with
 sequence rs.getFeatureSet().add(feat);
 
-// customise the feature here, eg. location, type, source etc. </java>
+// customise the feature here, eg. location, type, source etc. ```
 
 ### Qualifiers as annotations.
 
@@ -1792,7 +1792,7 @@ distinct. Use the rank of the annotation to preserve order.
 To go through all the qualifiers on a particular feature is quite
 straightforward:
 
-<java> RichFeature feat = ...; // get the feature from somewhere for
+```java RichFeature feat = ...; // get the feature from somewhere for
 (Iterator i = feat.getNoteSet().iterator(); i.hasNext; ) {
 
 `   // get the next note`  
@@ -1804,7 +1804,7 @@ straightforward:
 `   // print the qualifier out in key=value (rank) format`  
 `   System.out.println(key+"="+value+" ("+rank+")"); `
 
-} </java>
+} ```
 
 ### Obtaining the symbols for a feature.
 
@@ -1829,14 +1829,14 @@ The following code snippet defines a new term "contains" in the default
 ontology, then creates a relationship that states that feature A (the
 parent) contains feature B (the child):
 
-<java> ComparableTerm contains =
+```java ComparableTerm contains =
 RichObjectFactory.getDefaultOntology().getOrCreateTerm("contains"); ...
 RichFeature parent = ...; // get feature A from somewhere RichFeature
 child = ...; // get feature B from somewhere RichFeatureRelationship
 relationship = new RichFeatureRelationship(parent,child,contains,0);
 parent.addFeatureRelationship(relationship); // add the relationship to
 the parent ... parent.removeFeatureRelationship(relationship); // you
-can always take it away again later </java>
+can always take it away again later ```
 
 ### Querying the relationship.
 
@@ -1846,7 +1846,7 @@ feature.
 The following code snippet prints out all the relationships to child
 features within a parent feature:
 
-<java> RichFeature feature = ...; // get a feature from somewhere for
+```java RichFeature feature = ...; // get a feature from somewhere for
 (Iterator i = feature.getFeatureRelationshipSet().iterator();
 i.hasNext(); ) {
 
@@ -1857,7 +1857,7 @@ i.hasNext(); ) {
 `    // print out the relationship (eg. "A contains B");`  
 `    System.out.println(parent.getName()+" "+relationship.getName()+" "+child.getName());`
 
-} </java>
+} ```
 
 Annotations and Comments.
 -------------------------
@@ -1914,7 +1914,7 @@ with BioSQL.
 
 A default namespace is provided by the RichObjectFactory:
 
-<java> // get the default namespace Namespace defaultNS =
+```java // get the default namespace Namespace defaultNS =
 RichObjectFactory.getDefaultNamespace(); ... // make a custom namespace
 Namespace customNS = (Namespace)RichObjectFactory.getObject(
 
@@ -1926,18 +1926,18 @@ yet Namespace biosqlNS = (Namespace)BioSQLRichObjectFactory.getObject(
 `                                                       SimpleNamespace.class, new Object[]{"myBioSQLNameSpace"});`
 
 ... // change the default namespace to "bloggs"
-RichObjectFactory.setDefaultNamespaceName("bloggs"); </java>
+RichObjectFactory.setDefaultNamespaceName("bloggs"); ```
 
 NCBI Taxonomy.
 --------------
 
 ### Traversing from child to parent.
 
-<java> NCBITaxon child = ...; // some taxon object you want the parent
+```java NCBITaxon child = ...; // some taxon object you want the parent
 of Integer parentNCBITaxID = new Integer(child.getParentNCBITaxID());
 NCBITaxon parent =
 (NCBITaxon)RichObjectFactory.getObject(SimpleNCBITaxon.class,new
-Object[]{parentNCBITaxID}); </java>
+Object[]{parentNCBITaxID}); ```
 
 ### Traversing from parent to child.
 
@@ -1948,12 +1948,12 @@ information from a database. See the section on BioSQL and Hibernate for
 details about setting BioJavaX for use with a database. The query you
 are looking for is this:
 
-<java> NCBITaxon parent = ...; // some taxon object you want to get the
+```java NCBITaxon parent = ...; // some taxon object you want to get the
 immediate children of Query q = session.createQuery("from Taxon where
 parentNCBITaxID = :parentNCBITaxID");
 q.setInteger("parentNCBITaxID",parent.getNCBITaxID()); List children =
 q.list(); // children will now contain all the child taxon objects
-</java>
+```
 
 ### Finding taxons by name.
 
@@ -1962,14 +1962,14 @@ This also cannot be done using the BioJavaX API.
 Again, you can do it using HQL if you are reading your taxonomy
 information from a database. The query you are looking for is this:
 
-<java> Query q = session.createQuery("from Taxon as taxon join
+```java Query q = session.createQuery("from Taxon as taxon join
 taxon.nameSet as taxonName "+
 
 `                                "where taxonName.nameClass=:nameClass and taxonName.name=:name");`
 
 q.setString("nameClass",NCBITaxon.SCIENTIFIC); q.setString("name","Homo
 sapiens"); List taxons = q.list(); // taxons will now contain all
-matching taxon objects </java>
+matching taxon objects ```
 
 BioEntry and RichSequence Databases
 -----------------------------------
@@ -2162,14 +2162,14 @@ line in your code.
 
 To open a Hibernate session and connect it to BioJavaX:
 
-<java> // load Hibernate config SessionFactory sessionFactory = new
+```java // load Hibernate config SessionFactory sessionFactory = new
 Configuration().configure().buildSessionFactory(); // open the session
 Session session = sessionFactory.openSession(); // connect it to
-BioJavaX RichObjectFactory.connectToBioSQL(session); </java>
+BioJavaX RichObjectFactory.connectToBioSQL(session); ```
 
 To close the Hibernate session:
 
-<java> session.close(); </java>
+```java session.close(); ```
 
 Note that the line that loads the Hibernate configuration only needs to
 be done once, regardless of how many sessions you open, as long as you
@@ -2188,7 +2188,7 @@ do so. Transactions are opened with a single line of code, and rolled
 back or committed with another single line of code. You'd usually use
 them in a construct such as this:
 
-<java> Transaction tx = session.beginTransaction(); // begin the
+```java Transaction tx = session.beginTransaction(); // begin the
 transaction try {
 
 `   // do some stuff with BioJavaX objects here.`  
@@ -2200,7 +2200,7 @@ transaction try {
 `   tx.rollback();        // roll back the transaction if something went wrong`  
 `   e.printStackTrace();  // tell the user what went wrong`
 
-} </java>
+} ```
 
 Once a transaction object has been committed or rolled back you cannot
 use it any more and must open a new one.
@@ -2217,7 +2217,7 @@ commits any changes it has made and exits.
 This example shows just how easy it is to read and write to the
 database. No SQL required!
 
-<java> SessionFactory sessionFactory = new
+```java SessionFactory sessionFactory = new
 Configuration().configure().buildSessionFactory(); Session session =
 sessionFactory.openSession();
 RichObjectFactory.connectToBioSQL(session);
@@ -2265,7 +2265,7 @@ Transaction tx = session.beginTransaction(); try {
 
 }
 
-session.close(); </java>
+session.close(); ```
 
 ### Flattened locations.
 
@@ -2303,8 +2303,8 @@ fashion.
 For example, to persist a RichSequence object that you have just
 created, do this (inside a transaction):
 
-<java> RichSequence rs = ...; // some sequence you've made
-session.saveOrUpdate("Sequence",rs); // persist the sequence </java>
+```java RichSequence rs = ...; // some sequence you've made
+session.saveOrUpdate("Sequence",rs); // persist the sequence ```
 
 Nothing will actually get saved to the database until you commit the
 transaction. If you rollback the transaction or exit without committing
@@ -2322,50 +2322,50 @@ The simplest HQL query is the equivalent of a SQL select \* from
 sometable. This is how you use it to select all namespaces from the
 database:
 
-<java> Query q = session.createQuery("from Namespace"); List namespaces
+```java Query q = session.createQuery("from Namespace"); List namespaces
 = q.list(); // namespaces now contains all the Namespace objects in the
-database </java>
+database ```
 
 To set constraints your query should refer to object parameters, not
 table columns. The following query selects the namespace that is called
 'bloggs':
 
-<java> Query q = session.createQuery("from Namespace where name=:name");
+```java Query q = session.createQuery("from Namespace where name=:name");
 q.setString("name","bloggs"); List namespaces = q.list(); // should only
 contain one Namespace object. Empty if none found. Namespace ns =
 (Namespace)q.uniqueResult(); // alternative notation for queries with
-single-row results </java>
+single-row results ```
 
 You don't have to worry about foreign keys, and can just join objects
 directly without specifying which field to use. This query returns all
 RichSequence objects that have a comment that contains the word
 "rubbish" with a rank of 0:
 
-<java> Query q = session.createQuery(
+```java Query q = session.createQuery(
 
 `         "select rs from Sequence as rs join Comment as c where c.comment like :comment and rank=:rank");`
 
 q.setString("comment","%rubbish%"); // % symbol means match any string
 q.setInteger("rank",0); List sequences = q.list(); // a list of all
-matching RichSequence objects. </java>
+matching RichSequence objects. ```
 
 This query demonstrates the (unique) case of BioEntry and RichSequence
 being represented as a single Hibernate mapping, hence no join required
 to access fields from either table:
 
-<java> Query q = session.createQuery("from Sequence where
+```java Query q = session.createQuery("from Sequence where
 length\>:length and name=:name"); q.setInteger("length",200);
-q.setString("name","joe"); List sequences = q.list(); </java>
+q.setString("name","joe"); List sequences = q.list(); ```
 
 This query demonstrates how you can use other BioJavaX objects in the
 where clause without having to do any work at all. It returns all
 sequences that belong in a particular namespace:
 
-<java> Namespace ns = ...; // get a namespace from somewhere, eg.
+```java Namespace ns = ...; // get a namespace from somewhere, eg.
 RichObjectFactory.getDefaultNamespace() Query q =
 session.createQuery("from Sequence where namespace=:namespace");
 q.setParameter("namespace",ns); // plug the namespace object right in!
-List sequences = q.list(); </java>
+List sequences = q.list(); ```
 
 There's no way this tutorial could ever hope to teach you all about HQL!
 The best thing to do is go to the Hibernate website and read up on it
@@ -2376,24 +2376,24 @@ there: <http://www.hibernate.org/>.
 You might not always want to retrieve lists of objects from the
 database. This query retrieves the names of sequences:
 
-<java> Query q = session.createQuery("select name from Sequence"); List
+```java Query q = session.createQuery("select name from Sequence"); List
 names = q.list(); // list will contain String instances containing the
-names </java>
+names ```
 
 This one returns all the lengths of sequences, which are integers. Note
 the use of sequenceLength, which is the object parameter, and not length
 which is the database table column name:
 
-<java> Query q = session.createQuery("select sequenceLength from
+```java Query q = session.createQuery("select sequenceLength from
 Sequence"); List lengths = q.list(); // list will contain Integer
-instances containing the lengths </java>
+instances containing the lengths ```
 
 ### Deleting objects.
 
 Objects can be removed from the database by calling:
 
-<java> session.delete(obj); // where obj is some persistent object
-</java>
+```java session.delete(obj); // where obj is some persistent object
+```
 
 Only when the transaction is committed will they actually be deleted. If
 the transaction is rolled back, the objects will come back to life.
@@ -2416,8 +2416,8 @@ the BioSQL project.
 Here is the code to generate the DDL from the Hibernate mappings. It
 will be printed to standard output (usually the screen):
 
-<java> Configuration cfg = new Configuration().configure(); new
-SchemaExport(cfg).create(true, false); </java>
+```java Configuration cfg = new Configuration().configure(); new
+SchemaExport(cfg).create(true, false); ```
 
 ### Reading/writing objects as XML.
 
@@ -2429,7 +2429,7 @@ however the code is supplied as an example for when the bug is fixed.
 The snippet below will query the database for all DocRef objects, then
 output an XML representation of them to standard out:
 
-<java> Document doc = DocumentHelper.createDocument(); Element root =
+```java Document doc = DocumentHelper.createDocument(); Element root =
 doc.addElement("myRootNode"); // some arbitrary name for the XML root
 node
 
@@ -2447,11 +2447,11 @@ session.close();
 
 // Pretty print the document to System.out OutputFormat format =
 OutputFormat.createPrettyPrint(); XMLWriter writer = new
-XMLWriter(System.out, format);// writer.write(doc); </java>
+XMLWriter(System.out, format);// writer.write(doc); ```
 
 Reading them back and saving them to the database is similar:
 
-<java> // open an XML document with some kind of org.dom4j.io.SAXReader
+```java // open an XML document with some kind of org.dom4j.io.SAXReader
 Document doc = ...; // use the node-name from the class tag of
 DocRef.hbm.xml mapping file List results = doc.selectNodes("//docref");
 
@@ -2465,7 +2465,7 @@ for (Iterator i = results.iterator(); i.hasNext(); ) {
 
 }
 
-tx.commit(); session.close(); </java>
+tx.commit(); session.close(); ```
 
 ### BioEntryDB and RichSequenceDB convenience wrappers
 
@@ -2492,7 +2492,7 @@ the database in a single command. The easiest way to demonstrate this is
 by a code example in which a sequence is read from the database, another
 sequence is added, and a third is deleted:
 
-<java> Session sess = ...; // connect to BioSQL using Hibernate and
+```java Session sess = ...; // connect to BioSQL using Hibernate and
 establish a session RichObjectFactory.connectToBioSQL(sess); // bind
 BioJavaX to the Hibernate session
 
@@ -2508,13 +2508,13 @@ db.addRichSequence(seq2); // add it to the database
 db.removeRichSequence("bloggs"); // delete the sequence where
 name='bloggs'
 
-sess.close(); // disconnect from the database </java>
+sess.close(); // disconnect from the database ```
 
 The code above is non-transactional, but it can be made to be
 transactional by doing something like this (based on the example in the
 JavaDocs for the Session object in Hibernate):
 
-<java> Session sess = ...; // connect to BioSQL using Hibernate and
+```java Session sess = ...; // connect to BioSQL using Hibernate and
 establish a session RichObjectFactory.connectToBioSQL(sess); // bind
 BioJavaX to the Hibernate session
 
@@ -2538,7 +2538,7 @@ Transaction tx; try {
 
 `  sess.close();    // disconnect from the database`
 
-} </java>
+} ```
 
 ### `BioSQLFeatureFilter`
 
@@ -2644,7 +2644,7 @@ The GeneticAlgorithm will stop iterating when the GAStoppingCriteria
 tells it to. This may be when a suitable solution has been reached or
 after a finite number of generations.
 
-<java> public class GADemo {
+```java public class GADemo {
 
 `   public static void main(String[] args) throws Exception {`  
 `       // print the header`  
@@ -2766,4 +2766,4 @@ after a finite number of generations.
 `       }`  
 `   }`
 
-} </java>
+} ```

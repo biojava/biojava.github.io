@@ -15,7 +15,7 @@ of what is going on under the hood.
 There are actually a number of ways to do this, below I have presented
 only one.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SingleTranslationDemo {
 
@@ -52,4 +52,4 @@ public class SingleTranslationDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```

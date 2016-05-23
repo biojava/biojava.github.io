@@ -13,7 +13,7 @@ mostra un esempio di lettura di un file in formato FASTA.
 
 ### Soluzione n°1
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.\* import org.biojavax.\*
 
@@ -44,4 +44,4 @@ public class ReadFasta {
 `   }`  
 `   }`
 
-} </java>
+} ```

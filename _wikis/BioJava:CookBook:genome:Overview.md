@@ -26,35 +26,35 @@ Passing the collection of ChromsomeSequences to
 GeneFeatureHelper.getProteinSequences would return all protein
 sequences. You can then write the protein sequences to a fasta file.
 
-<java>
+```java
 
 `           LinkedHashMap`<String, ChromosomeSequence>` chromosomeSequenceList = GeneFeatureHelper.loadFastaAddGeneFeaturesFromGeneMarkGTF(new File("454Scaffolds.fna"), new File("genemark_hmm.gtf"));`  
 `           LinkedHashMap`<String, ProteinSequence>` proteinSequenceList = GeneFeatureHelper.getProteinSequences(chromosomeSequenceList.values());`  
 `           FastaWriterHelper.writeProteinSequence(new File("genemark_proteins.faa"), proteinSequenceList.values());`
 
-</java>
+```
 
 You can also output the gene sequence to a fasta file where the coding
 regions will be upper case and the non-coding regions will be lower case
-<java>
+```java
 
 `           LinkedHashMap`<String, GeneSequence>` geneSequenceHashMap = GeneFeatureHelper.getGeneSequences(chromosomeSequenceList.values());`  
 `           Collection`<GeneSequence>` geneSequences = geneSequenceHashMap.values();`  
 `           FastaWriterHelper.writeGeneSequence(new File("genemark_genes.fna"), geneSequences, true);`
 
-</java>
+```
 
 You can easily write out a gff3 view of a ChromosomeSequence with the
 following code.
 
-<java>
+```java
 
 `            FileOutputStream fo = new FileOutputStream("genemark.gff3");`  
 `            GFF3Writer gff3Writer = new GFF3Writer();`  
 `            gff3Writer.write(fo, chromosomeSequenceList);`  
 `             fo.close();`
 
-</java>
+```
 
 The chromsome sequence becomes the middle layer that represents the
 essence of what is mapped in a gtf, gff2 or gff3 file. This makes it

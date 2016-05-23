@@ -13,7 +13,7 @@ Par exemple, pour obtenir la liste de tous les acides aminés observé
 dans une chaîne polypeptidique d'un fichier PDB, vous pouvez utiliser la
 méthode suivante:
 
-<java> Chain chain = s.getChainByPDB("A"); List<Group> groups =
+```java Chain chain = s.getChainByPDB("A"); List<Group> groups =
 chain.getAtomGroups("amino");
 
 for (Group group : groups){
@@ -24,20 +24,20 @@ for (Group group : groups){
 `  // par exemple: afficher l'assignation de structure secondaire`  
 `  System.out.println(aa + " " + aa.getSecStruc());`
 
-} </java>
+} ```
 
 De la même manière, vous pouvez accéder aux groupes de nucléotides ou au
 groupes d'hétéroatomes:
 
-<java> chain.getAtomGroups("nucleotide"); </java>
+```java chain.getAtomGroups("nucleotide"); ```
 
-<java> chain.getAtomGroups("hetatm"); </java>
+```java chain.getAtomGroups("hetatm"); ```
 
 Puisque les trois types de groupe implémentent l'interface <b>Group</b>,
 vous pouvez aussi faire une itération sur une liste de groupes afin d'en
 obtenir le type:
 
-<java> List<Group> allgroups = chain.getAtomGroups();
+```java List<Group> allgroups = chain.getAtomGroups();
 
 for (Group group : groups){
 
@@ -46,4 +46,4 @@ for (Group group : groups){
 `   System.out.println(aa.getSecStruc());`  
 `  }`
 
-} </java>
+} ```

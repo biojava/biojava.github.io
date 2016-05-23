@@ -11,7 +11,7 @@ Pour obtenir le brin complémentaire d'une *SymbolList* ou d'une
 existe dans la classe *RNATools* pour faire la même opération sur les
 *Sequences* et *SymbolLists* d'ARN.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class ReverseComplement {
 
@@ -40,4 +40,4 @@ public class ReverseComplement {
 `   }`  
 ` }`
 
-</java>
+```

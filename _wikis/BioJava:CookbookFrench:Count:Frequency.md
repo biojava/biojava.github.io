@@ -17,7 +17,7 @@ n'importe quel *Alphabet*. Les *Symbols* ambiguës sont divisés parmi les
 Le programme suivant montre l'entrainement de trois *Distributions* avec
 des *Sequences* faites à partir de trois *Alphabets* différents.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 import org.biojava.bio.dist.\*; import org.biojava.utils.\*; import
 java.util.\*;
 
@@ -76,4 +76,4 @@ public class Frequency {
 `   }`  
 ` }`
 
-} </java>
+} ```

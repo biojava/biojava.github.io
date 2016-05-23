@@ -20,7 +20,7 @@ IOTools è nel pacage org.biojava.bio.seq.io
 
 ### Stampiamo un SequenceDB utilizzando un iterator
 
-<java>
+```java
 
 `   private static void printSequenceDB() {`  
 `       // creiamo una istanza dell'interfaccia SequenceDB`  
@@ -41,11 +41,11 @@ IOTools è nel pacage org.biojava.bio.seq.io
 `       }`  
 `   }`
 
-</java>
+```
 
 ### Stampiamo una singola sequenza
 
-<java>
+```java
 
 `     /*`  
 `      * La classe SeqIOTools ha un metodo che prende una singola sequenza e la scrive nel formato `  
@@ -67,4 +67,4 @@ IOTools è nel pacage org.biojava.bio.seq.io
 `       }       `  
 `   }`
 
-</java>
+```

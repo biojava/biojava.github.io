@@ -18,7 +18,7 @@ region outside of 1...length an IndexOutOfBoundsException will occur.
 
 ### Getting a Sub - Sequence
 
-<java>
+```java
 
 `   SymbolList symL = null;`
 
@@ -33,21 +33,21 @@ region outside of 1...length an IndexOutOfBoundsException will occur.
 `   //get the last three bases`  
 `   SymbolList symL3 = symL.subList(symL.length() - 3, symL.length());`
 
-</java>
+```
 
 ### Printing a Sub - Sequence
 
-<java>
+```java
 
 `   //print the last three bases of a SymbolList or Sequence`  
 `   String s = symL.subStr(symL.length() - 3, symL.length());`  
 `   System.out.println(s);`
 
-</java>
+```
 
 ### Complete Listing
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SubSequencing {
 
@@ -76,4 +76,4 @@ public class SubSequencing {
 `   System.out.println(s);`  
 ` }`
 
-} </java>
+} ```

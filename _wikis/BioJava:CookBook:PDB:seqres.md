@@ -22,7 +22,7 @@ Groups derived from SEQRES groups will be empty (i.e. they will not
 contain Atoms), unless they could be mapped to the ATOM records, in
 which case the full ATOM information can be accessed.
 
-Example: <java> import java.util.List; import
+Example: ```java import java.util.List; import
 org.biojava.nbio.structure.Chain; import
 org.biojava.nbio.structure.Group; import
 org.biojava.nbio.structure.GroupType; import
@@ -69,7 +69,7 @@ public class SeqResCookBook {
 
 }
 
-</java>
+```
 
 gives this output:
 

@@ -6,7 +6,7 @@ A simple demo that fetches a protein sequence from the UniProt web site,
 submits it to the [Hmmer3 service](http://hmmer.janelia.org/) and prints
 the results.
 
-<java> /\*
+```java /\*
 
 `* @since 3.0.3`  
 `*/`  
@@ -66,7 +66,7 @@ the results.
 `       return seq;`  
 `   }`
 
-</java>
+```
 
 This will create this output:
 

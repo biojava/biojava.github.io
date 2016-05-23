@@ -8,7 +8,7 @@ How can I turn a Count into a Distribution?
 A Count can be simply converted into a Distribution by using the static
 countToDistribution() method from the DistributionTools class.
 
-<java> import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*;
 import org.biojava.bio.symbol.\*;
 
 public class count2Dist {
@@ -45,4 +45,4 @@ public class count2Dist {
 `   }`  
 ` }`
 
-} </java>
+} ```

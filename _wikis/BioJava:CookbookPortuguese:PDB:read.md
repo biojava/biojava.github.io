@@ -4,7 +4,7 @@ title: BioJava:CookbookPortuguese:PDB:read
 
 ### Como eu leio um arquivo PDB?
 
-<java>
+```java
 
 `// também funciona com arquivos compactados com gzip`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -18,4 +18,4 @@ title: BioJava:CookbookPortuguese:PDB:read
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```

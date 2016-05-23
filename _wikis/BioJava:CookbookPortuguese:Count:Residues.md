@@ -22,7 +22,7 @@ não trabalha com símbolos de ambigüidade.
 
 ### Solução 1
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -74,11 +74,11 @@ public class CountResidues {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### Solução 2
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.dist.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*; import org.biojava.bio.symbol.\*;
@@ -141,4 +141,4 @@ public class CountResidues2 {
 `   }`  
 ` }`
 
-} </java>
+} ```

@@ -16,7 +16,7 @@ IsoelectricPointCalc con le proprietà di default, ma entrambe hanno
 delle proprietà particolare che sarebbe meglio approfondire utilizzando
 le API docs.
 
-<java> import java.io.BufferedReader; import java.io.FileOutputStream;
+```java import java.io.BufferedReader; import java.io.FileOutputStream;
 import java.io.FileReader; import java.io.PrintWriter;
 
 import org.biojava.bio.BioException; import
@@ -164,4 +164,4 @@ public class CalcMass {
 `   }`  
 ` }`
 
-} </java>
+} ```

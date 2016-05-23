@@ -5,7 +5,7 @@ title: BioJava:Cookbook:Sequence:ExtractGeneRegions
 How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS')?
 ---------------------------------------------------------------------------------------------------
 
-<java>
+```java
 
 `  public Sequence sequenceJustFeatues(Sequence seq, String featureName)`  
 `        throws Exception {`
@@ -59,4 +59,4 @@ How can I extract all regions beeing marked (or not) with a special feature (e.g
 `     return loccollection;`  
 `  }`
 
-</java>
+```

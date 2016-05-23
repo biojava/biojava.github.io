@@ -67,7 +67,7 @@ a gene-finder. The possibilities are endless.
 
 ### PairAlign.java
 
-<java> /\*
+```java /\*
 
 `* PairAlign.java`  
 `*`  
@@ -414,4 +414,4 @@ The
 `     System.out.println(targetString);`  
 ` }`
 
-} </java>
+} ```

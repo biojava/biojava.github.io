@@ -5,7 +5,7 @@ title: BioJava:CookBook:Core:SequenceCompare
 Caveat: This piece of code assumes that the sequences that are to be
 compared are already pre-aligned.
 
-<java> package org.biojava3.cookbook;
+```java package org.biojava3.cookbook;
 
 import java.util.ArrayList; import
 org.biojava.nbio.core.sequence.DNASequence; import
@@ -107,4 +107,4 @@ public class SequenceComparer {
 `   }`  
 `   `
 
-} </java>
+} ```

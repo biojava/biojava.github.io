@@ -30,7 +30,7 @@ DNATools, RNATools ou ProteinTools.
 
 ### String para SymbolList
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSymbolList {
 
@@ -53,11 +53,11 @@ public class StringToSymbolList {
 `  `  
 ` }`
 
-} </java>
+} ```
 
 ### String para Sequence
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSequence {
 
@@ -79,14 +79,14 @@ public class StringToSequence {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### SymbolList para String
 
 Você pode chamar o metodo seqString() em um *SymbolList* ou uma
 *Sequence* para adquiri-la em forma de uma *String*.
 
-<java> import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.symbol.\*;
 
 public class SymbolListToString {
 
@@ -98,4 +98,4 @@ public class SymbolListToString {
 `   String s = sl.seqString();`  
 ` }`
 
-} </java>
+} ```

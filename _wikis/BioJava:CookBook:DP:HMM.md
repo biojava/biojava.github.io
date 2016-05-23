@@ -19,7 +19,7 @@ demonstrates the construction and use of a ProfileHMM in BioJava.
 
 The first step is to create the profile HMM.
 
-<java>
+```java
 
 `   /*`  
 `    * Make a profile HMM over the DNA Alphabet with 12 'columns' and default`  
@@ -35,26 +35,26 @@ The first step is to create the profile HMM.
 `   //create the Dynamic Programming matrix for the model.`  
 `   dp = DPFactory.DEFAULT.createDP(hmm);`
 
-</java>
+```
 
 At this point you would read in a set of sequences that make up the
 training set.
 
-<java>
+```java
 
 `   //Database to hold the training set`  
 `   SequenceDB db = new HashSequenceDB();`  
 `   `  
 `   //code here to load the training set`
 
-</java>
+```
 
 Now initialize all of the model parameters to a uniform value.
 Alternatively parameters could be set randomly or set to represent a
 guess at what the best model might be. Then use the Baum-Welch Algorithm
 to optimise the parameters.
 
-<java>
+```java
 
 `   //train the model to have uniform parameters`  
 `   ModelTrainer mt = new SimpleModelTrainer();`  
@@ -80,11 +80,11 @@ to optimise the parameters.
 `    */`  
 `   bwt.train(db,1.0,stopper);`
 
-</java>
+```
 
 Below is an example of scoring a sequence and outputting the state path.
 
-<java>
+```java
 
 `   SymbolList test = null;`  
 `   //code here to initialize the test sequence`  
@@ -106,4 +106,4 @@ Below is an example of scoring a sequence and outputting the state path.
 `     System.out.println(path.symbolAt(StatePath.STATES, i).getName());`  
 `   }`
 
-</java>
+```

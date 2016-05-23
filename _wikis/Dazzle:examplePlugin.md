@@ -23,21 +23,21 @@ Step 1: declare what we want to implement. As you can see below, we want
 to implement a ReferenceSource and we use the convenience class
 AbstractDataSource, so we safe some time for the implmementation.
 
-<java> public class UniProtDataSource extends AbstractDataSource
-implements DazzleReferenceSource { </java>
+```java public class UniProtDataSource extends AbstractDataSource
+implements DazzleReferenceSource { ```
 
-These objects will collect the data: <java>
+These objects will collect the data: ```java
 
 `   private Map seqs; // contains all the BioJava Sequence objects.`  
 `   private Set allTypes; // all annotation types.`  
 `   String fileName; // the filename to parse`
 
-</java>
+```
 
 When the DAs source is requested, Dazzle will initiate this plugin. For
 this the init method is called:
 
-<java>
+```java
 
 `   public void init(ServletContext ctx) `  
 `   throws DataSourceException`  
@@ -46,11 +46,11 @@ this the init method is called:
 `       try {`  
 `                    `
 
-</java>
+```
 
 Now we init the variables and use BioJava to parse the uniprot file:
 
-<java>
+```java
 
 `           seqs = new HashMap();`  
 `           allTypes = new HashSet();`  
@@ -68,11 +68,11 @@ Now we init the variables and use BioJava to parse the uniprot file:
 `               seqs.put(seq.getName(), seq);`  
 `           }`
 
-</java>
+```
 
 If something goes wrong, we throw a DataSourceException
 
-<java>
+```java
 
 `       } catch (Exception ex) {`  
 `           throw new DataSourceException(ex, "Couldn't load sequence file");`  
@@ -119,11 +119,11 @@ If something goes wrong, we throw a DataSourceException
 
 `   }`
 
-</java>
+```
 
 Now some simple methods to provide some data to be returned to the user.
 
-<java>
+```java
 
 `   public String getDataSourceType() {`
 
@@ -135,23 +135,23 @@ Now some simple methods to provide some data to be returned to the user.
 `       return "1.00";`  
 `   }`
 
-</java>
+```
 
 This method is called, since in dazzecfg.xml we configured the filename
 attribute.
 
-<java>
+```java
 
 `   public void setFileName(String s) {`  
 `       fileName = s;`  
 `   }`
 
-</java>
+```
 
 And this method is called when the DAS - SEQUENCE command is being
 called:
 
-<java>
+```java
 
 `   public Sequence getSequence(String ref) throws DataSourceException, NoSuchElementException {`  
 `       Sequence seq = (Sequence) seqs.get(ref);`  
@@ -165,11 +165,11 @@ called:
 `       return Collections.unmodifiableSet(allTypes);`  
 `   }`
 
-</java>
+```
 
 and here now the method that is used for the ENTRYPOINTS command
 
-<java>
+```java
 
 `   public Set getEntryPoints() {`  
 `       return seqs.keySet();`  
@@ -185,4 +185,4 @@ and here now the method that is used for the ENTRYPOINTS command
 `       return null;`  
 `   }`
 
-} </java>
+} ```

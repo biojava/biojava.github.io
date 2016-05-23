@@ -10,7 +10,7 @@ lecteur de base de la démo précédente pour y inclure la possibilité
 d'écrire les données de séquence en format FASTA. L'exmple fourni
 fonctionne à partir de la version 1.3 de BioJava.
 
-<java> import java.io.\*;
+```java import java.io.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -73,4 +73,4 @@ public class GeneralReader {
 `      }`  
 `  }`
 
-} </java>
+} ```

@@ -70,12 +70,12 @@ String is King but Sequence Interface reigns supreme
 We really want to make it easy to create a sequence and what could be
 easier than using a String.
 
-<java>
+```java
 
 `           ProteinSequence proteinSequence = new ProteinSequence("ARNDCEQGHILKMFPSTWYVBZJX");`  
 `           DNASequence dnaSequence = new DNASequence("ATCG");`
 
-</java>
+```
 
 The storage of the sequence data is defined by the Sequence interface
 which allows for some interesting and we hope useful abstraction. The
@@ -107,12 +107,12 @@ error conditions without making every method throw an exception. This a
 design work in progress as we get feedback from developers and expect
 some level of api changes as we improve the overall design.
 
-<java>
+```java
 
 `           UniprotProxySequenceReader`<AminoAcidCompound>` uniprotSequence = new UniprotProxySequenceReader`<AminoAcidCompound>`("YA745_GIBZE", AminoAcidCompoundSet.getAminoAcidCompoundSet());`  
 `           ProteinSequence proteinSequence = new ProteinSequence(uniprotSequence);`
 
-</java>
+```
 
 The use of the SequenceCreator interface also allows us to address large
 genomic data sets where the sequence data is loaded from a fasta file
@@ -122,7 +122,7 @@ The FileProxyProteinSequenceCreator implements the Sequence interface
 but is very specific to learning the location of the sequence data in
 the file.
 
-<java>
+```java
 
 `           File file = new File(inputFile);`  
 `           FastaReader`<ProteinSequence,AminoAcidCompound>` fastaProxyReader = new FastaReader`<ProteinSequence,AminoAcidCompound>`(file, new GenericFastaHeaderParser`<ProteinSequence,AminoAcidCompound>`(), new FileProxyProteinSequenceCreator(file, AminoAcidCompoundSet.getAminoAcidCompoundSet()));`  
@@ -134,7 +134,7 @@ the file.
 `               System.out.println(proteinSequence.toString());`  
 `           }`
 
-</java>
+```
 
 In the above example a FastaReader class is created where we abstract
 out the code that is used to parse the Fasta Header and use
@@ -169,12 +169,12 @@ will be static methods and generally should be a small block of glue
 code. The following code shows the use of FastaReaderHelper and
 FastaWriterHelper.
 
-<java>
+```java
 
 `       LinkedHashMap`<String, DNASequence>` dnaSequences = FastaReaderHelper.readFastaDNASequence(new File("454Scaffolds.fna"));`  
 `       FastaWriterHelper.writeNucleotideSequence(new File("454Scaffolds-1.fna"),dnaSequences.values());`
 
-</java>
+```
 
 Working with Sequence Objects
 -----------------------------
@@ -203,7 +203,7 @@ Avoid using any kind of String method to do this since String operations
 are costly in BioJava (due to the String conversion that must be
 applied). Here is an example on how to do it for any Sequence object.
 
-<java> List<Sequence<AminoAcidCompound>\> translations =
+```java List<Sequence<AminoAcidCompound>\> translations =
 populateFromSomewhere(); Collections.sort(translations, new
 Comparator<Sequence<? extends Compound>\>() {
 
@@ -213,7 +213,7 @@ Comparator<Sequence<? extends Compound>\>() {
 `  return o1Length.compareTo(o2Length);`  
 `}`
 
-}); </java>
+}); ```
 
 Note our usage of the generic type to capture Sequence objects of any
 type since the assessment of length is something which can be applied to
@@ -239,11 +239,11 @@ The following translates the given DNASequence to a peptide using the
 non-ambiguity CompoundSets with Codon table 1 in Frame 1 in the forward
 orientation.
 
-<java>
+```java
 
 ` ProteinSequence protein = new DNASequence("ATG").getRNASequence().getProteinSequence();`
 
-</java>
+```
 
 ### Translating in a Different Frame
 
@@ -255,13 +255,13 @@ Frame enum provides all 6 available frames which can be given to the DNA
 object when we request the RNA. Multiple frames of translations are
 possible but see later on.
 
-<java>
+```java
 
 ` DNASequence dna = new DNASequence("AATG");`  
 ` RNASequence rna = dna.getRNASequence(Frame.TWO);`  
 ` ProteinSequence protein = rna.getProteinSequence();`
 
-</java>
+```
 
 ### Translating in Multiple Frames
 
@@ -272,10 +272,10 @@ translation in. The following example attempts to translate a sequence
 in all three forward frames. The code returns a map of the results keyed
 by their frame.
 
-<java> TranscriptionEngine te = TranscriptionEngine.getDefault();
+```java TranscriptionEngine te = TranscriptionEngine.getDefault();
 Frame[] frames = Frame.getForwardFrames();
 Map<Frame, Sequence<AminoAcidCompound>\> results =
-te.multipleFrameTranslation(dna, frames); </java>
+te.multipleFrameTranslation(dna, frames); ```
 
 Using this we can replicate the functionality found in EMBOSS' transeq
 package.
@@ -294,25 +294,25 @@ will build an engine to
 -   Convert any initiating amino acid which is not methionine into one
 -   Trim stops
 
-<java> TranscriptionEngine.Builder b = new
+```java TranscriptionEngine.Builder b = new
 TranscriptionEngine.Builder(); b.table(11).initMet(true).trimStop(true);
-TranscriptionEngine engine = b.build(); </java>
+TranscriptionEngine engine = b.build(); ```
 
 This can be handed to the translation methods like so:
 
-<java>
+```java
 
 ` DNASequence dna = new DNASequence("ATG");`  
 ` RNASequence rna = dna.getRNASequence(engine);`  
 ` ProteinSequence protein = rna.getProteinSequence(engine);`
 
-</java>
+```
 
 The translation can be started from the TranscriptionEngine directly
 except this results in more general objects (you will get back objects
 which implement the Sequence interface and not the true object type).
 
-<java>
+```java
 
 ` DNASequence dna = new DNASequence("ATG");`  
 ` TranscriptionEngine engine = TranscriptionEngine.getDefault(); //Get the default engine`  
@@ -322,7 +322,7 @@ which implement the Sequence interface and not the true object type).
 ` //Or to jump to it straight away use this method (coming soon)`  
 ` Sequence`<AminoAcidCompound>` protein = engine.translate(dna);`
 
-</java>
+```
 
 ### Codon Tables
 

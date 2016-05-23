@@ -19,7 +19,7 @@ créant une liste des *Alphabets* désirés et en fabriquant l*'Alphabet* à
 partir de cette liste. Les deux approches sont utilisées dans l'exemple
 ci-dessous.
 
-<java> import java.util.\*; import org.biojava.bio.seq.\*; import
+```java import java.util.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.symbol.\*;
 
 public class CrossProduct {
@@ -38,4 +38,4 @@ public class CrossProduct {
 `   System.out.println(codon == codon2);`  
 ` }`
 
-} </java>
+} ```

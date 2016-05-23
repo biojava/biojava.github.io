@@ -18,7 +18,7 @@ IOTools is in the package org.biojavax.bio.seq.RichSequence.IOTools
 
 ### Printing a SequenceDB with an Iterator
 
-<java> private static void printSequenceDB() {
+```java private static void printSequenceDB() {
 
 `       SequenceDB db = new HashSequenceDB();       `  
 `       Sequence dna1;`  
@@ -34,11 +34,11 @@ IOTools is in the package org.biojavax.bio.seq.RichSequence.IOTools
 `       }`  
 `   }`
 
-</java>
+```
 
 ### Printing a Single Sequence
 
-<java>
+```java
 
 `     /*`  
 `      * SeqIOTools also has a method that takes a single sequence so you don't`  
@@ -56,4 +56,4 @@ IOTools is in the package org.biojavax.bio.seq.RichSequence.IOTools
 `       }       `  
 `   }`
 
-</java>
+```

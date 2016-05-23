@@ -195,7 +195,7 @@ Sequence I/O framework, described in later chapters. Used as below, it
 allows you to iterate over all the sequences in a multiple-entry file,
 rather than holding all of them in memory at once.
 
-<java>import java.io.\*; import org.biojava.bio.symbol.\*; import
+```javaimport java.io.\*; import org.biojava.bio.symbol.\*; import
 org.biojava.bio.seq.\*; import org.biojava.bio.seq.io.\*;
 
 public class GCContent {
@@ -229,7 +229,7 @@ public class GCContent {
 `   }`  
 `   }                  `
 
-}</java>
+}```
 
 Ambiguous symbols
 -----------------

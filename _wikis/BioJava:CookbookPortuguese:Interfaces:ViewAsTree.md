@@ -21,7 +21,7 @@ The following program demonstrates the use of a FeatureTree. It takes
 two arguments. The first is the name of a file containing sequence data.
 The second is a number specifying the format of the data.
 
-<java> import java.awt.\*; import java.awt.event.\*; import java.io.\*;
+```java import java.awt.\*; import java.awt.event.\*; import java.io.\*;
 
 import javax.swing.\*;
 
@@ -95,4 +95,4 @@ public class TreeFrame extends JFrame {
 `   }`  
 ` }`
 
-} </java>
+} ```

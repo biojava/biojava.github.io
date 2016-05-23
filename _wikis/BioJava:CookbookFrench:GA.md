@@ -62,7 +62,7 @@ venir. Il nécessite Java JDK 1.4.
 
 ### GADemo.java
 
-<java> package GA;
+```java package GA;
 
 import java.util.Iterator; import org.biojava.bio.dist.Distribution;
 import org.biojava.bio.dist.DistributionTools; import
@@ -214,4 +214,4 @@ public class GADemo{
 `   }`  
 ` }`
 
-} </java>
+} ```

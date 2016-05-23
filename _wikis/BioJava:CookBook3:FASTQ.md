@@ -16,14 +16,14 @@ use cases.
 
 ### Convert between FASTQ variants
 
-<java> FastqReader fastqReader = new IlluminaFastqReader(); FastqWriter
+```java FastqReader fastqReader = new IlluminaFastqReader(); FastqWriter
 fastqWriter = new SangerFastqWriter(); fastqWriter.write(new
 File("sanger.fastq"), fastqReader.read(new File("illumina.fastq")));
-</java>
+```
 
 ### Convert only long sequences
 
-<java> FastqReader fastqReader = new IlluminaFastqReader(); FastqWriter
+```java FastqReader fastqReader = new IlluminaFastqReader(); FastqWriter
 fastqWriter = new SangerFastqWriter(); FileWriter fileWriter = new
 FileWriter(new File("sanger.fastq"))));
 
@@ -34,11 +34,11 @@ for (Fastq fastq : fastqReader.read(new File("illumina.fastq"))) {
 `   fastqWriter.append(fileWriter, fastq);`  
 ` }`
 
-} </java>
+} ```
 
 ### Convert between FASTQ variants using streaming API
 
-<java> FastqReader fastqReader = new IlluminaFastqReader();
+```java FastqReader fastqReader = new IlluminaFastqReader();
 InputSupplier inputSupplier = Files.newReaderSupplier(new
 File("illumina.fastq")); final FastqWriter fastqWriter = new
 SangerFastqWriter(); final FileWriter fileWriter = new FileWriter(new
@@ -54,11 +54,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Convert only long sequences using streaming API
 
-<java> FastqReader fastqReader = new IlluminaFastqReader();
+```java FastqReader fastqReader = new IlluminaFastqReader();
 InputSupplier inputSupplier = Files.newReaderSupplier(new
 File("illumina.fastq")); FastqWriter fastqWriter = new
 SangerFastqWriter(); FileWriter fileWriter = new FileWriter(new
@@ -77,22 +77,22 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Count sequences
 
-<java> FastqReader fastqReader = new IlluminaFastqReader();
+```java FastqReader fastqReader = new IlluminaFastqReader();
 
 int count = 0; for (Fastq fastq : fastqReader.read(new
 File("illumina.fastq"))) {
 
 ` count++:`
 
-} System.out.println(count); </java>
+} System.out.println(count); ```
 
 ### Count sequences using streaming API
 
-<java> FastqReader fastqReader = new IlluminaFastqReader();
+```java FastqReader fastqReader = new IlluminaFastqReader();
 InputSupplier inputSupplier = Files.newReaderSupplier(new
 File("illumina.fastq"));
 
@@ -107,11 +107,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-System.out.println(count.get()); </java>
+System.out.println(count.get()); ```
 
 ### Count sequences using low-level API
 
-<java> FastqReader fastqReader = new IlluminaFastqReader();
+```java FastqReader fastqReader = new IlluminaFastqReader();
 InputSupplier inputSupplier = Files.newReaderSupplier(new
 File("illumina.fastq"));
 
@@ -126,11 +126,11 @@ fastqReader.parse(inputSupplier, new ParseAdapter()
 `   }`  
 ` });`
 
-System.out.println(count.get()); </java>
+System.out.println(count.get()); ```
 
 ### Pattern match description lines using low-level API
 
-<java> final Pattern pattern = Pattern.compile("^HWUSI-EAS100R:.\*$");
+```java final Pattern pattern = Pattern.compile("^HWUSI-EAS100R:.\*$");
 FastqReader fastqReader = new IlluminaFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("illumina.fastq"));
 
@@ -147,44 +147,44 @@ fastqReader.parse(inputSupplier, new ParseAdapter()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Create DNASequences from FASTQ sequences
 
-<java> FastqReader fastqReader = new SangerFastqReader();
+```java FastqReader fastqReader = new SangerFastqReader();
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ` sequences.add(FastqTools.createDNASequence(fastq));`
 
-} </java>
+} ```
 
 ### Create DNASequences with quality scores in QualityFeature from FASTQ sequences
 
-<java> FastqReader fastqReader = new SangerFastqReader();
+```java FastqReader fastqReader = new SangerFastqReader();
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ` sequences.add(FastqTools.createDNASequenceWithQualityScores(fastq));`
 
-} </java>
+} ```
 
 ### Create DNASequences with quality scores in QualityFeature and error probabilities in QuantityFeature from FASTQ sequences
 
-<java> FastqReader fastqReader = new SangerFastqReader();
+```java FastqReader fastqReader = new SangerFastqReader();
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ` sequences.add(FastqTools.createDNASequenceWithQualityScoresAndErrorProbabilities(fastq));`
 
-} </java>
+} ```
 
 ### Create DNASequences with streaming API
 
-<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+```java FastqReader fastqReader = new SangerFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
@@ -198,11 +198,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Create DNASequences with quality scores in QualityFeature from FASTQ sequences with streaming API
 
-<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+```java FastqReader fastqReader = new SangerFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
@@ -216,11 +216,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Create DNASequences with quality scores in QualityFeature and error probabilities in QuantityFeature from FASTQ sequences with streaming API
 
-<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+```java FastqReader fastqReader = new SangerFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
 List<DNASequence> sequences = new LinkedList<DNASequence>();
 
@@ -234,11 +234,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Calculate mean p scores using streaming API
 
-<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+```java FastqReader fastqReader = new SangerFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
 SummaryStatistics stats = new SummaryStatistics(); StringBuilder sb =
 new StringBuilder(512);
@@ -264,11 +264,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```
 
 ### Calculate mean p scores using streaming API and double array
 
-<java> FastqReader fastqReader = new SangerFastqReader(); InputSupplier
+```java FastqReader fastqReader = new SangerFastqReader(); InputSupplier
 inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
 SummaryStatistics stats = new SummaryStatistics(); StringBuilder sb =
 new StringBuilder(512);
@@ -296,4 +296,4 @@ fastqReader.stream(inputSupplier, new StreamListener()
 `   }`  
 ` });`
 
-</java>
+```

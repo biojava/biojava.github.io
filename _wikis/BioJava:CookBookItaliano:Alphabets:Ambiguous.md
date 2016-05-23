@@ -16,7 +16,7 @@ getAmbiguity(Set symbols) della classe Alphabet da cui proviene il
 simbolo. Nel caso si voglia costruire il simbolo Y bisognerà utilizzare
 un set di simboli che conterrà i simboli C e T dell'alfabeto DNA.
 
-<java> package biojava\_in\_anger;
+```java package biojava\_in\_anger;
 
 import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*; import
 java.util.\*;
@@ -56,4 +56,4 @@ public class Ambiguity {
 `   }`  
 ` }`
 
-} </java>
+} ```

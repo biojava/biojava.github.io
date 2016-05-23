@@ -12,7 +12,7 @@ tradurre un singolo codone in un singolo aminoacido.
 
 Vediamo come:
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SingleTranslationDemo {
 
@@ -48,6 +48,6 @@ public class SingleTranslationDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 NB: Questo è soltanto uno dei metodi per effettuare questa traduzione

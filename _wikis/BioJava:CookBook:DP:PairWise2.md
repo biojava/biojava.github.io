@@ -60,7 +60,7 @@ equal **scores** for every match and every replace.
 A demo of local and global alignments
 -------------------------------------
 
-<java> import java.io.File;
+```java import java.io.File;
 
 import org.biojava.bio.alignment.NeedlemanWunsch; import
 org.biojava.bio.alignment.SequenceAlignment; import
@@ -143,4 +143,4 @@ public class DeterministicAlignmentDemo {
 `   }`  
 ` }`
 
-} </java>
+} ```

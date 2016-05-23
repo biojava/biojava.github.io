@@ -64,7 +64,7 @@ That file contained the following text fragment:
 I used the followng code to get values of notes **/function**, **/note**
 and **/translation** of the FEATURE Field:
 
-<java>
+```java
 
 RichSequenceIterator seqs = RichSequence.IOTools.readGenbankDNA(br, ns);
 RichSequence seq = seqs.nextRichSequence();
@@ -98,7 +98,7 @@ while (nit.hasNext()) {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 The output was as follows:
 

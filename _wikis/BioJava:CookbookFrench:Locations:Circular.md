@@ -38,7 +38,7 @@ faire.
 **Note:** La recette suivante ne fonctionne bien qu'avec des versions
 récentes de BioJava, 1.3 et plus.
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class SpecifyCircular {
 
@@ -71,4 +71,4 @@ public class SpecifyCircular {
 `   }`  
 ` }`
 
-} </java>
+} ```

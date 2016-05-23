@@ -15,19 +15,19 @@ molecular weights, EC numbers, and other information.
 
 The most important class is
 [RCSBDescriptionFactory](http://www.biojava.org/docs/api/org/biojava/bio/structure/rcsb/RCSBDescriptionFactory.html).
-To use it: <java> RCSBDescription description =
-RCSBDescriptionFactory.get("1w0p"); </java> This will automatically
+To use it: ```java RCSBDescription description =
+RCSBDescriptionFactory.get("1w0p"); ``` This will automatically
 download and parse the describeMol file.
 
 If you need an alternate stream (for example you don't want to download
 the files each time), RCSBDescriptionFactory has another factory method:
-<java> RCSBDescriptionFactory.get(InputStream stream); // stream is an
-opened InputStream to the describeMol file </java>
+```java RCSBDescriptionFactory.get(InputStream stream); // stream is an
+opened InputStream to the describeMol file ```
 
 The RCSBDescription contains the PDB Id and a list of
 [RCSBPolymers](http://www.biojava.org/docs/api/org/biojava/bio/structure/rcsb/RCSBPolymer.html).
 We can use RCSBPolymer to obtain the molecular weight, EC number,
-taxonomy, and accession numbers of the first polymer as follows: <java>
+taxonomy, and accession numbers of the first polymer as follows: ```java
 RCSBDescription description = RCSBDescriptionFactory.get("1w0p");
 RCSBPolymer polymer = description.getPolymers().get(0);
 System.out.println(polymer.getWeight()); // \*
@@ -38,7 +38,7 @@ System.out.println(taxonomy.getId() + "\\t" + taxonomy.getName()); for
 
 `   System.out.println(accession);`
 
-} </java>
+} ```
 
 RCSBPolymer and
 [RCSBMacromolecule](http://www.biojava.org/docs/api/org/biojava/bio/structure/rcsb/RCSBMacromolecule)
@@ -48,9 +48,9 @@ Javadoc for a complete list.
 Many of the numeric values in the describeMol file can be null. It is
 therefore crucial to check for null values when using these fields. For
 example, the molecular weight in the marked line above can be null, so
-the following code might throw a NullPointerException: <java> int weight
-= polymer.getWeight(); </java> Instead, the following is preferred:
-<java> Integer weight = polymer.getWeight(); if (weight == null) {
+the following code might throw a NullPointerException: ```java int weight
+= polymer.getWeight(); ``` Instead, the following is preferred:
+```java Integer weight = polymer.getWeight(); if (weight == null) {
 
 `   // do something`
 
@@ -58,4 +58,4 @@ the following code might throw a NullPointerException: <java> int weight
 
 `   // do something else`
 
-} </java>
+} ```

@@ -37,7 +37,7 @@ for a given amino acid sequence (in this example the sequence only
 contains the twenty amino acids) on the basis of the *CIDH920105* table
 from the AAindex1 file *aaindex1*:
 
-<java>SimpleSymbolPropertyTableDB db = new
+```javaSimpleSymbolPropertyTableDB db = new
 SimpleSymbolPropertyTableDB(new AAindexStreamReader(new
 FileReader("aaindex1"))); AAindex hydrophobicity = (AAindex)
 db.table("CIDH920105"); SymbolList symbols =
@@ -47,4 +47,4 @@ ProteinTools.createProtein("ARNDCEQGHILKMFPSTWYV"); double hp = 0.0; for
 `   hp += hydrophobicity.getDoubleValue(symbols.symbolAt(i));`
 
 } System.out.println("Average hydrophobicity: " + (hp /
-symbols.length()));</java>
+symbols.length()));```

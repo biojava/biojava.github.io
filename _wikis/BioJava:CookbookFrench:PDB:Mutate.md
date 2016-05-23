@@ -5,7 +5,7 @@ title: BioJava:CookbookFrench:PDB:Mutate
 Comment faire une mutation dans un fichier PDB
 ----------------------------------------------
 
-<java>
+```java
 
 `// muter la structure de la proteine`  
 `// et sauver en fichier`  
@@ -42,4 +42,4 @@ Comment faire une mutation dans un fichier PDB
 ` } catch (Exception e) {`  
 `     e.printStackTrace();`
 
-} </java>
+} ```

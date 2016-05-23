@@ -35,7 +35,7 @@ des classes *DNATools*, *RNATools* ou *ProteinTools*.
 
 ### D'une chaîne à une *SymbolList*
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSymbolList {
 
@@ -59,11 +59,11 @@ public class StringToSymbolList {
 `  `  
 ` }`
 
-} </java>
+} ```
 
 ### D'une chaîne à une *Sequence*
 
-<java> import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSequence {
 
@@ -85,7 +85,7 @@ public class StringToSequence {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 ### D'une *SymbolList* à une chaîne de caractères
 
@@ -93,7 +93,7 @@ Vous pouvez appeller la méthode **seqString()** sur une *SymbolList* ou
 une *Sequence* pour obtenir la chaîne de caractères contenant la
 séquence.
 
-<java> import org.biojava.bio.symbol.\*;
+```java import org.biojava.bio.symbol.\*;
 
 public class SymbolListToString {
 
@@ -106,4 +106,4 @@ public class SymbolListToString {
 `   String s = sl.seqString();`  
 ` }`
 
-} </java>
+} ```

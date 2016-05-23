@@ -11,7 +11,7 @@ DNATools.reverseComplement(SymbolList sl). Un metodo equivalente è
 presente all'interno della classe RNATools per effettuare la stessa
 operazione sulle Sequences e le SymbolList basate sull'RNA.
 
-<java> import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
+```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;
 
 public class ReverseComplement {
 
@@ -37,4 +37,4 @@ public class ReverseComplement {
 `   }`  
 ` }`
 
-} </java>
+} ```

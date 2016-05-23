@@ -51,7 +51,7 @@ The following program reads an EMBL file and lists its Annotation
 properties. The output of this program on the above file is listed below
 the program.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.\*; import org.biojava.bio.seq.\*; import
 org.biojava.bio.seq.io.\*;
@@ -81,7 +81,7 @@ public class ListAnnotations {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 Program Output
 

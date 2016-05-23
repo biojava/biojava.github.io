@@ -49,7 +49,7 @@ bundled with the next biojava distribution in version 1.7 when released.
 
 ### GADemo.java
 
-<java> import java.util.Iterator; import
+```java import java.util.Iterator; import
 org.biojava.bio.dist.Distribution; import
 org.biojava.bio.dist.DistributionTools; import
 org.biojava.bio.dist.UniformDistribution; import

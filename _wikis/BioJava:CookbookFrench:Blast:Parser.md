@@ -27,7 +27,7 @@ BlastLikeSearchBuilder --\> List
 L'API est très flexible mais dans la plupart des cas, la recette qui
 suit vous donnera les résultats que vous recherchez.
 
-<java> import java.io.\*; import java.util.\*;
+```java import java.io.\*; import java.util.\*;
 
 import org.biojava.bio.program.sax.\*; import
 org.biojava.bio.program.ssbind.\*; import org.biojava.bio.search.\*;
@@ -83,4 +83,4 @@ public class BlastParser {
 `   }`  
 ` }`
 
-</java>
+```

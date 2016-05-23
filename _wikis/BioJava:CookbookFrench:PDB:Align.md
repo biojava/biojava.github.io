@@ -37,7 +37,7 @@ Vous pouvez ensuite envoyer cet alignement pour affichage par Jmol grâce
 à cette
 [recette](http://biojava.org/wiki/BioJava:CookBookFrench:PDB:Jmol).
 
-<java>
+```java
 
 ` public static void main(String[] args){`
 
@@ -111,4 +111,4 @@ Vous pouvez ensuite envoyer cet alignement pour affichage par Jmol grâce
 `           e.printStackTrace();`  
 `       }`
 
-} </java>
+} ```

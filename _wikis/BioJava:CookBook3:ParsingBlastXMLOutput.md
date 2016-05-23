@@ -85,14 +85,14 @@ representing root XML element will be created.
 
 The most simple way to do it as follows, however you'll need to copy the
 3 aforementioned XML schema files to every directory in which you want
-to process Blast output XML files. <java> JAXBContext jc =
+to process Blast output XML files. ```java JAXBContext jc =
 JAXBContext.newInstance(BlastOutput.class); Unmarshaller u =
 jc.createUnmarshaller(); return (BlastOutput) u.unmarshal(new
-File("blast-xml-output.xml")); </java>
+File("blast-xml-output.xml")); ```
 
 As a workaround, place the 3 schema files in the same folder where the
 generated classes are located and use the following code, which will
-then use those files: <java> JAXBContext jc =
+then use those files: ```java JAXBContext jc =
 JAXBContext.newInstance(BlastOutput.class); Unmarshaller u =
 jc.createUnmarshaller();
 
@@ -117,7 +117,7 @@ true); xmlreader.setEntityResolver(new EntityResolver() {
 
 }); InputSource input = new InputSource(new FileReader(new
 File("blast-xml-output.xml"))); Source source = new SAXSource(xmlreader,
-input); return (BlastOutput) u.unmarshal(source); </java>
+input); return (BlastOutput) u.unmarshal(source); ```
 
 ### Use the created BlastOutput object
 
@@ -125,10 +125,10 @@ Finally, BlastOutput object, created in the previous step, can be used
 like any other Java object.
 
 For example, you can get the matrix used for given Blast search like
-this: <java> BlastOutput blastOutput; // assign BlastOutput object,
+this: ```java BlastOutput blastOutput; // assign BlastOutput object,
 returned by Unmarshaller (see previous step) String matrix =
 blastOutput.getBlastOutputParam().getParameters().getParametersMatrix();
-</java> Note that this corresponds to the XML structure: <xml>
+``` Note that this corresponds to the XML structure: <xml>
 <BlastOutput>
 
 ` ...`  

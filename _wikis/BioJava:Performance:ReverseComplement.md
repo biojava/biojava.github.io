@@ -8,7 +8,7 @@ Reverse complement of DNA sequence
 This source code is run in the [example that determines the reverse
 complement](BioJava:Performance "wikilink") of a DNA sequence.
 
-<java> import org.biojava.bio.seq.impl.RevCompSequence; import
+```java import org.biojava.bio.seq.impl.RevCompSequence; import
 org.biojavax.bio.seq.RichSequence; import
 org.biojavax.bio.seq.RichSequenceIterator; import
 org.biojavax.bio.seq.io.FastaFormat; import
@@ -57,4 +57,4 @@ public class RevComp {
 
 }
 
-</java>
+```

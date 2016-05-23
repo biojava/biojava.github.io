@@ -8,7 +8,7 @@ license](BioJava:License "wikilink"): LGPL v 2.1
 Developers: Please include the following javadoc in the header of every
 class you commit:
 
-<java> /\*
+```java /\*
 
 `*                    BioJava development code`  
 `*`  
@@ -32,4 +32,4 @@ class you commit:
 `*`  
 `*/`
 
-</java>
+```

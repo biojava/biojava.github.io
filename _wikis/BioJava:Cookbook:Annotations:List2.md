@@ -10,7 +10,7 @@ Each of these features can be annotated with specific information.
 The following program reads in a Genbank or EMBL file and outputs
 annotation information about each of the CDS features
 
-<java> /\*\*
+```java /\*\*
 
 `* Class to load an EMBL or Genbank sequence file and output annotation information about the CDS features.`  
 `*/`
@@ -121,4 +121,4 @@ it = ra.getNoteSet().iterator(); it.hasNext();){
 `   }`  
 ` }`
 
-} </java>
+} ```

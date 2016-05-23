@@ -21,7 +21,7 @@ les résidues dans l'ordre est le *SymbolSequenceRenderer*.
 Le programme suivant montre l'utilisation d'un *SequenceRenderContext*
 et d'un *SequenceRenderer* pour afficher les symboles d'une *Sequence*.
 
-<java> import java.awt.\*; import java.awt.event.\*; import
+```java import java.awt.\*; import java.awt.event.\*; import
 javax.swing.\*;
 
 import org.biojava.bio.gui.sequence.\*; import org.biojava.bio.seq.\*;
@@ -79,7 +79,7 @@ public class SeqView extends JFrame {
 `   }`  
 ` }`
 
-} </java>
+} ```
 
 Le code précédent donne l'image suivante:
 

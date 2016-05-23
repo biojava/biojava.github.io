@@ -8,7 +8,7 @@ The easiest way - AtomCache and StructureIO
 -------------------------------------------
 
 The easiest way is to use the AtomCache class for accessing PDB files:
-<java>
+```java
 
 `       // by default PDB files will be stored in a temporary directory`
 
@@ -26,10 +26,10 @@ The easiest way is to use the AtomCache class for accessing PDB files:
 `           e.printStackTrace();`  
 `       }`
 
-</java>
+```
 
 As of BioJava 3.0.5 there is also a new StructureIO utility class.
-<java> import org.biojava.nbio.structure.StructureIO;
+```java import org.biojava.nbio.structure.StructureIO;
 
 `       Structure s1 = StructureIO.getStructure("4hhb");`
 
@@ -38,7 +38,7 @@ As of BioJava 3.0.5 there is also a new StructureIO utility class.
 `       // set the PDB path in StructureIO`  
 `       StructureIO.setPdbPath("/tmp/");`
 
-</java>
+```
 
 Getting more control
 --------------------
@@ -57,7 +57,7 @@ class.
 Short Example: how to read a local file
 ---------------------------------------
 
-<java>
+```java
 
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -72,7 +72,7 @@ Short Example: how to read a local file
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```
 
 Example: How to work with a local installation of PDB
 -----------------------------------------------------
@@ -81,7 +81,7 @@ BioJava can work with local installations of PDB files. It can also
 automatically download and install missing PDB files. Here an example
 for how to do that:
 
-<java>
+```java
 
 public void basicLoad(String pdbId){
 
@@ -130,7 +130,7 @@ public void basicLoad(String pdbId){
 
 `}`
 
-</java>
+```
 
 Will give this output:
 
@@ -214,7 +214,7 @@ soft-cache, this means it won't cause out of memory exceptions, but
 garbage collects the data if the Java virtual machine needs to free up
 space. The AtomCache is thread-safe.
 
-<java> public void loadStructureFromCache(){
+```java public void loadStructureFromCache(){
 
 `     String pdbId = "4hhb";`  
 `     String chainName = "4hhb.A";`  
@@ -251,7 +251,7 @@ space. The AtomCache is thread-safe.
 
 `  }`
 
-</java>
+```
 
 Example: How to parse a local file
 ----------------------------------
@@ -265,7 +265,7 @@ that are contained in the file. For more examples of how to access the
 [Atoms](http://www.biojava.org/docs/api/org/biojava/nbio/structure/Atom.html)
 please go to <BioJava:CookBook:PDB:atoms>. For more info on how the
 parser deals with SEQRES and ATOM records please see
-<BioJava:CookBook:PDB:seqres> <java>
+<BioJava:CookBook:PDB:seqres> ```java
 
 `// also works for gzip compressed files`  
 `String filename =  "path/to/pdbfile.ent" ;`  
@@ -315,7 +315,7 @@ parser deals with SEQRES and ATOM records please see
 `    e.printStackTrace();`  
 `}`
 
-</java>
+```
 
 To learn how to serialize a Structure object to a database see
 <BioJava:CookBook:PDB:hibernate>

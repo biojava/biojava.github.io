@@ -14,7 +14,7 @@ classe Structure.
 
 La recette suivante vous permet d'y accéder.
 
-<java> public static void main(String[] args){
+```java public static void main(String[] args){
 
 `       String pdbCode =  "1aoi";`
 
@@ -45,7 +45,7 @@ La recette suivante vous permet d'y accéder.
 `       }`  
 `   }`
 
-</java>
+```
 
 fournira la sortie suivante:
 

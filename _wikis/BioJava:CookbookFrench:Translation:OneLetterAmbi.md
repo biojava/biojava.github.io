@@ -16,7 +16,7 @@ L'exemple suivant montre comment faire afin de récupérer les valeurs du
 code à une lettre nécessaire pour faire une telle annotation pour chaque
 position d'une séquence nucléotidique traduite.
 
-<java> import java.util.Iterator; import org.biojava.bio.BioException;
+```java import java.util.Iterator; import org.biojava.bio.BioException;
 import org.biojava.bio.seq.DNATools; import
 org.biojava.bio.seq.io.SymbolTokenization; import
 org.biojava.bio.symbol.Alphabet; import
@@ -64,4 +64,4 @@ public class AmbiguitySolution {
 `       }`  
 `   }`
 
-} </java>
+} ```

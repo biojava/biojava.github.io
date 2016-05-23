@@ -25,7 +25,7 @@ events you are interested in.
 
 ### BlastEcho.java
 
-<java>
+```java
 
 `1 import org.xml.sax.*; `  
 `2 import java.io.*; `  
@@ -70,4 +70,4 @@ void setQueryID(String queryID) { 65 System.out.println("\\tQueryID:\\t
 System.out.println("\\tDatabaseID: "+databaseID); 69 } 70 } 71 72 public
 static void main(String[] args) throws Exception{ 73 InputSource is =
 new InputSource(new FileInputStream(args[0])); 74 BlastEcho blastEcho =
-new BlastEcho(); 75 blastEcho.echo(is); 76 } 77 } </java>
+new BlastEcho(); 75 blastEcho.echo(is); 76 } 77 } ```

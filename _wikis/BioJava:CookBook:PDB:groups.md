@@ -14,7 +14,7 @@ There are 3 types of Groups:
 In order to get all amino acids that have been observed in a PDB chain,
 you can use the following utility method:
 
-<java>
+```java
 
 `           Chain chain = s.getChainByPDB("A");`  
 `           List`<Group>` groups = chain.getAtomGroups("amino");`  
@@ -25,24 +25,24 @@ you can use the following utility method:
 `               System.out.println(aa + " " + aa.getSecStruc());`  
 `           }`
 
-</java>
+```
 
-In a similar way you can access all nucleotide groups by <java>
+In a similar way you can access all nucleotide groups by ```java
 
 `           chain.getAtomGroups("nucleotide");`
 
-</java>
+```
 
-The Hetatom groups are access in a similar fashion: <java>
+The Hetatom groups are access in a similar fashion: ```java
 
 `           chain.getAtomGroups("hetatm");`
 
-</java>
+```
 
 Since all 3 types of groups are implementing the Group interface, you
 can also iterate over all groups and check for the instance type:
 
-<java>
+```java
 
 `           List`<Group>` allgroups = chain.getAtomGroups();`  
 `           for (Group group : groups) {`  
@@ -52,7 +52,7 @@ can also iterate over all groups and check for the instance type:
 `               }`  
 `           }`
 
-</java>
+```
 
 Next: <BioJava:CookBook:PDB:header> - How to access the header
 information

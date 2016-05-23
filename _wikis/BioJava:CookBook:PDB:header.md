@@ -11,7 +11,7 @@ availabe via the
 class that can be accessed from
 [structure.getCompounds()](http://www.biojava.org/docs/api/org/biojava/bio/structure/Structure.html).
 
-<java>
+```java
 
 `   public static void main(String[] args) throws Exception {`  
 `       `  
@@ -33,7 +33,7 @@ class that can be accessed from
 `       `  
 `   }`
 
-</java>
+```
 
 gives the following output:
 

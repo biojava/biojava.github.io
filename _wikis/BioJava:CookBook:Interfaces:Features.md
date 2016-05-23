@@ -19,7 +19,7 @@ demonstrated in the program below. A screen shot follows the program.
 
 [frame|center|Features in a GUI](image:Featview.jpg "wikilink")
 
-<java> import java.awt.\*; import java.awt.event.\*;
+```java import java.awt.\*; import java.awt.event.\*;
 
 import javax.swing.\*;
 
@@ -110,4 +110,4 @@ public class FeatureView extends JFrame {
 `   }`  
 ` }`
 
-} </java>
+} ```
