@@ -133,31 +133,32 @@ load your own, custom data structures. For this you will require to
 implement the [MMcifConsumer
 interface](http://www.biojava.org/docs/api/org/biojava/bio/structure/io/mmcif/MMcifConsumer.html)
 
-```java @since 1.7
+```java 
+@since 1.7
 
-`   public static void main(String[] args){`
+   public static void main(String[] args){
 
-`       String fileName = args[0];`  
-`       `  
-`       InputStream inStream =  new FileInputStream(fileName);`  
-`       `  
-`       MMcifParser parser = new SimpleMMcifParser();`
+       String fileName = args[0];  
+         
+       InputStream inStream =  new FileInputStream(fileName);  
+         
+       MMcifParser parser = new SimpleMMcifParser();
 
-`       SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();`
+       SimpleMMcifConsumer consumer = new SimpleMMcifConsumer();
 
-`       // The Consumer builds up the BioJava - structure object.`  
-`               // you could also hook in your own and build up you own data model.          `  
-`       parser.addMMcifConsumer(consumer);`
+       // The Consumer builds up the BioJava - structure object.  
+               // you could also hook in your own and build up you own data model.            
+       parser.addMMcifConsumer(consumer);
 
-`       try {`  
-`           parser.parse(new BufferedReader(new InputStreamReader(inStream)));`  
-`       } catch (IOException e){`  
-`           e.printStackTrace();`  
-`       }`
+       try {  
+           parser.parse(new BufferedReader(new InputStreamReader(inStream)));  
+       } catch (IOException e){  
+           e.printStackTrace();  
+       }
 
-`               // now get the protein structure.`  
-`       Structure cifStructure = consumer.getStructure();`  
-`                     `
+               // now get the protein structure.  
+       Structure cifStructure = consumer.getStructure();  
+                     
 
 }
 
