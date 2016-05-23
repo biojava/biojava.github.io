@@ -47,36 +47,41 @@ Command line usage example:
 <nowiki>xjc -d <output directory> -p <package name> -dtd http://www.ncbi.nlm.nih.gov/dtd/NCBI_BlastOutput.dtd</nowiki>
 `
 
-Maven plugin config example: <xml> <plugin>
+Maven plugin config example: 
 
-` `<groupId>`org.jvnet.jaxb2.maven2`</groupId>  
-` `<artifactId>`maven-jaxb2-plugin`</artifactId>  
-` `<version>`0.8.0`</version>  
-` `<executions>  
-`   `<execution>  
-`     `<goals>  
-`       `<goal>`generate`</goal>  
-`     `</goals>  
-`     `<configuration>  
-`       `<generatePackage>`ncbi.blast.result.generated`</generatePackage>  
-`       `<generateDirectory>`${basedir}/src/main/java`</generateDirectory>  
-`       `<schemaLanguage>`dtd`</schemaLanguage>  
-`       `<schemaIncludes>  
-`         `  
-`         `<value>`schemaFolder/NCBI_BlastOutput.dtd`</value>  
-`       `</schemaIncludes>  
-`     `</configuration>  
-`   `</execution>  
-` `</executions>  
-` `<dependencies>  
-`   `<dependency>  
-`     `<groupId>`org.jvnet.jaxb2-commons`</groupId>  
-`     `<artifactId>`property-listener-injector`</artifactId>  
-`     `<version>`1.0`</version>  
-`   `</dependency>  
-` `</dependencies>
+```xml 
 
-</plugin> </xml>
+<plugin>
+
+ >groupId>org.jvnet.jaxb2.maven2>/groupId>  
+ >artifactId>maven-jaxb2-plugin>/artifactId>  
+ >version>`0.8.0>/version>  
+ >executions>  
+   >execution>  
+     >goals>  
+       >goal>`generate>/goal>  
+     >/goals>  
+     >configuration>  
+       >generatePackage>ncbi.blast.result.generated>/generatePackage>  
+       >generateDirectory>${basedir}/src/main/java>/generateDirectory>  
+       >schemaLanguage>dtd>/schemaLanguage>  
+       >schemaIncludes>  
+           
+         >value>schemaFolder/NCBI_BlastOutput.dtd>/value>  
+       >/schemaIncludes>  
+     >/configuration>  
+   >/execution>  
+ >/executions>  
+ >dependencies>  
+   >dependency>  
+     >groupId>org.jvnet.jaxb2-commons>/groupId>  
+     >artifactId>property-listener-injector>/artifactId>  
+     >version>1.0>/version>  
+   >/dependency>  
+ >/dependencies>
+
+</plugin> 
+```
 
 ### Create Java objects from Blast results XML
 
@@ -92,32 +97,39 @@ File("blast-xml-output.xml")); ```
 
 As a workaround, place the 3 schema files in the same folder where the
 generated classes are located and use the following code, which will
-then use those files: ```java JAXBContext jc =
-JAXBContext.newInstance(BlastOutput.class); Unmarshaller u =
-jc.createUnmarshaller();
+then use those files: 
+
+```java 
+
+JAXBContext jc = JAXBContext.newInstance(BlastOutput.class); 
+Unmarshaller u = jc.createUnmarshaller();
 
 XMLReader xmlreader = XMLReaderFactory.createXMLReader();
 xmlreader.setFeature("<http://xml.org/sax/features/namespaces>", true);
 xmlreader.setFeature("<http://xml.org/sax/features/namespace-prefixes>",
 true); xmlreader.setEntityResolver(new EntityResolver() {
 
-`    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {`  
-`         String file = null;`  
-`         if (systemId.contains("NCBI_BlastOutput.dtd")) {`  
-`              file = "NCBI_BlastOutput.dtd";`  
-`         }`  
-`         if (systemId.contains("NCBI_Entity.mod.dtd")) {`  
-`              file = "NCBI_Entity.mod.dtd";`  
-`         }`  
-`         if (systemId.contains("NCBI_BlastOutput.mod.dtd")) {`  
-`              file = "NCBI_BlastOutput.mod.dtd";`  
-`         }`  
-`         return new InputSource(BlastOutput.class.getResourceAsStream(file));`  
-`   }`
+    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {  
+         String file = null`  
+         if (systemId.contains("NCBI_BlastOutput.dtd")) {  
+              file = "NCBI_BlastOutput.dtd"`  
+           
+         if (systemId.contains("NCBI_Entity.mod.dtd")) {  
+              file = "NCBI_Entity.mod.dtd"`  
+           
+         if (systemId.contains("NCBI_BlastOutput.mod.dtd")) {  
+              file = "NCBI_BlastOutput.mod.dtd"`  
+           
+         return new InputSource(BlastOutput.class.getResourceAsStream(file));
+   
 
-}); InputSource input = new InputSource(new FileReader(new
-File("blast-xml-output.xml"))); Source source = new SAXSource(xmlreader,
-input); return (BlastOutput) u.unmarshal(source); ```
+}); 
+
+InputSource input = new InputSource(new FileReader(new File("blast-xml-output.xml"))); Source source = new SAXSource(xmlreader, input); 
+
+return (BlastOutput) u.unmarshal(source); 
+
+```
 
 ### Use the created BlastOutput object
 
@@ -125,19 +137,25 @@ Finally, BlastOutput object, created in the previous step, can be used
 like any other Java object.
 
 For example, you can get the matrix used for given Blast search like
-this: ```java BlastOutput blastOutput; // assign BlastOutput object,
+this: 
+
+```java BlastOutput blastOutput; // assign BlastOutput object,
 returned by Unmarshaller (see previous step) String matrix =
 blastOutput.getBlastOutputParam().getParameters().getParametersMatrix();
-``` Note that this corresponds to the XML structure: <xml>
+``` Note that this corresponds to the XML structure: 
+
+```xml
 <BlastOutput>
 
-` ...`  
-` `<BlastOutput_param>  
-`   `<Parameters>  
-`     `<Parameters_matrix>`BLOSUM62`</Parameters_matrix>  
-`     ...`  
-`   `</Parameters>  
-` `</BlastOutput_param>  
-` ...`
+ ...
+ >BlastOutput_param>  
+   >Parameters>  
+     >Parameters_matrix>`BLOSUM62>/Parameters_matrix>  
+     ...
+   >/Parameters>  
+ >/BlastOutput_param>  
+ ...
 
-</BlastOutput> </xml>
+</BlastOutput> 
+
+```

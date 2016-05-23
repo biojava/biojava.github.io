@@ -15,31 +15,34 @@ part of them.
 Example: identify and print all preloaded modifications from a structure
 ------------------------------------------------------------------------
 
-```java Set<ModifiedCompound> identifyAllModfications(Structure struc) {
+```java
 
-`   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();`  
-`   parser.identify(struc);`  
-`   Set`<ModifiedCompound>` mcs = parser.getIdentifiedModifiedCompound();`  
-`   return mcs;`
+Set<ModifiedCompound> identifyAllModfications(Structure struc) {
 
-} ```
+   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();
+   parser.identify(struc);
+   Set`<ModifiedCompound> mcs = parser.getIdentifiedModifiedCompound();
+   return mcs;
+
+}
+```
 
 Example: identify phosphorylation sites in a structure
 ------------------------------------------------------
 
 ```java List<ResidueNumber> identifyPhosphosites(Structure struc) {
 
-`   List`<ResidueNumber>` phosphosites = new ArrayList`<ResidueNumber>`();`  
-`   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();`  
-`   parser.identify(struc, ProteinModificationRegistry.getByKeyword("phosphoprotein"));`  
-`   Set`<ModifiedCompound>` mcs = parser.getIdentifiedModifiedCompound();`  
-`   for (ModifiedCompound mc : mcs) {`  
-`       Set`<StructureGroup>` groups = mc.getGroups(true);`  
-`       for (StructureGroup group : groups) {`  
-`           phosphosites.add(group.getPDBResidueNumber());`  
-`       }`  
-`   }`  
-`   return phosphosites;`
+   List`<ResidueNumber> phosphosites = new ArrayList`<ResidueNumber>`();  
+   ProteinModificationIdentifier parser = new ProteinModificationIdentifier();  
+   parser.identify(struc, ProteinModificationRegistry.getByKeyword("phosphoprotein"));  
+   Set`<ModifiedCompound> mcs = parser.getIdentifiedModifiedCompound();  
+   for (ModifiedCompound mc : mcs) {`  
+       Set`<StructureGroup> groups = mc.getGroups(true);  
+       for (StructureGroup group : groups) {`  
+           phosphosites.add(group.getPDBResidueNumber());  
+       }`  
+   }`  
+   return phosphosites;
 
 } ```
 
@@ -53,28 +56,28 @@ org.biojava.nbio.protmod.structure.ProteinModificationIdentifier;
 
 public static void main(String[] args) {
 
-`   try {`  
-`       PDBFileReader reader = new PDBFileReader();`  
-`       reader.setAutoFetch(true);`
+   try {`  
+       PDBFileReader reader = new PDBFileReader();  
+       reader.setAutoFetch(true);
 
-`       // identify all modificaitons from PDB:1CAD and print them`  
-`       String pdbId = "1CAD";`  
-`       Structure struc = reader.getStructureById(pdbId);`  
-`       Set`<ModifiedCompound>` mcs = identifyAllModfications(struc);`  
-`       for (ModifiedCompound mc : mcs) {`  
-`           System.out.println(mc.toString());`  
-`       }`
+       // identify all modificaitons from PDB:1CAD and print them`  
+       String pdbId = "1CAD";  
+       Structure struc = reader.getStructureById(pdbId);  
+       Set`<ModifiedCompound> mcs = identifyAllModfications(struc);  
+       for (ModifiedCompound mc : mcs) {`  
+           System.out.println(mc.toString());  
+       }`
 
-`       // identify all phosphosites from PDB:3MVJ and print them`  
-`       pdbId = "3MVJ";`  
-`       struc = reader.getStructureById(pdbId);`  
-`       List`<ResidueNumber>` psites = identifyPhosphosites(struc);`  
-`       for (ResidueNumber psite : psites) {`  
-`           System.out.println(psite.toString());`  
-`       }`  
-`   } catch(Exception e) {`  
-`       e.printStackTrace();`  
-`   }`
+       // identify all phosphosites from PDB:3MVJ and print them`  
+       pdbId = "3MVJ";  
+       struc = reader.getStructureById(pdbId);  
+       List`<ResidueNumber> psites = identifyPhosphosites(struc);  
+       for (ResidueNumber psite : psites) {`  
+           System.out.println(psite.toString());  
+       }`  
+   } catch(Exception e) {`  
+       e.printStackTrace();  
+   }`
 
 } ```
 
