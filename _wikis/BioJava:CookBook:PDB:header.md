@@ -13,25 +13,25 @@ class that can be accessed from
 
 ```java
 
-`   public static void main(String[] args) throws Exception {`  
-`       `  
-`       String code =  "1aoi";`
+   public static void main(String[] args) throws Exception {  
+         
+       String code =  "1aoi";
 
-`       AtomCache cache = new AtomCache();`  
-`       `  
-`       Structure struc = cache.getStructure(code);`  
-`       `  
-`       PDBHeader header = struc.getPDBHeader();`  
-`       `  
-`       System.out.println(header.toString());`  
-`       `  
-`       System.out.println("available compounds:");`  
-`       List`<Compound>` compounds = struc.getCompounds();`  
-`       for (Compound compound:compounds){`  
-`           System.out.println(compound);`  
-`       }`  
-`       `  
-`   }`
+       AtomCache cache = new AtomCache();  
+         
+       Structure struc = cache.getStructure(code);  
+         
+       PDBHeader header = struc.getPDBHeader();  
+         
+       System.out.println(header.toString());  
+         
+       System.out.println("available compounds:");  
+       List<Compound> compounds = struc.getCompounds();  
+       for (Compound compound:compounds){  
+           System.out.println(compound);  
+       }  
+         
+   }
 
 ```
 
