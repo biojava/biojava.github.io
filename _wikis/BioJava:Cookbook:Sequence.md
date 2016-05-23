@@ -29,76 +29,82 @@ static method from either DNATools, RNATools or ProteinTools.
 
 ### String to SymbolList
 
-```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java 
+import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSymbolList {
 
-` public static void main(String[] args) {`  
-`  `  
-`   try {`  
-`     //create a DNA SymbolList from a String`  
-`     SymbolList dna = DNATools.createDNA("atcggtcggctta");`
+ public static void main(String[] args) {  
+    
+   try {  
+     //create a DNA SymbolList from a String  
+     SymbolList dna = DNATools.createDNA("atcggtcggctta");
 
-`     //create a RNA SymbolList from a String`  
-`     SymbolList rna = RNATools.createRNA("auugccuacauaggc");`
+     //create a RNA SymbolList from a String  
+     SymbolList rna = RNATools.createRNA("auugccuacauaggc");
 
-`     //create a Protein SymbolList from a String`  
-`     SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");`  
-`   }`  
-`   catch (IllegalSymbolException ex) {`  
-`     //this will happen if you use a character in one of your strings that is`  
-`     //not an accepted IUB Character for that Symbol.`  
-`     ex.printStackTrace();`  
-`   }`  
-`  `  
-` }`
+     //create a Protein SymbolList from a String  
+     SymbolList aa = ProteinTools.createProtein("AGFAVENDSA");  
+   }  
+   catch (IllegalSymbolException ex) {  
+     //this will happen if you use a character in one of your strings that is  
+     //not an accepted IUB Character for that Symbol.  
+     ex.printStackTrace();  
+   }  
+    
+ }
 
-} ```
+} 
+```
 
 ### String to Sequence
 
-```java import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
+```java 
+import org.biojava.bio.seq.\*; import org.biojava.bio.symbol.\*;
 
 public class StringToSequence {
 
-` public static void main(String[] args) {`
+ public static void main(String[] args) {
 
-`   try {`  
-`     //create a DNA sequence with the name dna_1`  
-`     Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");`
+   try {  
+     //create a DNA sequence with the name dna_1  
+     Sequence dna = DNATools.createDNASequence("atgctg", "dna_1");
 
-`     //create an RNA sequence with the name rna_1`  
-`     Sequence rna = RNATools.createRNASequence("augcug", "rna_1");`
+     //create an RNA sequence with the name rna_1  
+     Sequence rna = RNATools.createRNASequence("augcug", "rna_1");
 
-`     //create a Protein sequence with the name prot_1`  
-`     Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");`  
-`   }`  
-`   catch (IllegalSymbolException ex) {`  
-`     //an exception is thrown if you use a non IUB symbol`  
-`     ex.printStackTrace();`  
-`   }`  
-` }`
+     //create a Protein sequence with the name prot_1  
+     Sequence prot = ProteinTools.createProteinSequence("AFHS", "prot_1");  
+   }  
+   catch (IllegalSymbolException ex) {  
+     //an exception is thrown if you use a non IUB symbol  
+     ex.printStackTrace();  
+   }  
+ }
 
-} ```
+} 
+```
 
 ### SymbolList to String
 
 You can call the seqString() method on either a SymbolList or a Sequence
 to get it's Stringified version.
 
-```java import org.biojava.bio.symbol.\*;
+```java 
+import org.biojava.bio.symbol.\*;
 
 public class SymbolListToString {
 
-` public static void main(String[] args) {`  
-`   SymbolList sl = null;`  
-`   //code here to instantiate sl`  
-`  `  
-`   //convert sl into a String`  
-`   String s = sl.seqString();`  
-` }`
+ public static void main(String[] args) {  
+   SymbolList sl = null;  
+   //code here to instantiate sl  
+    
+   //convert sl into a String  
+   String s = sl.seqString();  
+ }
 
-} ```
+} 
+```
 
 The above example uses the process of 'tokenization' to create the
 String, in this case hidden in the SeqString method. Different types of
