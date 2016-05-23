@@ -36,18 +36,12 @@ How Do I....?
 
 **Required modules**: *biojava-core*
 
--   [Overview of
-    biojava-core?](BioJava:CookBook:Core:Overview "wikilink")
--   [How are sequences
-    created?](BioJava:CookBook:Core:Sequences "wikilink")
--   [How do I compare two DNA Sequences and create a consensus
-    sequence?](BioJava:CookBook:Core:SequenceCompare "wikilink")
--   [How do I read or write Fasta
-    files?](BioJava:CookBook:Core:FastaReadWrite "wikilink")
--   [How do I read Genbank
-    files?](BioJava:CookBook:Core:GenbankRead "wikilink")
--   [How do I view Features on a
-    sequence?](BioJava:CookBook:Core:SequenceFeaturePanel "wikilink")
+-   [Overview of biojava-core?](/wikis/BioJava:CookBook:Core:Overview "wikilink")
+-   [How are sequences created?](/wikis/BioJava:CookBook:Core:Sequences "wikilink")
+-   [How do I compare two DNA Sequences and create a consensus sequence?](/wikis/BioJava:CookBook:Core:SequenceCompare "wikilink")
+-   [How do I read or write Fasta files?](/wikis/BioJava:CookBook:Core:FastaReadWrite "wikilink")
+-   [How do I read Genbank files?](/wikis/BioJava:CookBook:Core:GenbankRead "wikilink")
+-   [How do I view Features on a sequence?](/wikis/BioJava:CookBook:Core:SequenceFeaturePanel "wikilink")
 
 ### Protein Structure
 
@@ -56,57 +50,57 @@ module** : *biojava-structure-gui* for the 3D visualisation **Optional
 external library** : *JmolApplet.jar* for the 3D visualisation
 
 -   [How can I parse a PDB
-    file?](BioJava:CookBook:PDB:read3.0 "wikilink")
+    file?](/wikis/BioJava:CookBook:PDB:read3.0 "wikilink")
 -   [How can I parse a .mmcif
-    file?](BioJava:CookBook:PDB:mmcif "wikilink")
+    file?](/wikis/BioJava:CookBook:PDB:mmcif "wikilink")
 -   [What is the BioJava structure
-    datamodel?](BioJava:CookBook:PDB:datamodel "wikilink")
+    datamodel?](/wikis/BioJava:CookBook:PDB:datamodel "wikilink")
 -   [How can I do calculations on
-    atoms?](BioJava:CookBook:PDB:atomsCalc "wikilink")
+    atoms?](/wikis/BioJava:CookBook:PDB:atomsCalc "wikilink")
 -   [How can I access the header information of a PDB
-    file?](BioJava:CookBook:PDB:header "wikilink")
+    file?](/wikis/BioJava:CookBook:PDB:header "wikilink")
 -   [How does BioJava deal with SEQRES and ATOM
-    groups?](BioJava:CookBook:PDB:seqres "wikilink")
+    groups?](/wikis/BioJava:CookBook:PDB:seqres "wikilink")
 -   [How can I mutate a
-    residue?](BioJava:CookBook:PDB:mutate "wikilink")
+    residue?](/wikis/BioJava:CookBook:PDB:mutate "wikilink")
 -   [How can I calculate a structure
-    alignment?](BioJava:CookBook:PDB:align "wikilink")
+    alignment?](/wikis/BioJava:CookBook:PDB:align "wikilink")
 -   [How can I use a simple GUI to calculate an
-    alignment?](BioJava:CookBook:PDB:alignGUI "wikilink")
+    alignment?](/wikis/BioJava:CookBook:PDB:alignGUI "wikilink")
 -   [How can I interact with
-    Jmol?](BioJava:CookBook:PDB:Jmol "wikilink")
+    Jmol?](/wikis/BioJava:CookBook:PDB:Jmol "wikilink")
 -   [How can I serialize to a
-    database?](BioJava:CookBook:PDB:hibernate "wikilink")
+    database?](/wikis/BioJava:CookBook:PDB:hibernate "wikilink")
 -   [How can I load data from the SCOP
-    classification?](BioJava:CookBook:PDB:SCOP "wikilink")
+    classification?](/wikis/BioJava:CookBook:PDB:SCOP "wikilink")
 -   [How can I work with the Berkeley version of
-    SCOP?](BioJava:CookBook:PDBP:BerkeleySCOP "wikilink")
+    SCOP?](/wikis/BioJava:CookBook:PDBP:BerkeleySCOP "wikilink")
 -   [How can I find residues binding a
-    ligand?](BioJava:CookBook:PDB:ligands "wikilink")
+    ligand?](/wikis/BioJava:CookBook:PDB:ligands "wikilink")
 -   [How to work with biological assemblies of
-    proteins](BioJava:CookBook:PDB:bioassembly "wikilink")
+    proteins](/wikis/BioJava:CookBook:PDB:bioassembly "wikilink")
 -   [How to get information using RCSB's RESTful
-    services](BioJava:CookBook:PDB:restful "wikilink")
+    services](/wikis/BioJava:CookBook:PDB:restful "wikilink")
 -   [How do I calculate the true length of a
-    structure?](BioJava:CookBook:PDB:restful "wikilink")
+    structure?](/wikis/BioJava:CookBook:PDB:restful "wikilink")
 
 ### Pairwise and Multiple Sequence Alignment
 
 **Required modules**: *biojava-alignment, biojava-core, biojava-phylo*
 **Required external library**: *forester.jar*
 
--   [How can I read a Sequence Alignment in Stockholm format](BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
--   [How can I calculate a Pairwise Sequence Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman, Needleman Wunsch)
--   [How can I calculate a Pairwise Sequence Alignment with DNA sequences](BioJava:CookBook3:PSA_DNA "wikilink")?
--   [How can I create a Multiple Sequence Alignment](BioJava:CookBook3:MSA "wikilink")?
--   [How can I profile the time and memory requirements of a Multiple Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
+-   [How can I read a Sequence Alignment in Stockholm format](/wikis/BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
+-   [How can I calculate a Pairwise Sequence Alignment](/wikis/BioJava:CookBook3:PSA "wikilink")? (Smith Waterman, Needleman Wunsch)
+-   [How can I calculate a Pairwise Sequence Alignment with DNA sequences](/wikis/BioJava:CookBook3:PSA_DNA "wikilink")?
+-   [How can I create a Multiple Sequence Alignment](/wikis/BioJava:CookBook3:MSA "wikilink")?
+-   [How can I profile the time and memory requirements of a Multiple Sequence Alignment](/wikis/BioJava:CookBook3:MSAProfiler "wikilink")?
 
 ### Genome
 
 **Required modules**: *biojava-genome*
 
 -   [Overview of
-    biojava-genome?](BioJava:CookBook:genome:Overview "wikilink")
+    biojava-genome?](/wikis/BioJava:CookBook:genome:Overview "wikilink")
 
 ### Sequencing
 
@@ -114,7 +108,7 @@ external library** : *JmolApplet.jar* for the 3D visualisation
 external library**: *guava-11.0.1.jar*
 
 -   [How do I work with nextgen sequencing reads in FASTQ
-    format?](Biojava:CookBook3:FASTQ "wikilink")
+    format?](/wikis/BioJava:CookBook3:FASTQ "wikilink")
 
 ### Phylogenetic tree
 
@@ -122,13 +116,13 @@ external library**: *guava-11.0.1.jar*
 *forester.jar*
 
 -   [Overview of
-    biojava-phylo?](BioJava:CookBook:Phylo:Overview "wikilink")
+    biojava-phylo?](/wikis/BioJava:CookBook:Phylo:Overview "wikilink")
 
 <!-- -->
 
 -   [How do I convert Profile object into Multiple Sequence Alignment
     object to be use in the
-    TreeConstructor](BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
+    TreeConstructor](/wikis/BioJava:CookBook:Phylo:ProfileToMSA "wikilink")
 
 ### Physico-Chemical Properties Computation
 
@@ -136,42 +130,42 @@ external library**: *guava-11.0.1.jar*
 biojava-core*
 
 -   [How can I compute physico-chemical properties via
-    APIs?](BioJava:CookBook:AAPROP:main "wikilink")
+    APIs?](/wikis/BioJava:CookBook:AAPROP:main "wikilink")
 -   [How can I compute physico-chemical properties using Command
-    Prompt?](BioJava:CookBook:AAPROP:commandprompt "wikilink")
+    Prompt?](/wikis/BioJava:CookBook:AAPROP:commandprompt "wikilink")
 -   [How can I compute PROFEAT properties via
-    APIs?](BioJava:CookBook:AAPROP:profeat "wikilink")
+    APIs?](/wikis/BioJava:CookBook:AAPROP:profeat "wikilink")
 
 ### Protein Disorder
 
 **Required modules**: *biojava-protein-disorder*
 
 -   [How can I predict disordered regions of the protein using its
-    sequence?](BioJava:CookBook3:ProteinDisorder "wikilink")
+    sequence?](/wikis/BioJava:CookBook3:ProteinDisorder "wikilink")
 -   [Can I use the predictor from the command
-    line?](BioJava:CookBook3:ProteinDisorderCLI "wikilink")
+    line?](/wikis/BioJava:CookBook3:ProteinDisorderCLI "wikilink")
 
 ### Protein Modification Identification
 
 **Required modules**: *biojava-modfinder, biojava-structure*
 
 -   [How can I identify protein modifications in a 3D
-    structure?](BioJava:CookBook3:ModFinder "wikilink")
+    structure?](/wikis/BioJava:CookBook3:ModFinder "wikilink")
 -   [How can I get the list of supported protein
-    modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+    modifications?](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink")
 -   [How can I define and register a new protein
-    modification?](BioJava:CookBook3:AddProtMod "wikilink")
+    modification?](/wikis/BioJava:CookBook3:AddProtMod "wikilink")
 
 ### Remote Web Service Calls
 
 **Required modules**: *biojava-core, biojava-ws*
 
 -   [How can I use NCBI's QBlast service
-    ?](BioJava:CookBook3:NCBIQBlastService "wikilink")
+    ?](/wikis/BioJava:CookBook3:NCBIQBlastService "wikilink")
 -   [How can I use Blast XML Output in my
-    program?](BioJava:CookBook3:ParsingBlastXMLOutput "wikilink")
+    program?](/wikis/BioJava:CookBook3:ParsingBlastXMLOutput "wikilink")
 -   [How can I get Pfam annotations for a protein sequence using the
-    Hmmer3 service?](BioJava:CookBook3:HmmerService "wikilink")
+    Hmmer3 service?](/wikis/BioJava:CookBook3:HmmerService "wikilink")
 
 Legacy 1.8.x CookBook
 ---------------------
