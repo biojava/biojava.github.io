@@ -41,13 +41,13 @@ the CVS repository can be browsed at:
 Future releases
 ---------------
 
--   [Release plan](BioJava:1.5ReleasePlan "wikilink") for version 1.5.
+-   [Release plan](/wikis/BioJava:1.5ReleasePlan "wikilink") for version 1.5.
 
 Getting older versions
 ----------------------
 
 -   The legacy release 1.3 can be found
-    [here](BioJava:Download 1.3 "wikilink").
+    [here](/wikis/BioJava:Download 1.3 "wikilink").
 -   Other releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

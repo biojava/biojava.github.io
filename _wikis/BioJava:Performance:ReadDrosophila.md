@@ -6,7 +6,7 @@ Read Drosophila Genome
 ======================
 
 This source code is run in the [example that reads the Drosophila
-genome](BioJava:Performance "wikilink") and prints out the size of each
+genome](/wikis/BioJava:Performance "wikilink") and prints out the size of each
 chromosome:
 
 ```java import java.io.\*; import java.util.\*;

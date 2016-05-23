@@ -3,5 +3,5 @@ title: BioJava:Tutorial:Installing BioSQL
 ---
 
 1.  redirect [BioJava:Tutorial:Installing and using
-    BioSQL](BioJava:Tutorial:Installing and using BioSQL "wikilink")
+    BioSQL](/wikis/BioJava:Tutorial:Installing and using BioSQL "wikilink")
 

@@ -16,7 +16,7 @@ First tutorial online
 ---------------------
 
 I've formatted the [first
-tutorial](BioJava:Tutorial:Symbols_and_SymbolLists "wikilink"). Any
+tutorial](/wikis/BioJava:Tutorial:Symbols_and_SymbolLists "wikilink"). Any
 feedback, suggestions, etc.? The usage of \<code\>...\</code\> is not
 consistent in the original
 [page](http://www.biojava.org/tutorials/chap1.html). Any guidelines when

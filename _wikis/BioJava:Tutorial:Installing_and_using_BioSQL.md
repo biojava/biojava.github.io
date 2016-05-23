@@ -7,7 +7,7 @@ tags:
 <b>Note</b> that if you intend to use the BioJavaX/
 [Hibernate](http://www.hibernate.org/) bindings to BioSQL you should
 refer instead to the [BioJavaX
-documentation](BioJava:BioJavaXDocs "wikilink").
+documentation](/wikis/BioJava:BioJavaXDocs "wikilink").
 
 **by David Huen**
 

@@ -8,7 +8,7 @@ How can I identify protein modifications in a structure?
 BioJava provide a module *biojava3-modfinder* for identification of
 protein pre-, co-, and post-translational modifications from structures.
 [A list of protein
-modifications](BioJava:CookBook3:SupportedProtMod "wikilink") has been
+modifications](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink") has been
 pre-loaded. It is possible to identify all pre-loaded modifications or
 part of them.
 
@@ -86,9 +86,9 @@ See also
 
 <div style="-moz-column-count:3; column-count:3;">
 -   [How can I get the list of supported protein
-    modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+    modifications?](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink")
 -   [How can I define a new protein
-    modification?](BioJava:CookBook3:AddProtMod "wikilink")
+    modification?](/wikis/BioJava:CookBook3:AddProtMod "wikilink")
 
 </div>
 

@@ -69,7 +69,7 @@ Procedure
 
 -   We need to identify leaders for the development of the sub-modules.
     View the current [list of defined
-    modules](BioJava:Modules "wikilink")
+    modules](/wikis/BioJava:Modules "wikilink")
 
 <!-- -->
 

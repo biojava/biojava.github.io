@@ -309,8 +309,8 @@ Progress Log
 ### July 19 - July 23
 
 -   posted simple example programs to biojava3 cookbook
-    -   [Pairwise Sequence Alignment](BioJava:CookBook3:PSA "wikilink")
-    -   [Multiple Sequence Alignment](BioJava:CookBook3:MSA "wikilink")
+    -   [Pairwise Sequence Alignment](/wikis/BioJava:CookBook3:PSA "wikilink")
+    -   [Multiple Sequence Alignment](/wikis/BioJava:CookBook3:MSA "wikilink")
 -   longer skype call than usual to prioritize additions yet this summer
     -   variable gap penalty
     -   linear space alignment
@@ -336,7 +336,7 @@ Progress Log
 -   updated cookbook programs
     -   added them to test folder in repository
     -   added [time and memory usage
-        profiler](BioJava:CookBook3:MSAProfiler "wikilink")
+        profiler](/wikis/BioJava:CookBook3:MSAProfiler "wikilink")
 -   made improvements to memory usage during multiple sequence alignment
     -   null out cached values after use (e.g. keep pairwise scores, but
         not alignments)

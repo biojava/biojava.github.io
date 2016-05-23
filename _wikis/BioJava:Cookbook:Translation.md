@@ -8,7 +8,7 @@ How do I translate a DNA or RNA Sequence or SymbolList to Protein?
 To translate a DNA sequence you need to do the following
 
 -   [Transcribe to
-    RNA](Biojava:Cookbook:Sequence:Transcribe "wikilink").
+    RNA](/wikis/BioJava:Cookbook:Sequence:Transcribe "wikilink").
 -   Get a triplet (codon) view on the SymbolList.
 -   Translate to protein.
 
@@ -20,7 +20,7 @@ transcribe it.
 *NOTE: if you try and create a 'triplet view' on a SymbolList or
 Sequence who's length is not evenly divisible by three an
 IllegalArgumentException will be thrown. See ['how to get a
-subsequence'](Biojava:Cookbook:Sequence:SubSequence "wikilink") for a
+subsequence'](/wikis/BioJava:Cookbook:Sequence:SubSequence "wikilink") for a
 description of how to get a portion of a Sequence for translation.*
 
 ```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;

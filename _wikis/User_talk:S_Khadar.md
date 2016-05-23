@@ -12,5 +12,5 @@ database and server development in Prof. R.Sowdhamini's Lab
 [National Centre for Biological Sciences](http://www.ncbs.res.in) -
 TIFR - B'Lore - India. I extensively used BioJava for teaching purpose
 for B.Tech, MSc and M.Tech students (Bioinformatics Major). Now, I am in
-the prep stage to develop an integrated tool using BJ (BioJava). --[S
+the prep stage to develop an integrated tool using BJ (/wikis/BioJava). --[S
 Khadar](User:S Khadar "wikilink") 15:25, 6 February 2006 (EST)

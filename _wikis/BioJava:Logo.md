@@ -45,7 +45,7 @@ out of a steaming cup of hot cocoa ;-) Could we stylized the cup with 0
 and 1, a,c,g,t ? --[Foisys](User:Foisys "wikilink") 09:48, 7 February
 2006 (EST)
 
-Logo8 ![](Biojava-logo-rh1.png "fig:Biojava-logo-rh1.png")
+Logo8 ![](/wikis/BioJava-logo-rh1.png "fig:Biojava-logo-rh1.png")
 
 It's a caffeine molecule! --[Rholland](User::Rholland "wikilink") 17:45,
 8 February 2006 (SGT)
@@ -71,15 +71,15 @@ Logo11 ![](OSHBiojava2.jpg "fig:OSHBiojava2.jpg")
 
 Logo12 ![](OSHBiojava3.jpg "fig:OSHBiojava3.jpg")
 
-Logo13 ![](Biojava4.jpg "fig:Biojava4.jpg")
+Logo13 ![](/wikis/BioJava4.jpg "fig:Biojava4.jpg")
 
-Logo14 ![](Biojavalogo.png "fig:Biojavalogo.png")
+Logo14 ![](/wikis/BioJavalogo.png "fig:Biojavalogo.png")
 
 If you like it I will upload the svg version, so you can change colors
 
-Logo15 ![](BIOJAVA_LOGO_samiul.jpg "fig:BIOJAVA_LOGO_samiul.jpg")
+Logo15 ![](/wikis/BioJava_LOGO_samiul.jpg "fig:BIOJAVA_LOGO_samiul.jpg")
 
-Logo16 ![](Biojava_logo.gif "fig:Biojava_logo.gif")
+Logo16 ![](/wikis/BioJava_logo.gif "fig:Biojava_logo.gif")
 
 hope you like this one ! (hwd from Taiwan)
 
@@ -87,9 +87,9 @@ I like the shape of this one, but the purple color is too strong. would
 it be possible to provide a version with e.g. blue or green ?
 [andreas](User:andreas "wikilink")
 
-Logo16.1 ![](Biojava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
+Logo16.1 ![](/wikis/BioJava_logo2.gif "fig:Biojava_logo2.gif") (blue + green)
 
-Logo17 ![](Biojava_logo_jitendra.jpg "fig:Biojava_logo_jitendra.jpg")
+Logo17 ![](/wikis/BioJava_logo_jitendra.jpg "fig:Biojava_logo_jitendra.jpg")
 
 Dear BioJava Lovers:
 
@@ -103,7 +103,7 @@ findings.
 **Here in this logo the JAVA is pouring its essence into BIOlogy, and
 thereby enhancing the research.**
 
-Logo17.1![](Biojava_jitendra-final.gif "fig:Biojava_jitendra-final.gif")
+Logo17.1![](/wikis/BioJava_jitendra-final.gif "fig:Biojava_jitendra-final.gif")
 
 Dear BioJava Lovers,
 

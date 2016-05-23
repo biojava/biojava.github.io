@@ -31,7 +31,7 @@ Examples of use are provided below. For more information please refer to
 JronnExample testcases.
 
 Finally instead of an API calls you can use a [ command line
-utility](BioJava:CookBook3:ProteinDisorderCLI "wikilink"), which is
+utility](/wikis/BioJava:CookBook3:ProteinDisorderCLI "wikilink"), which is
 likely to give you a better performance as it uses multiple threads to
 perform calculations.
 

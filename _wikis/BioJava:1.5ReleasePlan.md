@@ -106,10 +106,10 @@ consideration.
 
 ### Documentation
 
--   Update [Cookbook](BioJava:Cookbook "wikilink") code to reflect best
+-   Update [Cookbook](/wikis/BioJava:Cookbook "wikilink") code to reflect best
     practices with BioJavaX
 -   Should we keep legacy examples in the
-    [Cookbook](BioJava:Cookbook "wikilink")?
+    [Cookbook](/wikis/BioJava:Cookbook "wikilink")?
 -   Check for errors in biojavax docbook
 
 ### Javadoc

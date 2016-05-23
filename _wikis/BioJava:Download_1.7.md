@@ -71,13 +71,13 @@ Getting older versions
 ----------------------
 
 -   The legacy release of 1.6 can be found
-    [here](BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
+    [here](/wikis/BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.5 can be found
-    [here](BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
+    [here](/wikis/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
 -   The legacy release of 1.4 can be found
-    [here](BioJava:Download 1.4 "wikilink")
+    [here](/wikis/BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
-    [here](BioJava:Download 1.3 "wikilink").
+    [here](/wikis/BioJava:Download 1.3 "wikilink").
 -   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

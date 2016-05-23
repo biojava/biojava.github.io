@@ -9,7 +9,7 @@ Pour traduire une séquence d'ADN, il vous faudra faire les choses
 suivantes:
 
 -   [Transcrire en
-    ARN](BioJava:CookbookFrench:Sequence:Transcribe "wikilink");
+    ARN](/wikis/BioJava:CookbookFrench:Sequence:Transcribe "wikilink");
 
 <!-- -->
 
@@ -28,7 +28,7 @@ vous pouvez passer la portion transcription.
 *SymbolList* ou d'une *Sequence* dont la longueur ne se divise pas par
 3, une exception de type *IllegalArgumentException* sera lancée. Jetez
 un coup d'oeil sur la [manière de choisir une portion de la
-séquence](BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
+séquence](/wikis/BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
 de faire une bonne sélection.
 
 ```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;

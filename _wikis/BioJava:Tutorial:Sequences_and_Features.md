@@ -6,7 +6,7 @@ tags:
 
 **By [Thomas Down](mailto:td2@sanger.ac.uk)**
 
-[Chapter 1](BioJava:Tutorial:Symbols and SymbolLists "wikilink") of this
+[Chapter 1](/wikis/BioJava:Tutorial:Symbols and SymbolLists "wikilink") of this
 tutorial covered the `SymbolList` interface, BioJava's basic
 representation of biological sequence data. This chapter examines the
 `Sequence` interface. This adds extra functionality to `SymbolList`,

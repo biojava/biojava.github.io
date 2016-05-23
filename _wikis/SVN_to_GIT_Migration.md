@@ -158,7 +158,7 @@ Missing History
 The SVN repository used SVN 1.4, which does not store information about
 merges. This made it extremely difficult to deal with the major
 refactoring that occurred as part of the [Maven
-Migration](BioJava:MavenMigration "wikilink"). Another problem was that
+Migration](/wikis/BioJava:MavenMigration "wikilink"). Another problem was that
 a number of branches don't contain the full trunk (only a single
 project), and git lacks a mechanism to deal with partial checkouts. As a
 result, no history prior to September 2009 (r7227) was migrated to Git.

@@ -129,5 +129,5 @@ a perfect base class. It will lazily instantiate the delegate only when
 listeners need to be registered.
 
 In the [next
-tutorial](BioJava:Tutorial:ChangeEvent_example_using_Distribution_objects "wikilink"),
+tutorial](/wikis/BioJava:Tutorial:ChangeEvent_example_using_Distribution_objects "wikilink"),
 we will implement an event source and add some listeners to it.

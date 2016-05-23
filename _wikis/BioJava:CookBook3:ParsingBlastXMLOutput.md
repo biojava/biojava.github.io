@@ -16,7 +16,7 @@ returning results in XML format.
 
 It can be done in various ways, including saving manual Blast search
 results in XML format or by using biojava's
-[NCBIQBlastService](BioJava:CookBook3:NCBIQBlastService "wikilink").
+[NCBIQBlastService](/wikis/BioJava:CookBook3:NCBIQBlastService "wikilink").
 
 Blast output XML file should look like this (note the root element
 BlastOutput): <xml>

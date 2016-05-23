@@ -7,7 +7,7 @@ BioJava 4 tutorial:
 The BioJava 4 tutorial is being hosted and developed at the [BioJava
 tutorial project on
 github](https://github.com/biojava/biojava3-tutorial). The [BioJava
-Cookbook](BioJava:CookBook "wikilink") offers cookbook-style tutorials
+Cookbook](/wikis/BioJava:CookBook "wikilink") offers cookbook-style tutorials
 about performing many common tasks in BioJava.
 
 BioJava legacy tutorials:
@@ -19,30 +19,30 @@ latest biojava ]).
 
 -   Sequence basics
     -   [Symbols and
-        SymbolLists](BioJava:Tutorial:Symbols and SymbolLists "wikilink")
+        SymbolLists](/wikis/BioJava:Tutorial:Symbols and SymbolLists "wikilink")
     -   [Sequences and
-        Features](BioJava:Tutorial:Sequences and Features "wikilink")
+        Features](/wikis/BioJava:Tutorial:Sequences and Features "wikilink")
     -   [Sequence I/O
-        basics](BioJava:Tutorial:Sequence IO basics "wikilink")
+        basics](/wikis/BioJava:Tutorial:Sequence IO basics "wikilink")
 -   Changeability basics
     -   [ChangeEvent
-        overview](BioJava:Tutorial:ChangeEvent overview "wikilink")
+        overview](/wikis/BioJava:Tutorial:ChangeEvent overview "wikilink")
     -   [ChangeEvent example using Distribution
-        objects](BioJava:Tutorial:ChangeEvent example using Distribution objects "wikilink")
+        objects](/wikis/BioJava:Tutorial:ChangeEvent example using Distribution objects "wikilink")
     -   [Implementing
-        Changeable](BioJava:Tutorial:Implementing Changeable "wikilink")
+        Changeable](/wikis/BioJava:Tutorial:Implementing Changeable "wikilink")
 -   Blast-like parsing (NCBI Blast, WU-Blast, HMMER)
     -   [Blast-like Parsing Cook
-        Book](BioJava:Tutorial:Blast-like Parsing Cook Book "wikilink")
+        Book](/wikis/BioJava:Tutorial:Blast-like Parsing Cook Book "wikilink")
     -   [Blast2HTML Example
-        Application](BioJava:Tutorial:Blast2HTML Example Application "wikilink")
+        Application](/wikis/BioJava:Tutorial:Blast2HTML Example Application "wikilink")
 -   [Walkthrough of one of the dynamic programming
-    examples](BioJava:Tutorial:Dynamic programming examples "wikilink")
--   [Installing BioSQL](BioJava:Tutorial:Installing BioSQL "wikilink")
+    examples](/wikis/BioJava:Tutorial:Dynamic programming examples "wikilink")
+-   [Installing BioSQL](/wikis/BioJava:Tutorial:Installing BioSQL "wikilink")
 -   [Approaches to Web Development for
     Bioinformatics](http://biojava.org/download/WebDevelopmentBioinformatics.pdf)
 
-The [BioJava Legacy Cookbook](BioJava:CookBookLegacy "wikilink") offers
+The [BioJava Legacy Cookbook](/wikis/BioJava:CookBookLegacy "wikilink") offers
 cookbook-style tutorials about performing many common tasks in BioJava
 1.
 

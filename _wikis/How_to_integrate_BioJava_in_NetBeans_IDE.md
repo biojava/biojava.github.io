@@ -8,7 +8,7 @@ IDE](http://www.netbeans.org).
 ### Option 1 - Add BioJava to your project
 
 1) Download the necessary .jar files, javadocs and source from the
-Biojava download [area](BioJava:Download_1.8 "wikilink").
+Biojava download [area](/wikis/BioJava:Download_1.8 "wikilink").
 
 2) Open a project in Netbeans (one that you will use BioJava for) and go
 to the Project Panel.
@@ -20,7 +20,7 @@ to the Project Panel.
 ### Option 2 - Create a BioJava library wrapper module and refer to it
 
 1) Download the necessary .jar files, javadocs and source from the
-Biojava download [area](BioJava:Download_1.8 "wikilink").
+Biojava download [area](/wikis/BioJava:Download_1.8 "wikilink").
 
 2) Create a new library wrapper module.
 

@@ -23,7 +23,7 @@ how to check out the code from SVN or get the latest SNAPSHOT builds.
 IDE specific instructions
 -------------------------
 
--   [BioJava3\_eclipse](BioJava3_eclipse "wikilink") how to work with
+-   [BioJava3\_eclipse](/wikis/BioJava3_eclipse "wikilink") how to work with
     BioJava3 using eclipse
 
 Wanted
@@ -42,13 +42,13 @@ Coding conventions
 ------------------
 
 -   We are using Maven to build biojava 3
--   [BioJava3\_license](BioJava3_license "wikilink") - All source code
+-   [BioJava3\_license](/wikis/BioJava3_license "wikilink") - All source code
     of BioJava 3 is under LGPL.
--   [BioJava3\_logging](BioJava3_logging "wikilink") - How to use
+-   [BioJava3\_logging](/wikis/BioJava3_logging "wikilink") - How to use
     logging
 
 Links
 -----
 
--   [BioJava3\_Proposal](BioJava3_Proposal "wikilink")
+-   [BioJava3\_Proposal](/wikis/BioJava3_Proposal "wikilink")
 

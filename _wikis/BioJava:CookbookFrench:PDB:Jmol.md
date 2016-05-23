@@ -10,7 +10,7 @@ visualisation de structure 3D de plus en plus populaire. L'exemple qui
 suit fait la démonstration de la procédure à suivre pour faire suivre
 une structure BioJava vers Jmol. Il est alors possible par exemple de
 visualiser un alignement structurel de protéines selon cette
-[recette](BioJava:CookbookFrench:PDB:Align "wikilink").
+[recette](/wikis/BioJava:CookbookFrench:PDB:Align "wikilink").
 
 La classe BiojavaJmol permet l'affichage très simple d'un objet de type
 Structure, si JMol se trouve dans votre classpath.

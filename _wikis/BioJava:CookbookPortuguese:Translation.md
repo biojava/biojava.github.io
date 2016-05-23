@@ -8,7 +8,7 @@ Como eu traduzo um SymbolList ou Sequence?
 Para traduzir uma sequencia de DNA você precisa fazer o seguinte
 
 -   [Transcrever para
-    RNA](Biojava:Cookbook:Sequence:Transcribe "wikilink").
+    RNA](/wikis/BioJava:Cookbook:Sequence:Transcribe "wikilink").
 -   Adquirir uma (codon) usando SymbolList.
 -   Traduzir para proteína.
 

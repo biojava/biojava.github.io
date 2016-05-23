@@ -34,13 +34,13 @@ This is demonstrated in the example below.
 **NOTE: due to bugs in earlier versions of BioJava this recipe will give
 strange results unless you are working off a fairly recent version of
 BioJava. To get the most up to date version follow the "[How do I get
-and install BioJava](BioJava:GetStarted "wikilink")" link on the main
+and install BioJava](/wikis/BioJava:GetStarted "wikilink")" link on the main
 page and read the section on cvs. biojava-live BioJava version 1.3 (when
 released) will be adequate.**
 
 Since BioJava 1.5+, you may want to consider using
 [RichLocation](http://www.biojava.org/docs/api1.8/org/biojavax/bio/seq/RichLocation.html)
-from the [BioJavax](BioJava:BioJavaXDocs "wikilink") extension, which
+from the [BioJavax](/wikis/BioJava:BioJavaXDocs "wikilink") extension, which
 provides several tools to work with circular locations and has been
 extensively tested.
 

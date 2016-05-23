@@ -27,7 +27,7 @@ demos.jar and the supporting libraries.
 
 The apps.jar contains some simple example apps built with biojava. The
 demos.jar contains some simple demo programs (some are a bit dated).
-Refer to the [cookbook](BioJava:Cookbook "wikilink") for more up to date
+Refer to the [cookbook](/wikis/BioJava:Cookbook "wikilink") for more up to date
 examples.
 
 ### Support libraries
@@ -98,9 +98,9 @@ Getting older versions
 ----------------------
 
 -   The legacy release of 1.4 can be found
-    [here](BioJava:Download 1.4 "wikilink")
+    [here](/wikis/BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
-    [here](BioJava:Download 1.3 "wikilink").
+    [here](/wikis/BioJava:Download 1.3 "wikilink").
 -   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

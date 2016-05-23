@@ -12,7 +12,7 @@ Implementation
 --------------
 
 For information on the current status of the BioJava 3 implementation go
-to [BioJava3\_project](BioJava3_project "wikilink")
+to [BioJava3\_project](/wikis/BioJava3_project "wikilink")
 
 References
 ----------
@@ -214,4 +214,4 @@ Use cases
 
 It is planned to document BioJava in parallel with development. To do
 this, we want to drive development from a set of [ use
-cases](BioJava 3 Use Cases "wikilink").
+cases](/wikis/BioJava 3 Use Cases "wikilink").

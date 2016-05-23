@@ -61,9 +61,9 @@ with the tools required to parse the data retrieved.
 Hi Ghislain,
 
 I had this [ little
-example](BioJava:CookBook:ExternalSources:NCBIFetch "wikilink") ready
+example](/wikis/BioJava:CookBook:ExternalSources:NCBIFetch "wikilink") ready
 for a while because I had this same exact problem so many years ago ;-)
-There is also a package to get info from Ensembl (biojava-ensembl) from
+There is also a package to get info from Ensembl (/wikis/BioJava-ensembl) from
 Thomas Down but I do not know what is its status right now. Thomas: can
 you give us an update on this?
 

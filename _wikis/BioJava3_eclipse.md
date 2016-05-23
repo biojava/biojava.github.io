@@ -113,7 +113,7 @@ require SCM handler.*
     files (the maven config files) and will understand that it is a
     maven and a git-tracked project.
 
-You should now have source to all the biojava modules (biojava3-core,
+You should now have source to all the biojava modules (/wikis/BioJava3-core,
 biojava3-structure, etc). Viewing the history for any file should show
 you all commits since 2009 which have contributed to that file.
 

@@ -32,7 +32,7 @@ to their web site. No content in this wiki is provided and it does not
 feel like the BioJava cookbook page is the right place for this. Perhaps
 this should better be moved to the [applications that are based on
 biojava
-page](BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
+page](/wikis/BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
 18:39, 21 January 2008 (EST)
 
 Hi gang ;-) Andreas has a good point. The goals of the cookbook is to

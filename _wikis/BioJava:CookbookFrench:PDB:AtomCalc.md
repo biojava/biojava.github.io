@@ -32,4 +32,4 @@ sur des Atomes.
 
 BioJava possède également une classe utilisant un algorithm de
 superposition de structure protéique. Pour en savoir plus, consultez
-cette [ recette](BioJava:CookbookFrench:PDB:Align "wikilink").
+cette [ recette](/wikis/BioJava:CookbookFrench:PDB:Align "wikilink").

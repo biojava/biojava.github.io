@@ -6,7 +6,7 @@ How can I define a new protein modification?
 --------------------------------------------
 
 The protmod module automatically loads [a list of protein
-modifications](BioJava:CookBook3:SupportedProtMod "wikilink") into the
+modifications](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink") into the
 protein modification registry. In case you have a protein modification
 that is not preloaded, it is possible to define it by yourself and add
 it into the registry.
@@ -102,9 +102,9 @@ See also
 
 <div style="-moz-column-count:3; column-count:3;">
 -   [How can I identify protein modifications in a
-    structure?](BioJava:CookBook3:ProtMod "wikilink")
+    structure?](/wikis/BioJava:CookBook3:ProtMod "wikilink")
 -   [How can I get the list of supported protein
-    modifications?](BioJava:CookBook3:SupportedProtMod "wikilink")
+    modifications?](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink")
 
 </div>
 

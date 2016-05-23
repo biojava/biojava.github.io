@@ -334,7 +334,7 @@ title: BioJava:My build biojava
 `      `<group title="Experimental packages"
               packages="org.biojava.stats.svm:org.biojava.stats.svm.tools:org.biojava.bio.seq.homol:org.biojava.utils.lsid:org.biojava.bio.program.unigene:org.biojava.bio.program.ssaha:org.biojava.bio.seq.distributed:org.biojava.bio.annodb:org.biojava.bio.program.formats" />
 
-`      `<group title="Biojava extension (biojavax) packages"
+`      `<group title="Biojava extension (/wikis/BioJavax) packages"
               packages="org.biojavax:org.biojavax.bio:org.biojavax.bio.db:org.biojavax.bio.db.biosql:org.biojavax.bio.db.ncbi:org.biojavax.bio.seq:org.biojavax.bio.seq.io:org.biojavax.bio.taxa:org.biojavax.bio.taxa.io:org.biojavax.ontology:org.biojavax.utils" />  
 `             `  
 `      `<group title="Genetic Algorithm Framework"

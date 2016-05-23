@@ -27,7 +27,7 @@ viene poi memorizzato in un file e inviato nello STDOUT in formato
 FASTA.
 
 *Nota Bene:Segui questo
-[link](Biojava:CookBookItaliano:Sequence:SubSequence "wikilink") per
+[link](/wikis/BioJava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
 ```java import java.io.BufferedReader; import java.io.File; import

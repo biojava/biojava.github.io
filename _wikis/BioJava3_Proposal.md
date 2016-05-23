@@ -8,7 +8,7 @@ BioJava 3 has been released
 This page was used while starting the discussions for creating the new
 version. BioJava 3.0 has been released on Dec. 28th 2010.
 
-[BioJava3\_project](BioJava3_project "wikilink")
+[BioJava3\_project](/wikis/BioJava3_project "wikilink")
 
 Executive Summary
 -----------------
