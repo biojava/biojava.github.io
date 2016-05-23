@@ -4,8 +4,8 @@ title: BioJava:CookBook3:PSA DNA
 
 Calculating a local alignment
 -----------------------------
-
-<java> public static void main(String[] args){
+```java
+public static void main(String[] args){
 
 `       String targetSeq = "CACGTTTCTTGTGGCAGCTTAAGTTTGAATGTCATTTCTTCAATGGGACGGA"+`  
 `                 "GCGGGTGCGGTTGCTGGAAAGATGCATCTATAACCAAGAGGAGTCCGTGCGCTTCGACAGC"+`  
@@ -39,7 +39,7 @@ Calculating a local alignment
 
 `       System.out.println(psa);`  
 `   }`
-
-</java> AmbiguityDNA Compound Set allows not only ACTG, but also
+```
+AmbiguityDNA Compound Set allows not only ACTG, but also
 ambiguity codes, also known as [IUB
 Code](http://en.wikipedia.org/wiki/FASTA_format#Sequence_representation)
