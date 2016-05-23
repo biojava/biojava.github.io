@@ -1,7 +1,5 @@
 # biojava.github.io
-For now experimental - [the potential new location of the BioJava homepage](http://biojava.github.io)
-
-
+The new location of the [BioJava homepage](http://biojava.github.io)
 
 ## Conversion from Mediawiki
 
