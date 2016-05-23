@@ -95,17 +95,11 @@ external library** : *JmolApplet.jar* for the 3D visualisation
 **Required modules**: *biojava-alignment, biojava-core, biojava-phylo*
 **Required external library**: *forester.jar*
 
--   [How can I read a Sequence Alignment in Stockholm
-    format](BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
--   [How can I calculate a Pairwise Sequence
-    Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman,
-    Needleman Wunsch)
--   [How can I calculate a Pairwise Sequence Alignment with DNA
-    sequences](BioJava:CookBook3:PSA_DNA "wikilink")?
--   [How can I create a Multiple Sequence
-    Alignment](BioJava:CookBook3:MSA "wikilink")?
--   [How can I profile the time and memory requirements of a Multiple
-    Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
+-   [How can I read a Sequence Alignment in Stockholm format](BioJava:CookBook3:Stockholm "wikilink")? (Pfam, Rfam)
+-   [How can I calculate a Pairwise Sequence Alignment](BioJava:CookBook3:PSA "wikilink")? (Smith Waterman, Needleman Wunsch)
+-   [How can I calculate a Pairwise Sequence Alignment with DNA sequences](BioJava:CookBook3:PSA_DNA "wikilink")?
+-   [How can I create a Multiple Sequence Alignment](BioJava:CookBook3:MSA "wikilink")?
+-   [How can I profile the time and memory requirements of a Multiple Sequence Alignment](BioJava:CookBook3:MSAProfiler "wikilink")?
 
 ### Genome
 
