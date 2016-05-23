@@ -39,9 +39,9 @@ of the **Combinatorial Extension** algorithm (CE) as well as of the
 granting permission to freely use and redistribute their algorithms. The
 documentation how to use these is available from
 
-<BioJava:CookBook:PDB:CE_Algorithm>
+[BioJava:CookBook:PDB:CE_Algorithm](/wikis/BioJava:CookBook:PDB:CE_Algorithm)
 
-<BioJava:CookBook:PDB:FATCAT_Algorithm>
+[BioJava:CookBook:PDB:FATCAT_Algorithm](/wikis/BioJava:CookBook:PDB:FATCAT_Algorithm)
 
 [Combinatorial Extension with Circular
 Permutations](Combinatorial Extension with Circular Permutations "wikilink")
@@ -51,7 +51,7 @@ Permutations](Combinatorial Extension with Circular Permutations "wikilink")
 BioJava 1.7 contains an unpublished structure alignment algorithm. For
 more information on it, please see here:
 
-<BioJava:CookBook:PDB:BioJava_Algorithm>
+[BioJava:CookBook:PDB:BioJava_Algorithm](/wikis/BioJava:CookBook:PDB:BioJava_Algorithm)
 
 ### Structure superposition
 
@@ -94,6 +94,5 @@ Tool](http://www.rcsb.org/pdb/workbench/workbench.do).
 See Also
 ========
 
--   The BioJava Tutorial on [Structure
-    Alignment](https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md)
+-   The BioJava Tutorial on [Structure Alignment](https://github.com/biojava/biojava3-tutorial/blob/master/structure/alignment.md)
 
