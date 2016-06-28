@@ -13,8 +13,8 @@ About
 Maven Central as well as manual download (see below).
 
 This release contains over
-[<https://github.com/biojava/biojava/compare/6f8d796fee92edbbcd001c33cdae4f15c5480741>...biojava-4.2.0
-750] commits from 16 contributors.
+[750 commits](https://github.com/biojava/biojava/compare/6f8d796fee92edbbcd001c33cdae4f15c5480741...biojava-4.2.0)
+ from 16 contributors.
 
 ### New Features
 
@@ -83,6 +83,7 @@ this release.
 You can create a BioJava dependency by adding the following XML to your
 project pom.xml file:
 
+```xml
             <dependencies>
                     <dependency>
                             <groupId>org.biojava</groupId>
@@ -91,6 +92,7 @@ project pom.xml file:
                     </dependency>
                     <!-- other biojava jars as needed -->
             </dependencies> 
+```
 
 Manual Download
 ---------------
