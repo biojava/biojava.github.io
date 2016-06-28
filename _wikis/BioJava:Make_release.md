@@ -116,7 +116,7 @@ time-consuming, as maven runs all tests during each step.
 
 The second and third steps set up your local git repository and deploy
 jar files for each module to cloudportal. If something goes wrong, you
-can technically run \`mvn release:rollback\`, but it is easier to just
+can technically run `mvn release:rollback`, but it is easier to just
 reset your git repository to master.
 
 `git reset --hard origin/master`
@@ -128,7 +128,7 @@ sonatype. release:rollback will clean up for you.
 
 If all three steps work fine, the maven release plugin will push on your
 behalf to Github and release the jars on OSS Sonatype. Note:
-```mvn:release``` takes about 1 hour since the bandwith to upload at OSS
+`mvn:release` takes about 1 hour since the bandwith to upload at OSS
 Sonatype is limited.
 
 If there is a problem, here how to add the release tag by hand:
@@ -226,13 +226,7 @@ page to the latest data.
 Update <BioJava:Download> (Change the redirect on the BioJava:Download
 page to <BioJava:Download_3.0.5>)
 
-Update [Template:Current version](Template:Current version "wikilink"),
-which should change all the references on the home page, sidebar, etc.
 
-Double check that there are no additional references to the old version
-using an
-[<http://biojava.org/w/index.php?title=Special%3ASearch&profile=advanced&fulltext=Search&ns0=1&ns4=1&redirs=1&search>=
-Advanced Search].
 
 ### AND FINALLY
 
