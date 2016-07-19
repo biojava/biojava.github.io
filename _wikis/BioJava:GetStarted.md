@@ -22,7 +22,7 @@ the download page [BioJava1 (v) (requires Java
 1.5+)](/wikis/BioJava:Download_{{current version legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
-this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
+this [link](/wikis/How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 
 A step by step guide on 'How to integrate BioJava in Netbeans IDE' is
 [here](/wikis/BioJava-Installation_Guide.png "wikilink").
