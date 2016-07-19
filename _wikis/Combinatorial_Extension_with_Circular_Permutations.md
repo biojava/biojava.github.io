@@ -3,7 +3,7 @@ title: Combinatorial Extension with Circular Permutations
 ---
 
 ![Concanavalin A (yellow & orange) aligned with Pea Leptin (blue and
-cyan)](3cna.A_2pel.A_cecp.png "Concanavalin A (yellow & orange) aligned with Pea Leptin (blue and cyan)")
+cyan)](../3cna.A_2pel.A_cecp.png "Concanavalin A (yellow & orange) aligned with Pea Leptin (blue and cyan)")
 
 Combinatorial Extension with Circular Permutations (CE-CP) is a
 structural comparison algorithm provided by BioJava. It provides the
