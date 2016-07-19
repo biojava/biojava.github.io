@@ -55,7 +55,14 @@ social:
   #amazon:
 
 # Build settings
+gems:
+  - jekyll-redirect-from
+whitelist:
+  - jekyll-redirect-from
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 #sass:
 #  style: compressed
 
