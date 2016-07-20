@@ -56,9 +56,12 @@ social:
 
 # Build settings
 gems:
+  - jekyll-sitemap
   - jekyll-redirect-from
 whitelist:
+  - jekyll-sitemap
   - jekyll-redirect-from
+sitemap: true
 markdown: kramdown
 kramdown:
   input: GFM
