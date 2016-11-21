@@ -74,9 +74,9 @@ release:
  version: 4.2.1
 
 collections:
-  wikis :
+  wiki :
    output: true
-   permalink: /wikis/:path/
+   permalink: /wiki/:path/
    post_dirs: false
    layout: page
 
@@ -86,4 +86,3 @@ defaults:
       path: "" # empty string for all files
     values:
       layout: page
-
