@@ -127,7 +127,7 @@ A `StreamReader` object might be constructed as follows:
     StreamReader stream = new StreamReader(br, new FastaFormat(), dnaParser, fact);
 
 (This is just a snippet from the example program in [chapter
-1](BioJava:Tutorial:Symbols and SymbolLists "wikilink"), and you may
+1](BioJava%3ATutorial%3ASymbols and SymbolLists "wikilink"), and you may
 like to refer back for more information.)
 
 The `StreamReader` class implements the `SequenceIterator` interface, so

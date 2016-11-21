@@ -67,7 +67,7 @@ La superclasse *SequenceAlignment* de chaque algorithme possède une
 méthode pour formatter la sortie de l'alignement. Par conséquent, si
 vous désirez écrire votre propre algorithme d'alignment ou si vous
 voulez utiliser [l'algorithme basé sur les modèles de
-Markov](BioJava:CookbookFrench:DP:PairWise "wikilink"), vous pouvez
+Markov](BioJava%3ACookbookFrench%3ADP%3APairWise "wikilink"), vous pouvez
 dériver votre classe à partir de la super-classe et appliquer la
 méthode.
 
