@@ -75,9 +75,9 @@ release:
  legacy: 1.9.1
 
 collections:
-  wikis :
+  wiki:
    output: true
-   permalink: /wikis/:path/
+   permalink: /wiki/:path/
    post_dirs: false
    layout: page
 

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /css/
-Disallow: /wikis/Special:*
-Disallow: /wikis/Talk:*
+Disallow: /wiki/Special:*
+Disallow: /wiki/Talk:*
