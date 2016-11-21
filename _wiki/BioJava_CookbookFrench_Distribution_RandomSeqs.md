@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:RandomSeqs
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3ARandomSeqs
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3ARandomSeqs
 ---
 
 Comment créer une séquence aléatoire à partir d'une Distribution?

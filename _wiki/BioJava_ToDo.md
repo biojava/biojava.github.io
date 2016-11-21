@@ -1,6 +1,6 @@
 ---
 title: BioJava:ToDo
-permalink: wikis/BioJava%3AToDo
+permalink: wiki/BioJava%3AToDo
 ---
 
 What needs starting?
@@ -17,7 +17,7 @@ Whats in progress?
 ------------------
 
 -   Choosing a logo!
--   CookBook (/wikis/BioJava in Anger) Portuguese
+-   CookBook (/wiki/BioJava in Anger) Portuguese
     version --[Guedes](User:Guedes "wikilink") 06:50, 12 April 2006
     (EDT)
 
@@ -29,9 +29,9 @@ Whats done already?
 -   Thanks
 -   Getting Started (Done --[Foisys](User:Foisys "wikilink") 12:49, 6
     February 2006 (EST))
--   CookBook (/wikis/BioJava in Anger English version) -
+-   CookBook (/wiki/BioJava in Anger English version) -
     Done --[Guedes](User:Guedes "wikilink") 14:34, 8 February 2006 (EST)
--   CookBook (/wikis/BioJava in Anger French Version) -
+-   CookBook (/wiki/BioJava in Anger French Version) -
     Done --[Foisys](User:Foisys "wikilink") 15:00, 14 February 2006
     (EST)
 -   JavaDoc 1.3 - how? link back to old? Links to old

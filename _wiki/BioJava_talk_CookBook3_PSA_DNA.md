@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook3:PSA DNA
-permalink: wikis/BioJava_talk%3ACookBook3%3APSA_DNA
+permalink: wiki/BioJava_talk%3ACookBook3%3APSA_DNA
 ---
 
 Sync with code

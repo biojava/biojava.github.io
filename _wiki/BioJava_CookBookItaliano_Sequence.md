@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence
 ---
 
 Come posso creare un oggetto Stringa a partire da una Sequenza e viceversa creare un oggetto Sequenza a partire da una Stringa?

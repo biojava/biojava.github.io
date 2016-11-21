@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 4.2.0
-permalink: wikis/BioJava%3ADownload_4.2.0
+permalink: wiki/BioJava%3ADownload_4.2.0
 ---
 
 This page offers downloads for the <b>BioJava 4.2.0 release</b>.
@@ -129,55 +129,55 @@ Getting older versions
 ----------------------
 
 -   The release of 4.1.0 can be found
-    [here](/wikis/BioJava:Download 4.1.0 "wikilink") (requires Java 1.6, 1.7,
+    [here](/wiki/BioJava:Download 4.1.0 "wikilink") (requires Java 1.6, 1.7,
     or 1.8)
 -   The release of 4.0.0 can be found
-    [here](/wikis/BioJava:Download 4.0.0 "wikilink") (requires Java 1.6, 1.7,
+    [here](/wiki/BioJava:Download 4.0.0 "wikilink") (requires Java 1.6, 1.7,
     or 1.8)
 -   The release of 3.1.0 can be found
-    [here](/wikis/BioJava:Download 3.1.0 "wikilink") (requires Java 1.6 or 1.7)
+    [here](/wiki/BioJava:Download 3.1.0 "wikilink") (requires Java 1.6 or 1.7)
 -   The release of 3.0.8 can be found
-    [here](/wikis/BioJava:Download 3.0.8 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.8 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.7 can be found
-    [here](/wikis/BioJava:Download 3.0.7 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.7 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.6 can be found
-    [here](/wikis/BioJava:Download 3.0.6 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.6 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.5 can be found
-    [here](/wikis/BioJava:Download 3.0.5 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.5 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.4 can be found
-    [here](/wikis/BioJava:Download 3.0.4 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.4 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.3 can be found
-    [here](/wikis/BioJava:Download 3.0.3 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.3 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.2 can be found
-    [here](/wikis/BioJava:Download 3.0.2 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.2 "wikilink") (requires Java 1.6+)
 -   The release of 3.0.1 can be found
-    [here](/wikis/BioJava:Download 3.0.1 "wikilink") (requires Java 1.6+)
+    [here](/wiki/BioJava:Download 3.0.1 "wikilink") (requires Java 1.6+)
 -   The release of 3.0 can be found
-    [here](/wikis/BioJava:Download 3.0 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 3.0 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.9.1 can be found
-    [here](/wikis/BioJava:Download 1.9.1 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.9.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.9.0 can be found
-    [here](/wikis/BioJava:Download 1.9.0 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.9.0 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.5 can be found
-    [here](/wikis/BioJava:Download 1.8.5 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.8.5 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.4 can be found
-    [here](/wikis/BioJava:Download 1.8.4 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.8.4 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.2 can be found
-    [here](/wikis/BioJava:Download 1.8.2 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.8.2 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.8.1 can be found
-    [here](/wikis/BioJava:Download 1.8.1 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.8.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7.1 can be found
-    [here](/wikis/BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7 can be found
-    [here](/wikis/BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.6 can be found
-    [here](/wikis/BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.5 can be found
-    [here](/wikis/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
+    [here](/wiki/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
 -   The legacy release of 1.4 can be found
-    [here](/wikis/BioJava:Download 1.4 "wikilink")
+    [here](/wiki/BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
-    [here](/wikis/BioJava:Download 1.3 "wikilink").
+    [here](/wiki/BioJava:Download 1.3 "wikilink").
 -   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

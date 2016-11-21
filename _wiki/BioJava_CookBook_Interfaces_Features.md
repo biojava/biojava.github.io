@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:Features
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AFeatures
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AFeatures
 ---
 
 How do I display Features?

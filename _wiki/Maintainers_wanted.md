@@ -9,7 +9,7 @@ BLAST parsers
 -------------
 
 The BioJava [BLAST parser
-modules](/wikis/BioJava:CookBook:Blast:Parser "wikilink") are among the most
+modules](/wiki/BioJava:CookBook:Blast:Parser "wikilink") are among the most
 frequently used bits of BioJava. It is possible to parse a large variety
 of BLAST-family output files, but the framework is not complete. We are
 looking for a motivated individual who want to take over the leadership
@@ -41,7 +41,7 @@ schema.
 Among the currently open tasks are:
 
 `* Update the cookbook `[`IO`
-`examples`](/wikis/BioJava:CookBook#Sequence_I.2FO "wikilink")` to use the org.biojavax packages.`
+`examples`](/wiki/BioJava:CookBook#Sequence_I.2FO "wikilink")` to use the org.biojavax packages.`
 `* Provide more cookbook examples.`  
 `* Add support for DDBJ format.`  
 `* Run profilers to increase the speed of the parsers.`  

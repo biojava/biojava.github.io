@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:SeqIO:GBToFasta
-permalink: wikis/BioJava%3ACookbookFrench%3ASeqIO%3AGBToFasta
+permalink: wiki/BioJava%3ACookbookFrench%3ASeqIO%3AGBToFasta
 ---
 
 Comment extraire les Sequences à partir de fichiers en format GenBank/ EMBL/ SwissProt etc., pour ensuite les écrire en format Fasta?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:MinElementMass.xml
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3AMinElementMass.xml
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3AMinElementMass.xml
 ---
 
 ### MinElementMass.xml

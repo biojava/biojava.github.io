@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:XML
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3AXML
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3AXML
 ---
 
 Comment écrire une Distribution en format XML?

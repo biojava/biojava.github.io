@@ -1,6 +1,6 @@
 ---
 title: BioJava:BioJavaXDocs
-permalink: wikis/BioJava%3ABioJavaXDocs
+permalink: wiki/BioJava%3ABioJavaXDocs
 ---
 
 BioJavaX is not BioJava 3 is not BioJavaX.

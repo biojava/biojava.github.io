@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:isoelectricpoint
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Aisoelectricpoint
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Aisoelectricpoint
 ---
 
 ### How is Isoelectric Point computed?

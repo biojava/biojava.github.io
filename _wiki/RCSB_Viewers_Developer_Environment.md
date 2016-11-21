@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Developer Environment
-permalink: wikis/RCSB_Viewers%3ADeveloper_Environment
+permalink: wiki/RCSB_Viewers%3ADeveloper_Environment
 ---
 
 We are currently using <em>Eclipse</em> for our build environment. Other

@@ -1,13 +1,13 @@
 ---
 title: BioJava:CookBookItaliano:Alphabets:Component
-permalink: wikis/BioJava%3ACookBookItaliano%3AAlphabets%3AComponent
+permalink: wiki/BioJava%3ACookBookItaliano%3AAlphabets%3AComponent
 ---
 
 Come posso dividere i Simboli di un CrossProductAlphabets i maniera tale da recuperare i Simboli che li compongo?
 -----------------------------------------------------------------------------------------------------------------
 
 I
-[CrossProductAlphabets](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
+[CrossProductAlphabets](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
 sono utilizzati per rappresentare gruppi di
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
 come se fossero uno solo. Questo è molto utile per trattare oggeti come
@@ -21,7 +21,7 @@ ottenuto.
 I
 [Simboli](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/Symbol.html)
 di un
-[CrossProductAlphabet](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
+[CrossProductAlphabet](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
 sono implementazioni della interfaccia
 [AtomicSymbol](http://www.biojava.org/docs/api14/org/biojava/bio/symbol/AtomicSymbol.html).
 Il prefisso 'Atomico' suggerisce che i

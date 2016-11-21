@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:SubSequence
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3ASubSequence
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3ASubSequence
 ---
 
 Come posso ottenere una parte di una Sequenza?

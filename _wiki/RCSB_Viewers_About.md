@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:About
-permalink: wikis/RCSB_Viewers%3AAbout
+permalink: wiki/RCSB_Viewers%3AAbout
 ---
 
 About RCSB Viewers

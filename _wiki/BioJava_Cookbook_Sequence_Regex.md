@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Sequence:Regex
-permalink: wikis/BioJava%3ACookbook%3ASequence%3ARegex
+permalink: wiki/BioJava%3ACookbook%3ASequence%3ARegex
 ---
 
 How can make a motif into a regular expression?

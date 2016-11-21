@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:BioSQL:SetupOracle
-permalink: wikis/BioJava%3ACookBook%3ABioSQL%3ASetupOracle
+permalink: wiki/BioJava%3ACookBook%3ABioSQL%3ASetupOracle
 ---
 
 BioJava and BioSQL/Oracle HOWTO

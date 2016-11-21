@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Alphabets
-permalink: wikis/BioJava%3ACookBookItaliano%3AAlphabets
+permalink: wiki/BioJava%3ACookBookItaliano%3AAlphabets
 ---
 
 Come posso ottenere l'alfabeto del DNA, dell'RNA o Proteico?

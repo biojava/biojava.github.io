@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Circular
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3ACircular
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3ACircular
 ---
 
 Comment fonctionne les CircularLocations?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Interfaces:Coordinates
-permalink: wikis/BioJava%3ACookbookFrench%3AInterfaces%3ACoordinates
+permalink: wiki/BioJava%3ACookbookFrench%3AInterfaces%3ACoordinates
 ---
 
 Comment afficher les coordonnées d'une Sequence?

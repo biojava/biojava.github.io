@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:ViewInGUI
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AViewInGUI
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AViewInGUI
 ---
 
 How can I display a Sequence in a GUI

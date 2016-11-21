@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:SeqIO:ReadGES
-permalink: wikis/BioJava%3ACookbookFrench%3ASeqIO%3AReadGES
+permalink: wiki/BioJava%3ACookbookFrench%3ASeqIO%3AReadGES
 ---
 
 Comment Faire pour lire un fichier en format GenBank, swissprot ou EMBL?

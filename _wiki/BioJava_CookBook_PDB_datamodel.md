@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:datamodel
-permalink: wikis/BioJava%3ACookBook%3APDB%3Adatamodel
+permalink: wiki/BioJava%3ACookBook%3APDB%3Adatamodel
 ---
 
 The BioJava-structure data model

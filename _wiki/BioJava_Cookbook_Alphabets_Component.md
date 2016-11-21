@@ -1,12 +1,12 @@
 ---
 title: BioJava:Cookbook:Alphabets:Component
-permalink: wikis/BioJava%3ACookbook%3AAlphabets%3AComponent
+permalink: wiki/BioJava%3ACookbook%3AAlphabets%3AComponent
 ---
 
 How do I break Symbols from CrossProductAlphabets into their component Symbols?
 -------------------------------------------------------------------------------
 
-[CrossProductAlphabets](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
+[CrossProductAlphabets](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
 are used to represent groups of
 [Symbols](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/Symbol.html)
 as a single Symbol. This is very useful for treating things like codons
@@ -21,7 +21,7 @@ The following recipe demonstrates how this can be done.
 The
 [Symbols](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/Symbol.html)
 from a
-[CrossProductAlphabet](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
+[CrossProductAlphabet](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
 are implementations of the
 [AtomicSymbol](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/AtomicSymbol.html)
 interface. The prefix 'Atomic' suggests that the
@@ -35,7 +35,7 @@ the same
 The component parts of an
 [AtomicSymbol](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/AtomicSymbol.html)
 from a
-[CrossProductAlphabet](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
+[CrossProductAlphabet](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")
 are not members of the same
 [Alphabet](http://www.biojava.org/docs/api1.8/org/biojava/bio/symbol/Alphabet.html)
 so the 'Atomic' definition still stands. A [codon](wp:codon "wikilink")

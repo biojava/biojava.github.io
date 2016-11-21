@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Translation:OneLetterAmbi
-permalink: wikis/BioJava%3ACookBookItaliano%3ATranslation%3AOneLetterAmbi
+permalink: wiki/BioJava%3ACookBookItaliano%3ATranslation%3AOneLetterAmbi
 ---
 
 Come è possibile ottenere una traduzione con codice a una lettera di una sequenza che contiene ambiguità?

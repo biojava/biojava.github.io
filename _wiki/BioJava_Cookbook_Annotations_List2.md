@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Annotations:List2
-permalink: wikis/BioJava%3ACookbook%3AAnnotations%3AList2
+permalink: wiki/BioJava%3ACookbook%3AAnnotations%3AList2
 ---
 
 When you read in a annotated sequence file such as from GenBank or EMBL

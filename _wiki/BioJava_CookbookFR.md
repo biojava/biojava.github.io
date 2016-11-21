@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFR
-permalink: wikis/BioJava%3ACookbookFR
+permalink: wiki/BioJava%3ACookbookFR
 ---
 
 1.  redirect <BioJava:CookbookFrench>

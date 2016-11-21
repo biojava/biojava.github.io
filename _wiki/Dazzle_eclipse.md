@@ -1,6 +1,6 @@
 ---
 title: Dazzle:eclipse
-permalink: wikis/Dazzle%3Aeclipse
+permalink: wiki/Dazzle%3Aeclipse
 ---
 
 ### Dazzle & plugin installation in Eclipse

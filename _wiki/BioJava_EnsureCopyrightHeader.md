@@ -1,6 +1,6 @@
 ---
 title: BioJava:EnsureCopyrightHeader
-permalink: wikis/BioJava%3AEnsureCopyrightHeader
+permalink: wiki/BioJava%3AEnsureCopyrightHeader
 ---
 
     find . -iname '*.java' -exec grep -L 'http://www.gnu.org/copyleft/lesser.html' '{}' ';' |

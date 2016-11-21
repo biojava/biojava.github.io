@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:Edit
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3AEdit
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3AEdit
 ---
 
 Come posso modificare una Sequence o una SymbolList?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:DP:WeightMatrix
-permalink: wikis/BioJava%3ACookBook%3ADP%3AWeightMatrix
+permalink: wiki/BioJava%3ACookBook%3ADP%3AWeightMatrix
 ---
 
 How do I use a WeightMatrix to find a motif?

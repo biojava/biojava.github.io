@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:DP:PairWise
-permalink: wikis/BioJava%3ACookbookFrench%3ADP%3APairWise
+permalink: wiki/BioJava%3ACookbookFrench%3ADP%3APairWise
 ---
 
 Comment faire l'alignement de deux séquences grâce à un modèle probabiliste de Markov?

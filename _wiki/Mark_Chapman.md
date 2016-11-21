@@ -14,5 +14,5 @@ Code](Google Summer of Code "wikilink") 2010. With the guidance of
 [Andreas Prlic](Andreas Prlic "wikilink"), Scooter Willis, and Kyle
 Ellrott, he plans to develop a multiple sequence alignment module and
 update the pairwise alignment module to fit the [BioJava3
-Design](/wikis/BioJava3 Design "wikilink"). A dedicated page at <GSoC:MSA> has
+Design](/wiki/BioJava3 Design "wikilink"). A dedicated page at <GSoC:MSA> has
 an overview and timeline for the summer.

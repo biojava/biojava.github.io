@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Symbols and SymbolLists
-permalink: wikis/BioJava%3ATutorial%3ASymbols_and_SymbolLists
+permalink: wiki/BioJava%3ATutorial%3ASymbols_and_SymbolLists
 tags:
  - Tutorial
 ---

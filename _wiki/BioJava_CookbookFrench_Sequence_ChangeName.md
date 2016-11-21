@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence:ChangeName
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence%3AChangeName
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence%3AChangeName
 ---
 
 Comment changer le nom d'une Sequence?

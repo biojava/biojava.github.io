@@ -1,6 +1,6 @@
 ---
 title: BioJava:About
-permalink: wikis/BioJava%3AAbout
+permalink: wiki/BioJava%3AAbout
 ---
 
 About BioJava

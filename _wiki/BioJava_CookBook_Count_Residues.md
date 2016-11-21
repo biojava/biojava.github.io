@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Count:Residues
-permalink: wikis/BioJava%3ACookBook%3ACount%3AResidues
+permalink: wiki/BioJava%3ACookBook%3ACount%3AResidues
 ---
 
 How Do I Count the Residues in a Sequence?

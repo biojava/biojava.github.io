@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Translation:Single
-permalink: wikis/BioJava%3ACookbook%3ATranslation%3ASingle
+permalink: wiki/BioJava%3ACookbook%3ATranslation%3ASingle
 ---
 
 How do I translate a single codon to a single amino acid?

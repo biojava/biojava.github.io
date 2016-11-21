@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Sequence:Reverse
-permalink: wikis/BioJava%3ACookbook%3ASequence%3AReverse
+permalink: wiki/BioJava%3ACookbook%3ASequence%3AReverse
 ---
 
 How do I Reverse Complement a Sequence or SymbolList?

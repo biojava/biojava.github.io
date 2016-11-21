@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:HmmerService
-permalink: wikis/BioJava%3ACookBook3%3AHmmerService
+permalink: wiki/BioJava%3ACookBook3%3AHmmerService
 ---
 
 A simple demo that fetches a protein sequence from the UniProt web site,

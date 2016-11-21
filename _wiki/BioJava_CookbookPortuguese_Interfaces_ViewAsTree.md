@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:Interfaces:ViewAsTree
-permalink: wikis/BioJava%3ACookbookPortuguese%3AInterfaces%3AViewAsTree
+permalink: wiki/BioJava%3ACookbookPortuguese%3AInterfaces%3AViewAsTree
 ---
 
 Como eu posso visualizar Anotações e características como árvore

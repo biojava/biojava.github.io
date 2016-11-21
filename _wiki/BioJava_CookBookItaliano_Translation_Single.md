@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Translation:Single
-permalink: wikis/BioJava%3ACookBookItaliano%3ATranslation%3ASingle
+permalink: wiki/BioJava%3ACookBookItaliano%3ATranslation%3ASingle
 ---
 
 Come posso tradurre un singolo codone in un singolo aminoacido?

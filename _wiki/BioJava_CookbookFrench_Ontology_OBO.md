@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Ontology:OBO
-permalink: wikis/BioJava%3ACookbookFrench%3AOntology%3AOBO
+permalink: wiki/BioJava%3ACookbookFrench%3AOntology%3AOBO
 ---
 
 Comment extraire l'information d'un fichier d'ontologie en format OBO?

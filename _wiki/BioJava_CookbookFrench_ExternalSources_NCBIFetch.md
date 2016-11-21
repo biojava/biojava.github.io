@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:ExternalSources:NCBIFetch
-permalink: wikis/BioJava%3ACookbookFrench%3AExternalSources%3ANCBIFetch
+permalink: wiki/BioJava%3ACookbookFrench%3AExternalSources%3ANCBIFetch
 ---
 
 Comment faire pour obtenir une séquence directement du NCBI?

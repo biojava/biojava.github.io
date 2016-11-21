@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook3:NCBIQBlastService
-permalink: wikis/BioJava_talk%3ACookBook3%3ANCBIQBlastService
+permalink: wiki/BioJava_talk%3ACookBook3%3ANCBIQBlastService
 ---
 
 Converted entry.getValue() to string before submitting it to
@@ -84,7 +84,7 @@ code :-)
 ------------------------------------------------------------------------
 
 I am getting the very same problem (The key named PROGRAM is not set in
-this RemoteQBlastOutputProperties object) with the legacy (/wikis/BioJava 1.8)
+this RemoteQBlastOutputProperties object) with the legacy (/wiki/BioJava 1.8)
 version of this example. I don't know how to fix this.
 
 --[Peter Illés](User:Peter Illés "wikilink") 09:18, 6 September 2011

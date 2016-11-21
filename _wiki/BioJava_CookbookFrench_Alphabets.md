@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Alphabets
-permalink: wikis/BioJava%3ACookbookFrench%3AAlphabets
+permalink: wiki/BioJava%3ACookbookFrench%3AAlphabets
 ---
 
 Comment obtenir un Alphabet d'ADN, d'ARN ou de Protéine?

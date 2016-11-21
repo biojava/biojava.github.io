@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Locations:Feature
-permalink: wikis/BioJava%3ACookbook%3ALocations%3AFeature
+permalink: wiki/BioJava%3ACookbook%3ALocations%3AFeature
 ---
 
 How can I make a Feature?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:Emission
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3AEmission
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3AEmission
 ---
 
 What is an easy way to tell if two Distributions have equal weights?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Performance
-permalink: wikis/BioJava%3APerformance
+permalink: wiki/BioJava%3APerformance
 ---
 
 BioJava performance examples
@@ -21,7 +21,7 @@ Read all chromosomes from Drosophila and print out their sizes:
 Example](http://www.biojava.org/download/performance/biojava-test.jnlp)
 (download includes the 47MB file containing the genome sequence).
 
-[View Source](/wikis/BioJava:Performance:ReadDrosophila "wikilink")
+[View Source](/wiki/BioJava:Performance:ReadDrosophila "wikilink")
 
 Results:
 
@@ -68,7 +68,7 @@ sequence in FASTA format
 [Run
 Example](http://www.biojava.org/download/performance/biojava-revcomp.jnlp)
 
-[View Source](/wikis/BioJava:Performance:ReverseComplement "wikilink")
+[View Source](/wiki/BioJava:Performance:ReverseComplement "wikilink")
 
 Results:
 
@@ -91,7 +91,7 @@ Haemoglobin are identified as different alternate solutions.
 Example](http://www.biojava.org/download/performance/biojava-structure-example1.jnlp)
 (5MB download includes Jmol for visualization)
 
-[View Source](/wikis/BioJava:Performance:AlignMyoHemo "wikilink")
+[View Source](/wiki/BioJava:Performance:AlignMyoHemo "wikilink")
 
 Results:
 
@@ -112,7 +112,7 @@ agglomerans plasmid pPA3.0).
 [Run
 Example](http://www.biojava.org/download/performance/biojava-testSW.jnlp)
 
-[View Source](/wikis/BioJava:Performance:AlignSW "wikilink")
+[View Source](/wiki/BioJava:Performance:AlignSW "wikilink")
 
 Results:
 

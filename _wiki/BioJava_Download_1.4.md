@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.4
-permalink: wikis/BioJava%3ADownload_1.4
+permalink: wiki/BioJava%3ADownload_1.4
 ---
 
 This page offers downloads for the BioJava 1.4 release. BioJava 1.4 runs
@@ -42,13 +42,13 @@ the CVS repository can be browsed at:
 Future releases
 ---------------
 
--   [Release plan](/wikis/BioJava:1.5ReleasePlan "wikilink") for version 1.5.
+-   [Release plan](/wiki/BioJava:1.5ReleasePlan "wikilink") for version 1.5.
 
 Getting older versions
 ----------------------
 
 -   The legacy release 1.3 can be found
-    [here](/wikis/BioJava:Download 1.3 "wikilink").
+    [here](/wiki/BioJava:Download 1.3 "wikilink").
 -   Other releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

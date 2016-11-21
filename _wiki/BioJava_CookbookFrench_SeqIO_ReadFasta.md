@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:SeqIO:ReadFasta
-permalink: wikis/BioJava%3ACookbookFrench%3ASeqIO%3AReadFasta
+permalink: wiki/BioJava%3ACookbookFrench%3ASeqIO%3AReadFasta
 ---
 
 Comment lire les Sequences contenues dans un fichier en format Fasta?

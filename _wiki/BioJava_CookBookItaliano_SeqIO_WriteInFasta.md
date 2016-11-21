@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:SeqIO:WriteInFasta
-permalink: wikis/BioJava%3ACookBookItaliano%3ASeqIO%3AWriteInFasta
+permalink: wiki/BioJava%3ACookBookItaliano%3ASeqIO%3AWriteInFasta
 ---
 
 Come posso stampare una sequenza in formato FASTA?

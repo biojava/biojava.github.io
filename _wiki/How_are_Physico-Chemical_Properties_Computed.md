@@ -9,16 +9,16 @@ The computation methods used for various properties can be found in the
 following links:
 
 -   [How are Molecular Weight
-    computed?](/wikis/BioJava:CookBook:AAPROP:molecularweight "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:molecularweight "wikilink")
 -   [How are Absorbance and Extinction Coefficient
-    computed?](/wikis/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient "wikilink")
 -   [How are Instability Index
-    computed?](/wikis/BioJava:CookBook:AAPROP:instabilityindex "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:instabilityindex "wikilink")
 -   [How are Aliphatic Index
-    computed?](/wikis/BioJava:CookBook:AAPROP:aliphaticindex "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:aliphaticindex "wikilink")
 -   [How is Average Hydropathy
-    computed?](/wikis/BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:averagehydropathyvalue "wikilink")
 -   [How are Isoelectric Point
-    computed?](/wikis/BioJava:CookBook:AAPROP:isoelectricpoint "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:isoelectricpoint "wikilink")
 -   [How are Net Charge
-    computed?](/wikis/BioJava:CookBook:AAPROP:netcharge "wikilink")
+    computed?](/wiki/BioJava:CookBook:AAPROP:netcharge "wikilink")

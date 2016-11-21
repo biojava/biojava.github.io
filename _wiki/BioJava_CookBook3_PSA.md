@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:PSA
-permalink: wikis/BioJava%3ACookBook3%3APSA
+permalink: wiki/BioJava%3ACookBook3%3APSA
 ---
 
 How to create a Pairwise Sequence Alignment in BioJava

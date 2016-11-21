@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:Bayes
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3ABayes
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3ABayes
 ---
 
 Using Distributions to make a naive Bayes classifier

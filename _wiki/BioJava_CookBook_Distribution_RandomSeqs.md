@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:RandomSeqs
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3ARandomSeqs
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3ARandomSeqs
 ---
 
 How can I generate a random Sequence from a Distribution?

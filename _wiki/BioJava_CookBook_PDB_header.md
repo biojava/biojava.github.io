@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:header
-permalink: wikis/BioJava%3ACookBook%3APDB%3Aheader
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aheader
 ---
 
 ### How can I access the header information of a PDB file?

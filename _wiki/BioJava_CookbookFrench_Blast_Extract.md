@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Blast:Extract
-permalink: wikis/BioJava%3ACookbookFrench%3ABlast%3AExtract
+permalink: wiki/BioJava%3ACookbookFrench%3ABlast%3AExtract
 ---
 
 Comment extraire les informations voulues d'un résultat de recherche?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distirbution:Emission
-permalink: wikis/BioJava%3ACookbookFrench%3ADistirbution%3AEmission
+permalink: wiki/BioJava%3ACookbookFrench%3ADistirbution%3AEmission
 ---
 
 Comment savoir facilement si deux Distributions sont identiques?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:GenbankRead
-permalink: wikis/BioJava%3ACookBook%3ACore%3AGenbankRead
+permalink: wiki/BioJava%3ACookBook%3ACore%3AGenbankRead
 ---
 
 How to Read a Genbank File with Biojava3

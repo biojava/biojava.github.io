@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:Reverse
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3AReverse
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3AReverse
 ---
 
 Come posso fare il complemento inverso di una sequenza o di una SymbolList?

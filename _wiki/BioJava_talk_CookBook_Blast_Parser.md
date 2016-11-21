@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook:Blast:Parser
-permalink: wikis/BioJava_talk%3ACookBook%3ABlast%3AParser
+permalink: wiki/BioJava_talk%3ACookBook%3ABlast%3AParser
 ---
 
 Code here didn't work for me (tested windows and linux blast, many

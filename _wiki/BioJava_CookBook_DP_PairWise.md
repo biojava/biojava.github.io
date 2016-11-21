@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:DP:PairWise
-permalink: wikis/BioJava%3ACookBook%3ADP%3APairWise
+permalink: wiki/BioJava%3ACookBook%3ADP%3APairWise
 ---
 
 How do I generate a pair-wise alignment?

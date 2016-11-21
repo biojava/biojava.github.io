@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:OBO:parse
-permalink: wikis/BioJava%3ACookBook%3AOBO%3Aparse
+permalink: wiki/BioJava%3ACookBook%3AOBO%3Aparse
 ---
 
 How to parse an Ontology (OBO) file

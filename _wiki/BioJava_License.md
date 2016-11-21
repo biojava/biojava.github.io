@@ -1,6 +1,6 @@
 ---
 title: BioJava:License
-permalink: wikis/BioJava%3ALicense
+permalink: wiki/BioJava%3ALicense
 ---
 
 BioJava is distributed under the terms of the GNU [Lesser GPL

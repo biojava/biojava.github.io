@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:Sequences
-permalink: wikis/BioJava%3ACookBook%3ACore%3ASequences
+permalink: wiki/BioJava%3ACookBook%3ACore%3ASequences
 ---
 
 is is fairly straightforward to create sequences. Take a look at these

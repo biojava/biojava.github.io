@@ -1,13 +1,13 @@
 ---
 title: User talk:Seeker
-permalink: wikis/User_talk%3ASeeker
+permalink: wiki/User_talk%3ASeeker
 ---
 
 I've noticed some misprints in BioJavaX Documentation and in the source code.
 -----------------------------------------------------------------------------
 
-[Here](/wikis/BioJava:BioJavaXDocs#Writing_2 "wikilink") in
-[BioJavaXDocs](/wikis/BioJava:BioJavaXDocs "wikilink") it is said that GenBank
+[Here](/wiki/BioJava:BioJavaXDocs#Writing_2 "wikilink") in
+[BioJavaXDocs](/wiki/BioJava:BioJavaXDocs "wikilink") it is said that GenBank
 Field FEATURE can be outputted as follows:
 
 "...For the source feature, the db\_xref and organism fields are added

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence:Regex
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence%3ARegex
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence%3ARegex
 ---
 
 Comment transformer un motif en expression régulière?

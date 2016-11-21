@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Feature
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3AFeature
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3AFeature
 ---
 
 Comment créer une caractéristique (*Feature*)?

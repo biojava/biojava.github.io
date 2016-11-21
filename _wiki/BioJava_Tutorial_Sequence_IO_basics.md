@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Sequence IO basics
-permalink: wikis/BioJava%3ATutorial%3ASequence_IO_basics
+permalink: wiki/BioJava%3ATutorial%3ASequence_IO_basics
 tags:
  - Tutorial
 ---

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Proteomics:AAindex
-permalink: wikis/BioJava%3ACookbook%3AProteomics%3AAAindex
+permalink: wiki/BioJava%3ACookbook%3AProteomics%3AAAindex
 ---
 
 **Note**: The classes mentioned in this article are not integrated in

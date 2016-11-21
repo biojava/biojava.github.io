@@ -1,6 +1,6 @@
 ---
 title: Dazzle:writeplugin
-permalink: wikis/Dazzle%3Awriteplugin
+permalink: wiki/Dazzle%3Awriteplugin
 ---
 
 How to write your own Dazzle plugin

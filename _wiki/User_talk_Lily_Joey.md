@@ -1,6 +1,6 @@
 ---
 title: User talk:Lily Joey
-permalink: wikis/User_talk%3ALily_Joey
+permalink: wiki/User_talk%3ALily_Joey
 ---
 
 Get hair extension: with highest quality hair and newest methods with

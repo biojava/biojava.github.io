@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:Cookbook:Sequence:ExtractGeneRegions
-permalink: wikis/BioJava_talk%3ACookbook%3ASequence%3AExtractGeneRegions
+permalink: wiki/BioJava_talk%3ACookbook%3ASequence%3AExtractGeneRegions
 ---
 
 Hi,

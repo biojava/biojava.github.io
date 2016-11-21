@@ -1,6 +1,6 @@
 ---
 title: BiojavaKorean:Cookbook:Alphabets
-permalink: wikis/BiojavaKorean%3ACookbook%3AAlphabets
+permalink: wiki/BiojavaKorean%3ACookbook%3AAlphabets
 ---
 
 어떻게 DNA, RNA 또는 단백질 알파벳을 얻을 수 있나요?

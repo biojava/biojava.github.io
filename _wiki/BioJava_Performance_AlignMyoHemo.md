@@ -1,13 +1,13 @@
 ---
 title: BioJava:Performance:AlignMyoHemo
-permalink: wikis/BioJava%3APerformance%3AAlignMyoHemo
+permalink: wiki/BioJava%3APerformance%3AAlignMyoHemo
 ---
 
 Align two protein structures
 ============================
 
 This source code is run in the [example that calculates the structure
-alignment](/wikis/BioJava:Performance "wikilink") of Myoglobin and Hemoglobin.
+alignment](/wiki/BioJava:Performance "wikilink") of Myoglobin and Hemoglobin.
 See <BioJava:CookBook:PDB:align> for more information on how to
 calculate protein structure alignments. ```java
 

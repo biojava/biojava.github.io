@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:ABItoSequence
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AABItoSequence
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AABItoSequence
 ---
 
 How can I turn an ABI trace into a BioJava Sequence?

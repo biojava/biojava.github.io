@@ -1,6 +1,6 @@
 ---
 title: Dazzle:deployment
-permalink: wikis/Dazzle%3Adeployment
+permalink: wiki/Dazzle%3Adeployment
 ---
 
 This document describes the steps required to install and start the

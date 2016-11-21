@@ -12,7 +12,7 @@ OBF](http://www.open-bio.org/wiki/Google_Summer_of_Code).
 
 If you want to propose a project, have a look at the <BioJava:Modules>
 page, for areas which are currently under development. Also take a look
-at the [Feature Requests](/wikis/BioJava3_Feature_Requests "wikilink") page.
+at the [Feature Requests](/wiki/BioJava3_Feature_Requests "wikilink") page.
 There are also some ideas from last year at
 [Google\_Summer\_of\_Code\_2012](Google_Summer_of_Code_2012 "wikilink")
 

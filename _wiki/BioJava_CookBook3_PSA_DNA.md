@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:PSA DNA
-permalink: wikis/BioJava%3ACookBook3%3APSA_DNA
+permalink: wiki/BioJava%3ACookBook3%3APSA_DNA
 ---
 
 Calculating a local alignment

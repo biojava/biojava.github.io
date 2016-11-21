@@ -21,5 +21,5 @@ There are also a number of algorithms where we would be interested in
 [Java ports](Algorithm_Java_port "wikilink").
 
 You can also take a look at the current list of [ BioJava
-Modules](/wikis/BioJava:Modules#BioJava_3.0.X "wikilink") and suggest other
+Modules](/wiki/BioJava:Modules#BioJava_3.0.X "wikilink") and suggest other
 missing features.

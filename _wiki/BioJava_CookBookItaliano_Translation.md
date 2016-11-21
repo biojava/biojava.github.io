@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Translation
-permalink: wikis/BioJava%3ACookBookItaliano%3ATranslation
+permalink: wiki/BioJava%3ACookBookItaliano%3ATranslation
 ---
 
 Come posso tradurre una Sequenza o una SymbolList di DNA o RNA in una Proteina?
@@ -9,7 +9,7 @@ Come posso tradurre una Sequenza o una SymbolList di DNA o RNA in una Proteina?
 Per tradurre una sequenza di DNA bisogna seguire i seguenti passi:
 
 -   [Trascriverlo in
-    RNA](/wikis/BioJava:Cookbook:Sequence:Transcribe "wikilink").
+    RNA](/wiki/BioJava:Cookbook:Sequence:Transcribe "wikilink").
 -   Dividerlo in triplette.
 -   Tradurlo in Proteina.
 
@@ -21,7 +21,7 @@ si ha già una sequenza di RNA non è necessario trascriverla.
 *Nota Bene:Se si cerca di dividere in triplette una SymbolList o
 Sequenza la cui lunghezza non è divisible per tre viene sollevata una
 IllegalArgumentException. Segui questo
-[link](/wikis/BioJava:CookBookItaliano:Sequence:SubSequence "wikilink") per
+[link](/wiki/BioJava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
 ```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;

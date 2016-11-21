@@ -1,6 +1,6 @@
 ---
 title: Dazzle:plugins
-permalink: wikis/Dazzle%3Aplugins
+permalink: wiki/Dazzle%3Aplugins
 ---
 
 The following plugins are already provided within

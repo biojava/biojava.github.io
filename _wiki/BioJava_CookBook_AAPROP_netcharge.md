@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:netcharge
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Anetcharge
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Anetcharge
 ---
 
 ### How is Net Charge computed?

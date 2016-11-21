@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:OBO:visualize
-permalink: wikis/BioJava%3ACookBook%3AOBO%3Avisualize
+permalink: wiki/BioJava%3ACookBook%3AOBO%3Avisualize
 ---
 
 How to visualize an Ontology (OBO) file as a directed acyclic graph

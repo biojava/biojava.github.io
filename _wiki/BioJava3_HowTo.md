@@ -1,6 +1,6 @@
 ---
 title: BioJava3:HowTo
-permalink: wikis/BioJava3%3AHowTo
+permalink: wiki/BioJava3%3AHowTo
 ---
 
 This page is a work-in-progress, describing each of the key areas in

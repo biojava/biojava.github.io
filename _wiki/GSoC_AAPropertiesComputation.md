@@ -1,6 +1,6 @@
 ---
 title: GSoC:AAPropertiesComputation
-permalink: wikis/GSoC%3AAAPropertiesComputation
+permalink: wiki/GSoC%3AAAPropertiesComputation
 ---
 
 **Amino Acids Physicochemical Properties Calculation**

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:XML
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3AXML
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3AXML
 ---
 
 How can I write a Distribution to XML?

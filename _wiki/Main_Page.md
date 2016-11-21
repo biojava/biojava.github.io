@@ -12,7 +12,7 @@ parsers for common file formats and allows the manipulation of sequences
 and 3D structures. The goal of the biojava project is to facilitate
 rapid application development for bioinformatics.
 
-BioJava is [licensed under LGPL 2.1](/wikis/BioJava:License "wikilink").
+BioJava is [licensed under LGPL 2.1](/wiki/BioJava:License "wikilink").
 
 **Please cite:**
 

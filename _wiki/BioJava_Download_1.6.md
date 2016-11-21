@@ -1,13 +1,13 @@
 ---
 title: BioJava:Download 1.6
-permalink: wikis/BioJava%3ADownload_1.6
+permalink: wiki/BioJava%3ADownload_1.6
 ---
 
 This page offers downloads for the <b>BioJava 1.6 release</b>.
 
 BioJava 1.6 requires on <b>Java 1.5</b> or later. If you require Java
 1.4.2 then please download the previous [ release
-1.5](/wikis/BioJava:Download 1.5 "wikilink")
+1.5](/wiki/BioJava:Download 1.5 "wikilink")
 
 Complete Download
 -----------------
@@ -61,11 +61,11 @@ Getting older versions
 ----------------------
 
 -   The legacy release of 1.5 can be found
-    [here](/wikis/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
+    [here](/wiki/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
 -   The legacy release of 1.4 can be found
-    [here](/wikis/BioJava:Download 1.4 "wikilink")
+    [here](/wiki/BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
-    [here](/wikis/BioJava:Download 1.3 "wikilink").
+    [here](/wiki/BioJava:Download 1.3 "wikilink").
 -   Older releases of BioJava can be found in the [download
     area](http://www.biojava.org/download/).
 

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CambridgeDiscussion
-permalink: wikis/BioJava%3ACambridgeDiscussion
+permalink: wiki/BioJava%3ACambridgeDiscussion
 ---
 
 Background

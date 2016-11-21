@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:restful
-permalink: wikis/BioJava%3ACookBook%3APDB%3Arestful
+permalink: wiki/BioJava%3ACookBook%3APDB%3Arestful
 ---
 
 ### How to get RESTful data from RCSB

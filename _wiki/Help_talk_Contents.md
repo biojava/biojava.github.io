@@ -1,6 +1,6 @@
 ---
 title: Help talk:Contents
-permalink: wikis/Help_talk%3AContents
+permalink: wiki/Help_talk%3AContents
 ---
 
 How to do Multiple Sequence Alignment of proteins with biojava n to get

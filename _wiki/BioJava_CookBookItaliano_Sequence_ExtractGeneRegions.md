@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:ExtractGeneRegions
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3AExtractGeneRegions
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3AExtractGeneRegions
 ---
 
 Come posso estrarre tutte le regioni che rappresentano caratteristiche speciali (ad esempio 'geni' or 'sequenze codificanti')?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Interfaces:Features
-permalink: wikis/BioJava%3ACookbookFrench%3AInterfaces%3AFeatures
+permalink: wiki/BioJava%3ACookbookFrench%3AInterfaces%3AFeatures
 ---
 
 Comment montrer les Features dans une interface graphique?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:SeqIO:Echo
-permalink: wikis/BioJava%3ACookbookFrench%3ASeqIO%3AEcho
+permalink: wiki/BioJava%3ACookbookFrench%3ASeqIO%3AEcho
 ---
 
 Comment fonctionne les entrées / sorties de fichiers de séquence avec Biojava?

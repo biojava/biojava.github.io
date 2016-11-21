@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:Tutorial:Simple HMMs with BioJava
-permalink: wikis/BioJava_talk%3ATutorial%3ASimple_HMMs_with_BioJava
+permalink: wiki/BioJava_talk%3ATutorial%3ASimple_HMMs_with_BioJava
 ---
 
 Great tutorial, David. One suggestion, though, this code:

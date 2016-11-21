@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Translation
-permalink: wikis/BioJava%3ACookbookFrench%3ATranslation
+permalink: wiki/BioJava%3ACookbookFrench%3ATranslation
 ---
 
 Comment traduire une SymbolList ou une Sequence?
@@ -10,7 +10,7 @@ Pour traduire une séquence d'ADN, il vous faudra faire les choses
 suivantes:
 
 -   [Transcrire en
-    ARN](/wikis/BioJava:CookbookFrench:Sequence:Transcribe "wikilink");
+    ARN](/wiki/BioJava:CookbookFrench:Sequence:Transcribe "wikilink");
 
 <!-- -->
 
@@ -29,7 +29,7 @@ vous pouvez passer la portion transcription.
 *SymbolList* ou d'une *Sequence* dont la longueur ne se divise pas par
 3, une exception de type *IllegalArgumentException* sera lancée. Jetez
 un coup d'oeil sur la [manière de choisir une portion de la
-séquence](/wikis/BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
+séquence](/wiki/BioJava:CookbookFrench:Sequence:SubSequence "wikilink") afin
 de faire une bonne sélection.
 
 ```java import org.biojava.bio.symbol.\*; import org.biojava.bio.seq.\*;

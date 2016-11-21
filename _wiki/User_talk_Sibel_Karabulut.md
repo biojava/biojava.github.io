@@ -1,6 +1,6 @@
 ---
 title: User talk:Sibel Karabulut
-permalink: wikis/User_talk%3ASibel_Karabulut
+permalink: wiki/User_talk%3ASibel_Karabulut
 ---
 
 Hi;

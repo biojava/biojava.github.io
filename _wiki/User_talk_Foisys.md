@@ -1,6 +1,6 @@
 ---
 title: User talk:Foisys
-permalink: wikis/User_talk%3AFoisys
+permalink: wiki/User_talk%3AFoisys
 ---
 
 -   My pleasure... Just sad to see people actaully thinking that we

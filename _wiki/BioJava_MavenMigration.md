@@ -1,6 +1,6 @@
 ---
 title: BioJava:MavenMigration
-permalink: wikis/BioJava%3AMavenMigration
+permalink: wiki/BioJava%3AMavenMigration
 ---
 
 BioJava Maven migration and modularization
@@ -70,7 +70,7 @@ Procedure
 
 -   We need to identify leaders for the development of the sub-modules.
     View the current [list of defined
-    modules](/wikis/BioJava:Modules "wikilink")
+    modules](/wiki/BioJava:Modules "wikilink")
 
 <!-- -->
 

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:BioSQL:Manage
-permalink: wikis/BioJava%3ACookBook%3ABioSQL%3AManage
+permalink: wiki/BioJava%3ACookBook%3ABioSQL%3AManage
 ---
 
 How do I add, view and remove Sequence Objects from a BioSQL DB?

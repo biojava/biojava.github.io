@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:commandprompt
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Acommandprompt
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Acommandprompt
 ---
 
 ### How can I compute physico-chemical properties using Command Prompt?

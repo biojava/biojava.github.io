@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Services:Qblast
-permalink: wikis/BioJava%3ACookbookFrench%3AServices%3AQblast
+permalink: wiki/BioJava%3ACookbookFrench%3AServices%3AQblast
 ---
 
 Comment aligner une séquence en utilisant le service QBlast?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Sequence:ExtractGeneRegions
-permalink: wikis/BioJava%3ACookbook%3ASequence%3AExtractGeneRegions
+permalink: wiki/BioJava%3ACookbook%3ASequence%3AExtractGeneRegions
 ---
 
 How can I extract all regions beeing marked (or not) with a special feature (e.g. 'gene' or 'CDS')?

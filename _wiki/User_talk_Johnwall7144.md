@@ -1,6 +1,6 @@
 ---
 title: User talk:Johnwall7144
-permalink: wikis/User_talk%3AJohnwall7144
+permalink: wiki/User_talk%3AJohnwall7144
 ---
 
 AliExpress Coupon rules 2015 Tips That may help you Cut back

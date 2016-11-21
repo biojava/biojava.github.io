@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:Entropy
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3AEntropy
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3AEntropy
 ---
 
 How can I find the amount of information or entropy in a Distribution?

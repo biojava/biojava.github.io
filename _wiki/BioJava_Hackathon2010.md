@@ -1,6 +1,6 @@
 ---
 title: BioJava:Hackathon2010
-permalink: wikis/BioJava%3AHackathon2010
+permalink: wiki/BioJava%3AHackathon2010
 ---
 
 BioJava Hackathon 2010
@@ -11,7 +11,7 @@ Cambridge, U.K. from Jan. 19th-22nd
 
 ### Goals
 
-`- Further development of the BioJava modules. For module specific goals see the `[`BioJava:Modules`](/wikis/BioJava:Modules "wikilink")` page.`
+`- Further development of the BioJava modules. For module specific goals see the `[`BioJava:Modules`](/wiki/BioJava:Modules "wikilink")` page.`
 `- Anything the module leaders deem necessary for their modules.`  
 `- Add new modules`  
 `- Finalizing BioJava 3.0`

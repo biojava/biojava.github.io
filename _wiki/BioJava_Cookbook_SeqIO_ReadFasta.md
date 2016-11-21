@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:ReadFasta
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AReadFasta
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AReadFasta
 ---
 
 How do I read Sequences from a Fasta File?

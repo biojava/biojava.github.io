@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:FATCAT Algorithm
-permalink: wikis/BioJava%3ACookBook%3APDB%3AFATCAT_Algorithm
+permalink: wiki/BioJava%3ACookBook%3APDB%3AFATCAT_Algorithm
 ---
 
 FATCAT Algorithm

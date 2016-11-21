@@ -1,6 +1,6 @@
 ---
 title: BioJava:MailingLists
-permalink: wikis/BioJava%3AMailingLists
+permalink: wiki/BioJava%3AMailingLists
 ---
 
 BioJava Mailing Lists

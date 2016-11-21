@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook:Interfaces:ViewInGUI2
-permalink: wikis/BioJava_talk%3ACookBook%3AInterfaces%3AViewInGUI2
+permalink: wiki/BioJava_talk%3ACookBook%3AInterfaces%3AViewInGUI2
 ---
 
 Hi Jolyon,

@@ -1,6 +1,6 @@
 ---
 title: BioJava:1.5ReleasePlan
-permalink: wikis/BioJava%3A1.5ReleasePlan
+permalink: wiki/BioJava%3A1.5ReleasePlan
 ---
 
 Release plan for BioJava 1.5
@@ -107,10 +107,10 @@ consideration.
 
 ### Documentation
 
--   Update [Cookbook](/wikis/BioJava:Cookbook "wikilink") code to reflect best
+-   Update [Cookbook](/wiki/BioJava:Cookbook "wikilink") code to reflect best
     practices with BioJavaX
 -   Should we keep legacy examples in the
-    [Cookbook](/wikis/BioJava:Cookbook "wikilink")?
+    [Cookbook](/wiki/BioJava:Cookbook "wikilink")?
 -   Check for errors in biojavax docbook
 
 ### Javadoc

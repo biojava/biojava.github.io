@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:profeat
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Aprofeat
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Aprofeat
 ---
 
 ### How can I compute PROFEAT properties via APIs?

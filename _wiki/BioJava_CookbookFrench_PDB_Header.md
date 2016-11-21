@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Header
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AHeader
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AHeader
 ---
 
 Comment accéder aux informations contenues dans l'en-tête d'un fichier PDB?

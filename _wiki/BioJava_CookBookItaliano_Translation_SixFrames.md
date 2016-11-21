@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Translation:SixFrames
-permalink: wikis/BioJava%3ACookBookItaliano%3ATranslation%3ASixFrames
+permalink: wiki/BioJava%3ACookBookItaliano%3ATranslation%3ASixFrames
 ---
 
 Come posso tradure una sequenza di nucleotidi secondo tutti i sei frame?
@@ -28,7 +28,7 @@ viene poi memorizzato in un file e inviato nello STDOUT in formato
 FASTA.
 
 *Nota Bene:Segui questo
-[link](/wikis/BioJava:CookBookItaliano:Sequence:SubSequence "wikilink") per
+[link](/wiki/BioJava:CookBookItaliano:Sequence:SubSequence "wikilink") per
 scoprire come ottenere una porzione di una Sequenza per poi tradurla*
 
 ```java import java.io.BufferedReader; import java.io.File; import

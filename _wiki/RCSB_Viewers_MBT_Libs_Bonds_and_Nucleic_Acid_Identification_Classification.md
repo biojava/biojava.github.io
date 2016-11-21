@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:MBT Libs:Bonds and Nucleic Acid Identification^Classification
-permalink: wikis/RCSB_Viewers%3AMBT_Libs%3ABonds_and_Nucleic_Acid_Identification%5EClassification
+permalink: wiki/RCSB_Viewers%3AMBT_Libs%3ABonds_and_Nucleic_Acid_Identification%5EClassification
 ---
 
 Notes

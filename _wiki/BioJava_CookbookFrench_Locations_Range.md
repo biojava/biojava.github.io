@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Range
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3ARange
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3ARange
 ---
 
 Comment faire pour spécifier une position par intervalle (*RangeLocation*)?

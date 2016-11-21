@@ -1,6 +1,6 @@
 ---
 title: User talk:Wy666
-permalink: wikis/User_talk%3AWy666
+permalink: wiki/User_talk%3AWy666
 ---
 
 I have tested the demos\\seq\\TestGenbank.java on my computer, but the

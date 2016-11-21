@@ -1,14 +1,14 @@
 ---
 title: BioJava3:Coding Conventions
-permalink: wikis/BioJava3%3ACoding_Conventions
+permalink: wiki/BioJava3%3ACoding_Conventions
 ---
 
 -   Each file should contain the
-    [BioJava3\_license](/wikis/BioJava3_license "wikilink") LGPL copyright
+    [BioJava3\_license](/wiki/BioJava3_license "wikilink") LGPL copyright
     statement.
 
 <!-- -->
 
 -   For Eclipse developers, here a Code template:
-    [BioJava3\_eclipse\_template](/wikis/BioJava3_eclipse_template "wikilink")
+    [BioJava3\_eclipse\_template](/wiki/BioJava3_eclipse_template "wikilink")
 

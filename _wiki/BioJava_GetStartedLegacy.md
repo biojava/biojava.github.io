@@ -1,6 +1,6 @@
 ---
 title: BioJava:GetStartedLegacy
-permalink: wikis/BioJava%3AGetStartedLegacy
+permalink: wiki/BioJava%3AGetStartedLegacy
 ---
 
 Introduction
@@ -16,11 +16,11 @@ BioJava 1 a valid option for your project.
 To find out more about BioJava 1, check any of the following entry
 points:
 
--   [Tutorial](/wikis/BioJava:Tutorial "wikilink") to learn about symbols,
+-   [Tutorial](/wiki/BioJava:Tutorial "wikilink") to learn about symbols,
     sequence, and events.
--   [Cook Book](/wikis/BioJava:CookBookLegacy "wikilink"), also famously known
+-   [Cook Book](/wiki/BioJava:CookBookLegacy "wikilink"), also famously known
     as BioJava in Anger, to find out many code snippets.
--   [BioJavax Extension](/wikis/BioJava:BioJavaXDocs "wikilink") which provides
+-   [BioJavax Extension](/wiki/BioJava:BioJavaXDocs "wikilink") which provides
     sophisticated event-based methods to read, write, and manipulate
     sequence files.
 
@@ -37,7 +37,7 @@ available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
 You can get the latest version from the download page [BioJava (requires
-Java 1.5+)](/wikis/BioJava:Download_{{current version legacy}} "wikilink").
+Java 1.5+)](/wiki/BioJava:Download_{{current version legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
@@ -90,9 +90,9 @@ consult your Java vendor.
 
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the
-[tutorial](/wikis/BioJava:Tutorial "wikilink"),
+[tutorial](/wiki/BioJava:Tutorial "wikilink"),
 [<http://www.biojava.org/docs/api> API documentation] and the [Legacy
-Cookbook](/wikis/BioJava:CookBookLegacy "wikilink") section. Finally, you can
+Cookbook](/wiki/BioJava:CookBookLegacy "wikilink") section. Finally, you can
 learn a lot about BioJava by trying the demo programs included in the
 source distribution (see below).
 

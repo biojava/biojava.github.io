@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Alphabets:Custom
-permalink: wikis/BioJava%3ACookbook%3AAlphabets%3ACustom
+permalink: wiki/BioJava%3ACookbook%3AAlphabets%3ACustom
 ---
 
 How do I make a custom Alphabet from custom Symbols?

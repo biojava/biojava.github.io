@@ -1,6 +1,6 @@
 ---
 title: Dazzle:examplePlugin
-permalink: wikis/Dazzle%3AexamplePlugin
+permalink: wiki/Dazzle%3AexamplePlugin
 ---
 
 How to write a plugin for Dazzle

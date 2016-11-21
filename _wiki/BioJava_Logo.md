@@ -1,6 +1,6 @@
 ---
 title: BioJava:Logo
-permalink: wikis/BioJava%3ALogo
+permalink: wiki/BioJava%3ALogo
 ---
 
 BioJava Needs a Logo

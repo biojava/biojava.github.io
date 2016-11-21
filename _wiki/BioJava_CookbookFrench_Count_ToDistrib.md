@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Count:ToDistrib
-permalink: wikis/BioJava%3ACookbookFrench%3ACount%3AToDistrib
+permalink: wiki/BioJava%3ACookbookFrench%3ACount%3AToDistrib
 ---
 
 Comment transformer un Count en Distribution?

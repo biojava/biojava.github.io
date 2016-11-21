@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Read
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3ARead
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3ARead
 ---
 
 ### Comment faire pour lire un fichier de type PDB?

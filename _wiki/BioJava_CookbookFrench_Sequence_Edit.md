@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence:Edit
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence%3AEdit
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence%3AEdit
 ---
 
 Comment éditer une Sequence?

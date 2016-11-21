@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Interfaces:ViewAsTree
-permalink: wikis/BioJava%3ACookbookFrench%3AInterfaces%3AViewAsTree
+permalink: wiki/BioJava%3ACookbookFrench%3AInterfaces%3AViewAsTree
 ---
 
 Comment obtenir les Features et les Annotations graphiquement sous la forme d'un arbre?

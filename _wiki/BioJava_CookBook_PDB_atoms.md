@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:atoms
-permalink: wikis/BioJava%3ACookBook%3APDB%3Aatoms
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aatoms
 ---
 
 ### How can I access the atoms in a structure?

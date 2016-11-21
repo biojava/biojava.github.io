@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Filter
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3AFilter
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3AFilter
 ---
 
 Comment filtrer les Features selon leur type?

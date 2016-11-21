@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Alphabets:Canonical
-permalink: wikis/BioJava%3ACookbookFrench%3AAlphabets%3ACanonical
+permalink: wiki/BioJava%3ACookbookFrench%3AAlphabets%3ACanonical
 ---
 
 Comment savoir si deux Symbols ou Alphabets sont identiques?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Translation:Single
-permalink: wikis/BioJava%3ACookbookFrench%3ATranslation%3ASingle
+permalink: wiki/BioJava%3ACookbookFrench%3ATranslation%3ASingle
 ---
 
 Comment traduire un seul codon À son acide aminÉ correspondant?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:GA
-permalink: wikis/BioJava%3ACookbookFrench%3AGA
+permalink: wiki/BioJava%3ACookbookFrench%3AGA
 ---
 
 Comment puis-je faire un algorithme génétique avec BioJava?

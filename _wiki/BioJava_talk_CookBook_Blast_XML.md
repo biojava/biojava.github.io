@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook:Blast:XML
-permalink: wikis/BioJava_talk%3ACookBook%3ABlast%3AXML
+permalink: wiki/BioJava_talk%3ACookBook%3ABlast%3AXML
 ---
 
 Hi to all,

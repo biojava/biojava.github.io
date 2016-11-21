@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:MinAminoAcidComposition.xml
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3AMinAminoAcidComposition.xml
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3AMinAminoAcidComposition.xml
 ---
 
 ### MinAminoAcidComposition.xml

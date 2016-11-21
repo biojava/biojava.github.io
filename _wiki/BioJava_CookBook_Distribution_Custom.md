@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:Custom
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3ACustom
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3ACustom
 ---
 
 How do I make a custom Alphabet then take an OrderNDistribution over it?

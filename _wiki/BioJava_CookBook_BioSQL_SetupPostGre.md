@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:BioSQL:SetupPostGre
-permalink: wikis/BioJava%3ACookBook%3ABioSQL%3ASetupPostGre
+permalink: wiki/BioJava%3ACookBook%3ABioSQL%3ASetupPostGre
 ---
 
 Installing and using BioSQL

@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:MBT Libs:Fragment (Secondary Structure) Definition
-permalink: wikis/RCSB_Viewers%3AMBT_Libs%3AFragment_(Secondary_Structure)_Definition
+permalink: wiki/RCSB_Viewers%3AMBT_Libs%3AFragment_(Secondary_Structure)_Definition
 ---
 
 Notes

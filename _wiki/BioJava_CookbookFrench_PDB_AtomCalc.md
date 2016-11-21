@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:AtomCalc
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AAtomCalc
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AAtomCalc
 ---
 
 Comment faire des calculs sur des Atomes présent dans un fichier PDB?
@@ -33,4 +33,4 @@ sur des Atomes.
 
 BioJava possède également une classe utilisant un algorithm de
 superposition de structure protéique. Pour en savoir plus, consultez
-cette [ recette](/wikis/BioJava:CookbookFrench:PDB:Align "wikilink").
+cette [ recette](/wiki/BioJava:CookbookFrench:PDB:Align "wikilink").

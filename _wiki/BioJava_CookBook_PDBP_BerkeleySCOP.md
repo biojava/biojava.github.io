@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDBP:BerkeleySCOP
-permalink: wikis/BioJava%3ACookBook%3APDBP%3ABerkeleySCOP
+permalink: wiki/BioJava%3ACookBook%3APDBP%3ABerkeleySCOP
 ---
 
 BioJava supports by default the [original SCOP

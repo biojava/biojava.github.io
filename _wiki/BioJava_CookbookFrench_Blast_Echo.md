@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Blast:Echo
-permalink: wikis/BioJava%3ACookbookFrench%3ABlast%3AEcho
+permalink: wiki/BioJava%3ACookbookFrench%3ABlast%3AEcho
 ---
 
 Comment extraire les informations d'un très gros fichier ou comment écrire son propre SearchContentHandler?

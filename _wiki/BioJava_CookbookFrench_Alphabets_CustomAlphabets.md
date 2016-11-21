@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Alphabets:CustomAlphabets
-permalink: wikis/BioJava%3ACookbookFrench%3AAlphabets%3ACustomAlphabets
+permalink: wiki/BioJava%3ACookbookFrench%3AAlphabets%3ACustomAlphabets
 ---
 
 Comment créer un Alphabet sur mesure à partir de Symbols crées aussi sur mesure?

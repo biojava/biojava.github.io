@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:main
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Amain
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Amain
 ---
 
 ### How can I compute physico-chemical properties via APIs?
@@ -12,7 +12,7 @@ physiochemical properties. They are
     Weight](http://biojava.org/wiki/BioJava:CookBook:AAPROP:molecularweight)
     (See also: [How to define the XML files to customize mass of Amino
     Acids in the computation of Molecular
-    Weight?](/wikis/BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
+    Weight?](/wiki/BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
 -   [Absorbance](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
 -   [Extinction
     Coefficient](http://biojava.org/wiki/BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient)
@@ -54,7 +54,7 @@ aminoAcidCompositionFile, ignoreCase)); ```
 
 (See also: [How to define the XML files to customize mass of Amino Acids
 in the computation of Molecular
-Weight?](/wikis/BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
+Weight?](/wiki/BioJava:CookBook:AAPROP:xmlfiles "wikilink"))
 
 Short Example 3: Computing molecular weight for multiple sequences
 ------------------------------------------------------------------

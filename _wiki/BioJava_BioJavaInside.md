@@ -1,6 +1,6 @@
 ---
 title: BioJava:BioJavaInside
-permalink: wikis/BioJava%3ABioJavaInside
+permalink: wiki/BioJava%3ABioJavaInside
 ---
 
 **If you use BioJava in an application or publication please cite:**

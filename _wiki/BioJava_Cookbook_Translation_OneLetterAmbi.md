@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Translation:OneLetterAmbi
-permalink: wikis/BioJava%3ACookbook%3ATranslation%3AOneLetterAmbi
+permalink: wiki/BioJava%3ACookbook%3ATranslation%3AOneLetterAmbi
 ---
 
 How can I retrieve the 1-Letter code of a translated sequence containing ambiguities?

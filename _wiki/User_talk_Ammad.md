@@ -1,6 +1,6 @@
 ---
 title: User talk:Ammad
-permalink: wikis/User_talk%3AAmmad
+permalink: wiki/User_talk%3AAmmad
 ---
 
 hi,

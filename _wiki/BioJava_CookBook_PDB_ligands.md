@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:ligands
-permalink: wikis/BioJava%3ACookBook%3APDB%3Aligands
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aligands
 ---
 
 ```java

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Fasta:Parser
-permalink: wikis/BioJava%3ACookBook%3AFasta%3AParser
+permalink: wiki/BioJava%3ACookBook%3AFasta%3AParser
 ---
 
 How Do I Parse a FASTA Search Result?

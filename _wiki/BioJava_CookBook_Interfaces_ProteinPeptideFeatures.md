@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:ProteinPeptideFeatures
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AProteinPeptideFeatures
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AProteinPeptideFeatures
 ---
 
 How do I display protein features / a Peptide Digest?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Phylo:ProfileToMSA
-permalink: wikis/BioJava%3ACookBook%3APhylo%3AProfileToMSA
+permalink: wiki/BioJava%3ACookBook%3APhylo%3AProfileToMSA
 ---
 
 `       MultipleSequenceAlignment`<ProteinSequence, AminoAcidCompound>` multipleSequenceAlignment= new MultipleSequenceAlignment `<ProteinSequence, AminoAcidCompound>`();`  

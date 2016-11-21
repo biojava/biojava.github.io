@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Point
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3APoint
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3APoint
 ---
 
 Comment faire pour spécifier une position ponctuelle (*PointLocation*)?

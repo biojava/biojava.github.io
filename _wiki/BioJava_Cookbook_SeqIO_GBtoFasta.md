@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:GBtoFasta
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AGBtoFasta
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AGBtoFasta
 ---
 
 How do I extract Sequences from GenBank/EMBL/UniProt/FASTA/INSDseq and write them as Fasta?

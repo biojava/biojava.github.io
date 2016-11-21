@@ -1,6 +1,6 @@
 ---
 title: User talk:HomeWork Solver
-permalink: wikis/User_talk%3AHomeWork_Solver
+permalink: wiki/User_talk%3AHomeWork_Solver
 ---
 
 Ours is to ensure that you perform well and acquire the practical skills

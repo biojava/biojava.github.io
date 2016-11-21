@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:MSAProfiler
-permalink: wikis/BioJava%3ACookBook3%3AMSAProfiler
+permalink: wiki/BioJava%3ACookBook3%3AMSAProfiler
 ---
 
 How to profile the time and memory used for Multiple Sequence Alignment in BioJava

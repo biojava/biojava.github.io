@@ -1,6 +1,6 @@
 ---
 title: Dazzle:Ensembl
-permalink: wikis/Dazzle%3AEnsembl
+permalink: wiki/Dazzle%3AEnsembl
 ---
 
 Deploying an ensembl-das reference server

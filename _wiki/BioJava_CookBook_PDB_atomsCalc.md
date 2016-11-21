@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:atomsCalc
-permalink: wikis/BioJava%3ACookBook%3APDB%3AatomsCalc
+permalink: wiki/BioJava%3ACookBook%3APDB%3AatomsCalc
 ---
 
 ### How can I do calculations with Atoms?

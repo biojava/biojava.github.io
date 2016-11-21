@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:DP:PairWise2
-permalink: wikis/BioJava%3ACookBook%3ADP%3APairWise2
+permalink: wiki/BioJava%3ACookBook%3ADP%3APairWise2
 ---
 
 How do I generate a global or local alignment with the Needleman-Wunsch- or the Smith-Waterman-algorithm?

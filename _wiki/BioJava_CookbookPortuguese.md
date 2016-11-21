@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese
-permalink: wikis/BioJava%3ACookbookPortuguese
+permalink: wiki/BioJava%3ACookbookPortuguese
 ---
 
 BioJava in Anger - um livro de receitas para aqueles que tem pressa
@@ -27,16 +27,16 @@ clique [aqui](http://biojava.org/mailman/listinfo/biojava-l)
 
 Esta tradução para o Portugues (Brasil) é mantida por [ Dickson S.
 Guedes](User:Guedes "wikilink"), porém não está completa em relação ao
-[documento original](/wikis/BioJava:Cookbook "wikilink"), isto não impede que
+[documento original](/wiki/BioJava:Cookbook "wikilink"), isto não impede que
 seja alimentada com maiores informações pois, por se tratar de um
 sistema Wiki, correções podem ser feitas desde que estejam de acordo com
-o documento original [neste link](/wikis/BioJava:Cookbook "wikilink").
+o documento original [neste link](/wiki/BioJava:Cookbook "wikilink").
 
 Anúncios
 --------
 
 Você encontra também a versão em
-[Francês](/wikis/BioJava:CookbookFrench "wikilink") do 'Biojava in Anger'
+[Francês](/wiki/BioJava:CookbookFrench "wikilink") do 'Biojava in Anger'
 (traduzido por Sylvain Foisy).
 
 Você também pode ler uma versão em
@@ -69,57 +69,57 @@ Como eu faço para....?
 -   [Onde eu encontro a instalação do
     Java](http://java.sun.com/downloads/)? (esta página está
     exclusivamente em Ingles)
--   [Como obter a instalação do BioJava](/wikis/BioJava:GetStarted "wikilink")?
+-   [Como obter a instalação do BioJava](/wiki/BioJava:GetStarted "wikilink")?
     (esta página está exclusivamente em Ingles)
 
 ### Alfabetos e Simbolos
 
 -   [Como obter o Alfabeto de DNA, RNA ou
-    Proteina](/wikis/BioJava:CookbookPortuguese:Alphabets "wikilink")?
+    Proteina](/wiki/BioJava:CookbookPortuguese:Alphabets "wikilink")?
 -   [Como crio alfabetos customizados a partir de simbolos
-    customizados](/wikis/BioJava:CookbookPortuguese:Alphabets:Custom "wikilink")?
+    customizados](/wiki/BioJava:CookbookPortuguese:Alphabets:Custom "wikilink")?
 -   [Como crio um CrossProductAlphabet, por exemplo, um alfabeto de
-    codons](/wikis/BioJava:CookbookPortuguese:Alphabets:CrossProduct "wikilink")?
+    codons](/wiki/BioJava:CookbookPortuguese:Alphabets:CrossProduct "wikilink")?
 
 ### Manipulação básica de sequencia
 
 -   [Como eu crio uma Sequence a partir de uma String ou como eu crio
     uma String a partir de um objeto
-    Sequence](/wikis/BioJava:CookbookPortuguese:Sequence "wikilink")?
+    Sequence](/wiki/BioJava:CookbookPortuguese:Sequence "wikilink")?
 
 ### Tradução e transcrição
 
 -   [Como eu faco para transcrever DNA em RNA e este em
-    Proteina](/wikis/BioJava:CookbookPortuguese:Translation "wikilink")?
+    Proteina](/wiki/BioJava:CookbookPortuguese:Translation "wikilink")?
 
 ### Proteoma
 
 -   [Como eu calculo a massa e o pI de um
-    peptideo](/wikis/BioJava:CookbookPortuguese:Proteomics "wikilink")?
+    peptideo](/wiki/BioJava:CookbookPortuguese:Proteomics "wikilink")?
 
 ### Sequencia de E/S
 
 -   [Como eu escrevo Sequencias no formato
-    Fasta](/wikis/BioJava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
+    Fasta](/wiki/BioJava:CookbookPortuguese:SeqIO:WriteInFasta "wikilink")?
 
 ### BLAST e FASTA
 
 -   [Como eu configuro um parser
-    BLAST](/wikis/BioJava:CookbookPortuguese:Blast:Parser "wikilink")?
+    BLAST](/wiki/BioJava:CookbookPortuguese:Blast:Parser "wikilink")?
 
 ### Contabilizações e Distribuições
 
 -   [Como eu posso contar os residuos em uma
-    Sequence](/wikis/BioJava:CookbookPortuguese:Count:Residues "wikilink")?
+    Sequence](/wiki/BioJava:CookbookPortuguese:Count:Residues "wikilink")?
 -   [Como posso calcular a frequencia de um simbolo em uma
-    Sequence](/wikis/BioJava:CookbookPortuguese:Count:Frequency "wikilink")?
+    Sequence](/wiki/BioJava:CookbookPortuguese:Count:Frequency "wikilink")?
 
 ### Estrutura da Proteina
 
 -   [Como eu posso ler um arquivo
-    PDB?](/wikis/BioJava:CookbookPortuguese:PDB:read "wikilink")
+    PDB?](/wiki/BioJava:CookbookPortuguese:PDB:read "wikilink")
 -   [Como eu posso mutar um
-    residuo?](/wikis/BioJava:CookbookPortuguese:PDB:mutate "wikilink")
+    residuo?](/wiki/BioJava:CookbookPortuguese:PDB:mutate "wikilink")
 
 Disclaimer
 ----------

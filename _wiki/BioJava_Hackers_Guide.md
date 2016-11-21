@@ -1,6 +1,6 @@
 ---
 title: BioJava:Hackers Guide
-permalink: wikis/BioJava%3AHackers_Guide
+permalink: wiki/BioJava%3AHackers_Guide
 ---
 
 ### A hacker's guide to BioJava

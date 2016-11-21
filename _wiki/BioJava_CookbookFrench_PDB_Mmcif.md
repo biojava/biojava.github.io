@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Mmcif
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AMmcif
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AMmcif
 ---
 
 ### Comment lire un fichier en format MMCIF?
@@ -12,7 +12,7 @@ il n'est pas trivial d'écrire un logiciel de lecture pour ce format,
 BioJava contient les outils essentiels pour ce faire. Les fichiers en
 format MMCIF sont lus afin de créer le même type d'objets Structure crée
 à la suite de la lecture de [fichiers en format
-PDB](/wikis/BioJava:CookbookFrench:PDB:Read "wikilink").
+PDB](/wiki/BioJava:CookbookFrench:PDB:Read "wikilink").
 
 Pour lire un fichier en format mmCif, simplement utilisé le code
 suivant:
@@ -73,7 +73,7 @@ MMcifConsumer](http://www.spice-3d.org/public-files/javadoc/biojava/org/biojava/
 ```
 
 Pour plus d'information sur le modèle de données structurale de BioJava,
-jetez un coup d'oeil [ici](/wikis/BioJava:CookbookFrench:PDB:Atom "wikilink").
+jetez un coup d'oeil [ici](/wiki/BioJava:CookbookFrench:PDB:Atom "wikilink").
 
 Bibliographie
 -------------

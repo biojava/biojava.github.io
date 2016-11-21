@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Translation:OneLetterAmbi
-permalink: wikis/BioJava%3ACookbookFrench%3ATranslation%3AOneLetterAmbi
+permalink: wiki/BioJava%3ACookbookFrench%3ATranslation%3AOneLetterAmbi
 ---
 
 Comment obtenir la séquence en acide aminés avec le code à une lettre si la séquence nucléotidique traduite contient des ambiguités?

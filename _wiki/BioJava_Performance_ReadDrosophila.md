@@ -1,13 +1,13 @@
 ---
 title: BioJava:Performance:ReadDrosophila
-permalink: wikis/BioJava%3APerformance%3AReadDrosophila
+permalink: wiki/BioJava%3APerformance%3AReadDrosophila
 ---
 
 Read Drosophila Genome
 ======================
 
 This source code is run in the [example that reads the Drosophila
-genome](/wikis/BioJava:Performance "wikilink") and prints out the size of each
+genome](/wiki/BioJava:Performance "wikilink") and prints out the size of each
 chromosome:
 
 ```java import java.io.\*; import java.util.\*;

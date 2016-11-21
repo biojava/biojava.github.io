@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Translation:SixFrame
-permalink: wikis/BioJava%3ACookbookFrench%3ATranslation%3ASixFrame
+permalink: wiki/BioJava%3ACookbookFrench%3ATranslation%3ASixFrame
 ---
 
 Comment faire pour traduire une Sequence dans ses six cadres de lectures?

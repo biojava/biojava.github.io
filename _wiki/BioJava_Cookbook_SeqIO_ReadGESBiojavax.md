@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:ReadGESBiojavax
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AReadGESBiojavax
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AReadGESBiojavax
 ---
 
 How do I read a sequence file (in whatever format) with the new Biojavax extension?

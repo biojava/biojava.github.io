@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Alphabets:Canonical
-permalink: wikis/BioJava%3ACookBookItaliano%3AAlphabets%3ACanonical
+permalink: wiki/BioJava%3ACookBookItaliano%3AAlphabets%3ACanonical
 ---
 
 Come posso stabilire l'identità fra Simboli e Alfabeti?

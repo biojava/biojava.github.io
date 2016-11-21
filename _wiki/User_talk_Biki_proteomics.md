@@ -1,6 +1,6 @@
 ---
 title: User talk:Biki proteomics
-permalink: wikis/User_talk%3ABiki_proteomics
+permalink: wiki/User_talk%3ABiki_proteomics
 ---
 
 i have install all set CLASSPATH

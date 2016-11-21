@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:PDB:mutate
-permalink: wikis/BioJava%3ACookbookPortuguese%3APDB%3Amutate
+permalink: wiki/BioJava%3ACookbookPortuguese%3APDB%3Amutate
 ---
 
 ### Como eu posso mutar um residuo?

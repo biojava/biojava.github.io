@@ -1,6 +1,6 @@
 ---
 title: BioJava:Community Portal
-permalink: wikis/BioJava%3ACommunity_Portal
+permalink: wiki/BioJava%3ACommunity_Portal
 ---
 
 BioJava is an [open source](wp:open_source "wikilink") project developed

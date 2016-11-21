@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Translation:NonStandart
-permalink: wikis/BioJava%3ACookBookItaliano%3ATranslation%3ANonStandart
+permalink: wiki/BioJava%3ACookBookItaliano%3ATranslation%3ANonStandart
 ---
 
 Come posso utilizzare una tavola di traduzione non standard?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:PhyloSOC07
-permalink: wikis/BioJava%3APhyloSOC07
+permalink: wiki/BioJava%3APhyloSOC07
 ---
 
 This page will include all info and docs about our efforts in the 2007

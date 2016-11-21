@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:MBT Libs:PDBToNdbConverter
-permalink: wikis/RCSB_Viewers%3AMBT_Libs%3APDBToNdbConverter
+permalink: wiki/RCSB_Viewers%3AMBT_Libs%3APDBToNdbConverter
 ---
 
 Notes

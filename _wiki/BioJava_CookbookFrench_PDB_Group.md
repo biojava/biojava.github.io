@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Group
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AGroup
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AGroup
 ---
 
 L'interface <b>Group</b> regroupe toutes les méthodes communes à un

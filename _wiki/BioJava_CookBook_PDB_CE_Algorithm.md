@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:CE Algorithm
-permalink: wikis/BioJava%3ACookBook%3APDB%3ACE_Algorithm
+permalink: wiki/BioJava%3ACookBook%3APDB%3ACE_Algorithm
 ---
 
 CE Algorithm

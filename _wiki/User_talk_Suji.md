@@ -1,6 +1,6 @@
 ---
 title: User talk:Suji
-permalink: wikis/User_talk%3ASuji
+permalink: wiki/User_talk%3ASuji
 ---
 
 Dear All I am using biojava under windows opearting system. I have

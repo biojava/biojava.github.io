@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Atom
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AAtom
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AAtom
 ---
 
 Comment obtenir les informations sur les atomes présent dans un fichier PDB?

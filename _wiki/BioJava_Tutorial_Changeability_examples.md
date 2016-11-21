@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Changeability examples
-permalink: wikis/BioJava%3ATutorial%3AChangeability_examples
+permalink: wiki/BioJava%3ATutorial%3AChangeability_examples
 tags:
  - Tutorial
 ---

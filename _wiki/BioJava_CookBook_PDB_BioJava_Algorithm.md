@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:BioJava Algorithm
-permalink: wikis/BioJava%3ACookBook%3APDB%3ABioJava_Algorithm
+permalink: wiki/BioJava%3ACookBook%3APDB%3ABioJava_Algorithm
 ---
 
 This is the example of how to use the structure alignment algorithm with
@@ -11,10 +11,10 @@ Biojava 1.7 algorithm
 =====================
 
 The [structure alignment
-algorithm](/wikis/BioJava:CookBook:PDB:aboutalign "wikilink") contained in
+algorithm](/wiki/BioJava:CookBook:PDB:aboutalign "wikilink") contained in
 BioJava is based on a variation of the PSC++ algorithm provided by Peter
 Lackner, Univ. Salzburg (personal communication). The
-[algorithm](/wikis/BioJava:CookBook:PDB:aboutalign "wikilink") is calculating a
+[algorithm](/wiki/BioJava:CookBook:PDB:aboutalign "wikilink") is calculating a
 distance matrix based, rigid body protein structure superimposition.
 
 Example

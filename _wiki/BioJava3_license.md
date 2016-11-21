@@ -3,7 +3,7 @@ title: BioJava3 license
 ---
 
 BioJava 3 is using the [standard BioJava
-license](/wikis/BioJava:License "wikilink"): LGPL v 2.1
+license](/wiki/BioJava:License "wikilink"): LGPL v 2.1
 
 Developers: Please include the following javadoc in the header of every
 class you commit:

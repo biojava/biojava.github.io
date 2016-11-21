@@ -1,10 +1,10 @@
 ---
 title: BioJava:Performance:AlignSW
-permalink: wikis/BioJava%3APerformance%3AAlignSW
+permalink: wiki/BioJava%3APerformance%3AAlignSW
 ---
 
 This is the source code for the [Smith Waterman performance
-example](/wikis/BioJava:Performance "wikilink").
+example](/wiki/BioJava:Performance "wikilink").
 
 ```java /\*
 

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:SeqIO:ReadFasta
-permalink: wikis/BioJava%3ACookBookItaliano%3ASeqIO%3AReadFasta
+permalink: wiki/BioJava%3ACookBookItaliano%3ASeqIO%3AReadFasta
 ---
 
 Come posso leggere una sequenze da un file in formato FASTA?

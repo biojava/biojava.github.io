@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Annotations:Filter
-permalink: wikis/BioJava%3ACookbookFrench%3AAnnotations%3AFilter
+permalink: wiki/BioJava%3ACookbookFrench%3AAnnotations%3AFilter
 ---
 
 Comment filtrer les séquences selon leur espèce d'origine?

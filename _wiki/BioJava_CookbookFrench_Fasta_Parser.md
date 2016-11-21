@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Fasta:Parser
-permalink: wikis/BioJava%3ACookbookFrench%3AFasta%3AParser
+permalink: wiki/BioJava%3ACookbookFrench%3AFasta%3AParser
 ---
 
 Comment lire les résultats d'un fichier de sortie FASTA?

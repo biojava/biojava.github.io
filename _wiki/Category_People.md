@@ -1,6 +1,6 @@
 ---
 title: Category:People
-permalink: wikis/Category%3APeople
+permalink: wiki/Category%3APeople
 layout: tagpage
 tag: People
 ---

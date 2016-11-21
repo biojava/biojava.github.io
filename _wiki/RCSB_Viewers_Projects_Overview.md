@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Projects Overview
-permalink: wikis/RCSB_Viewers%3AProjects_Overview
+permalink: wiki/RCSB_Viewers%3AProjects_Overview
 ---
 
 The <em>RCSB MBT Lib and Structure Viewers</em> comprise a body of code

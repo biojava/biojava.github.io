@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Translation:NonStandard
-permalink: wikis/BioJava%3ACookbookFrench%3ATranslation%3ANonStandard
+permalink: wiki/BioJava%3ACookbookFrench%3ATranslation%3ANonStandard
 ---
 
 Comment utilisé un code génétique non-standard?

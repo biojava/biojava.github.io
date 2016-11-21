@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:SequenceFeaturePanel
-permalink: wikis/BioJava%3ACookBook%3ACore%3ASequenceFeaturePanel
+permalink: wiki/BioJava%3ACookBook%3ACore%3ASequenceFeaturePanel
 ---
 
 ![The SequenceFeaturePanel demonstrates the ability to wrap sequences

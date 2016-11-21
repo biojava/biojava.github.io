@@ -1,6 +1,6 @@
 ---
 title: BioJava:GetStarted
-permalink: wikis/BioJava%3AGetStarted
+permalink: wiki/BioJava%3AGetStarted
 ---
 
 Introduction
@@ -16,17 +16,17 @@ available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
 You can get the latest version of BioJava3+ from the download page
-[BioJava (v) (requires Java 1.6+)](/wikis/BioJava:Download "wikilink").
+[BioJava (v) (requires Java 1.6+)](/wiki/BioJava:Download "wikilink").
 
 You can get the latest version of BioJava-legacy (a.k.a. BioJava1) from
 the download page [BioJava1 (v) (requires Java
-1.5+)](/wikis/BioJava:Download_{{current version legacy}} "wikilink").
+1.5+)](/wiki/BioJava:Download_{{current version legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
-this [link](/wikis/How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
+this [link](/wiki/How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
 
 A step by step guide on 'How to integrate BioJava in Netbeans IDE' is
-[here](/wikis/BioJava-Installation_Guide.png "wikilink").
+[here](/wiki/BioJava-Installation_Guide.png "wikilink").
 
 Maven
 -----

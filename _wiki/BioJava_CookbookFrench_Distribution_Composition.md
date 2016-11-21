@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:Composition
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3AComposition
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3AComposition
 ---
 
 Comment calculer la composition d'une ou plusieurs Sequences?

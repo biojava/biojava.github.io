@@ -74,7 +74,7 @@ release:
  version: 4.2.1
 
 collections:
-  wiki :
+  wiki:
    output: true
    permalink: /wiki/:path/
    post_dirs: false

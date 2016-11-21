@@ -1,6 +1,6 @@
 ---
 title: Dazzle:deployment google app engine
-permalink: wikis/Dazzle%3Adeployment_google_app_engine
+permalink: wiki/Dazzle%3Adeployment_google_app_engine
 ---
 
 Work in progress ...

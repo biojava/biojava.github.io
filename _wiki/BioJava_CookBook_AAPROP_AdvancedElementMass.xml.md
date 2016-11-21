@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:AdvancedElementMass.xml
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3AAdvancedElementMass.xml
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3AAdvancedElementMass.xml
 ---
 
 ### AdvancedElementMass.xml

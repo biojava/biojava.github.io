@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence
 ---
 
 Comment faire une Sequence à partir d'une chaîne de caractères ou créer une chaîne à partir d'une Sequence?

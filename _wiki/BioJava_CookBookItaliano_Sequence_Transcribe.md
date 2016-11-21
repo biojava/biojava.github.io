@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:Transcribe
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3ATranscribe
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3ATranscribe
 ---
 
 Come posso trascrivere una Sequenze di DNA in una Sequenza di RNA?

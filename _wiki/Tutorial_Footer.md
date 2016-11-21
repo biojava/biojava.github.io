@@ -1,6 +1,6 @@
 ---
 title: Tutorial:Footer
-permalink: wikis/Tutorial%3AFooter
+permalink: wiki/Tutorial%3AFooter
 ---
 
 ------------------------------------------------------------------------

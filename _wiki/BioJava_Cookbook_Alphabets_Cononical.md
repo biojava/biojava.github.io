@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Alphabets:Cononical
-permalink: wikis/BioJava%3ACookbook%3AAlphabets%3ACononical
+permalink: wiki/BioJava%3ACookbook%3AAlphabets%3ACononical
 ---
 
 How can I tell if two Symbols or Alphabets are equal?

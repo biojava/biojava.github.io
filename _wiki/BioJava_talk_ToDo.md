@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:ToDo
-permalink: wikis/BioJava_talk%3AToDo
+permalink: wiki/BioJava_talk%3AToDo
 ---
 
 WebCVS, CVS and Mailing list pages
@@ -17,7 +17,7 @@ First tutorial online
 ---------------------
 
 I've formatted the [first
-tutorial](/wikis/BioJava:Tutorial:Symbols_and_SymbolLists "wikilink"). Any
+tutorial](/wiki/BioJava:Tutorial:Symbols_and_SymbolLists "wikilink"). Any
 feedback, suggestions, etc.? The usage of \<code\>...\</code\> is not
 consistent in the original
 [page](http://www.biojava.org/tutorials/chap1.html). Any guidelines when

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:mmcif
-permalink: wikis/BioJava%3ACookBook%3APDB%3Ammcif
+permalink: wiki/BioJava%3ACookBook%3APDB%3Ammcif
 ---
 
 How to parse mmCIF files using BioJava

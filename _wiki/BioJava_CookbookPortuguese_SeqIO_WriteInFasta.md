@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:SeqIO:WriteInFasta
-permalink: wikis/BioJava%3ACookbookPortuguese%3ASeqIO%3AWriteInFasta
+permalink: wiki/BioJava%3ACookbookPortuguese%3ASeqIO%3AWriteInFasta
 ---
 
 Como eu imprimo uma sequencia no formato Fasta?

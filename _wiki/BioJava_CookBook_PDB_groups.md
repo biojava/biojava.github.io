@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:groups
-permalink: wikis/BioJava%3ACookBook%3APDB%3Agroups
+permalink: wiki/BioJava%3ACookBook%3APDB%3Agroups
 ---
 
 ### Groups

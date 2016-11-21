@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:Blast:Parser
-permalink: wikis/BioJava%3ACookbookPortuguese%3ABlast%3AParser
+permalink: wiki/BioJava%3ACookbookPortuguese%3ABlast%3AParser
 ---
 
 Como eu verifico um BLAST Result?

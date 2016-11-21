@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:MailingLists
-permalink: wikis/BioJava_talk%3AMailingLists
+permalink: wiki/BioJava_talk%3AMailingLists
 ---
 
 sir,

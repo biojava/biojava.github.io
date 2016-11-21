@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Translation:SixFrames
-permalink: wikis/BioJava%3ACookbook%3ATranslation%3ASixFrames
+permalink: wiki/BioJava%3ACookbook%3ATranslation%3ASixFrames
 ---
 
 How can I translate all six frames of a nucleotide Sequence?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.8.2
-permalink: wikis/BioJava%3ADownload_1.8.2
+permalink: wiki/BioJava%3ADownload_1.8.2
 ---
 
 This page offers downloads for the <b>BioJava Legacy 1.8.2 release</b>.
@@ -15,7 +15,7 @@ BioJava legacy 1.8.2 has been released and is available using Maven from
 
 Over the last year BioJava has undergone a major re-write. A new code
 base has been started under the codename [BioJava
-3](/wikis/BioJava:Download "wikilink"). The old BioJava code (or BioJava 1 or
+3](/wiki/BioJava:Download "wikilink"). The old BioJava code (or BioJava 1 or
 BioJava Legacy) has been modularized into small, re-usable components
 and is available for download on this page.
 
@@ -99,19 +99,19 @@ Getting older versions
 ----------------------
 
 -   The legacy release of 1.8.1 can be found
-    [here](/wikis/BioJava:Download 1.8.1 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.8.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7.1 can be found
-    [here](/wikis/BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.7.1 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.7 can be found
-    [here](/wikis/BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.7 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.6 can be found
-    [here](/wikis/BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
+    [here](/wiki/BioJava:Download 1.6 "wikilink") (requires Java 1.5+)
 -   The legacy release of 1.5 can be found
-    [here](/wikis/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
+    [here](/wiki/BioJava:Download 1.5 "wikilink") (requires Java 1.4.2+)
 -   The legacy release of 1.4 can be found
-    [here](/wikis/BioJava:Download 1.4 "wikilink")
+    [here](/wiki/BioJava:Download 1.4 "wikilink")
 -   The legacy release 1.3 can be found
-    [here](/wikis/BioJava:Download 1.3 "wikilink").
+    [here](/wiki/BioJava:Download 1.3 "wikilink").
 
 Getting BioJava 3
 -----------------

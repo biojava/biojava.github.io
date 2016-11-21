@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:Stockholm
-permalink: wikis/BioJava%3ACookBook3%3AStockholm
+permalink: wiki/BioJava%3ACookBook3%3AStockholm
 ---
 
 How to Read Multiple Sequence Alignment files in Stockholm format

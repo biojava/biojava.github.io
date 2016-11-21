@@ -1,13 +1,13 @@
 ---
 title: BioJava:Tutorial:Sequences and Features
-permalink: wikis/BioJava%3ATutorial%3ASequences_and_Features
+permalink: wiki/BioJava%3ATutorial%3ASequences_and_Features
 tags:
  - Tutorial
 ---
 
 **By [Thomas Down](mailto:td2@sanger.ac.uk)**
 
-[Chapter 1](/wikis/BioJava:Tutorial:Symbols and SymbolLists "wikilink") of this
+[Chapter 1](/wiki/BioJava:Tutorial:Symbols and SymbolLists "wikilink") of this
 tutorial covered the `SymbolList` interface, BioJava's basic
 representation of biological sequence data. This chapter examines the
 `Sequence` interface. This adds extra functionality to `SymbolList`,

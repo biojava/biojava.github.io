@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:Regex
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3ARegex
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3ARegex
 ---
 
 Come posso trasformare un motivo di interesse biologico in una espressione regolare?

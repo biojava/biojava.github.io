@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Alphabets:CrossProduct
-permalink: wikis/BioJava%3ACookbook%3AAlphabets%3ACrossProduct
+permalink: wiki/BioJava%3ACookbook%3AAlphabets%3ACrossProduct
 ---
 
 How do I make a CrossProductAlphabet such as a codon Alphabet

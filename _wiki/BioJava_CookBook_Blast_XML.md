@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Blast:XML
-permalink: wikis/BioJava%3ACookBook%3ABlast%3AXML
+permalink: wiki/BioJava%3ACookBook%3ABlast%3AXML
 ---
 
 How do I convert an XML BLAST result into HTML page?

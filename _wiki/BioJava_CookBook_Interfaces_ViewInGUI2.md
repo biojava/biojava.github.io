@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:ViewInGUI2
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AViewInGUI2
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AViewInGUI2
 ---
 
 When building a bioinformatics GUI you will probably want to display the

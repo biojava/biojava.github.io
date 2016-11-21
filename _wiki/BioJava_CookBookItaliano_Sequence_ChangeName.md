@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Sequence:ChangeName
-permalink: wikis/BioJava%3ACookBookItaliano%3ASequence%3AChangeName
+permalink: wiki/BioJava%3ACookBookItaliano%3ASequence%3AChangeName
 ---
 
 Come posso cambiare il nome di una sequenza visto che è immutabile?

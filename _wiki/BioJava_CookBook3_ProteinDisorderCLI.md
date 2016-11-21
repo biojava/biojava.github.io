@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:ProteinDisorderCLI
-permalink: wikis/BioJava%3ACookBook3%3AProteinDisorderCLI
+permalink: wiki/BioJava%3ACookBook3%3AProteinDisorderCLI
 ---
 
 Can I use the (protein disorder) predictor from the command line?
@@ -13,7 +13,7 @@ repository
 [biojava3-protein-disorder-3.0.2-SNAPSHOT.jar](http://www.biojava.org/download/maven/org/biojava/biojava3-protein-disorder/)
 
 Alternatively if you want to integrate the predictor into your code you
-can use [ API functions](/wikis/BioJava:CookBook3:ProteinDisorder "wikilink")
+can use [ API functions](/wiki/BioJava:CookBook3:ProteinDisorder "wikilink")
 to perform the calculations.
 
 Options supported by the command line executable

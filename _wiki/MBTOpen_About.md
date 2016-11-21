@@ -1,6 +1,6 @@
 ---
 title: MBTOpen:About
-permalink: wikis/MBTOpen%3AAbout
+permalink: wiki/MBTOpen%3AAbout
 ---
 
 MBT Open

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:molecularweight
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Amolecularweight
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Amolecularweight
 ---
 
 ### How is Molecular Weight computed?

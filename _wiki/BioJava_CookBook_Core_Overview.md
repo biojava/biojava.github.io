@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:Overview
-permalink: wikis/BioJava%3ACookBook%3ACore%3AOverview
+permalink: wiki/BioJava%3ACookBook%3ACore%3AOverview
 ---
 
 **Draft copy of Core module design and capabilities.**

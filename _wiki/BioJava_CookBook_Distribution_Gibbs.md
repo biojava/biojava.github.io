@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Distribution:Gibbs
-permalink: wikis/BioJava%3ACookBook%3ADistribution%3AGibbs
+permalink: wiki/BioJava%3ACookBook%3ADistribution%3AGibbs
 ---
 
 Using Distributions to make a Gibbs sampler

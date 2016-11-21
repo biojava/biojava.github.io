@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:BioJavaXDocs
-permalink: wikis/BioJava_talk%3ABioJavaXDocs
+permalink: wiki/BioJava_talk%3ABioJavaXDocs
 ---
 
 This page is getting a bit long. perhaps it would make sense to split it

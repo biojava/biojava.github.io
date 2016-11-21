@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Sequence
-permalink: wikis/BioJava%3ACookbook%3ASequence
+permalink: wiki/BioJava%3ACookbook%3ASequence
 ---
 
 How do I make a Sequence from a String or make a Sequence Object back into a String?

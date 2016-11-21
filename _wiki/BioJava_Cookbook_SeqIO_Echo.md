@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:Echo
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AEcho
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AEcho
 ---
 
 How does sequence I/O work in biojava?

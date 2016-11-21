@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:instabilityindex
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Ainstabilityindex
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Ainstabilityindex
 ---
 
 ### How is Instability Index computed?

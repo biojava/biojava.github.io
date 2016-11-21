@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:genome:Overview
-permalink: wikis/BioJava%3ACookBook%3Agenome%3AOverview
+permalink: wiki/BioJava%3ACookBook%3Agenome%3AOverview
 ---
 
 The biojava3-genome library leverages the sequence relationships in

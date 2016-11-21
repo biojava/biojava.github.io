@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Phylo:Overview
-permalink: wikis/BioJava%3ACookBook%3APhylo%3AOverview
+permalink: wiki/BioJava%3ACookBook%3APhylo%3AOverview
 ---
 
 The biojava3-phylo module provides a biojava3 interface layer to the

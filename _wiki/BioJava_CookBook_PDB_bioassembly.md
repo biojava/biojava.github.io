@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:bioassembly
-permalink: wikis/BioJava%3ACookBook%3APDB%3Abioassembly
+permalink: wiki/BioJava%3ACookBook%3APDB%3Abioassembly
 ---
 
 Since BioJava 3.0.5 the protein structure modules can parse the

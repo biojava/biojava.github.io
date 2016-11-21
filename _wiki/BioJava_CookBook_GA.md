@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:GA
-permalink: wikis/BioJava%3ACookBook%3AGA
+permalink: wiki/BioJava%3ACookBook%3AGA
 ---
 
 How can I make a Genetic Algorithm with BioJava?

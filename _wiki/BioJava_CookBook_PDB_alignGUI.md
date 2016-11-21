@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:alignGUI
-permalink: wikis/BioJava%3ACookBook%3APDB%3AalignGUI
+permalink: wiki/BioJava%3ACookBook%3APDB%3AalignGUI
 ---
 
 A simple GUI for protein structure alignment

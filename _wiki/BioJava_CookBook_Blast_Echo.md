@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Blast:Echo
-permalink: wikis/BioJava%3ACookBook%3ABlast%3AEcho
+permalink: wiki/BioJava%3ACookBook%3ABlast%3AEcho
 ---
 
 How do I parse a large file; Or, How do I make a custom SearchContentHandler?

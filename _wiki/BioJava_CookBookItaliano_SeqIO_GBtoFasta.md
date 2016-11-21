@@ -1,13 +1,13 @@
 ---
 title: BioJava:CookBookItaliano:SeqIO:GBtoFasta
-permalink: wikis/BioJava%3ACookBookItaliano%3ASeqIO%3AGBtoFasta
+permalink: wiki/BioJava%3ACookBookItaliano%3ASeqIO%3AGBtoFasta
 ---
 
 Come posso leggere una sequenza GenBank/EMBL/Swissprot e convertirla nel formato FASTA?
 ---------------------------------------------------------------------------------------
 
 Per effettuare questa conversione estendiamo l'esempio precedente
-(clicca [qui](/wikis/BioJava:CookBookItaliano:SeqIO:ReadGES "wikilink"))
+(clicca [qui](/wiki/BioJava:CookBookItaliano:SeqIO:ReadGES "wikilink"))
 aggiungendo la funzionalità di scrivere la sequenza in formato FASTA. Di
 seguito è mostrato un esempio:
 

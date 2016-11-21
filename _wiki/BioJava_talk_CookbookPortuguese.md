@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookbookPortuguese
-permalink: wikis/BioJava_talk%3ACookbookPortuguese
+permalink: wiki/BioJava_talk%3ACookbookPortuguese
 ---
 
 I'm to busy now writing my teses, so I'll try to work hard on next week

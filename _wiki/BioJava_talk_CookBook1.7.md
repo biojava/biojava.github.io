@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook1.7
-permalink: wikis/BioJava_talk%3ACookBook1.7
+permalink: wiki/BioJava_talk%3ACookBook1.7
 ---
 
 Why dont we give a list of publications ? I think we should give pdf
@@ -33,7 +33,7 @@ to their web site. No content in this wiki is provided and it does not
 feel like the BioJava cookbook page is the right place for this. Perhaps
 this should better be moved to the [applications that are based on
 biojava
-page](/wikis/BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
+page](/wiki/BioJava:BioJavaInside "wikilink")? --[Andreas](User:Andreas "wikilink")
 18:39, 21 January 2008 (EST)
 
 Hi gang ;-) Andreas has a good point. The goals of the cookbook is to

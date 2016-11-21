@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:FastaReadWrite
-permalink: wikis/BioJava%3ACookBook%3ACore%3AFastaReadWrite
+permalink: wiki/BioJava%3ACookBook%3ACore%3AFastaReadWrite
 ---
 
 How to Read a Fasta File with Biojava3

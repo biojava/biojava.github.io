@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence:Reverse
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence%3AReverse
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence%3AReverse
 ---
 
 Comment obtenir le brin complÉmentaire d'une Sequence ou d'une SymbolList?

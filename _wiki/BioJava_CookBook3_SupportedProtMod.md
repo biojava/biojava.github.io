@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:SupportedProtMod
-permalink: wikis/BioJava%3ACookBook3%3ASupportedProtMod
+permalink: wiki/BioJava%3ACookBook3%3ASupportedProtMod
 ---
 
 How can I get the list of supported protein modifications?
@@ -19,7 +19,7 @@ iso-peptide bonds.
 The protmod maintains a registry of supported protein modifications. The
 list of protein modifications contained in the XML file will be
 automatically loaded. You can [ define and register a new protein
-modification](/wikis/BioJava:CookBook3:AddProtMod "wikilink") if it has not
+modification](/wiki/BioJava:CookBook3:AddProtMod "wikilink") if it has not
 been defined in the XML file. From the protein modification registry, a
 user can retrieve
 
@@ -75,9 +75,9 @@ See also
 
 <div style="-moz-column-count:3; column-count:3;">
 -   [How can I identify protein modifications in a
-    structure](/wikis/BioJava:CookBook3:ProtMod "wikilink")
+    structure](/wiki/BioJava:CookBook3:ProtMod "wikilink")
 -   [How can I define a new protein
-    modification?](/wikis/BioJava:CookBook3:AddProtMod "wikilink")
+    modification?](/wiki/BioJava:CookBook3:AddProtMod "wikilink")
 
 </div>
 

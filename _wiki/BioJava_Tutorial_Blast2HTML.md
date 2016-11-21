@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Blast2HTML
-permalink: wikis/BioJava%3ATutorial%3ABlast2HTML
+permalink: wiki/BioJava%3ATutorial%3ABlast2HTML
 tags:
  - Tutorial
 ---

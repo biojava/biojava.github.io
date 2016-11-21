@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Alphabets:Ambiguity
-permalink: wikis/BioJava%3ACookbookFrench%3AAlphabets%3AAmbiguity
+permalink: wiki/BioJava%3ACookbookFrench%3AAlphabets%3AAmbiguity
 ---
 
 Comment faire pour créer un Symbol ambiguë comme Y ou R?

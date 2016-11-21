@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:SeqIO:ReadGES
-permalink: wikis/BioJava%3ACookBookItaliano%3ASeqIO%3AReadGES
+permalink: wiki/BioJava%3ACookBookItaliano%3ASeqIO%3AReadGES
 ---
 
 Come posso leggere un file in formato GenBank/EMBL/UniProt/FASTA/INSDseq?

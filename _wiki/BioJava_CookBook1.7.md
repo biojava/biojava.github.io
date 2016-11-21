@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook1.7
-permalink: wikis/BioJava%3ACookBook1.7
+permalink: wiki/BioJava%3ACookBook1.7
 ---
 
 BioJava 3.0 release
@@ -38,11 +38,11 @@ Announcing
 ----------
 
 You can now read BioJava in Anger in
-[French](/wikis/BioJava:CookbookFrench "wikilink") (Translated by Sylvain
+[French](/wiki/BioJava:CookbookFrench "wikilink") (Translated by Sylvain
 Foisy; mise à jour / updated : 28 décembre 2009).
 
 You can also read Biojava in Anger in
-[Portuguese](/wikis/BioJava:CookbookPortuguese "wikilink") (Translated by
+[Portuguese](/wiki/BioJava:CookbookPortuguese "wikilink") (Translated by
 Dickson Guedes)
 
 You can also read BioJava in Anger in
@@ -55,7 +55,7 @@ How about simplified
 (Translated by Wu Xin).
 
 And lets not forget this new
-[Italian](/wikis/BioJava:CookBookItaliano "wikilink") translation (translated
+[Italian](/wiki/BioJava:CookBookItaliano "wikilink") translation (translated
 by Alessandro Cipriani; last update: 9 Sep 2010).
 
 How Do I....?
@@ -65,240 +65,240 @@ How Do I....?
 
 -   [Where do I get a Java
     installation](http://java.sun.com/javase/downloads/index.jsp)?
--   [How do I get and install BioJava](/wikis/BioJava:GetStarted "wikilink")?
+-   [How do I get and install BioJava](/wiki/BioJava:GetStarted "wikilink")?
 
 ### Alphabets and Symbols
 
 -   [How do I get a DNA, RNA or Protein
-    Alphabet](/wikis/BioJava:Cookbook:Alphabets "wikilink")?
+    Alphabet](/wiki/BioJava:Cookbook:Alphabets "wikilink")?
 -   [How do I make a custom Alphabet from custom
-    Symbols](/wikis/BioJava:Cookbook:Alphabets:Custom "wikilink")?
+    Symbols](/wiki/BioJava:Cookbook:Alphabets:Custom "wikilink")?
 -   [How do I make a CrossProductAlphabet such as a codon
-    Alphabet](/wikis/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")?
+    Alphabet](/wiki/BioJava:Cookbook:Alphabets:CrossProduct "wikilink")?
 -   [How do I break Symbols from CrossProduct Alphabets into their
-    component Symbols](/wikis/BioJava:Cookbook:Alphabets:Component "wikilink")?
+    component Symbols](/wiki/BioJava:Cookbook:Alphabets:Component "wikilink")?
 -   [How can I tell if two Alphabets or Symbols are
-    equal](/wikis/BioJava:Cookbook:Alphabets:Cononical "wikilink")?
+    equal](/wiki/BioJava:Cookbook:Alphabets:Cononical "wikilink")?
 -   [How can I make an ambiguous Symbol like Y or
-    R](/wikis/BioJava:Cookbook:Alphabets:Ambiguous "wikilink")?
+    R](/wiki/BioJava:Cookbook:Alphabets:Ambiguous "wikilink")?
 
 ### Basic Sequence Manipulation
 
 -   [How do I make a Sequence from a String or make a Sequence Object
-    back into a String](/wikis/BioJava:Cookbook:Sequence "wikilink")?
+    back into a String](/wiki/BioJava:Cookbook:Sequence "wikilink")?
 -   [How do I get a subsection of a
-    Sequence](/wikis/BioJava:Cookbook:Sequence:SubSequence "wikilink")?
+    Sequence](/wiki/BioJava:Cookbook:Sequence:SubSequence "wikilink")?
 -   [How do I transcribe a DNA Sequence to a RNA
-    Sequence](/wikis/BioJava:Cookbook:Sequence:Transcribe "wikilink")?
+    Sequence](/wiki/BioJava:Cookbook:Sequence:Transcribe "wikilink")?
 -   [How do I reverse complement a DNA or RNA
-    Sequence](/wikis/BioJava:Cookbook:Sequence:Reverse "wikilink")?
+    Sequence](/wiki/BioJava:Cookbook:Sequence:Reverse "wikilink")?
 -   [Sequences are immutable so how can I change it's
-    name](/wikis/BioJava:Cookbook:Sequence:ChangeName "wikilink")?
+    name](/wiki/BioJava:Cookbook:Sequence:ChangeName "wikilink")?
 -   [How can I edit a Sequence or
-    SymbolList](/wikis/BioJava:Cookbook:Sequence:Edit "wikilink")?
+    SymbolList](/wiki/BioJava:Cookbook:Sequence:Edit "wikilink")?
 -   [How can I make a sequence motif into a regular
-    expression](/wikis/BioJava:Cookbook:Sequence:Regex "wikilink")?
+    expression](/wiki/BioJava:Cookbook:Sequence:Regex "wikilink")?
 -   [How can I extract all regions beeing marked (or not) with a special
     feature (e.g. 'gene' or
-    'CDS')](/wikis/BioJava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
+    'CDS')](/wiki/BioJava:Cookbook:Sequence:ExtractGeneRegions "wikilink")?
 
 ### Translation
 
 -   [How do I translate a DNA or RNA Sequence or SymbolList to
-    Protein](/wikis/BioJava:Cookbook:Translation "wikilink")?
+    Protein](/wiki/BioJava:Cookbook:Translation "wikilink")?
 -   [How do I translate a single codon to a single amino
-    acid](/wikis/BioJava:Cookbook:Translation:Single "wikilink")?
+    acid](/wiki/BioJava:Cookbook:Translation:Single "wikilink")?
 -   [How do I use a non standard translation
-    table](/wikis/BioJava:Cookbook:Translation:NonStandart "wikilink")?
+    table](/wiki/BioJava:Cookbook:Translation:NonStandart "wikilink")?
 -   [How do I translate a nucleotide sequence in all six
-    frames](/wikis/BioJava:Cookbook:Translation:SixFrames "wikilink")?
+    frames](/wiki/BioJava:Cookbook:Translation:SixFrames "wikilink")?
 -   [How do I retrieve the 1-Letter code of a translated sequence
     containing
-    ambiguities](/wikis/BioJava:Cookbook:Translation:OneLetterAmbi "wikilink")?
+    ambiguities](/wiki/BioJava:Cookbook:Translation:OneLetterAmbi "wikilink")?
 
 ### Proteomics
 
 -   [How do I calculate the mass and pI of a
-    peptide](/wikis/BioJava:Cookbook:Proteomics "wikilink")?
+    peptide](/wiki/BioJava:Cookbook:Proteomics "wikilink")?
 -   [How do I analyze the symbol properties of an amino acid sequence
     using the Amino Acid Index
-    database](/wikis/BioJava:Cookbook:Proteomics:AAindex "wikilink")?
+    database](/wiki/BioJava:Cookbook:Proteomics:AAindex "wikilink")?
 
 ### Sequence I/O
 
 -   [How do I write Sequences in Fasta
-    format](/wikis/BioJava:Cookbook:SeqIO:WriteInFasta "wikilink")?
+    format](/wiki/BioJava:Cookbook:SeqIO:WriteInFasta "wikilink")?
 -   [How do I read in a Fasta
-    file](/wikis/BioJava:Cookbook:SeqIO:ReadFasta "wikilink")?
+    file](/wiki/BioJava:Cookbook:SeqIO:ReadFasta "wikilink")?
 -   [How do I read a GenBank/EMBL/SwissProt
-    file](/wikis/BioJava:Cookbook:SeqIO:ReadGES "wikilink")?(deprecated)
+    file](/wiki/BioJava:Cookbook:SeqIO:ReadGES "wikilink")?(deprecated)
 -   [How do I read a GenBank/EMBL/UniProt/FASTA/INSDseq
-    file](/wikis/BioJava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
+    file](/wiki/BioJava:Cookbook:SeqIO:ReadGESBiojavax "wikilink")?
 -   [How do I extract GenBank/EMBL/UniProt/FASTA/INSDseq sequences and
-    write them as Fasta](/wikis/BioJava:Cookbook:SeqIO:GBtoFasta "wikilink")?
+    write them as Fasta](/wiki/BioJava:Cookbook:SeqIO:GBtoFasta "wikilink")?
 -   [How do I turn an ABI sequence trace into a BioJava
-    Sequence](/wikis/BioJava:Cookbook:SeqIO:ABItoSequence "wikilink")?
+    Sequence](/wiki/BioJava:Cookbook:SeqIO:ABItoSequence "wikilink")?
 -   [How does sequence I/O work in
-    BioJava](/wikis/BioJava:Cookbook:SeqIO:Echo "wikilink")?
+    BioJava](/wiki/BioJava:Cookbook:SeqIO:Echo "wikilink")?
 
 ### Annotations
 
 -   [How do I list the Annotations in a
-    Sequence](/wikis/BioJava:Cookbook:Annotations:List "wikilink")?
+    Sequence](/wiki/BioJava:Cookbook:Annotations:List "wikilink")?
 -   [How do I extract Annotations for a set of
-    Features](/wikis/BioJava:Cookbook:Annotations:List2 "wikilink")?
+    Features](/wiki/BioJava:Cookbook:Annotations:List2 "wikilink")?
 -   [How do I filter a Sequences based on their species (or another
     Annotation
-    property)](/wikis/BioJava:Cookbook:Annotations:Filter "wikilink")?
+    property)](/wiki/BioJava:Cookbook:Annotations:Filter "wikilink")?
 
 ### Locations and Features
 
 -   [How do I specify a
-    PointLocation](/wikis/BioJava:Cookbook:Locations:Point "wikilink")?
+    PointLocation](/wiki/BioJava:Cookbook:Locations:Point "wikilink")?
 -   [How do I specify a
-    RangeLocation](/wikis/BioJava:Cookbook:Locations:Range "wikilink")?
+    RangeLocation](/wiki/BioJava:Cookbook:Locations:Range "wikilink")?
 -   [How do CircularLocations
-    work](/wikis/BioJava:Cookbook:Locations:Circular "wikilink")?
+    work](/wiki/BioJava:Cookbook:Locations:Circular "wikilink")?
 -   [How can I make a
-    Feature](/wikis/BioJava:Cookbook:Locations:Feature "wikilink")?
+    Feature](/wiki/BioJava:Cookbook:Locations:Feature "wikilink")?
 -   [How can I filter Features by
-    type](/wikis/BioJava:Cookbook:Locations:Filter "wikilink")?
+    type](/wiki/BioJava:Cookbook:Locations:Filter "wikilink")?
 -   [How can I remove
-    features](/wikis/BioJava:Cookbook:Locations:Remove "wikilink")?
+    features](/wiki/BioJava:Cookbook:Locations:Remove "wikilink")?
 
 ### BLAST and FASTA
 
 -   [How do I set up a BLAST
-    parser](/wikis/BioJava:CookBook:Blast:Parser "wikilink")?
+    parser](/wiki/BioJava:CookBook:Blast:Parser "wikilink")?
 -   [How do I set up a FASTA
-    parser](/wikis/BioJava:CookBook:Fasta:Parser "wikilink")?
+    parser](/wiki/BioJava:CookBook:Fasta:Parser "wikilink")?
 -   [How do I extract information from parsed
-    results](/wikis/BioJava:CookBook:Blast:Extract "wikilink")?
+    results](/wiki/BioJava:CookBook:Blast:Extract "wikilink")?
 -   [How do I parse a large file; Or, How do I make a custom
-    SearchContentHandler](/wikis/BioJava:CookBook:Blast:Echo "wikilink")?
+    SearchContentHandler](/wiki/BioJava:CookBook:Blast:Echo "wikilink")?
 -   [How do I convert an XML BLAST result into HTML
-    page](/wikis/BioJava:CookBook:Blast:XML "wikilink")?
+    page](/wiki/BioJava:CookBook:Blast:XML "wikilink")?
 
 ### Counts and Distributions
 
 -   [How do I count the residues in a
-    Sequence](/wikis/BioJava:CookBook:Count:Residues "wikilink")?
+    Sequence](/wiki/BioJava:CookBook:Count:Residues "wikilink")?
 -   [How do I calculate the frequency of a Symbol in a
-    Sequence](/wikis/BioJava:CookBook:Count:Frequency "wikilink")?
+    Sequence](/wiki/BioJava:CookBook:Count:Frequency "wikilink")?
 -   [How can I turn a Count into a
-    Distribution](/wikis/BioJava:CookBook:Count:ToDistrib "wikilink")?
+    Distribution](/wiki/BioJava:CookBook:Count:ToDistrib "wikilink")?
 -   [How can I generate a random sequence from a
-    Distribution](/wikis/BioJava:CookBook:Distribution:RandomSeqs "wikilink")?
+    Distribution](/wiki/BioJava:CookBook:Distribution:RandomSeqs "wikilink")?
 -   [How can I find the amount of information or entropy in a
-    Distribution](/wikis/BioJava:CookBook:Distribution:Entropy "wikilink")?
+    Distribution](/wiki/BioJava:CookBook:Distribution:Entropy "wikilink")?
 -   [What is an easy way to tell if two Distributions have equal
-    weights](/wikis/BioJava:CookBook:Distribution:Emission "wikilink")?
+    weights](/wiki/BioJava:CookBook:Distribution:Emission "wikilink")?
 -   [How can I make an OrderNDistribution over a custom
-    Alphabet](/wikis/BioJava:CookBook:Distribution:Custom "wikilink")?
+    Alphabet](/wiki/BioJava:CookBook:Distribution:Custom "wikilink")?
 -   [How can I write a Distribution as
-    XML](/wikis/BioJava:CookBook:Distribution:XML "wikilink")?
+    XML](/wiki/BioJava:CookBook:Distribution:XML "wikilink")?
 -   [Using Distributions to make a Gibbs
-    sampler](/wikis/BioJava:CookBook:Distribution:Gibbs "wikilink")
+    sampler](/wiki/BioJava:CookBook:Distribution:Gibbs "wikilink")
 -   [Using Distributions to make a naive Bayes
-    classifier](/wikis/BioJava:CookBook:Distribution:Bayes "wikilink")
+    classifier](/wiki/BioJava:CookBook:Distribution:Bayes "wikilink")
 -   [How do I calculate the composition of a Sequence or collection of
-    Sequences?](/wikis/BioJava:CookBook:Distribution:Composition "wikilink")
+    Sequences?](/wiki/BioJava:CookBook:Distribution:Composition "wikilink")
     This example uses JDK 1.5 and BioJavaX
 
 ### Weight Matrices and Dynamic Programming
 
 -   [How do I use a WeightMatrix to find a
-    motif](/wikis/BioJava:CookBook:DP:WeightMatrix "wikilink")?
+    motif](/wiki/BioJava:CookBook:DP:WeightMatrix "wikilink")?
 -   [How do I make a HMMER like profile
-    HMM](/wikis/BioJava:CookBook:DP:HMM "wikilink")?
+    HMM](/wiki/BioJava:CookBook:DP:HMM "wikilink")?
 -   |How do I set up a custom HMM? (Link to
     Tutorial?? --[Guedes](User:Guedes "wikilink") 11:43, 8 February 2006
     (EST) )
 -   [How do I generate a pair-wise alignment with a Hidden Markov
-    Model](/wikis/BioJava:CookBook:DP:PairWise "wikilink")?
+    Model](/wiki/BioJava:CookBook:DP:PairWise "wikilink")?
 -   [How do I generate a global or local alignment with the
     Needleman-Wunsch- or the
-    Smith-Waterman-algorithm](/wikis/BioJava:CookBook:DP:PairWise2 "wikilink")?
+    Smith-Waterman-algorithm](/wiki/BioJava:CookBook:DP:PairWise2 "wikilink")?
 
 ### User Interfaces
 
 -   [How can I visualize Annotations and Features as a
-    tree](/wikis/BioJava:CookBook:Interfaces:ViewAsTree "wikilink")?
+    tree](/wiki/BioJava:CookBook:Interfaces:ViewAsTree "wikilink")?
 -   [How can I display a Sequence in a
-    GUI](/wikis/BioJava:CookBook:Interfaces:ViewInGUI "wikilink")?
+    GUI](/wiki/BioJava:CookBook:Interfaces:ViewInGUI "wikilink")?
 -   [How can I create a RichSequence
-    viewer](/wikis/BioJava:CookBook:Interfaces:ViewInGUI2 "wikilink")?
+    viewer](/wiki/BioJava:CookBook:Interfaces:ViewInGUI2 "wikilink")?
 -   [How do I display Sequence
-    coordinates](/wikis/BioJava:CookBook:Interfaces:Coordinates "wikilink")?
+    coordinates](/wiki/BioJava:CookBook:Interfaces:Coordinates "wikilink")?
 -   [How can I display
-    features](/wikis/BioJava:CookBook:Interfaces:Features "wikilink")?
+    features](/wiki/BioJava:CookBook:Interfaces:Features "wikilink")?
 -   [How can I view an
-    Alignment](/wikis/BioJava:CookBook:Interfaces:Alignments "wikilink")?
+    Alignment](/wiki/BioJava:CookBook:Interfaces:Alignments "wikilink")?
 -   [How can I view an Alignment
-    II](/wikis/BioJava:CookBook:Interfaces:Alignments II "wikilink")?
+    II](/wiki/BioJava:CookBook:Interfaces:Alignments II "wikilink")?
 -   [How can I display Protein Features / a Peptide
-    Digest](/wikis/BioJava:CookBook:Interfaces:ProteinPeptideFeatures "wikilink")?
+    Digest](/wiki/BioJava:CookBook:Interfaces:ProteinPeptideFeatures "wikilink")?
 
 ### BioSQL and Sequence Databases
 
 -   [How do I set up BioSQL with
-    PostgreSQL?](/wikis/BioJava:CookBook:BioSQL:SetupPostGre "wikilink") (by
+    PostgreSQL?](/wiki/BioJava:CookBook:BioSQL:SetupPostGre "wikilink") (by
     [David Huen](User:David "wikilink"))
 -   [How do I set up BioSQL with
-    Oracle?](/wikis/BioJava:CookBook:BioSQL:SetupOracle "wikilink") (by
+    Oracle?](/wiki/BioJava:CookBook:BioSQL:SetupOracle "wikilink") (by
     [Richard Holland](User:Richard "wikilink"))
 -   [How do I add, view and remove Sequence Objects from a BioSQL
-    DB?](/wikis/BioJava:CookBook:BioSQL:Manage "wikilink")
+    DB?](/wiki/BioJava:CookBook:BioSQL:Manage "wikilink")
 -   [How can I get a sequence straight from
-    NCBI?](/wikis/BioJava:CookBook:ExternalSources:NCBIFetch "wikilink")
+    NCBI?](/wiki/BioJava:CookBook:ExternalSources:NCBIFetch "wikilink")
 
 ### External Applications and Services
 
 -   [How can I use QBlast to do my alignments
-    remotely](/wikis/BioJava:CookBook:Services:Qblast "wikilink")?
+    remotely](/wiki/BioJava:CookBook:Services:Qblast "wikilink")?
 
 ### Genetic Algorithms
 
 -   [How can I make a Genetic Algorithm with
-    BioJava](/wikis/BioJava:CookBook:GA "wikilink")?
+    BioJava](/wiki/BioJava:CookBook:GA "wikilink")?
 
 ### Protein Structure
 
--   [How can I parse a PDB file?](/wikis/BioJava:CookBook:PDB:read "wikilink")
+-   [How can I parse a PDB file?](/wiki/BioJava:CookBook:PDB:read "wikilink")
 -   [How can I parse a .mmcif
-    file?](/wikis/BioJava:CookBook:PDB:mmcif "wikilink")
+    file?](/wiki/BioJava:CookBook:PDB:mmcif "wikilink")
 -   [How can I access the atoms in a
-    structure?](/wikis/BioJava:CookBook:PDB:atoms "wikilink")
+    structure?](/wiki/BioJava:CookBook:PDB:atoms "wikilink")
 -   [How can I do calculations on
-    atoms?](/wikis/BioJava:CookBook:PDB:atomsCalc "wikilink")
+    atoms?](/wiki/BioJava:CookBook:PDB:atomsCalc "wikilink")
 -   [How to work with Groups (AminoAcid, Nucleotide,
-    Hetatom)?](/wikis/BioJava:CookBook:PDB:groups "wikilink")
+    Hetatom)?](/wiki/BioJava:CookBook:PDB:groups "wikilink")
 -   [How can I access the header information of a PDB
-    file?](/wikis/BioJava:CookBook:PDB:header "wikilink")
+    file?](/wiki/BioJava:CookBook:PDB:header "wikilink")
 -   [How does BioJava deal with SEQRES and ATOM
-    groups?](/wikis/BioJava:CookBook:PDB:seqres "wikilink")
+    groups?](/wiki/BioJava:CookBook:PDB:seqres "wikilink")
 -   [How can I mutate a
-    residue?](/wikis/BioJava:CookBook:PDB:mutate "wikilink")
+    residue?](/wiki/BioJava:CookBook:PDB:mutate "wikilink")
 -   [How can I calculate a structure
-    alignment?](/wikis/BioJava:CookBook:PDB:align "wikilink")
+    alignment?](/wiki/BioJava:CookBook:PDB:align "wikilink")
 -   [How can I use a simple GUI to calculate an
-    alignment?](/wikis/BioJava:CookBook:PDB:alignGUI "wikilink")
+    alignment?](/wiki/BioJava:CookBook:PDB:alignGUI "wikilink")
 -   [How can I interact with
-    Jmol?](/wikis/BioJava:CookBook:PDB:Jmol "wikilink")
+    Jmol?](/wiki/BioJava:CookBook:PDB:Jmol "wikilink")
 -   [How can I serialize to a
-    database?](/wikis/BioJava:CookBook:PDB:hibernate "wikilink")
+    database?](/wiki/BioJava:CookBook:PDB:hibernate "wikilink")
 
 ### Ontologies
 
 -   [How can I parse an OBO
-    file?](/wikis/BioJava:CookBook:OBO:parse "wikilink")
+    file?](/wiki/BioJava:CookBook:OBO:parse "wikilink")
 -   [How can I visualize an OBO file as a directed acyclic
-    graph?](/wikis/BioJava:CookBook:OBO:visualize "wikilink")
+    graph?](/wiki/BioJava:CookBook:OBO:visualize "wikilink")
 
 ### Cloud computing
 
 -   [How do I use Biojava in the Amazon EC2
-    cloud?](/wikis/BioJava:CookBook:Cloud:ec2 "wikilink")
+    cloud?](/wiki/BioJava:CookBook:Cloud:ec2 "wikilink")
 
 Disclaimer
 ----------

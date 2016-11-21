@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:residuerange
-permalink: wikis/BioJava%3ACookBook%3APDB%3Aresiduerange
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aresiduerange
 ---
 
 ### How to calculate the true length of a range of residues

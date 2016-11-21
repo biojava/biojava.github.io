@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Annotations:List
-permalink: wikis/BioJava%3ACookBookItaliano%3AAnnotations%3AList
+permalink: wiki/BioJava%3ACookBookItaliano%3AAnnotations%3AList
 ---
 
 How do I List the Annotations in a Sequence?

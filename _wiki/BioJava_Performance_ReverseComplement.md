@@ -1,13 +1,13 @@
 ---
 title: BioJava:Performance:ReverseComplement
-permalink: wikis/BioJava%3APerformance%3AReverseComplement
+permalink: wiki/BioJava%3APerformance%3AReverseComplement
 ---
 
 Reverse complement of DNA sequence
 ==================================
 
 This source code is run in the [example that determines the reverse
-complement](/wikis/BioJava:Performance "wikilink") of a DNA sequence.
+complement](/wiki/BioJava:Performance "wikilink") of a DNA sequence.
 
 ```java import org.biojava.bio.seq.impl.RevCompSequence; import
 org.biojavax.bio.seq.RichSequence; import

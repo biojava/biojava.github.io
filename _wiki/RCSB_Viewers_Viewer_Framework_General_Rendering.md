@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Viewer Framework:General Rendering
-permalink: wikis/RCSB_Viewers%3AViewer_Framework%3AGeneral_Rendering
+permalink: wiki/RCSB_Viewers%3AViewer_Framework%3AGeneral_Rendering
 ---
 
 Notes

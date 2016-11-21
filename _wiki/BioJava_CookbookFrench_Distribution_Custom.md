@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:Custom
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3ACustom
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3ACustom
 ---
 
 Comment créer un Alphabet sur mesure pour ensuite l'utiliser dans une OrderNDistribution?

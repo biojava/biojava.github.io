@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Proteomics
-permalink: wikis/BioJava%3ACookBookItaliano%3AProteomics
+permalink: wiki/BioJava%3ACookBookItaliano%3AProteomics
 ---
 
 Come posso calcolare la massa e il pI di un aminoacido?

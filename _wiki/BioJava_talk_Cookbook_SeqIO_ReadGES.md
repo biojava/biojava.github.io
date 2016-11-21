@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:Cookbook:SeqIO:ReadGES
-permalink: wikis/BioJava_talk%3ACookbook%3ASeqIO%3AReadGES
+permalink: wiki/BioJava_talk%3ACookbook%3ASeqIO%3AReadGES
 ---
 
 these examples are describing the "old" biojava way. In the latest svn

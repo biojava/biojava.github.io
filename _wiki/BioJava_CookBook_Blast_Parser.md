@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Blast:Parser
-permalink: wikis/BioJava%3ACookBook%3ABlast%3AParser
+permalink: wiki/BioJava%3ACookBook%3ABlast%3AParser
 ---
 
 How Do I Parse A BLAST Result?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:ViewAsTree
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AViewAsTree
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AViewAsTree
 ---
 
 How can I view the Features and Annotations as a tree?

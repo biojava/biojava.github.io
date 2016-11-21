@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:ModFinder
-permalink: wikis/BioJava%3ACookBook3%3AModFinder
+permalink: wiki/BioJava%3ACookBook3%3AModFinder
 ---
 
 How can I identify protein modifications in a structure?
@@ -9,7 +9,7 @@ How can I identify protein modifications in a structure?
 BioJava provide a module *biojava3-modfinder* for identification of
 protein pre-, co-, and post-translational modifications from structures.
 [A list of protein
-modifications](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink") has been
+modifications](/wiki/BioJava:CookBook3:SupportedProtMod "wikilink") has been
 pre-loaded. It is possible to identify all pre-loaded modifications or
 part of them.
 
@@ -87,9 +87,9 @@ See also
 
 <div style="-moz-column-count:3; column-count:3;">
 -   [How can I get the list of supported protein
-    modifications?](/wikis/BioJava:CookBook3:SupportedProtMod "wikilink")
+    modifications?](/wiki/BioJava:CookBook3:SupportedProtMod "wikilink")
 -   [How can I define a new protein
-    modification?](/wikis/BioJava:CookBook3:AddProtMod "wikilink")
+    modification?](/wiki/BioJava:CookBook3:AddProtMod "wikilink")
 
 </div>
 

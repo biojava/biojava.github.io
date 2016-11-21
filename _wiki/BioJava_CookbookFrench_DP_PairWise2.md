@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:DP:PairWise2
-permalink: wikis/BioJava%3ACookbookFrench%3ADP%3APairWise2
+permalink: wiki/BioJava%3ACookbookFrench%3ADP%3APairWise2
 ---
 
 Comment faire pour créer un alignement global (algorithme de Needleman-Wunsh) ou local (algorithme de Smith-Waterman)

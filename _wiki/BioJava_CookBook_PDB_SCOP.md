@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:SCOP
-permalink: wikis/BioJava%3ACookBook%3APDB%3ASCOP
+permalink: wiki/BioJava%3ACookBook%3APDB%3ASCOP
 ---
 
 Parsing SCOP with BioJava

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Make release
-permalink: wikis/BioJava%3AMake_release
+permalink: wiki/BioJava%3AMake_release
 ---
 
 How to make a BioJava release

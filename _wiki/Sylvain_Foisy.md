@@ -19,7 +19,7 @@ language and not having a lot of time to do so, I chose Java because it
 works well with my brain and they don't teach Perl around here! Jokeing
 aside, my main contribution so far had been in creating useful docs to
 go with the API for example in translating [BioJava in anger in
-french](/wikis/BioJava:CookbookFrench "wikilink") and to put some more docs
+french](/wiki/BioJava:CookbookFrench "wikilink") and to put some more docs
 into the Javadocs. I admit that I am a plain user, not a programmer but
 I have taken the evangelist's stick around here to do some PR. I
 organized a 1-week BioJava BootCamp in Montreal in 2003 and a BioJava

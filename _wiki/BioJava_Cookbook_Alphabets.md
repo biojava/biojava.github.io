@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Alphabets
-permalink: wikis/BioJava%3ACookbook%3AAlphabets
+permalink: wiki/BioJava%3ACookbook%3AAlphabets
 ---
 
 How do I get a DNA, RNA or Protein Alphabet?

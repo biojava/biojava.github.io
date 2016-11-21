@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Changeability, Mutability and Events
-permalink: wikis/BioJava%3ATutorial%3AChangeability,_Mutability_and_Events
+permalink: wiki/BioJava%3ATutorial%3AChangeability,_Mutability_and_Events
 tags:
  - Tutorial
 ---
@@ -130,5 +130,5 @@ a perfect base class. It will lazily instantiate the delegate only when
 listeners need to be registered.
 
 In the [next
-tutorial](/wikis/BioJava:Tutorial:ChangeEvent_example_using_Distribution_objects "wikilink"),
+tutorial](/wiki/BioJava:Tutorial:ChangeEvent_example_using_Distribution_objects "wikilink"),
 we will implement an event source and add some listeners to it.

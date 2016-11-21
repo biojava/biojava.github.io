@@ -1,6 +1,6 @@
 ---
 title: User talk:Sulaman
-permalink: wikis/User_talk%3ASulaman
+permalink: wiki/User_talk%3ASulaman
 ---
 
 Hi everybody I am Muhammad Sulaman Nawaz,Student of Bioinformatic at the

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Proteomics
-permalink: wikis/BioJava%3ACookbookFrench%3AProteomics
+permalink: wiki/BioJava%3ACookbookFrench%3AProteomics
 ---
 
 Comment la masse et le pI d'une protéine?

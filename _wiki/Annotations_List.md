@@ -1,6 +1,6 @@
 ---
 title: Annotations:List
-permalink: wikis/Annotations%3AList
+permalink: wiki/Annotations%3AList
 ---
 
 How do I List the Annotations in a Sequence?

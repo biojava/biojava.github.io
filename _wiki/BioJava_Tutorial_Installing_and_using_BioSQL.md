@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Installing and using BioSQL
-permalink: wikis/BioJava%3ATutorial%3AInstalling_and_using_BioSQL
+permalink: wiki/BioJava%3ATutorial%3AInstalling_and_using_BioSQL
 tags:
  - Tutorial
 ---
@@ -8,7 +8,7 @@ tags:
 <b>Note</b> that if you intend to use the BioJavaX/
 [Hibernate](http://www.hibernate.org/) bindings to BioSQL you should
 refer instead to the [BioJavaX
-documentation](/wikis/BioJava:BioJavaXDocs "wikilink").
+documentation](/wiki/BioJava:BioJavaXDocs "wikilink").
 
 **by David Huen**
 

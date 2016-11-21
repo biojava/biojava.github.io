@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Blast:Parser
-permalink: wikis/BioJava%3ACookbookFrench%3ABlast%3AParser
+permalink: wiki/BioJava%3ACookbookFrench%3ABlast%3AParser
 ---
 
 Comment lire les résultats d'un fichier BLAST?

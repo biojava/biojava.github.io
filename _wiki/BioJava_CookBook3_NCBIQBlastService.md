@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:NCBIQBlastService
-permalink: wikis/BioJava%3ACookBook3%3ANCBIQBlastService
+permalink: wiki/BioJava%3ACookBook3%3ANCBIQBlastService
 ---
 
 How can I use NCBIQBlastService to do my alignments remotely?

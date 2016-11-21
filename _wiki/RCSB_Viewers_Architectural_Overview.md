@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Architectural Overview
-permalink: wikis/RCSB_Viewers%3AArchitectural_Overview
+permalink: wiki/RCSB_Viewers%3AArchitectural_Overview
 ---
 
 The architecture of the *RCSB MBT Libs* is a blend of two well

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Services:Qblast
-permalink: wikis/BioJava%3ACookBook%3AServices%3AQblast
+permalink: wiki/BioJava%3ACookBook%3AServices%3AQblast
 ---
 
 How can I use QBlast to do my alignments remotely?

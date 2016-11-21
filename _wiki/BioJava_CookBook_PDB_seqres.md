@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:seqres
-permalink: wikis/BioJava%3ACookBook%3APDB%3Aseqres
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aseqres
 ---
 
 SEQRES and ATOM information from PDB files

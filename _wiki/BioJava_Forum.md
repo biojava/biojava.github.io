@@ -1,6 +1,6 @@
 ---
 title: BioJava:Forum
-permalink: wikis/BioJava%3AForum
+permalink: wiki/BioJava%3AForum
 ---
 
 Welcome to the BioJava Forum Page!!
@@ -62,9 +62,9 @@ with the tools required to parse the data retrieved.
 Hi Ghislain,
 
 I had this [ little
-example](/wikis/BioJava:CookBook:ExternalSources:NCBIFetch "wikilink") ready
+example](/wiki/BioJava:CookBook:ExternalSources:NCBIFetch "wikilink") ready
 for a while because I had this same exact problem so many years ago ;-)
-There is also a package to get info from Ensembl (/wikis/BioJava-ensembl) from
+There is also a package to get info from Ensembl (/wiki/BioJava-ensembl) from
 Thomas Down but I do not know what is its status right now. Thomas: can
 you give us an update on this?
 

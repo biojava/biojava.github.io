@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:hibernate
-permalink: wikis/BioJava%3ACookBook%3APDB%3Ahibernate
+permalink: wiki/BioJava%3ACookBook%3APDB%3Ahibernate
 ---
 
 How to serialize a protein structure to a database

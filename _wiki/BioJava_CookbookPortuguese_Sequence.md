@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:Sequence
-permalink: wikis/BioJava%3ACookbookPortuguese%3ASequence
+permalink: wiki/BioJava%3ACookbookPortuguese%3ASequence
 ---
 
 Como eu crio uma Sequence de uma String ou crio de volta uma String de um Objeto Sequence?

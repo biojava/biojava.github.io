@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:DP:HMM
-permalink: wikis/BioJava%3ACookBook%3ADP%3AHMM
+permalink: wiki/BioJava%3ACookBook%3ADP%3AHMM
 ---
 
 How do I make a ProfileHMM?

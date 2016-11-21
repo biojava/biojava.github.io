@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Interfaces:ProteinPeptideFeatures
-permalink: wikis/BioJava%3ACookbookFrench%3AInterfaces%3AProteinPeptideFeatures
+permalink: wiki/BioJava%3ACookbookFrench%3AInterfaces%3AProteinPeptideFeatures
 ---
 
 Comment afficher les caractéristiques d'une protéine avec les fragments d'une digestion tryptique (ou autre)?

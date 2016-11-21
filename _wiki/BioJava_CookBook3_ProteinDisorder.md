@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:ProteinDisorder
-permalink: wikis/BioJava%3ACookBook3%3AProteinDisorder
+permalink: wiki/BioJava%3ACookBook3%3AProteinDisorder
 ---
 
 How can I predict disordered regions on a protein sequence?
@@ -32,7 +32,7 @@ Examples of use are provided below. For more information please refer to
 JronnExample testcases.
 
 Finally instead of an API calls you can use a [ command line
-utility](/wikis/BioJava:CookBook3:ProteinDisorderCLI "wikilink"), which is
+utility](/wiki/BioJava:CookBook3:ProteinDisorderCLI "wikilink"), which is
 likely to give you a better performance as it uses multiple threads to
 perform calculations.
 

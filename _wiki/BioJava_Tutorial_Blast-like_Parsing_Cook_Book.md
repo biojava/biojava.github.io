@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Blast-like Parsing Cook Book
-permalink: wikis/BioJava%3ATutorial%3ABlast-like_Parsing_Cook_Book
+permalink: wiki/BioJava%3ATutorial%3ABlast-like_Parsing_Cook_Book
 tags:
  - Tutorial
 ---

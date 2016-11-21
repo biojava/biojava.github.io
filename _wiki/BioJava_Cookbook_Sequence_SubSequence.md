@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Sequence:SubSequence
-permalink: wikis/BioJava%3ACookbook%3ASequence%3ASubSequence
+permalink: wiki/BioJava%3ACookbook%3ASequence%3ASubSequence
 ---
 
 How do I get a subsection of a Sequence?

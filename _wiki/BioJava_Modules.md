@@ -1,6 +1,6 @@
 ---
 title: BioJava:Modules
-permalink: wikis/BioJava%3AModules
+permalink: wiki/BioJava%3AModules
 ---
 
 BioJava Modules
@@ -32,7 +32,7 @@ Module: biojava3-protein-disorder: Lead: Peter Troshin
 
 If you are looking for a BioJava related project, consider contributing
 one of the missing [Feature
-Requests](/wikis/BioJava3_Feature_Requests "wikilink").
+Requests](/wiki/BioJava3_Feature_Requests "wikilink").
 
 There are also a number of algorithms where we would be interested in
 [Java ports](Algorithm_Java_port "wikilink").

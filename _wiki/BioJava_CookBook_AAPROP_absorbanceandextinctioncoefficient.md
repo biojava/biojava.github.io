@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:absorbanceandextinctioncoefficient
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Aabsorbanceandextinctioncoefficient
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Aabsorbanceandextinctioncoefficient
 ---
 
 ### How are Absorbance and Extinction Coefficient computed?

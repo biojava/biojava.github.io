@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Viewer Framework:Picking
-permalink: wikis/RCSB_Viewers%3AViewer_Framework%3APicking
+permalink: wiki/RCSB_Viewers%3AViewer_Framework%3APicking
 ---
 
 Notes

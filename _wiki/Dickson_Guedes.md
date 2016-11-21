@@ -14,7 +14,7 @@ live in Tubarão, [Santa Catarina](wp:Santa Catarina (state) "wikilink"),
 Catarina](wp:Santa Catarina (state) "wikilink").
 
 I've contributed with BioJava by porting the
-[CookBook's](/wikis/BioJava:Cookbook "wikilink") English version to this Wiki,
+[CookBook's](/wiki/BioJava:Cookbook "wikilink") English version to this Wiki,
 but I've introduced to BioJava at 2005, when I've started my Bacharel's
 thesis using it how a framework to contruct [Phylogenetic
 trees](wp:Phylogenetic trees "wikilink") "powered by" [Genetic

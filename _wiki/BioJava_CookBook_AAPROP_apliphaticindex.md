@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:apliphaticindex
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Aapliphaticindex
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Aapliphaticindex
 ---
 
 ### How is Aliphatic Index computed?

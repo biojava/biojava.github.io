@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:GetStarted
-permalink: wikis/BioJava%3ACookBookItaliano%3AGetStarted
+permalink: wiki/BioJava%3ACookBookItaliano%3AGetStarted
 ---
 
 Introduzione
@@ -16,14 +16,14 @@ proprio rivenditore. I file binare di BioJava sono distribuiti in
 formato .jar (Java ARchive).
 
 L'ultima versione di [BioJava 1.7 (richiede Java
-1.5+)](/wikis/BioJava:Download "wikilink") è scaricabile da qui [area
-download](/wikis/BioJava:Download "wikilink").
+1.5+)](/wiki/BioJava:Download "wikilink") è scaricabile da qui [area
+download](/wiki/BioJava:Download "wikilink").
 
 Versioni legacy di BioJava 1.5 sono scaricabili da qui [BioJava 1.5
-(richiede Java 1.4+)](/wikis/BioJava:Download 1.5 "wikilink") ; o
+(richiede Java 1.4+)](/wiki/BioJava:Download 1.5 "wikilink") ; o
 
 Versioni legacy di BioJava 1.4 sono scaricabili da qui [BioJava
-1.4](/wikis/BioJava:Download 1.4 "wikilink");
+1.4](/wiki/BioJava:Download 1.4 "wikilink");
 
 E' possibile integrare BioJava anche con NetBeans IDE. Per sapere come
 seguire questo
@@ -103,9 +103,9 @@ consultare questo
 
 A questo punto sarà possibile compilare ed eseguire i programmi BioJava
 utilizzando i comandi *javac* e *java*. E' opportuno dare uno sguardo al
-[tutorial](/wikis/BioJava:Tutorial "wikilink"), alla documentazione relativa
+[tutorial](/wiki/BioJava:Tutorial "wikilink"), alla documentazione relativa
 alle [API](http://www.biojava.org/docs/api15b/index.html) e alla sezione
-[BioJava in anger](/wikis/BioJava:CookBookItaliano "wikilink"). Infine si può
+[BioJava in anger](/wiki/BioJava:CookBookItaliano "wikilink"). Infine si può
 imparare molto riguardo BioJava semplicemente utilizzando i programmi
 demo inclusi nei sorgenti (segue).
 

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Proteomics
-permalink: wikis/BioJava%3ACookbook%3AProteomics
+permalink: wiki/BioJava%3ACookbook%3AProteomics
 ---
 
 How can I calculate the mass and pI of a peptide?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Blast:Extract
-permalink: wikis/BioJava%3ACookBook%3ABlast%3AExtract
+permalink: wiki/BioJava%3ACookBook%3ABlast%3AExtract
 ---
 
 How Do I Extract Information From Search Results?

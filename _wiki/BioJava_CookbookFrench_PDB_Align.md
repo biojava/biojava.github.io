@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Align
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AAlign
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AAlign
 ---
 
 Comment calculer un alignement de structures?

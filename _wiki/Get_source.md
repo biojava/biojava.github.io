@@ -7,7 +7,7 @@ preferred method for checking out the source is with git, although it is
 also possible to use subversion. This page contains general instructions
 for getting the BioJava source. Users of the Eclipse IDE can see more
 detailed instructions at [BioJava3
-eclipse](/wikis/BioJava3 eclipse "wikilink").
+eclipse](/wiki/BioJava3 eclipse "wikilink").
 
 Getting the latest release code
 ===============================
@@ -16,7 +16,7 @@ BioJava can be accessed several ways
 
 -   Git
 -   SVN (not recommended)
--   [Download binaries](/wikis/BioJava:Download "wikilink")
+-   [Download binaries](/wiki/BioJava:Download "wikilink")
 -   Directly from [Maven](http://maven.apache.org/)
 
 Using git
@@ -28,7 +28,7 @@ using the following command:
 `git clone `[`https://github.com/biojava/biojava.git`](https://github.com/biojava/biojava.git)
 
 This can also be done directly from within Eclipse. Instructions are
-available at [BioJava3 eclipse](/wikis/BioJava3 eclipse "wikilink").
+available at [BioJava3 eclipse](/wiki/BioJava3 eclipse "wikilink").
 
 Using SVN
 ---------

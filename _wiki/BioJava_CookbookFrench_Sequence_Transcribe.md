@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Sequence:Transcribe
-permalink: wikis/BioJava%3ACookbookFrench%3ASequence%3ATranscribe
+permalink: wiki/BioJava%3ACookbookFrench%3ASequence%3ATranscribe
 ---
 
 Comment transcrire une Sequence d'ADN en Sequence d'ARN?

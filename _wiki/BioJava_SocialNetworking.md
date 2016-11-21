@@ -1,6 +1,6 @@
 ---
 title: BioJava:SocialNetworking
-permalink: wikis/BioJava%3ASocialNetworking
+permalink: wiki/BioJava%3ASocialNetworking
 ---
 
 Here a list of BioJava groups on various social networking sites:

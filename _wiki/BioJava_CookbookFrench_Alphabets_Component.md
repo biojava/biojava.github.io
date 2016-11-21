@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Alphabets:Component
-permalink: wikis/BioJava%3ACookbookFrench%3AAlphabets%3AComponent
+permalink: wiki/BioJava%3ACookbookFrench%3AAlphabets%3AComponent
 ---
 
 Comment décomposer les Symbols d'un CrossProductAlphabet pour obtenir les Symbols qui les constituent?

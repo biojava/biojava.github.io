@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:Count:Frequency
-permalink: wikis/BioJava%3ACookbookPortuguese%3ACount%3AFrequency
+permalink: wiki/BioJava%3ACookbookPortuguese%3ACount%3AFrequency
 ---
 
 Como eu calculo a frequencia de um simbolo em uma Sequence?

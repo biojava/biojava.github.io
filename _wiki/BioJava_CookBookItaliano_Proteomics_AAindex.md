@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Proteomics:AAindex
-permalink: wikis/BioJava%3ACookBookItaliano%3AProteomics%3AAAindex
+permalink: wiki/BioJava%3ACookBookItaliano%3AProteomics%3AAAindex
 ---
 
 Come posso analizzare le proprietà dei vari simboli di una sequenza peptidica utilizzano Amino Acid Index DataBase?

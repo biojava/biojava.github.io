@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:Forum
-permalink: wikis/BioJava_talk%3AForum
+permalink: wiki/BioJava_talk%3AForum
 ---
 
 A link to the dbSNP discussion should probably be posted on the mailing

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:Annotations:Filter
-permalink: wikis/BioJava%3ACookbook%3AAnnotations%3AFilter
+permalink: wiki/BioJava%3ACookbook%3AAnnotations%3AFilter
 ---
 
 How do I filter sequences based on their species?

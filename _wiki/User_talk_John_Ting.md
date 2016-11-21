@@ -1,6 +1,6 @@
 ---
 title: User talk:John Ting
-permalink: wikis/User_talk%3AJohn_Ting
+permalink: wiki/User_talk%3AJohn_Ting
 ---
 
 **Now Look No Further For Your Material Handling Equipment**

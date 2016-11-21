@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:ParsingBlastXMLOutput
-permalink: wikis/BioJava%3ACookBook3%3AParsingBlastXMLOutput
+permalink: wiki/BioJava%3ACookBook3%3AParsingBlastXMLOutput
 ---
 
 How can I use Blast XML output in my program?
@@ -17,7 +17,7 @@ returning results in XML format.
 
 It can be done in various ways, including saving manual Blast search
 results in XML format or by using biojava's
-[NCBIQBlastService](/wikis/BioJava:CookBook3:NCBIQBlastService "wikilink").
+[NCBIQBlastService](/wiki/BioJava:CookBook3:NCBIQBlastService "wikilink").
 
 Blast output XML file should look like this (note the root element
 BlastOutput): <xml>

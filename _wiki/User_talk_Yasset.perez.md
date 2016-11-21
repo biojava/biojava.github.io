@@ -1,6 +1,6 @@
 ---
 title: User talk:Yasset.perez
-permalink: wikis/User_talk%3AYasset.perez
+permalink: wiki/User_talk%3AYasset.perez
 ---
 
 Hi, I want to know if it is possible to load the information of the

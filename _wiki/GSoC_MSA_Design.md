@@ -1,6 +1,6 @@
 ---
 title: GSoC:MSA Design
-permalink: wikis/GSoC%3AMSA_Design
+permalink: wiki/GSoC%3AMSA_Design
 ---
 
 **Design for Alignment in BioJava3**

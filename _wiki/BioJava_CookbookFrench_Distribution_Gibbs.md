@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:Gibbs
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3AGibbs
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3AGibbs
 ---
 
 Comment construire un échantillonneur de Gibbs à l'aide de Distributions?

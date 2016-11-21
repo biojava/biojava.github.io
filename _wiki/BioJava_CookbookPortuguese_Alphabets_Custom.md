@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookPortuguese:Alphabets:Custom
-permalink: wikis/BioJava%3ACookbookPortuguese%3AAlphabets%3ACustom
+permalink: wiki/BioJava%3ACookbookPortuguese%3AAlphabets%3ACustom
 ---
 
 Como crio alfabetos customizados a partir de simbolos customizados?

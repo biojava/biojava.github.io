@@ -1,6 +1,6 @@
 ---
 title: RCSB Viewers:Source Division
-permalink: wikis/RCSB_Viewers%3ASource_Division
+permalink: wiki/RCSB_Viewers%3ASource_Division
 ---
 
 We need to organize the source in such a way that we know how and where

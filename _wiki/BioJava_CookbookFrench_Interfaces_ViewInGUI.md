@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Interfaces:ViewInGUI
-permalink: wikis/BioJava%3ACookbookFrench%3AInterfaces%3AViewInGUI
+permalink: wiki/BioJava%3ACookbookFrench%3AInterfaces%3AViewInGUI
 ---
 
 Comment afficher une séquence dans une interface graphique?

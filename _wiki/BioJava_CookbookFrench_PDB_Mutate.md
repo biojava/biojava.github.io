@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:PDB:Mutate
-permalink: wikis/BioJava%3ACookbookFrench%3APDB%3AMutate
+permalink: wiki/BioJava%3ACookbookFrench%3APDB%3AMutate
 ---
 
 Comment faire une mutation dans un fichier PDB

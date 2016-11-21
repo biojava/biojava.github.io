@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Core:SequenceCompare
-permalink: wikis/BioJava%3ACookBook%3ACore%3ASequenceCompare
+permalink: wiki/BioJava%3ACookBook%3ACore%3ASequenceCompare
 ---
 
 Caveat: This piece of code assumes that the sequences that are to be

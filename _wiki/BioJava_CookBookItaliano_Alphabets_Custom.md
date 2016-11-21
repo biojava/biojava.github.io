@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBookItaliano:Alphabets:Custom
-permalink: wikis/BioJava%3ACookBookItaliano%3AAlphabets%3ACustom
+permalink: wiki/BioJava%3ACookBookItaliano%3AAlphabets%3ACustom
 ---
 
 Come posso creare un Alfabeto personalizzato con Simboli personalizzati?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:Implementing Changeable
-permalink: wikis/BioJava%3ATutorial%3AImplementing_Changeable
+permalink: wiki/BioJava%3ATutorial%3AImplementing_Changeable
 tags:
  - Tutorial
 ---

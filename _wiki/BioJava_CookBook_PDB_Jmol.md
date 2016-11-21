@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:Jmol
-permalink: wikis/BioJava%3ACookBook%3APDB%3AJmol
+permalink: wiki/BioJava%3ACookBook%3APDB%3AJmol
 ---
 
 How to interact with Jmol

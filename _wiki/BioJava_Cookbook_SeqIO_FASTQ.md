@@ -1,6 +1,6 @@
 ---
 title: BioJava:Cookbook:SeqIO:FASTQ
-permalink: wikis/BioJava%3ACookbook%3ASeqIO%3AFASTQ
+permalink: wiki/BioJava%3ACookbook%3ASeqIO%3AFASTQ
 ---
 
 How do I work with nextgen sequencing reads in FASTQ format?

@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:Interfaces:Alignments II
-permalink: wikis/BioJava%3ACookBook%3AInterfaces%3AAlignments_II
+permalink: wiki/BioJava%3ACookBook%3AInterfaces%3AAlignments_II
 ---
 
 BioJava can render alignments

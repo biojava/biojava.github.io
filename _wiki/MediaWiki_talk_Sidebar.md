@@ -1,6 +1,6 @@
 ---
 title: MediaWiki talk:Sidebar
-permalink: wikis/MediaWiki_talk%3ASidebar
+permalink: wiki/MediaWiki_talk%3ASidebar
 ---
 
 A suggestion: modifiying this to be like BioPerl. Not to be sheepish but

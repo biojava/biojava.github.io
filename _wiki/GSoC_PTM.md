@@ -1,6 +1,6 @@
 ---
 title: GSoC:PTM
-permalink: wikis/GSoC%3APTM
+permalink: wiki/GSoC%3APTM
 ---
 
 **BioJava Packages for Identification, Classification, and Visualization

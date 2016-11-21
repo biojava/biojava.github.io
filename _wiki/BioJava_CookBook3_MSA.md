@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook3:MSA
-permalink: wikis/BioJava%3ACookBook3%3AMSA
+permalink: wiki/BioJava%3ACookBook3%3AMSA
 ---
 
 How to create a Multiple Sequence Alignment in BioJava

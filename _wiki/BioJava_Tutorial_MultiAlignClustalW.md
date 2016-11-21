@@ -1,6 +1,6 @@
 ---
 title: BioJava:Tutorial:MultiAlignClustalW
-permalink: wikis/BioJava%3ATutorial%3AMultiAlignClustalW
+permalink: wiki/BioJava%3ATutorial%3AMultiAlignClustalW
 ---
 
 **by [Dickson S. Guedes](Dickson Guedes "wikilink")**

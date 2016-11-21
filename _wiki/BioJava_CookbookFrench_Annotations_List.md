@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Annotations:List
-permalink: wikis/BioJava%3ACookbookFrench%3AAnnotations%3AList
+permalink: wiki/BioJava%3ACookbookFrench%3AAnnotations%3AList
 ---
 
 Comment obtenir la liste des annotations d'une sequence?

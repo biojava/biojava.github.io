@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Locations:Remove
-permalink: wikis/BioJava%3ACookbookFrench%3ALocations%3ARemove
+permalink: wiki/BioJava%3ACookbookFrench%3ALocations%3ARemove
 ---
 
 Comment supprimer un *Feature* d'une *Sequence*?

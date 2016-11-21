@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:AAPROP:averagehydropathyvalue
-permalink: wikis/BioJava%3ACookBook%3AAAPROP%3Aaveragehydropathyvalue
+permalink: wiki/BioJava%3ACookBook%3AAAPROP%3Aaveragehydropathyvalue
 ---
 
 ### How is Average Hydropathy computed?

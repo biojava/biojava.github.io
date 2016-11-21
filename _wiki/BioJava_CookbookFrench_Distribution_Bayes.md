@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookbookFrench:Distribution:Bayes
-permalink: wikis/BioJava%3ACookbookFrench%3ADistribution%3ABayes
+permalink: wiki/BioJava%3ACookbookFrench%3ADistribution%3ABayes
 ---
 
 Utiliser des Distributions pour créer un classificateur bayésien naif
