@@ -71,7 +71,8 @@ kramdown:
 
 # Release settings
 release:
- version: 4.2.1
+ version: 4.2.0
+ legacy: 1.9.1
 
 collections:
   wiki:

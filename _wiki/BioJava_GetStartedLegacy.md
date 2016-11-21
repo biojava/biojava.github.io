@@ -37,7 +37,7 @@ available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
 You can get the latest version from the download page [BioJava (requires
-Java 1.5+)](/wiki/BioJava:Download_{{current version legacy}} "wikilink").
+Java 1.5+)](/wiki/BioJava:Download_{{site.release.legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
