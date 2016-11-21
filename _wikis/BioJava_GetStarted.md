@@ -20,7 +20,7 @@ You can get the latest version of BioJava3+ from the download page
 
 You can get the latest version of BioJava-legacy (a.k.a. BioJava1) from
 the download page [BioJava1 (v) (requires Java
-1.5+)](/wikis/BioJava:Download_{{current version legacy}} "wikilink").
+1.5+)](/wikis/BioJava:Download_{{site.release.legacy}} "wikilink").
 
 You can also integrate BioJava with NetBeans IDE. To find out how follow
 this [link](/wikis/How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
@@ -41,17 +41,17 @@ BioJava, as of release 4.0.0 is available through Maven Central.
 You can add the BioJava repository by adding the following XML to your
 project pom.xml file:
 
-            
+
             <dependencies>
                     ...
                     <dependency>
                             <groupId>org.biojava</groupId>
                             <artifactId>biojava-core</artifactId>
-                            <version>4.2.0</version>
+                            <version>{{site.release.version}}</version>
                     </dependency>
                     <!-- other biojava jars as needed -->
             </dependencies>
-        
+
 
 Installation
 ------------
