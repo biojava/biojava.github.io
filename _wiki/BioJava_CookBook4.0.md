@@ -1,6 +1,7 @@
 ---
 title: BioJava:CookBook4.0
 permalink: wiki/BioJava%3ACookBook4.0/
+menu: main
 ---
 
 BioJava Cookbook for release 4.\*

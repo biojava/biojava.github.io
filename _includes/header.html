@@ -8,15 +8,21 @@
         <div id="menu">
           <ul>
             <li><a href="index.html">Home</a></li>
-	        {% for my_page in site.pages %}
-                 {% if my_page.title  %}
-                  <li>{{ my_page.categories | join ' ' }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
-                {% endif %}
-              {% endfor %}
-        
-            <li><a href="https://github.com/login">Log In</a></li>
+            <li><a href="https://github.com/biojava/biojava">Github</a></li>
+            {% for my_page in site.pages %}
+              {% if my_page.title and my_page.menu == 'main' %}
+            <li>{{ my_page.categories | join ' ' }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% for my_page in site.wiki %}
+              {% if my_page.title and my_page.menu %}
+            <li>{{ my_page.categories | join ' ' }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+            <li><a href="{{ "/docs/api4.2.1/index.html" | prepend: side.baseurl }}">Javadoc API (4.2.1)</a></li>
+            <li><a href="{{ "/docs/api1.9.1/index.html" | prepend: side.baseurl }}">Javadoc API (1.9.1)</a></li>
             <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}"
-                   class="icon fa-feed"> RSS Feed</a></li>
+              class="icon fa-feed"> RSS Feed</a></li>
           </ul>
         </div>
       </li>

@@ -1,25 +1,24 @@
 ---
 layout: page
 title: Wiki Pages
+menu: main
 ---
 
 <div class="home">
 
-      <p>The following pages have been imported from the legacy mediawiki instance</p>
+  <p>The following pages have been imported from the legacy mediawiki instance</p>
 
-      {% for my_page in site.wiki %}
-      <p>
-	<ul>
-	  <li>
-	    {{ my_page.categories }} <a href="{{ site.baseurl }}{{ my_page.url }}">{{ my_page.title }}</a>
-
-	  </li>
-	</ul>
-      </p>
-
-      {% endfor %}
+  {% for my_page in site.wiki %}
+  <p>
+    <ul>
+      <li>
+        {{ my_page.categories }} <a href="{{ site.baseurl }}{{ my_page.url }}">{{ my_page.title }}</a>
+      </li>
+    </ul>
+  </p>
+  {% endfor %}
 
 
 
 
-  </div>
+</div>
