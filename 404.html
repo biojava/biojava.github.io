@@ -1,5 +1,6 @@
 ---
 layout: page
+permalink: /404.html
 title: 404 Page Not Found
 ---
 <script>
@@ -8,7 +9,7 @@ function redirectToCorrectPage() {
 	{% for post in site.pages %}
 		allposts.push("{{ post.url }}");
 	{% endfor %}
-	{% for post in site.wiki %}  
+	{% for post in site.wiki %}
 		allposts.push("{{ post.url }}");
 	{% endfor %}
 	var url = window.location.pathname;
