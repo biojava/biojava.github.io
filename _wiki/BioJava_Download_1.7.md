@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.7
-permalink: wiki/BioJava%3ADownload_1.7
+permalink: wiki/BioJava%3ADownload_1.7/
 ---
 
 This page offers downloads for the <b>BioJava 1.7 release</b>.

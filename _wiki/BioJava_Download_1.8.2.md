@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.8.2
-permalink: wiki/BioJava%3ADownload_1.8.2
+permalink: wiki/BioJava%3ADownload_1.8.2/
 ---
 
 This page offers downloads for the <b>BioJava Legacy 1.8.2 release</b>.

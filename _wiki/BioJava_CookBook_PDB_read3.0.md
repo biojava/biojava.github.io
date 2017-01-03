@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook:PDB:read3.0
-permalink: wiki/BioJava%3ACookBook%3APDB%3Aread3.0
+permalink: wiki/BioJava%3ACookBook%3APDB%3Aread3.0/
 ---
 
 ### How do I read a PDB file?

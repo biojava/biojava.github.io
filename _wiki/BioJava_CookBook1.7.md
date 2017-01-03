@@ -1,6 +1,6 @@
 ---
 title: BioJava:CookBook1.7
-permalink: wiki/BioJava%3ACookBook1.7
+permalink: wiki/BioJava%3ACookBook1.7/
 ---
 
 BioJava 3.0 release

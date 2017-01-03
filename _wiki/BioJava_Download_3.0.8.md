@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 3.0.8
-permalink: wiki/BioJava%3ADownload_3.0.8
+permalink: wiki/BioJava%3ADownload_3.0.8/
 ---
 
 This page offers downloads for the <b>BioJava 3.0.8 release</b>.

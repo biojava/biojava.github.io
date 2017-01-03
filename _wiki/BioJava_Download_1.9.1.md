@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.9.1
-permalink: wiki/BioJava%3ADownload_1.9.1
+permalink: wiki/BioJava%3ADownload_1.9.1/
 ---
 
 This page offers downloads for the <b>BioJava Legacy 1.9.1 release</b>.

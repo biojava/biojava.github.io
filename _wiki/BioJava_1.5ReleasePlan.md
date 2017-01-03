@@ -1,6 +1,6 @@
 ---
 title: BioJava:1.5ReleasePlan
-permalink: wiki/BioJava%3A1.5ReleasePlan
+permalink: wiki/BioJava%3A1.5ReleasePlan/
 ---
 
 Release plan for BioJava 1.5

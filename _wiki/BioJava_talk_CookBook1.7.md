@@ -1,6 +1,6 @@
 ---
 title: BioJava talk:CookBook1.7
-permalink: wiki/BioJava_talk%3ACookBook1.7
+permalink: wiki/BioJava_talk%3ACookBook1.7/
 ---
 
 Why dont we give a list of publications ? I think we should give pdf

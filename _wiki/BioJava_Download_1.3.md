@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.3
-permalink: wiki/BioJava%3ADownload_1.3
+permalink: wiki/BioJava%3ADownload_1.3/
 ---
 
 This page offers downloads for the legacy release version, BioJava 1.30

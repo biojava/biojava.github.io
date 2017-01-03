@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 4.2.0
-permalink: wiki/BioJava%3ADownload_4.2.0
+permalink: wiki/BioJava%3ADownload_4.2.0/
 ---
 
 This page offers downloads for the <b>BioJava 4.2.0 release</b>.

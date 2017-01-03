@@ -1,6 +1,6 @@
 ---
 title: BioJava:Download 1.5
-permalink: wiki/BioJava%3ADownload_1.5
+permalink: wiki/BioJava%3ADownload_1.5/
 ---
 
 This page offers downloads for the BioJava 1.5 release. BioJava 1.5 runs
