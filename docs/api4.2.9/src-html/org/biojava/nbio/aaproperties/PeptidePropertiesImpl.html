@@ -1,0 +1,657 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.aaproperties;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.aaproperties.xml.AminoAcidCompositionTable;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.aaproperties.xml.ElementTable;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.aaproperties.xml.MyValidationEventHandler;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.core.sequence.ProteinSequence;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.slf4j.Logger;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.slf4j.LoggerFactory;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>import javax.xml.bind.JAXBContext;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import javax.xml.bind.JAXBException;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import javax.xml.bind.Unmarshaller;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import java.io.File;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import java.io.FileInputStream;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import java.io.FileNotFoundException;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import java.util.HashMap;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import java.util.Map;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>/**<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * This class contains the actual implementation of IPeptideProperties and is wrapped around by PeptideProperties for ease of use.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @author kohchuanhock<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @version 2011.08.22<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @since 3.0.2<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @see IPeptideProperties<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @see PeptideProperties<a name="line.48"></a>
+<span class="sourceLineNo">049</span> */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>public class PeptidePropertiesImpl implements IPeptideProperties{<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>        private final static Logger logger = LoggerFactory.getLogger(PeptidePropertiesImpl.class);<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>        /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * @return the molecular weight of water<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        private double getWaterMoleculeWeight(){<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                final double hydrogenMW = 1.0079;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                final double hydroxideMW = 17.0073;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                //H     1.0079  OH      17.0073<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                return hydrogenMW + hydroxideMW;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        }<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>        private char[] getSequence(String sequence, boolean ignoreCase){<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                if(ignoreCase){<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                        return sequence.toUpperCase().toCharArray();<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                }else{<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                        return sequence.toCharArray();<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                }<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        }<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>        @Override<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        public double getMolecularWeight(ProteinSequence sequence) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                double value = 0.0;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                char[] seq = getSequence(sequence.toString(), true);//ignore case<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                for(char aa:seq){<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                        AminoAcidCompound c = aaSet.getCompoundForString(aa + "");<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                        if(Constraints.aa2MolecularWeight.containsKey(c)){<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                                value += Constraints.aa2MolecularWeight.get(c);<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                        }<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                }<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                if(value == 0)<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                        return value;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                else<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                        return value + getWaterMoleculeWeight();<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        }<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>        @Override<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        public double getMolecularWeight(ProteinSequence sequence, File aminoAcidCompositionFile) throws JAXBException, FileNotFoundException {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                File elementMassFile = new File("./src/main/resources/ElementMass.xml");<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                if(!elementMassFile.exists()){<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                        throw new FileNotFoundException("Cannot locate ElementMass.xml. " +<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                                        "Please use getMolecularWeight(ProteinSequence, File, File) to specify ElementMass.xml location.");<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                }<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                return getMolecularWeightBasedOnXML(sequence, obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile));<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        }<a name="line.97"></a>
+<span class="sourceLineNo">098</span><a name="line.98"></a>
+<span class="sourceLineNo">099</span>        @Override<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        public double getMolecularWeight(ProteinSequence sequence, File elementMassFile, File aminoAcidCompositionFile)<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                        throws JAXBException, FileNotFoundException{<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                return getMolecularWeightBasedOnXML(sequence, obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile));<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        }<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>        @Override<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        public double getMolecularWeightBasedOnXML(ProteinSequence sequence, AminoAcidCompositionTable aminoAcidCompositionTable){<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                double value = 0.0;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                char[] seq = sequence.toString().toCharArray();<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                for(char aa:seq){<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                        Double weight = aminoAcidCompositionTable.getMolecularWeight(aa);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                        if(weight != null){<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                                value += weight;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                        }<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                }<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                if(value == 0.0)<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                        return value;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                else<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                        return value + getWaterMoleculeWeight();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        }<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span>        @Override<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        public AminoAcidCompositionTable obtainAminoAcidCompositionTable(File aminoAcidCompositionFile)<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                throws JAXBException, FileNotFoundException{<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                File elementMassFile = new File("./src/main/resources/ElementMass.xml");<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                if(!elementMassFile.exists()){<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                        throw new FileNotFoundException("Cannot locate ElementMass.xml. " +<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                                        "Please use getMolecularWeight(ProteinSequence, File, File) to specify ElementMass.xml location.");<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                }<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                return obtainAminoAcidCompositionTable(elementMassFile, aminoAcidCompositionFile);<a name="line.129"></a>
+<span class="sourceLineNo">130</span>        }<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>        @Override<a name="line.132"></a>
+<span class="sourceLineNo">133</span>        public AminoAcidCompositionTable obtainAminoAcidCompositionTable(File elementMassFile, File aminoAcidCompositionFile)<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                throws JAXBException, FileNotFoundException{<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                //Parse elementMassFile<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                ElementTable iTable = new ElementTable();<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                // Get a JAXB Context for the object we created above<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                JAXBContext jc = JAXBContext.newInstance(iTable.getClass());<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                Unmarshaller u = jc.createUnmarshaller();<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                u.setEventHandler(new MyValidationEventHandler());<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                iTable = (ElementTable)u.unmarshal(new FileInputStream(elementMassFile));<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                iTable.populateMaps();<a name="line.142"></a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span>                //Parse aminoAcidCompositionFile<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                AminoAcidCompositionTable aTable = new AminoAcidCompositionTable();<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                // Get a JAXB Context for the object we created above<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                JAXBContext jc2 = JAXBContext.newInstance(aTable.getClass());<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                Unmarshaller u2 = jc2.createUnmarshaller();<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                u2.setEventHandler(new MyValidationEventHandler());<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                aTable = (AminoAcidCompositionTable)u2.unmarshal(new FileInputStream(aminoAcidCompositionFile));<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                aTable.computeMolecularWeight(iTable);<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                return aTable;<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        }<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>        @Override<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        public double getExtinctionCoefficient(ProteinSequence sequence, boolean assumeCysReduced) {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                //Tyr =&gt; Y<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                //Trp =&gt; W<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                //Cys =&gt; C<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                //E(Prot) = Numb(Tyr)*Ext(Tyr) + Numb(Trp)*Ext(Trp) + Numb(Cystine)*Ext(Cystine)<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                //where (for proteins in water measured at 280 nm): Ext(Tyr) = 1490, Ext(Trp) = 5500, Ext(Cystine) = 125;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                Map&lt;AminoAcidCompound, Integer&gt; extinctAA2Count = this.getExtinctAACount(sequence);<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>                double eProt;<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                if(!assumeCysReduced){<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                        eProt = extinctAA2Count.get(aaSet.getCompoundForString("Y")) *<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                Constraints.aa2ExtinctionCoefficient.get(aaSet.getCompoundForString("Y")) +<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                extinctAA2Count.get(aaSet.getCompoundForString("W")) *<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                                Constraints.aa2ExtinctionCoefficient.get(aaSet.getCompoundForString("W")) +<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                                extinctAA2Count.get(aaSet.getCompoundForString("C")) *<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                                Constraints.aa2ExtinctionCoefficient.get(aaSet.getCompoundForString("C"));<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                }else<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                        eProt = extinctAA2Count.get(aaSet.getCompoundForString("Y")) *<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                                Constraints.aa2ExtinctionCoefficient.get(aaSet.getCompoundForString("Y")) +<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                                extinctAA2Count.get(aaSet.getCompoundForString("W")) *<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                                Constraints.aa2ExtinctionCoefficient.get(aaSet.getCompoundForString("W"));<a name="line.177"></a>
+<span class="sourceLineNo">178</span><a name="line.178"></a>
+<span class="sourceLineNo">179</span>                return eProt;<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        }<a name="line.180"></a>
+<span class="sourceLineNo">181</span><a name="line.181"></a>
+<span class="sourceLineNo">182</span>        @Override<a name="line.182"></a>
+<span class="sourceLineNo">183</span>        public double getAbsorbance(ProteinSequence sequence, boolean assumeCysReduced){<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                //Absorb(Prot) = E(Prot) / Molecular_weight<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                double mw = this.getMolecularWeight(sequence);<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                double eProt = this.getExtinctionCoefficient(sequence, assumeCysReduced);<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                if (mw == 0.0) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                        logger.warn("Molecular weight is 0.0, can't divide by 0: setting absorbance to 0.0");<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                        return 0.0;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                return eProt / mw;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        }<a name="line.192"></a>
+<span class="sourceLineNo">193</span><a name="line.193"></a>
+<span class="sourceLineNo">194</span>        private Map&lt;AminoAcidCompound, Integer&gt; getExtinctAACount(ProteinSequence sequence){<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                //Cys =&gt; C, Tyr =&gt; Y, Trp =&gt; W<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                int numW = 0;<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                int smallW = 0;<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                double numC = 0;<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                double smallC = 0;<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                int numY = 0;<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                int smallY = 0;<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                for(char aa:sequence.getSequenceAsString().toCharArray()){<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                        switch(aa){<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                        case 'W': numW++; break;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                        case 'w': smallW++; break;<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                        case 'C': numC += 0.5; break;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                        case 'c': smallC += 0.5; break;<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                        case 'Y': numY++; break;<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                        case 'y': smallY++; break;<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                        }<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                }<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                Map&lt;AminoAcidCompound, Integer&gt; extinctAA2Count = new HashMap&lt;AminoAcidCompound, Integer&gt;();<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                //Ignore Case is always true<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                extinctAA2Count.put(aaSet.getCompoundForString("W"), numW + smallW);<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                extinctAA2Count.put(aaSet.getCompoundForString("C"), (int) (numC + smallC));<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                extinctAA2Count.put(aaSet.getCompoundForString("Y"), numY + smallY);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                return extinctAA2Count;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>        @Override<a name="line.221"></a>
+<span class="sourceLineNo">222</span>        public double getInstabilityIndex(ProteinSequence sequence) {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                double sum = 0.0;<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                String s = sequence.getSequenceAsString().toUpperCase();<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                for(int i = 0; i &lt; sequence.getLength() - 1; i++){<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                        String dipeptide = s.substring(i, i+2);<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                        if(Constraints.diAA2Instability.containsKey(dipeptide)){<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                                sum += Constraints.diAA2Instability.get(dipeptide);<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                        }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                }<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                int denominator = s.length() - Utils.getNumberOfInvalidChar(s, null, true);<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>                if (denominator==0) {<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                        logger.warn("Valid length of sequence is 0, can't divide by 0 to calculate instability index: setting instability index value to 0.0");<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                        return 0.0;<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                }<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                return sum * 10.0 / denominator;<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        }<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>        @Override<a name="line.240"></a>
+<span class="sourceLineNo">241</span>        public double getApliphaticIndex(ProteinSequence sequence) {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>//              Aliphatic index = X(Ala) + a * X(Val) + b * ( X(Ile) + X(Leu) )<a name="line.242"></a>
+<span class="sourceLineNo">243</span>//              where X(Ala), X(Val), X(Ile), and X(Leu) are mole percent (100 X mole fraction)<a name="line.243"></a>
+<span class="sourceLineNo">244</span>//              of alanine, valine, isoleucine, and leucine.<a name="line.244"></a>
+<span class="sourceLineNo">245</span>//              The coefficients a and b are the relative volume of valine side chain (a = 2.9)<a name="line.245"></a>
+<span class="sourceLineNo">246</span>//              and of Leu/Ile side chains (b = 3.9) to the side chain of alanine.<a name="line.246"></a>
+<span class="sourceLineNo">247</span>//              Ala =&gt; A, Val =&gt; V, Ile =&gt; I, Leu =&gt; L<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                Map&lt;AminoAcidCompound, Double&gt; aa2Composition = getAAComposition(sequence);<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                final double a = 2.9;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                final double b = 3.9;<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                double xAla = aa2Composition.get(aaSet.getCompoundForString("A"));<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                double xVal = aa2Composition.get(aaSet.getCompoundForString("V"));<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                double xIle = aa2Composition.get(aaSet.getCompoundForString("I"));<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                double xLeu = aa2Composition.get(aaSet.getCompoundForString("L"));<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                return (xAla + (a * xVal) + (b * (xIle + xLeu))) * 100;<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        }<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span>        @Override<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        public double getAvgHydropathy(ProteinSequence sequence) {<a name="line.260"></a>
+<span class="sourceLineNo">261</span>                int validLength = 0;<a name="line.261"></a>
+<span class="sourceLineNo">262</span>                double total = 0.0;<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                char[] seq = this.getSequence(sequence.toString(), true);<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                for(char aa:seq){<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                        AminoAcidCompound c = aaSet.getCompoundForString(aa + "");<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        if(Constraints.aa2Hydrophathicity.containsKey(c)){<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                                total += Constraints.aa2Hydrophathicity.get(c);<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                                validLength++;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>                        }<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                }<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                if (validLength==0) {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                        logger.warn("Valid length of sequence is 0, can't divide by 0 to calculate average hydropathy: setting average hydropathy to 0");<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                        return 0.0;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                }<a name="line.275"></a>
+<span class="sourceLineNo">276</span><a name="line.276"></a>
+<span class="sourceLineNo">277</span>                return total / validLength;<a name="line.277"></a>
+<span class="sourceLineNo">278</span>        }<a name="line.278"></a>
+<span class="sourceLineNo">279</span><a name="line.279"></a>
+<span class="sourceLineNo">280</span>        @Override<a name="line.280"></a>
+<span class="sourceLineNo">281</span>        public double getIsoelectricPoint(ProteinSequence sequence, boolean useExpasyValues) {<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                if(useExpasyValues){<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                        return this.getIsoelectricPointExpasy(sequence.toString().toUpperCase());<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                }else{<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                        return this.getIsoelectricPointInnovagen(sequence);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                }<a name="line.286"></a>
+<span class="sourceLineNo">287</span>        }<a name="line.287"></a>
+<span class="sourceLineNo">288</span><a name="line.288"></a>
+<span class="sourceLineNo">289</span>        private double getIsoelectricPointInnovagen(ProteinSequence sequence){<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                double currentPH = 7.0;<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                double changeSize = 7.0;<a name="line.291"></a>
+<span class="sourceLineNo">292</span>                String sequenceString = sequence.toString();<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                char nTerminalChar = sequenceString.charAt(0);<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                char cTerminalChar = sequenceString.charAt(sequenceString.length() - 1);<a name="line.294"></a>
+<span class="sourceLineNo">295</span><a name="line.295"></a>
+<span class="sourceLineNo">296</span>                Map&lt;AminoAcidCompound, Integer&gt; chargedAA2Count = this.getChargedAACount(sequence);<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                double margin;<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                final double difference = 0.0001;<a name="line.298"></a>
+<span class="sourceLineNo">299</span><a name="line.299"></a>
+<span class="sourceLineNo">300</span>                while(true){<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                        margin = this.getNetChargeInnovagen(chargedAA2Count, currentPH, nTerminalChar, cTerminalChar);<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                        //Within allowed difference<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                        if(margin &lt;= difference &amp;&amp; margin &gt;= -difference) break;<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                        changeSize /= 2.0;<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                        if(margin &gt; 0){<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                                currentPH += changeSize;<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                        }else{<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                                currentPH -= changeSize;<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                        }<a name="line.309"></a>
+<span class="sourceLineNo">310</span>                }<a name="line.310"></a>
+<span class="sourceLineNo">311</span>                return currentPH;<a name="line.311"></a>
+<span class="sourceLineNo">312</span>        }<a name="line.312"></a>
+<span class="sourceLineNo">313</span><a name="line.313"></a>
+<span class="sourceLineNo">314</span>        /*<a name="line.314"></a>
+<span class="sourceLineNo">315</span>         *  Pseudo code obtained from email correspondance with ExPASy Helpdesk, Gregoire Rossier<a name="line.315"></a>
+<span class="sourceLineNo">316</span>         */<a name="line.316"></a>
+<span class="sourceLineNo">317</span>        //<a name="line.317"></a>
+<span class="sourceLineNo">318</span>        // Table of pk values :<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        // Note: the current algorithm does not use the last two columns.<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        // Each row corresponds to an amino acid starting with Ala. J, O and U are<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        // inexistant, but here only in order to have the complete alphabet.<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        //<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        // Ct Nt Sm Sc Sn<a name="line.323"></a>
+<span class="sourceLineNo">324</span>        //<a name="line.324"></a>
+<span class="sourceLineNo">325</span>        private final double cPk[][] = {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>                        {3.55, 7.59, 0.0},  // A<a name="line.326"></a>
+<span class="sourceLineNo">327</span>                        {3.55, 7.50, 0.0},  // B<a name="line.327"></a>
+<span class="sourceLineNo">328</span>                        {3.55, 7.50, 9.00}, // C<a name="line.328"></a>
+<span class="sourceLineNo">329</span>//                      {4.55, 7.50, 4.05}, // D<a name="line.329"></a>
+<span class="sourceLineNo">330</span>//                      {4.75, 7.70, 4.45}, // E<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                        {3.55, 7.50, 4.05}, // D<a name="line.331"></a>
+<span class="sourceLineNo">332</span>                        {3.55, 7.70, 4.45}, // E<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                        {3.55, 7.50, 0}, // F<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                        {3.55, 7.50, 0}, // G<a name="line.334"></a>
+<span class="sourceLineNo">335</span>                        {3.55, 7.50, 5.98}, // H<a name="line.335"></a>
+<span class="sourceLineNo">336</span>                        {3.55, 7.50, 0.0}, // I<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                        {0.0, 0.0, 0.0}, // J<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                        {3.55, 7.50, 10.00}, // K<a name="line.338"></a>
+<span class="sourceLineNo">339</span>                        {3.55, 7.50, 0.0}, // L<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                        {3.55, 7.00, 0.0},// M<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                        {3.55, 7.50, 0.0},// N<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                        {0.00, 0.00, 0.0},// O<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                        {3.55, 8.36, 0.0},// P<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                        {3.55, 7.50, 0.0}, // Q<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                        {3.55, 7.50, 12.0},// R<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                        {3.55, 6.93, 0.0},// S<a name="line.346"></a>
+<span class="sourceLineNo">347</span>                        {3.55, 6.82, 0.0}, // T<a name="line.347"></a>
+<span class="sourceLineNo">348</span>                        {0.00, 0.00, 0.0}, // U<a name="line.348"></a>
+<span class="sourceLineNo">349</span>                        {3.55, 7.44, 0.0},// V<a name="line.349"></a>
+<span class="sourceLineNo">350</span>                        {3.55, 7.50, 0.0},// W<a name="line.350"></a>
+<span class="sourceLineNo">351</span>                        {3.55, 7.50, 0.0},// X<a name="line.351"></a>
+<span class="sourceLineNo">352</span>                        {3.55, 7.50, 10.00},// Y<a name="line.352"></a>
+<span class="sourceLineNo">353</span>                        {3.55, 7.50, 0.0}}; // Z<a name="line.353"></a>
+<span class="sourceLineNo">354</span><a name="line.354"></a>
+<span class="sourceLineNo">355</span>        private final double PH_MIN = 0.0; /* minimum pH value */<a name="line.355"></a>
+<span class="sourceLineNo">356</span>        private final double PH_MAX = 14.0; /* maximum pH value */<a name="line.356"></a>
+<span class="sourceLineNo">357</span>        private final double MAXLOOP = 2000.0; /* maximum number of iterations */<a name="line.357"></a>
+<span class="sourceLineNo">358</span>        private final double EPSI = 0.0001; /* desired precision */<a name="line.358"></a>
+<span class="sourceLineNo">359</span><a name="line.359"></a>
+<span class="sourceLineNo">360</span>        private double exp10(double pka){<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                return Math.pow(10, pka);<a name="line.361"></a>
+<span class="sourceLineNo">362</span>        }<a name="line.362"></a>
+<span class="sourceLineNo">363</span><a name="line.363"></a>
+<span class="sourceLineNo">364</span>        private double getIsoelectricPointExpasy(String sequence){<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                //<a name="line.365"></a>
+<span class="sourceLineNo">366</span>                // Compute the amino-acid composition.<a name="line.366"></a>
+<span class="sourceLineNo">367</span>                //<a name="line.367"></a>
+<span class="sourceLineNo">368</span>                int comp[] = new int[26];<a name="line.368"></a>
+<span class="sourceLineNo">369</span>                for(int i = 0; i &lt; sequence.length(); i++){<a name="line.369"></a>
+<span class="sourceLineNo">370</span>                        int index = sequence.charAt(i) - 'A';<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                        if(index &lt; 0 || index &gt;= 26) continue;<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                        comp[index]++;<a name="line.372"></a>
+<span class="sourceLineNo">373</span>                }<a name="line.373"></a>
+<span class="sourceLineNo">374</span>                //<a name="line.374"></a>
+<span class="sourceLineNo">375</span>                // Look up N-terminal and C-terminal residue.<a name="line.375"></a>
+<span class="sourceLineNo">376</span>                //<a name="line.376"></a>
+<span class="sourceLineNo">377</span>                int nTermResidue = -1;<a name="line.377"></a>
+<span class="sourceLineNo">378</span>                int index = 0;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                while((nTermResidue &lt; 0 || nTermResidue &gt;= 26) &amp;&amp; index &lt; 25){<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                        nTermResidue = sequence.charAt(index++) - 'A';<a name="line.380"></a>
+<span class="sourceLineNo">381</span>                }<a name="line.381"></a>
+<span class="sourceLineNo">382</span><a name="line.382"></a>
+<span class="sourceLineNo">383</span>                int cTermResidue = -1;<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                index = 1;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>                while((cTermResidue &lt; 0 || cTermResidue &gt;= 26) &amp;&amp; index &lt; 25){<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                        cTermResidue = sequence.charAt(sequence.length() - index++) - 'A';<a name="line.386"></a>
+<span class="sourceLineNo">387</span>                }<a name="line.387"></a>
+<span class="sourceLineNo">388</span><a name="line.388"></a>
+<span class="sourceLineNo">389</span>                double phMin = PH_MIN;<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                double phMax = PH_MAX;<a name="line.390"></a>
+<span class="sourceLineNo">391</span><a name="line.391"></a>
+<span class="sourceLineNo">392</span>                double phMid = 0.0;<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                double charge = 1.0;<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                for (int i = 0; i &lt; MAXLOOP &amp;&amp; (phMax - phMin) &gt; EPSI; i++){<a name="line.394"></a>
+<span class="sourceLineNo">395</span>                        phMid = phMin + (phMax - phMin) / 2.0;<a name="line.395"></a>
+<span class="sourceLineNo">396</span><a name="line.396"></a>
+<span class="sourceLineNo">397</span>                        charge = getNetChargeExpasy(comp, nTermResidue, cTermResidue, phMid);<a name="line.397"></a>
+<span class="sourceLineNo">398</span><a name="line.398"></a>
+<span class="sourceLineNo">399</span>                        if (charge &gt; 0.0) phMin = phMid;<a name="line.399"></a>
+<span class="sourceLineNo">400</span>                        else phMax = phMid;<a name="line.400"></a>
+<span class="sourceLineNo">401</span>                }<a name="line.401"></a>
+<span class="sourceLineNo">402</span>                return phMid;<a name="line.402"></a>
+<span class="sourceLineNo">403</span>        }<a name="line.403"></a>
+<span class="sourceLineNo">404</span><a name="line.404"></a>
+<span class="sourceLineNo">405</span>        @Override<a name="line.405"></a>
+<span class="sourceLineNo">406</span>        public double getIsoelectricPoint(ProteinSequence sequence){<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                return getIsoelectricPoint(sequence, true);<a name="line.407"></a>
+<span class="sourceLineNo">408</span>        }<a name="line.408"></a>
+<span class="sourceLineNo">409</span><a name="line.409"></a>
+<span class="sourceLineNo">410</span>        @Override<a name="line.410"></a>
+<span class="sourceLineNo">411</span>        public double getNetCharge(ProteinSequence sequence) {<a name="line.411"></a>
+<span class="sourceLineNo">412</span>                return getNetCharge(sequence, true);<a name="line.412"></a>
+<span class="sourceLineNo">413</span>        }<a name="line.413"></a>
+<span class="sourceLineNo">414</span><a name="line.414"></a>
+<span class="sourceLineNo">415</span>        @Override<a name="line.415"></a>
+<span class="sourceLineNo">416</span>        public double getNetCharge(ProteinSequence sequence, boolean useExpasyValues){<a name="line.416"></a>
+<span class="sourceLineNo">417</span>                return getNetCharge(sequence, true, 7.0);<a name="line.417"></a>
+<span class="sourceLineNo">418</span>        }<a name="line.418"></a>
+<span class="sourceLineNo">419</span><a name="line.419"></a>
+<span class="sourceLineNo">420</span>        @Override<a name="line.420"></a>
+<span class="sourceLineNo">421</span>        public double getNetCharge(ProteinSequence sequence, boolean useExpasyValues, double pHPoint){<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                if(useExpasyValues){<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                        return getNetChargeExpasy(sequence.toString().toUpperCase(), pHPoint);<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                }else{<a name="line.424"></a>
+<span class="sourceLineNo">425</span>                        return getNetChargeInnovagen(sequence, pHPoint);<a name="line.425"></a>
+<span class="sourceLineNo">426</span>                }<a name="line.426"></a>
+<span class="sourceLineNo">427</span>        }<a name="line.427"></a>
+<span class="sourceLineNo">428</span><a name="line.428"></a>
+<span class="sourceLineNo">429</span>        private double getNetChargeExpasy(String sequence, double pHPoint){<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                //<a name="line.430"></a>
+<span class="sourceLineNo">431</span>                // Compute the amino-acid composition.<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                //<a name="line.432"></a>
+<span class="sourceLineNo">433</span>                int comp[] = new int[26];<a name="line.433"></a>
+<span class="sourceLineNo">434</span>                for(int i = 0; i &lt; sequence.length(); i++){<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                        int index = sequence.charAt(i) - 'A';<a name="line.435"></a>
+<span class="sourceLineNo">436</span>                        if(index &lt; 0 || index &gt;= 26) continue;<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                        comp[index]++;<a name="line.437"></a>
+<span class="sourceLineNo">438</span>                }<a name="line.438"></a>
+<span class="sourceLineNo">439</span>                //<a name="line.439"></a>
+<span class="sourceLineNo">440</span>                // Look up N-terminal and C-terminal residue.<a name="line.440"></a>
+<span class="sourceLineNo">441</span>                //<a name="line.441"></a>
+<span class="sourceLineNo">442</span>                int nTermResidue = sequence.charAt(0) - 'A';<a name="line.442"></a>
+<span class="sourceLineNo">443</span>                int cTermResidue = sequence.charAt(sequence.length() - 1) - 'A';<a name="line.443"></a>
+<span class="sourceLineNo">444</span>                return getNetChargeExpasy(comp, nTermResidue, cTermResidue, pHPoint);<a name="line.444"></a>
+<span class="sourceLineNo">445</span>        }<a name="line.445"></a>
+<span class="sourceLineNo">446</span><a name="line.446"></a>
+<span class="sourceLineNo">447</span>        private double getNetChargeExpasy(int comp[], int nTermResidue, int cTermResidue, double ph){<a name="line.447"></a>
+<span class="sourceLineNo">448</span>                double cter = 0.0;<a name="line.448"></a>
+<span class="sourceLineNo">449</span>                if(cTermResidue &gt;= 0 &amp;&amp; cTermResidue &lt; 26) cter = exp10(-cPk[cTermResidue][0]) / (exp10(-cPk[cTermResidue][0]) + exp10(-ph));<a name="line.449"></a>
+<span class="sourceLineNo">450</span>                double nter = 0.0;<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                if(nTermResidue &gt;= 0 &amp;&amp; nTermResidue &lt; 26) nter = exp10(-ph) / (exp10(-cPk[nTermResidue][1]) + exp10(-ph));<a name="line.451"></a>
+<span class="sourceLineNo">452</span><a name="line.452"></a>
+<span class="sourceLineNo">453</span>                double carg = comp['R' - 'A'] * exp10(-ph) / (exp10(-cPk['R' - 'A'][2]) + exp10(-ph));<a name="line.453"></a>
+<span class="sourceLineNo">454</span>                double chis = comp['H' - 'A'] * exp10(-ph) / (exp10(-cPk['H' - 'A'][2]) + exp10(-ph));<a name="line.454"></a>
+<span class="sourceLineNo">455</span>                double clys = comp['K' - 'A'] * exp10(-ph) / (exp10(-cPk['K' - 'A'][2]) + exp10(-ph));<a name="line.455"></a>
+<span class="sourceLineNo">456</span><a name="line.456"></a>
+<span class="sourceLineNo">457</span>                double casp = comp['D' - 'A'] * exp10(-cPk['D' - 'A'][2]) / (exp10(-cPk['D' - 'A'][2]) + exp10(-ph));<a name="line.457"></a>
+<span class="sourceLineNo">458</span>                double cglu = comp['E' - 'A'] * exp10(-cPk['E' - 'A'][2]) / (exp10(-cPk['E' - 'A'][2]) + exp10(-ph));<a name="line.458"></a>
+<span class="sourceLineNo">459</span><a name="line.459"></a>
+<span class="sourceLineNo">460</span>                double ccys = comp['C' - 'A'] * exp10(-cPk['C' - 'A'][2]) / (exp10(-cPk['C' - 'A'][2]) + exp10(-ph));<a name="line.460"></a>
+<span class="sourceLineNo">461</span>                double ctyr = comp['Y' - 'A'] * exp10(-cPk['Y' - 'A'][2]) / (exp10(-cPk['Y' - 'A'][2]) + exp10(-ph));<a name="line.461"></a>
+<span class="sourceLineNo">462</span><a name="line.462"></a>
+<span class="sourceLineNo">463</span>                return (carg + clys + chis + nter) - (casp + cglu + ctyr + ccys + cter);<a name="line.463"></a>
+<span class="sourceLineNo">464</span>        }<a name="line.464"></a>
+<span class="sourceLineNo">465</span><a name="line.465"></a>
+<span class="sourceLineNo">466</span>        private double getNetChargeInnovagen(ProteinSequence sequence, double pHPoint) {<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                Map&lt;AminoAcidCompound, Integer&gt; chargedAA2Count = this.getChargedAACount(sequence);<a name="line.467"></a>
+<span class="sourceLineNo">468</span>                String sequenceString = sequence.getSequenceAsString();<a name="line.468"></a>
+<span class="sourceLineNo">469</span>                return getNetChargeInnovagen(chargedAA2Count, pHPoint, sequenceString.charAt(0), sequenceString.charAt(sequenceString.length() - 1));<a name="line.469"></a>
+<span class="sourceLineNo">470</span>        }<a name="line.470"></a>
+<span class="sourceLineNo">471</span><a name="line.471"></a>
+<span class="sourceLineNo">472</span>        private double getNetChargeInnovagen(Map&lt;AminoAcidCompound, Integer&gt; chargedAA2Count, double ph, char nTerminalChar, char cTerminalChar){<a name="line.472"></a>
+<span class="sourceLineNo">473</span>                //Constraints.aa2PKa is aleady reinitialized in getChargedAACount hence no need to do it again<a name="line.473"></a>
+<span class="sourceLineNo">474</span><a name="line.474"></a>
+<span class="sourceLineNo">475</span>                //Lys =&gt; K, Arg =&gt; R, His =&gt; H<a name="line.475"></a>
+<span class="sourceLineNo">476</span>                //Asp =&gt; D, Glu =&gt; E, Cys =&gt; C, Tyr =&gt; Y<a name="line.476"></a>
+<span class="sourceLineNo">477</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.477"></a>
+<span class="sourceLineNo">478</span><a name="line.478"></a>
+<span class="sourceLineNo">479</span>                double nTerminalCharge = 0.0;<a name="line.479"></a>
+<span class="sourceLineNo">480</span>                AminoAcidCompound nTermCompound = aaSet.getCompoundForString(nTerminalChar + "");<a name="line.480"></a>
+<span class="sourceLineNo">481</span>                if(Constraints.aa2NTerminalPka.containsKey(nTermCompound)){<a name="line.481"></a>
+<span class="sourceLineNo">482</span>                        nTerminalCharge = this.getPosCharge(Constraints.aa2NTerminalPka.get(nTermCompound), ph);<a name="line.482"></a>
+<span class="sourceLineNo">483</span>                }<a name="line.483"></a>
+<span class="sourceLineNo">484</span><a name="line.484"></a>
+<span class="sourceLineNo">485</span>                double cTerminalCharge = 0.0;<a name="line.485"></a>
+<span class="sourceLineNo">486</span>                AminoAcidCompound cTermCompound = aaSet.getCompoundForString(cTerminalChar + "");<a name="line.486"></a>
+<span class="sourceLineNo">487</span>                if(Constraints.aa2CTerminalPka.containsKey(cTermCompound)){<a name="line.487"></a>
+<span class="sourceLineNo">488</span>                        cTerminalCharge = this.getNegCharge(Constraints.aa2CTerminalPka.get(cTermCompound), ph);<a name="line.488"></a>
+<span class="sourceLineNo">489</span>                }<a name="line.489"></a>
+<span class="sourceLineNo">490</span><a name="line.490"></a>
+<span class="sourceLineNo">491</span>                double kCharge = chargedAA2Count.get(aaSet.getCompoundForString("K")) * this.getPosCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("K")), ph);<a name="line.491"></a>
+<span class="sourceLineNo">492</span>                double rCharge = chargedAA2Count.get(aaSet.getCompoundForString("R")) * this.getPosCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("R")), ph);<a name="line.492"></a>
+<span class="sourceLineNo">493</span>                double hCharge = chargedAA2Count.get(aaSet.getCompoundForString("H")) * this.getPosCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("H")), ph);<a name="line.493"></a>
+<span class="sourceLineNo">494</span>                double dCharge = chargedAA2Count.get(aaSet.getCompoundForString("D")) * this.getNegCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("D")), ph);<a name="line.494"></a>
+<span class="sourceLineNo">495</span>                double eCharge = chargedAA2Count.get(aaSet.getCompoundForString("E")) * this.getNegCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("E")), ph);<a name="line.495"></a>
+<span class="sourceLineNo">496</span>                double cCharge = chargedAA2Count.get(aaSet.getCompoundForString("C")) * this.getNegCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("C")), ph);<a name="line.496"></a>
+<span class="sourceLineNo">497</span>                double yCharge = chargedAA2Count.get(aaSet.getCompoundForString("Y")) * this.getNegCharge(Constraints.aa2PKa.get(aaSet.getCompoundForString("Y")), ph);<a name="line.497"></a>
+<span class="sourceLineNo">498</span>//              if((kCharge + rCharge + hCharge) == 0.0 &amp;&amp; (dCharge + eCharge + cCharge + yCharge) == 0.0){<a name="line.498"></a>
+<span class="sourceLineNo">499</span>//                      return 0.0;<a name="line.499"></a>
+<span class="sourceLineNo">500</span>//              }<a name="line.500"></a>
+<span class="sourceLineNo">501</span>                return (nTerminalCharge + kCharge + rCharge + hCharge) - (dCharge + eCharge + cCharge + yCharge + cTerminalCharge);<a name="line.501"></a>
+<span class="sourceLineNo">502</span>        }<a name="line.502"></a>
+<span class="sourceLineNo">503</span><a name="line.503"></a>
+<span class="sourceLineNo">504</span>        private double getPosCharge(double pka, double ph){<a name="line.504"></a>
+<span class="sourceLineNo">505</span>                return Math.pow(10, pka) / (Math.pow(10, pka) + Math.pow(10, ph));<a name="line.505"></a>
+<span class="sourceLineNo">506</span>        }<a name="line.506"></a>
+<span class="sourceLineNo">507</span><a name="line.507"></a>
+<span class="sourceLineNo">508</span>        private double getNegCharge(double pka, double ph){<a name="line.508"></a>
+<span class="sourceLineNo">509</span>                return Math.pow(10, ph) / (Math.pow(10, pka) + Math.pow(10, ph));<a name="line.509"></a>
+<span class="sourceLineNo">510</span>        }<a name="line.510"></a>
+<span class="sourceLineNo">511</span><a name="line.511"></a>
+<span class="sourceLineNo">512</span>        private Map&lt;AminoAcidCompound, Integer&gt; getChargedAACount(ProteinSequence sequence){<a name="line.512"></a>
+<span class="sourceLineNo">513</span>                //Lys =&gt; K, Arg =&gt; R, His =&gt; H<a name="line.513"></a>
+<span class="sourceLineNo">514</span>                //Asp =&gt; D, Glu =&gt; E, Cys =&gt; C, Tyr =&gt; Y<a name="line.514"></a>
+<span class="sourceLineNo">515</span>                int numK = 0;<a name="line.515"></a>
+<span class="sourceLineNo">516</span>                int numR = 0;<a name="line.516"></a>
+<span class="sourceLineNo">517</span>                int numH = 0;<a name="line.517"></a>
+<span class="sourceLineNo">518</span>                int numD = 0;<a name="line.518"></a>
+<span class="sourceLineNo">519</span>                int numE = 0;<a name="line.519"></a>
+<span class="sourceLineNo">520</span>                int numC = 0;<a name="line.520"></a>
+<span class="sourceLineNo">521</span>                int numY = 0;<a name="line.521"></a>
+<span class="sourceLineNo">522</span>                char[] seq = this.getSequence(sequence.getSequenceAsString(), true);<a name="line.522"></a>
+<span class="sourceLineNo">523</span>                for(char aa:seq){<a name="line.523"></a>
+<span class="sourceLineNo">524</span>                        switch(aa){<a name="line.524"></a>
+<span class="sourceLineNo">525</span>                        case 'K': numK++; break;<a name="line.525"></a>
+<span class="sourceLineNo">526</span>                        case 'R': numR++; break;<a name="line.526"></a>
+<span class="sourceLineNo">527</span>                        case 'H': numH++; break;<a name="line.527"></a>
+<span class="sourceLineNo">528</span>                        case 'D': numD++; break;<a name="line.528"></a>
+<span class="sourceLineNo">529</span>                        case 'E': numE++; break;<a name="line.529"></a>
+<span class="sourceLineNo">530</span>                        case 'C': numC++; break;<a name="line.530"></a>
+<span class="sourceLineNo">531</span>                        case 'Y': numY++; break;<a name="line.531"></a>
+<span class="sourceLineNo">532</span>                        }<a name="line.532"></a>
+<span class="sourceLineNo">533</span>                }<a name="line.533"></a>
+<span class="sourceLineNo">534</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.534"></a>
+<span class="sourceLineNo">535</span>                Map&lt;AminoAcidCompound, Integer&gt; chargedAA2Count = new HashMap&lt;AminoAcidCompound, Integer&gt;();<a name="line.535"></a>
+<span class="sourceLineNo">536</span>                chargedAA2Count.put(aaSet.getCompoundForString("K"), numK);<a name="line.536"></a>
+<span class="sourceLineNo">537</span>                chargedAA2Count.put(aaSet.getCompoundForString("R"), numR);<a name="line.537"></a>
+<span class="sourceLineNo">538</span>                chargedAA2Count.put(aaSet.getCompoundForString("H"), numH);<a name="line.538"></a>
+<span class="sourceLineNo">539</span>                chargedAA2Count.put(aaSet.getCompoundForString("D"), numD);<a name="line.539"></a>
+<span class="sourceLineNo">540</span>                chargedAA2Count.put(aaSet.getCompoundForString("E"), numE);<a name="line.540"></a>
+<span class="sourceLineNo">541</span>                chargedAA2Count.put(aaSet.getCompoundForString("C"), numC);<a name="line.541"></a>
+<span class="sourceLineNo">542</span>                chargedAA2Count.put(aaSet.getCompoundForString("Y"), numY);<a name="line.542"></a>
+<span class="sourceLineNo">543</span>                return chargedAA2Count;<a name="line.543"></a>
+<span class="sourceLineNo">544</span>        }<a name="line.544"></a>
+<span class="sourceLineNo">545</span><a name="line.545"></a>
+<span class="sourceLineNo">546</span>        @Override<a name="line.546"></a>
+<span class="sourceLineNo">547</span>        public double getEnrichment(ProteinSequence sequence, AminoAcidCompound aminoAcidCode) {<a name="line.547"></a>
+<span class="sourceLineNo">548</span>                double counter = 0.0;<a name="line.548"></a>
+<span class="sourceLineNo">549</span>                char[] seq = this.getSequence(sequence.getSequenceAsString(), true);<a name="line.549"></a>
+<span class="sourceLineNo">550</span>                for(char aa:seq){<a name="line.550"></a>
+<span class="sourceLineNo">551</span>                        if(aminoAcidCode.getShortName().equals(aa + "")){<a name="line.551"></a>
+<span class="sourceLineNo">552</span>                                counter++;<a name="line.552"></a>
+<span class="sourceLineNo">553</span>                        }<a name="line.553"></a>
+<span class="sourceLineNo">554</span>                }<a name="line.554"></a>
+<span class="sourceLineNo">555</span>                return counter/sequence.getLength();<a name="line.555"></a>
+<span class="sourceLineNo">556</span>        }<a name="line.556"></a>
+<span class="sourceLineNo">557</span><a name="line.557"></a>
+<span class="sourceLineNo">558</span>        @Override<a name="line.558"></a>
+<span class="sourceLineNo">559</span>        public Map&lt;AminoAcidCompound, Double&gt; getAAComposition(ProteinSequence sequence) {<a name="line.559"></a>
+<span class="sourceLineNo">560</span>                int validLength = 0;<a name="line.560"></a>
+<span class="sourceLineNo">561</span>                Map&lt;AminoAcidCompound, Double&gt; aa2Composition = new HashMap&lt;AminoAcidCompound, Double&gt;();<a name="line.561"></a>
+<span class="sourceLineNo">562</span>                AminoAcidCompoundSet aaSet = new AminoAcidCompoundSet();<a name="line.562"></a>
+<span class="sourceLineNo">563</span>                for(AminoAcidCompound aa:aaSet.getAllCompounds()){<a name="line.563"></a>
+<span class="sourceLineNo">564</span>                        aa2Composition.put(aa, 0.0);<a name="line.564"></a>
+<span class="sourceLineNo">565</span>                }<a name="line.565"></a>
+<span class="sourceLineNo">566</span>                char[] seq = this.getSequence(sequence.toString(), true);<a name="line.566"></a>
+<span class="sourceLineNo">567</span>                for(char aa:seq){<a name="line.567"></a>
+<span class="sourceLineNo">568</span>                        if(PeptideProperties.standardAASet.contains(aa)){<a name="line.568"></a>
+<span class="sourceLineNo">569</span>                                AminoAcidCompound compound = aaSet.getCompoundForString(aa + "");<a name="line.569"></a>
+<span class="sourceLineNo">570</span>                                aa2Composition.put(compound, aa2Composition.get(compound) + 1.0);<a name="line.570"></a>
+<span class="sourceLineNo">571</span>                                validLength++;<a name="line.571"></a>
+<span class="sourceLineNo">572</span>                        }<a name="line.572"></a>
+<span class="sourceLineNo">573</span>                }<a name="line.573"></a>
+<span class="sourceLineNo">574</span>                if(validLength &gt; 0){<a name="line.574"></a>
+<span class="sourceLineNo">575</span>                        for(AminoAcidCompound aa:aaSet.getAllCompounds()){<a name="line.575"></a>
+<span class="sourceLineNo">576</span>                                aa2Composition.put(aa, aa2Composition.get(aa) / validLength);<a name="line.576"></a>
+<span class="sourceLineNo">577</span>                        }<a name="line.577"></a>
+<span class="sourceLineNo">578</span>                }else{<a name="line.578"></a>
+<span class="sourceLineNo">579</span>                        for(AminoAcidCompound aa:aaSet.getAllCompounds()){<a name="line.579"></a>
+<span class="sourceLineNo">580</span>                                aa2Composition.put(aa, 0.0);<a name="line.580"></a>
+<span class="sourceLineNo">581</span>                        }<a name="line.581"></a>
+<span class="sourceLineNo">582</span>                }<a name="line.582"></a>
+<span class="sourceLineNo">583</span>                return aa2Composition;<a name="line.583"></a>
+<span class="sourceLineNo">584</span>        }<a name="line.584"></a>
+<span class="sourceLineNo">585</span>}<a name="line.585"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
