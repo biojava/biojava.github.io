@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> *<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.nbio.structure.basepairs;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.structure.Atom;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.structure.Chain;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.structure.Group;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.structure.Structure;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.structure.contact.Pair;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.vecmath.Matrix4d;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.ArrayList;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.List;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>/**<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * This class also finds the base pairing and base-pair step parameters but has a broader definition<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * of a base pair so that non-canonical-WC base pairs will be detected and reported.  This is useful<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * for RNA that has folded into different regions, and for higher-order DNA structures.  Intra-strand<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * pairings are considered in this class (but in not the base class or MismatchedBasePairParameters class)<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @author Luke Czapla<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @since 5.0.0<a name="line.40"></a>
+<span class="sourceLineNo">041</span> *<a name="line.41"></a>
+<span class="sourceLineNo">042</span> */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>public class TertiaryBasePairParameters extends BasePairParameters {<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>        private static final long serialVersionUID = 2556427111533466577L;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        <a name="line.46"></a>
+<span class="sourceLineNo">047</span>        public static final double DEFAULT_MAX_STAGGER = 2.0;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    public static final double DEFAULT_MAX_PROPELLER = 60.0;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>    // These are the criteria used to select proper base pairs.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    private double maxStagger = DEFAULT_MAX_STAGGER,<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            maxPropeller = DEFAULT_MAX_PROPELLER;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>    public TertiaryBasePairParameters(Structure structure, boolean RNA, boolean removeDups) {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>        super(structure, RNA, removeDups);<a name="line.54"></a>
+<span class="sourceLineNo">055</span>    }<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>    /**<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * This is an alternative implementation of findPair() that looks for anything that would fit the<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     * criteria for a base-pair, useful for the context of tertiary structure of RNA.  Intra-strand base pairs<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * are found with this algorithm.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * @param chains The list of chains already found to be nucleic acids<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * @return A list of the Pair of groups that match the base pair criteria, including intra-strand groups.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     */<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    @Override<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    public List&lt;Pair&lt;Group&gt;&gt; findPairs(List&lt;Chain&gt; chains) {<a name="line.65"></a>
+<span class="sourceLineNo">066</span>        List&lt;Pair&lt;Group&gt;&gt; result = new ArrayList&lt;&gt;();<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        boolean lastFoundPair = false;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        for (int i = 0; i &lt; chains.size(); i++) {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>            Chain c = chains.get(i);<a name="line.69"></a>
+<span class="sourceLineNo">070</span>            String sequence = c.getAtomSequence();<a name="line.70"></a>
+<span class="sourceLineNo">071</span>            Integer type1, type2;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>            for (int j = 0; j &lt; sequence.length(); j++) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                boolean foundPair = false;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                for (int k = sequence.length()-1; k &gt;= j + 3 &amp;&amp; !foundPair; k--) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                    Group g1 = c.getAtomGroup(j);<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                    Group g2 = c.getAtomGroup(k);<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                    type1 = BASE_MAP.get(g1.getPDBName());<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                    type2 = BASE_MAP.get(g2.getPDBName());<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                    if (type1 == null || type2 == null) continue;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                    Atom a1 = g1.getAtom("C1'");<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                    Atom a2 = g2.getAtom("C1'");<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                    if (a1 == null || a2 == null) continue;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                    // C1'-C1' distance is one useful criteria<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                    if (Math.abs(a1.getCoordsAsPoint3d().distance(a2.getCoordsAsPoint3d())-10.0) &gt; 4.0) continue;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                    Pair&lt;Group&gt; ga = new Pair&lt;&gt;(g1, g2);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                    // TODO is this call needed?? JD 2018-03-07<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                    @SuppressWarnings("unused")<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                                        Matrix4d data = basePairReferenceFrame(ga);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                    // if the stagger is greater than 2 Å, it's not really paired.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                    if (Math.abs(pairParameters[5]) &gt; maxStagger) continue;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                    // if the propeller is ridiculous it's also not that good of a pair.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                    if (Math.abs(pairParameters[1]) &gt; maxPropeller) {<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                        continue;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                    }<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                    result.add(ga);<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                    pairingNames.add(useRNA ? BASE_LIST_RNA[type1]+ BASE_LIST_RNA[type2]: BASE_LIST_DNA[type1]+ BASE_LIST_DNA[type2]);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                    foundPair = true;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                }<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                if (!foundPair &amp;&amp; lastFoundPair) {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                    if (pairSequence.length() &gt; 0 &amp;&amp; pairSequence.charAt(pairSequence.length()-1) != ' ')<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                        pairSequence += ' ';<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                }<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                if (foundPair) pairSequence += (c.getAtomSequence().charAt(j));<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                lastFoundPair = foundPair;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            }<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        }<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        result.addAll(super.findPairs(chains));<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        return result;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    }<a name="line.109"></a>
+<span class="sourceLineNo">110</span><a name="line.110"></a>
+<span class="sourceLineNo">111</span>    /**<a name="line.111"></a>
+<span class="sourceLineNo">112</span>     * This method returns the maximum stagger between bases used as criteria for the characterization of two bases as being paired.<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * @return the maximum stagger (in Å) allowed.<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     */<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    public double getMaxStagger() {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        return maxStagger;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>    }<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>    /**<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     * This method sets the maximum stagger allowed for a base pair, prior to analyze() call<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     * @param maxStagger The maximum stagger (in Å) allowed to consider two bases paired<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     */<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    public void setMaxStagger(double maxStagger) {<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        this.maxStagger = maxStagger;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    }<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span>    /**<a name="line.127"></a>
+<span class="sourceLineNo">128</span>     * This method returns the maximum propeller twist between bases used as criteria for the characterization of two bases as being paired.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>     * @return the maximum propeller ("propeller-twist", in degrees) allowed.<a name="line.129"></a>
+<span class="sourceLineNo">130</span>     */<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    public double getMaxPropeller() {<a name="line.131"></a>
+<span class="sourceLineNo">132</span>        return maxPropeller;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    }<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>    /**<a name="line.135"></a>
+<span class="sourceLineNo">136</span>     * This method sets the maximum propeller allowed for a base pair, prior to analyze() call<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * @param maxPropeller The maximum propeller ("propeller-twist", in degrees) allowed to consider two bases paired<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     */<a name="line.138"></a>
+<span class="sourceLineNo">139</span>    public void setMaxPropeller(double maxPropeller) {<a name="line.139"></a>
+<span class="sourceLineNo">140</span>        this.maxPropeller = maxPropeller;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    }<a name="line.141"></a>
+<span class="sourceLineNo">142</span>}<a name="line.142"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

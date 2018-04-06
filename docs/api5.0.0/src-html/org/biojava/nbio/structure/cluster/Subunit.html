@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.structure.cluster;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.core.exceptions.CompoundNotFoundException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.core.sequence.ProteinSequence;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.structure.Atom;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.structure.Structure;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.structure.StructureIdentifier;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.structure.StructureTools;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * A Subunit consists of a set of residues from a Structure, which may<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * correspond to an entire Chain, a Domain, or any subset or combination of<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * residues from them. All the residues of a Subunit are of the same type.<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * &lt;p&gt;<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * The Subunit object can contain additional fields for identification and<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * annotation.<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * <a name="line.37"></a>
+<span class="sourceLineNo">038</span> * @author Aleix Lafita<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @since 5.0.0<a name="line.39"></a>
+<span class="sourceLineNo">040</span> *<a name="line.40"></a>
+<span class="sourceLineNo">041</span> */<a name="line.41"></a>
+<span class="sourceLineNo">042</span>public class Subunit {<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>        // Optional fields for Subunit annotation<a name="line.44"></a>
+<span class="sourceLineNo">045</span>        private String name;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        private Structure structure;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        private StructureIdentifier identifier;<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>        // Required fields for Subunit definition<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        private Atom[] reprAtoms;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        private ProteinSequence sequence = null;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>        /**<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * A Subunit is solely defined by the coordinates of the representative<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * Atoms of its residues. It can be identified with a StructureIdentifier<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         * and/or a name and stores a reference to the Structure from which the<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         * Atoms were obtained.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>         * <a name="line.58"></a>
+<span class="sourceLineNo">059</span>         * @param reprAtoms<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         *            representative Atoms. It cannot be null or empty<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * @param name<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         *            String field that identifies the Subunit. It can be null<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         * @param identifier<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         *            StructureIdentifier. It can be null<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * @param structure<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         *            parent Structure object. It can be null<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        public Subunit(Atom[] reprAtoms, String name,<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                        StructureIdentifier identifier, Structure structure) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>                if (reprAtoms == null)<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                        throw new IllegalArgumentException(<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                                        "Representative Atom Array of the Subunit is null");<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                if (reprAtoms.length==0)<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                        throw new IllegalArgumentException(<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                                        "Representative Atom Array of the Subunit has 0 length");<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>                this.reprAtoms = reprAtoms;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                this.name = name;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                this.identifier = identifier;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                this.structure = structure;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>        /**<a name="line.84"></a>
+<span class="sourceLineNo">085</span>         * Get all the representative Atoms of the Subunit. These Atoms are used for<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         * clustering and displaying the Subunit.<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         * <a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * @return representative Atom[]<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         */<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        public Atom[] getRepresentativeAtoms() {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                return reprAtoms;<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        }<a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>        /**<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * The size of a Subunit is the number of residues it contains.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         * <a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * @return the size of the Subunit<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         */<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        public int size() {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                return reprAtoms.length;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        }<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>        /**<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * Get the protein sequence of the Subunit as String.<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         * <a name="line.105"></a>
+<span class="sourceLineNo">106</span>         * @return protein sequence String<a name="line.106"></a>
+<span class="sourceLineNo">107</span>         */<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        public String getProteinSequenceString() {<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>                if (sequence != null)<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                        return sequence.toString();<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>                StringBuilder builder = new StringBuilder();<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                for (Atom a : reprAtoms)<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                        // This method preferred over getChemComp.getOneLetterCode because<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                        // it returns always X for Unknown residues<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                        builder.append(StructureTools.get1LetterCode(a.getGroup()<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                                        .getPDBName()));<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>                return builder.toString();<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        }<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>        /**<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         * Get the protein sequence of the Subunit.<a name="line.124"></a>
+<span class="sourceLineNo">125</span>         * <a name="line.125"></a>
+<span class="sourceLineNo">126</span>         * @return sequence ProteinSequence<a name="line.126"></a>
+<span class="sourceLineNo">127</span>         * @throws CompoundNotFoundException<a name="line.127"></a>
+<span class="sourceLineNo">128</span>         */<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        public ProteinSequence getProteinSequence()<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                        throws CompoundNotFoundException {<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>                if (sequence == null)<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                        sequence = new ProteinSequence(getProteinSequenceString());<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>                return sequence;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>        }<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>        /**<a name="line.138"></a>
+<span class="sourceLineNo">139</span>         * The Name of a Subunit is a free-text field, user defined.<a name="line.139"></a>
+<span class="sourceLineNo">140</span>         * <a name="line.140"></a>
+<span class="sourceLineNo">141</span>         * @return the Subunit name<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         */<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        public String getName() {<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                return name;<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span>        /**<a name="line.147"></a>
+<span class="sourceLineNo">148</span>         * The Name of a Subunit is a free-text field, user defined.<a name="line.148"></a>
+<span class="sourceLineNo">149</span>         * <a name="line.149"></a>
+<span class="sourceLineNo">150</span>         * @param name<a name="line.150"></a>
+<span class="sourceLineNo">151</span>         *            of the Subunit<a name="line.151"></a>
+<span class="sourceLineNo">152</span>         */<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        public void setName(String name) {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                this.name = name;<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        }<a name="line.155"></a>
+<span class="sourceLineNo">156</span><a name="line.156"></a>
+<span class="sourceLineNo">157</span>        /**<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         * The parent Structure from which the Subunit atoms were obtained.<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * <a name="line.159"></a>
+<span class="sourceLineNo">160</span>         * @return Structure object<a name="line.160"></a>
+<span class="sourceLineNo">161</span>         */<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        public Structure getStructure() {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                return structure;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>        /**<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         * The standard identifier of the Subunit.<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         * <a name="line.168"></a>
+<span class="sourceLineNo">169</span>         * @return StructureIdentifier object<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         */<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        public StructureIdentifier getIdentifier() {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                return identifier;<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        }<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>        @Override<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        public String toString() {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                return "Subunit [Name: " + name + ", Identifier: " + identifier<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                                + ", Size:" + size() + ", Sequence:" + sequence + "]";<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>}<a name="line.181"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

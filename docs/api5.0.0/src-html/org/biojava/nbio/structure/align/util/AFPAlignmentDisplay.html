@@ -1,0 +1,562 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    PDB web development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * Created on Jun 17, 2009<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * Created by ap3<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> */<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>package org.biojava.nbio.structure.align.util;<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.biojava.nbio.structure.*;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.structure.align.ce.GuiWrapper;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.structure.align.model.AFPChain;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.structure.geometry.Matrices;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.structure.geometry.SuperPositions;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.structure.jama.Matrix;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.slf4j.Logger;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.slf4j.LoggerFactory;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.lang.reflect.InvocationTargetException;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.*;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>import javax.vecmath.Matrix4d;<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>public class AFPAlignmentDisplay<a name="line.37"></a>
+<span class="sourceLineNo">038</span>{<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        private static final Logger logger = LoggerFactory.getLogger(AFPAlignmentDisplay.class);<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>        private static final int[][] aaMatrix = new int[][] {{6,0,-2,-3,-2,0,-1,0,-2,-2,-2,-2,-2,-3,-4,-4,-3,-3,-3,-2,-4},<a name="line.41"></a>
+<span class="sourceLineNo">042</span>                        {0,4,-1,0,0,1,-2,-2,-1,-1,-1,-2,-1,0,-1,-1,-1,-2,-2,-3,-4},<a name="line.42"></a>
+<span class="sourceLineNo">043</span>                        {-2,-1,7,-3,-1,-1,-1,-2,-1,-1,-1,-2,-2,-2,-3,-3,-2,-4,-3,-4,-4},<a name="line.43"></a>
+<span class="sourceLineNo">044</span>                        {-3,0,-3,9,-1,-1,-3,-3,-4,-3,-3,-3,-3,-1,-1,-1,-1,-2,-2,-2,-4},<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                        {-2,0,-1,-1,5,1,-1,0,-1,-1,-1,-2,-1,0,-1,-1,-1,-2,-2,-2,-4},<a name="line.45"></a>
+<span class="sourceLineNo">046</span>                        {0,1,-1,-1,1,4,0,1,0,0,0,-1,-1,-2,-2,-2,-1,-2,-2,-3,-4},<a name="line.46"></a>
+<span class="sourceLineNo">047</span>                        {-1,-2,-1,-3,-1,0,6,1,2,0,-1,-1,-2,-3,-3,-4,-3,-3,-3,-4,-4},<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                        {0,-2,-2,-3,0,1,1,6,0,0,0,1,0,-3,-3,-3,-2,-3,-2,-4,-4},<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                        {-2,-1,-1,-4,-1,0,2,0,5,2,1,0,0,-2,-3,-3,-2,-3,-2,-3,-4},<a name="line.49"></a>
+<span class="sourceLineNo">050</span>                        {-2,-1,-1,-3,-1,0,0,0,2,5,1,0,1,-2,-3,-2,0,-3,-1,-2,-4},<a name="line.50"></a>
+<span class="sourceLineNo">051</span>                        {-2,-1,-1,-3,-1,0,-1,0,1,1,5,-1,2,-2,-3,-2,-1,-3,-2,-3,-4},<a name="line.51"></a>
+<span class="sourceLineNo">052</span>                        {-2,-2,-2,-3,-2,-1,-1,1,0,0,-1,8,0,-3,-3,-3,-2,-1,2,-2,-4},<a name="line.52"></a>
+<span class="sourceLineNo">053</span>                        {-2,-1,-2,-3,-1,-1,-2,0,0,1,2,0,5,-3,-3,-2,-1,-3,-2,-3,-4},<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                        {-3,0,-2,-1,0,-2,-3,-3,-2,-2,-2,-3,-3,4,3,1,1,-1,-1,-3,-4},<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                        {-4,-1,-3,-1,-1,-2,-3,-3,-3,-3,-3,-3,-3,3,4,2,1,0,-1,-3,-4},<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                        {-4,-1,-3,-1,-1,-2,-4,-3,-3,-2,-2,-3,-2,1,2,4,2,0,-1,-2,-4},<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                        {-3,-1,-2,-1,-1,-1,-3,-2,-2,0,-1,-2,-1,1,1,2,5,0,-1,-1,-4},<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                        {-3,-2,-4,-2,-2,-2,-3,-3,-3,-3,-3,-1,-3,-1,0,0,0,6,3,1,-4},<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                        {-3,-2,-3,-2,-2,-2,-3,-2,-2,-1,-2,2,-2,-1,-1,-1,-1,3,7,2,-4},<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                        {-2,-3,-4,-2,-2,-3,-4,-4,-3,-2,-3,-2,-3,-3,-3,-2,-1,1,2,11,-4},<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                        {-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,1}};<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>        private static Character[] aa1 = new Character[]{  'G',   'A',   'P',   'C',   'T',   'S','D',   'N',   'E',   'Q',   'K',   'H',   'R', 'V',   'I',   'L',   'M',   'F',   'Y',   'W', '-'};<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>        private static final List&lt;Character&gt; aa1List = Arrays.asList(aa1);<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>        public static Matrix getRotMax(AFPChain afpChain,Atom[] ca1,Atom[] ca2) throws StructureException{<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>                Atom[] a1 = getAlignedAtoms1(afpChain,ca1);<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                Atom[] a2 = getAlignedAtoms2(afpChain,ca2);<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>                Matrix4d trans = SuperPositions.superpose(Calc.atomsToPoints(a1), <a name="line.72"></a>
+<span class="sourceLineNo">073</span>                                Calc.atomsToPoints(a2));<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                <a name="line.74"></a>
+<span class="sourceLineNo">075</span>                return Matrices.getRotationJAMA(trans);<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>        }<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>        public static Atom getTranslation(AFPChain afpChain,Atom[] ca1,Atom[] ca2) throws StructureException{<a name="line.79"></a>
+<span class="sourceLineNo">080</span><a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>                Atom[] a1 = getAlignedAtoms1(afpChain,ca1);<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                Atom[] a2 = getAlignedAtoms2(afpChain,ca2);<a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>                Matrix4d trans = SuperPositions.superpose(Calc.atomsToPoints(a1), <a name="line.85"></a>
+<span class="sourceLineNo">086</span>                                Calc.atomsToPoints(a2));<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                <a name="line.87"></a>
+<span class="sourceLineNo">088</span>                return Calc.getTranslationVector(trans);<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>        }<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>        public static Atom[] getAlignedAtoms1(AFPChain afpChain,Atom[] ca1){<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                List&lt;Atom&gt; atoms = new ArrayList&lt;Atom&gt;();<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>                int blockNum = afpChain.getBlockNum();<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>                int[] optLen = afpChain.getOptLen();<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                int[][][] optAln = afpChain.getOptAln();<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span>                for(int bk = 0; bk &lt; blockNum; bk ++)       {<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>                        for ( int i=0;i&lt; optLen[bk];i++){<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                int pos = optAln[bk][0][i];<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                                atoms.add(ca1[pos]);<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                        }<a name="line.107"></a>
+<span class="sourceLineNo">108</span><a name="line.108"></a>
+<span class="sourceLineNo">109</span>                }<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                return atoms.toArray(new Atom[atoms.size()]);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        }<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        public static Atom[] getAlignedAtoms2(AFPChain afpChain,Atom[] ca2){<a name="line.112"></a>
+<span class="sourceLineNo">113</span><a name="line.113"></a>
+<span class="sourceLineNo">114</span>                List&lt;Atom&gt; atoms = new ArrayList&lt;Atom&gt;();<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>                int blockNum = afpChain.getBlockNum();<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>                int[] optLen = afpChain.getOptLen();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                int[][][] optAln = afpChain.getOptAln();<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span><a name="line.121"></a>
+<span class="sourceLineNo">122</span>                for(int bk = 0; bk &lt; blockNum; bk ++)       {<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>                        for ( int i=0;i&lt; optLen[bk];i++){<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                                int pos = optAln[bk][1][i];<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                                atoms.add(ca2[pos]);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                        }<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>                }<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                return atoms.toArray(new Atom[atoms.size()]);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>        }<a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>        /**<a name="line.136"></a>
+<span class="sourceLineNo">137</span>         * Extract the alignment output<a name="line.137"></a>
+<span class="sourceLineNo">138</span>         * &lt;p&gt;eg&lt;pre&gt;<a name="line.138"></a>
+<span class="sourceLineNo">139</span>         * STWNTWACTWHLKQP--WSTILILA<a name="line.139"></a>
+<span class="sourceLineNo">140</span>         * 111111111111     22222222<a name="line.140"></a>
+<span class="sourceLineNo">141</span>         * SQNNTYACSWKLKSWNNNSTILILG<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         * &lt;/pre&gt;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>         * Those position pairs labeled by 1 and 2 are equivalent positions, belongs to<a name="line.143"></a>
+<span class="sourceLineNo">144</span>         * two blocks 1 and 2. The residues between labeled residues are non-equivalent,<a name="line.144"></a>
+<span class="sourceLineNo">145</span>         * with '-' filling in their resulting gaps.<a name="line.145"></a>
+<span class="sourceLineNo">146</span>         * &lt;p&gt;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>         * The three lines can be accessed using<a name="line.147"></a>
+<span class="sourceLineNo">148</span>         * {@link AFPChain#getAlnseq1()}, {@link AFPChain#getAlnsymb()},<a name="line.148"></a>
+<span class="sourceLineNo">149</span>         * and {@link AFPChain#getAlnseq2()}.<a name="line.149"></a>
+<span class="sourceLineNo">150</span>         *<a name="line.150"></a>
+<span class="sourceLineNo">151</span>         */<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        public static void getAlign(AFPChain afpChain,Atom[] ca1,Atom[] ca2) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                getAlign(afpChain, ca1, ca2, false);<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        }<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>        /**<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * Sets the following properties:<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         * &lt;ul&gt;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * &lt;li&gt;The alignment strings {@link AFPChain#setAlnseq1(char[]) alnseq1},<a name="line.159"></a>
+<span class="sourceLineNo">160</span>         *  {@link AFPChain#setAlnseq2(char[]) alnseq2},<a name="line.160"></a>
+<span class="sourceLineNo">161</span>         *  and {@link AFPChain#setAlnsymb(char[]) alnsymb}&lt;/li&gt;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>         * &lt;li&gt;{@link AFPChain#setAlnbeg1(int) alnbeg1} and 2&lt;/li&gt;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>         * &lt;li&gt;{@link AFPChain#setAlnLength(int) alnLength} and<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         *  {@link AFPChain#setGapLen(int) gapLen}&lt;/li&gt;<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         * &lt;/ul&gt;<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         * &lt;p&gt;<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         * Expects the following properties to be previously computed:<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         * &lt;ul&gt;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         * &lt;li&gt;{@link AFPChain#getOptAln()} and lengths<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         * &lt;/ul&gt;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>         *<a name="line.171"></a>
+<span class="sourceLineNo">172</span>         * &lt;section&gt;Known Bugs&lt;/section&gt;<a name="line.172"></a>
+<span class="sourceLineNo">173</span>         * Expects the alignment to have linear topology. May give odd results<a name="line.173"></a>
+<span class="sourceLineNo">174</span>         * for circular permutations and other complicated topologies.<a name="line.174"></a>
+<span class="sourceLineNo">175</span>         *<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         * @param afpChain Alignment between ca1 and ca2<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         * @param ca1 CA atoms of the first protein<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         * @param ca2 CA atoms of the second protein<a name="line.178"></a>
+<span class="sourceLineNo">179</span>         * @param showSeq Use symbols reflecting sequence similarity: '|' for identical,<a name="line.179"></a>
+<span class="sourceLineNo">180</span>         *  ':' for similar, '.' for dissimilar. Otherwise, use the block number<a name="line.180"></a>
+<span class="sourceLineNo">181</span>         *  to show aligned residues.<a name="line.181"></a>
+<span class="sourceLineNo">182</span>         */<a name="line.182"></a>
+<span class="sourceLineNo">183</span>        public static void getAlign(AFPChain afpChain,Atom[] ca1,Atom[] ca2, boolean showSeq) {<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>                char[] alnsymb = afpChain.getAlnsymb();<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                char[] alnseq1 = afpChain.getAlnseq1();<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                char[] alnseq2 = afpChain.getAlnseq2();<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>                int     i, j, k, p1, p2, p1b, p2b, lmax;<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>                int pro1Len = ca1.length;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                int pro2Len = ca2.length;<a name="line.192"></a>
+<span class="sourceLineNo">193</span><a name="line.193"></a>
+<span class="sourceLineNo">194</span>                p1b = p2b = 0;<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span><a name="line.197"></a>
+<span class="sourceLineNo">198</span>                if(alnsymb == null)     {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                        alnseq1 = new char[pro1Len+pro2Len +1];<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                        alnseq2 = new char[pro1Len+pro2Len +1] ;<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                        alnsymb = new char[pro1Len+pro2Len+1];<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>                        afpChain.setAlnseq1(alnseq1);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                        afpChain.setAlnseq2(alnseq2);<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                        afpChain.setAlnsymb(alnsymb);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                }<a name="line.206"></a>
+<span class="sourceLineNo">207</span><a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>                int blockNum = afpChain.getBlockNum();<a name="line.209"></a>
+<span class="sourceLineNo">210</span><a name="line.210"></a>
+<span class="sourceLineNo">211</span>                int[] optLen = afpChain.getOptLen();<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                int[][][] optAln = afpChain.getOptAln();<a name="line.212"></a>
+<span class="sourceLineNo">213</span><a name="line.213"></a>
+<span class="sourceLineNo">214</span>                int alnbeg1 = afpChain.getAlnbeg1(); // immediately overwritten<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                int alnbeg2 = afpChain.getAlnbeg2(); // immediately overwritten<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                int alnLength; // immediately overwritten<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                int optLength = afpChain.getOptLength();<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>                if ( optLen == null) {<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                        optLen = new int[blockNum];<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                        for (int oi =0 ; oi &lt; blockNum ; oi++)<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                optLen[oi] = 0;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                int     len = 0;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                for(i = 0; i &lt; blockNum; i ++)  {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                        for(j = 0; j &lt; optLen[i]; j ++) {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                                p1 = optAln[i][0][j];<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                                p2 = optAln[i][1][j];<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>                                // weird, could not find a residue in the Atom array. Did something change in the underlying data?<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                                if (( p1 == -1 ) || ( p2 == -1)) {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>                                        logger.warn("Could not get atom on position " + j );<a name="line.232"></a>
+<span class="sourceLineNo">233</span>                                        continue;<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                                }<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                                if(len &gt; 0)     {<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                                        lmax = (p1 - p1b - 1)&gt;(p2 - p2b - 1)?(p1 - p1b - 1):(p2 - p2b - 1);<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                                        for(k = 0; k &lt; lmax; k ++)      {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                                                if(k &gt;= (p1 - p1b - 1)) alnseq1[len] = '-';<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                                                else {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                                                        char oneletter = getOneLetter(ca1[p1b+1+k].getGroup());<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                                                        alnseq1[len] = oneletter;<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                                                }<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                                                if(k &gt;= (p2 - p2b - 1)) alnseq2[len] = '-';<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                                                else  {<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                                                        char oneletter = getOneLetter(ca2[p2b+1+k].getGroup());<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                                                        alnseq2[len] = oneletter;<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                                                }<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                                                alnsymb[len ++] = ' ';<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                                        }<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                                }<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                                else    {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                                        alnbeg1 = p1; //the first position of sequence in alignment<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                                        alnbeg2 = p2;<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                                }<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>                                if ( p1 &lt; ca1.length &amp;&amp; p2&lt;ca2.length) {<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>                                        alnseq1[len] = getOneLetter(ca1[p1].getGroup());<a name="line.258"></a>
+<span class="sourceLineNo">259</span>                                        alnseq2[len] = getOneLetter(ca2[p2].getGroup());<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                                } else {<a name="line.260"></a>
+<span class="sourceLineNo">261</span>                                        //TODO handle permutations<a name="line.261"></a>
+<span class="sourceLineNo">262</span>                                        alnseq1[len]='?';<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                                        alnseq2[len]='?';<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                                }<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                                if ( showSeq) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                                        if ( alnseq1[len] == alnseq2[len]){<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                                                alnsymb[len ++] = '|';<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                                        } else {<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                                                double score = aaScore(alnseq1[len], alnseq2[len]);<a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span>                                                if ( score &gt; 1)<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                                                        alnsymb[len ++] = ':';<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                                                else<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                                                        alnsymb[len ++] = '.';<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                                        }<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                                } else {<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                                        String tmpS = String.format( "%d", i + 1);<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                                        alnsymb[len ++] = tmpS.charAt(0);<a name="line.278"></a>
+<span class="sourceLineNo">279</span>                                }<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                                p1b = p1;<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                                p2b = p2;<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                        }<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                }<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                alnLength = len;<a name="line.284"></a>
+<span class="sourceLineNo">285</span><a name="line.285"></a>
+<span class="sourceLineNo">286</span>                afpChain.setOptAln(optAln);<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                afpChain.setOptLen(optLen);<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                afpChain.setAlnbeg1(alnbeg1);<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                afpChain.setAlnbeg2(alnbeg2);<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                afpChain.setAlnLength(alnLength);<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                afpChain.setGapLen(alnLength-optLength);<a name="line.291"></a>
+<span class="sourceLineNo">292</span>        }<a name="line.292"></a>
+<span class="sourceLineNo">293</span><a name="line.293"></a>
+<span class="sourceLineNo">294</span>        private static char getOneLetter(Group g){<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                return StructureTools.get1LetterCode(g.getPDBName());<a name="line.295"></a>
+<span class="sourceLineNo">296</span>        }<a name="line.296"></a>
+<span class="sourceLineNo">297</span><a name="line.297"></a>
+<span class="sourceLineNo">298</span>        public static int aaScore(char a, char b){<a name="line.298"></a>
+<span class="sourceLineNo">299</span>                if (a == 'x')<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                        a= '-';<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                if (b == 'x')<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                        b='-';<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                if ( a == 'X')<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                        a = '-';<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                if ( b == 'X')<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                        b = '-';<a name="line.306"></a>
+<span class="sourceLineNo">307</span><a name="line.307"></a>
+<span class="sourceLineNo">308</span>                int pos1 = aa1List.indexOf(a);<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                int pos2 = aa1List.indexOf(b);<a name="line.309"></a>
+<span class="sourceLineNo">310</span><a name="line.310"></a>
+<span class="sourceLineNo">311</span><a name="line.311"></a>
+<span class="sourceLineNo">312</span>                // SEC an PYL amino acids are not supported as of yet...<a name="line.312"></a>
+<span class="sourceLineNo">313</span><a name="line.313"></a>
+<span class="sourceLineNo">314</span>                if ( pos1 &lt; 0) {<a name="line.314"></a>
+<span class="sourceLineNo">315</span>                        logger.warn("unknown char " + a);<a name="line.315"></a>
+<span class="sourceLineNo">316</span>                        return 0;<a name="line.316"></a>
+<span class="sourceLineNo">317</span>                }<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                if ( pos2 &lt; 0) {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>                        logger.warn("unknown char " + b);<a name="line.319"></a>
+<span class="sourceLineNo">320</span>                        return 0;<a name="line.320"></a>
+<span class="sourceLineNo">321</span>                }<a name="line.321"></a>
+<span class="sourceLineNo">322</span><a name="line.322"></a>
+<span class="sourceLineNo">323</span>                return aaMatrix[pos1][pos2];<a name="line.323"></a>
+<span class="sourceLineNo">324</span>        }<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>        public static Map&lt;String,Double&gt; calcIdSimilarity(char[] seq1, char[] seq2, int alnLength){<a name="line.326"></a>
+<span class="sourceLineNo">327</span>                double identity = 0.0;<a name="line.327"></a>
+<span class="sourceLineNo">328</span>                double similarity = 0.0;<a name="line.328"></a>
+<span class="sourceLineNo">329</span><a name="line.329"></a>
+<span class="sourceLineNo">330</span>                if ( seq1 == null || seq2 == null){<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                        logger.warn("Can't calc %ID for an empty alignment! ");<a name="line.331"></a>
+<span class="sourceLineNo">332</span>                        Map&lt;String, Double&gt; m = new HashMap&lt;String, Double&gt;();<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                        m.put("similarity", similarity);<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                        m.put("identity", identity);<a name="line.334"></a>
+<span class="sourceLineNo">335</span>                        return m;<a name="line.335"></a>
+<span class="sourceLineNo">336</span>                }<a name="line.336"></a>
+<span class="sourceLineNo">337</span><a name="line.337"></a>
+<span class="sourceLineNo">338</span>                int     i;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>                int eqr = 0;<a name="line.339"></a>
+<span class="sourceLineNo">340</span><a name="line.340"></a>
+<span class="sourceLineNo">341</span>                @SuppressWarnings("unused")<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                int count = 0;<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                for(i = 0; i &lt; alnLength; i ++) {<a name="line.343"></a>
+<span class="sourceLineNo">344</span><a name="line.344"></a>
+<span class="sourceLineNo">345</span>                        //System.out.println(i + " " + count + " " + seq1[i] + " " + seq2[i]);<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                        // ignore gaps<a name="line.346"></a>
+<span class="sourceLineNo">347</span>                        if(seq1[i] == '-' || seq1[i] == '*' || seq1[i] == '.' ||<a name="line.347"></a>
+<span class="sourceLineNo">348</span>                                        seq2[i] == '-' || seq2[i] == '*' || seq2[i] == '.' )<a name="line.348"></a>
+<span class="sourceLineNo">349</span>                                continue ;<a name="line.349"></a>
+<span class="sourceLineNo">350</span><a name="line.350"></a>
+<span class="sourceLineNo">351</span>                        eqr++;<a name="line.351"></a>
+<span class="sourceLineNo">352</span><a name="line.352"></a>
+<span class="sourceLineNo">353</span>                        if(seq1[i] == seq2[i])  {<a name="line.353"></a>
+<span class="sourceLineNo">354</span><a name="line.354"></a>
+<span class="sourceLineNo">355</span>                                identity   += 1.0;<a name="line.355"></a>
+<span class="sourceLineNo">356</span>                                similarity += 1.0;<a name="line.356"></a>
+<span class="sourceLineNo">357</span>                                count++;<a name="line.357"></a>
+<span class="sourceLineNo">358</span><a name="line.358"></a>
+<span class="sourceLineNo">359</span>                        } else if(aaScore(seq1[i], seq2[i]) &gt; 0) {<a name="line.359"></a>
+<span class="sourceLineNo">360</span><a name="line.360"></a>
+<span class="sourceLineNo">361</span>                                similarity += 1.0;<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                                count++;<a name="line.362"></a>
+<span class="sourceLineNo">363</span><a name="line.363"></a>
+<span class="sourceLineNo">364</span>                        }<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                }<a name="line.365"></a>
+<span class="sourceLineNo">366</span><a name="line.366"></a>
+<span class="sourceLineNo">367</span><a name="line.367"></a>
+<span class="sourceLineNo">368</span>                if ( alnLength &gt; 0){<a name="line.368"></a>
+<span class="sourceLineNo">369</span>                        similarity = (similarity) / eqr;<a name="line.369"></a>
+<span class="sourceLineNo">370</span>                        identity = identity/eqr;<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                }<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                Map&lt;String, Double&gt; m = new HashMap&lt;String, Double&gt;();<a name="line.372"></a>
+<span class="sourceLineNo">373</span>                m.put("similarity", similarity);<a name="line.373"></a>
+<span class="sourceLineNo">374</span>                m.put("identity", identity);<a name="line.374"></a>
+<span class="sourceLineNo">375</span><a name="line.375"></a>
+<span class="sourceLineNo">376</span>                return m;<a name="line.376"></a>
+<span class="sourceLineNo">377</span>        }<a name="line.377"></a>
+<span class="sourceLineNo">378</span><a name="line.378"></a>
+<span class="sourceLineNo">379</span><a name="line.379"></a>
+<span class="sourceLineNo">380</span>        /**<a name="line.380"></a>
+<span class="sourceLineNo">381</span>         *<a name="line.381"></a>
+<span class="sourceLineNo">382</span>         * @param afpChain<a name="line.382"></a>
+<span class="sourceLineNo">383</span>         * @param ca1<a name="line.383"></a>
+<span class="sourceLineNo">384</span>         * @param ca2<a name="line.384"></a>
+<span class="sourceLineNo">385</span>         * @return<a name="line.385"></a>
+<span class="sourceLineNo">386</span>         * @throws ClassNotFoundException If an error occurs when invoking jmol<a name="line.386"></a>
+<span class="sourceLineNo">387</span>         * @throws NoSuchMethodException If an error occurs when invoking jmol<a name="line.387"></a>
+<span class="sourceLineNo">388</span>         * @throws InvocationTargetException If an error occurs when invoking jmol<a name="line.388"></a>
+<span class="sourceLineNo">389</span>         * @throws IllegalAccessException If an error occurs when invoking jmol<a name="line.389"></a>
+<span class="sourceLineNo">390</span>         * @throws StructureException <a name="line.390"></a>
+<span class="sourceLineNo">391</span>         */<a name="line.391"></a>
+<span class="sourceLineNo">392</span>        public static Structure createArtificalStructure(AFPChain afpChain, Atom[] ca1,<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                                                                                                         Atom[] ca2) throws ClassNotFoundException, NoSuchMethodException,<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                        InvocationTargetException, IllegalAccessException, StructureException<a name="line.394"></a>
+<span class="sourceLineNo">395</span>        {<a name="line.395"></a>
+<span class="sourceLineNo">396</span><a name="line.396"></a>
+<span class="sourceLineNo">397</span>                if ( afpChain.getNrEQR() &lt; 1){<a name="line.397"></a>
+<span class="sourceLineNo">398</span>                        return GuiWrapper.getAlignedStructure(ca1, ca2);<a name="line.398"></a>
+<span class="sourceLineNo">399</span>                }<a name="line.399"></a>
+<span class="sourceLineNo">400</span><a name="line.400"></a>
+<span class="sourceLineNo">401</span>                Group[] twistedGroups = AlignmentTools.prepareGroupsForDisplay(afpChain,ca1, ca2);<a name="line.401"></a>
+<span class="sourceLineNo">402</span><a name="line.402"></a>
+<span class="sourceLineNo">403</span>                List&lt;Atom&gt; twistedAs = new ArrayList&lt;Atom&gt;();<a name="line.403"></a>
+<span class="sourceLineNo">404</span><a name="line.404"></a>
+<span class="sourceLineNo">405</span>                for ( Group g: twistedGroups){<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                        if ( g == null )<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                                continue;<a name="line.407"></a>
+<span class="sourceLineNo">408</span>                        if ( g.size() &lt; 1)<a name="line.408"></a>
+<span class="sourceLineNo">409</span>                                continue;<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                        Atom a = g.getAtom(0);<a name="line.410"></a>
+<span class="sourceLineNo">411</span>                        twistedAs.add(a);<a name="line.411"></a>
+<span class="sourceLineNo">412</span>                }<a name="line.412"></a>
+<span class="sourceLineNo">413</span>                Atom[] twistedAtoms = twistedAs.toArray(new Atom[twistedAs.size()]);<a name="line.413"></a>
+<span class="sourceLineNo">414</span><a name="line.414"></a>
+<span class="sourceLineNo">415</span>                List&lt;Group&gt; hetatms  = new ArrayList&lt;Group&gt;();<a name="line.415"></a>
+<span class="sourceLineNo">416</span>                List&lt;Group&gt; nucs1    = new ArrayList&lt;Group&gt;();<a name="line.416"></a>
+<span class="sourceLineNo">417</span>                Group g1 = ca1[0].getGroup();<a name="line.417"></a>
+<span class="sourceLineNo">418</span>                Chain c1 = null;<a name="line.418"></a>
+<span class="sourceLineNo">419</span>                if ( g1 != null) {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>                        c1 = g1.getChain();<a name="line.420"></a>
+<span class="sourceLineNo">421</span>                        if ( c1 != null){<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                                hetatms = c1.getAtomGroups(GroupType.HETATM);;<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                                nucs1  = c1.getAtomGroups(GroupType.NUCLEOTIDE);<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                        }<a name="line.424"></a>
+<span class="sourceLineNo">425</span>                }<a name="line.425"></a>
+<span class="sourceLineNo">426</span>                List&lt;Group&gt; hetatms2 = new ArrayList&lt;Group&gt;();<a name="line.426"></a>
+<span class="sourceLineNo">427</span>                List&lt;Group&gt; nucs2    = new ArrayList&lt;Group&gt;();<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                Group g2 = ca2[0].getGroup();<a name="line.428"></a>
+<span class="sourceLineNo">429</span>                Chain c2 = null;<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                if ( g2 != null){<a name="line.430"></a>
+<span class="sourceLineNo">431</span>                        c2 = g2.getChain();<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                        if ( c2 != null){<a name="line.432"></a>
+<span class="sourceLineNo">433</span>                                hetatms2 = c2.getAtomGroups(GroupType.HETATM);<a name="line.433"></a>
+<span class="sourceLineNo">434</span>                                nucs2 = c2.getAtomGroups(GroupType.NUCLEOTIDE);<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                        }<a name="line.435"></a>
+<span class="sourceLineNo">436</span>                }<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                Atom[] arr1 = GuiWrapper.getAtomArray(ca1, hetatms, nucs1);<a name="line.437"></a>
+<span class="sourceLineNo">438</span>                Atom[] arr2 = GuiWrapper.getAtomArray(twistedAtoms, hetatms2, nucs2);<a name="line.438"></a>
+<span class="sourceLineNo">439</span><a name="line.439"></a>
+<span class="sourceLineNo">440</span>                return GuiWrapper.getAlignedStructure(arr1,arr2);<a name="line.440"></a>
+<span class="sourceLineNo">441</span>        }<a name="line.441"></a>
+<span class="sourceLineNo">442</span><a name="line.442"></a>
+<span class="sourceLineNo">443</span>        /** get the block number for an aligned position<a name="line.443"></a>
+<span class="sourceLineNo">444</span>         *<a name="line.444"></a>
+<span class="sourceLineNo">445</span>         * @param afpChain<a name="line.445"></a>
+<span class="sourceLineNo">446</span>         * @param aligPos<a name="line.446"></a>
+<span class="sourceLineNo">447</span>         * @return<a name="line.447"></a>
+<span class="sourceLineNo">448</span>         */<a name="line.448"></a>
+<span class="sourceLineNo">449</span>        public static int getBlockNrForAlignPos(AFPChain afpChain, int aligPos){<a name="line.449"></a>
+<span class="sourceLineNo">450</span>                // moved here from DisplayAFP;<a name="line.450"></a>
+<span class="sourceLineNo">451</span><a name="line.451"></a>
+<span class="sourceLineNo">452</span>                int blockNum = afpChain.getBlockNum();<a name="line.452"></a>
+<span class="sourceLineNo">453</span><a name="line.453"></a>
+<span class="sourceLineNo">454</span>                int[] optLen = afpChain.getOptLen();<a name="line.454"></a>
+<span class="sourceLineNo">455</span>                int[][][] optAln = afpChain.getOptAln();<a name="line.455"></a>
+<span class="sourceLineNo">456</span><a name="line.456"></a>
+<span class="sourceLineNo">457</span>                int len = 0;<a name="line.457"></a>
+<span class="sourceLineNo">458</span>                int p1b=0;<a name="line.458"></a>
+<span class="sourceLineNo">459</span>                int p2b=0;<a name="line.459"></a>
+<span class="sourceLineNo">460</span><a name="line.460"></a>
+<span class="sourceLineNo">461</span>                for(int i = 0; i &lt; blockNum; i ++)  {<a name="line.461"></a>
+<span class="sourceLineNo">462</span><a name="line.462"></a>
+<span class="sourceLineNo">463</span>                        for(int j = 0; j &lt; optLen[i]; j ++) {<a name="line.463"></a>
+<span class="sourceLineNo">464</span><a name="line.464"></a>
+<span class="sourceLineNo">465</span>                                int p1 = optAln[i][0][j];<a name="line.465"></a>
+<span class="sourceLineNo">466</span>                                int p2 = optAln[i][1][j];<a name="line.466"></a>
+<span class="sourceLineNo">467</span><a name="line.467"></a>
+<span class="sourceLineNo">468</span>                                if (len != 0) {<a name="line.468"></a>
+<span class="sourceLineNo">469</span>                                        // check for gapped region<a name="line.469"></a>
+<span class="sourceLineNo">470</span>                                        int lmax = (p1 - p1b - 1)&gt;(p2 - p2b - 1)?(p1 - p1b - 1):(p2 - p2b - 1);<a name="line.470"></a>
+<span class="sourceLineNo">471</span>                                        for(int k = 0; k &lt; lmax; k ++)      {<a name="line.471"></a>
+<span class="sourceLineNo">472</span>                                                len++;<a name="line.472"></a>
+<span class="sourceLineNo">473</span>                                        }<a name="line.473"></a>
+<span class="sourceLineNo">474</span>                                }<a name="line.474"></a>
+<span class="sourceLineNo">475</span><a name="line.475"></a>
+<span class="sourceLineNo">476</span><a name="line.476"></a>
+<span class="sourceLineNo">477</span>                                p1b = p1;<a name="line.477"></a>
+<span class="sourceLineNo">478</span>                                p2b = p2;<a name="line.478"></a>
+<span class="sourceLineNo">479</span>                                if ( len &gt;= aligPos) {<a name="line.479"></a>
+<span class="sourceLineNo">480</span><a name="line.480"></a>
+<span class="sourceLineNo">481</span>                                        return i;<a name="line.481"></a>
+<span class="sourceLineNo">482</span>                                }<a name="line.482"></a>
+<span class="sourceLineNo">483</span>                                len++;<a name="line.483"></a>
+<span class="sourceLineNo">484</span>                        }<a name="line.484"></a>
+<span class="sourceLineNo">485</span>                }<a name="line.485"></a>
+<span class="sourceLineNo">486</span><a name="line.486"></a>
+<span class="sourceLineNo">487</span>                return blockNum;<a name="line.487"></a>
+<span class="sourceLineNo">488</span><a name="line.488"></a>
+<span class="sourceLineNo">489</span>        }<a name="line.489"></a>
+<span class="sourceLineNo">490</span>}<a name="line.490"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

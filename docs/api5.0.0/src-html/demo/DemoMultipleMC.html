@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package demo;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.IOException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Arrays;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.List;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.ArrayList;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.concurrent.ExecutionException;<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.nbio.structure.Atom;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.nbio.structure.StructureException;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.nbio.structure.StructureIdentifier;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.nbio.structure.align.ce.CeMain;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.nbio.structure.align.client.StructureName;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.nbio.structure.align.multiple.MultipleAlignment;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.nbio.structure.align.multiple.mc.MultipleMcMain;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.nbio.structure.align.multiple.mc.MultipleMcParameters;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.nbio.structure.align.multiple.util.MultipleAlignmentWriter;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.nbio.structure.align.util.AtomCache;<a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>/**<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * Demo for running the MultipleMC Algorithm on a protein family.<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * For visualizing the results in jmol use the same Demo in the GUI module.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * Here only the sequence alignment will be displayed.<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * Choose the family by commenting out the protein family names.<a name="line.44"></a>
+<span class="sourceLineNo">045</span> *<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @author Aleix Lafita<a name="line.46"></a>
+<span class="sourceLineNo">047</span> *<a name="line.47"></a>
+<span class="sourceLineNo">048</span> */<a name="line.48"></a>
+<span class="sourceLineNo">049</span>public class DemoMultipleMC {<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>        public static void main(String[] args) throws IOException, StructureException, InterruptedException, ExecutionException {<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>                //Specify the structures to align<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                //ASP-proteinases (CEMC paper)<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                //List&lt;String&gt; names = Arrays.asList("3app", "4ape", "2apr", "5pep", "1psn", "4cms", "1bbs.A", "1smr.A", "2jxr.A", "1mpp", "2asi", "1am5");<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                //Protein Kinases (CEMC paper)<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                //List&lt;String&gt; names = Arrays.asList("1cdk.A", "1cja.A", "1csn", "1b6c.B", "1ir3.A", "1fgk.A", "1byg.A", "1hck", "1blx.A", "3erk", "1bmk.A", "1kob.A", "1tki.A", "1phk", "1a06");<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                //DHFR (Gerstein 1998 paper)<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                //List&lt;String&gt; names = Arrays.asList("d1dhfa_", "8dfr", "d4dfra_", "3dfr");<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                //Beta-propeller (MATT paper)<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                //List&lt;String&gt; names = Arrays.asList("d1nr0a1", "d1nr0a2", "d1p22a2", "d1tbga_");<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                //Beta-helix (MATT paper)<a name="line.62"></a>
+<span class="sourceLineNo">063</span>                List&lt;String&gt; names = Arrays.asList("d1hm9a1", "d1kk6a_", "d1krra_", "d1lxaa_", "d1ocxa_", "d1qrea_", "d1xata_", "d3tdta_");<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                //TIM barrels (MUSTA paper)<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                //List&lt;String&gt; names = Arrays.asList("1tim.A", "1vzw", "1nsj", "3tha.A", "4enl", "2mnr", "7tim.A", "1tml", "1btc", "a1piia1", "6xia", "5rub.A", "2taa.B");<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                //Calcium Binding (MUSTA paper)<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                //List&lt;String&gt; names = Arrays.asList("4cpv", "2scp.A", "2sas", "1top", "1scm.B", "3icb");<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                //Serine Rich Proteins SERP (MUSTA paper)<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                //List&lt;String&gt; names = Arrays.asList("7api.A", "8api.A", "1hle.A", "1ova.A", "2ach.A", "9api.A", "1psi", "1atu", "1kct", "1ath.A", "1att.A");<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                //Serine Proteases (MUSTA paper)<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                //List&lt;String&gt; names = Arrays.asList("1cse.E", "1sbn.E", "1pek.E", "3prk", "3tec.E");<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                //GPCRs<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                //List&lt;String&gt; names = Arrays.asList("2z73.A", "1u19.A", "4ug2.A", "4xt3", "4or2.A", "3odu.A");<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                //Immunoglobulins (MAMMOTH paper)<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                //List&lt;String&gt; names = Arrays.asList("2hla.B", "3hla.B", "1cd8", "2rhe", "1tlk", "1ten", "1ttf");<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                //Globins (MAMMOTH, POSA, Gerstein&amp;Levitt and MUSTA papers)<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                //List&lt;String&gt; names = Arrays.asList("1mbc", "1hlb", "1thb.A", "1ith.A", "1idr.A", "1dlw", "1kr7.A", "1ew6.A", "1it2.A", "1eco", "3sdh.A", "1cg5.B", "1fhj.B", "1ird.A", "1mba", "2gdm", "1b0b", "1h97.A", "1ash.A", "1jl7.A");<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                //Rossman-Fold (POSA paper)<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                //List&lt;String&gt; names = Arrays.asList("d1heta2", "d1ek6a_", "d1obfo1", "2cmd", "d1np3a2", "d1bgva1", "d1id1a_", "d1id1a_", "d1oi7a1");<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                //Circular Permutations (Bliven CECP paper) - dynamin GTP-ase with CP G-domain<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                //List&lt;String&gt; names = Arrays.asList("d1u0la2", "d1jwyb_");<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                //Circular Permutations: SAND and MFPT domains<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                //List&lt;String&gt; names = Arrays.asList("d2bjqa1", "d1h5pa_", "d1ufna_");  //"d1oqja"<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                //Amonium Transporters (Aleix Bachelor's Thesis)<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                //List&lt;String&gt; names = Arrays.asList("1xqf.A","2b2f.A", "3b9w.A","3hd6.A");<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                //Cytochrome C Oxidases (Aleix Bachelor's Thesis)<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                //List&lt;String&gt; names = Arrays.asList("2dyr.A","2gsm.A","2yev.A","3hb3.A","3omn.A","1fft.A","1xme.A","3o0r.B","3ayf.A");<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                //Cation Transporting ATPases (Aleix Bachelor's Thesis)<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                //List&lt;String&gt; names = Arrays.asList("3b8e.A","2zxe.A", "3tlm.A","1iwo.A");<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                //Ankyrin Repeats<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                //List&lt;String&gt; names = Arrays.asList("d1n0ra_", "3ehq.A", "1awc.B");  //ankyrin<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>                //Load the CA atoms of the structures<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                AtomCache cache = new AtomCache();<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                List&lt;Atom[]&gt; atomArrays = new ArrayList&lt;Atom[]&gt;();<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>                List&lt;StructureIdentifier&gt; ids = new ArrayList&lt;StructureIdentifier&gt;();<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                for (String name:names) {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                        StructureIdentifier id = new StructureName(name);<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                        ids.add(id);<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                        atomArrays.add(cache.getAtoms(id));<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                }<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>                //Here the multiple structural alignment algorithm comes in place to generate the alignment object<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                MultipleMcMain algorithm = new MultipleMcMain(new CeMain());<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                MultipleMcParameters params = (MultipleMcParameters) algorithm.getParameters();<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                params.setMinBlockLen(15);<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                params.setMinAlignedStructures(10);<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>                MultipleAlignment result = algorithm.align(atomArrays);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                result.getEnsemble().setStructureIdentifiers(ids);<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>                //Information about the alignment<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                result.getEnsemble().setAlgorithmName(algorithm.getAlgorithmName());<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                result.getEnsemble().setVersion(algorithm.getVersion());<a name="line.115"></a>
+<span class="sourceLineNo">116</span><a name="line.116"></a>
+<span class="sourceLineNo">117</span>                //Output the sequence alignment + transformations<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                System.out.println(MultipleAlignmentWriter.toFatCat(result));<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                //System.out.println(MultipleAlignmentWriter.toFASTA(result));<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                System.out.println(MultipleAlignmentWriter.toTransformMatrices(result));<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                System.out.println(MultipleAlignmentWriter.toXML(result.getEnsemble()));<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>}<a name="line.123"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.core.sequence.io;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.core.sequence.compound.DNACompoundSet;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.core.sequence.features.FeatureInterface;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.core.sequence.io.template.GenbankHeaderFormatInterface;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.core.sequence.template.AbstractSequence;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.core.sequence.template.Compound;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.nbio.core.util.StringManipulationHelper;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.text.SimpleDateFormat;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.*;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>public class GenericGenbankHeaderFormat&lt;S extends AbstractSequence&lt;C&gt;, C extends Compound&gt;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>                extends GenericInsdcHeaderFormat&lt;S, C&gt; implements<a name="line.35"></a>
+<span class="sourceLineNo">036</span>                GenbankHeaderFormatInterface&lt;S, C&gt; {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        private static final int HEADER_WIDTH = 12;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        private static final String lineSep = "%n";<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        private String seqType = null;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>        public GenericGenbankHeaderFormat() {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>                seqType = null;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>        }<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>        public GenericGenbankHeaderFormat(String seqType) {<a name="line.45"></a>
+<span class="sourceLineNo">046</span>                this.seqType = seqType;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        }<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * Used in the the 'header' of each GenBank record.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         *<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         * @param tag<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * @param text<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        private String _write_single_line(String tag, String text) {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                assert tag.length() &lt; HEADER_WIDTH;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                return StringManipulationHelper.padRight(tag, HEADER_WIDTH)<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                                + text.replace('\n', ' ') + lineSep;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        }<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>        /**<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         * Used in the the 'header' of each GenBank record.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         *<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * @param tag<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * @param text<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        private String _write_multi_line(String tag, String text) {<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                if (text == null) {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                        text = "";<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                }<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                int max_len = MAX_WIDTH - HEADER_WIDTH;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                ArrayList&lt;String&gt; lines = _split_multi_line(text, max_len);<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                String output = _write_single_line(tag, lines.get(0));<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                for (int i = 1; i &lt; lines.size(); i++) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                        output += _write_single_line("", lines.get(i));<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                }<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                return output;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        }<a name="line.78"></a>
+<span class="sourceLineNo">079</span><a name="line.79"></a>
+<span class="sourceLineNo">080</span>        /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         * used for DBLINK and any similar later line types. If the list of strings<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * is empty, nothing is written.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         *<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         * @param tag<a name="line.84"></a>
+<span class="sourceLineNo">085</span>         * @param text_list<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         */<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        /*<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * private String _write_multi_entries(String tag, ArrayList&lt;String&gt;<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         * text_list) { String output = _write_single_line(tag,text_list.remove(0));<a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * for(String s : text_list) { output += _write_single_line("", s); } return<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         * output; }<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         */<a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>        private String _get_date(S sequence) {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                Date sysdate = Calendar.getInstance().getTime();<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>                // String default_date =<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                // sysdate.get(Calendar.DAY_OF_MONTH)+"-"+sysdate.get(Calendar.MONTH)+"-"+sysdate.get(Calendar.YEAR);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                String default_date = new SimpleDateFormat("dd-MMM-yyyy")<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                                .format(sysdate);<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                return default_date;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                /*<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                 * try : date = record.annotations["date"] except KeyError : return<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                 * default #Cope with a list of one string: if isinstance(date, list)<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                 * and len(date)==1 : date = date[0] #TODO - allow a Python date object<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                 * if not isinstance(date, str) or len(date) != 11 \ or date[2] != "-"<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                 * or date[6] != "-" \ or not date[:2].isdigit() or not<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                 * date[7:].isdigit() \ or int(date[:2]) &gt; 31 \ or date[3:6] not in<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                 * ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP",<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                 * "OCT", "NOV", "DEC"] : #TODO - Check is a valid date (e.g. not 31<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                 * Feb) return default return date<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                 */<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>        private String _get_data_division(S sequence) {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                return UNKNOWN_DNA;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                /*<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                 * try: division = record.annotations["data_file_division"] except<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                 * KeyError: division = "UNK" if division in ["PRI", "ROD", "MAM",<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                 * "VRT", "INV", "PLN", "BCT", "VRL", "PHG", "SYN", "UNA", "EST", "PAT",<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                 * "STS", "GSS", "HTG", "HTC", "ENV", "CON"]: #Good, already GenBank<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                 * style # PRI - primate sequences # ROD - rodent sequences # MAM -<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                 * other mammalian sequences # VRT - other vertebrate sequences # INV -<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                 * invertebrate sequences # PLN - plant, fungal, and algal sequences #<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                 * BCT - bacterial sequences [plus archea] # VRL - viral sequences # PHG<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                 * - bacteriophage sequences # SYN - synthetic sequences # UNA -<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                 * unannotated sequences # EST - EST sequences (expressed sequence tags)<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                 * # PAT - patent sequences # STS - STS sequences (sequence tagged<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                 * sites) # GSS - GSS sequences (genome survey sequences) # HTG - HTGS<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                 * sequences (high throughput genomic sequences) # HTC - HTC sequences<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                 * (high throughput cDNA sequences) # ENV - Environmental sampling<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                 * sequences # CON - Constructed sequences # #(plus UNK for unknown)<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                 * pass else: #See if this is in EMBL style: # Division Code #<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                 * ----------------- ---- # Bacteriophage PHG - common # Environmental<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                 * Sample ENV - common # Fungal FUN - map to PLN (plants + fungal) #<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                 * Human HUM - map to PRI (primates) # Invertebrate INV - common # Other<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                 * Mammal MAM - common # Other Vertebrate VRT - common # Mus musculus<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                 * MUS - map to ROD (rodent) # Plant PLN - common # Prokaryote PRO - map<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                 * to BCT (poor name) # Other Rodent ROD - common # Synthetic SYN -<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                 * common # Transgenic TGN - ??? map to SYN ??? # Unclassified UNC - map<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                 * to UNK # Viral VRL - common # #(plus XXX for submiting which we can<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                 * map to UNK) embl_to_gbk = {"FUN":"PLN", "HUM":"PRI", "MUS":"ROD",<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                 * "PRO":"BCT", "UNC":"UNK", "XXX":"UNK", } try: division =<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                 * embl_to_gbk[division] except KeyError: division = "UNK" assert<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                 * len(division)==3 return division<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                 */<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>        /**<a name="line.149"></a>
+<span class="sourceLineNo">150</span>         * Write the LOCUS line.<a name="line.150"></a>
+<span class="sourceLineNo">151</span>         *<a name="line.151"></a>
+<span class="sourceLineNo">152</span>         * @param sequence<a name="line.152"></a>
+<span class="sourceLineNo">153</span>         * @param seqType<a name="line.153"></a>
+<span class="sourceLineNo">154</span>         */<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        private String _write_the_first_line(S sequence) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                /*<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                 * locus = record.name if not locus or locus == "&lt;unknown name&gt;": locus<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                 * = record.id if not locus or locus == "&lt;unknown id&gt;": locus =<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                 * self._get_annotation_str(record, "accession", just_first=True)\<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                 */<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                String locus;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                try {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                        locus = sequence.getAccession().getID();<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                } catch (Exception e) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                        locus = "";<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                }<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                if (locus.length() &gt; 16) {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                        throw new RuntimeException("Locus identifier " + locus<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                        + " is too long");<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                }<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>                String units = "";<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                String mol_type = "";<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                if (sequence.getCompoundSet() instanceof DNACompoundSet) {<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                        units = "bp";<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                        mol_type = "DNA";<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                } else if (sequence.getCompoundSet() instanceof DNACompoundSet) {<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                        units = "bp";<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                        mol_type = "RNA";<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                } else if (sequence.getCompoundSet() instanceof AminoAcidCompoundSet) {<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                        units = "aa";<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        mol_type = "";<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                } else {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                        throw new RuntimeException(<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                                        "Need a DNACompoundSet, RNACompoundSet, or an AminoAcidCompoundSet");<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                }<a name="line.186"></a>
+<span class="sourceLineNo">187</span><a name="line.187"></a>
+<span class="sourceLineNo">188</span>                String division = _get_data_division(sequence);<a name="line.188"></a>
+<span class="sourceLineNo">189</span><a name="line.189"></a>
+<span class="sourceLineNo">190</span>                if (seqType != null) {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                        division = seqType;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                }<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                assert units.length() == 2;<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span>                // the next line does not seem right.. seqType == linear<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                // uncommenting for now<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                //assert division.length() == 3;<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>                StringBuilder sb = new StringBuilder();<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                Formatter formatter = new Formatter(sb, Locale.US);<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                formatter<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                .format("LOCUS       %s %s %s    %s           %s %s" + lineSep,<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                                StringManipulationHelper.padRight(locus, 16),<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                                StringManipulationHelper.padLeft(<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                                                Integer.toString(sequence.getLength()), 11),<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                                                units, StringManipulationHelper.padRight(mol_type, 6), division,<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                                                _get_date(sequence));<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                String output = formatter.toString();<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                formatter.close();<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                return output;<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                /*<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                 * assert len(line) == 79+1, repr(line) #plus one for new line<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                 *<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                 * assert line[12:28].rstrip() == locus, \ 'LOCUS line does not contain<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                 * the locus at the expected position:\n' + line assert line[28:29] ==<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                 * " " assert line[29:40].lstrip() == str(len(record)), \ 'LOCUS line<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                 * does not contain the length at the expected position:\n' + line<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                 *<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                 * #Tests copied from Bio.GenBank.Scanner assert line[40:44] in [' bp ',<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                 * ' aa '] , \ 'LOCUS line does not contain size units at expected<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                 * position:\n' + line assert line[44:47] in [' ', 'ss-', 'ds-', 'ms-'],<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                 * \ 'LOCUS line does not have valid strand type (Single stranded,<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                 * ...):\n' + line assert line[47:54].strip() == "" \ or<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                 * line[47:54].strip().find('DNA') != -1 \ or<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                 * line[47:54].strip().find('RNA') != -1, \ 'LOCUS line does not contain<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                 * valid sequence type (DNA, RNA, ...):\n' + line assert line[54:55] ==<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                 * ' ', \ 'LOCUS line does not contain space at position 55:\n' + line<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                 * assert line[55:63].strip() in ['', 'linear', 'circular'], \ 'LOCUS<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                 * line does not contain valid entry (linear, circular, ...):\n' + line<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                 * assert line[63:64] == ' ', \ 'LOCUS line does not contain space at<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                 * position 64:\n' + line assert line[67:68] == ' ', \ 'LOCUS line does<a name="line.231"></a>
+<span class="sourceLineNo">232</span>                 * not contain space at position 68:\n' + line assert line[70:71] ==<a name="line.232"></a>
+<span class="sourceLineNo">233</span>                 * '-', \ 'LOCUS line does not contain - at position 71 in date:\n' +<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                 * line assert line[74:75] == '-', \ 'LOCUS line does not contain - at<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                 * position 75 in date:\n' + line<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                 */<a name="line.236"></a>
+<span class="sourceLineNo">237</span>        }<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>        /**<a name="line.239"></a>
+<span class="sourceLineNo">240</span>         * This is a bit complicated due to the range of possible ways people might<a name="line.240"></a>
+<span class="sourceLineNo">241</span>         * have done their annotation... Currently the parser uses a single string<a name="line.241"></a>
+<span class="sourceLineNo">242</span>         * with newlines. A list of lines is also reasonable. A single (long) string<a name="line.242"></a>
+<span class="sourceLineNo">243</span>         * is perhaps the most natural of all. This means we may need to deal with<a name="line.243"></a>
+<span class="sourceLineNo">244</span>         * line wrapping.<a name="line.244"></a>
+<span class="sourceLineNo">245</span>         *<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         * @param sequence<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         */<a name="line.247"></a>
+<span class="sourceLineNo">248</span>        private String _write_comment(S sequence) {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                ArrayList&lt;String&gt; comments = sequence.getNotesList();<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                String output = _write_multi_line("COMMENT", comments.remove(0));<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                for (String comment : comments) {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                        output += _write_multi_line("", comment);<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                }<a name="line.253"></a>
+<span class="sourceLineNo">254</span><a name="line.254"></a>
+<span class="sourceLineNo">255</span>                return output;<a name="line.255"></a>
+<span class="sourceLineNo">256</span>        }<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>        @Override<a name="line.258"></a>
+<span class="sourceLineNo">259</span>        public String getHeader(S sequence) {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                String header = _write_the_first_line(sequence);<a name="line.260"></a>
+<span class="sourceLineNo">261</span>                String acc_with_version;<a name="line.261"></a>
+<span class="sourceLineNo">262</span>                String accession;<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                try {<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                        acc_with_version = sequence.getAccession().getID();<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                        accession = acc_with_version.split("\\.", 1)[0];<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                } catch (Exception e) {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        acc_with_version = "";<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                        accession = "";<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                }<a name="line.269"></a>
+<span class="sourceLineNo">270</span>                String description = sequence.getDescription();<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                if ("&lt;unknown description&gt;".equals(description) || description == null) {<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                        description = ".";<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                }<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                header += _write_multi_line("DEFINITION", description);<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                header += _write_multi_line("ACCESSION", accession);<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                header += _write_multi_line("VERSION", acc_with_version);<a name="line.276"></a>
+<span class="sourceLineNo">277</span><a name="line.277"></a>
+<span class="sourceLineNo">278</span>                /*<a name="line.278"></a>
+<span class="sourceLineNo">279</span>                 * gi = self._get_annotation_str(record, "gi", just_first=True)<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                 *<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                 * self._write_single_line("ACCESSION", accession) if gi != ".":<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                 * self._write_single_line("VERSION", "%s  GI:%s" \ % (acc_with_version,<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                 * gi)) else: self._write_single_line("VERSION", "%s" %<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                 * (acc_with_version))<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                 *<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                 * #The NCBI only expect two types of link so far, #e.g. "Project:28471"<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                 * and "Trace Assembly Archive:123456" #TODO - Filter the dbxrefs list<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                 * to just these? self._write_multi_entries("DBLINK", record.dbxrefs)<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                 *<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                 * try: #List of strings #Keywords should be given separated with semi<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                 * colons, keywords = "; ".join(record.annotations["keywords"]) #with a<a name="line.291"></a>
+<span class="sourceLineNo">292</span>                 * trailing period: if not keywords.endswith(".") : keywords += "."<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                 * except KeyError: #If no keywords, there should be just a period:<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                 * keywords = "."<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                 */<a name="line.295"></a>
+<span class="sourceLineNo">296</span><a name="line.296"></a>
+<span class="sourceLineNo">297</span>                header += _write_multi_line("KEYWORDS", ".");<a name="line.297"></a>
+<span class="sourceLineNo">298</span><a name="line.298"></a>
+<span class="sourceLineNo">299</span>                /*<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                 * if "segment" in record.annotations: #Deal with SEGMENT line found<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                 * only in segmented records, #e.g. AH000819 segment =<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                 * record.annotations["segment"] if isinstance(segment, list): assert<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                 * len(segment)==1, segment segment = segment[0]<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                 * self._write_single_line("SEGMENT", segment)<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                 *<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                 * self._write_multi_line("SOURCE", \ self._get_annotation_str(record,<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                 * "source"))<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                 */<a name="line.308"></a>
+<span class="sourceLineNo">309</span><a name="line.309"></a>
+<span class="sourceLineNo">310</span>                header += _write_multi_line("SOURCE", sequence.getSource());<a name="line.310"></a>
+<span class="sourceLineNo">311</span><a name="line.311"></a>
+<span class="sourceLineNo">312</span>                /*<a name="line.312"></a>
+<span class="sourceLineNo">313</span>                 * #The ORGANISM line MUST be a single line, as any continuation is the<a name="line.313"></a>
+<span class="sourceLineNo">314</span>                 * taxonomy org = self._get_annotation_str(record, "organism") if<a name="line.314"></a>
+<span class="sourceLineNo">315</span>                 * len(org) &gt; self.MAX_WIDTH - self.HEADER_WIDTH: org =<a name="line.315"></a>
+<span class="sourceLineNo">316</span>                 * org[:self.MAX_WIDTH - self.HEADER_WIDTH-4]+"..."<a name="line.316"></a>
+<span class="sourceLineNo">317</span>                 * self._write_single_line("  ORGANISM", org) try: #List of strings<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                 * #Taxonomy should be given separated with semi colons, taxonomy =<a name="line.318"></a>
+<span class="sourceLineNo">319</span>                 * "; ".join(record.annotations["taxonomy"]) #with a trailing period: if<a name="line.319"></a>
+<span class="sourceLineNo">320</span>                 * not taxonomy.endswith(".") : taxonomy += "." except KeyError:<a name="line.320"></a>
+<span class="sourceLineNo">321</span>                 * taxonomy = "." self._write_multi_line("", taxonomy)<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                 *<a name="line.322"></a>
+<span class="sourceLineNo">323</span>                 * if "references" in record.annotations: self._write_references(record)<a name="line.323"></a>
+<span class="sourceLineNo">324</span>                 */<a name="line.324"></a>
+<span class="sourceLineNo">325</span>                if (!sequence.getNotesList().isEmpty()) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>                        header += _write_comment(sequence);<a name="line.326"></a>
+<span class="sourceLineNo">327</span>                }<a name="line.327"></a>
+<span class="sourceLineNo">328</span><a name="line.328"></a>
+<span class="sourceLineNo">329</span>                header += "FEATURES             Location/Qualifiers" + lineSep;<a name="line.329"></a>
+<span class="sourceLineNo">330</span>                int rec_length = sequence.getLength();<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                for (FeatureInterface&lt;AbstractSequence&lt;C&gt;, C&gt; feature : sequence<a name="line.331"></a>
+<span class="sourceLineNo">332</span>                                .getFeatures()) {<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                        header += _write_feature(feature, rec_length);<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                }<a name="line.334"></a>
+<span class="sourceLineNo">335</span><a name="line.335"></a>
+<span class="sourceLineNo">336</span>                return header;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>        }<a name="line.337"></a>
+<span class="sourceLineNo">338</span><a name="line.338"></a>
+<span class="sourceLineNo">339</span>}<a name="line.339"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
