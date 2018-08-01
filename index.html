@@ -5,9 +5,9 @@ layout: landing
 					<section id="banner">
 						<div class="inner">
 							<h2>{{ site.title }}</h2>
-							<p>{{ site.description | markdownify }}</p>
+							<p>{{ site.description | markdownify }}</p><br>
 							<ul class="actions">
-								<li><a href="https://github.com/biojava/biojava/" class="button special">Get the Source</a></li>
+								<li><a href="wiki/BioJava%3AGetStarted" class="button special">Get started</a></li>
 							</ul>
 						</div>
 						<a href="#one" class="more scrolly">Learn More</a>
@@ -17,17 +17,10 @@ layout: landing
 					<section id="one" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
-								<h2>BioJava is open source<br />
-								</h2>
-								<p>It's hosted, developed, and maintained on GitHub.<br/>
-								  </p>
-								    <a href="https://github.com/biojava/biojava" class="button big">View the GitHub project</a>
+								<h2>Open source</h2>
+								<p>The project is hosted, developed, and maintained on GitHub.</p>
+								    <a href="https://github.com/biojava/biojava" class="button big">GitHub project</a>
 							</header>
-							<ul class="icons major">
-								<li><span class="icon fa-diamond major style1"><span class="label">Current release: {{ site.release.version }}</span></span></li>
-								<li><span class="icon fa-heart-o major style2"><span class="label">Ipsum</span></span></li>
-								<li><span class="icon fa-code major style3"><span class="label">Dolor</span></span></li>
-							</ul>
 						</div>
 					</section>
 
@@ -35,39 +28,23 @@ layout: landing
 					<section id="two" class="wrapper alt style2">
 						<section class="spotlight">
 							<div class="image"><img src="images/4hhb.png" alt="" /></div><div class="content">
-								<h2>Protein Structure Modules<br />
-								</h2>
-								<p>provide an API that allow to</p>
-								<ul>
-								  <li>Maintain local installations of PDB</li>
-								  <li>Load structures and manipulate them</li>
-								  <li>Perform standard analysis such as sequence and structure alignments</li>
-								  <li>Visualize structures</li>
-								</ul>
+								<h2>Protein structures</h2>
+								<p>BioJava provides an API to maintain local installations of the PDB, load and manipulate structures, perform standard analysis such as sequence and structure alignments and visualize them in 3D.</p>
 
 							</div>
 						</section>
 						<section class="spotlight">
 							<div class="image"><img src="images/1d68.png" alt="" /></div><div class="content">
-								<h2>Biological Sequences<br />
-								</h2>
-								<p>BioJava allows to</p>
-								<ul>
-								  <li>Perform basic operations on biological sequences</li>
-								  <li>Read and Write popular sequence file formats</li>
-								  <li>Translate DNA sequences into protein sequences</li>
-								</ul>
+								<h2>Biological sequences</h2>
+								<p>BioJava supports reading and writing popular sequence file formats, translating DNA sequences into proteins and other common bioinformatics routines.</p>
 							</div>
 						</section>
 						<section class="spotlight">
 							<div class="image"><img src="images/1ihm.png" alt="" /></div><div class="content">
 								<h2>Please cite<br />
 								</h2>
-								<p>
-								  {% capture my-citation %}{% include citation.md %}{% endcapture %}
+								  {% capture my-citation %}{% include citation-2012.md %}{% endcapture %}
 								  {{ my-citation | markdownify }}
-
-								</p>
 							</div>
 						</section>
 					</section>
@@ -76,19 +53,18 @@ layout: landing
 					<section id="three" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
-							  <h2>Mailing list</h2>
+							  <h2>Get in touch</h2>
 							  <p>
-							    Questions, comments, and communications regarding BioJava can be made either on github or on the BioJava mailing list:
+							    Questions, comments, and communications regarding BioJava can be done either on <a href="https://github.com/biojava/biojava/issues">
+								<span class="label">GitHub</span></a> or through the <a href="http://lists.open-bio.org/mailman/listinfo/biojava-l">
+								<span class="label">BioJava mailing list</span></a>. Subscribe to stay up to date!
 							    </p>
 							</header>
 							  <ul class="icons major">
-							    <li><span class="icon fa-envelope-o major style1"></span>
-								<a href="/wiki/BioJava:MailingLists/">
-								  <span class="label">biojava-l</span>
-							        </a>  general discussion list
-							    </li>
-							  </ul>
-
+							    <li><span class="icon fa-envelope-o major style1"></span></li>
+									<li><span class="icon fa-heart-o major style2"></span></li>
+								<li><span class="icon fa-code major style3"></span></li>
+								</ul>
 
 						</div>
 						</section>
@@ -98,23 +74,24 @@ layout: landing
 							<ul class="features">
 								<li class="icon fa-graduation-cap">
 									<h3>Tutorial</h3>
-									<p>The tutorial offers an introduction into some of the features that are provided by BioJava.</p>
-									<a href="https://github.com/biojava/biojava-tutorial" class="button">tutorial</a>
+									<p>The tutorial offers an introduction into some of the features provided by BioJava.</p>
+									<a href="https://github.com/biojava/biojava-tutorial" class="button">Tutorial</a>
 								</li>
 								<li class="icon fa-rocket">
-									<h3>Cookbook</h3>
-									<p>The Cookbook provides simple coding recipes that follow a "How do I ..." approach.</p>
-									<a href="http://biojava.org/wiki/BioJava:CookBook4.0/" class="button">Cookbook</a>
+									<h3>CookBook</h3>
+									<p>The Cookbook provides simple coding recipes to common bioinformatics problems using BioJava.</p>
+									<a href="wiki/BioJava%3ACookBook4.0" class="button">Cookbook</a>
 								</li>
 								<li class="icon fa-code">
 									<h3>Javadoc API</h3>
-									<p>The Javadocs for the current BioJava release</p>
+									<p>The Javadocs for the current BioJava {{site.release.version}} release.</p>
 									<a href="docs/api" class="button">Javadoc API</a></br>
 
 								</li>
 								<li class="icon fa-globe">
-									<h3>Current release: {{ site.release.version }}</h3>
-									<p>BioJava is available from Maven Central</p>
+									<h3>Release {{ site.release.version }}</h3>
+									<p>BioJava is available from Maven Central.</p>
+									<a href="https://mvnrepository.com/artifact/org.biojava" class="button">Maven Central</a></br>
 								</li>
 								<li class="icon fa-heart-o">
 									<h3>Wiki</h3>
@@ -123,7 +100,7 @@ layout: landing
 								</li>
 								<li class="icon fa-flag-o">
 									<h3>Legacy Javadoc API</h3>
-									<p>The Javadocs for legacy 1.x BioJava.</p>
+									<p>The Javadocs for BioJava legacy 1.x versions.</p>
 									<a href="docs/api1.9.1/" class="button">View 1.9.1 API</a>
 								</li>
 							</ul>
@@ -134,12 +111,12 @@ layout: landing
 					<section id="cta" class="wrapper style4">
 						<div class="inner">
 							<header>
-								<h2><img src="/images/logo/logo_favicon_65.png" style="vertical-align:middle"/> Learn More</h2>
-								<p>Here a couple of pointers for how to get started</p>
+								<h2><img src="/images/logo/logo_favicon_250.png" height="60" style="vertical-align:middle"/> Learn More</h2>
+								<p>Here a couple of pointers to get you started</p>
 							</header>
 							<ul class="actions vertical">
-								<li><a href="wiki/Get_source/" class="button fit special">Get the Code</a></li>
-								<li><a href="wiki/BioJava:GetStarted/" class="button fit">Get Started</a></li>
+								<li><a href="wiki/BioJava%3AGetStarted" class="button fit special">Get started</a></li>
+								<li><a href="https://github.com/biojava/biojava" class="button fit">Get the source</a></li>
 							</ul>
 						</div>
 					</section>
