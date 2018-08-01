@@ -1,24 +1,22 @@
 ---
 layout: page
-title: Wiki Pages
+title: Wiki pages
 menu: main
 ---
 
 <div class="home">
 
-  <p>The following pages have been imported from the legacy mediawiki instance</p>
+  <p>The following pages include content related to BioJava created since the launch of the project. The content has been imported from the legacy mediawiki instance and no new pages have been added.</p>
+  <p>We did out best to preserve the information, but be aware that some links and content might be outdated or no longer available. We are in the process of organizing and cleaning them up.</p>
 
-  {% for my_page in site.wiki %}
   <p>
     <ul>
+      {% for my_page in site.wiki %}
       <li>
         {{ my_page.categories }} <a href="{{ site.baseurl }}{{ my_page.url }}">{{ my_page.title }}</a>
       </li>
+      {% endfor %}
     </ul>
   </p>
-  {% endfor %}
-
-
-
 
 </div>
