@@ -1,7 +1,7 @@
 ---
-title: BioJava:CookBook4.0
+title: BioJava CookBook
 permalink: wiki/BioJava%3ACookBook4.0/
-menu: main
+#menu: main
 ---
 
 BioJava Cookbook for release 4.\*
@@ -22,8 +22,6 @@ bit bloated.
 If you have any suggestions, questions or comments contact the [biojava
 mailing list](mailto:biojava-l@biojava.org). To subscribe to this list
 go [here](http://biojava.org/mailman/listinfo/biojava-l)
-
-**Please cite:**
 
 Tutorial
 --------
@@ -172,5 +170,4 @@ biojava-core*
 Legacy 1.8.x CookBook
 ---------------------
 
-The CookBook for the legacy 1.8.x code base is available from
-<BioJava:CookBookLegacy>.
+The CookBook for the legacy 1.8.x code base is available from [here](/wiki/BioJava:CookBookLegacy "wikilink").

@@ -1,26 +1,19 @@
 <!-- Header -->
 <header id="header"{% if page.layout == 'landing' %} class="alt"{% endif %}>
-  <h1><a href="{{ site.baseurl }}/index.html"><img src="{{ site.baseurl }}/images/logo/logo_100.png"/></a></h1>
+  <h1><a href="{{ site.baseurl }}/index.html"><img src="{{ site.baseurl }}/images/logo/logo_800.png" height="20" /></a></h1>
   <nav id="nav">
     <ul>
       <li class="special">
         <a href="#menu" class="menuToggle"><span>Menu</span></a>
         <div id="menu">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="https://github.com/biojava/biojava">Github</a></li>
-            {% for my_page in site.pages %}
-              {% if my_page.title and my_page.menu == 'main' %}
-            <li>{{ my_page.categories | join ' ' }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
-              {% endif %}
-            {% endfor %}
-            {% for my_page in site.wiki %}
-              {% if my_page.title and my_page.menu %}
-            <li>{{ my_page.categories | join ' ' }}<a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
-              {% endif %}
-            {% endfor %}
-            <li><a href="{{ "/docs/api4.2.1/index.html" | prepend: side.baseurl }}">Javadoc API (4.2.1)</a></li>
-            <li><a href="{{ "/docs/api1.9.1/index.html" | prepend: side.baseurl }}">Javadoc API (1.9.1)</a></li>
+            <li><a href="{{ site.baseurl }}/index.html">Home</a></li>
+            <li><a href="{{ site.baseurl }}/wiki/About">About</a></li>
+            <li><a href="{{ site.baseurl }}/wiki/BioJava%3AGetStarted">Get started</a></li>
+            <li><a href="{{ site.baseurl }}/wiki/Documentation">Documentation</a></li>
+            <li><a href="{{ site.baseurl }}/wiki">Wiki pages</a></li>
+            <li><a href="{{ site.baseurl }}/wiki/GetInvolved">Get involved</a></li>
+            <li><a href="{{ site.baseurl }}/wiki/FAQs">FAQs</a></li>
           </ul>
         </div>
       </li>

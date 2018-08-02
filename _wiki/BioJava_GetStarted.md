@@ -1,5 +1,5 @@
 ---
-title: BioJava:GetStarted
+title: Get Started
 permalink: wiki/BioJava%3AGetStarted
 ---
 
@@ -7,7 +7,7 @@ Introduction
 ------------
 
 BioJava will run on any computer with a Java virtual machine complying
-to the Java 2 Standard Edition (J2SE) 1.6 (or later) specifications.
+to the Java specifications.
 Java implementations for Linux, Windows, and Solaris are available to
 download from [Oracle's java
 website](http://www.oracle.com/technetwork/java/). Recent versions of
@@ -15,48 +15,43 @@ MacOS X include a suitable Java implementation as standard. Java is also
 available on many other platforms: if in doubt, contact your vendor.
 BioJava binaries are distributed in .jar (Java ARchive) format.
 
-You can get the latest version of BioJava3+ from the download page
-[BioJava (v) (requires Java 1.6+)](/wiki/BioJava:Download "wikilink").
+Obtain BioJava
+--------------
 
-You can get the latest version of BioJava-legacy (a.k.a. BioJava1) from
-the download page [BioJava1 (v) (requires Java
-1.5+)](/wiki/BioJava:Download_{{site.release.legacy}} "wikilink").
+BioJava is open-source and entirely hosted on [GitHub](https://github.com/biojava/biojava). You can check the code, submit issues and pull requests and download latest and past release binaries from GitHub.
 
-You can also integrate BioJava with NetBeans IDE. To find out how follow
-this [link](/wiki/How_to_integrate_BioJava_in_NetBeans_IDE "wikilink").
+You can manually download the latest version of BioJava ({{site.release.version}}), which requires Java 1.8+, from the [GitHub releases page](https://github.com/biojava/biojava/releases), but continue reading this article for a more convenient solution to integrate BioJava into your project.
 
-A step by step guide on 'How to integrate BioJava in Netbeans IDE' is
-[here](/wiki/BioJava-Installation_Guide.png "wikilink").
+For instructions on how to obtain the BioJava-legacy (a.k.a. BioJava1), which requires Java 1.5+, follow [this link](BioJava%3AGetStartedLegacy) or check the [biojava-legacy](https://github.com/biojava/biojava-legacy) project on GitHub.
 
-Maven
------
+Quick Installation
+------------------
 
 BioJava uses [Maven](http://maven.apache.org/) as a build and
-distribution system. If you are new to Maven, take a look at the
+distribution system. If you are new to Maven and want to find out more about it (although most details are not required for using BioJava), take a look at the
 [Getting Started with
 Maven](http://maven.apache.org/guides/getting-started/index.html) guide.
 
-BioJava, as of release 4.0.0 is available through Maven Central.
+BioJava is available through [Maven Central](https://mvnrepository.com/artifact/org.biojava), so if you are using Maven to build your Java project you can import BioJava by adding the following XML to your project pom.xml file:
 
-You can add the BioJava repository by adding the following XML to your
-project pom.xml file:
+```xml
+    <dependencies>
+      <dependency>
+        <groupId>org.biojava</groupId>
+        <artifactId>biojava-core</artifactId>
+        <version>{{site.release.version}}</version>
+      </dependency>
+      <!-- other biojava jars as needed -->
+    </dependencies>
+```
+
+More options can be found in the [README](https://github.com/biojava/biojava) of the GitHub repository.
 
 
-            <dependencies>
-                    ...
-                    <dependency>
-                            <groupId>org.biojava</groupId>
-                            <artifactId>biojava-core</artifactId>
-                            <version>{{site.release.version}}</version>
-                    </dependency>
-                    <!-- other biojava jars as needed -->
-            </dependencies>
+Manual Installation
+-------------------
 
-
-Installation
-------------
-
-None of these .jar files need to be unpacked for normal use -- simply
+None of the BioJava .jar files need to be unpacked for normal use - simply
 place them in a convenient directory.
 
 To use BioJava, add the required JAR files to your CLASSPATH environment
@@ -79,10 +74,7 @@ below).
 Building your own
 -----------------
 
-If you want to modify BioJava, you can obtain a copy of the source code
-from the download areas. Source releases are distributed in .tar.gz
-format. You can also obtain up-to-the-minute source code via either the
-[Maven repository](http://biojava.org/download/maven/) or from
-[github](Get source "wikilink").
+If you want to modify BioJava, you can clone or fork the GitHub repository or obtain the source code from any of the previous releases from the [releases page](https://github.com/biojava/biojava/releases).
+Source releases are distributed in .tar.gz format.
 
-BioJava is now built using [Apache Maven](http://maven.apache.org/).
+If you think your modifications can benefit others do not hesitate to submit a [pull request on GitHub](https://github.com/biojava/biojava/pulls). We always welcome new contributions. Here is how you can [get involved]({{site.baseurl}}/getinvolved.html).

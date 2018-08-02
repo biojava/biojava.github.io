@@ -1,7 +1,7 @@
 ---
 title: BioJava:Tutorial
 permalink: wiki/BioJava%3ATutorial
-menu: main
+#menu: main
 ---
 
 BioJava 4 tutorial:
