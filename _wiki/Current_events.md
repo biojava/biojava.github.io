@@ -128,14 +128,14 @@ fixes and improvements.
 
 New Features:
 
-`- new Genbank writer`  
-`- new parser for Karyotype file from UCSC`  
-`- new parser for Gene locations from UCSC `  
-`- new parser for Gene names file from genenames.org`  
-`- new module for Cox regression code for survival analysis`  
-`- new calculation of accessible surface area (ASA)`  
-`- new module for parsing .OBO files (ontologies)`  
-`- improved representation of SCOP and Berkeley-SCOP classifications`  
+- new Genbank writer
+- new parser for Karyotype file from UCSC
+- new parser for Gene locations from UCSC
+- new parser for Gene names file from genenames.org
+- new module for Cox regression code for survival analysis
+- new calculation of accessible surface area (ASA)
+- new module for parsing .OBO files (ontologies)
+- improved representation of SCOP and Berkeley-SCOP classifications
 
 For a detailed comparison see here:
 <https://github.com/biojava/biojava/compare/biojava-3.0.7>...biojava-3.0.8
@@ -163,11 +163,11 @@ BioJava 3.0.7 was released on September 23rd and is available from
 
 new features:
 
-`- added a basic genbank parser `  
-`- fixed a problem when translating codons with N`  
-`- now can infer bonds in protein structures`  
-`- added support to parse mmcif records for organism and expression system`  
-`- many small bug fixes and improvements`
+- added a basic genbank parser
+- fixed a problem when translating codons with N
+- now can infer bonds in protein structures
+- added support to parse mmcif records for organism and expression system
+- many small bug fixes and improvements
 
 BioJava Legacy 1.8.4 released
 -----------------------------
@@ -180,9 +180,9 @@ repository at
 
 New Features:
 
-`- We moved our development to Github`  
-`- Minor improvements to the sequencing module`  
-`- Build/release fixes`
+- We moved our development to Github
+- Minor improvements to the sequencing module
+- Build/release fixes
 
 BioJava 3.0.6 released
 ----------------------
@@ -194,8 +194,8 @@ BioJava 3.0.6 was released on July 15th 2013 and is available from
 
 New Features:
 
-`- We moved our development to Github.`  
-`- many bug fixes and minor improvements`
+- We moved our development to Github.
+- many bug fixes and minor improvements
 
 BioJava moves to Github
 -----------------------
@@ -214,10 +214,10 @@ BioJava 3.0.5 was released on Nov 30th 2012 and is available from
 
 New Features:
 
-`- New parser for CATH classification`  
-`- New parser for Stockholm file format`  
-`- Significantly improved representation of biological assemblies of protein structures. Now can re-create biological assembly from asymmetric unit`  
-`- Several bug fixes.`
+- New parser for CATH classification
+- New parser for Stockholm file format
+- Significantly improved representation of biological assemblies of protein structures. Now can re-create biological assembly from asymmetric unit
+- Several bug fixes.
 
 BioJava 2012 paper published
 ----------------------------
@@ -307,13 +307,13 @@ BioJava 3.0.2 was released on September 2nd 2011 and is available from
 
 BioJava 3.0.2 adds new modules and enhances the capabilities of BioJava:
 
-`- biojava3-aa-prop: This new module allows the calculation of physico chemical and other properties of protein sequences.`  
-`- biojava3-protein-disorder: A new module for the prediction of disordered regions in proteins. It based on a Java implementation of the RONN predictor.`
+- biojava3-aa-prop: This new module allows the calculation of physico chemical and other properties of protein sequences.
+- biojava3-protein-disorder: A new module for the prediction of disordered regions in proteins. It based on a Java implementation of the RONN predictor.
 
 Other noteworthy improvements:
 
-`- protein-structure: Improved handling of protein domains: Now with better support for SCOP. New functionality for automated prediction of protein domains, based on Protein Domain Parser.`  
-`- Improvements and bug fixes in several modules.`
+- protein-structure: Improved handling of protein domains: Now with better support for SCOP. New functionality for automated prediction of protein domains, based on Protein Domain Parser.
+- Improvements and bug fixes in several modules.
 
 Currently, up to 8 different people are making commits per month. This
 gives an indication how active Biojava is being developed. The two new
