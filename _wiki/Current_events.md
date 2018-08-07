@@ -128,14 +128,14 @@ fixes and improvements.
 
 New Features:
 
-- new Genbank writer
-- new parser for Karyotype file from UCSC
-- new parser for Gene locations from UCSC
-- new parser for Gene names file from genenames.org
-- new module for Cox regression code for survival analysis
-- new calculation of accessible surface area (ASA)
-- new module for parsing .OBO files (ontologies)
-- improved representation of SCOP and Berkeley-SCOP classifications
+- New Genbank writer
+- New parser for Karyotype file from UCSC
+- New parser for Gene locations from UCSC
+- New parser for Gene names file from genenames.org
+- New module for Cox regression code for survival analysis
+- New calculation of accessible surface area (ASA)
+- New module for parsing .OBO files (ontologies)
+- Improved representation of SCOP and Berkeley-SCOP classifications
 
 For a detailed comparison see here:
 <https://github.com/biojava/biojava/compare/biojava-3.0.7>...biojava-3.0.8
