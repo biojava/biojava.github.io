@@ -8,7 +8,7 @@ owner: BioJava
 first_published: 2000
 email: biojava-l@biojava.org
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://biojava.org" # the base hostname & protocol for your site
+url: "https://biojava.org" # the base hostname & protocol for your site
 google_analytics: UA-1326640-1
 social:
   #twitter: https://twitter.com/<username>
