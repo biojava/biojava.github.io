@@ -21,7 +21,7 @@ your scala project. The easiest way to do this is to use Maven to build
 your scala project and just add BioJava as a dependency. For instance,
 add the following to the dependencies section of your pom.xml file.
 
-```xml
+```
 <dependency>  
     <groupId>org.biojava</groupId>  
     <artifactId>biojava3-core</artifactId>  
@@ -40,7 +40,7 @@ Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
 <BioJava:CookBook3:PSA_DNA>.
 
-```scala
+```
 /**  
  * Demo of using BioJava from scala code. Performs a simple sequence alignment.  
  *  
@@ -99,7 +99,7 @@ First, include the ScaBio jars and dependencies in your classpath. If
 using maven this is quite simple. Add the required packages to your
 pom.xml:
 
-```xml
+```
 <dependency>  
     <groupId>net.gumbix</groupId>  
     <artifactId>scabio-demo</artifactId>  
@@ -111,7 +111,7 @@ Scala objects and methods can now be used from Java code. To display
 ScaBio's RNA secondary structure visualization too, for instance, just
 call the appropriate method.
 
-```scala
+```
 public class RNAStruct2DViewer {  
    public static void main(String[] args) {  
        net.gumbix.bioinf.struct.RNAStruct2DViewer.main(args);  
@@ -122,7 +122,7 @@ public class RNAStruct2DViewer {
 Here is a more complex example to output the results of the RNA
 secondary structure prediction in a simple text format.
 
-```scala
+```
 import java.util.List;  
 import net.gumbix.bioinf.struct.AbstractNussinov;  
 import net.gumbix.bioinf.struct.NussinovDecision;  
