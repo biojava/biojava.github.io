@@ -38,7 +38,7 @@ project just add the following to your sbt file.
 
 Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
-<BioJava:CookBook3:PSA_DNA>.
+[BioJava:CookBook3:PSA_DNA](/wiki/BioJava%3ACookBook%3APSA_DNA).
 
 ```
 /**  
