@@ -21,7 +21,7 @@ your scala project. The easiest way to do this is to use Maven to build
 your scala project and just add BioJava as a dependency. For instance,
 add the following to the dependencies section of your pom.xml file.
 
-```
+```xml
 <dependency>  
     <groupId>org.biojava</groupId>  
     <artifactId>biojava3-core</artifactId>  
@@ -38,7 +38,7 @@ project just add the following to your sbt file.
 
 Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
-[BioJava:CookBook3:PSA_DNA](/wiki/BioJava%3ACookBook%3APSA_DNA).
+[BioJava:CookBook3:PSA_DNA](/wiki/BioJava%3ACookBook3%3APSA_DNA).
 
 ```
 /**  
@@ -99,7 +99,7 @@ First, include the ScaBio jars and dependencies in your classpath. If
 using maven this is quite simple. Add the required packages to your
 pom.xml:
 
-```
+```xml
 <dependency>  
     <groupId>net.gumbix</groupId>  
     <artifactId>scabio-demo</artifactId>  
