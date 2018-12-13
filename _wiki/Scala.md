@@ -34,7 +34,7 @@ project just add the following to your sbt file.
 
 `libraryDependencies += "org.biojava" % "biojava3-core" % "3.1.0"`  
   
-`resolvers += "BioJava repository" at "`[`http://www.biojava.org/download/maven/`](http://www.biojava.org/download/maven/)`"`
+`resolvers += "BioJava repository" at "[http://www.biojava.org/download/maven/](http://www.biojava.org/download/maven/)"`
 
 Java classes can be imported and used in scala code without
 modification. For instance, here is a scala version of
@@ -98,6 +98,7 @@ present in BioJava.
 First, include the ScaBio jars and dependencies in your classpath. If
 using maven this is quite simple. Add the required packages to your
 pom.xml:
+
 ```xml
 <dependency>  
     <groupId>net.gumbix</groupId>  
