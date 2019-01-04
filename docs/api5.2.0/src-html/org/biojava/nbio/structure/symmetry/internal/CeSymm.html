@@ -1,0 +1,513 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.symmetry.internal;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.util.ArrayList;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.List;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import javax.vecmath.Matrix4d;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.StructureException;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.StructureIdentifier;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.StructureTools;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.align.ce.CECalculator;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.structure.align.ce.CeCPMain;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.structure.align.ce.MatrixListener;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.structure.align.model.AFPChain;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.nbio.structure.align.multiple.MultipleAlignment;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.nbio.structure.align.util.AFPChainScorer;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.nbio.structure.secstruc.SecStrucCalc;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.nbio.structure.secstruc.SecStrucTools;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.nbio.structure.symmetry.internal.CESymmParameters.SymmetryType;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.nbio.structure.symmetry.utils.SymmetryTools;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">/**</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * Identify the symmetries in a structure by running an alignment of the</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * structure against itself disabling the diagonal of the identity alignment.</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * &lt;p&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * Iterating over previous results and disabling the diagonal of the previous</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * alignments can also be done with this implementation, which will generate a</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * set of self-alignments (disabled, because none improvements were shown, but</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * can be turn on manually).</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * &lt;p&gt;</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * Multiple levels of symmetry can be analyzed by finding symmetries in repeats</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * of previous results. This feature allows to find multiple symmetry axes.</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * &lt;p&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * The alignment is then refined to obtain a consistent alignment among all</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * residues of the structure and organized into different parts, called</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * symmetric repeats.</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * &lt;p&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * After refinement of the initial alignment, an optimization step can be used</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * to improve the overall score of the repeat multiple alignment.</a>
+<span class="sourceLineNo">065</span><a id="line.65"> *</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * @since 4.1.1</a>
+<span class="sourceLineNo">070</span><a id="line.70"> *</a>
+<span class="sourceLineNo">071</span><a id="line.71"> */</a>
+<span class="sourceLineNo">072</span><a id="line.72">public class CeSymm {</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">        /**</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * Version History:</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * &lt;p&gt;</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * &lt;ul&gt;</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * &lt;li&gt;1.0 - initial implementation of CE-Symm.</a>
+<span class="sourceLineNo">079</span><a id="line.79">         * &lt;li&gt;1.1 - enable multiple CE-Symm runs to calculate all self-alignments.</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * &lt;li&gt;2.0 - refine the alignment for consistency of repeat definition.</a>
+<span class="sourceLineNo">081</span><a id="line.81">         * &lt;li&gt;2.1 - optimize the alignment to improve the score.</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * &lt;li&gt;2.2 - run multiple symmetry levels recursively to find PG and</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * hierarchical symmetries.</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * &lt;/ul&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * &lt;/li&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">         */</a>
+<span class="sourceLineNo">087</span><a id="line.87">        public static final String version = "2.2";</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public static final String algorithmName = "jCE-symm";</a>
+<span class="sourceLineNo">089</span><a id="line.89">        private static final Logger logger = LoggerFactory.getLogger(CeSymm.class);</a>
+<span class="sourceLineNo">090</span><a id="line.90">        private final static boolean multiPass = false; // multiple self-alignments</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">        /**</a>
+<span class="sourceLineNo">093</span><a id="line.93">         * Prevent instantiation. Static class.</a>
+<span class="sourceLineNo">094</span><a id="line.94">         */</a>
+<span class="sourceLineNo">095</span><a id="line.95">        private CeSymm() {</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">        private static Matrix align(AFPChain afpChain, Atom[] ca1, Atom[] ca2,</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        CESymmParameters params, Matrix origM, CECalculator calculator,</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        int counter) throws StructureException {</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">                int fragmentLength = params.getWinSize();</a>
+<span class="sourceLineNo">103</span><a id="line.103">                Atom[] ca2clone = StructureTools.cloneAtomArray(ca2);</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">                int rows = ca1.length;</a>
+<span class="sourceLineNo">106</span><a id="line.106">                int cols = ca2.length;</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                // Matrix that tracks similarity of a fragment of length fragmentLength</a>
+<span class="sourceLineNo">109</span><a id="line.109">                // starting a position i,j.</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                int blankWindowSize = fragmentLength;</a>
+<span class="sourceLineNo">112</span><a id="line.112">                if (origM == null) {</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">                        // Build alignment ca1 to ca2-ca2</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        afpChain = calculator.extractFragments(afpChain, ca1, ca2clone);</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">                        origM = SymmetryTools.blankOutPreviousAlignment(afpChain, ca2,</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                        rows, cols, calculator, null, blankWindowSize);</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">                } else {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        // we are doing an iteration on a previous alignment</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        // mask the previous alignment</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        origM = SymmetryTools.blankOutPreviousAlignment(afpChain, ca2,</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                        rows, cols, calculator, origM, blankWindowSize);</a>
+<span class="sourceLineNo">125</span><a id="line.125">                }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                Matrix clone = (Matrix) origM.clone();</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">                // that's the matrix to run the alignment on..</a>
+<span class="sourceLineNo">130</span><a id="line.130">                calculator.setMatMatrix(clone.getArray());</a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">                calculator.traceFragmentMatrix(afpChain, ca1, ca2clone);</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">                final Matrix origMfinal = (Matrix) origM.clone();</a>
+<span class="sourceLineNo">135</span><a id="line.135">                // Add a matrix listener to keep the blacked zones in max.</a>
+<span class="sourceLineNo">136</span><a id="line.136">                calculator.addMatrixListener(new MatrixListener() {</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">                        @Override</a>
+<span class="sourceLineNo">139</span><a id="line.139">                        public double[][] matrixInOptimizer(double[][] max) {</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">                                // Check every entry of origM for blacked out regions</a>
+<span class="sourceLineNo">142</span><a id="line.142">                                for (int i = 0; i &lt; max.length; i++) {</a>
+<span class="sourceLineNo">143</span><a id="line.143">                                        for (int j = 0; j &lt; max[i].length; j++) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                                                if (origMfinal.getArray()[i][j] &gt; 1e9) {</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                                        max[i][j] = -origMfinal.getArray()[i][j];</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                                }</a>
+<span class="sourceLineNo">147</span><a id="line.147">                                        }</a>
+<span class="sourceLineNo">148</span><a id="line.148">                                }</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                return max;</a>
+<span class="sourceLineNo">150</span><a id="line.150">                        }</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">                        @Override</a>
+<span class="sourceLineNo">153</span><a id="line.153">                        public boolean[][] initializeBreakFlag(boolean[][] brkFlag) {</a>
+<span class="sourceLineNo">154</span><a id="line.154"></a>
+<span class="sourceLineNo">155</span><a id="line.155">                                return brkFlag;</a>
+<span class="sourceLineNo">156</span><a id="line.156">                        }</a>
+<span class="sourceLineNo">157</span><a id="line.157">                });</a>
+<span class="sourceLineNo">158</span><a id="line.158"></a>
+<span class="sourceLineNo">159</span><a id="line.159">                calculator.nextStep(afpChain, ca1, ca2clone);</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">                afpChain.setAlgorithmName(algorithmName);</a>
+<span class="sourceLineNo">162</span><a id="line.162">                afpChain.setVersion(version);</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164">                afpChain.setDistanceMatrix(origM);</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                return origMfinal;</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">        }</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">        @SuppressWarnings("unused")</a>
+<span class="sourceLineNo">171</span><a id="line.171">        protected static CeSymmResult align(Atom[] atoms, CESymmParameters params)</a>
+<span class="sourceLineNo">172</span><a id="line.172">                        throws StructureException {</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                CeSymmResult result = new CeSymmResult();</a>
+<span class="sourceLineNo">175</span><a id="line.175">                result.setParams(params);</a>
+<span class="sourceLineNo">176</span><a id="line.176">                result.setAtoms(atoms);</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">                // STEP 1: prepare all the information for the symmetry alignment</a>
+<span class="sourceLineNo">179</span><a id="line.179">                Atom[] ca2 = StructureTools.duplicateCA2(atoms);</a>
+<span class="sourceLineNo">180</span><a id="line.180">                int rows = atoms.length;</a>
+<span class="sourceLineNo">181</span><a id="line.181">                int cols = ca2.length;</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">                if (rows == 0 || cols == 0) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                        throw new StructureException("Aligning empty structure");</a>
+<span class="sourceLineNo">185</span><a id="line.185">                }</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">                Matrix origM = null;</a>
+<span class="sourceLineNo">188</span><a id="line.188">                AFPChain myAFP = new AFPChain(algorithmName);</a>
+<span class="sourceLineNo">189</span><a id="line.189">                CECalculator calculator = new CECalculator(params);</a>
+<span class="sourceLineNo">190</span><a id="line.190">                Matrix lastMatrix = null;</a>
+<span class="sourceLineNo">191</span><a id="line.191"></a>
+<span class="sourceLineNo">192</span><a id="line.192">                List&lt;AFPChain&gt; selfAlignments = new ArrayList&lt;AFPChain&gt;();</a>
+<span class="sourceLineNo">193</span><a id="line.193">                AFPChain optimalAFP = null;</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">                // STEP 2: perform the self-alignments of the structure</a>
+<span class="sourceLineNo">196</span><a id="line.196">                int i = 0;</a>
+<span class="sourceLineNo">197</span><a id="line.197">                do {</a>
+<span class="sourceLineNo">198</span><a id="line.198">                        if (origM != null)</a>
+<span class="sourceLineNo">199</span><a id="line.199">                                myAFP.setDistanceMatrix((Matrix) origM.clone());</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">                        origM = align(myAFP, atoms, ca2, params, origM, calculator, i);</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">                        double tmScore2 = AFPChainScorer.getTMScore(myAFP, atoms, ca2);</a>
+<span class="sourceLineNo">204</span><a id="line.204">                        myAFP.setTMScore(tmScore2);</a>
+<span class="sourceLineNo">205</span><a id="line.205"></a>
+<span class="sourceLineNo">206</span><a id="line.206">                        AFPChain newAFP = (AFPChain) myAFP.clone();</a>
+<span class="sourceLineNo">207</span><a id="line.207">                        newAFP = CeCPMain.postProcessAlignment(newAFP, atoms, ca2,</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        calculator);</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">                        // Calculate and set the TM score for the newAFP alignment</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        double tmScore3 = AFPChainScorer.getTMScore(newAFP, atoms, ca2);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                        newAFP.setTMScore(tmScore3);</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                        // Determine if the alignment is significant, stop if false</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        if (tmScore3 &lt; params.getUnrefinedScoreThreshold()) {</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                // If it is the first alignment save it anyway</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                if (i == 0)</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                        selfAlignments.add(newAFP);</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                // store final matrix</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                lastMatrix = newAFP.getDistanceMatrix().copy();</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                break;</a>
+<span class="sourceLineNo">222</span><a id="line.222">                        }</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">                        // If it is a symmetric alignment add it to the allAlignments list</a>
+<span class="sourceLineNo">225</span><a id="line.225">                        selfAlignments.add(newAFP);</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">                        i++;</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">                } while (i &lt; params.getMaxSymmOrder() &amp;&amp; multiPass);</a>
+<span class="sourceLineNo">230</span><a id="line.230"></a>
+<span class="sourceLineNo">231</span><a id="line.231">                // We reached the maximum order, so blank out the final alignment</a>
+<span class="sourceLineNo">232</span><a id="line.232">                if (lastMatrix == null &amp;&amp; selfAlignments.size() &gt; 1 &amp;&amp; multiPass) {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                        AFPChain last = selfAlignments.get(selfAlignments.size() - 1);</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        lastMatrix = SymmetryTools.blankOutPreviousAlignment(last, ca2,</a>
+<span class="sourceLineNo">235</span><a id="line.235">                                        last.getCa1Length(), last.getCa2Length(), calculator,</a>
+<span class="sourceLineNo">236</span><a id="line.236">                                        origM, params.getWinSize());</a>
+<span class="sourceLineNo">237</span><a id="line.237">                        lastMatrix = lastMatrix.getMatrix(0, last.getCa1Length() - 1, 0,</a>
+<span class="sourceLineNo">238</span><a id="line.238">                                        last.getCa2Length() - 1);</a>
+<span class="sourceLineNo">239</span><a id="line.239">                }</a>
+<span class="sourceLineNo">240</span><a id="line.240"></a>
+<span class="sourceLineNo">241</span><a id="line.241">                // Extract the structure identifier</a>
+<span class="sourceLineNo">242</span><a id="line.242">                optimalAFP = selfAlignments.get(0);</a>
+<span class="sourceLineNo">243</span><a id="line.243">                StructureIdentifier id = atoms[0].getGroup().getChain().getStructure()</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                .getStructureIdentifier();</a>
+<span class="sourceLineNo">245</span><a id="line.245">                optimalAFP.setName1(id.getIdentifier());</a>
+<span class="sourceLineNo">246</span><a id="line.246">                optimalAFP.setName2(id.getIdentifier());</a>
+<span class="sourceLineNo">247</span><a id="line.247"></a>
+<span class="sourceLineNo">248</span><a id="line.248">                // Store the optimal self-alignment</a>
+<span class="sourceLineNo">249</span><a id="line.249">                result.setSelfAlignment(optimalAFP);</a>
+<span class="sourceLineNo">250</span><a id="line.250">                result.setStructureId(id);</a>
+<span class="sourceLineNo">251</span><a id="line.251"></a>
+<span class="sourceLineNo">252</span><a id="line.252">                // Determine the symmetry Type or get the one in params</a>
+<span class="sourceLineNo">253</span><a id="line.253">                SymmetryType type = params.getSymmType();</a>
+<span class="sourceLineNo">254</span><a id="line.254">                if (type == SymmetryType.AUTO) {</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        if (result.getSelfAlignment().getBlockNum() == 1) {</a>
+<span class="sourceLineNo">256</span><a id="line.256">                                type = SymmetryType.OPEN;</a>
+<span class="sourceLineNo">257</span><a id="line.257">                                logger.info("Open Symmetry detected");</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        } else {</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                type = SymmetryType.CLOSED;</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                logger.info("Close Symmetry detected");</a>
+<span class="sourceLineNo">261</span><a id="line.261">                        }</a>
+<span class="sourceLineNo">262</span><a id="line.262">                }</a>
+<span class="sourceLineNo">263</span><a id="line.263"></a>
+<span class="sourceLineNo">264</span><a id="line.264">                // Do not try the refinement if the self-alignment is not significant</a>
+<span class="sourceLineNo">265</span><a id="line.265">                if (optimalAFP.getTMScore() &lt; params.getUnrefinedScoreThreshold()){</a>
+<span class="sourceLineNo">266</span><a id="line.266">                        result.setNumRepeats(1);</a>
+<span class="sourceLineNo">267</span><a id="line.267">                        return result;</a>
+<span class="sourceLineNo">268</span><a id="line.268">                }</a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">                // STEP 3: order detection &amp; symmetry refinement, apply consistency</a>
+<span class="sourceLineNo">271</span><a id="line.271">                try {</a>
+<span class="sourceLineNo">272</span><a id="line.272">                        // ORDER DETECTION</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        OrderDetector orderDetector = null;</a>
+<span class="sourceLineNo">274</span><a id="line.274">                        int order = 1;</a>
+<span class="sourceLineNo">275</span><a id="line.275">                        switch (params.getOrderDetectorMethod()) {</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        case USER_INPUT:</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                order = params.getUserOrder();</a>
+<span class="sourceLineNo">278</span><a id="line.278">                                break;</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        case SEQUENCE_FUNCTION:</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                // Does not work for OPEN alignments</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                if (type == SymmetryType.CLOSED) {</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                        orderDetector = new SequenceFunctionOrderDetector(</a>
+<span class="sourceLineNo">283</span><a id="line.283">                                                        params.getMaxSymmOrder(), 0.4f);</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                        order = orderDetector.calculateOrder(</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                                        result.getSelfAlignment(), atoms);</a>
+<span class="sourceLineNo">286</span><a id="line.286">                                        break;</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                }</a>
+<span class="sourceLineNo">288</span><a id="line.288">                        case ANGLE:</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                // Does not work for OPEN alignments</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                if (type == SymmetryType.CLOSED) {</a>
+<span class="sourceLineNo">291</span><a id="line.291">                                        orderDetector = new AngleOrderDetectorPlus(</a>
+<span class="sourceLineNo">292</span><a id="line.292">                                                        params.getMaxSymmOrder());</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                        order = orderDetector.calculateOrder(</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                                        result.getSelfAlignment(), atoms);</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                        break;</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                }</a>
+<span class="sourceLineNo">297</span><a id="line.297">                        case GRAPH_COMPONENT:</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                orderDetector = new GraphComponentOrderDetector();</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                order = orderDetector.calculateOrder(result.getSelfAlignment(),</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                                atoms);</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                break;</a>
+<span class="sourceLineNo">302</span><a id="line.302">                        }</a>
+<span class="sourceLineNo">303</span><a id="line.303">                        result.setNumRepeats(order);</a>
+<span class="sourceLineNo">304</span><a id="line.304"></a>
+<span class="sourceLineNo">305</span><a id="line.305">                        // REFINEMENT</a>
+<span class="sourceLineNo">306</span><a id="line.306">                        SymmetryRefiner refiner = null;</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        switch (params.getRefineMethod()) {</a>
+<span class="sourceLineNo">308</span><a id="line.308">                        case NOT_REFINED:</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                return result;</a>
+<span class="sourceLineNo">310</span><a id="line.310">                        case SEQUENCE_FUNCTION:</a>
+<span class="sourceLineNo">311</span><a id="line.311">                                // Does not work for OPEN alignments</a>
+<span class="sourceLineNo">312</span><a id="line.312">                                if (type == SymmetryType.CLOSED) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                                        refiner = new SequenceFunctionRefiner();</a>
+<span class="sourceLineNo">314</span><a id="line.314">                                        break;</a>
+<span class="sourceLineNo">315</span><a id="line.315">                                }</a>
+<span class="sourceLineNo">316</span><a id="line.316">                        case GRAPH_COMPONENT:</a>
+<span class="sourceLineNo">317</span><a id="line.317">                                refiner = new GraphComponentRefiner();</a>
+<span class="sourceLineNo">318</span><a id="line.318">                                break;</a>
+<span class="sourceLineNo">319</span><a id="line.319">                        }</a>
+<span class="sourceLineNo">320</span><a id="line.320"></a>
+<span class="sourceLineNo">321</span><a id="line.321">                        MultipleAlignment msa = refiner.refine(result.getSelfAlignment(),</a>
+<span class="sourceLineNo">322</span><a id="line.322">                                        atoms, order);</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">                        // Refinement succeeded, store results</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        result.setMultipleAlignment(msa);</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        result.setNumRepeats(msa.size());</a>
+<span class="sourceLineNo">327</span><a id="line.327">                        result.setRefined(true);</a>
+<span class="sourceLineNo">328</span><a id="line.328"></a>
+<span class="sourceLineNo">329</span><a id="line.329">                } catch (RefinerFailedException e) {</a>
+<span class="sourceLineNo">330</span><a id="line.330">                        logger.info("Refinement failed: " + e.getMessage());</a>
+<span class="sourceLineNo">331</span><a id="line.331">                        return result;</a>
+<span class="sourceLineNo">332</span><a id="line.332">                }</a>
+<span class="sourceLineNo">333</span><a id="line.333"></a>
+<span class="sourceLineNo">334</span><a id="line.334">                // STEP 4: symmetry axes</a>
+<span class="sourceLineNo">335</span><a id="line.335">                SymmetryAxes axes = new SymmetryAxes();</a>
+<span class="sourceLineNo">336</span><a id="line.336">                int order = result.getMultipleAlignment().size();</a>
+<span class="sourceLineNo">337</span><a id="line.337">                Matrix4d axis = result.getMultipleAlignment().getBlockSet(0)</a>
+<span class="sourceLineNo">338</span><a id="line.338">                                .getTransformations().get(1);</a>
+<span class="sourceLineNo">339</span><a id="line.339">                axes.addAxis(axis, order, type);</a>
+<span class="sourceLineNo">340</span><a id="line.340"></a>
+<span class="sourceLineNo">341</span><a id="line.341">                result.setAxes(axes);</a>
+<span class="sourceLineNo">342</span><a id="line.342">                return result;</a>
+<span class="sourceLineNo">343</span><a id="line.343">        }</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345">        /**</a>
+<span class="sourceLineNo">346</span><a id="line.346">         * Analyze the symmetries of the input Atom array using the DEFAULT</a>
+<span class="sourceLineNo">347</span><a id="line.347">         * parameters.</a>
+<span class="sourceLineNo">348</span><a id="line.348">         *</a>
+<span class="sourceLineNo">349</span><a id="line.349">         * @param atoms</a>
+<span class="sourceLineNo">350</span><a id="line.350">         *            representative Atom array of the Structure</a>
+<span class="sourceLineNo">351</span><a id="line.351">         * @return CeSymmResult</a>
+<span class="sourceLineNo">352</span><a id="line.352">         * @throws StructureException</a>
+<span class="sourceLineNo">353</span><a id="line.353">         */</a>
+<span class="sourceLineNo">354</span><a id="line.354">        public static CeSymmResult analyze(Atom[] atoms) throws StructureException {</a>
+<span class="sourceLineNo">355</span><a id="line.355">                CESymmParameters params = new CESymmParameters();</a>
+<span class="sourceLineNo">356</span><a id="line.356">                return analyze(atoms, params);</a>
+<span class="sourceLineNo">357</span><a id="line.357">        }</a>
+<span class="sourceLineNo">358</span><a id="line.358"></a>
+<span class="sourceLineNo">359</span><a id="line.359">        /**</a>
+<span class="sourceLineNo">360</span><a id="line.360">         * Analyze the symmetries of the input Atom array using the provided</a>
+<span class="sourceLineNo">361</span><a id="line.361">         * parameters.</a>
+<span class="sourceLineNo">362</span><a id="line.362">         *</a>
+<span class="sourceLineNo">363</span><a id="line.363">         * @param atoms</a>
+<span class="sourceLineNo">364</span><a id="line.364">         *            representative Atom array of the Structure</a>
+<span class="sourceLineNo">365</span><a id="line.365">         * @param param</a>
+<span class="sourceLineNo">366</span><a id="line.366">         *            CeSymmParameters bean</a>
+<span class="sourceLineNo">367</span><a id="line.367">         * @return CeSymmResult</a>
+<span class="sourceLineNo">368</span><a id="line.368">         * @throws StructureException</a>
+<span class="sourceLineNo">369</span><a id="line.369">         */</a>
+<span class="sourceLineNo">370</span><a id="line.370">        public static CeSymmResult analyze(Atom[] atoms, CESymmParameters params)</a>
+<span class="sourceLineNo">371</span><a id="line.371">                        throws StructureException {</a>
+<span class="sourceLineNo">372</span><a id="line.372"></a>
+<span class="sourceLineNo">373</span><a id="line.373">                if (atoms.length &lt; 1)</a>
+<span class="sourceLineNo">374</span><a id="line.374">                        throw new IllegalArgumentException("Empty Atom array given.");</a>
+<span class="sourceLineNo">375</span><a id="line.375"></a>
+<span class="sourceLineNo">376</span><a id="line.376">                // If the SSE information is needed, we calculate it if the user did not</a>
+<span class="sourceLineNo">377</span><a id="line.377">                if (params.getSSEThreshold() &gt; 0) {</a>
+<span class="sourceLineNo">378</span><a id="line.378">                        Structure s = atoms[0].getGroup().getChain().getStructure();</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        if (SecStrucTools.getSecStrucInfo(s).isEmpty()) {</a>
+<span class="sourceLineNo">380</span><a id="line.380">                                logger.info("Calculating Secondary Structure...");</a>
+<span class="sourceLineNo">381</span><a id="line.381">                                SecStrucCalc ssp = new SecStrucCalc();</a>
+<span class="sourceLineNo">382</span><a id="line.382">                                ssp.calculate(s, true);</a>
+<span class="sourceLineNo">383</span><a id="line.383">                        }</a>
+<span class="sourceLineNo">384</span><a id="line.384">                }</a>
+<span class="sourceLineNo">385</span><a id="line.385"></a>
+<span class="sourceLineNo">386</span><a id="line.386">                CeSymmIterative iter = new CeSymmIterative(params);</a>
+<span class="sourceLineNo">387</span><a id="line.387">                CeSymmResult result = iter.execute(atoms);</a>
+<span class="sourceLineNo">388</span><a id="line.388"></a>
+<span class="sourceLineNo">389</span><a id="line.389">                if (result.isRefined()) {</a>
+<span class="sourceLineNo">390</span><a id="line.390">                        // Optimize the global alignment freely once more (final step)</a>
+<span class="sourceLineNo">391</span><a id="line.391">                        if (params.getOptimization() &amp;&amp; result.getSymmLevels() &gt; 1) {</a>
+<span class="sourceLineNo">392</span><a id="line.392">                                try {</a>
+<span class="sourceLineNo">393</span><a id="line.393">                                        SymmOptimizer optimizer = new SymmOptimizer(result);</a>
+<span class="sourceLineNo">394</span><a id="line.394">                                        MultipleAlignment optimized = optimizer.optimize();</a>
+<span class="sourceLineNo">395</span><a id="line.395">                                        // Set the optimized MultipleAlignment and the axes</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                        result.setMultipleAlignment(optimized);</a>
+<span class="sourceLineNo">397</span><a id="line.397">                                } catch (RefinerFailedException e) {</a>
+<span class="sourceLineNo">398</span><a id="line.398">                                        logger.info("Final optimization failed:" + e.getMessage());</a>
+<span class="sourceLineNo">399</span><a id="line.399">                                }</a>
+<span class="sourceLineNo">400</span><a id="line.400">                        }</a>
+<span class="sourceLineNo">401</span><a id="line.401">                        result.getMultipleAlignment().getEnsemble()</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                        .setStructureIdentifiers(result.getRepeatsID());</a>
+<span class="sourceLineNo">403</span><a id="line.403">                }</a>
+<span class="sourceLineNo">404</span><a id="line.404">                return result;</a>
+<span class="sourceLineNo">405</span><a id="line.405">        }</a>
+<span class="sourceLineNo">406</span><a id="line.406"></a>
+<span class="sourceLineNo">407</span><a id="line.407">        /**</a>
+<span class="sourceLineNo">408</span><a id="line.408">         * Analyze a single level of symmetry.</a>
+<span class="sourceLineNo">409</span><a id="line.409">         *</a>
+<span class="sourceLineNo">410</span><a id="line.410">         * @param atoms</a>
+<span class="sourceLineNo">411</span><a id="line.411">         *            Atom array of the current level</a>
+<span class="sourceLineNo">412</span><a id="line.412">         * @return CeSymmResult</a>
+<span class="sourceLineNo">413</span><a id="line.413">         * @throws StructureException</a>
+<span class="sourceLineNo">414</span><a id="line.414">         */</a>
+<span class="sourceLineNo">415</span><a id="line.415">        public static CeSymmResult analyzeLevel(Atom[] atoms,</a>
+<span class="sourceLineNo">416</span><a id="line.416">                        CESymmParameters params) throws StructureException {</a>
+<span class="sourceLineNo">417</span><a id="line.417"></a>
+<span class="sourceLineNo">418</span><a id="line.418">                if (atoms.length &lt; 1)</a>
+<span class="sourceLineNo">419</span><a id="line.419">                        throw new IllegalArgumentException("Empty Atom array given.");</a>
+<span class="sourceLineNo">420</span><a id="line.420"></a>
+<span class="sourceLineNo">421</span><a id="line.421">                CeSymmResult result = align(atoms, params);</a>
+<span class="sourceLineNo">422</span><a id="line.422"></a>
+<span class="sourceLineNo">423</span><a id="line.423">                if (result.isRefined()) {</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        // STEP 5: symmetry alignment optimization</a>
+<span class="sourceLineNo">425</span><a id="line.425">                        if (result.getParams().getOptimization()) {</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                try {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                        MultipleAlignment msa = result.getMultipleAlignment();</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                        SymmOptimizer optimizer = new SymmOptimizer(result);</a>
+<span class="sourceLineNo">429</span><a id="line.429">                                        msa = optimizer.optimize();</a>
+<span class="sourceLineNo">430</span><a id="line.430">                                        result.setMultipleAlignment(msa);</a>
+<span class="sourceLineNo">431</span><a id="line.431">                                } catch (RefinerFailedException e) {</a>
+<span class="sourceLineNo">432</span><a id="line.432">                                        logger.debug("Optimization failed:" + e.getMessage());</a>
+<span class="sourceLineNo">433</span><a id="line.433">                                }</a>
+<span class="sourceLineNo">434</span><a id="line.434">                        }</a>
+<span class="sourceLineNo">435</span><a id="line.435">                }</a>
+<span class="sourceLineNo">436</span><a id="line.436">                return result;</a>
+<span class="sourceLineNo">437</span><a id="line.437">        }</a>
+<span class="sourceLineNo">438</span><a id="line.438"></a>
+<span class="sourceLineNo">439</span><a id="line.439">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

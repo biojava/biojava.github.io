@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Jan 21, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23">package demo;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.StructureTools;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.align.StructureAlignment;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.align.StructureAlignmentFactory;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.align.ce.CeMain;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.align.ce.CeParameters;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.align.model.AFPChain;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.structure.align.util.AFPChainScorer;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.structure.align.util.AtomCache;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.structure.align.xml.AFPChainXMLConverter;</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/** Example of how to run a structure alignment using the CE algorithm.</a>
+<span class="sourceLineNo">040</span><a id="line.40"> *</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public class DemoCE {</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        public static void main(String[] args){</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">                //String name1 = "4hhb.A";</a>
+<span class="sourceLineNo">049</span><a id="line.49">                //String name2 = "4hhb.B";</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">                String name1 = "1cdg.A";</a>
+<span class="sourceLineNo">052</span><a id="line.52">                String name2 = "1tim.B";</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">                AtomCache cache = new AtomCache();</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">                Structure structure1 = null;</a>
+<span class="sourceLineNo">059</span><a id="line.59">                Structure structure2 = null;</a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">                try {</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                   StructureAlignment algorithm  = StructureAlignmentFactory.getAlgorithm(CeMain.algorithmName);</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">                        structure1 = cache.getStructure(name1);</a>
+<span class="sourceLineNo">066</span><a id="line.66">                        structure2 = cache.getStructure(name2);</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68">                        Atom[] ca1 = StructureTools.getAtomCAArray(structure1);</a>
+<span class="sourceLineNo">069</span><a id="line.69">                        Atom[] ca2 = StructureTools.getAtomCAArray(structure2);</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">                        // get default parameters</a>
+<span class="sourceLineNo">072</span><a id="line.72">                        CeParameters params = new CeParameters();</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">                        // add more print</a>
+<span class="sourceLineNo">075</span><a id="line.75">                        params.setShowAFPRanges(true);</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">                        // set the maximum gap size to unlimited</a>
+<span class="sourceLineNo">078</span><a id="line.78">                        params.setMaxGapSize(-1);</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">                        AFPChain afpChain = algorithm.align(ca1,ca2,params);</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">                        afpChain.setName1(name1);</a>
+<span class="sourceLineNo">083</span><a id="line.83">                        afpChain.setName2(name2);</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">                        // flexible original results:</a>
+<span class="sourceLineNo">086</span><a id="line.86">                        System.out.println(afpChain.toFatcat(ca1,ca2));</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">                        System.out.println(afpChain.toRotMat());</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        //System.out.println(afpChain.toCE(ca1, ca2));</a>
+<span class="sourceLineNo">090</span><a id="line.90"></a>
+<span class="sourceLineNo">091</span><a id="line.91">                        System.out.println(AFPChainXMLConverter.toXML(afpChain,ca1,ca2));</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                        double tmScore = AFPChainScorer.getTMScore(afpChain, ca1, ca2);</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        afpChain.setTMScore(tmScore);</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">                        //System.out.println(AfpChainWriter.toWebSiteDisplay(afpChain, ca1, ca2));</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                        printScores(afpChain);</a>
+<span class="sourceLineNo">099</span><a id="line.99">                } catch (Exception e) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        e.printStackTrace();</a>
+<span class="sourceLineNo">101</span><a id="line.101">                        return;</a>
+<span class="sourceLineNo">102</span><a id="line.102">                }</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        private static void printScores(AFPChain afpChain) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                System.out.println("=====================");</a>
+<span class="sourceLineNo">107</span><a id="line.107">                System.out.println("The main scores for the alignment:");</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">                System.out.println("EQR       :\t" + afpChain.getNrEQR() + "\t The number of residues on structurally equivalent positions.")  ;</a>
+<span class="sourceLineNo">110</span><a id="line.110">                System.out.println("RMSD      :\t" + String.format("%.2f",afpChain.getTotalRmsdOpt() )+ "\t The RMSD of the alignment");</a>
+<span class="sourceLineNo">111</span><a id="line.111">                System.out.println("Z-score   :\t" + afpChain.getProbability() + "\t The Z-score of the alignment (CE)");</a>
+<span class="sourceLineNo">112</span><a id="line.112">                System.out.println("TM-score  :\t" + String.format("%.2f",afpChain.getTMScore()) + "\t The TM-score of the alignment.");</a>
+<span class="sourceLineNo">113</span><a id="line.113">                System.out.println("");</a>
+<span class="sourceLineNo">114</span><a id="line.114">                System.out.println("Other scores:");</a>
+<span class="sourceLineNo">115</span><a id="line.115">                System.out.println("Identity  :\t" + String.format("%.2f",afpChain.getIdentity())   + "\t The percent of residues that are sequence-identical in the alignment.");</a>
+<span class="sourceLineNo">116</span><a id="line.116">                System.out.println("Similarity:\t" + String.format("%.2f",afpChain.getSimilarity()) + "\t The percent of residues in the alignment that are sequence-similar.");</a>
+<span class="sourceLineNo">117</span><a id="line.117">                System.out.println("Coverage1 :\t" + afpChain.getCoverage1() + " %\t Percent of protein 1 that is covered with the alignment.");</a>
+<span class="sourceLineNo">118</span><a id="line.118">                System.out.println("Coverage2 :\t" + afpChain.getCoverage2() + " %\t Percent of protein 2 that is covered with the alignment.");</a>
+<span class="sourceLineNo">119</span><a id="line.119">                int dab = afpChain.getCa1Length()+afpChain.getCa2Length() - 2 * afpChain.getNrEQR();</a>
+<span class="sourceLineNo">120</span><a id="line.120">                System.out.println("Distance  :\t" + dab + "\t Distance between folds a,b ");</a>
+<span class="sourceLineNo">121</span><a id="line.121">                double sab = 2 * afpChain.getNrEQR() / (double)( afpChain.getCa1Length() + afpChain.getCa2Length());</a>
+<span class="sourceLineNo">122</span><a id="line.122">                System.out.println("Rel. Sim. :\t" + String.format("%.2f",sab) + "\t Relative similarity");</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">        }</a>
+<span class="sourceLineNo">127</span><a id="line.127">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

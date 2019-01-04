@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on 2013-05-23</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.nbio.structure.symmetry.core;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.Calc;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.cluster.*;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.contact.BoundingBox;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.contact.Grid;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.jgrapht.graph.SimpleGraph;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.jgrapht.alg.clique.CliqueMinimalSeparatorDecomposition;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.jgrapht.graph.DefaultEdge;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.jgrapht.graph.AsSubgraph;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.jgrapht.Graph;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">import javax.vecmath.Point3d;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.util.*;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.util.stream.Collectors;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">/**</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * Detects the symmetry (global, pseudo, internal and local) of protein</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * structures.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;p&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * The {@link SubunitClustererParameters} determine the subunit definition and</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * clustering, while the {@link QuatSymmetryParameters} determine the calculated</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * symmetry results (point group and axes).</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * @author Peter Rose</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *</a>
+<span class="sourceLineNo">054</span><a id="line.54"> */</a>
+<span class="sourceLineNo">055</span><a id="line.55">public class QuatSymmetryDetector {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">        private static final Logger logger = LoggerFactory</a>
+<span class="sourceLineNo">058</span><a id="line.58">                        .getLogger(QuatSymmetryDetector.class);</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">        /**</a>
+<span class="sourceLineNo">062</span><a id="line.62">         * Maximal distance between Calpha atoms of residues of different subunits</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * to establish a residue contact.</a>
+<span class="sourceLineNo">064</span><a id="line.64">         */</a>
+<span class="sourceLineNo">065</span><a id="line.65">        private static final double CONTACT_GRAPH_DISTANCE_CUTOFF = 8;</a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * The minimal number of residue contacts between subunits to consider</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * them connected and add an edge to the contact graph.</a>
+<span class="sourceLineNo">069</span><a id="line.69">         */</a>
+<span class="sourceLineNo">070</span><a id="line.70">        private static final int CONTACT_GRAPH_MIN_CONTACTS = 5;</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">        /** Prevent instantiation **/</a>
+<span class="sourceLineNo">073</span><a id="line.73">        private QuatSymmetryDetector() {</a>
+<span class="sourceLineNo">074</span><a id="line.74">        }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">        /**</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * Calculate GLOBAL symmetry results. This means that all {@link Subunit}</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * are included in the symmetry.</a>
+<span class="sourceLineNo">079</span><a id="line.79">         *</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * @param structure</a>
+<span class="sourceLineNo">081</span><a id="line.81">         *            protein chains will be extracted as {@link Subunit}</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * @param symmParams</a>
+<span class="sourceLineNo">083</span><a id="line.83">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * @param clusterParams</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *            subunit clustering parameters</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @return GLOBAL quaternary structure symmetry results</a>
+<span class="sourceLineNo">087</span><a id="line.87">         */</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public static QuatSymmetryResults calcGlobalSymmetry(Structure structure,</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        SubunitClustererParameters clusterParams) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">                Stoichiometry composition = SubunitClusterer.cluster(structure, clusterParams);</a>
+<span class="sourceLineNo">092</span><a id="line.92">                return calcGlobalSymmetry(composition, symmParams);</a>
+<span class="sourceLineNo">093</span><a id="line.93">        }</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">        /**</a>
+<span class="sourceLineNo">096</span><a id="line.96">         * Calculate GLOBAL symmetry results. This means that all {@link Subunit}</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * are included in the symmetry.</a>
+<span class="sourceLineNo">098</span><a id="line.98">         *</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @param subunits</a>
+<span class="sourceLineNo">100</span><a id="line.100">         *            list of {@link Subunit}</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @param symmParams</a>
+<span class="sourceLineNo">102</span><a id="line.102">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">103</span><a id="line.103">         * @param clusterParams</a>
+<span class="sourceLineNo">104</span><a id="line.104">         *            subunit clustering parameters</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * @return GLOBAL quaternary structure symmetry results</a>
+<span class="sourceLineNo">106</span><a id="line.106">         */</a>
+<span class="sourceLineNo">107</span><a id="line.107">        public static QuatSymmetryResults calcGlobalSymmetry(</a>
+<span class="sourceLineNo">108</span><a id="line.108">                        List&lt;Subunit&gt; subunits, QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">109</span><a id="line.109">                        SubunitClustererParameters clusterParams) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">                Stoichiometry composition = SubunitClusterer.cluster(subunits,</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                clusterParams);</a>
+<span class="sourceLineNo">112</span><a id="line.112">                return calcGlobalSymmetry(composition, symmParams);</a>
+<span class="sourceLineNo">113</span><a id="line.113">        }</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">        /**</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * Calculate GLOBAL symmetry results. This means that all {@link Subunit}</a>
+<span class="sourceLineNo">117</span><a id="line.117">         * are included in the symmetry.</a>
+<span class="sourceLineNo">118</span><a id="line.118">         *</a>
+<span class="sourceLineNo">119</span><a id="line.119">         * @param composition</a>
+<span class="sourceLineNo">120</span><a id="line.120">         *            {@link Stoichiometry} object that contains clustering results</a>
+<span class="sourceLineNo">121</span><a id="line.121">         * @param symmParams</a>
+<span class="sourceLineNo">122</span><a id="line.122">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">123</span><a id="line.123">         * @return GLOBAL quaternary structure symmetry results</a>
+<span class="sourceLineNo">124</span><a id="line.124">         */</a>
+<span class="sourceLineNo">125</span><a id="line.125">        public static QuatSymmetryResults calcGlobalSymmetry(</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        Stoichiometry composition, QuatSymmetryParameters symmParams) {</a>
+<span class="sourceLineNo">127</span><a id="line.127">                return calcQuatSymmetry(composition, symmParams);</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">        /**</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * Returns a List of LOCAL symmetry results. This means that a subset of the</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * {@link SubunitCluster} is left out of the symmetry calculation. Each</a>
+<span class="sourceLineNo">134</span><a id="line.134">         * element of the List is one possible LOCAL symmetry result.</a>
+<span class="sourceLineNo">135</span><a id="line.135">         * &lt;p&gt;</a>
+<span class="sourceLineNo">136</span><a id="line.136">         * Determine local symmetry if global structure is: (1) asymmetric, C1; (2)</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * heteromeric (belongs to more than 1 subunit cluster); (3) more than 2</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * subunits (heteromers with just 2 chains cannot have local symmetry)</a>
+<span class="sourceLineNo">139</span><a id="line.139">         *</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @param structure</a>
+<span class="sourceLineNo">141</span><a id="line.141">         *            protein chains will be extracted as {@link Subunit}</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @param symmParams</a>
+<span class="sourceLineNo">143</span><a id="line.143">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @param clusterParams</a>
+<span class="sourceLineNo">145</span><a id="line.145">         *            subunit clustering parameters</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * @return List of LOCAL quaternary structure symmetry results. Empty if</a>
+<span class="sourceLineNo">147</span><a id="line.147">         *         none.</a>
+<span class="sourceLineNo">148</span><a id="line.148">         */</a>
+<span class="sourceLineNo">149</span><a id="line.149">        public static List&lt;QuatSymmetryResults&gt; calcLocalSymmetries(</a>
+<span class="sourceLineNo">150</span><a id="line.150">                        Structure structure, QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">151</span><a id="line.151">                        SubunitClustererParameters clusterParams) {</a>
+<span class="sourceLineNo">152</span><a id="line.152"></a>
+<span class="sourceLineNo">153</span><a id="line.153">                Stoichiometry composition = SubunitClusterer.cluster(structure, clusterParams);</a>
+<span class="sourceLineNo">154</span><a id="line.154">                return calcLocalSymmetries(composition, symmParams);</a>
+<span class="sourceLineNo">155</span><a id="line.155">        }</a>
+<span class="sourceLineNo">156</span><a id="line.156"></a>
+<span class="sourceLineNo">157</span><a id="line.157">        /**</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * Returns a List of LOCAL symmetry results. This means that a subset of the</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * {@link SubunitCluster} is left out of the symmetry calculation. Each</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * element of the List is one possible LOCAL symmetry result.</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * &lt;p&gt;</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * Determine local symmetry if global structure is: (1) asymmetric, C1; (2)</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * heteromeric (belongs to more than 1 subunit cluster); (3) more than 2</a>
+<span class="sourceLineNo">164</span><a id="line.164">         * subunits (heteromers with just 2 chains cannot have local symmetry)</a>
+<span class="sourceLineNo">165</span><a id="line.165">         *</a>
+<span class="sourceLineNo">166</span><a id="line.166">         * @param subunits</a>
+<span class="sourceLineNo">167</span><a id="line.167">         *            list of {@link Subunit}</a>
+<span class="sourceLineNo">168</span><a id="line.168">         * @param symmParams</a>
+<span class="sourceLineNo">169</span><a id="line.169">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">170</span><a id="line.170">         * @param clusterParams</a>
+<span class="sourceLineNo">171</span><a id="line.171">         *            subunit clustering parameters</a>
+<span class="sourceLineNo">172</span><a id="line.172">         * @return List of LOCAL quaternary structure symmetry results. Empty if</a>
+<span class="sourceLineNo">173</span><a id="line.173">         *         none.</a>
+<span class="sourceLineNo">174</span><a id="line.174">         */</a>
+<span class="sourceLineNo">175</span><a id="line.175">        public static List&lt;QuatSymmetryResults&gt; calcLocalSymmetries(</a>
+<span class="sourceLineNo">176</span><a id="line.176">                        List&lt;Subunit&gt; subunits, QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">177</span><a id="line.177">                        SubunitClustererParameters clusterParams) {</a>
+<span class="sourceLineNo">178</span><a id="line.178"></a>
+<span class="sourceLineNo">179</span><a id="line.179">                Stoichiometry composition = SubunitClusterer.cluster(subunits, clusterParams);</a>
+<span class="sourceLineNo">180</span><a id="line.180">                return calcLocalSymmetries(composition, symmParams);</a>
+<span class="sourceLineNo">181</span><a id="line.181">        }</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">        /**</a>
+<span class="sourceLineNo">184</span><a id="line.184">         * Returns a List of LOCAL symmetry results. This means that a subset of the</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * {@link SubunitCluster} is left out of the symmetry calculation. Each</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * element of the List is one possible LOCAL symmetry result.</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * &lt;p&gt;</a>
+<span class="sourceLineNo">188</span><a id="line.188">         * Determine local symmetry if global structure is: (1) asymmetric, C1; (2)</a>
+<span class="sourceLineNo">189</span><a id="line.189">         * heteromeric (belongs to more than 1 subunit cluster); (3) more than 2</a>
+<span class="sourceLineNo">190</span><a id="line.190">         * subunits (heteromers with just 2 chains cannot have local symmetry)</a>
+<span class="sourceLineNo">191</span><a id="line.191">         *</a>
+<span class="sourceLineNo">192</span><a id="line.192">         * @param globalComposition</a>
+<span class="sourceLineNo">193</span><a id="line.193">         *            {@link Stoichiometry} object that contains global clustering results</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * @param symmParams</a>
+<span class="sourceLineNo">195</span><a id="line.195">         *            quaternary symmetry parameters</a>
+<span class="sourceLineNo">196</span><a id="line.196">         * @return List of LOCAL quaternary structure symmetry results. Empty if</a>
+<span class="sourceLineNo">197</span><a id="line.197">         *         none.</a>
+<span class="sourceLineNo">198</span><a id="line.198">         */</a>
+<span class="sourceLineNo">199</span><a id="line.199"></a>
+<span class="sourceLineNo">200</span><a id="line.200">        public static List&lt;QuatSymmetryResults&gt; calcLocalSymmetries(Stoichiometry globalComposition, QuatSymmetryParameters symmParams) {</a>
+<span class="sourceLineNo">201</span><a id="line.201"></a>
+<span class="sourceLineNo">202</span><a id="line.202">                Set&lt;Set&lt;Integer&gt;&gt; knownCombinations = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">203</span><a id="line.203">                List&lt;SubunitCluster&gt; clusters = globalComposition.getClusters();</a>
+<span class="sourceLineNo">204</span><a id="line.204">                //more than one subunit per cluster required for symmetry</a>
+<span class="sourceLineNo">205</span><a id="line.205">                List&lt;SubunitCluster&gt; nontrivialClusters =</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                clusters.stream().</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                        filter(cluster -&gt; (cluster.size()&gt;1)).</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        collect(Collectors.toList());</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">                QuatSymmetrySubunits consideredSubunits = new QuatSymmetrySubunits(nontrivialClusters);</a>
+<span class="sourceLineNo">211</span><a id="line.211">                if (consideredSubunits.getSubunitCount() &lt; 2)</a>
+<span class="sourceLineNo">212</span><a id="line.212">                        return new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                Graph&lt;Integer, DefaultEdge&gt; graph = initContactGraph(nontrivialClusters);</a>
+<span class="sourceLineNo">215</span><a id="line.215">                Stoichiometry nontrivialComposition = new Stoichiometry(nontrivialClusters,false);</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                List&lt;Integer&gt; allSubunitIds = new ArrayList&lt;&gt;(graph.vertexSet());</a>
+<span class="sourceLineNo">218</span><a id="line.218">                Collections.sort(allSubunitIds);</a>
+<span class="sourceLineNo">219</span><a id="line.219">                List&lt;Integer&gt; allSubunitClusterIds = consideredSubunits.getClusterIds();</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">                // since clusters are rearranged and trimmed, we need a reference to the original data</a>
+<span class="sourceLineNo">222</span><a id="line.222">                // to maintain consistent IDs of clusters and subunits across all solutions</a>
+<span class="sourceLineNo">223</span><a id="line.223">                Map&lt;Integer, List&lt;Integer&gt;&gt; clusterIdToSubunitIds =</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                allSubunitIds.stream().</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                        collect(Collectors.</a>
+<span class="sourceLineNo">226</span><a id="line.226">                                                groupingBy(allSubunitClusterIds::get, Collectors.toList()));</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">                List&lt;QuatSymmetryResults&gt; redundantSymmetries = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">229</span><a id="line.229">                // first, find symmetries for single clusters and their groups</a>
+<span class="sourceLineNo">230</span><a id="line.230">                // grouping is done based on symmetries found (i.e., no exhaustive permutation search is performed)</a>
+<span class="sourceLineNo">231</span><a id="line.231">                if (clusters.size()&gt;1) {</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233">                        List&lt;QuatSymmetryResults&gt; clusterSymmetries =</a>
+<span class="sourceLineNo">234</span><a id="line.234">                                        calcLocalSymmetriesCluster(nontrivialComposition, clusterIdToSubunitIds,symmParams, knownCombinations);</a>
+<span class="sourceLineNo">235</span><a id="line.235">                        redundantSymmetries.addAll(clusterSymmetries);</a>
+<span class="sourceLineNo">236</span><a id="line.236">                }</a>
+<span class="sourceLineNo">237</span><a id="line.237">                //find symmetries for groups based on connectivity of subunits</a>
+<span class="sourceLineNo">238</span><a id="line.238">                // disregarding initial clustering</a>
+<span class="sourceLineNo">239</span><a id="line.239">                List&lt;QuatSymmetryResults&gt; graphSymmetries = calcLocalSymmetriesGraph(nontrivialComposition,</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                                                                                                                                        allSubunitClusterIds,</a>
+<span class="sourceLineNo">241</span><a id="line.241">                                                                                                                                                        clusterIdToSubunitIds,</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                                                                                                                                        symmParams,</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                                                                                                                                        knownCombinations,</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                                                                                                                                        graph);</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">                redundantSymmetries.addAll(graphSymmetries);</a>
+<span class="sourceLineNo">247</span><a id="line.247"></a>
+<span class="sourceLineNo">248</span><a id="line.248">                // find symmetries which are not superseded by any other symmetry</a>
+<span class="sourceLineNo">249</span><a id="line.249">                // e.g., we have global stoichiometry of A3B3C,</a>
+<span class="sourceLineNo">250</span><a id="line.250">                // the local symmetries found are C3 with stoichiometries A3, B3, A3B3;</a>
+<span class="sourceLineNo">251</span><a id="line.251">                // then output only A3B3.</a>
+<span class="sourceLineNo">252</span><a id="line.252"></a>
+<span class="sourceLineNo">253</span><a id="line.253">                List&lt;QuatSymmetryResults&gt; outputSymmetries =</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                redundantSymmetries.stream().</a>
+<span class="sourceLineNo">255</span><a id="line.255">                                        filter(a -&gt; redundantSymmetries.stream().</a>
+<span class="sourceLineNo">256</span><a id="line.256">                                                noneMatch(b -&gt; a!=b &amp;&amp; a.isSupersededBy(b))).</a>
+<span class="sourceLineNo">257</span><a id="line.257">                                                collect(Collectors.toList());</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">                if(symmParams.isLocalLimitsExceeded(knownCombinations)) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                        logger.warn("Exceeded calculation limits for local symmetry detection. The results may be incomplete.");</a>
+<span class="sourceLineNo">261</span><a id="line.261">                }</a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">                return outputSymmetries;</a>
+<span class="sourceLineNo">264</span><a id="line.264">        }</a>
+<span class="sourceLineNo">265</span><a id="line.265"></a>
+<span class="sourceLineNo">266</span><a id="line.266"></a>
+<span class="sourceLineNo">267</span><a id="line.267">        private static  Graph&lt;Integer, DefaultEdge&gt; initContactGraph(List&lt;SubunitCluster&gt; clusters){</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269">                Graph&lt;Integer, DefaultEdge&gt; graph = new SimpleGraph&lt;&gt;(DefaultEdge.class);</a>
+<span class="sourceLineNo">270</span><a id="line.270"></a>
+<span class="sourceLineNo">271</span><a id="line.271">                // extract Ca coords from every subunit of every cluster.</a>
+<span class="sourceLineNo">272</span><a id="line.272">                // all subunit coords are used for contact evaluation,</a>
+<span class="sourceLineNo">273</span><a id="line.273">                // not only the aligned equivalent residues</a>
+<span class="sourceLineNo">274</span><a id="line.274">                List &lt;Point3d[]&gt; clusterSubunitCoords =</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                clusters.stream().</a>
+<span class="sourceLineNo">276</span><a id="line.276">                                        flatMap(c -&gt; c.getSubunits().stream()).</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                                map(r -&gt; Calc.atomsToPoints(r.getRepresentativeAtoms())).</a>
+<span class="sourceLineNo">278</span><a id="line.278">                                                collect(Collectors.toList());</a>
+<span class="sourceLineNo">279</span><a id="line.279"></a>
+<span class="sourceLineNo">280</span><a id="line.280">                for (int i = 0; i &lt; clusterSubunitCoords.size(); i++) {</a>
+<span class="sourceLineNo">281</span><a id="line.281">                        graph.addVertex(i);</a>
+<span class="sourceLineNo">282</span><a id="line.282">                }</a>
+<span class="sourceLineNo">283</span><a id="line.283"></a>
+<span class="sourceLineNo">284</span><a id="line.284">                // pre-compute bounding boxes</a>
+<span class="sourceLineNo">285</span><a id="line.285">                List&lt;BoundingBox&gt; boundingBoxes = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">286</span><a id="line.286">                clusterSubunitCoords.forEach(c -&gt; boundingBoxes.add(new BoundingBox(c)));</a>
+<span class="sourceLineNo">287</span><a id="line.287"></a>
+<span class="sourceLineNo">288</span><a id="line.288">                for (int i = 0; i &lt; clusterSubunitCoords.size() - 1; i++) {</a>
+<span class="sourceLineNo">289</span><a id="line.289">                        Point3d[] coords1 = clusterSubunitCoords.get(i);</a>
+<span class="sourceLineNo">290</span><a id="line.290">                        BoundingBox bb1 = boundingBoxes.get(i);</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">                        for (int j = i + 1; j &lt; clusterSubunitCoords.size(); j++) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                Point3d[] coords2 = clusterSubunitCoords.get(j);</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                BoundingBox bb2 = boundingBoxes.get(j);</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                Grid grid = new Grid(CONTACT_GRAPH_DISTANCE_CUTOFF);</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                grid.addCoords(coords1, bb1, coords2, bb2);</a>
+<span class="sourceLineNo">297</span><a id="line.297"></a>
+<span class="sourceLineNo">298</span><a id="line.298">                                if (grid.getIndicesContacts().size() &gt;= CONTACT_GRAPH_MIN_CONTACTS) {</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                        graph.addEdge(i, j);</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                }</a>
+<span class="sourceLineNo">301</span><a id="line.301">                        }</a>
+<span class="sourceLineNo">302</span><a id="line.302">                }</a>
+<span class="sourceLineNo">303</span><a id="line.303">                return graph;</a>
+<span class="sourceLineNo">304</span><a id="line.304">        }</a>
+<span class="sourceLineNo">305</span><a id="line.305"></a>
+<span class="sourceLineNo">306</span><a id="line.306">        private static List&lt;QuatSymmetryResults&gt; calcLocalSymmetriesCluster(Stoichiometry nontrivialComposition,</a>
+<span class="sourceLineNo">307</span><a id="line.307">                                                                            Map&lt;Integer, List&lt;Integer&gt;&gt; clusterIdToSubunitIds,</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                                                            QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                                                            Set&lt;Set&lt;Integer&gt;&gt; knownCombinations) {</a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">                List&lt;QuatSymmetryResults&gt; clusterSymmetries = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">312</span><a id="line.312"></a>
+<span class="sourceLineNo">313</span><a id="line.313">                // find solutions for single clusters first</a>
+<span class="sourceLineNo">314</span><a id="line.314">                for (int i=0;i&lt;nontrivialComposition.numberOfComponents();i++) {</a>
+<span class="sourceLineNo">315</span><a id="line.315">                        QuatSymmetryResults localResult =</a>
+<span class="sourceLineNo">316</span><a id="line.316">                                        calcQuatSymmetry(nontrivialComposition.getComponent(i),symmParams);</a>
+<span class="sourceLineNo">317</span><a id="line.317"></a>
+<span class="sourceLineNo">318</span><a id="line.318">                        if(localResult!=null &amp;&amp; !localResult.getSymmetry().equals("C1")) {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                                localResult.setLocal(true);</a>
+<span class="sourceLineNo">320</span><a id="line.320">                                clusterSymmetries.add(localResult);</a>
+<span class="sourceLineNo">321</span><a id="line.321">                                Set&lt;Integer&gt; knownResult = new HashSet&lt;&gt;(clusterIdToSubunitIds.get(i));</a>
+<span class="sourceLineNo">322</span><a id="line.322">                                // since symmetry is found,</a>
+<span class="sourceLineNo">323</span><a id="line.323">                                // do not try graph decomposition of this set of subunits later</a>
+<span class="sourceLineNo">324</span><a id="line.324">                                knownCombinations.add(knownResult);</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">                }</a>
+<span class="sourceLineNo">327</span><a id="line.327"></a>
+<span class="sourceLineNo">328</span><a id="line.328">                // group clusters by symmetries found, in case they all share axes and have the same number of subunits</a>
+<span class="sourceLineNo">329</span><a id="line.329">                Map&lt;String, Map&lt;Integer,List&lt;QuatSymmetryResults&gt;&gt;&gt; groupedSymmetries =</a>
+<span class="sourceLineNo">330</span><a id="line.330">                                clusterSymmetries.stream().</a>
+<span class="sourceLineNo">331</span><a id="line.331">                                        collect(Collectors.</a>
+<span class="sourceLineNo">332</span><a id="line.332">                                                groupingBy(QuatSymmetryResults::getSymmetry,Collectors.</a>
+<span class="sourceLineNo">333</span><a id="line.333">                                                        groupingBy(QuatSymmetryResults::getSubunitCount,Collectors.toList())));</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">                for (Map&lt;Integer,List&lt;QuatSymmetryResults&gt;&gt; symmetriesByGroup: groupedSymmetries.values()) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        for (List&lt;QuatSymmetryResults&gt; symmetriesBySubunits: symmetriesByGroup.values()) {</a>
+<span class="sourceLineNo">337</span><a id="line.337"></a>
+<span class="sourceLineNo">338</span><a id="line.338">                                Stoichiometry groupComposition =</a>
+<span class="sourceLineNo">339</span><a id="line.339">                                                symmetriesBySubunits.stream().</a>
+<span class="sourceLineNo">340</span><a id="line.340">                                                        map(QuatSymmetryResults::getStoichiometry).</a>
+<span class="sourceLineNo">341</span><a id="line.341">                                                                reduce(Stoichiometry::combineWith).get();</a>
+<span class="sourceLineNo">342</span><a id="line.342"></a>
+<span class="sourceLineNo">343</span><a id="line.343">                                if (groupComposition.numberOfComponents() &lt; 2) {</a>
+<span class="sourceLineNo">344</span><a id="line.344">                                        continue;</a>
+<span class="sourceLineNo">345</span><a id="line.345">                                }</a>
+<span class="sourceLineNo">346</span><a id="line.346">                                //check if grouped clusters also have symmetry</a>
+<span class="sourceLineNo">347</span><a id="line.347">                                QuatSymmetryResults localResult = calcQuatSymmetry(groupComposition,symmParams);</a>
+<span class="sourceLineNo">348</span><a id="line.348"></a>
+<span class="sourceLineNo">349</span><a id="line.349">                                if(localResult!=null &amp;&amp; !localResult.getSymmetry().equals("C1")) {</a>
+<span class="sourceLineNo">350</span><a id="line.350">                                        localResult.setLocal(true);</a>
+<span class="sourceLineNo">351</span><a id="line.351">                                        clusterSymmetries.add(localResult);</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                        // find subunit ids in this cluster list</a>
+<span class="sourceLineNo">353</span><a id="line.353">                                        Set&lt;Integer&gt; knownResult = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">354</span><a id="line.354">                                        for (SubunitCluster cluster: groupComposition.getClusters()) {</a>
+<span class="sourceLineNo">355</span><a id="line.355">                                                int i = nontrivialComposition.getClusters().indexOf(cluster);</a>
+<span class="sourceLineNo">356</span><a id="line.356">                                                knownResult.addAll(clusterIdToSubunitIds.get(i));</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                        }</a>
+<span class="sourceLineNo">358</span><a id="line.358">                                        // since symmetry is found,</a>
+<span class="sourceLineNo">359</span><a id="line.359">                                        // do not try graph decomposition of this set of subunits later</a>
+<span class="sourceLineNo">360</span><a id="line.360">                                        knownCombinations.add(knownResult);</a>
+<span class="sourceLineNo">361</span><a id="line.361">                                }</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        }</a>
+<span class="sourceLineNo">363</span><a id="line.363">                }</a>
+<span class="sourceLineNo">364</span><a id="line.364">                return clusterSymmetries;</a>
+<span class="sourceLineNo">365</span><a id="line.365">        }</a>
+<span class="sourceLineNo">366</span><a id="line.366"></a>
+<span class="sourceLineNo">367</span><a id="line.367"></a>
+<span class="sourceLineNo">368</span><a id="line.368">        private static List&lt;QuatSymmetryResults&gt; calcLocalSymmetriesGraph(final Stoichiometry globalComposition,</a>
+<span class="sourceLineNo">369</span><a id="line.369">                                                                          final List&lt;Integer&gt; allSubunitClusterIds,</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                                                          final Map&lt;Integer, List&lt;Integer&gt;&gt; clusterIdToSubunitIds,</a>
+<span class="sourceLineNo">371</span><a id="line.371">                                                                          QuatSymmetryParameters symmParams,</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                                                          Set&lt;Set&lt;Integer&gt;&gt; knownCombinations,</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                                                          Graph&lt;Integer, DefaultEdge&gt; graph) {</a>
+<span class="sourceLineNo">374</span><a id="line.374"></a>
+<span class="sourceLineNo">375</span><a id="line.375">                List&lt;QuatSymmetryResults&gt; localSymmetries = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">                // do not go any deeper into recursion if over the time/combinations limit</a>
+<span class="sourceLineNo">378</span><a id="line.378">                if(symmParams.isLocalLimitsExceeded(knownCombinations)) {</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        return localSymmetries;</a>
+<span class="sourceLineNo">380</span><a id="line.380">                }</a>
+<span class="sourceLineNo">381</span><a id="line.381">                // extract components of a (sub-)graph</a>
+<span class="sourceLineNo">382</span><a id="line.382">                CliqueMinimalSeparatorDecomposition&lt;Integer, DefaultEdge&gt; cmsd =</a>
+<span class="sourceLineNo">383</span><a id="line.383">                                new CliqueMinimalSeparatorDecomposition&lt;&gt;(graph);</a>
+<span class="sourceLineNo">384</span><a id="line.384"></a>
+<span class="sourceLineNo">385</span><a id="line.385">                // only consider components with more than 1 vertex (subunit)</a>
+<span class="sourceLineNo">386</span><a id="line.386">                Set&lt;Set&lt;Integer&gt;&gt; graphComponents =</a>
+<span class="sourceLineNo">387</span><a id="line.387">                                cmsd.getAtoms().stream().</a>
+<span class="sourceLineNo">388</span><a id="line.388">                                        filter(component -&gt; component.size()&gt;1).</a>
+<span class="sourceLineNo">389</span><a id="line.389">                                        collect(Collectors.toSet());</a>
+<span class="sourceLineNo">390</span><a id="line.390"></a>
+<span class="sourceLineNo">391</span><a id="line.391">                //do not go into what has already been explored</a>
+<span class="sourceLineNo">392</span><a id="line.392">                graphComponents.removeAll(knownCombinations);</a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394">                for (Set&lt;Integer&gt; graphComponent: graphComponents) {</a>
+<span class="sourceLineNo">395</span><a id="line.395">                        knownCombinations.add(graphComponent);</a>
+<span class="sourceLineNo">396</span><a id="line.396"></a>
+<span class="sourceLineNo">397</span><a id="line.397">                        List&lt;Integer&gt; usedSubunitIds = new ArrayList&lt;&gt;(graphComponent);</a>
+<span class="sourceLineNo">398</span><a id="line.398">                        Collections.sort(usedSubunitIds);</a>
+<span class="sourceLineNo">399</span><a id="line.399">                        // get clusters which contain only subunits in the current component</a>
+<span class="sourceLineNo">400</span><a id="line.400">                        Stoichiometry localStoichiometry =</a>
+<span class="sourceLineNo">401</span><a id="line.401">                                        trimSubunitClusters(globalComposition, allSubunitClusterIds, clusterIdToSubunitIds, usedSubunitIds);</a>
+<span class="sourceLineNo">402</span><a id="line.402"></a>
+<span class="sourceLineNo">403</span><a id="line.403">                        if (localStoichiometry.numberOfComponents()==0) {</a>
+<span class="sourceLineNo">404</span><a id="line.404">                                continue;</a>
+<span class="sourceLineNo">405</span><a id="line.405">                        }</a>
+<span class="sourceLineNo">406</span><a id="line.406"></a>
+<span class="sourceLineNo">407</span><a id="line.407">                        //NB: usedSubunitIds might have changed when trimming clusters</a>
+<span class="sourceLineNo">408</span><a id="line.408">                        // if a subunit belongs to a cluster with no other subunits,</a>
+<span class="sourceLineNo">409</span><a id="line.409">                        // it is removed inside trimSubunitClusters</a>
+<span class="sourceLineNo">410</span><a id="line.410">                        Set&lt;Integer&gt; usedSubunitIdsSet = new HashSet&lt;&gt;(usedSubunitIds);</a>
+<span class="sourceLineNo">411</span><a id="line.411">                        if(!graphComponent.equals(usedSubunitIdsSet)) {</a>
+<span class="sourceLineNo">412</span><a id="line.412">                                if(knownCombinations.contains(usedSubunitIdsSet)) {</a>
+<span class="sourceLineNo">413</span><a id="line.413">                                        continue;</a>
+<span class="sourceLineNo">414</span><a id="line.414">                                } else {</a>
+<span class="sourceLineNo">415</span><a id="line.415">                                        knownCombinations.add(usedSubunitIdsSet);</a>
+<span class="sourceLineNo">416</span><a id="line.416">                                }</a>
+<span class="sourceLineNo">417</span><a id="line.417">                        }</a>
+<span class="sourceLineNo">418</span><a id="line.418"></a>
+<span class="sourceLineNo">419</span><a id="line.419">                        QuatSymmetryResults localResult = calcQuatSymmetry(localStoichiometry,symmParams);</a>
+<span class="sourceLineNo">420</span><a id="line.420">                        if(localResult!=null &amp;&amp; !localResult.getSymmetry().equals("C1")) {</a>
+<span class="sourceLineNo">421</span><a id="line.421">                                localResult.setLocal(true);</a>
+<span class="sourceLineNo">422</span><a id="line.422">                                localSymmetries.add(localResult);</a>
+<span class="sourceLineNo">423</span><a id="line.423">                                continue;</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        }</a>
+<span class="sourceLineNo">425</span><a id="line.425"></a>
+<span class="sourceLineNo">426</span><a id="line.426">                        if (usedSubunitIds.size() &lt; 3) {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                // cannot decompose this component any further</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                continue;</a>
+<span class="sourceLineNo">429</span><a id="line.429">                        }</a>
+<span class="sourceLineNo">430</span><a id="line.430"></a>
+<span class="sourceLineNo">431</span><a id="line.431">                        for (Integer removeSubunitId: usedSubunitIds) {</a>
+<span class="sourceLineNo">432</span><a id="line.432">                                // try removing subunits one by one and decompose the sub-graph recursively</a>
+<span class="sourceLineNo">433</span><a id="line.433">                                Set&lt;Integer&gt; prunedGraphVertices = new HashSet&lt;&gt;(usedSubunitIds);</a>
+<span class="sourceLineNo">434</span><a id="line.434">                                prunedGraphVertices.remove(removeSubunitId);</a>
+<span class="sourceLineNo">435</span><a id="line.435">                                if (knownCombinations.contains(prunedGraphVertices)) {</a>
+<span class="sourceLineNo">436</span><a id="line.436">                                        continue;</a>
+<span class="sourceLineNo">437</span><a id="line.437">                                }</a>
+<span class="sourceLineNo">438</span><a id="line.438">                                knownCombinations.add(prunedGraphVertices);</a>
+<span class="sourceLineNo">439</span><a id="line.439"></a>
+<span class="sourceLineNo">440</span><a id="line.440">                                Graph&lt;Integer, DefaultEdge&gt; subGraph = new AsSubgraph&lt;&gt;(graph,prunedGraphVertices);</a>
+<span class="sourceLineNo">441</span><a id="line.441"></a>
+<span class="sourceLineNo">442</span><a id="line.442">                                List&lt;QuatSymmetryResults&gt; localSubSymmetries = calcLocalSymmetriesGraph(globalComposition,</a>
+<span class="sourceLineNo">443</span><a id="line.443">                                                                                                                                                                                allSubunitClusterIds,</a>
+<span class="sourceLineNo">444</span><a id="line.444">                                                                                                                                                                                clusterIdToSubunitIds,</a>
+<span class="sourceLineNo">445</span><a id="line.445">                                                                                                                                                                                symmParams,</a>
+<span class="sourceLineNo">446</span><a id="line.446">                                                                                                                                                                                knownCombinations,</a>
+<span class="sourceLineNo">447</span><a id="line.447">                                                                                                                                                                                subGraph);</a>
+<span class="sourceLineNo">448</span><a id="line.448">                                localSymmetries.addAll(localSubSymmetries);</a>
+<span class="sourceLineNo">449</span><a id="line.449">                        }</a>
+<span class="sourceLineNo">450</span><a id="line.450"></a>
+<span class="sourceLineNo">451</span><a id="line.451">                }</a>
+<span class="sourceLineNo">452</span><a id="line.452"></a>
+<span class="sourceLineNo">453</span><a id="line.453">                return localSymmetries;</a>
+<span class="sourceLineNo">454</span><a id="line.454">        }</a>
+<span class="sourceLineNo">455</span><a id="line.455"></a>
+<span class="sourceLineNo">456</span><a id="line.456">        private static Stoichiometry trimSubunitClusters(Stoichiometry globalComposition,</a>
+<span class="sourceLineNo">457</span><a id="line.457">                                                                List&lt;Integer&gt; allSubunitClusterIds,</a>
+<span class="sourceLineNo">458</span><a id="line.458">                                                                Map&lt;Integer, List&lt;Integer&gt;&gt; clusterIdToSubunitIds,</a>
+<span class="sourceLineNo">459</span><a id="line.459">                                                                List&lt;Integer&gt; usedSubunitIds) {</a>
+<span class="sourceLineNo">460</span><a id="line.460">                List&lt;SubunitCluster&gt; globalClusters = globalComposition.getClusters();</a>
+<span class="sourceLineNo">461</span><a id="line.461">                List&lt;SubunitCluster&gt; localClusters = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">462</span><a id="line.462"></a>
+<span class="sourceLineNo">463</span><a id="line.463">                Set&lt;Integer&gt; usedClusterIds =</a>
+<span class="sourceLineNo">464</span><a id="line.464">                                usedSubunitIds.stream().</a>
+<span class="sourceLineNo">465</span><a id="line.465">                                        map(allSubunitClusterIds::get).</a>
+<span class="sourceLineNo">466</span><a id="line.466">                                        distinct().</a>
+<span class="sourceLineNo">467</span><a id="line.467">                                        collect(Collectors.toSet());</a>
+<span class="sourceLineNo">468</span><a id="line.468"></a>
+<span class="sourceLineNo">469</span><a id="line.469">                // for each used cluster, remove unused subunits</a>
+<span class="sourceLineNo">470</span><a id="line.470">                for(Integer usedClusterId:usedClusterIds) {</a>
+<span class="sourceLineNo">471</span><a id="line.471">                        SubunitCluster originalCluster = globalClusters.get(usedClusterId);</a>
+<span class="sourceLineNo">472</span><a id="line.472">                        List&lt;Integer&gt; allSubunitIdsInCluster = clusterIdToSubunitIds.get(usedClusterId);</a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474">                        //subunit numbering is global for the entire graph</a>
+<span class="sourceLineNo">475</span><a id="line.475">                        // make it zero-based for the inside of a cluster</a>
+<span class="sourceLineNo">476</span><a id="line.476">                        int minSUValue = Collections.min(allSubunitIdsInCluster);</a>
+<span class="sourceLineNo">477</span><a id="line.477">                        List&lt;Integer&gt; usedSubunitIdsInCluster = new ArrayList&lt;&gt;(allSubunitIdsInCluster);</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        usedSubunitIdsInCluster.retainAll(usedSubunitIds);</a>
+<span class="sourceLineNo">479</span><a id="line.479"></a>
+<span class="sourceLineNo">480</span><a id="line.480">                        List&lt;Integer&gt; subunitsToRetain =</a>
+<span class="sourceLineNo">481</span><a id="line.481">                                        usedSubunitIdsInCluster.stream().</a>
+<span class="sourceLineNo">482</span><a id="line.482">                                                map(i -&gt; i-minSUValue).</a>
+<span class="sourceLineNo">483</span><a id="line.483">                                                collect(Collectors.toList());</a>
+<span class="sourceLineNo">484</span><a id="line.484"></a>
+<span class="sourceLineNo">485</span><a id="line.485">                        if (subunitsToRetain.size()&gt;1) {</a>
+<span class="sourceLineNo">486</span><a id="line.486">                                SubunitCluster filteredCluster = new SubunitCluster(originalCluster, subunitsToRetain);</a>
+<span class="sourceLineNo">487</span><a id="line.487">                                localClusters.add(filteredCluster);</a>
+<span class="sourceLineNo">488</span><a id="line.488">                        } else {</a>
+<span class="sourceLineNo">489</span><a id="line.489">                                // if the cluster ends up having only 1 subunit, remove it from further processing</a>
+<span class="sourceLineNo">490</span><a id="line.490">                                usedSubunitIds.removeAll(usedSubunitIdsInCluster);</a>
+<span class="sourceLineNo">491</span><a id="line.491">                        }</a>
+<span class="sourceLineNo">492</span><a id="line.492">                }</a>
+<span class="sourceLineNo">493</span><a id="line.493">                return new Stoichiometry(localClusters,false);</a>
+<span class="sourceLineNo">494</span><a id="line.494">        }</a>
+<span class="sourceLineNo">495</span><a id="line.495"></a>
+<span class="sourceLineNo">496</span><a id="line.496"></a>
+<span class="sourceLineNo">497</span><a id="line.497">        private static QuatSymmetryResults calcQuatSymmetry(Stoichiometry composition, QuatSymmetryParameters parameters) {</a>
+<span class="sourceLineNo">498</span><a id="line.498"></a>
+<span class="sourceLineNo">499</span><a id="line.499">                QuatSymmetrySubunits subunits = new QuatSymmetrySubunits(composition.getClusters());</a>
+<span class="sourceLineNo">500</span><a id="line.500"></a>
+<span class="sourceLineNo">501</span><a id="line.501">                if (subunits.getSubunitCount() == 0)</a>
+<span class="sourceLineNo">502</span><a id="line.502">                        return null;</a>
+<span class="sourceLineNo">503</span><a id="line.503"></a>
+<span class="sourceLineNo">504</span><a id="line.504">                RotationGroup rotationGroup = null;</a>
+<span class="sourceLineNo">505</span><a id="line.505">                SymmetryPerceptionMethod method = null;</a>
+<span class="sourceLineNo">506</span><a id="line.506">                if (subunits.getFolds().size() == 1) {</a>
+<span class="sourceLineNo">507</span><a id="line.507">                        // no symmetry possible, create empty ("C1") rotation group</a>
+<span class="sourceLineNo">508</span><a id="line.508">                        method = SymmetryPerceptionMethod.NO_ROTATION;</a>
+<span class="sourceLineNo">509</span><a id="line.509">                        rotationGroup = new RotationGroup();</a>
+<span class="sourceLineNo">510</span><a id="line.510">                        rotationGroup.setC1(subunits.getSubunitCount());</a>
+<span class="sourceLineNo">511</span><a id="line.511">                } else if (subunits.getSubunitCount() == 2</a>
+<span class="sourceLineNo">512</span><a id="line.512">                                &amp;&amp; subunits.getFolds().contains(2)) {</a>
+<span class="sourceLineNo">513</span><a id="line.513">                        method = SymmetryPerceptionMethod.C2_ROTATION;</a>
+<span class="sourceLineNo">514</span><a id="line.514">                        QuatSymmetrySolver solver = new C2RotationSolver(subunits,</a>
+<span class="sourceLineNo">515</span><a id="line.515">                                        parameters);</a>
+<span class="sourceLineNo">516</span><a id="line.516">                        rotationGroup = solver.getSymmetryOperations();</a>
+<span class="sourceLineNo">517</span><a id="line.517">                } else {</a>
+<span class="sourceLineNo">518</span><a id="line.518">                        method = SymmetryPerceptionMethod.ROTATION;</a>
+<span class="sourceLineNo">519</span><a id="line.519">                        QuatSymmetrySolver solver = new RotationSolver(subunits, parameters);</a>
+<span class="sourceLineNo">520</span><a id="line.520">                        rotationGroup = solver.getSymmetryOperations();</a>
+<span class="sourceLineNo">521</span><a id="line.521">                }</a>
+<span class="sourceLineNo">522</span><a id="line.522"></a>
+<span class="sourceLineNo">523</span><a id="line.523">                QuatSymmetryResults results = new QuatSymmetryResults(composition,</a>
+<span class="sourceLineNo">524</span><a id="line.524">                                rotationGroup, method);</a>
+<span class="sourceLineNo">525</span><a id="line.525"></a>
+<span class="sourceLineNo">526</span><a id="line.526">                String symmetry = results.getSymmetry();</a>
+<span class="sourceLineNo">527</span><a id="line.527"></a>
+<span class="sourceLineNo">528</span><a id="line.528">                // Check structures with Cn symmetry (n = 1, ...) for helical symmetry</a>
+<span class="sourceLineNo">529</span><a id="line.529">                if (symmetry.startsWith("C")) {</a>
+<span class="sourceLineNo">530</span><a id="line.530">                        HelixSolver hc = new HelixSolver(subunits,</a>
+<span class="sourceLineNo">531</span><a id="line.531">                                        rotationGroup.getOrder(), parameters);</a>
+<span class="sourceLineNo">532</span><a id="line.532">                        HelixLayers helixLayers = hc.getSymmetryOperations();</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">                        if (helixLayers.size() &gt; 0) {</a>
+<span class="sourceLineNo">535</span><a id="line.535">                                // if the complex has no symmetry (c1) or has Cn (n&gt;=2) symmetry</a>
+<span class="sourceLineNo">536</span><a id="line.536">                                // and the</a>
+<span class="sourceLineNo">537</span><a id="line.537">                                // helical symmetry has a lower RMSD than the cyclic symmetry,</a>
+<span class="sourceLineNo">538</span><a id="line.538">                                // set helical symmetry</a>
+<span class="sourceLineNo">539</span><a id="line.539">                                // If the RMSD for helical and cyclic symmetry is similar, a</a>
+<span class="sourceLineNo">540</span><a id="line.540">                                // slight preference is</a>
+<span class="sourceLineNo">541</span><a id="line.541">                                // given to the helical symmetry by the helixRmsdThreshold</a>
+<span class="sourceLineNo">542</span><a id="line.542">                                // parameter.</a>
+<span class="sourceLineNo">543</span><a id="line.543">                                double cRmsd = rotationGroup.getScores().getRmsd();</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                double hRmsd = helixLayers.getScores().getRmsd();</a>
+<span class="sourceLineNo">545</span><a id="line.545">                                // System.out.println("cRMSD: " + cRmsd + " hRMSD: " + hRmsd);</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                double deltaRmsd = hRmsd - cRmsd;</a>
+<span class="sourceLineNo">547</span><a id="line.547">                                if (symmetry.equals("C1")</a>
+<span class="sourceLineNo">548</span><a id="line.548">                                                || (!symmetry.equals("C1") &amp;&amp; deltaRmsd &lt;= parameters</a>
+<span class="sourceLineNo">549</span><a id="line.549">                                                                .getHelixRmsdThreshold())) {</a>
+<span class="sourceLineNo">550</span><a id="line.550">                                        method = SymmetryPerceptionMethod.ROTO_TRANSLATION;</a>
+<span class="sourceLineNo">551</span><a id="line.551">                                        results = new QuatSymmetryResults(composition, helixLayers,</a>
+<span class="sourceLineNo">552</span><a id="line.552">                                                        method);</a>
+<span class="sourceLineNo">553</span><a id="line.553">                                }</a>
+<span class="sourceLineNo">554</span><a id="line.554">                        }</a>
+<span class="sourceLineNo">555</span><a id="line.555">                }</a>
+<span class="sourceLineNo">556</span><a id="line.556"></a>
+<span class="sourceLineNo">557</span><a id="line.557">                return results;</a>
+<span class="sourceLineNo">558</span><a id="line.558">        }</a>
+<span class="sourceLineNo">559</span><a id="line.559">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

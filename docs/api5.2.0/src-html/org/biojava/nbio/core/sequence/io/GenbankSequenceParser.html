@@ -1,0 +1,517 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * @author Richard Holland</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * @author David Scott</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * @author Bubba Puryear</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * @author George Waldon</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * @author Deepak Sheoran</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * @author Karl Nicholas &lt;github:karlnicholas&gt;</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * @author Jacek Grzebyta</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * @author Paolo Pavan</a>
+<span class="sourceLineNo">023</span><a id="line.23"> *</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * at:</a>
+<span class="sourceLineNo">027</span><a id="line.27"> *</a>
+<span class="sourceLineNo">028</span><a id="line.28"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">029</span><a id="line.29"> *</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * Created on 01-21-2010</a>
+<span class="sourceLineNo">031</span><a id="line.31"> */</a>
+<span class="sourceLineNo">032</span><a id="line.32">package org.biojava.nbio.core.sequence.io;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.core.exceptions.Messages;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.core.exceptions.ParserException;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.core.sequence.DataSource;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.nbio.core.sequence.compound.DNACompoundSet;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.nbio.core.sequence.compound.RNACompoundSet;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.nbio.core.sequence.features.AbstractFeature;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.nbio.core.sequence.features.DBReferenceInfo;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.nbio.core.sequence.features.Qualifier;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.nbio.core.sequence.features.TextFeature;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.nbio.core.sequence.io.template.SequenceParserInterface;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.nbio.core.sequence.location.InsdcParser;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.nbio.core.sequence.location.template.AbstractLocation;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.nbio.core.sequence.location.template.Location;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.nbio.core.sequence.reference.GenbankReference;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.nbio.core.sequence.template.AbstractSequence;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.nbio.core.sequence.template.Compound;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.nbio.core.sequence.template.CompoundSet;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">056</span><a id="line.56">import java.io.IOException;</a>
+<span class="sourceLineNo">057</span><a id="line.57">import java.util.ArrayList;</a>
+<span class="sourceLineNo">058</span><a id="line.58">import java.util.HashMap;</a>
+<span class="sourceLineNo">059</span><a id="line.59">import java.util.LinkedHashMap;</a>
+<span class="sourceLineNo">060</span><a id="line.60">import java.util.List;</a>
+<span class="sourceLineNo">061</span><a id="line.61">import java.util.regex.Matcher;</a>
+<span class="sourceLineNo">062</span><a id="line.62">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">public class GenbankSequenceParser&lt;S extends AbstractSequence&lt;C&gt;, C extends Compound&gt; implements SequenceParserInterface{</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        private String seqData = null;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        private GenericGenbankHeaderParser&lt;S, C&gt; headerParser;</a>
+<span class="sourceLineNo">068</span><a id="line.68">        private String header;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        private String accession;</a>
+<span class="sourceLineNo">070</span><a id="line.70">        public LinkedHashMap&lt;String, ArrayList&lt;DBReferenceInfo&gt;&gt; mapDB;</a>
+<span class="sourceLineNo">071</span><a id="line.71">        /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">         * this data structure collects list of features extracted from the</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * FEATURE_TAG section They are organized by list of the same type (i.e.</a>
+<span class="sourceLineNo">074</span><a id="line.74">         * same genbank Feature) and are provided with location</a>
+<span class="sourceLineNo">075</span><a id="line.75">         */</a>
+<span class="sourceLineNo">076</span><a id="line.76">        private HashMap&lt;String, ArrayList&lt;AbstractFeature&gt;&gt; featureCollection;</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">        private Logger log = LoggerFactory.getLogger(getClass());</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">        // this is a compoundset parsed from header.</a>
+<span class="sourceLineNo">081</span><a id="line.81">        private CompoundSet&lt;?&gt; compoundType;</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * The name of this format</a>
+<span class="sourceLineNo">085</span><a id="line.85">         */</a>
+<span class="sourceLineNo">086</span><a id="line.86">        public static final String GENBANK_FORMAT = "GENBANK";</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">        protected static final String LOCUS_TAG = "LOCUS";</a>
+<span class="sourceLineNo">089</span><a id="line.89">        protected static final String DEFINITION_TAG = "DEFINITION";</a>
+<span class="sourceLineNo">090</span><a id="line.90">        protected static final String ACCESSION_TAG = "ACCESSION";</a>
+<span class="sourceLineNo">091</span><a id="line.91">        protected static final String VERSION_TAG = "VERSION";</a>
+<span class="sourceLineNo">092</span><a id="line.92">        protected static final String KEYWORDS_TAG = "KEYWORDS";</a>
+<span class="sourceLineNo">093</span><a id="line.93">        //                                                  "SEGMENT"</a>
+<span class="sourceLineNo">094</span><a id="line.94">        protected static final String SOURCE_TAG = "SOURCE";</a>
+<span class="sourceLineNo">095</span><a id="line.95">        protected static final String ORGANISM_TAG = "ORGANISM";</a>
+<span class="sourceLineNo">096</span><a id="line.96">        protected static final String REFERENCE_TAG = "REFERENCE";</a>
+<span class="sourceLineNo">097</span><a id="line.97">        protected static final String AUTHORS_TAG = "AUTHORS";</a>
+<span class="sourceLineNo">098</span><a id="line.98">        protected static final String CONSORTIUM_TAG = "CONSRTM";</a>
+<span class="sourceLineNo">099</span><a id="line.99">        protected static final String TITLE_TAG = "TITLE";</a>
+<span class="sourceLineNo">100</span><a id="line.100">        protected static final String JOURNAL_TAG = "JOURNAL";</a>
+<span class="sourceLineNo">101</span><a id="line.101">        protected static final String PUBMED_TAG = "PUBMED";</a>
+<span class="sourceLineNo">102</span><a id="line.102">        protected static final String MEDLINE_TAG = "MEDLINE"; //deprecated</a>
+<span class="sourceLineNo">103</span><a id="line.103">        protected static final String REMARK_TAG = "REMARK";</a>
+<span class="sourceLineNo">104</span><a id="line.104">        protected static final String COMMENT_TAG = "COMMENT";</a>
+<span class="sourceLineNo">105</span><a id="line.105">        protected static final String FEATURE_TAG = "FEATURES";</a>
+<span class="sourceLineNo">106</span><a id="line.106">        protected static final String BASE_COUNT_TAG_FULL = "BASE COUNT"; //deprecated</a>
+<span class="sourceLineNo">107</span><a id="line.107">        protected static final String BASE_COUNT_TAG = "BASE";</a>
+<span class="sourceLineNo">108</span><a id="line.108">        //                                                  "CONTIG"</a>
+<span class="sourceLineNo">109</span><a id="line.109">        protected static final String START_SEQUENCE_TAG = "ORIGIN";</a>
+<span class="sourceLineNo">110</span><a id="line.110">        protected static final String END_SEQUENCE_TAG = "//";</a>
+<span class="sourceLineNo">111</span><a id="line.111">        // locus line</a>
+<span class="sourceLineNo">112</span><a id="line.112">        protected static final Pattern lp = Pattern.compile("^(\\S+)\\s+\\d+\\s+(bp|aa)\\s{1,4}(([dms]s-)?(\\S+))?\\s+(circular|linear)?\\s*(\\S+)?\\s*(\\S+)?$");</a>
+<span class="sourceLineNo">113</span><a id="line.113">        // version line</a>
+<span class="sourceLineNo">114</span><a id="line.114">        protected static final Pattern vp = Pattern.compile("^(\\S*?)(\\.(\\d+))?(\\s+GI:(\\S+))?$");</a>
+<span class="sourceLineNo">115</span><a id="line.115">        // reference line</a>
+<span class="sourceLineNo">116</span><a id="line.116">        protected static final Pattern refRange = Pattern.compile("^\\s*(\\d+)\\s+to\\s+(\\d+)$");</a>
+<span class="sourceLineNo">117</span><a id="line.117">        protected static final Pattern refp = Pattern.compile("^(\\d+)\\s*(?:(\\((?:bases|residues)\\s+(\\d+\\s+to\\s+\\d+(\\s*;\\s*\\d+\\s+to\\s+\\d+)*)\\))|\\(sites\\))?");</a>
+<span class="sourceLineNo">118</span><a id="line.118">        // dbxref line</a>
+<span class="sourceLineNo">119</span><a id="line.119">        protected static final Pattern dbxp = Pattern.compile("^([^:]+):(\\S+)$");</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">        protected static final InsdcParser locationParser = new InsdcParser(DataSource.GENBANK);</a>
+<span class="sourceLineNo">122</span><a id="line.122">        //sections start at a line and continue till the first line afterwards with a</a>
+<span class="sourceLineNo">123</span><a id="line.123">        //non-whitespace first character</a>
+<span class="sourceLineNo">124</span><a id="line.124">        //we want to match any of the following as a new section within a section</a>
+<span class="sourceLineNo">125</span><a id="line.125">        //  \s{0,8} word \s{0,7} value</a>
+<span class="sourceLineNo">126</span><a id="line.126">        //  \s{21} /word = value</a>
+<span class="sourceLineNo">127</span><a id="line.127">        //  \s{21} /word</a>
+<span class="sourceLineNo">128</span><a id="line.128">        protected static final Pattern sectp = Pattern.compile("^(\\s{0,8}(\\S+)\\s{0,7}(.*)|\\s{21}(/\\S+?)=(.*)|\\s{21}(/\\S+))$");</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        protected static final Pattern readableFiles = Pattern.compile(".*(g[bp]k*$|\\u002eg[bp].*)");</a>
+<span class="sourceLineNo">131</span><a id="line.131">        protected static final Pattern headerLine = Pattern.compile("^LOCUS.*");</a>
+<span class="sourceLineNo">132</span><a id="line.132">        private static final String DBSOURCE = "DBSOURCE";</a>
+<span class="sourceLineNo">133</span><a id="line.133">        private static final String PRIMARY = "PRIMARY";</a>
+<span class="sourceLineNo">134</span><a id="line.134">        private static final String DBLINK = "DBLINK";</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">//  private NCBITaxon tax = null;</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">        private String parse(BufferedReader bufferedReader) {</a>
+<span class="sourceLineNo">141</span><a id="line.141">                String sectionKey = null;</a>
+<span class="sourceLineNo">142</span><a id="line.142">                List&lt;String[]&gt; section;</a>
+<span class="sourceLineNo">143</span><a id="line.143">                // Get an ordered list of key-&gt;value pairs in array-tuples</a>
+<span class="sourceLineNo">144</span><a id="line.144">                do {</a>
+<span class="sourceLineNo">145</span><a id="line.145">                        section = this.readSection(bufferedReader);</a>
+<span class="sourceLineNo">146</span><a id="line.146">                        sectionKey = section.get(0)[0];</a>
+<span class="sourceLineNo">147</span><a id="line.147">                        if (sectionKey == null) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                                //if we reach the end of the file, section contains empty strings</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                if(section.get(0)[1]==null || section.get(0)[1]=="" ||</a>
+<span class="sourceLineNo">150</span><a id="line.150">                                                section.get(0)[1].length()==0) {</a>
+<span class="sourceLineNo">151</span><a id="line.151">                                        throw new ParserException(Messages.ENDOFFILE);</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                }</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                throw new ParserException(Messages.SECTIONKEYNULL);</a>
+<span class="sourceLineNo">154</span><a id="line.154">                        }</a>
+<span class="sourceLineNo">155</span><a id="line.155">                        // process section-by-section</a>
+<span class="sourceLineNo">156</span><a id="line.156">                        if (sectionKey.equals(LOCUS_TAG)) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">                                String loc = section.get(0)[1];</a>
+<span class="sourceLineNo">158</span><a id="line.158">                                header = loc;</a>
+<span class="sourceLineNo">159</span><a id="line.159">                                Matcher m = lp.matcher(loc);</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                if (m.matches()) {</a>
+<span class="sourceLineNo">161</span><a id="line.161">                                        headerParser.setName(m.group(1));</a>
+<span class="sourceLineNo">162</span><a id="line.162">                                        headerParser.setAccession(m.group(1)); // default if no accession found</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164">                                        String lengthUnits = m.group(2);</a>
+<span class="sourceLineNo">165</span><a id="line.165">                                        String type = m.group(5);</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">                                        if (lengthUnits.equals("aa")) {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                                                compoundType = AminoAcidCompoundSet.getAminoAcidCompoundSet();</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                        } else if (lengthUnits.equals("bp")) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                                                if (type != null) {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                                                        if (type.contains("RNA")) {</a>
+<span class="sourceLineNo">172</span><a id="line.172">                                                                compoundType = RNACompoundSet.getRNACompoundSet();</a>
+<span class="sourceLineNo">173</span><a id="line.173">                                                        } else {</a>
+<span class="sourceLineNo">174</span><a id="line.174">                                                                compoundType = DNACompoundSet.getDNACompoundSet();</a>
+<span class="sourceLineNo">175</span><a id="line.175">                                                        }</a>
+<span class="sourceLineNo">176</span><a id="line.176">                                                } else {</a>
+<span class="sourceLineNo">177</span><a id="line.177">                                                        compoundType = DNACompoundSet.getDNACompoundSet();</a>
+<span class="sourceLineNo">178</span><a id="line.178">                                                }</a>
+<span class="sourceLineNo">179</span><a id="line.179">                                        }</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">                                        log.debug("compound type: {}", compoundType.getClass().getSimpleName());</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">                                } else {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                                        throw new ParserException("Bad locus line");</a>
+<span class="sourceLineNo">185</span><a id="line.185">                                }</a>
+<span class="sourceLineNo">186</span><a id="line.186">                        } else if (sectionKey.equals(DEFINITION_TAG)) {</a>
+<span class="sourceLineNo">187</span><a id="line.187">                                headerParser.setDescription(section.get(0)[1]);</a>
+<span class="sourceLineNo">188</span><a id="line.188">                        } else if (sectionKey.equals(ACCESSION_TAG)) {</a>
+<span class="sourceLineNo">189</span><a id="line.189">                                // if multiple accessions, store only first as accession,</a>
+<span class="sourceLineNo">190</span><a id="line.190">                                // and store rest in annotation</a>
+<span class="sourceLineNo">191</span><a id="line.191">                                String[] accs = section.get(0)[1].split("\\s+");</a>
+<span class="sourceLineNo">192</span><a id="line.192">                                accession = accs[0].trim();</a>
+<span class="sourceLineNo">193</span><a id="line.193">                                headerParser.setAccession(accession);</a>
+<span class="sourceLineNo">194</span><a id="line.194">                        } else if (sectionKey.equals(VERSION_TAG)) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">                                String ver = section.get(0)[1];</a>
+<span class="sourceLineNo">196</span><a id="line.196">                                Matcher m = vp.matcher(ver);</a>
+<span class="sourceLineNo">197</span><a id="line.197">                                if (m.matches()) {</a>
+<span class="sourceLineNo">198</span><a id="line.198">                                        String verAcc = m.group(1);</a>
+<span class="sourceLineNo">199</span><a id="line.199">                                        if (!accession.equals(verAcc)) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">                                                // the version refers to a different accession!</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                                // believe the version line, and store the original</a>
+<span class="sourceLineNo">202</span><a id="line.202">                                                // accession away in the additional accession set</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                                accession = verAcc;</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                        }</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                        if (m.group(3) != null) {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                                headerParser.setVersion(Integer.parseInt(m.group(3)));</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                        }</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        if (m.group(5) != null) {</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                                headerParser.setIdentifier(m.group(5));</a>
+<span class="sourceLineNo">210</span><a id="line.210">                                        }</a>
+<span class="sourceLineNo">211</span><a id="line.211">                                } else {</a>
+<span class="sourceLineNo">212</span><a id="line.212">                                        throw new ParserException("Bad version line");</a>
+<span class="sourceLineNo">213</span><a id="line.213">                                }</a>
+<span class="sourceLineNo">214</span><a id="line.214">                        } else if (sectionKey.equals(KEYWORDS_TAG)) {</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        } else if (sectionKey.equals(SOURCE_TAG)) {</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                // ignore - can get all this from the first feature</a>
+<span class="sourceLineNo">217</span><a id="line.217">                        } else if (sectionKey.equals(REFERENCE_TAG)) {</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                if (!section.isEmpty()) {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                        GenbankReference genbankReference = new GenbankReference();</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                        for (String[] ref : section) {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                                if (ref[0].equals(AUTHORS_TAG)) {</a>
+<span class="sourceLineNo">222</span><a id="line.222">                                                        genbankReference.setAuthors(ref[1]);</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                                } else if (ref[0].equals(TITLE_TAG)) {</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                                        genbankReference.setTitle(ref[1]);</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                                } else if (ref[0].equals(JOURNAL_TAG)) {</a>
+<span class="sourceLineNo">226</span><a id="line.226">                                                        genbankReference.setJournal(ref[1]);</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                                }</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                        }</a>
+<span class="sourceLineNo">229</span><a id="line.229">                                        headerParser.addReference(genbankReference);</a>
+<span class="sourceLineNo">230</span><a id="line.230">                                }</a>
+<span class="sourceLineNo">231</span><a id="line.231">                        } else if (sectionKey.equals(COMMENT_TAG)) {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                // Set up some comments</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                headerParser.setComment(section.get(0)[1]);</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        } else if (sectionKey.equals(FEATURE_TAG)) {</a>
+<span class="sourceLineNo">235</span><a id="line.235">                                // starting from second line of input, start a new feature whenever we come across</a>
+<span class="sourceLineNo">236</span><a id="line.236">                                // a key that does not start with /</a>
+<span class="sourceLineNo">237</span><a id="line.237">                                AbstractFeature gbFeature = null;</a>
+<span class="sourceLineNo">238</span><a id="line.238">                                for (int i = 1; i &lt; section.size(); i++) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                                        String key = section.get(i)[0];</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                        String val = section.get(i)[1];</a>
+<span class="sourceLineNo">241</span><a id="line.241">                                        if (key.startsWith("/")) {</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                                if (gbFeature == null) {</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                                        throw new ParserException("Malformed GenBank file: found a qualifier without feature.");</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                                }</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                                key = key.substring(1); // strip leading slash</a>
+<span class="sourceLineNo">246</span><a id="line.246">                                                val = val.replaceAll("\\s*[\\n\\r]+\\s*", " ").trim();</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                                if (val.endsWith("\"")) {</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                                        val = val.substring(1, val.length() - 1); // strip quotes</a>
+<span class="sourceLineNo">249</span><a id="line.249">                                                }</a>
+<span class="sourceLineNo">250</span><a id="line.250">                                                // parameter on old feature</a>
+<span class="sourceLineNo">251</span><a id="line.251">                                                if (key.equals("db_xref")) {</a>
+<span class="sourceLineNo">252</span><a id="line.252">                                                        Matcher m = dbxp.matcher(val);</a>
+<span class="sourceLineNo">253</span><a id="line.253">                                                        if (m.matches()) {</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                                                String dbname = m.group(1);</a>
+<span class="sourceLineNo">255</span><a id="line.255">                                                                String raccession = m.group(2);</a>
+<span class="sourceLineNo">256</span><a id="line.256">                                                                Qualifier xref = new DBReferenceInfo(dbname, raccession);</a>
+<span class="sourceLineNo">257</span><a id="line.257">                                                                gbFeature.addQualifier(key, xref);</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">                                                                ArrayList&lt;DBReferenceInfo&gt; listDBEntry = new ArrayList&lt;DBReferenceInfo&gt;();</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                                                listDBEntry.add((DBReferenceInfo) xref);</a>
+<span class="sourceLineNo">261</span><a id="line.261">                                                                mapDB.put(key, listDBEntry);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                                                        } else {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                                                                throw new ParserException("Bad dbxref");</a>
+<span class="sourceLineNo">264</span><a id="line.264">                                                        }</a>
+<span class="sourceLineNo">265</span><a id="line.265">                                                } else if (key.equalsIgnoreCase("organism")) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                                        Qualifier q = new Qualifier(key, val.replace('\n', ' '));</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                                        gbFeature.addQualifier(key, q);</a>
+<span class="sourceLineNo">268</span><a id="line.268">                                                } else {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                                                        if (key.equalsIgnoreCase("translation")) {</a>
+<span class="sourceLineNo">270</span><a id="line.270">                                                                // strip spaces from sequence</a>
+<span class="sourceLineNo">271</span><a id="line.271">                                                                val = val.replaceAll("\\s+", "");</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                                                Qualifier q = new Qualifier(key, val);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                                                                gbFeature.addQualifier(key, q);</a>
+<span class="sourceLineNo">274</span><a id="line.274">                                                        } else {</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                                                Qualifier q = new Qualifier(key, val);</a>
+<span class="sourceLineNo">276</span><a id="line.276">                                                                gbFeature.addQualifier(key, q);</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                                        }</a>
+<span class="sourceLineNo">278</span><a id="line.278">                                                }</a>
+<span class="sourceLineNo">279</span><a id="line.279">                                        } else {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                                // new feature!</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                                gbFeature = new TextFeature(key, val, key, key);</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                                Location l =</a>
+<span class="sourceLineNo">283</span><a id="line.283">                                                                locationParser.parse(val);</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                                gbFeature.setLocation((AbstractLocation)l);</a>
+<span class="sourceLineNo">285</span><a id="line.285"></a>
+<span class="sourceLineNo">286</span><a id="line.286">                                                if (!featureCollection.containsKey(key)) {</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                                        featureCollection.put(key, new ArrayList());</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                                }</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                                featureCollection.get(key).add(gbFeature);</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                        }</a>
+<span class="sourceLineNo">291</span><a id="line.291">                                }</a>
+<span class="sourceLineNo">292</span><a id="line.292">                        } else if (sectionKey.equals(BASE_COUNT_TAG)) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                // ignore - can calculate from sequence content later if needed</a>
+<span class="sourceLineNo">294</span><a id="line.294">                        } else if (sectionKey.equals(START_SEQUENCE_TAG)) {</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                // our first line is ignorable as it is the ORIGIN tag</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                // the second line onwards conveniently have the number as</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                // the [0] tuple, and sequence string as [1] so all we have</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                // to do is concat the [1] parts and then strip out spaces,</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                // and replace '.' and '~' with '-' for our parser.</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                StringBuffer seq = new StringBuffer();</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                for (int i = 1; i &lt; section.size(); i++) {</a>
+<span class="sourceLineNo">302</span><a id="line.302">                                        seq.append(section.get(i)[1]);</a>
+<span class="sourceLineNo">303</span><a id="line.303">                                }</a>
+<span class="sourceLineNo">304</span><a id="line.304">                                seqData = seq.toString().replaceAll("\\s+", "").replaceAll("[\\.|~]", "-").toUpperCase();</a>
+<span class="sourceLineNo">305</span><a id="line.305">                        } else if(sectionKey.equals(DBSOURCE)) {</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                //TODO</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        } else if(sectionKey.equals(PRIMARY)) {</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                //TODO</a>
+<span class="sourceLineNo">309</span><a id="line.309">                        } else if(sectionKey.equals(DBLINK)) {</a>
+<span class="sourceLineNo">310</span><a id="line.310">                                //TODO</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        } else {</a>
+<span class="sourceLineNo">312</span><a id="line.312">                                if(!sectionKey.equals(END_SEQUENCE_TAG)) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                                        log.info("found unknown section key: "+sectionKey);</a>
+<span class="sourceLineNo">314</span><a id="line.314">                                }</a>
+<span class="sourceLineNo">315</span><a id="line.315">                        }</a>
+<span class="sourceLineNo">316</span><a id="line.316">                } while (!sectionKey.equals(END_SEQUENCE_TAG));</a>
+<span class="sourceLineNo">317</span><a id="line.317">                return seqData;</a>
+<span class="sourceLineNo">318</span><a id="line.318">        }</a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320"></a>
+<span class="sourceLineNo">321</span><a id="line.321"></a>
+<span class="sourceLineNo">322</span><a id="line.322">        // reads an indented section, combining split lines and creating a list of</a>
+<span class="sourceLineNo">323</span><a id="line.323">        // key-&gt;value tuples</a>
+<span class="sourceLineNo">324</span><a id="line.324">        // reads an indented section, combining split lines and creating a list of</a>
+<span class="sourceLineNo">325</span><a id="line.325">        // key-&gt;value tuples</a>
+<span class="sourceLineNo">326</span><a id="line.326">        // reads an indented section, combining split lines and creating a list of</a>
+<span class="sourceLineNo">327</span><a id="line.327">        // key-&gt;value tuples</a>
+<span class="sourceLineNo">328</span><a id="line.328">        private List&lt;String[]&gt; readSection(BufferedReader bufferedReader) {</a>
+<span class="sourceLineNo">329</span><a id="line.329">                List&lt;String[]&gt; section = new ArrayList&lt;String[]&gt;();</a>
+<span class="sourceLineNo">330</span><a id="line.330">                String line = "";</a>
+<span class="sourceLineNo">331</span><a id="line.331"></a>
+<span class="sourceLineNo">332</span><a id="line.332">                String currKey = null;</a>
+<span class="sourceLineNo">333</span><a id="line.333">                StringBuffer currVal = new StringBuffer();</a>
+<span class="sourceLineNo">334</span><a id="line.334">                boolean done = false;</a>
+<span class="sourceLineNo">335</span><a id="line.335">                int linecount = 0;</a>
+<span class="sourceLineNo">336</span><a id="line.336"></a>
+<span class="sourceLineNo">337</span><a id="line.337">                try {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                        while (!done) {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                                bufferedReader.mark(320);</a>
+<span class="sourceLineNo">340</span><a id="line.340">                                line = bufferedReader.readLine();</a>
+<span class="sourceLineNo">341</span><a id="line.341">                                String firstSecKey = section.isEmpty() ? ""</a>
+<span class="sourceLineNo">342</span><a id="line.342">                                                : section.get(0)[0];</a>
+<span class="sourceLineNo">343</span><a id="line.343">                                if (line != null &amp;&amp; line.matches("\\p{Space}*")) {</a>
+<span class="sourceLineNo">344</span><a id="line.344">                                        // regular expression \p{Space}* will match line</a>
+<span class="sourceLineNo">345</span><a id="line.345">                                        // having only white space characters</a>
+<span class="sourceLineNo">346</span><a id="line.346">                                        continue;</a>
+<span class="sourceLineNo">347</span><a id="line.347">                                }</a>
+<span class="sourceLineNo">348</span><a id="line.348">                                if (line == null</a>
+<span class="sourceLineNo">349</span><a id="line.349">                                                || (!line.startsWith(" ") &amp;&amp; linecount++ &gt; 0 &amp;&amp; (!firstSecKey</a>
+<span class="sourceLineNo">350</span><a id="line.350">                                                .equals(START_SEQUENCE_TAG) || line</a>
+<span class="sourceLineNo">351</span><a id="line.351">                                                .startsWith(END_SEQUENCE_TAG)))) {</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                        // dump out last part of section</a>
+<span class="sourceLineNo">353</span><a id="line.353">                                        section.add(new String[]{currKey, currVal.toString()});</a>
+<span class="sourceLineNo">354</span><a id="line.354">                                        bufferedReader.reset();</a>
+<span class="sourceLineNo">355</span><a id="line.355">                                        done = true;</a>
+<span class="sourceLineNo">356</span><a id="line.356">                                } else {</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                        Matcher m = sectp.matcher(line);</a>
+<span class="sourceLineNo">358</span><a id="line.358">                                        if (m.matches()) {</a>
+<span class="sourceLineNo">359</span><a id="line.359">                                                // new key</a>
+<span class="sourceLineNo">360</span><a id="line.360">                                                if (currKey != null) {</a>
+<span class="sourceLineNo">361</span><a id="line.361">                                                        section.add(new String[]{currKey,</a>
+<span class="sourceLineNo">362</span><a id="line.362">                                                                currVal.toString()});</a>
+<span class="sourceLineNo">363</span><a id="line.363">                                                }</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                                // key = group(2) or group(4) or group(6) - whichever is</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                                // not null</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                                currKey = m.group(2) == null ? (m.group(4) == null ? m</a>
+<span class="sourceLineNo">367</span><a id="line.367">                                                                .group(6) : m.group(4)) : m.group(2);</a>
+<span class="sourceLineNo">368</span><a id="line.368">                                                currVal = new StringBuffer();</a>
+<span class="sourceLineNo">369</span><a id="line.369">                        // val = group(3) if group(2) not null, group(5) if</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                                // group(4) not null, "" otherwise, trimmed</a>
+<span class="sourceLineNo">371</span><a id="line.371">                                                currVal.append((m.group(2) == null ? (m.group(4) == null ? ""</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                                                : m.group(5))</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                                                : m.group(3)).trim());</a>
+<span class="sourceLineNo">374</span><a id="line.374">                                        } else {</a>
+<span class="sourceLineNo">375</span><a id="line.375">                                                // concatted line or SEQ START/END line?</a>
+<span class="sourceLineNo">376</span><a id="line.376">                                                if (line.startsWith(START_SEQUENCE_TAG)</a>
+<span class="sourceLineNo">377</span><a id="line.377">                                                                || line.startsWith(END_SEQUENCE_TAG)) {</a>
+<span class="sourceLineNo">378</span><a id="line.378">                                                        currKey = line;</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                                } else {</a>
+<span class="sourceLineNo">380</span><a id="line.380">                                                        currVal.append("\n"); // newline in between lines -</a>
+<span class="sourceLineNo">381</span><a id="line.381">                                                        // can be removed later</a>
+<span class="sourceLineNo">382</span><a id="line.382">                                                        currVal.append(currKey.charAt(0) == '/' ? line</a>
+<span class="sourceLineNo">383</span><a id="line.383">                                                                        .substring(21) : line.substring(12));</a>
+<span class="sourceLineNo">384</span><a id="line.384">                                                }</a>
+<span class="sourceLineNo">385</span><a id="line.385">                                        }</a>
+<span class="sourceLineNo">386</span><a id="line.386">                                }</a>
+<span class="sourceLineNo">387</span><a id="line.387">                        }</a>
+<span class="sourceLineNo">388</span><a id="line.388">                } catch (IOException e) {</a>
+<span class="sourceLineNo">389</span><a id="line.389">                        throw new ParserException(e.getMessage());</a>
+<span class="sourceLineNo">390</span><a id="line.390">                } catch (RuntimeException e) {</a>
+<span class="sourceLineNo">391</span><a id="line.391">                        throw new ParserException(e.getMessage());</a>
+<span class="sourceLineNo">392</span><a id="line.392">                }</a>
+<span class="sourceLineNo">393</span><a id="line.393">                return section;</a>
+<span class="sourceLineNo">394</span><a id="line.394">        }</a>
+<span class="sourceLineNo">395</span><a id="line.395"></a>
+<span class="sourceLineNo">396</span><a id="line.396">        @Override</a>
+<span class="sourceLineNo">397</span><a id="line.397">        public String getSequence(BufferedReader bufferedReader, int sequenceLength) throws IOException {</a>
+<span class="sourceLineNo">398</span><a id="line.398">                featureCollection = new HashMap&lt;String, ArrayList&lt;AbstractFeature&gt;&gt;();</a>
+<span class="sourceLineNo">399</span><a id="line.399">                mapDB = new LinkedHashMap&lt;String, ArrayList&lt;DBReferenceInfo&gt;&gt;();</a>
+<span class="sourceLineNo">400</span><a id="line.400">                headerParser = new GenericGenbankHeaderParser&lt;S, C&gt;();</a>
+<span class="sourceLineNo">401</span><a id="line.401">                try {</a>
+<span class="sourceLineNo">402</span><a id="line.402">                        parse(bufferedReader);</a>
+<span class="sourceLineNo">403</span><a id="line.403">                } catch (ParserException e) {</a>
+<span class="sourceLineNo">404</span><a id="line.404">                        if(e.getMessage().equalsIgnoreCase(Messages.ENDOFFILE)) return null;</a>
+<span class="sourceLineNo">405</span><a id="line.405">                        else throw new ParserException(e.getMessage());</a>
+<span class="sourceLineNo">406</span><a id="line.406">                }</a>
+<span class="sourceLineNo">407</span><a id="line.407"></a>
+<span class="sourceLineNo">408</span><a id="line.408">                return seqData;</a>
+<span class="sourceLineNo">409</span><a id="line.409">        }</a>
+<span class="sourceLineNo">410</span><a id="line.410"></a>
+<span class="sourceLineNo">411</span><a id="line.411">        public String getHeader() {</a>
+<span class="sourceLineNo">412</span><a id="line.412">                return header;</a>
+<span class="sourceLineNo">413</span><a id="line.413">        }</a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415">        public GenericGenbankHeaderParser&lt;S, C&gt; getSequenceHeaderParser() {</a>
+<span class="sourceLineNo">416</span><a id="line.416">                return headerParser;</a>
+<span class="sourceLineNo">417</span><a id="line.417">        }</a>
+<span class="sourceLineNo">418</span><a id="line.418"></a>
+<span class="sourceLineNo">419</span><a id="line.419">        public LinkedHashMap&lt;String, ArrayList&lt;DBReferenceInfo&gt;&gt; getDatabaseReferences() {</a>
+<span class="sourceLineNo">420</span><a id="line.420">                return mapDB;</a>
+<span class="sourceLineNo">421</span><a id="line.421">        }</a>
+<span class="sourceLineNo">422</span><a id="line.422"></a>
+<span class="sourceLineNo">423</span><a id="line.423">        public ArrayList&lt;String&gt; getKeyWords() {</a>
+<span class="sourceLineNo">424</span><a id="line.424">                return new ArrayList&lt;String&gt;(featureCollection.keySet());</a>
+<span class="sourceLineNo">425</span><a id="line.425">        }</a>
+<span class="sourceLineNo">426</span><a id="line.426"></a>
+<span class="sourceLineNo">427</span><a id="line.427">        public ArrayList&lt;AbstractFeature&gt; getFeatures(String keyword) {</a>
+<span class="sourceLineNo">428</span><a id="line.428">                return featureCollection.get(keyword);</a>
+<span class="sourceLineNo">429</span><a id="line.429">        }</a>
+<span class="sourceLineNo">430</span><a id="line.430">        public HashMap&lt;String, ArrayList&lt;AbstractFeature&gt;&gt; getFeatures() {</a>
+<span class="sourceLineNo">431</span><a id="line.431">                return featureCollection;</a>
+<span class="sourceLineNo">432</span><a id="line.432">        }</a>
+<span class="sourceLineNo">433</span><a id="line.433"></a>
+<span class="sourceLineNo">434</span><a id="line.434">        public void parseFeatures(AbstractSequence&lt;C&gt; sequence) {</a>
+<span class="sourceLineNo">435</span><a id="line.435">                for (String k: featureCollection.keySet())</a>
+<span class="sourceLineNo">436</span><a id="line.436">                        for (AbstractFeature f: featureCollection.get(k))</a>
+<span class="sourceLineNo">437</span><a id="line.437">                                sequence.addFeature(f);</a>
+<span class="sourceLineNo">438</span><a id="line.438">        }</a>
+<span class="sourceLineNo">439</span><a id="line.439"></a>
+<span class="sourceLineNo">440</span><a id="line.440">        public CompoundSet&lt;?&gt; getCompoundType() {</a>
+<span class="sourceLineNo">441</span><a id="line.441">                return compoundType;</a>
+<span class="sourceLineNo">442</span><a id="line.442">        }</a>
+<span class="sourceLineNo">443</span><a id="line.443">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

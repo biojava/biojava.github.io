@@ -1,0 +1,591 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.genome.parsers.gff;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.core.sequence.DNASequence;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.Serializable;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.*;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Map.Entry;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">/**</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * A list of FeatureI objects implemented using a Java ArrayList; corresponds to a GFF file.</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * This class is implemented entirely using FeatureI objects, so everything here will work</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * correctly if you choose to implement your own feature class -- there are no dependencies</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * on JavaGene's native Feature class.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *</a>
+<span class="sourceLineNo">037</span><a id="line.37"> *</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @author Hanno Hinsch, Carmelo Foti</a>
+<span class="sourceLineNo">039</span><a id="line.39"> */</a>
+<span class="sourceLineNo">040</span><a id="line.40">@SuppressWarnings("serial")</a>
+<span class="sourceLineNo">041</span><a id="line.41">public class FeatureList extends ArrayList&lt;FeatureI&gt; {</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">         Map&lt;String, Map&lt;String,List&lt;FeatureI&gt;&gt;&gt; featindex = new HashMap&lt;String,Map&lt;String,List&lt;FeatureI&gt;&gt;&gt;();</a>
+<span class="sourceLineNo">044</span><a id="line.44">        Location mLocation;                     //genomic location (union of feature locations)</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">         * Construct an empty list.</a>
+<span class="sourceLineNo">048</span><a id="line.48">         */</a>
+<span class="sourceLineNo">049</span><a id="line.49">        public FeatureList() {</a>
+<span class="sourceLineNo">050</span><a id="line.50">                mLocation = null;</a>
+<span class="sourceLineNo">051</span><a id="line.51">        }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        /**</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * Construct a new list containing the same features</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * as the specified list.</a>
+<span class="sourceLineNo">056</span><a id="line.56">         *</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * @param features An existing list or collection of FeatureI objects.</a>
+<span class="sourceLineNo">058</span><a id="line.58">         */</a>
+<span class="sourceLineNo">059</span><a id="line.59">        public FeatureList(Collection&lt;FeatureI&gt; features) {</a>
+<span class="sourceLineNo">060</span><a id="line.60">                this();</a>
+<span class="sourceLineNo">061</span><a id="line.61">                this.add(features);</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                mLocation = null;</a>
+<span class="sourceLineNo">064</span><a id="line.64">        }</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * Add specified feature to the end of the list. Updates the bounding location of the</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * feature list, if needed.</a>
+<span class="sourceLineNo">069</span><a id="line.69">         *</a>
+<span class="sourceLineNo">070</span><a id="line.70">         * @param feature The FeatureI object to add.</a>
+<span class="sourceLineNo">071</span><a id="line.71">         * @return True if the feature was added.</a>
+<span class="sourceLineNo">072</span><a id="line.72">         */</a>
+<span class="sourceLineNo">073</span><a id="line.73">        @Override</a>
+<span class="sourceLineNo">074</span><a id="line.74">        public boolean add(FeatureI feature) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">                if (mLocation == null) {</a>
+<span class="sourceLineNo">076</span><a id="line.76">                        mLocation = feature.location().plus();</a>
+<span class="sourceLineNo">077</span><a id="line.77">                } else if (null != feature.location()) {</a>
+<span class="sourceLineNo">078</span><a id="line.78">                        mLocation = mLocation.union(feature.location().plus());</a>
+<span class="sourceLineNo">079</span><a id="line.79">                }</a>
+<span class="sourceLineNo">080</span><a id="line.80">                for (Entry&lt;String, String&gt; entry : feature.getAttributes().entrySet()){</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        if (featindex.containsKey(entry.getKey())){</a>
+<span class="sourceLineNo">082</span><a id="line.82">                                Map&lt;String,List&lt;FeatureI&gt;&gt; feat = featindex.get(entry.getKey());</a>
+<span class="sourceLineNo">083</span><a id="line.83">                                if (feat==null){</a>
+<span class="sourceLineNo">084</span><a id="line.84">                                        feat= new HashMap&lt;String,List&lt;FeatureI&gt;&gt;();</a>
+<span class="sourceLineNo">085</span><a id="line.85">                                }</a>
+<span class="sourceLineNo">086</span><a id="line.86">                                List&lt;FeatureI&gt; features = feat.get(entry.getValue());</a>
+<span class="sourceLineNo">087</span><a id="line.87">                                if (features==null){</a>
+<span class="sourceLineNo">088</span><a id="line.88">                                        features = new ArrayList&lt;FeatureI&gt;();</a>
+<span class="sourceLineNo">089</span><a id="line.89">                                }</a>
+<span class="sourceLineNo">090</span><a id="line.90">                                features.add(feature);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                                feat.put(entry.getValue(), features);</a>
+<span class="sourceLineNo">092</span><a id="line.92">                                featindex.put(entry.getKey(), feat);</a>
+<span class="sourceLineNo">093</span><a id="line.93">                                //featindex.put(key, value)</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        }</a>
+<span class="sourceLineNo">095</span><a id="line.95">                }</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">                return super.add(feature);</a>
+<span class="sourceLineNo">098</span><a id="line.98">        }</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">        /**</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * Add all features in the specified list or collection to this list.</a>
+<span class="sourceLineNo">102</span><a id="line.102">         *</a>
+<span class="sourceLineNo">103</span><a id="line.103">         * @param list The collection of FeatureI objects.</a>
+<span class="sourceLineNo">104</span><a id="line.104">         */</a>
+<span class="sourceLineNo">105</span><a id="line.105">        public void add(Collection&lt;FeatureI&gt; list) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                for (FeatureI f : list) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">                        add(f);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                }</a>
+<span class="sourceLineNo">109</span><a id="line.109">        }</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">        /**</a>
+<span class="sourceLineNo">112</span><a id="line.112">         * The union of all locations of all features in this list, mapped to the positive strand.</a>
+<span class="sourceLineNo">113</span><a id="line.113">         * If an added feature is on the negative strand, its positive strand image is added</a>
+<span class="sourceLineNo">114</span><a id="line.114">         * to the union.</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * The bounding location is not updated when a feature is removed from the list, so</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * it is not guaranteed to be the minimal bounding location.</a>
+<span class="sourceLineNo">117</span><a id="line.117">         *</a>
+<span class="sourceLineNo">118</span><a id="line.118">         * @return A location that is the union of all feature locations in the list.</a>
+<span class="sourceLineNo">119</span><a id="line.119">         */</a>
+<span class="sourceLineNo">120</span><a id="line.120">        public Location bounds() {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                return mLocation;</a>
+<span class="sourceLineNo">122</span><a id="line.122">        }</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">        /**</a>
+<span class="sourceLineNo">125</span><a id="line.125">         * Check size of gaps between successive features in list. The features in</a>
+<span class="sourceLineNo">126</span><a id="line.126">         * the list are assumed to be appropriately ordered.</a>
+<span class="sourceLineNo">127</span><a id="line.127">         *</a>
+<span class="sourceLineNo">128</span><a id="line.128">         * @param gapLength The minimum gap length to consider. Use a gapLength</a>
+<span class="sourceLineNo">129</span><a id="line.129">         * of 0 to check if features are contiguous.</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * @return True if list has any gaps equal to or greater than gapLength.</a>
+<span class="sourceLineNo">131</span><a id="line.131">         */</a>
+<span class="sourceLineNo">132</span><a id="line.132">        public boolean hasGaps(int gapLength) {</a>
+<span class="sourceLineNo">133</span><a id="line.133">                Location last = null;</a>
+<span class="sourceLineNo">134</span><a id="line.134">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">135</span><a id="line.135">                        if (last != null &amp;&amp; gapLength &lt;= f.location().distance(last)) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                                return true;</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        } else {</a>
+<span class="sourceLineNo">138</span><a id="line.138">                                last = f.location();</a>
+<span class="sourceLineNo">139</span><a id="line.139">                        }</a>
+<span class="sourceLineNo">140</span><a id="line.140">                }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">                return false;</a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">        /**</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * Concatenate successive portions of the specified sequence</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * using the feature locations in the list. The list is assumed to be appropriately</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * ordered.</a>
+<span class="sourceLineNo">152</span><a id="line.152">         *</a>
+<span class="sourceLineNo">153</span><a id="line.153">         * @param sequence The source sequence from which portions should be selected.</a>
+<span class="sourceLineNo">154</span><a id="line.154">         * @return The spliced data.</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * @throws IllegalStateException Out of order or overlapping FeatureI locations detected.</a>
+<span class="sourceLineNo">156</span><a id="line.156">         *</a>
+<span class="sourceLineNo">157</span><a id="line.157">         */</a>
+<span class="sourceLineNo">158</span><a id="line.158">        public String splice(DNASequence sequence) {</a>
+<span class="sourceLineNo">159</span><a id="line.159">                StringBuilder subData = new StringBuilder();</a>
+<span class="sourceLineNo">160</span><a id="line.160">                Location last = null;</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">                        Location loc = f.location();</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">                        if (last == null || loc.startsAfter(last)) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                                subData.append(sequence.getSubSequence(loc.start(), loc.end()).toString());</a>
+<span class="sourceLineNo">167</span><a id="line.167">                                last = loc;</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        } else {</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                throw new IllegalStateException("Splice: Feature locations should not overlap.");</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        }</a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">                }</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                return subData.toString();</a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        /**</a>
+<span class="sourceLineNo">178</span><a id="line.178">         * Create a collection of all unique group ids in the list, as defined</a>
+<span class="sourceLineNo">179</span><a id="line.179">         * by the group() method of the features. For example, if the</a>
+<span class="sourceLineNo">180</span><a id="line.180">         * features are from a GFF1 file, then each group id identifies a particular gene,</a>
+<span class="sourceLineNo">181</span><a id="line.181">         * and this method returns a collection of all gene ids.</a>
+<span class="sourceLineNo">182</span><a id="line.182">         *</a>
+<span class="sourceLineNo">183</span><a id="line.183">         * @return A collection (suitable for iteration using Java's "for" loop) of all the</a>
+<span class="sourceLineNo">184</span><a id="line.184">         * group ids found in this list. The order of the values is undefined; it will not match</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * the order of features in the list.</a>
+<span class="sourceLineNo">186</span><a id="line.186">         */</a>
+<span class="sourceLineNo">187</span><a id="line.187">        public Collection&lt;String&gt; groupValues() {</a>
+<span class="sourceLineNo">188</span><a id="line.188">                Set&lt;String&gt; set = new HashSet&lt;String&gt;();</a>
+<span class="sourceLineNo">189</span><a id="line.189">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">                        //enter in a set -- removes duplicates</a>
+<span class="sourceLineNo">191</span><a id="line.191">                        set.add(f.group());</a>
+<span class="sourceLineNo">192</span><a id="line.192">                }</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">                return set;</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">        /**</a>
+<span class="sourceLineNo">198</span><a id="line.198">         * Create a collection of the unique values for the specified key.</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * Example: For GTF files, using the "gene_id" key will give the names of all</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * the genes in this list.</a>
+<span class="sourceLineNo">201</span><a id="line.201">         *</a>
+<span class="sourceLineNo">202</span><a id="line.202">         * @return A collection (suitable for iteration using Java's "for" loop) of all the</a>
+<span class="sourceLineNo">203</span><a id="line.203">         * values found for this key. The order of the values is undefined; it will not match</a>
+<span class="sourceLineNo">204</span><a id="line.204">         * the order of features in the list.</a>
+<span class="sourceLineNo">205</span><a id="line.205">         */</a>
+<span class="sourceLineNo">206</span><a id="line.206">        public Collection&lt;String&gt; attributeValues(String key) {</a>
+<span class="sourceLineNo">207</span><a id="line.207">                if (featindex.containsKey(key)){</a>
+<span class="sourceLineNo">208</span><a id="line.208">                        Map&lt;String, List&lt;FeatureI&gt;&gt; map = featindex.get(key);</a>
+<span class="sourceLineNo">209</span><a id="line.209">                        Collection&lt;String&gt; result = map.keySet();</a>
+<span class="sourceLineNo">210</span><a id="line.210">                        if (result == null) result = new HashSet&lt;String&gt;();</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        return Collections.unmodifiableCollection(result);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                }</a>
+<span class="sourceLineNo">213</span><a id="line.213">                LinkedHashMap&lt;String, String&gt; hash = new LinkedHashMap&lt;String, String&gt;();</a>
+<span class="sourceLineNo">214</span><a id="line.214">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        //enter as a key -- removes duplicates</a>
+<span class="sourceLineNo">216</span><a id="line.216">                        hash.put(f.getAttribute(key), null);</a>
+<span class="sourceLineNo">217</span><a id="line.217">                }</a>
+<span class="sourceLineNo">218</span><a id="line.218"></a>
+<span class="sourceLineNo">219</span><a id="line.219">                return Collections.unmodifiableCollection(hash.keySet());</a>
+<span class="sourceLineNo">220</span><a id="line.220">        }</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">        /**</a>
+<span class="sourceLineNo">223</span><a id="line.223">         * Create a list of all features that have the specified group id, as defined by</a>
+<span class="sourceLineNo">224</span><a id="line.224">         * the group() method of the features.</a>
+<span class="sourceLineNo">225</span><a id="line.225">         *</a>
+<span class="sourceLineNo">226</span><a id="line.226">         * @param groupid The group to match.</a>
+<span class="sourceLineNo">227</span><a id="line.227">         * @return A list of features having the specified group id.</a>
+<span class="sourceLineNo">228</span><a id="line.228">         */</a>
+<span class="sourceLineNo">229</span><a id="line.229">        public FeatureList selectByGroup(String groupid) {</a>
+<span class="sourceLineNo">230</span><a id="line.230">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">231</span><a id="line.231">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                        if (f.group().equals(groupid)) {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                list.add(f);</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        }</a>
+<span class="sourceLineNo">235</span><a id="line.235">                }</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">                return list;</a>
+<span class="sourceLineNo">238</span><a id="line.238">        }</a>
+<span class="sourceLineNo">239</span><a id="line.239"></a>
+<span class="sourceLineNo">240</span><a id="line.240">        /**</a>
+<span class="sourceLineNo">241</span><a id="line.241">         * Create a list of all features that are of the specified type, as defined by</a>
+<span class="sourceLineNo">242</span><a id="line.242">         * the type() method of the features.</a>
+<span class="sourceLineNo">243</span><a id="line.243">         * This might be, for example, "exon" or "CDS".</a>
+<span class="sourceLineNo">244</span><a id="line.244">         *</a>
+<span class="sourceLineNo">245</span><a id="line.245">         * @param type The type to match.</a>
+<span class="sourceLineNo">246</span><a id="line.246">         * @return A list of features of the specified type.</a>
+<span class="sourceLineNo">247</span><a id="line.247">         */</a>
+<span class="sourceLineNo">248</span><a id="line.248">        public FeatureList selectByType(String type) {</a>
+<span class="sourceLineNo">249</span><a id="line.249">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">250</span><a id="line.250">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">251</span><a id="line.251">                        if (f.type().equals(type)) {</a>
+<span class="sourceLineNo">252</span><a id="line.252">                                list.add(f);</a>
+<span class="sourceLineNo">253</span><a id="line.253">                        }</a>
+<span class="sourceLineNo">254</span><a id="line.254">                }</a>
+<span class="sourceLineNo">255</span><a id="line.255"></a>
+<span class="sourceLineNo">256</span><a id="line.256">                return list;</a>
+<span class="sourceLineNo">257</span><a id="line.257">        }</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">        /**</a>
+<span class="sourceLineNo">260</span><a id="line.260">         * Create a list of all features that include the specified attribute key/value pair.</a>
+<span class="sourceLineNo">261</span><a id="line.261">         * This method now properly supports adding the index before or after adding the features.</a>
+<span class="sourceLineNo">262</span><a id="line.262">         * Adding features, then then index, then more features is still not supported.</a>
+<span class="sourceLineNo">263</span><a id="line.263">         *</a>
+<span class="sourceLineNo">264</span><a id="line.264">         * @param key The key to consider.</a>
+<span class="sourceLineNo">265</span><a id="line.265">         * @param value The value to consider.</a>
+<span class="sourceLineNo">266</span><a id="line.266">         * @return A list of features that include the key/value pair.</a>
+<span class="sourceLineNo">267</span><a id="line.267">         */</a>
+<span class="sourceLineNo">268</span><a id="line.268">        public FeatureList selectByAttribute(String key, String value) {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                if (featindex.containsKey(key)){</a>
+<span class="sourceLineNo">270</span><a id="line.270">                        Map&lt;String,List&lt;FeatureI&gt;&gt; featuresmap = featindex.get(key);</a>
+<span class="sourceLineNo">271</span><a id="line.271">                        if (featuresmap==null) return new FeatureList();</a>
+<span class="sourceLineNo">272</span><a id="line.272">                        List&lt;FeatureI&gt; list = featuresmap.get(value);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        if (list == null){</a>
+<span class="sourceLineNo">274</span><a id="line.274">                                return new FeatureList();</a>
+<span class="sourceLineNo">275</span><a id="line.275">                        }</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        return  new FeatureList(list);</a>
+<span class="sourceLineNo">277</span><a id="line.277">                }</a>
+<span class="sourceLineNo">278</span><a id="line.278">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">279</span><a id="line.279">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                        if (f.hasAttribute(key, value)) {</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                list.add(f);</a>
+<span class="sourceLineNo">282</span><a id="line.282">                        }</a>
+<span class="sourceLineNo">283</span><a id="line.283">                }</a>
+<span class="sourceLineNo">284</span><a id="line.284">                return list;</a>
+<span class="sourceLineNo">285</span><a id="line.285">        }</a>
+<span class="sourceLineNo">286</span><a id="line.286">        /**</a>
+<span class="sourceLineNo">287</span><a id="line.287">         * Create a list of all features that include the specified attribute key.</a>
+<span class="sourceLineNo">288</span><a id="line.288">         *</a>
+<span class="sourceLineNo">289</span><a id="line.289">         * @param key The key to consider.</a>
+<span class="sourceLineNo">290</span><a id="line.290">         * @return A list of features that include the key.</a>
+<span class="sourceLineNo">291</span><a id="line.291">         */</a>
+<span class="sourceLineNo">292</span><a id="line.292">        public FeatureList selectByAttribute(String key) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">294</span><a id="line.294">                if (featindex.containsKey(key)){</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        Map&lt;String, List&lt;FeatureI&gt;&gt; featsmap =featindex.get(key);</a>
+<span class="sourceLineNo">296</span><a id="line.296">                        if(null != featsmap) {</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                for (List&lt;FeatureI&gt; feats: featsmap.values()){</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                        list.addAll(Collections.unmodifiableCollection(feats));</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                }</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                return list;</a>
+<span class="sourceLineNo">301</span><a id="line.301">                        }</a>
+<span class="sourceLineNo">302</span><a id="line.302">                }</a>
+<span class="sourceLineNo">303</span><a id="line.303"></a>
+<span class="sourceLineNo">304</span><a id="line.304">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">305</span><a id="line.305">                        if (f.hasAttribute(key)) {</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                list.add(f);</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        }</a>
+<span class="sourceLineNo">308</span><a id="line.308">                }</a>
+<span class="sourceLineNo">309</span><a id="line.309">                return list;</a>
+<span class="sourceLineNo">310</span><a id="line.310">        }</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312">        /**</a>
+<span class="sourceLineNo">313</span><a id="line.313">         * Create a list of all features that include the specified key/value pair in their userMap().</a>
+<span class="sourceLineNo">314</span><a id="line.314">         *</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * @param key The key to consider.</a>
+<span class="sourceLineNo">316</span><a id="line.316">         * @param value The value to consider.</a>
+<span class="sourceLineNo">317</span><a id="line.317">         * @return A list of features that include the key/value pair.</a>
+<span class="sourceLineNo">318</span><a id="line.318">         */</a>
+<span class="sourceLineNo">319</span><a id="line.319">        public FeatureList selectByUserData(String key, Object value) {</a>
+<span class="sourceLineNo">320</span><a id="line.320">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">321</span><a id="line.321">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">322</span><a id="line.322">                        Object o = f.userData().get(key);</a>
+<span class="sourceLineNo">323</span><a id="line.323">                        if (o != null &amp;&amp; o.equals(value)) {</a>
+<span class="sourceLineNo">324</span><a id="line.324">                                list.add(f);</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">                }</a>
+<span class="sourceLineNo">327</span><a id="line.327">                return list;</a>
+<span class="sourceLineNo">328</span><a id="line.328">        }</a>
+<span class="sourceLineNo">329</span><a id="line.329">        /**</a>
+<span class="sourceLineNo">330</span><a id="line.330">         * Create a list of all features that include the specified key in their userMap().</a>
+<span class="sourceLineNo">331</span><a id="line.331">         *</a>
+<span class="sourceLineNo">332</span><a id="line.332">         * @param key The key to consider.</a>
+<span class="sourceLineNo">333</span><a id="line.333">         * @return A list of features that include the key.</a>
+<span class="sourceLineNo">334</span><a id="line.334">         */</a>
+<span class="sourceLineNo">335</span><a id="line.335">        public FeatureList selectByUserData(String key) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">337</span><a id="line.337">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                        if (f.userData().containsKey(key)) {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                                list.add(f);</a>
+<span class="sourceLineNo">340</span><a id="line.340">                        }</a>
+<span class="sourceLineNo">341</span><a id="line.341">                }</a>
+<span class="sourceLineNo">342</span><a id="line.342">                return list;</a>
+<span class="sourceLineNo">343</span><a id="line.343">        }</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345">        /**</a>
+<span class="sourceLineNo">346</span><a id="line.346">         * Create a list of all features that overlap the specified location on the specified</a>
+<span class="sourceLineNo">347</span><a id="line.347">         * sequence.</a>
+<span class="sourceLineNo">348</span><a id="line.348">         *</a>
+<span class="sourceLineNo">349</span><a id="line.349">         * @param seqname The sequence name. Only features with this sequence name will be checked for overlap.</a>
+<span class="sourceLineNo">350</span><a id="line.350">         * @param location The location to check.</a>
+<span class="sourceLineNo">351</span><a id="line.351">         * @param useBothStrands If true, locations are mapped to their positive strand image</a>
+<span class="sourceLineNo">352</span><a id="line.352">         * before being checked for overlap. If false, only features whose locations are</a>
+<span class="sourceLineNo">353</span><a id="line.353">         * on the same strand as the specified location will be considered for inclusion.</a>
+<span class="sourceLineNo">354</span><a id="line.354">         * @return The new list of features that overlap the location.</a>
+<span class="sourceLineNo">355</span><a id="line.355">         */</a>
+<span class="sourceLineNo">356</span><a id="line.356">        public FeatureList selectOverlapping(String seqname, Location location, boolean useBothStrands)</a>
+<span class="sourceLineNo">357</span><a id="line.357">                        throws Exception {</a>
+<span class="sourceLineNo">358</span><a id="line.358">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">359</span><a id="line.359"></a>
+<span class="sourceLineNo">360</span><a id="line.360">                for (FeatureI feature : this) {</a>
+<span class="sourceLineNo">361</span><a id="line.361">                        boolean overlaps = false;</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        if (feature.seqname().equals(seqname)) {</a>
+<span class="sourceLineNo">363</span><a id="line.363">                                if (location.isSameStrand(feature.location())) {</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                        overlaps = feature.location().overlaps(location);</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                } else if (useBothStrands) {</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                        overlaps = feature.location().overlaps(location.opposite());</a>
+<span class="sourceLineNo">367</span><a id="line.367">                                }</a>
+<span class="sourceLineNo">368</span><a id="line.368">                        }</a>
+<span class="sourceLineNo">369</span><a id="line.369">                        if (overlaps) {</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                list.add(feature);</a>
+<span class="sourceLineNo">371</span><a id="line.371">                        }</a>
+<span class="sourceLineNo">372</span><a id="line.372">                }</a>
+<span class="sourceLineNo">373</span><a id="line.373">                return list;</a>
+<span class="sourceLineNo">374</span><a id="line.374">        }</a>
+<span class="sourceLineNo">375</span><a id="line.375"></a>
+<span class="sourceLineNo">376</span><a id="line.376">        /**</a>
+<span class="sourceLineNo">377</span><a id="line.377">         * Create a list of all features that do not overlap the specified location on the specified sequence.</a>
+<span class="sourceLineNo">378</span><a id="line.378">         *</a>
+<span class="sourceLineNo">379</span><a id="line.379">         * @param seqname The sequence name. Only features with this sequence name will be checked for overlap.</a>
+<span class="sourceLineNo">380</span><a id="line.380">         * @param location The location to check.</a>
+<span class="sourceLineNo">381</span><a id="line.381">         * @param useBothStrands If true, locations are mapped to their positive strand image</a>
+<span class="sourceLineNo">382</span><a id="line.382">         * before being checked for overlap. If false, all features whose locations are</a>
+<span class="sourceLineNo">383</span><a id="line.383">         * on the opposite strand from the specified location will be considered non-overlapping.</a>
+<span class="sourceLineNo">384</span><a id="line.384">         * @return The new list of features that do not overlap the location.</a>
+<span class="sourceLineNo">385</span><a id="line.385">         */</a>
+<span class="sourceLineNo">386</span><a id="line.386">        public FeatureList omitOverlapping(String seqname, Location location, boolean useBothStrands) {</a>
+<span class="sourceLineNo">387</span><a id="line.387">                FeatureList list = new FeatureList();</a>
+<span class="sourceLineNo">388</span><a id="line.388"></a>
+<span class="sourceLineNo">389</span><a id="line.389">                for (FeatureI feature : this) {</a>
+<span class="sourceLineNo">390</span><a id="line.390">                        boolean overlaps = false;</a>
+<span class="sourceLineNo">391</span><a id="line.391">                        if (feature.seqname().equals(seqname)) {</a>
+<span class="sourceLineNo">392</span><a id="line.392">                                if (location.isSameStrand(feature.location())) {</a>
+<span class="sourceLineNo">393</span><a id="line.393">                                        overlaps = feature.location().overlaps(location);</a>
+<span class="sourceLineNo">394</span><a id="line.394">                                } else if (useBothStrands) {</a>
+<span class="sourceLineNo">395</span><a id="line.395">                                        overlaps = feature.location().overlaps(location.opposite());</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                }</a>
+<span class="sourceLineNo">397</span><a id="line.397">                        }</a>
+<span class="sourceLineNo">398</span><a id="line.398"></a>
+<span class="sourceLineNo">399</span><a id="line.399">                        if (!overlaps) {</a>
+<span class="sourceLineNo">400</span><a id="line.400">                                list.add(feature);</a>
+<span class="sourceLineNo">401</span><a id="line.401">                        }</a>
+<span class="sourceLineNo">402</span><a id="line.402">                }</a>
+<span class="sourceLineNo">403</span><a id="line.403"></a>
+<span class="sourceLineNo">404</span><a id="line.404">                return list;</a>
+<span class="sourceLineNo">405</span><a id="line.405">        }</a>
+<span class="sourceLineNo">406</span><a id="line.406"></a>
+<span class="sourceLineNo">407</span><a id="line.407">        /**</a>
+<span class="sourceLineNo">408</span><a id="line.408">         * Check if any feature in list has the specified attribute key.</a>
+<span class="sourceLineNo">409</span><a id="line.409">         *</a>
+<span class="sourceLineNo">410</span><a id="line.410">         * @param key The attribute key to consider.</a>
+<span class="sourceLineNo">411</span><a id="line.411">         * @return True if at least one feature has the attribute key.</a>
+<span class="sourceLineNo">412</span><a id="line.412">         */</a>
+<span class="sourceLineNo">413</span><a id="line.413">        public boolean hasAttribute(String key) {</a>
+<span class="sourceLineNo">414</span><a id="line.414">                if (featindex.containsKey(key)){</a>
+<span class="sourceLineNo">415</span><a id="line.415">                        Map&lt;String, List&lt;FeatureI&gt;&gt; mappa = featindex.get(key);</a>
+<span class="sourceLineNo">416</span><a id="line.416">                        if (mappa!= null &amp;&amp; mappa.size()&gt;0)return true;</a>
+<span class="sourceLineNo">417</span><a id="line.417">                        return false;</a>
+<span class="sourceLineNo">418</span><a id="line.418">                }</a>
+<span class="sourceLineNo">419</span><a id="line.419">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">420</span><a id="line.420">                        if (f.hasAttribute(key)) {</a>
+<span class="sourceLineNo">421</span><a id="line.421">                                return true;</a>
+<span class="sourceLineNo">422</span><a id="line.422">                        }</a>
+<span class="sourceLineNo">423</span><a id="line.423">                }</a>
+<span class="sourceLineNo">424</span><a id="line.424"></a>
+<span class="sourceLineNo">425</span><a id="line.425">                return false;</a>
+<span class="sourceLineNo">426</span><a id="line.426">        }</a>
+<span class="sourceLineNo">427</span><a id="line.427"></a>
+<span class="sourceLineNo">428</span><a id="line.428">        /**</a>
+<span class="sourceLineNo">429</span><a id="line.429">         * Check if any feature in list has the specified attribute key/value pair.</a>
+<span class="sourceLineNo">430</span><a id="line.430">         *</a>
+<span class="sourceLineNo">431</span><a id="line.431">         * @param key The attribute key to consider.</a>
+<span class="sourceLineNo">432</span><a id="line.432">         * @param value The attribute value to consider.</a>
+<span class="sourceLineNo">433</span><a id="line.433">         * @return True if at least one feature has the key/value pair.</a>
+<span class="sourceLineNo">434</span><a id="line.434">         */</a>
+<span class="sourceLineNo">435</span><a id="line.435">        public boolean hasAttribute(String key, String value) {</a>
+<span class="sourceLineNo">436</span><a id="line.436">                if (featindex.containsKey(key)){</a>
+<span class="sourceLineNo">437</span><a id="line.437">                        Map&lt;String, List&lt;FeatureI&gt;&gt; mappa = featindex.get(key);</a>
+<span class="sourceLineNo">438</span><a id="line.438">                        if (mappa == null) return false;</a>
+<span class="sourceLineNo">439</span><a id="line.439">                        if (mappa.containsKey(value)) return true;</a>
+<span class="sourceLineNo">440</span><a id="line.440">                        return false;</a>
+<span class="sourceLineNo">441</span><a id="line.441">                }</a>
+<span class="sourceLineNo">442</span><a id="line.442"></a>
+<span class="sourceLineNo">443</span><a id="line.443">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">444</span><a id="line.444">                        if (f.hasAttribute(key, value)) {</a>
+<span class="sourceLineNo">445</span><a id="line.445">                                return true;</a>
+<span class="sourceLineNo">446</span><a id="line.446">                        }</a>
+<span class="sourceLineNo">447</span><a id="line.447">                }</a>
+<span class="sourceLineNo">448</span><a id="line.448"></a>
+<span class="sourceLineNo">449</span><a id="line.449">                return false;</a>
+<span class="sourceLineNo">450</span><a id="line.450">        }</a>
+<span class="sourceLineNo">451</span><a id="line.451"></a>
+<span class="sourceLineNo">452</span><a id="line.452">        /**</a>
+<span class="sourceLineNo">453</span><a id="line.453">         * Return a string representation of all features in this list.</a>
+<span class="sourceLineNo">454</span><a id="line.454">         *</a>
+<span class="sourceLineNo">455</span><a id="line.455">         * @return A string.</a>
+<span class="sourceLineNo">456</span><a id="line.456">         */</a>
+<span class="sourceLineNo">457</span><a id="line.457">        @Override</a>
+<span class="sourceLineNo">458</span><a id="line.458">        public String toString() {</a>
+<span class="sourceLineNo">459</span><a id="line.459">                StringBuilder  s = new StringBuilder("FeatureList: &gt;&gt;\n");</a>
+<span class="sourceLineNo">460</span><a id="line.460">                for (FeatureI f : this) {</a>
+<span class="sourceLineNo">461</span><a id="line.461">                        s.append( f.seqname() + ":" + f.toString() + "\n");</a>
+<span class="sourceLineNo">462</span><a id="line.462">                }</a>
+<span class="sourceLineNo">463</span><a id="line.463"></a>
+<span class="sourceLineNo">464</span><a id="line.464">                s.append("\n&lt;&lt;\n");</a>
+<span class="sourceLineNo">465</span><a id="line.465">                return s.toString();</a>
+<span class="sourceLineNo">466</span><a id="line.466">        }</a>
+<span class="sourceLineNo">467</span><a id="line.467"></a>
+<span class="sourceLineNo">468</span><a id="line.468">        /**</a>
+<span class="sourceLineNo">469</span><a id="line.469">         * used by sort routine</a>
+<span class="sourceLineNo">470</span><a id="line.470">         */</a>
+<span class="sourceLineNo">471</span><a id="line.471">        private class FeatureComparator implements Comparator&lt;FeatureI&gt;, Serializable {</a>
+<span class="sourceLineNo">472</span><a id="line.472">        private static final long serialVersionUID = 1;</a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474">                @Override</a>
+<span class="sourceLineNo">475</span><a id="line.475">                public int compare(FeatureI a, FeatureI b) {</a>
+<span class="sourceLineNo">476</span><a id="line.476">                        if (a.seqname().equals(b.seqname()) &amp;&amp; a.location().isSameStrand(b.location())) {</a>
+<span class="sourceLineNo">477</span><a id="line.477">                                return a.location().start() - b.location().start();             //sort on start</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        } else {</a>
+<span class="sourceLineNo">479</span><a id="line.479">                                throw new IndexOutOfBoundsException("Cannot compare/sort features whose locations are on opposite strands or with different seqname().\r\n" + a.toString() + "\r\n" + b.toString() );</a>
+<span class="sourceLineNo">480</span><a id="line.480">                        }</a>
+<span class="sourceLineNo">481</span><a id="line.481">                }</a>
+<span class="sourceLineNo">482</span><a id="line.482">        }</a>
+<span class="sourceLineNo">483</span><a id="line.483"></a>
+<span class="sourceLineNo">484</span><a id="line.484">        /**</a>
+<span class="sourceLineNo">485</span><a id="line.485">         * Create a new list that is ordered by the starting index of the features' locations. All locations</a>
+<span class="sourceLineNo">486</span><a id="line.486">         * must be on the same strand of the same sequence.</a>
+<span class="sourceLineNo">487</span><a id="line.487">         *</a>
+<span class="sourceLineNo">488</span><a id="line.488">         * @return An ordered list.</a>
+<span class="sourceLineNo">489</span><a id="line.489">         * @throws IndexOutOfBoundsException Cannot compare/sort features whose locations are on opposite strands, or</a>
+<span class="sourceLineNo">490</span><a id="line.490">         * whose seqnames differ.</a>
+<span class="sourceLineNo">491</span><a id="line.491">         */</a>
+<span class="sourceLineNo">492</span><a id="line.492">        public FeatureList sortByStart() {</a>
+<span class="sourceLineNo">493</span><a id="line.493">                FeatureI[] array = toArray(new FeatureI[1]);</a>
+<span class="sourceLineNo">494</span><a id="line.494"></a>
+<span class="sourceLineNo">495</span><a id="line.495">                Arrays.sort(array, new FeatureComparator());</a>
+<span class="sourceLineNo">496</span><a id="line.496"></a>
+<span class="sourceLineNo">497</span><a id="line.497">                return new FeatureList(Arrays.asList(array));</a>
+<span class="sourceLineNo">498</span><a id="line.498">        }</a>
+<span class="sourceLineNo">499</span><a id="line.499"></a>
+<span class="sourceLineNo">500</span><a id="line.500">        /**</a>
+<span class="sourceLineNo">501</span><a id="line.501">         * Add a list of attributes that will be used as indexes for queries</a>
+<span class="sourceLineNo">502</span><a id="line.502">         * @param indexes  the List containing the attribute_id</a>
+<span class="sourceLineNo">503</span><a id="line.503">         */</a>
+<span class="sourceLineNo">504</span><a id="line.504">        public void addIndexes(List&lt;String&gt; indexes) {</a>
+<span class="sourceLineNo">505</span><a id="line.505">                for (String index : indexes){</a>
+<span class="sourceLineNo">506</span><a id="line.506">                        addIndex(index);</a>
+<span class="sourceLineNo">507</span><a id="line.507">                }</a>
+<span class="sourceLineNo">508</span><a id="line.508"></a>
+<span class="sourceLineNo">509</span><a id="line.509">        }</a>
+<span class="sourceLineNo">510</span><a id="line.510">        /**</a>
+<span class="sourceLineNo">511</span><a id="line.511">         * Add an attribute that will be used as index for queries</a>
+<span class="sourceLineNo">512</span><a id="line.512">         * @param index an attribute_id</a>
+<span class="sourceLineNo">513</span><a id="line.513">         */</a>
+<span class="sourceLineNo">514</span><a id="line.514">        public void addIndex(String index) {</a>
+<span class="sourceLineNo">515</span><a id="line.515">                featindex.put(index, null);</a>
+<span class="sourceLineNo">516</span><a id="line.516">        }</a>
+<span class="sourceLineNo">517</span><a id="line.517">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

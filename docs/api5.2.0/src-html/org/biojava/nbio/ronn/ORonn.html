@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * @(#)ORonn.java 1.0 June 2010</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Copyright (c) 2010 Peter Troshin</a>
+<span class="sourceLineNo">005</span><a id="line.5"> *</a>
+<span class="sourceLineNo">006</span><a id="line.6"> *        BioJava development code</a>
+<span class="sourceLineNo">007</span><a id="line.7"> *</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * see:</a>
+<span class="sourceLineNo">012</span><a id="line.12"> *</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * at:</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">023</span><a id="line.23"> *</a>
+<span class="sourceLineNo">024</span><a id="line.24"> */</a>
+<span class="sourceLineNo">025</span><a id="line.25">package org.biojava.nbio.ronn;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.data.sequence.FastaSequence;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.data.sequence.SequenceUtil;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.ronn.ModelLoader.Model;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.io.FileInputStream;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.io.IOException;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.io.PrintWriter;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.text.DateFormat;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.text.NumberFormat;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.Date;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.List;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.util.Locale;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.util.concurrent.*;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">/**</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * Fully re-factored and enhanced version of RONN.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * This class does the calculation and contains the main for the command line client.</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @author Peter Troshin</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * @version 1.0</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * @since 3.0.2</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53"> * TODO refactor</a>
+<span class="sourceLineNo">054</span><a id="line.54"> */</a>
+<span class="sourceLineNo">055</span><a id="line.55">public final class ORonn implements Callable&lt;ORonn&gt; {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">        private static final Logger logger = LoggerFactory.getLogger(ORonn.class);</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        private static final DateFormat DATE_FORMAT = DateFormat</a>
+<span class="sourceLineNo">060</span><a id="line.60">                        .getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.US);</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">        private static final NumberFormat nformat = NumberFormat.getInstance();</a>
+<span class="sourceLineNo">063</span><a id="line.63">        static {</a>
+<span class="sourceLineNo">064</span><a id="line.64">                ORonn.nformat.setMaximumFractionDigits(2);</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68">        static final byte NUMBER_OF_MODELS = 10;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        private final FastaSequence sequence;</a>
+<span class="sourceLineNo">070</span><a id="line.70">        private final ModelLoader mloader;</a>
+<span class="sourceLineNo">071</span><a id="line.71">        private final PrintWriter out;</a>
+<span class="sourceLineNo">072</span><a id="line.72">        private final ResultLayout layout;</a>
+<span class="sourceLineNo">073</span><a id="line.73">        private final PrintWriter stat;</a>
+<span class="sourceLineNo">074</span><a id="line.74">        private final Timer timer;</a>
+<span class="sourceLineNo">075</span><a id="line.75">        private final float disorder;</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">        // This gets initialized after calling a call method!</a>
+<span class="sourceLineNo">078</span><a id="line.78">        private float[] cummulativeScore;</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        ORonn(final FastaSequence sequence, final ModelLoader mloader,</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        final InputParameters params) throws NumberFormatException,</a>
+<span class="sourceLineNo">083</span><a id="line.83">                        IOException {</a>
+<span class="sourceLineNo">084</span><a id="line.84">                this.sequence = sequence;</a>
+<span class="sourceLineNo">085</span><a id="line.85">                this.mloader = mloader;</a>
+<span class="sourceLineNo">086</span><a id="line.86">                out = params.getOutputWriter();</a>
+<span class="sourceLineNo">087</span><a id="line.87">                assert out != null;</a>
+<span class="sourceLineNo">088</span><a id="line.88">                layout = params.getFormat();</a>
+<span class="sourceLineNo">089</span><a id="line.89">                stat = params.getStatWriter();</a>
+<span class="sourceLineNo">090</span><a id="line.90">                disorder = params.getDisorder();</a>
+<span class="sourceLineNo">091</span><a id="line.91">                timer = new Timer(TimeUnit.MILLISECONDS);</a>
+<span class="sourceLineNo">092</span><a id="line.92">        }</a>
+<span class="sourceLineNo">093</span><a id="line.93">        //This constructor is for API calls where the caller collects the results directly</a>
+<span class="sourceLineNo">094</span><a id="line.94">        ORonn(final FastaSequence sequence, final ModelLoader mloader) throws NumberFormatException,</a>
+<span class="sourceLineNo">095</span><a id="line.95">        IOException {</a>
+<span class="sourceLineNo">096</span><a id="line.96">                this.sequence = sequence;</a>
+<span class="sourceLineNo">097</span><a id="line.97">                this.mloader = mloader;</a>
+<span class="sourceLineNo">098</span><a id="line.98">                out = new PrintWriter(new NullOutputStream());</a>
+<span class="sourceLineNo">099</span><a id="line.99">                layout = ResultLayout.HORIZONTAL;</a>
+<span class="sourceLineNo">100</span><a id="line.100">                stat = new PrintWriter(new NullOutputStream());</a>
+<span class="sourceLineNo">101</span><a id="line.101">                disorder = RonnConstraint.DEFAULT_DISORDER;</a>
+<span class="sourceLineNo">102</span><a id="line.102">                timer = new Timer(TimeUnit.MILLISECONDS);</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        void writeResults(final float[] meanScores, final char[] seqs) {</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">                synchronized (out)</a>
+<span class="sourceLineNo">108</span><a id="line.108">                {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                        out.println("&gt;" + sequence.getId());</a>
+<span class="sourceLineNo">110</span><a id="line.110">                        if (layout == ResultLayout.VERTICAL) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                for (int i = 0; i &lt; meanScores.length; i++) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                        out.printf("%c\t%.2f%n", seqs[i], meanScores[i]);</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                        //out.printf("%c\t%f%n", seqs[i], meanScores[i]);</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                }</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        } else {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                final StringBuilder seqLine = new StringBuilder();</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                final StringBuilder resultLine = new StringBuilder();</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                final String spacer = "\t";</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                for (int i = 0; i &lt; meanScores.length; i++) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                        seqLine.append(seqs[i]);</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                        seqLine.append(spacer);</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                        resultLine.append(ORonn.nformat.format(meanScores[i]));</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                        resultLine.append(spacer);</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                }</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                out.println(seqLine.toString());</a>
+<span class="sourceLineNo">126</span><a id="line.126">                                out.println(resultLine.toString());</a>
+<span class="sourceLineNo">127</span><a id="line.127">                        }</a>
+<span class="sourceLineNo">128</span><a id="line.128">                        out.println();</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        out.flush();</a>
+<span class="sourceLineNo">130</span><a id="line.130">                }</a>
+<span class="sourceLineNo">131</span><a id="line.131">        }</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133">        static boolean isValidSequence(final FastaSequence fsequence) {</a>
+<span class="sourceLineNo">134</span><a id="line.134">                assert fsequence != null;</a>
+<span class="sourceLineNo">135</span><a id="line.135">                return fsequence.getLength() &gt; RonnConstraint.MIN_SEQUENCE_LENGTH;</a>
+<span class="sourceLineNo">136</span><a id="line.136">        }</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">        @Override</a>
+<span class="sourceLineNo">139</span><a id="line.139">        public ORonn call() throws NumberFormatException, IOException {</a>
+<span class="sourceLineNo">140</span><a id="line.140">                final String seq = sequence.getSequence();</a>
+<span class="sourceLineNo">141</span><a id="line.141">                // Calculate for each model</a>
+<span class="sourceLineNo">142</span><a id="line.142">                for (int m = 0; m &lt; ORonn.NUMBER_OF_MODELS; m++) {</a>
+<span class="sourceLineNo">143</span><a id="line.143">                        final Model model = mloader.getModel(m);</a>
+<span class="sourceLineNo">144</span><a id="line.144">                        final ORonnModel rmodel = new ORonnModel(seq, model, disorder);</a>
+<span class="sourceLineNo">145</span><a id="line.145">                        final float[] scores = rmodel.detect();</a>
+<span class="sourceLineNo">146</span><a id="line.146">                        addScore(scores);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                }</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">                final char[] ch = seq.toCharArray();</a>
+<span class="sourceLineNo">150</span><a id="line.150">                final float[] meanScores = getMeanScores();</a>
+<span class="sourceLineNo">151</span><a id="line.151">                assert meanScores.length == seq.length() : "Scores are not calculated for "</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                + "all residues!";</a>
+<span class="sourceLineNo">153</span><a id="line.153">                writeResults(meanScores, ch);</a>
+<span class="sourceLineNo">154</span><a id="line.154">                stat.println(timer.getTotalTime() + "ms prediction completed for "</a>
+<span class="sourceLineNo">155</span><a id="line.155">                                + sequence.getId());</a>
+<span class="sourceLineNo">156</span><a id="line.156">                return this;</a>
+<span class="sourceLineNo">157</span><a id="line.157">        }</a>
+<span class="sourceLineNo">158</span><a id="line.158"></a>
+<span class="sourceLineNo">159</span><a id="line.159">        private void addScore(final float[] scores) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">                // For the first time just add all elements</a>
+<span class="sourceLineNo">161</span><a id="line.161">                if (cummulativeScore == null) {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                        cummulativeScore = scores;</a>
+<span class="sourceLineNo">163</span><a id="line.163">                        return;</a>
+<span class="sourceLineNo">164</span><a id="line.164">                }</a>
+<span class="sourceLineNo">165</span><a id="line.165">                if (cummulativeScore.length != scores.length) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                        throw new IllegalArgumentException("Expected "</a>
+<span class="sourceLineNo">167</span><a id="line.167">                                        + cummulativeScore.length + " but get " + scores.length);</a>
+<span class="sourceLineNo">168</span><a id="line.168">                }</a>
+<span class="sourceLineNo">169</span><a id="line.169">                for (int i = 0; i &lt; scores.length; i++) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        cummulativeScore[i] += scores[i];</a>
+<span class="sourceLineNo">171</span><a id="line.171">                }</a>
+<span class="sourceLineNo">172</span><a id="line.172">        }</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">        float[] getMeanScores() {</a>
+<span class="sourceLineNo">175</span><a id="line.175">                final float[] meanScores = new float[cummulativeScore.length];</a>
+<span class="sourceLineNo">176</span><a id="line.176">                for (int i = 0; i &lt; cummulativeScore.length; i++) {</a>
+<span class="sourceLineNo">177</span><a id="line.177">                        meanScores[i] = cummulativeScore[i] / ORonn.NUMBER_OF_MODELS;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                }</a>
+<span class="sourceLineNo">179</span><a id="line.179">                return meanScores;</a>
+<span class="sourceLineNo">180</span><a id="line.180">        }</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">        /**</a>
+<span class="sourceLineNo">183</span><a id="line.183">         *</a>
+<span class="sourceLineNo">184</span><a id="line.184">         * @author pvtroshin</a>
+<span class="sourceLineNo">185</span><a id="line.185">         *</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * VERTICAL - where the letters of the sequence and corresponding disorder values are</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * output in two column layout.</a>
+<span class="sourceLineNo">188</span><a id="line.188">         *</a>
+<span class="sourceLineNo">189</span><a id="line.189">         * HORIZONTAL where the disorder values are provided under the letters of the</a>
+<span class="sourceLineNo">190</span><a id="line.190">         * sequence. Letters and values separated by tabulation in      this case.</a>
+<span class="sourceLineNo">191</span><a id="line.191">         *</a>
+<span class="sourceLineNo">192</span><a id="line.192">         */</a>
+<span class="sourceLineNo">193</span><a id="line.193">        static enum ResultLayout {</a>
+<span class="sourceLineNo">194</span><a id="line.194">                VERTICAL, HORIZONTAL</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">        static void printUsage() {</a>
+<span class="sourceLineNo">198</span><a id="line.198">                logger.error(RonnConstraint.HELP_MESSAGE);</a>
+<span class="sourceLineNo">199</span><a id="line.199">        }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        static boolean isValidSequenceForRonn(final FastaSequence fsequence,</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        final PrintWriter stat) {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                boolean valid = true;</a>
+<span class="sourceLineNo">204</span><a id="line.204">                String message = "";</a>
+<span class="sourceLineNo">205</span><a id="line.205">                if (!ORonn.isValidSequence(fsequence)) {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                        message = "IGNORING sequence "</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                        + fsequence.getId()</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        + " as its too short. Minimum sequence length for disorder prediction is "</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                        + (RonnConstraint.MIN_SEQUENCE_LENGTH + 1) + " characters!";</a>
+<span class="sourceLineNo">210</span><a id="line.210">                        stat.println(message);</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        logger.warn(message);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                        valid = false;</a>
+<span class="sourceLineNo">213</span><a id="line.213">                }</a>
+<span class="sourceLineNo">214</span><a id="line.214">                final String sequence = fsequence.getSequence();</a>
+<span class="sourceLineNo">215</span><a id="line.215">                if (!(SequenceUtil.isProteinSequence(sequence) || SequenceUtil</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                .isAmbiguosProtein(sequence))) {</a>
+<span class="sourceLineNo">217</span><a id="line.217">                        message = "IGNORING sequence " + fsequence.getId()</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                        + " as it is not a protein sequence!";</a>
+<span class="sourceLineNo">219</span><a id="line.219">                        stat.println(message);</a>
+<span class="sourceLineNo">220</span><a id="line.220">                        logger.warn(message);</a>
+<span class="sourceLineNo">221</span><a id="line.221">                        valid = false;</a>
+<span class="sourceLineNo">222</span><a id="line.222">                }</a>
+<span class="sourceLineNo">223</span><a id="line.223">                return valid;</a>
+<span class="sourceLineNo">224</span><a id="line.224">        }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">        static void validateSequenceForRonn(final FastaSequence fsequence) {</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">                String message = "";</a>
+<span class="sourceLineNo">229</span><a id="line.229">                if (!ORonn.isValidSequence(fsequence)) {</a>
+<span class="sourceLineNo">230</span><a id="line.230">                        message = "IGNORING sequence "</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                        + fsequence.getId()</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                        + " as its too short. Minimum sequence length for disorder prediction is "</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                        + (RonnConstraint.MIN_SEQUENCE_LENGTH + 1) + " characters!";</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        throw new IllegalArgumentException(message);</a>
+<span class="sourceLineNo">235</span><a id="line.235">                }</a>
+<span class="sourceLineNo">236</span><a id="line.236">                final String sequence = fsequence.getSequence();</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">                if ( SequenceUtil.isAmbiguosProtein(sequence)){</a>
+<span class="sourceLineNo">239</span><a id="line.239">                        logger.warn("Sequence is ambiguous!");</a>
+<span class="sourceLineNo">240</span><a id="line.240">                }</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242">                if (!(SequenceUtil.isProteinSequence(sequence) )){</a>
+<span class="sourceLineNo">243</span><a id="line.243">                        logger.warn("Does not look like a protein sequence!");</a>
+<span class="sourceLineNo">244</span><a id="line.244">                }</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">                if (!(SequenceUtil.isProteinSequence(sequence) || SequenceUtil</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                .isAmbiguosProtein(sequence))) {</a>
+<span class="sourceLineNo">248</span><a id="line.248">                        message = "IGNORING sequence " + fsequence.getId()</a>
+<span class="sourceLineNo">249</span><a id="line.249">                                        + " as it is not a protein sequence!";</a>
+<span class="sourceLineNo">250</span><a id="line.250">                        throw new IllegalArgumentException(message);</a>
+<span class="sourceLineNo">251</span><a id="line.251">                }</a>
+<span class="sourceLineNo">252</span><a id="line.252">        }</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254">        private static InputParameters parseArguments(final String[] args)</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        throws IOException {</a>
+<span class="sourceLineNo">256</span><a id="line.256">                final InputParameters prms = new InputParameters();</a>
+<span class="sourceLineNo">257</span><a id="line.257">                for (int i = 0; i &lt; args.length; i++) {</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        final String prm = args[i].trim().toLowerCase();</a>
+<span class="sourceLineNo">259</span><a id="line.259">                        if (prm.startsWith(InputParameters.inputKey)) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                prms.setFilePrm(args[i], InputParameters.inputKey);</a>
+<span class="sourceLineNo">261</span><a id="line.261">                        }</a>
+<span class="sourceLineNo">262</span><a id="line.262">                        if (prm.startsWith(InputParameters.outputKey)) {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                                prms.setFilePrm(args[i], InputParameters.outputKey);</a>
+<span class="sourceLineNo">264</span><a id="line.264">                        }</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        if (prm.startsWith(InputParameters.disorderKey)) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                prms.setDisorder(prm);</a>
+<span class="sourceLineNo">267</span><a id="line.267">                        }</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        if (prm.startsWith(InputParameters.formatKey)) {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                                prms.setFormat(prm);</a>
+<span class="sourceLineNo">270</span><a id="line.270">                        }</a>
+<span class="sourceLineNo">271</span><a id="line.271">                        if (prm.startsWith(InputParameters.statKey)) {</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                prms.setFilePrm(args[i], InputParameters.statKey);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        }</a>
+<span class="sourceLineNo">274</span><a id="line.274">                        if (prm.startsWith(InputParameters.threadKey)) {</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                prms.setThreadNum(prm);</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        }</a>
+<span class="sourceLineNo">277</span><a id="line.277"></a>
+<span class="sourceLineNo">278</span><a id="line.278">                }</a>
+<span class="sourceLineNo">279</span><a id="line.279">                return prms;</a>
+<span class="sourceLineNo">280</span><a id="line.280">        }</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">        public static void main(final String[] args) throws NumberFormatException,</a>
+<span class="sourceLineNo">283</span><a id="line.283">        IOException {</a>
+<span class="sourceLineNo">284</span><a id="line.284"></a>
+<span class="sourceLineNo">285</span><a id="line.285">                if ((args.length == 0) || (args.length &gt; 5)) {</a>
+<span class="sourceLineNo">286</span><a id="line.286">                        ORonn.printUsage();</a>
+<span class="sourceLineNo">287</span><a id="line.287">                        System.exit(1);</a>
+<span class="sourceLineNo">288</span><a id="line.288">                }</a>
+<span class="sourceLineNo">289</span><a id="line.289">                final InputParameters prms = ORonn.parseArguments(args);</a>
+<span class="sourceLineNo">290</span><a id="line.290"></a>
+<span class="sourceLineNo">291</span><a id="line.291">                final PrintWriter stat = prms.getStatWriter();</a>
+<span class="sourceLineNo">292</span><a id="line.292">                stat.println("Using parameters: \n[" + prms + "]");</a>
+<span class="sourceLineNo">293</span><a id="line.293"></a>
+<span class="sourceLineNo">294</span><a id="line.294">                if (prms.getInput() == null) {</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        logger.error("Input is not defined! ");</a>
+<span class="sourceLineNo">296</span><a id="line.296">                        ORonn.printUsage();</a>
+<span class="sourceLineNo">297</span><a id="line.297">                        System.exit(1);</a>
+<span class="sourceLineNo">298</span><a id="line.298">                }</a>
+<span class="sourceLineNo">299</span><a id="line.299">                stat.println("Calculation started: "</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                + ORonn.DATE_FORMAT.format(new Date()));</a>
+<span class="sourceLineNo">301</span><a id="line.301"></a>
+<span class="sourceLineNo">302</span><a id="line.302">                final Timer timer = new Timer();</a>
+<span class="sourceLineNo">303</span><a id="line.303">                // The stream is closed after reading inside readFasta</a>
+<span class="sourceLineNo">304</span><a id="line.304">                final List&lt;FastaSequence&gt; sequences = SequenceUtil</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                .readFasta(new FileInputStream(prms.getInput()));</a>
+<span class="sourceLineNo">306</span><a id="line.306">                stat.println(timer.getStepTime(TimeUnit.MILLISECONDS)</a>
+<span class="sourceLineNo">307</span><a id="line.307">                                + "ms input file loaded");</a>
+<span class="sourceLineNo">308</span><a id="line.308">                stat.println("Input file has " + sequences.size() + " sequences");</a>
+<span class="sourceLineNo">309</span><a id="line.309"></a>
+<span class="sourceLineNo">310</span><a id="line.310">                final ModelLoader mloader = new ModelLoader();</a>
+<span class="sourceLineNo">311</span><a id="line.311">                mloader.loadModels();</a>
+<span class="sourceLineNo">312</span><a id="line.312"></a>
+<span class="sourceLineNo">313</span><a id="line.313">                final PrintWriter out = prms.getOutputWriter();</a>
+<span class="sourceLineNo">314</span><a id="line.314">                assert out != null;</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316">                // do serial execution</a>
+<span class="sourceLineNo">317</span><a id="line.317">                if (prms.getThreadNum() == 1) {</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        stat.println("Running predictions serially");</a>
+<span class="sourceLineNo">319</span><a id="line.319">                        ORonn.predictSerial(sequences, prms, mloader);</a>
+<span class="sourceLineNo">320</span><a id="line.320">                } else {</a>
+<span class="sourceLineNo">321</span><a id="line.321">                        // Run predictions in parallel</a>
+<span class="sourceLineNo">322</span><a id="line.322">                        stat.print("Running preditions in parallel - ");</a>
+<span class="sourceLineNo">323</span><a id="line.323">                        stat.println("Using " + prms.getThreadNum() + " threads");</a>
+<span class="sourceLineNo">324</span><a id="line.324">                        ORonn.predictParallel(sequences, prms, mloader);</a>
+<span class="sourceLineNo">325</span><a id="line.325">                }</a>
+<span class="sourceLineNo">326</span><a id="line.326"></a>
+<span class="sourceLineNo">327</span><a id="line.327">                stat.println("Total calculation time: " + timer.getTotalTime() + "s ");</a>
+<span class="sourceLineNo">328</span><a id="line.328">                stat.println("Calculation completed: "</a>
+<span class="sourceLineNo">329</span><a id="line.329">                                + ORonn.DATE_FORMAT.format(new Date()));</a>
+<span class="sourceLineNo">330</span><a id="line.330">                stat.close();</a>
+<span class="sourceLineNo">331</span><a id="line.331">                out.flush();</a>
+<span class="sourceLineNo">332</span><a id="line.332">                out.close();</a>
+<span class="sourceLineNo">333</span><a id="line.333">        }</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">        static void predictSerial(final List&lt;FastaSequence&gt; fsequences,</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        final InputParameters prms, final ModelLoader mloader)</a>
+<span class="sourceLineNo">337</span><a id="line.337">                                        throws NumberFormatException, IOException {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                for (final FastaSequence sequence : fsequences) {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                        if (!ORonn.isValidSequenceForRonn(sequence, prms.getStatWriter())) {</a>
+<span class="sourceLineNo">340</span><a id="line.340">                                continue;</a>
+<span class="sourceLineNo">341</span><a id="line.341">                        }</a>
+<span class="sourceLineNo">342</span><a id="line.342">                        final ORonn ronn = new ORonn(sequence, mloader, prms);</a>
+<span class="sourceLineNo">343</span><a id="line.343">                        ronn.call();</a>
+<span class="sourceLineNo">344</span><a id="line.344">                }</a>
+<span class="sourceLineNo">345</span><a id="line.345">        }</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347"></a>
+<span class="sourceLineNo">348</span><a id="line.348">        static void predictParallel(final List&lt;FastaSequence&gt; fsequences,</a>
+<span class="sourceLineNo">349</span><a id="line.349">                        final InputParameters prms, final ModelLoader mloader)</a>
+<span class="sourceLineNo">350</span><a id="line.350">                                        throws NumberFormatException, IOException {</a>
+<span class="sourceLineNo">351</span><a id="line.351">                final PrintWriter stat = prms.getStatWriter();</a>
+<span class="sourceLineNo">352</span><a id="line.352"></a>
+<span class="sourceLineNo">353</span><a id="line.353">                // Do parallel execution</a>
+<span class="sourceLineNo">354</span><a id="line.354">                final ExecutorService executor = new ThreadPoolExecutor(prms</a>
+<span class="sourceLineNo">355</span><a id="line.355">                                .getThreadNum(), prms.getThreadNum(), 0L, TimeUnit.SECONDS,</a>
+<span class="sourceLineNo">356</span><a id="line.356">                                new SynchronousQueue&lt;Runnable&gt;(),</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                new ThreadPoolExecutor.CallerRunsPolicy());</a>
+<span class="sourceLineNo">358</span><a id="line.358">                try {</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        for (final FastaSequence sequence : fsequences) {</a>
+<span class="sourceLineNo">360</span><a id="line.360">                                if (!ORonn.isValidSequenceForRonn(sequence, stat)) {</a>
+<span class="sourceLineNo">361</span><a id="line.361">                                        continue;</a>
+<span class="sourceLineNo">362</span><a id="line.362">                                }</a>
+<span class="sourceLineNo">363</span><a id="line.363">                                final ORonn ronn = new ORonn(sequence, mloader, prms);</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                /*</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                 * To get stack traces from tasks one need to obtain a Future</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                 * from this method and call its get() method. Otherwise some</a>
+<span class="sourceLineNo">367</span><a id="line.367">                                 * task may end up with exception but unnoticed</a>
+<span class="sourceLineNo">368</span><a id="line.368">                                 */</a>
+<span class="sourceLineNo">369</span><a id="line.369">                                executor.submit(ronn);</a>
+<span class="sourceLineNo">370</span><a id="line.370">                        }</a>
+<span class="sourceLineNo">371</span><a id="line.371">                        executor.shutdown();</a>
+<span class="sourceLineNo">372</span><a id="line.372">                        final int timeOut = (fsequences.size() &lt; 60) ? 60 : fsequences</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                        .size();</a>
+<span class="sourceLineNo">374</span><a id="line.374">                        stat.println("All task submitted. Waiting for complition for "</a>
+<span class="sourceLineNo">375</span><a id="line.375">                                        + "maximum of " + timeOut + " minutes");</a>
+<span class="sourceLineNo">376</span><a id="line.376">                        executor.awaitTermination(timeOut, TimeUnit.MINUTES);</a>
+<span class="sourceLineNo">377</span><a id="line.377">                } catch (final InterruptedException e) {</a>
+<span class="sourceLineNo">378</span><a id="line.378">                        logger.error("Execution is terminated! "</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                        + "Terminated by either by the system or the timeout. "</a>
+<span class="sourceLineNo">380</span><a id="line.380">                                        + "Maximum of 1 minute is allowed for one sequence analisys! "</a>
+<span class="sourceLineNo">381</span><a id="line.381">                                        + "If it took longer to complite this analysis "</a>
+<span class="sourceLineNo">382</span><a id="line.382">                                        + "the program is terminated.", e);</a>
+<span class="sourceLineNo">383</span><a id="line.383">                } finally {</a>
+<span class="sourceLineNo">384</span><a id="line.384">                        executor.shutdownNow();</a>
+<span class="sourceLineNo">385</span><a id="line.385">                }</a>
+<span class="sourceLineNo">386</span><a id="line.386">        }</a>
+<span class="sourceLineNo">387</span><a id="line.387"></a>
+<span class="sourceLineNo">388</span><a id="line.388">} // class end</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

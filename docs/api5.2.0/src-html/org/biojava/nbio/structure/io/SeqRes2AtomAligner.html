@@ -1,0 +1,933 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                  BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Aug 23, 2007</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.structure.io;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.ArrayList;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.HashMap;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Iterator;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.List;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.Map;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.alignment.Alignments;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.alignment.SimpleGapPenalty;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.alignment.template.GapPenalty;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.nbio.alignment.template.PairwiseSequenceAligner;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.nbio.core.alignment.matrices.SubstitutionMatrixHelper;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.nbio.core.alignment.template.SequencePair;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.nbio.core.alignment.template.SubstitutionMatrix;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.nbio.core.exceptions.CompoundNotFoundException;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.nbio.core.sequence.DNASequence;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.nbio.core.sequence.ProteinSequence;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.nbio.core.sequence.RNASequence;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.nbio.core.sequence.compound.AmbiguityDNACompoundSet;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.nbio.core.sequence.compound.AmbiguityDNARNAHybridCompoundSet;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.nbio.core.sequence.compound.AmbiguityRNACompoundSet;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.nbio.core.sequence.compound.DNACompoundSet;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.nbio.core.sequence.compound.NucleotideCompound;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import org.biojava.nbio.core.sequence.template.Compound;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import org.biojava.nbio.core.sequence.template.Sequence;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import org.biojava.nbio.structure.AminoAcid;</a>
+<span class="sourceLineNo">055</span><a id="line.55">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">056</span><a id="line.56">import org.biojava.nbio.structure.Chain;</a>
+<span class="sourceLineNo">057</span><a id="line.57">import org.biojava.nbio.structure.Group;</a>
+<span class="sourceLineNo">058</span><a id="line.58">import org.biojava.nbio.structure.GroupType;</a>
+<span class="sourceLineNo">059</span><a id="line.59">import org.biojava.nbio.structure.HetatomImpl;</a>
+<span class="sourceLineNo">060</span><a id="line.60">import org.biojava.nbio.structure.NucleotideImpl;</a>
+<span class="sourceLineNo">061</span><a id="line.61">import org.biojava.nbio.structure.ResidueNumber;</a>
+<span class="sourceLineNo">062</span><a id="line.62">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">063</span><a id="line.63">import org.biojava.nbio.structure.io.mmcif.chem.PolymerType;</a>
+<span class="sourceLineNo">064</span><a id="line.64">import org.biojava.nbio.structure.io.mmcif.chem.ResidueType;</a>
+<span class="sourceLineNo">065</span><a id="line.65">import org.biojava.nbio.structure.io.mmcif.model.ChemComp;</a>
+<span class="sourceLineNo">066</span><a id="line.66">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">067</span><a id="line.67">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">/**</a>
+<span class="sourceLineNo">071</span><a id="line.71"> * Aligns the SEQRES residues to the ATOM residues.</a>
+<span class="sourceLineNo">072</span><a id="line.72"> * The AminoAcids that can be matched between the two of them will be set in the SEQRES</a>
+<span class="sourceLineNo">073</span><a id="line.73"> * chains</a>
+<span class="sourceLineNo">074</span><a id="line.74"> *</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">077</span><a id="line.77"> * @author Jose Duarte</a>
+<span class="sourceLineNo">078</span><a id="line.78"> */</a>
+<span class="sourceLineNo">079</span><a id="line.79">public class SeqRes2AtomAligner {</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        private static final Logger logger = LoggerFactory.getLogger(SeqRes2AtomAligner.class);</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83"></a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">        private String alignmentString;</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        public SeqRes2AtomAligner(){</a>
+<span class="sourceLineNo">088</span><a id="line.88">                logger.debug("initialising SeqRes2AtomAligner");</a>
+<span class="sourceLineNo">089</span><a id="line.89">                alignmentString = "";</a>
+<span class="sourceLineNo">090</span><a id="line.90">        }</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">        public String getAlignmentString() {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                return alignmentString;</a>
+<span class="sourceLineNo">094</span><a id="line.94">        }</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">         *</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @param seqRes</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @param atomList</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * @param useChainId if true chainId (Chain.getId) is used for matching,</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * if false chainName (Chain.getName) is used</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * @return</a>
+<span class="sourceLineNo">103</span><a id="line.103">         */</a>
+<span class="sourceLineNo">104</span><a id="line.104">        public static Chain getMatchingAtomRes(Chain seqRes, List&lt;Chain&gt; atomList, boolean useChainId)</a>
+<span class="sourceLineNo">105</span><a id="line.105">        {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                Iterator&lt;Chain&gt; iter = atomList.iterator();</a>
+<span class="sourceLineNo">107</span><a id="line.107">                while(iter.hasNext()){</a>
+<span class="sourceLineNo">108</span><a id="line.108">                        Chain atomChain = iter.next();</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">                        String atomChainId = null;</a>
+<span class="sourceLineNo">111</span><a id="line.111">                        String seqResChainId = null;</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        if (useChainId) {</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                atomChainId = atomChain.getId();</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                seqResChainId = seqRes.getId();</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        } else {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                atomChainId = atomChain.getName();</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                seqResChainId = seqRes.getName();</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">                        }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">                        if ( atomChainId.equals(seqResChainId)){</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                return atomChain;</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        }</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                logger.info("Could not match SEQRES chainID asymId:" + seqRes.getId() + " authId:"+ seqRes.getName() +"  to ATOM chains!, size of atom chain: " + atomList.size());</a>
+<span class="sourceLineNo">128</span><a id="line.128">                return null;</a>
+<span class="sourceLineNo">129</span><a id="line.129">        }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">        public void align(Structure s, List&lt;Chain&gt; seqResList){</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">                List&lt;Chain&gt; atomList   = s.getModel(0);</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">                for (Chain seqRes: seqResList){</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">                                Chain atomRes = getMatchingAtomRes(seqRes,atomList,false);</a>
+<span class="sourceLineNo">142</span><a id="line.142">                                if ( atomRes == null)</a>
+<span class="sourceLineNo">143</span><a id="line.143">                                        continue;</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">                                mapSeqresRecords(atomRes,seqRes);</a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">                }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">        }</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">        /**</a>
+<span class="sourceLineNo">153</span><a id="line.153">         * Map the seqRes groups to the atomRes chain.</a>
+<span class="sourceLineNo">154</span><a id="line.154">         * Updates the atomRes chain object with the mapped data</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * The seqRes chain should not be needed after this and atomRes should be further used.</a>
+<span class="sourceLineNo">156</span><a id="line.156">         *</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * @param atomRes the chain containing ATOM groups (in atomGroups slot). This chain</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * is modified to contain in its seqresGroups slot the mapped atom groups</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * @param seqRes the chain containing SEQRES groups (in atomGroups slot). This chain</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * is not modified</a>
+<span class="sourceLineNo">161</span><a id="line.161">         */</a>
+<span class="sourceLineNo">162</span><a id="line.162">        public void mapSeqresRecords(Chain atomRes, Chain seqRes) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">                List&lt;Group&gt; seqResGroups = seqRes.getAtomGroups();</a>
+<span class="sourceLineNo">164</span><a id="line.164">                List&lt;Group&gt; atmResGroups = atomRes.getAtomGroups();</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                logger.debug("Comparing ATOM {} ({} groups) to SEQRES {} ({} groups) ",</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                atomRes.getId(), atmResGroups.size(), seqRes.getId(), seqResGroups.size());</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">                List&lt;Group&gt; matchedGroups = trySimpleMatch(seqResGroups, atmResGroups);</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                if ( matchedGroups != null) {</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        // update the new SEQRES list</a>
+<span class="sourceLineNo">176</span><a id="line.176">                        atomRes.setSeqResGroups(matchedGroups);</a>
+<span class="sourceLineNo">177</span><a id="line.177">                        return;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                }</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">                logger.debug("Could not map SEQRES to ATOM records easily, need to align...");</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">                int numAminosSeqres = seqRes.getAtomGroups(GroupType.AMINOACID).size();</a>
+<span class="sourceLineNo">183</span><a id="line.183">                int numNucleotidesSeqres = seqRes.getAtomGroups(GroupType.NUCLEOTIDE).size();</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">                if ( numAminosSeqres &lt; 1) {</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">                        if ( numNucleotidesSeqres &gt; 1) {</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">                                logger.debug("SEQRES chain {} is a nucleotide chain ({} nucleotides), aligning nucleotides...", seqRes.getId(), numNucleotidesSeqres);</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                                alignNucleotideChains(seqRes,atomRes);</a>
+<span class="sourceLineNo">192</span><a id="line.192">                                return;</a>
+<span class="sourceLineNo">193</span><a id="line.193">                        } else {</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">                                logger.debug("SEQRES chain {} contains {} amino acids and {} nucleotides, ignoring...", seqRes.getId(),numAminosSeqres,numNucleotidesSeqres);</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                                return;</a>
+<span class="sourceLineNo">198</span><a id="line.198">                        }</a>
+<span class="sourceLineNo">199</span><a id="line.199">                }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">                if ( atomRes.getAtomGroups(GroupType.AMINOACID).size() &lt; 1) {</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        logger.debug("ATOM chain {} does not contain amino acids, ignoring...", atomRes.getId());</a>
+<span class="sourceLineNo">203</span><a id="line.203">                        return;</a>
+<span class="sourceLineNo">204</span><a id="line.204">                }</a>
+<span class="sourceLineNo">205</span><a id="line.205"></a>
+<span class="sourceLineNo">206</span><a id="line.206">                logger.debug("Proceeding to do protein alignment for chain {}", atomRes.getId() );</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">                boolean noMatchFound = alignProteinChains(seqResGroups,atomRes.getAtomGroups());</a>
+<span class="sourceLineNo">210</span><a id="line.210">                if ( ! noMatchFound){</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        atomRes.setSeqResGroups(seqResGroups);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                }</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">        }</a>
+<span class="sourceLineNo">215</span><a id="line.215"></a>
+<span class="sourceLineNo">216</span><a id="line.216">        private void alignNucleotideChains(Chain seqRes, Chain atomRes) {</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">                if ( atomRes.getAtomGroups(GroupType.NUCLEOTIDE).size() &lt; 1) {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                        logger.debug("ATOM chain {} does not contain nucleotides, ignoring...", atomRes.getId());</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">                        return;</a>
+<span class="sourceLineNo">222</span><a id="line.222">                }</a>
+<span class="sourceLineNo">223</span><a id="line.223">                logger.debug("Alignment for chain {}", atomRes.getId() );</a>
+<span class="sourceLineNo">224</span><a id="line.224"></a>
+<span class="sourceLineNo">225</span><a id="line.225">                List&lt;Group&gt; seqResGroups = seqRes.getAtomGroups();</a>
+<span class="sourceLineNo">226</span><a id="line.226">                boolean noMatchFound = alignNucleotideGroups(seqResGroups,atomRes.getAtomGroups());</a>
+<span class="sourceLineNo">227</span><a id="line.227">                if ( ! noMatchFound){</a>
+<span class="sourceLineNo">228</span><a id="line.228">                        atomRes.setSeqResGroups(seqResGroups);</a>
+<span class="sourceLineNo">229</span><a id="line.229">                }</a>
+<span class="sourceLineNo">230</span><a id="line.230"></a>
+<span class="sourceLineNo">231</span><a id="line.231">        }</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233">        /**</a>
+<span class="sourceLineNo">234</span><a id="line.234">         * A simple matching approach that tries to do a 1:1 mapping between SEQRES and ATOM records</a>
+<span class="sourceLineNo">235</span><a id="line.235">         *</a>
+<span class="sourceLineNo">236</span><a id="line.236">         * @param seqResGroups list of seqREs groups</a>
+<span class="sourceLineNo">237</span><a id="line.237">         * @param atmResGroups list of atmRes Groups</a>
+<span class="sourceLineNo">238</span><a id="line.238">         * @return the matching or null if the matching didn't work</a>
+<span class="sourceLineNo">239</span><a id="line.239">         */</a>
+<span class="sourceLineNo">240</span><a id="line.240">        private List&lt;Group&gt; trySimpleMatch(List&lt;Group&gt; seqResGroups,List&lt;Group&gt; atmResGroups) {</a>
+<span class="sourceLineNo">241</span><a id="line.241">                // by default first ATOM position is 1</a>
+<span class="sourceLineNo">242</span><a id="line.242">                //</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">                @SuppressWarnings("unchecked")</a>
+<span class="sourceLineNo">245</span><a id="line.245">                List&lt;Group&gt; newSeqResGroups = (ArrayList&lt;Group&gt;)((ArrayList&lt;Group&gt;)seqResGroups).clone();</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                boolean startAt1 = true;</a>
+<span class="sourceLineNo">248</span><a id="line.248"></a>
+<span class="sourceLineNo">249</span><a id="line.249">                for ( int atomResPos = 0 ; atomResPos &lt; atmResGroups.size() ; atomResPos++){</a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">                        // let's try to match this case</a>
+<span class="sourceLineNo">252</span><a id="line.252">                        Group atomResGroup = atmResGroups.get(atomResPos);</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254">                        // let's ignore waters</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        if ( atomResGroup.isWater()){</a>
+<span class="sourceLineNo">256</span><a id="line.256">                                continue;</a>
+<span class="sourceLineNo">257</span><a id="line.257">                        }</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">                        ResidueNumber atomResNum = atomResGroup.getResidueNumber();</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">                        int seqResPos = atomResNum.getSeqNum();</a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263"></a>
+<span class="sourceLineNo">264</span><a id="line.264"></a>
+<span class="sourceLineNo">265</span><a id="line.265">                        if ( seqResPos &lt; 0) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                logger.debug("ATOM residue number &lt; 0 : {}", seqResPos);</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                return null;</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        }</a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">                        if ( seqResPos == 0){</a>
+<span class="sourceLineNo">271</span><a id="line.271">                                // make sure the first SEQRES is matching.</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                Group seqResGroup = seqResGroups.get(0);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                                if (  seqResGroup.getPDBName().equals(atomResGroup.getPDBName())){</a>
+<span class="sourceLineNo">274</span><a id="line.274">                                        // they match! seems in this case the numbering starts with 0...</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                        startAt1 = false;</a>
+<span class="sourceLineNo">276</span><a id="line.276">                                } else {</a>
+<span class="sourceLineNo">277</span><a id="line.277"></a>
+<span class="sourceLineNo">278</span><a id="line.278">                                        logger.debug("SEQRES position 1 ({}) does not match ATOM PDB res num 0 ({})",</a>
+<span class="sourceLineNo">279</span><a id="line.279">                                                        seqResGroup.getPDBName(), atomResGroup.getPDBName());</a>
+<span class="sourceLineNo">280</span><a id="line.280"></a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">                                        return null;</a>
+<span class="sourceLineNo">283</span><a id="line.283"></a>
+<span class="sourceLineNo">284</span><a id="line.284">                                }</a>
+<span class="sourceLineNo">285</span><a id="line.285">                        }</a>
+<span class="sourceLineNo">286</span><a id="line.286"></a>
+<span class="sourceLineNo">287</span><a id="line.287"></a>
+<span class="sourceLineNo">288</span><a id="line.288">                        if ( startAt1 )</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                seqResPos--;</a>
+<span class="sourceLineNo">290</span><a id="line.290"></a>
+<span class="sourceLineNo">291</span><a id="line.291">                        // another check that would require the alignment approach</a>
+<span class="sourceLineNo">292</span><a id="line.292">                        if ( startAt1 &amp;&amp; seqResPos &gt;=  seqResGroups.size()  )</a>
+<span class="sourceLineNo">293</span><a id="line.293">                        {</a>
+<span class="sourceLineNo">294</span><a id="line.294"></a>
+<span class="sourceLineNo">295</span><a id="line.295">                                // could be a HETATOM...</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                if ( atomResGroup instanceof AminoAcid) {</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                        logger.debug(" ATOM residue nr: " + seqResPos + " &gt; seqres! " + seqResGroups.size() + " " + atomResGroup);</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                        return null;</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                } else if ( atomResGroup instanceof NucleotideImpl) {</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                        logger.debug(" NUCLEOTIDE residue nr: " + seqResPos + " &gt; seqres! " + seqResGroups.size() + " " + atomResGroup);</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                        return null;</a>
+<span class="sourceLineNo">302</span><a id="line.302">                                } else {</a>
+<span class="sourceLineNo">303</span><a id="line.303">                                        // we won't map HETATOM groups...</a>
+<span class="sourceLineNo">304</span><a id="line.304">                                        continue;</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                }</a>
+<span class="sourceLineNo">306</span><a id="line.306">                        }</a>
+<span class="sourceLineNo">307</span><a id="line.307"></a>
+<span class="sourceLineNo">308</span><a id="line.308"></a>
+<span class="sourceLineNo">309</span><a id="line.309">                        //                      if ( seqResPos &lt; 0){</a>
+<span class="sourceLineNo">310</span><a id="line.310">                        //</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        //                              System.err.println("What is going on??? " + atomRes.getChainID() + " " + atomResGroup);</a>
+<span class="sourceLineNo">312</span><a id="line.312">                        //                      }</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">                        if ( seqResPos &gt;= seqResGroups.size()){</a>
+<span class="sourceLineNo">315</span><a id="line.315">                                logger.debug("seqres groups don't match atom indices " + seqResPos);</a>
+<span class="sourceLineNo">316</span><a id="line.316">                                if ( atomResGroup instanceof AminoAcid )</a>
+<span class="sourceLineNo">317</span><a id="line.317">                                        return null;</a>
+<span class="sourceLineNo">318</span><a id="line.318">                                else</a>
+<span class="sourceLineNo">319</span><a id="line.319">                                        continue;</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        }</a>
+<span class="sourceLineNo">321</span><a id="line.321"></a>
+<span class="sourceLineNo">322</span><a id="line.322">                        Group seqResGroup = seqResGroups.get(seqResPos );</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">                        if ( ! seqResGroup.getPDBName().trim().equals(atomResGroup.getPDBName().trim())){</a>
+<span class="sourceLineNo">325</span><a id="line.325">                                // a mismatch! something is wrong in the mapping and we need to do an alignment</a>
+<span class="sourceLineNo">326</span><a id="line.326">                                logger.debug("Mismatch of SEQRES pos " + seqResPos + " and ATOM record: " + atomResGroup + " | " + seqResGroup);</a>
+<span class="sourceLineNo">327</span><a id="line.327">                                return null;</a>
+<span class="sourceLineNo">328</span><a id="line.328">                        }</a>
+<span class="sourceLineNo">329</span><a id="line.329"></a>
+<span class="sourceLineNo">330</span><a id="line.330">                        // the two groups are identical and we can merge them</a>
+<span class="sourceLineNo">331</span><a id="line.331">                        // replace the SEQRES group with the ATOM group...</a>
+<span class="sourceLineNo">332</span><a id="line.332"></a>
+<span class="sourceLineNo">333</span><a id="line.333">                        Group replacedGroup = newSeqResGroups.set(seqResPos, atomResGroup);</a>
+<span class="sourceLineNo">334</span><a id="line.334">                        logger.debug("Merging index {}: replaced seqres group {} ({}) with atom group {} ({})",</a>
+<span class="sourceLineNo">335</span><a id="line.335">                                        seqResPos,</a>
+<span class="sourceLineNo">336</span><a id="line.336">                                        replacedGroup.getResidueNumber(), replacedGroup.getPDBName(),</a>
+<span class="sourceLineNo">337</span><a id="line.337">                                        atomResGroup.getResidueNumber(), atomResGroup.getPDBName());</a>
+<span class="sourceLineNo">338</span><a id="line.338"></a>
+<span class="sourceLineNo">339</span><a id="line.339">                }</a>
+<span class="sourceLineNo">340</span><a id="line.340"></a>
+<span class="sourceLineNo">341</span><a id="line.341">                // all went ok. copy over the updated list to the original one.</a>
+<span class="sourceLineNo">342</span><a id="line.342">                // note: if something went wrong, we did not modifiy the original list.</a>
+<span class="sourceLineNo">343</span><a id="line.343">                //seqResGroups = newSeqResGroups;</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345"></a>
+<span class="sourceLineNo">346</span><a id="line.346">                //                      int pos = -1;</a>
+<span class="sourceLineNo">347</span><a id="line.347">                //                      for (Group g: seqResGroups){</a>
+<span class="sourceLineNo">348</span><a id="line.348">                //                              pos++;</a>
+<span class="sourceLineNo">349</span><a id="line.349">                //                              logger.debug(pos + " " + g);</a>
+<span class="sourceLineNo">350</span><a id="line.350">                //                      }</a>
+<span class="sourceLineNo">351</span><a id="line.351"></a>
+<span class="sourceLineNo">352</span><a id="line.352">                //System.out.println("I:" + seqResGroups);</a>
+<span class="sourceLineNo">353</span><a id="line.353">                // all atom records could get matched correctly!</a>
+<span class="sourceLineNo">354</span><a id="line.354">                return newSeqResGroups;</a>
+<span class="sourceLineNo">355</span><a id="line.355"></a>
+<span class="sourceLineNo">356</span><a id="line.356">        }</a>
+<span class="sourceLineNo">357</span><a id="line.357"></a>
+<span class="sourceLineNo">358</span><a id="line.358">        /**</a>
+<span class="sourceLineNo">359</span><a id="line.359">         * Returns the full sequence of the Atom records of a parent</a>
+<span class="sourceLineNo">360</span><a id="line.360">         * with X instead of HETATMSs. The advantage of this is</a>
+<span class="sourceLineNo">361</span><a id="line.361">         * that it allows us to also align HETATM groups back to the SEQRES.</a>
+<span class="sourceLineNo">362</span><a id="line.362">         * @param groups the list of groups in a parent</a>
+<span class="sourceLineNo">363</span><a id="line.363">         * @param positionIndex a Map to keep track of which group is at which sequence position</a>
+<span class="sourceLineNo">364</span><a id="line.364">         * @param isNucleotideChain whether the atom groups are predominantly nucleotides (the groups represent a nucleotide chain), if true</a>
+<span class="sourceLineNo">365</span><a id="line.365">         * non-standard nucleotides will be represented with ambiguous letter 'N' instead of 'X', if false all non-standard residues will be 'X'</a>
+<span class="sourceLineNo">366</span><a id="line.366">         * @return string representations</a>
+<span class="sourceLineNo">367</span><a id="line.367">         */</a>
+<span class="sourceLineNo">368</span><a id="line.368">        public static String getFullAtomSequence(List&lt;Group&gt; groups, Map&lt;Integer, Integer&gt; positionIndex, boolean isNucleotideChain){</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">                StringBuffer sequence = new StringBuffer() ;</a>
+<span class="sourceLineNo">371</span><a id="line.371">                int seqIndex = 0; // track sequence.length()</a>
+<span class="sourceLineNo">372</span><a id="line.372">                for ( int i=0 ; i&lt; groups.size(); i++){</a>
+<span class="sourceLineNo">373</span><a id="line.373">                        Group g = groups.get(i);</a>
+<span class="sourceLineNo">374</span><a id="line.374"></a>
+<span class="sourceLineNo">375</span><a id="line.375">                        if ( g instanceof AminoAcid ){</a>
+<span class="sourceLineNo">376</span><a id="line.376">                                AminoAcid a = (AminoAcid)g;</a>
+<span class="sourceLineNo">377</span><a id="line.377">                                char oneLetter =a.getAminoType();</a>
+<span class="sourceLineNo">378</span><a id="line.378">                                if ( oneLetter == '?')</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                        oneLetter = 'X';</a>
+<span class="sourceLineNo">380</span><a id="line.380"></a>
+<span class="sourceLineNo">381</span><a id="line.381">                                positionIndex.put(seqIndex,i);</a>
+<span class="sourceLineNo">382</span><a id="line.382">                                sequence.append(oneLetter );</a>
+<span class="sourceLineNo">383</span><a id="line.383">                                seqIndex++;</a>
+<span class="sourceLineNo">384</span><a id="line.384">                        } else {</a>
+<span class="sourceLineNo">385</span><a id="line.385"></a>
+<span class="sourceLineNo">386</span><a id="line.386">                                // exclude solvents</a>
+<span class="sourceLineNo">387</span><a id="line.387">                                if (  g.isWater())</a>
+<span class="sourceLineNo">388</span><a id="line.388">                                        continue;</a>
+<span class="sourceLineNo">389</span><a id="line.389"></a>
+<span class="sourceLineNo">390</span><a id="line.390">                                // exclude metals</a>
+<span class="sourceLineNo">391</span><a id="line.391">                                if ( g.size() == 1 ) {</a>
+<span class="sourceLineNo">392</span><a id="line.392"></a>
+<span class="sourceLineNo">393</span><a id="line.393">                                        Atom a = g.getAtom(0);</a>
+<span class="sourceLineNo">394</span><a id="line.394">                                        if ( a == null)</a>
+<span class="sourceLineNo">395</span><a id="line.395">                                                continue;</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                        if (a.getElement().isMetal())</a>
+<span class="sourceLineNo">397</span><a id="line.397">                                                continue;</a>
+<span class="sourceLineNo">398</span><a id="line.398"></a>
+<span class="sourceLineNo">399</span><a id="line.399">                                }</a>
+<span class="sourceLineNo">400</span><a id="line.400"></a>
+<span class="sourceLineNo">401</span><a id="line.401">                                ChemComp cc = g.getChemComp();</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                if ( cc == null) {</a>
+<span class="sourceLineNo">403</span><a id="line.403">                                        logger.debug("No chem comp available for group {}",g.toString());</a>
+<span class="sourceLineNo">404</span><a id="line.404">                                        // not sure what to do in that case!</a>
+<span class="sourceLineNo">405</span><a id="line.405">                                        continue;</a>
+<span class="sourceLineNo">406</span><a id="line.406">                                }</a>
+<span class="sourceLineNo">407</span><a id="line.407">                                if (</a>
+<span class="sourceLineNo">408</span><a id="line.408">                                                ResidueType.lPeptideLinking.equals(cc.getResidueType()) ||</a>
+<span class="sourceLineNo">409</span><a id="line.409">                                                PolymerType.PROTEIN_ONLY.contains(cc.getPolymerType())  ||</a>
+<span class="sourceLineNo">410</span><a id="line.410">                                                PolymerType.POLYNUCLEOTIDE_ONLY.contains(cc.getPolymerType())</a>
+<span class="sourceLineNo">411</span><a id="line.411">                                                ) {</a>
+<span class="sourceLineNo">412</span><a id="line.412">                                        //System.out.println(cc.getOne_letter_code());</a>
+<span class="sourceLineNo">413</span><a id="line.413">                                        String c = cc.getOne_letter_code();</a>
+<span class="sourceLineNo">414</span><a id="line.414">                                        if ( c.equals("?")) {</a>
+<span class="sourceLineNo">415</span><a id="line.415">                                                if (isNucleotideChain &amp;&amp; PolymerType.POLYNUCLEOTIDE_ONLY.contains(cc.getPolymerType())) {</a>
+<span class="sourceLineNo">416</span><a id="line.416">                                                        // the way to represent unknown nucleotides is with 'N', see https://en.wikipedia.org/wiki/Nucleic_acid_notation</a>
+<span class="sourceLineNo">417</span><a id="line.417">                                                        c = "N";</a>
+<span class="sourceLineNo">418</span><a id="line.418">                                                } else {</a>
+<span class="sourceLineNo">419</span><a id="line.419">                                                        c = "X";</a>
+<span class="sourceLineNo">420</span><a id="line.420">                                                }</a>
+<span class="sourceLineNo">421</span><a id="line.421">                                        }</a>
+<span class="sourceLineNo">422</span><a id="line.422"></a>
+<span class="sourceLineNo">423</span><a id="line.423">                                        // For some unusual cases the het residue can map to 2 or more standard aas and thus give an</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                        // insertion of length &gt;1.</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                        //      e.g. 1: SUI maps to DG  (in 1oew,A)</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                        //              e.g. 2: NRQ maps to MYG (in 3cfh,A)</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                        if (c.length()&gt;1) {</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                                logger.info("Group '{}' maps to more than 1 standard aminoacid: {}.",</a>
+<span class="sourceLineNo">429</span><a id="line.429">                                                                g.toString(), c);</a>
+<span class="sourceLineNo">430</span><a id="line.430">                                        }</a>
+<span class="sourceLineNo">431</span><a id="line.431">                                        // because of the mapping to more than 1 aminoacid, we have</a>
+<span class="sourceLineNo">432</span><a id="line.432">                                        // to loop through it (99% of cases c will have length 1 anyway)</a>
+<span class="sourceLineNo">433</span><a id="line.433">                                        for (int cIdx=0;cIdx&lt;c.length();cIdx++) {</a>
+<span class="sourceLineNo">434</span><a id="line.434">                                                positionIndex.put(seqIndex,i);</a>
+<span class="sourceLineNo">435</span><a id="line.435">                                                sequence.append(c.charAt(cIdx));</a>
+<span class="sourceLineNo">436</span><a id="line.436">                                                seqIndex++;</a>
+<span class="sourceLineNo">437</span><a id="line.437">                                        }</a>
+<span class="sourceLineNo">438</span><a id="line.438">                                } else {</a>
+<span class="sourceLineNo">439</span><a id="line.439">                                        logger.debug("Group {} is not lPeptideLinked, nor PROTEIN_ONLY, nor POLYNUCLEOTIDE_ONLY",g.toString());</a>
+<span class="sourceLineNo">440</span><a id="line.440">                                        continue;</a>
+<span class="sourceLineNo">441</span><a id="line.441">                                }</a>
+<span class="sourceLineNo">442</span><a id="line.442"></a>
+<span class="sourceLineNo">443</span><a id="line.443"></a>
+<span class="sourceLineNo">444</span><a id="line.444">                                //sequence.append("X");</a>
+<span class="sourceLineNo">445</span><a id="line.445">                        }</a>
+<span class="sourceLineNo">446</span><a id="line.446"></a>
+<span class="sourceLineNo">447</span><a id="line.447">                }</a>
+<span class="sourceLineNo">448</span><a id="line.448"></a>
+<span class="sourceLineNo">449</span><a id="line.449">                return sequence.toString();</a>
+<span class="sourceLineNo">450</span><a id="line.450"></a>
+<span class="sourceLineNo">451</span><a id="line.451">        }</a>
+<span class="sourceLineNo">452</span><a id="line.452"></a>
+<span class="sourceLineNo">453</span><a id="line.453"></a>
+<span class="sourceLineNo">454</span><a id="line.454">        private boolean alignNucleotideGroups(List&lt;Group&gt; seqRes, List&lt;Group&gt; atomRes) {</a>
+<span class="sourceLineNo">455</span><a id="line.455"></a>
+<span class="sourceLineNo">456</span><a id="line.456">                Map&lt;Integer,Integer&gt; seqresIndexPosition = new HashMap&lt;Integer, Integer&gt;();</a>
+<span class="sourceLineNo">457</span><a id="line.457">                Map&lt;Integer,Integer&gt; atomIndexPosition   = new HashMap&lt;Integer, Integer&gt;();</a>
+<span class="sourceLineNo">458</span><a id="line.458"></a>
+<span class="sourceLineNo">459</span><a id="line.459">                String seq1 = getFullAtomSequence(seqRes, seqresIndexPosition, true);</a>
+<span class="sourceLineNo">460</span><a id="line.460">                //</a>
+<span class="sourceLineNo">461</span><a id="line.461">                String seq2 = getFullAtomSequence(atomRes, atomIndexPosition, true);</a>
+<span class="sourceLineNo">462</span><a id="line.462"></a>
+<span class="sourceLineNo">463</span><a id="line.463">                if (seq1.isEmpty() || seq2.isEmpty()) {</a>
+<span class="sourceLineNo">464</span><a id="line.464">                        logger.warn("Could not align nucleotide sequences, at least one of them is empty");</a>
+<span class="sourceLineNo">465</span><a id="line.465">                        return true;</a>
+<span class="sourceLineNo">466</span><a id="line.466">                }</a>
+<span class="sourceLineNo">467</span><a id="line.467"></a>
+<span class="sourceLineNo">468</span><a id="line.468">                logger.debug("align seq1 ("+ seq1.length()+") " + seq1);</a>
+<span class="sourceLineNo">469</span><a id="line.469">                logger.debug("align seq2 ("+ seq2.length()+") " + seq2);</a>
+<span class="sourceLineNo">470</span><a id="line.470"></a>
+<span class="sourceLineNo">471</span><a id="line.471">                Sequence&lt;NucleotideCompound&gt; s1 = getNucleotideSequence(seq1);</a>
+<span class="sourceLineNo">472</span><a id="line.472">                Sequence&lt;NucleotideCompound&gt; s2 = getNucleotideSequence(seq2);</a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474">                if (s1==null || s2==null) return true;</a>
+<span class="sourceLineNo">475</span><a id="line.475"></a>
+<span class="sourceLineNo">476</span><a id="line.476">                if ( ! s1.getCompoundSet().equals(s2.getCompoundSet()) ) {</a>
+<span class="sourceLineNo">477</span><a id="line.477">                        // e.g. trying to align a DNA and an RNA sequence...</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        // test PDB ID: 1A34</a>
+<span class="sourceLineNo">479</span><a id="line.479">                        // try to make both RNA sequence...</a>
+<span class="sourceLineNo">480</span><a id="line.480">                        if ( ! s1.getCompoundSet().equals(AmbiguityRNACompoundSet.getRNACompoundSet())) {</a>
+<span class="sourceLineNo">481</span><a id="line.481">                                try {</a>
+<span class="sourceLineNo">482</span><a id="line.482">                                        s1 = new RNASequence(seq1,AmbiguityRNACompoundSet.getRNACompoundSet());</a>
+<span class="sourceLineNo">483</span><a id="line.483">                                } catch (CompoundNotFoundException ex) {</a>
+<span class="sourceLineNo">484</span><a id="line.484">                                        logger.warn("Could not align DNA and RNA compound sets: " + seq1);</a>
+<span class="sourceLineNo">485</span><a id="line.485">                                        return true;</a>
+<span class="sourceLineNo">486</span><a id="line.486">                                }</a>
+<span class="sourceLineNo">487</span><a id="line.487">                        }</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">                        if( ! s2.getCompoundSet().equals(AmbiguityRNACompoundSet.getRNACompoundSet())) {</a>
+<span class="sourceLineNo">490</span><a id="line.490">                                try {</a>
+<span class="sourceLineNo">491</span><a id="line.491">                                        s2 = new RNASequence(seq2,AmbiguityRNACompoundSet.getRNACompoundSet());</a>
+<span class="sourceLineNo">492</span><a id="line.492">                                } catch (CompoundNotFoundException ex) {</a>
+<span class="sourceLineNo">493</span><a id="line.493">                                        logger.warn("Could not align DNA and RNA compound sets: " + seq2);</a>
+<span class="sourceLineNo">494</span><a id="line.494">                                        return true;</a>
+<span class="sourceLineNo">495</span><a id="line.495">                                }</a>
+<span class="sourceLineNo">496</span><a id="line.496">                        }</a>
+<span class="sourceLineNo">497</span><a id="line.497">                }</a>
+<span class="sourceLineNo">498</span><a id="line.498"></a>
+<span class="sourceLineNo">499</span><a id="line.499"></a>
+<span class="sourceLineNo">500</span><a id="line.500">                SubstitutionMatrix&lt;NucleotideCompound&gt; matrix = SubstitutionMatrixHelper.getNuc4_4();</a>
+<span class="sourceLineNo">501</span><a id="line.501"></a>
+<span class="sourceLineNo">502</span><a id="line.502">                GapPenalty penalty = new SimpleGapPenalty(8,1);</a>
+<span class="sourceLineNo">503</span><a id="line.503"></a>
+<span class="sourceLineNo">504</span><a id="line.504">                PairwiseSequenceAligner&lt;Sequence&lt;NucleotideCompound&gt;, NucleotideCompound&gt; smithWaterman =</a>
+<span class="sourceLineNo">505</span><a id="line.505">                                Alignments.getPairwiseAligner(s1, s2, PairwiseSequenceAlignerType.LOCAL, penalty, matrix);</a>
+<span class="sourceLineNo">506</span><a id="line.506"></a>
+<span class="sourceLineNo">507</span><a id="line.507"></a>
+<span class="sourceLineNo">508</span><a id="line.508"></a>
+<span class="sourceLineNo">509</span><a id="line.509">                SequencePair&lt;Sequence&lt;NucleotideCompound&gt;, NucleotideCompound&gt; pair = smithWaterman.getPair();</a>
+<span class="sourceLineNo">510</span><a id="line.510"></a>
+<span class="sourceLineNo">511</span><a id="line.511"></a>
+<span class="sourceLineNo">512</span><a id="line.512"></a>
+<span class="sourceLineNo">513</span><a id="line.513">                if ( pair == null) {</a>
+<span class="sourceLineNo">514</span><a id="line.514">                        logger.warn("Could not align nucleotide sequences. ATOM and SEQRES groups will not be aligned.");</a>
+<span class="sourceLineNo">515</span><a id="line.515">                        logger.warn("Sequences: ");</a>
+<span class="sourceLineNo">516</span><a id="line.516">                        logger.warn(seq1);</a>
+<span class="sourceLineNo">517</span><a id="line.517">                        logger.warn(seq2);</a>
+<span class="sourceLineNo">518</span><a id="line.518">                        return true;</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                }</a>
+<span class="sourceLineNo">521</span><a id="line.521"></a>
+<span class="sourceLineNo">522</span><a id="line.522"></a>
+<span class="sourceLineNo">523</span><a id="line.523"></a>
+<span class="sourceLineNo">524</span><a id="line.524">                logger.debug("Alignment:\n"+pair.toString(100));</a>
+<span class="sourceLineNo">525</span><a id="line.525"></a>
+<span class="sourceLineNo">526</span><a id="line.526"></a>
+<span class="sourceLineNo">527</span><a id="line.527">                boolean noMatchFound = mapDNAChains(seqRes,atomRes,pair,seqresIndexPosition, atomIndexPosition );</a>
+<span class="sourceLineNo">528</span><a id="line.528"></a>
+<span class="sourceLineNo">529</span><a id="line.529">                return noMatchFound;</a>
+<span class="sourceLineNo">530</span><a id="line.530"></a>
+<span class="sourceLineNo">531</span><a id="line.531">        }</a>
+<span class="sourceLineNo">532</span><a id="line.532"></a>
+<span class="sourceLineNo">533</span><a id="line.533">        private Sequence&lt;NucleotideCompound&gt; getNucleotideSequence(String seq) {</a>
+<span class="sourceLineNo">534</span><a id="line.534">                Sequence&lt;NucleotideCompound&gt; s = null;</a>
+<span class="sourceLineNo">535</span><a id="line.535"></a>
+<span class="sourceLineNo">536</span><a id="line.536">                // first we try DNA, then RNA, them hybrid</a>
+<span class="sourceLineNo">537</span><a id="line.537"></a>
+<span class="sourceLineNo">538</span><a id="line.538">                try {</a>
+<span class="sourceLineNo">539</span><a id="line.539"></a>
+<span class="sourceLineNo">540</span><a id="line.540">                        s = new DNASequence(seq, AmbiguityDNACompoundSet.getDNACompoundSet());</a>
+<span class="sourceLineNo">541</span><a id="line.541">                } catch (CompoundNotFoundException e){</a>
+<span class="sourceLineNo">542</span><a id="line.542"></a>
+<span class="sourceLineNo">543</span><a id="line.543">                        try {</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                s= new RNASequence(seq, AmbiguityRNACompoundSet.getRNACompoundSet());</a>
+<span class="sourceLineNo">545</span><a id="line.545">                        } catch (CompoundNotFoundException ex) {</a>
+<span class="sourceLineNo">546</span><a id="line.546"></a>
+<span class="sourceLineNo">547</span><a id="line.547">                                try {</a>
+<span class="sourceLineNo">548</span><a id="line.548">                                        // it could still be a hybrid, e.g. 3hoz, chain T, what to do in that case?</a>
+<span class="sourceLineNo">549</span><a id="line.549">                                        s = new DNASequence(seq, AmbiguityDNARNAHybridCompoundSet.getDNARNAHybridCompoundSet());</a>
+<span class="sourceLineNo">550</span><a id="line.550">                                        logger.warn("Hybrid RNA/DNA sequence detected for sequence {}", seq);</a>
+<span class="sourceLineNo">551</span><a id="line.551">                                } catch (CompoundNotFoundException exc) {</a>
+<span class="sourceLineNo">552</span><a id="line.552">                                        // not DNA, nor RNA, nor hybrid</a>
+<span class="sourceLineNo">553</span><a id="line.553">                                        logger.warn("Could not determine compound set (neither DNA, RNA nor hybrid) for nucleotide sequence " + seq);</a>
+<span class="sourceLineNo">554</span><a id="line.554">                                        return null;</a>
+<span class="sourceLineNo">555</span><a id="line.555">                                }</a>
+<span class="sourceLineNo">556</span><a id="line.556"></a>
+<span class="sourceLineNo">557</span><a id="line.557">                        }</a>
+<span class="sourceLineNo">558</span><a id="line.558">                }</a>
+<span class="sourceLineNo">559</span><a id="line.559">                return s;</a>
+<span class="sourceLineNo">560</span><a id="line.560">        }</a>
+<span class="sourceLineNo">561</span><a id="line.561"></a>
+<span class="sourceLineNo">562</span><a id="line.562"></a>
+<span class="sourceLineNo">563</span><a id="line.563">        /**</a>
+<span class="sourceLineNo">564</span><a id="line.564">         * Aligns two chains of groups, where the first parent is representing the</a>
+<span class="sourceLineNo">565</span><a id="line.565">         * list of amino acids as obtained from the SEQRES records, and the second parent</a>
+<span class="sourceLineNo">566</span><a id="line.566">         * represents the groups obtained from the ATOM records (and containing the actual ATOM information).</a>
+<span class="sourceLineNo">567</span><a id="line.567">         * This does the actual alignment and if a group can be mapped to a position in the SEQRES then the corresponding</a>
+<span class="sourceLineNo">568</span><a id="line.568">         * position is replaced with the group that contains the atoms.</a>
+<span class="sourceLineNo">569</span><a id="line.569">         *</a>
+<span class="sourceLineNo">570</span><a id="line.570">         * @param seqRes</a>
+<span class="sourceLineNo">571</span><a id="line.571">         * @param atomRes</a>
+<span class="sourceLineNo">572</span><a id="line.572">         * @return true if no match has been found</a>
+<span class="sourceLineNo">573</span><a id="line.573">         */</a>
+<span class="sourceLineNo">574</span><a id="line.574">        private boolean alignProteinChains(List&lt;Group&gt; seqRes, List&lt;Group&gt; atomRes) {</a>
+<span class="sourceLineNo">575</span><a id="line.575"></a>
+<span class="sourceLineNo">576</span><a id="line.576">                Map&lt;Integer,Integer&gt; seqresIndexPosition = new HashMap&lt;Integer, Integer&gt;();</a>
+<span class="sourceLineNo">577</span><a id="line.577">                Map&lt;Integer,Integer&gt; atomIndexPosition   = new HashMap&lt;Integer, Integer&gt;();</a>
+<span class="sourceLineNo">578</span><a id="line.578"></a>
+<span class="sourceLineNo">579</span><a id="line.579">                String seq1 = getFullAtomSequence(seqRes, seqresIndexPosition, false);</a>
+<span class="sourceLineNo">580</span><a id="line.580">                //</a>
+<span class="sourceLineNo">581</span><a id="line.581">                String seq2 = getFullAtomSequence(atomRes, atomIndexPosition, false);</a>
+<span class="sourceLineNo">582</span><a id="line.582"></a>
+<span class="sourceLineNo">583</span><a id="line.583"></a>
+<span class="sourceLineNo">584</span><a id="line.584">                logger.debug("Protein seq1 to align (length "+ seq1.length()+"): " + seq1);</a>
+<span class="sourceLineNo">585</span><a id="line.585">                logger.debug("Protein seq2 to align (length "+ seq2.length()+"): " + seq2);</a>
+<span class="sourceLineNo">586</span><a id="line.586"></a>
+<span class="sourceLineNo">587</span><a id="line.587">                ProteinSequence s1;</a>
+<span class="sourceLineNo">588</span><a id="line.588">                ProteinSequence s2;</a>
+<span class="sourceLineNo">589</span><a id="line.589">                try {</a>
+<span class="sourceLineNo">590</span><a id="line.590">                        s1 = new ProteinSequence(seq1);</a>
+<span class="sourceLineNo">591</span><a id="line.591">                        s2 = new ProteinSequence(seq2);</a>
+<span class="sourceLineNo">592</span><a id="line.592">                } catch (CompoundNotFoundException e) {</a>
+<span class="sourceLineNo">593</span><a id="line.593">                        logger.warn("Could not create protein sequences ({}) to align ATOM and SEQRES groups, they will remain unaligned.", e.getMessage());</a>
+<span class="sourceLineNo">594</span><a id="line.594">                        return true;</a>
+<span class="sourceLineNo">595</span><a id="line.595">                }</a>
+<span class="sourceLineNo">596</span><a id="line.596"></a>
+<span class="sourceLineNo">597</span><a id="line.597"></a>
+<span class="sourceLineNo">598</span><a id="line.598">                SubstitutionMatrix&lt;AminoAcidCompound&gt; matrix = SubstitutionMatrixHelper.getBlosum65();</a>
+<span class="sourceLineNo">599</span><a id="line.599"></a>
+<span class="sourceLineNo">600</span><a id="line.600">                GapPenalty penalty = new SimpleGapPenalty(8, 1);</a>
+<span class="sourceLineNo">601</span><a id="line.601"></a>
+<span class="sourceLineNo">602</span><a id="line.602"></a>
+<span class="sourceLineNo">603</span><a id="line.603">                PairwiseSequenceAligner&lt;ProteinSequence, AminoAcidCompound&gt; smithWaterman =</a>
+<span class="sourceLineNo">604</span><a id="line.604">                                Alignments.getPairwiseAligner(s1, s2, PairwiseSequenceAlignerType.LOCAL, penalty, matrix);</a>
+<span class="sourceLineNo">605</span><a id="line.605"></a>
+<span class="sourceLineNo">606</span><a id="line.606">                SequencePair&lt;ProteinSequence, AminoAcidCompound&gt; pair = smithWaterman.getPair();</a>
+<span class="sourceLineNo">607</span><a id="line.607"></a>
+<span class="sourceLineNo">608</span><a id="line.608"></a>
+<span class="sourceLineNo">609</span><a id="line.609">                // sequences that are only X (e.g. 1jnv chain A) produced empty alignments, because nothing aligns to nothing and thus the local alignment is empty</a>
+<span class="sourceLineNo">610</span><a id="line.610">                // to avoid those empty alignments we catch them here with pair.getLength()==0</a>
+<span class="sourceLineNo">611</span><a id="line.611">                if ( pair == null || pair.getLength()==0) {</a>
+<span class="sourceLineNo">612</span><a id="line.612">                        logger.warn("Could not align protein sequences. ATOM and SEQRES groups will not be aligned.");</a>
+<span class="sourceLineNo">613</span><a id="line.613">                        logger.warn("Sequences: ");</a>
+<span class="sourceLineNo">614</span><a id="line.614">                        logger.warn(seq1);</a>
+<span class="sourceLineNo">615</span><a id="line.615">                        logger.warn(seq2);</a>
+<span class="sourceLineNo">616</span><a id="line.616">                        return true;</a>
+<span class="sourceLineNo">617</span><a id="line.617">                }</a>
+<span class="sourceLineNo">618</span><a id="line.618"></a>
+<span class="sourceLineNo">619</span><a id="line.619"></a>
+<span class="sourceLineNo">620</span><a id="line.620">                logger.debug("Alignment:\n"+pair.toString(100));</a>
+<span class="sourceLineNo">621</span><a id="line.621"></a>
+<span class="sourceLineNo">622</span><a id="line.622"></a>
+<span class="sourceLineNo">623</span><a id="line.623">                boolean noMatchFound = mapChains(seqRes,atomRes,pair,seqresIndexPosition, atomIndexPosition );</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+<span class="sourceLineNo">625</span><a id="line.625">                return noMatchFound;</a>
+<span class="sourceLineNo">626</span><a id="line.626"></a>
+<span class="sourceLineNo">627</span><a id="line.627"></a>
+<span class="sourceLineNo">628</span><a id="line.628">        }</a>
+<span class="sourceLineNo">629</span><a id="line.629"></a>
+<span class="sourceLineNo">630</span><a id="line.630"></a>
+<span class="sourceLineNo">631</span><a id="line.631">        private boolean mapChains(List&lt;Group&gt; seqResGroups, List&lt;Group&gt; atomRes,</a>
+<span class="sourceLineNo">632</span><a id="line.632">                        SequencePair&lt;ProteinSequence, AminoAcidCompound&gt; pair,</a>
+<span class="sourceLineNo">633</span><a id="line.633">                        Map&lt;Integer,Integer&gt; seqresIndexPosition,</a>
+<span class="sourceLineNo">634</span><a id="line.634">                        Map&lt;Integer,Integer&gt; atomIndexPosition )   {</a>
+<span class="sourceLineNo">635</span><a id="line.635"></a>
+<span class="sourceLineNo">636</span><a id="line.636"></a>
+<span class="sourceLineNo">637</span><a id="line.637"></a>
+<span class="sourceLineNo">638</span><a id="line.638">                // at the present stage the future seqRes are still stored as Atom groups in the seqRes parent...</a>
+<span class="sourceLineNo">639</span><a id="line.639"></a>
+<span class="sourceLineNo">640</span><a id="line.640"></a>
+<span class="sourceLineNo">641</span><a id="line.641">                int aligLength = pair.getLength();</a>
+<span class="sourceLineNo">642</span><a id="line.642"></a>
+<span class="sourceLineNo">643</span><a id="line.643">                // make sure we actually find an alignment</a>
+<span class="sourceLineNo">644</span><a id="line.644">                boolean noMatchFound = true;</a>
+<span class="sourceLineNo">645</span><a id="line.645"></a>
+<span class="sourceLineNo">646</span><a id="line.646">                Compound gapSymbol =  AminoAcidCompoundSet.getAminoAcidCompoundSet().getCompoundForString("-");</a>
+<span class="sourceLineNo">647</span><a id="line.647"></a>
+<span class="sourceLineNo">648</span><a id="line.648">                mainLoop:</a>
+<span class="sourceLineNo">649</span><a id="line.649">                        for (int i = 1; i &lt;= aligLength ; i++) {</a>
+<span class="sourceLineNo">650</span><a id="line.650"></a>
+<span class="sourceLineNo">651</span><a id="line.651">                                Compound s =  pair.getCompoundAt(1, i);</a>
+<span class="sourceLineNo">652</span><a id="line.652">                                Compound a =  pair.getCompoundAt(2, i);</a>
+<span class="sourceLineNo">653</span><a id="line.653"></a>
+<span class="sourceLineNo">654</span><a id="line.654">                                // alignment is using internal index start at 1...</a>
+<span class="sourceLineNo">655</span><a id="line.655">                                int posSeq  = pair.getIndexInQueryAt(i)  - 1;</a>
+<span class="sourceLineNo">656</span><a id="line.656">                                int posAtom = pair.getIndexInTargetAt(i) - 1;</a>
+<span class="sourceLineNo">657</span><a id="line.657"></a>
+<span class="sourceLineNo">658</span><a id="line.658">                                if (  s.equals(gapSymbol) || a.equals(gapSymbol)){</a>
+<span class="sourceLineNo">659</span><a id="line.659">                                        continue;</a>
+<span class="sourceLineNo">660</span><a id="line.660">                                }</a>
+<span class="sourceLineNo">661</span><a id="line.661"></a>
+<span class="sourceLineNo">662</span><a id="line.662">                                if ( s.equals(a)){</a>
+<span class="sourceLineNo">663</span><a id="line.663"></a>
+<span class="sourceLineNo">664</span><a id="line.664">                                        // the atom record can be aligned to the SeqRes record!</a>
+<span class="sourceLineNo">665</span><a id="line.665">                                        // replace the SeqRes group with the Atom group!</a>
+<span class="sourceLineNo">666</span><a id="line.666"></a>
+<span class="sourceLineNo">667</span><a id="line.667">                                        Group s1 = seqResGroups.get(seqresIndexPosition.get(posSeq));</a>
+<span class="sourceLineNo">668</span><a id="line.668">                                        Group a1 = atomRes.get(atomIndexPosition.get(posAtom));</a>
+<span class="sourceLineNo">669</span><a id="line.669"></a>
+<span class="sourceLineNo">670</span><a id="line.670">                                        if ( s1 == null || a1 == null){</a>
+<span class="sourceLineNo">671</span><a id="line.671">                                                /// can't map this position...</a>
+<span class="sourceLineNo">672</span><a id="line.672">                                                logger.warn("can't map " + i + ":" + s + " " + posSeq +" " + s1 + " atom: " + posAtom + " " + a1 );</a>
+<span class="sourceLineNo">673</span><a id="line.673">                                                continue mainLoop;</a>
+<span class="sourceLineNo">674</span><a id="line.674">                                        }</a>
+<span class="sourceLineNo">675</span><a id="line.675"></a>
+<span class="sourceLineNo">676</span><a id="line.676">                                        // need to trim the names to allow matching e.g in</a>
+<span class="sourceLineNo">677</span><a id="line.677">                                        // pdb1b2m</a>
+<span class="sourceLineNo">678</span><a id="line.678">                                        String pdbNameS = s1.getPDBName();</a>
+<span class="sourceLineNo">679</span><a id="line.679">                                        String pdbNameA = a1.getPDBName();</a>
+<span class="sourceLineNo">680</span><a id="line.680"></a>
+<span class="sourceLineNo">681</span><a id="line.681">                                        if ( pdbNameS == null || pdbNameA == null ){</a>
+<span class="sourceLineNo">682</span><a id="line.682">                                                logger.warn("null value for group.getPDBName found at {} when trying to align {} and {} {}",posSeq, s1, a1, posAtom);</a>
+<span class="sourceLineNo">683</span><a id="line.683">                                                logger.warn("ATOM and SEQRES sequences will not be aligned.");</a>
+<span class="sourceLineNo">684</span><a id="line.684">                                                return true;</a>
+<span class="sourceLineNo">685</span><a id="line.685">                                        }</a>
+<span class="sourceLineNo">686</span><a id="line.686"></a>
+<span class="sourceLineNo">687</span><a id="line.687">                                        if ( ! pdbNameA.trim().equals(pdbNameS.trim())) {</a>
+<span class="sourceLineNo">688</span><a id="line.688"></a>
+<span class="sourceLineNo">689</span><a id="line.689">                                                String msg = "'"+ s1 + "' (position " + posSeq + ") does not align with '" + a1+ "' (position " + posAtom + "), should be: " + s + " : " + a;</a>
+<span class="sourceLineNo">690</span><a id="line.690"></a>
+<span class="sourceLineNo">691</span><a id="line.691">                                                if ( s1.getType().equals(HetatomImpl.type) &amp;&amp; a1.getType().equals(HetatomImpl.type)){</a>
+<span class="sourceLineNo">692</span><a id="line.692">                                                        logger.info(msg + ". They seem to be hetatoms, so ignoring mismatch.");</a>
+<span class="sourceLineNo">693</span><a id="line.693">                                                }</a>
+<span class="sourceLineNo">694</span><a id="line.694">                                                else {</a>
+<span class="sourceLineNo">695</span><a id="line.695">                                                        logger.warn(msg + ". This could be a problem because they aren't both hetatoms");</a>
+<span class="sourceLineNo">696</span><a id="line.696">                                                }</a>
+<span class="sourceLineNo">697</span><a id="line.697"></a>
+<span class="sourceLineNo">698</span><a id="line.698">                                        }</a>
+<span class="sourceLineNo">699</span><a id="line.699"></a>
+<span class="sourceLineNo">700</span><a id="line.700">                                        // do the actual replacing of the SEQRES group with the ATOM group</a>
+<span class="sourceLineNo">701</span><a id="line.701">                                        //                                      if ( s1.getChain().getChainID().equals("A")) {</a>
+<span class="sourceLineNo">702</span><a id="line.702">                                        //                                              System.out.println(" setting " + posSeq +" " + a1);</a>
+<span class="sourceLineNo">703</span><a id="line.703">                                        //                                      }</a>
+<span class="sourceLineNo">704</span><a id="line.704">                                        seqResGroups.set(seqresIndexPosition.get(posSeq),a1);</a>
+<span class="sourceLineNo">705</span><a id="line.705">                                        noMatchFound = false;</a>
+<span class="sourceLineNo">706</span><a id="line.706">                                }</a>
+<span class="sourceLineNo">707</span><a id="line.707">                        }</a>
+<span class="sourceLineNo">708</span><a id="line.708"></a>
+<span class="sourceLineNo">709</span><a id="line.709"></a>
+<span class="sourceLineNo">710</span><a id="line.710">                // now we merge the two chains into one</a>
+<span class="sourceLineNo">711</span><a id="line.711">                // the Groups that can be aligned are now pointing to the</a>
+<span class="sourceLineNo">712</span><a id="line.712">                // groups in the Atom records.</a>
+<span class="sourceLineNo">713</span><a id="line.713">                if (  noMatchFound) {</a>
+<span class="sourceLineNo">714</span><a id="line.714"></a>
+<span class="sourceLineNo">715</span><a id="line.715">                        logger.debug("no alignment found!");</a>
+<span class="sourceLineNo">716</span><a id="line.716">                }</a>
+<span class="sourceLineNo">717</span><a id="line.717">                return noMatchFound;</a>
+<span class="sourceLineNo">718</span><a id="line.718"></a>
+<span class="sourceLineNo">719</span><a id="line.719">        }</a>
+<span class="sourceLineNo">720</span><a id="line.720"></a>
+<span class="sourceLineNo">721</span><a id="line.721">        private boolean mapDNAChains(List&lt;Group&gt; seqResGroups, List&lt;Group&gt; atomRes,</a>
+<span class="sourceLineNo">722</span><a id="line.722">                        SequencePair&lt;Sequence&lt;NucleotideCompound&gt;, NucleotideCompound&gt; pair,</a>
+<span class="sourceLineNo">723</span><a id="line.723">                        Map&lt;Integer,Integer&gt; seqresIndexPosition,</a>
+<span class="sourceLineNo">724</span><a id="line.724">                        Map&lt;Integer,Integer&gt; atomIndexPosition)   {</a>
+<span class="sourceLineNo">725</span><a id="line.725"></a>
+<span class="sourceLineNo">726</span><a id="line.726"></a>
+<span class="sourceLineNo">727</span><a id="line.727">                // at the present stage the future seqREs are still stored as Atom groups in the seqRes parent...</a>
+<span class="sourceLineNo">728</span><a id="line.728"></a>
+<span class="sourceLineNo">729</span><a id="line.729"></a>
+<span class="sourceLineNo">730</span><a id="line.730">                int aligLength = pair.getLength();</a>
+<span class="sourceLineNo">731</span><a id="line.731"></a>
+<span class="sourceLineNo">732</span><a id="line.732">                //              System.out.println("sequence length seqres:");</a>
+<span class="sourceLineNo">733</span><a id="line.733">                //              System.out.println(seqresIndexPosition.keySet().size());</a>
+<span class="sourceLineNo">734</span><a id="line.734">                //              System.out.println("alignment length: " + aligLength);</a>
+<span class="sourceLineNo">735</span><a id="line.735">                // System.out.println(gapSymbol.getName());</a>
+<span class="sourceLineNo">736</span><a id="line.736"></a>
+<span class="sourceLineNo">737</span><a id="line.737">                // make sure we actually find an alignment</a>
+<span class="sourceLineNo">738</span><a id="line.738">                boolean noMatchFound = true;</a>
+<span class="sourceLineNo">739</span><a id="line.739"></a>
+<span class="sourceLineNo">740</span><a id="line.740">                Compound gapSymbol =  DNACompoundSet.getDNACompoundSet().getCompoundForString("-");</a>
+<span class="sourceLineNo">741</span><a id="line.741"></a>
+<span class="sourceLineNo">742</span><a id="line.742">                mainLoop:</a>
+<span class="sourceLineNo">743</span><a id="line.743">                        for (int i = 1; i &lt;= aligLength ; i++) {</a>
+<span class="sourceLineNo">744</span><a id="line.744"></a>
+<span class="sourceLineNo">745</span><a id="line.745">                                Compound s =  pair.getCompoundAt(1, i);</a>
+<span class="sourceLineNo">746</span><a id="line.746">                                Compound a =  pair.getCompoundAt(2,i);</a>
+<span class="sourceLineNo">747</span><a id="line.747"></a>
+<span class="sourceLineNo">748</span><a id="line.748">                                // alignment is using internal index start at 1...</a>
+<span class="sourceLineNo">749</span><a id="line.749">                                int posSeq = pair.getIndexInQueryAt(i)  -1;</a>
+<span class="sourceLineNo">750</span><a id="line.750">                                int posAtom = pair.getIndexInTargetAt(i) -1;</a>
+<span class="sourceLineNo">751</span><a id="line.751"></a>
+<span class="sourceLineNo">752</span><a id="line.752">                                if (  s.equals(gapSymbol) || a.equals(gapSymbol)){</a>
+<span class="sourceLineNo">753</span><a id="line.753">                                        continue;</a>
+<span class="sourceLineNo">754</span><a id="line.754">                                }</a>
+<span class="sourceLineNo">755</span><a id="line.755"></a>
+<span class="sourceLineNo">756</span><a id="line.756">                                if ( s.equals(a)){</a>
+<span class="sourceLineNo">757</span><a id="line.757"></a>
+<span class="sourceLineNo">758</span><a id="line.758">                                        // the atom record can be aligned to the SeqRes record!</a>
+<span class="sourceLineNo">759</span><a id="line.759">                                        // replace the SeqRes group with the Atom group!</a>
+<span class="sourceLineNo">760</span><a id="line.760"></a>
+<span class="sourceLineNo">761</span><a id="line.761">                                        Group s1 = seqResGroups.get(seqresIndexPosition.get(posSeq));</a>
+<span class="sourceLineNo">762</span><a id="line.762">                                        Group a1 = atomRes.get(atomIndexPosition.get(posAtom));</a>
+<span class="sourceLineNo">763</span><a id="line.763"></a>
+<span class="sourceLineNo">764</span><a id="line.764">                                        if ( s1 == null || a1 == null){</a>
+<span class="sourceLineNo">765</span><a id="line.765">                                                /// can't map this position...</a>
+<span class="sourceLineNo">766</span><a id="line.766">                                                logger.warn("can't map " + i + ":" + s + " " + posSeq +" " + s1 + " atom: " + posAtom + " " + a1 );</a>
+<span class="sourceLineNo">767</span><a id="line.767">                                                continue mainLoop;</a>
+<span class="sourceLineNo">768</span><a id="line.768">                                        }</a>
+<span class="sourceLineNo">769</span><a id="line.769"></a>
+<span class="sourceLineNo">770</span><a id="line.770">                                        // need to trim the names to allow matching e.g in</a>
+<span class="sourceLineNo">771</span><a id="line.771">                                        // pdb1b2m</a>
+<span class="sourceLineNo">772</span><a id="line.772">                                        String pdbNameS = s1.getPDBName();</a>
+<span class="sourceLineNo">773</span><a id="line.773">                                        String pdbNameA = a1.getPDBName();</a>
+<span class="sourceLineNo">774</span><a id="line.774">                                        if ( pdbNameS == null || pdbNameA == null ){</a>
+<span class="sourceLineNo">775</span><a id="line.775">                                                logger.warn("null value found for group.getPDBName() at " + posSeq + " when trying to align " + s1 + " and " + a1 + " " + posAtom);</a>
+<span class="sourceLineNo">776</span><a id="line.776">                                                logger.warn("ATOM and SEQRES sequences will not be aligned.");</a>
+<span class="sourceLineNo">777</span><a id="line.777">                                        }</a>
+<span class="sourceLineNo">778</span><a id="line.778">                                        if (! pdbNameA.equals(pdbNameS)){</a>
+<span class="sourceLineNo">779</span><a id="line.779">                                                if ( ! pdbNameA.trim().equals(pdbNameS.trim())) {</a>
+<span class="sourceLineNo">780</span><a id="line.780">                                                        logger.info(s1 + " " + posSeq + " does not align with " + a1+ " " + posAtom + " should be: " + s + " : " + a);</a>
+<span class="sourceLineNo">781</span><a id="line.781">                                                        if ( s1.getType().equals(HetatomImpl.type) &amp;&amp; a1.getType().equals(HetatomImpl.type)){</a>
+<span class="sourceLineNo">782</span><a id="line.782">                                                                logger.info("they seem to be hetatoms, so ignoring mismatch.");</a>
+<span class="sourceLineNo">783</span><a id="line.783">                                                        }</a>
+<span class="sourceLineNo">784</span><a id="line.784">                                                        else {</a>
+<span class="sourceLineNo">785</span><a id="line.785">                                                                //  System.exit(0);// for debug only</a>
+<span class="sourceLineNo">786</span><a id="line.786">                                                                //System.out.println(lst1.seqString());</a>
+<span class="sourceLineNo">787</span><a id="line.787">                                                                //System.out.println(lst2.seqString());</a>
+<span class="sourceLineNo">788</span><a id="line.788">                                                                logger.warn("Could not match residues " + s1 + " " + a1);</a>
+<span class="sourceLineNo">789</span><a id="line.789">                                                        }</a>
+<span class="sourceLineNo">790</span><a id="line.790"></a>
+<span class="sourceLineNo">791</span><a id="line.791">                                                }</a>
+<span class="sourceLineNo">792</span><a id="line.792">                                        }</a>
+<span class="sourceLineNo">793</span><a id="line.793"></a>
+<span class="sourceLineNo">794</span><a id="line.794">                                        // do the actual replacing of the SEQRES group with the ATOM group</a>
+<span class="sourceLineNo">795</span><a id="line.795">                                        //                                      if ( s1.getChain().getChainID().equals("A")) {</a>
+<span class="sourceLineNo">796</span><a id="line.796">                                        //                                              System.out.println(" setting " + posSeq +" " + a1);</a>
+<span class="sourceLineNo">797</span><a id="line.797">                                        //                                      }</a>
+<span class="sourceLineNo">798</span><a id="line.798">                                        seqResGroups.set(seqresIndexPosition.get(posSeq),a1);</a>
+<span class="sourceLineNo">799</span><a id="line.799">                                        noMatchFound = false;</a>
+<span class="sourceLineNo">800</span><a id="line.800">                                }</a>
+<span class="sourceLineNo">801</span><a id="line.801">                        }</a>
+<span class="sourceLineNo">802</span><a id="line.802"></a>
+<span class="sourceLineNo">803</span><a id="line.803"></a>
+<span class="sourceLineNo">804</span><a id="line.804">                // now we merge the two chains into one</a>
+<span class="sourceLineNo">805</span><a id="line.805">                // the Groups that can be aligned are now pointing to the</a>
+<span class="sourceLineNo">806</span><a id="line.806">                // groups in the Atom records.</a>
+<span class="sourceLineNo">807</span><a id="line.807">                if (  noMatchFound) {</a>
+<span class="sourceLineNo">808</span><a id="line.808"></a>
+<span class="sourceLineNo">809</span><a id="line.809">                        logger.debug("no alignment found!");</a>
+<span class="sourceLineNo">810</span><a id="line.810">                }</a>
+<span class="sourceLineNo">811</span><a id="line.811">                return noMatchFound;</a>
+<span class="sourceLineNo">812</span><a id="line.812"></a>
+<span class="sourceLineNo">813</span><a id="line.813">        }</a>
+<span class="sourceLineNo">814</span><a id="line.814"></a>
+<span class="sourceLineNo">815</span><a id="line.815">        /**</a>
+<span class="sourceLineNo">816</span><a id="line.816">         * Storing unaligned SEQRES groups in a Structure.</a>
+<span class="sourceLineNo">817</span><a id="line.817">         * @param structure</a>
+<span class="sourceLineNo">818</span><a id="line.818">         * @param seqResChains</a>
+<span class="sourceLineNo">819</span><a id="line.819">         */</a>
+<span class="sourceLineNo">820</span><a id="line.820">        public static void storeUnAlignedSeqRes(Structure structure, List&lt;Chain&gt; seqResChains, boolean headerOnly) {</a>
+<span class="sourceLineNo">821</span><a id="line.821"></a>
+<span class="sourceLineNo">822</span><a id="line.822"></a>
+<span class="sourceLineNo">823</span><a id="line.823">                if (headerOnly) {</a>
+<span class="sourceLineNo">824</span><a id="line.824"></a>
+<span class="sourceLineNo">825</span><a id="line.825">                        List&lt;Chain&gt; atomChains = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">826</span><a id="line.826">                        for (Chain seqRes: seqResChains) {</a>
+<span class="sourceLineNo">827</span><a id="line.827">                                // In header-only mode skip ATOM records.</a>
+<span class="sourceLineNo">828</span><a id="line.828">                                // Here we store chains with SEQRES instead of AtomGroups.</a>
+<span class="sourceLineNo">829</span><a id="line.829">                                seqRes.setSeqResGroups(seqRes.getAtomGroups());</a>
+<span class="sourceLineNo">830</span><a id="line.830">                                seqRes.setAtomGroups(new ArrayList&lt;&gt;()); // clear out the atom groups.</a>
+<span class="sourceLineNo">831</span><a id="line.831"></a>
+<span class="sourceLineNo">832</span><a id="line.832">                                atomChains.add(seqRes);</a>
+<span class="sourceLineNo">833</span><a id="line.833"></a>
+<span class="sourceLineNo">834</span><a id="line.834">                        }</a>
+<span class="sourceLineNo">835</span><a id="line.835">                        structure.setChains(0, atomChains);</a>
+<span class="sourceLineNo">836</span><a id="line.836"></a>
+<span class="sourceLineNo">837</span><a id="line.837">                } else {</a>
+<span class="sourceLineNo">838</span><a id="line.838"></a>
+<span class="sourceLineNo">839</span><a id="line.839">                        for (int i = 0; i &lt; structure.nrModels(); i++) {</a>
+<span class="sourceLineNo">840</span><a id="line.840">                                List&lt;Chain&gt; atomChains   = structure.getModel(i);</a>
+<span class="sourceLineNo">841</span><a id="line.841"></a>
+<span class="sourceLineNo">842</span><a id="line.842">                                for (Chain seqRes: seqResChains){</a>
+<span class="sourceLineNo">843</span><a id="line.843">                                        Chain atomRes;</a>
+<span class="sourceLineNo">844</span><a id="line.844"></a>
+<span class="sourceLineNo">845</span><a id="line.845">                                        // Otherwise, we find a chain with AtomGroups</a>
+<span class="sourceLineNo">846</span><a id="line.846">                                        // and set this as SEQRES groups.</a>
+<span class="sourceLineNo">847</span><a id="line.847">                                        // TODO no idea if new parameter useChainId should be false or true here, used true as a guess - JD 2016-05-09</a>
+<span class="sourceLineNo">848</span><a id="line.848">                                        atomRes = SeqRes2AtomAligner.getMatchingAtomRes(seqRes,atomChains,true);</a>
+<span class="sourceLineNo">849</span><a id="line.849">                                        if ( atomRes != null)</a>
+<span class="sourceLineNo">850</span><a id="line.850">                                                atomRes.setSeqResGroups(seqRes.getAtomGroups());</a>
+<span class="sourceLineNo">851</span><a id="line.851">                                        else</a>
+<span class="sourceLineNo">852</span><a id="line.852">                                                logger.warn("Could not find atom records for chain " + seqRes.getId());</a>
+<span class="sourceLineNo">853</span><a id="line.853">                                }</a>
+<span class="sourceLineNo">854</span><a id="line.854"></a>
+<span class="sourceLineNo">855</span><a id="line.855"></a>
+<span class="sourceLineNo">856</span><a id="line.856">                        }</a>
+<span class="sourceLineNo">857</span><a id="line.857">                }</a>
+<span class="sourceLineNo">858</span><a id="line.858">        }</a>
+<span class="sourceLineNo">859</span><a id="line.859">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

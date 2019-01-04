@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                  BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on May 27, 2006</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.nbio.structure.align.helper;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.AtomImpl;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.Calc;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">/**</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * Low level helper methods for CE and FATCAT algorithms.</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">036</span><a id="line.36"> */</a>
+<span class="sourceLineNo">037</span><a id="line.37">public class AlignUtils {</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">        private static final Logger logger = LoggerFactory.getLogger(AlignUtils.class);</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">        /**</a>
+<span class="sourceLineNo">042</span><a id="line.42">         * Get a subset of Atoms based by their positions</a>
+<span class="sourceLineNo">043</span><a id="line.43">         *</a>
+<span class="sourceLineNo">044</span><a id="line.44">         * @param caall</a>
+<span class="sourceLineNo">045</span><a id="line.45">         * @param idx an array where each element is a position of all the Atoms to return</a>
+<span class="sourceLineNo">046</span><a id="line.46">         * @return at Atom[] array</a>
+<span class="sourceLineNo">047</span><a id="line.47">         */</a>
+<span class="sourceLineNo">048</span><a id="line.48">        public static Atom[] getFragmentFromIdxList(Atom[] caall, int[] idx){</a>
+<span class="sourceLineNo">049</span><a id="line.49">                Atom[] subset = new Atom[idx.length];</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">                for (int p = 0 ; p &lt; idx.length;p++){</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">                        int pos1 =  idx[p];</a>
+<span class="sourceLineNo">054</span><a id="line.54">                        subset[p] =  (Atom) caall[pos1].clone();</a>
+<span class="sourceLineNo">055</span><a id="line.55">                }</a>
+<span class="sourceLineNo">056</span><a id="line.56">                return subset;</a>
+<span class="sourceLineNo">057</span><a id="line.57">        }</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        /**</a>
+<span class="sourceLineNo">060</span><a id="line.60">         * Get a continue subset of Atoms based by the starting position and the length</a>
+<span class="sourceLineNo">061</span><a id="line.61">         *</a>
+<span class="sourceLineNo">062</span><a id="line.62">         * @param caall</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * @param pos the start position</a>
+<span class="sourceLineNo">064</span><a id="line.64">         * @param fragmentLength the length of the subset to extract.</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * @return an Atom[] array</a>
+<span class="sourceLineNo">066</span><a id="line.66">         */</a>
+<span class="sourceLineNo">067</span><a id="line.67">        public static Atom[] getFragment(Atom[] caall, int pos, int fragmentLength){</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">                if ( pos+fragmentLength &gt; caall.length)</a>
+<span class="sourceLineNo">070</span><a id="line.70">                        return null;</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">                Atom[] tmp = new Atom[fragmentLength];</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">                for (int i=0;i&lt; fragmentLength;i++){</a>
+<span class="sourceLineNo">075</span><a id="line.75">                        tmp[i] = (Atom)caall[i+pos].clone();</a>
+<span class="sourceLineNo">076</span><a id="line.76">                }</a>
+<span class="sourceLineNo">077</span><a id="line.77">                return tmp;</a>
+<span class="sourceLineNo">078</span><a id="line.78"></a>
+<span class="sourceLineNo">079</span><a id="line.79">        }</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">        /**</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * Get a continue subset of Atoms based by the starting position and the length</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * does not clone the original atoms.</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @param caall</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * @param pos the start position</a>
+<span class="sourceLineNo">088</span><a id="line.88">         * @param fragmentLength the length of the subset to extract.</a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @return an Atom[] array</a>
+<span class="sourceLineNo">090</span><a id="line.90">         */</a>
+<span class="sourceLineNo">091</span><a id="line.91">        public static Atom[] getFragmentNoClone(Atom[] caall, int pos, int fragmentLength){</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                if ( pos+fragmentLength &gt; caall.length)</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        return null;</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">                Atom[] tmp = new Atom[fragmentLength];</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                for (int i=0;i&lt; fragmentLength;i++){</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        tmp[i] = caall[i+pos];</a>
+<span class="sourceLineNo">100</span><a id="line.100">                }</a>
+<span class="sourceLineNo">101</span><a id="line.101">                return tmp;</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        /**</a>
+<span class="sourceLineNo">106</span><a id="line.106">         * Get the centroid for the set of atoms starting from position pos, length fragmentLenght</a>
+<span class="sourceLineNo">107</span><a id="line.107">         *</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @param ca</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * @param pos</a>
+<span class="sourceLineNo">110</span><a id="line.110">         * @param fragmentLength</a>
+<span class="sourceLineNo">111</span><a id="line.111">         * @return an Atom</a>
+<span class="sourceLineNo">112</span><a id="line.112">         */</a>
+<span class="sourceLineNo">113</span><a id="line.113">        public static Atom getCenter(Atom[] ca, int pos, int fragmentLength){</a>
+<span class="sourceLineNo">114</span><a id="line.114">                Atom center = new AtomImpl();</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">                if ( pos+fragmentLength &gt; ca.length) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">                        logger.info("pos ("+pos+"), fragL ("+fragmentLength +") &gt; ca.length"+ca.length);</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        return center;</a>
+<span class="sourceLineNo">119</span><a id="line.119">                }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">                Atom[] tmp = getFragmentNoClone(ca,pos,fragmentLength);</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">                return Calc.getCentroid(tmp);</a>
+<span class="sourceLineNo">124</span><a id="line.124">        }</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">        /**</a>
+<span class="sourceLineNo">128</span><a id="line.128">         * Get distances along diagonal k from coordinate array coords.</a>
+<span class="sourceLineNo">129</span><a id="line.129">         *</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * @param atoms set of atoms to be used</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * @param k number of diagonal to be used</a>
+<span class="sourceLineNo">132</span><a id="line.132">         */</a>
+<span class="sourceLineNo">133</span><a id="line.133">        public static double[] getDiagonalAtK (Atom[] atoms,int k) {</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">                int l = atoms.length;</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">                double[] dk = new double[(l-k)];</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">                for ( int i = 0 ; i&lt; (l-k); i++){</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">                        double dist = Calc.getDistance(atoms[i],atoms[i+k]);</a>
+<span class="sourceLineNo">142</span><a id="line.142">                        dk[i] = dist;</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">                }</a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146">                return dk;</a>
+<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">        /**</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * Given distance matrix diagonals dk1, dk2, get the rmsd of a fpair.</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * i,j is the fpair start in mol1 and mol2, l is the length of the fragment</a>
+<span class="sourceLineNo">152</span><a id="line.152">         *</a>
+<span class="sourceLineNo">153</span><a id="line.153">         * @param dk1 distances of structure 1</a>
+<span class="sourceLineNo">154</span><a id="line.154">         * @param dk2 distance of structure 2</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * @param i position in structure 1</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * @param j position in structure 2</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * @param l length of the fragments</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * @param k diagonal used</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * @return a double</a>
+<span class="sourceLineNo">160</span><a id="line.160">         */</a>
+<span class="sourceLineNo">161</span><a id="line.161">        public static double rms_dk_diag(double[] dk1, double[] dk2, int i, int j, int l, int k) {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                //        dk = 0</a>
+<span class="sourceLineNo">163</span><a id="line.163">                //        for x in range(l-k):</a>
+<span class="sourceLineNo">164</span><a id="line.164">                //            dk += (dk1[x+i]-dk2[x+j])*(dk1[x+i]-dk2[x+j])</a>
+<span class="sourceLineNo">165</span><a id="line.165">                //        dk /= (l-k)</a>
+<span class="sourceLineNo">166</span><a id="line.166">                //        return math.sqrt(dk)</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                double dk = 0.0;</a>
+<span class="sourceLineNo">169</span><a id="line.169">                for (int x = 0 ; x &lt; (l-k) ; x++)</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        dk += (dk1[x+i]-dk2[x+j])*(dk1[x+i]-dk2[x+j]);</a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">                dk /= ( l-k);</a>
+<span class="sourceLineNo">173</span><a id="line.173">                return Math.sqrt(dk);</a>
+<span class="sourceLineNo">174</span><a id="line.174"></a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        /**</a>
+<span class="sourceLineNo">178</span><a id="line.178">         * Matrix of all distances between two sets of Atoms. Does not</a>
+<span class="sourceLineNo">179</span><a id="line.179">         * superimpose or modify the Atoms.</a>
+<span class="sourceLineNo">180</span><a id="line.180">         *</a>
+<span class="sourceLineNo">181</span><a id="line.181">         * @param ca1</a>
+<span class="sourceLineNo">182</span><a id="line.182">         * @param ca2</a>
+<span class="sourceLineNo">183</span><a id="line.183">         * @return a Matrix</a>
+<span class="sourceLineNo">184</span><a id="line.184">         */</a>
+<span class="sourceLineNo">185</span><a id="line.185">        public static Matrix getDistanceMatrix(Atom[] ca1, Atom[] ca2){</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">                int r = ca1.length;</a>
+<span class="sourceLineNo">188</span><a id="line.188">                int c = ca2.length;</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">                Matrix out = new Matrix(r,c);</a>
+<span class="sourceLineNo">191</span><a id="line.191"></a>
+<span class="sourceLineNo">192</span><a id="line.192">                for (int i=0; i&lt;r; i++) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">                        Atom a1 = ca1[i];</a>
+<span class="sourceLineNo">194</span><a id="line.194">                        for (int j=0;j&lt;c;j++){</a>
+<span class="sourceLineNo">195</span><a id="line.195">                                Atom b1 = ca2[j];</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                                double d = Calc.getDistance(a1,b1);</a>
+<span class="sourceLineNo">198</span><a id="line.198">                                out.set(i,j,d);</a>
+<span class="sourceLineNo">199</span><a id="line.199">                        }</a>
+<span class="sourceLineNo">200</span><a id="line.200">                }</a>
+<span class="sourceLineNo">201</span><a id="line.201">                return out;</a>
+<span class="sourceLineNo">202</span><a id="line.202">        }</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.align;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.align.client.FarmJobParameters;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.align.client.FarmJobRunnable;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.align.events.AlignmentProgressListener;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.align.util.CliTools;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.align.util.ConfigurationException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.align.util.UserConfiguration;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.scop.CachedRemoteScopInstallation;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.scop.ScopDatabase;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.scop.ScopFactory;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.core.util.InputStreamProvider;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.io.IOException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.ArrayList;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.Arrays;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.List;</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">/** A job as it can be run on the farm.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">045</span><a id="line.45"> *</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * for arguments see the printHelp() method.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> *</a>
+<span class="sourceLineNo">050</span><a id="line.50"> */</a>
+<span class="sourceLineNo">051</span><a id="line.51">public class FarmJob implements Runnable {</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        private final static Logger logger = LoggerFactory.getLogger(FarmJob.class);</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        private static final String[] mandParams = new String[] {"pdbFilePath"};</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">        private static final List&lt;String&gt; mandatoryArgs= Arrays.asList(mandParams);</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        List&lt;AlignmentProgressListener&gt; progressListeners;</a>
+<span class="sourceLineNo">060</span><a id="line.60">        List&lt;FarmJobRunnable&gt; jobs;</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">        FarmJobParameters params ;</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">        public FarmJob(){</a>
+<span class="sourceLineNo">065</span><a id="line.65">                progressListeners = null;</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">                // send a flag to the PDb file loader to cache the gzip compressed files.</a>
+<span class="sourceLineNo">068</span><a id="line.68">                System.setProperty(InputStreamProvider.CACHE_PROPERTY, "true");</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">        }</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">        public FarmJobParameters getParams() {</a>
+<span class="sourceLineNo">074</span><a id="line.74">                return params;</a>
+<span class="sourceLineNo">075</span><a id="line.75">        }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">        public void setParams(FarmJobParameters params) {</a>
+<span class="sourceLineNo">078</span><a id="line.78">                this.params = params;</a>
+<span class="sourceLineNo">079</span><a id="line.79">        }</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        public void addAlignmentProgressListener(AlignmentProgressListener listener){</a>
+<span class="sourceLineNo">082</span><a id="line.82">                if (progressListeners == null)</a>
+<span class="sourceLineNo">083</span><a id="line.83">                        progressListeners = new ArrayList&lt;AlignmentProgressListener&gt;();</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">                progressListeners.add(listener);</a>
+<span class="sourceLineNo">086</span><a id="line.86">        }</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">        public void clearListeners(){</a>
+<span class="sourceLineNo">089</span><a id="line.89">                progressListeners.clear();</a>
+<span class="sourceLineNo">090</span><a id="line.90">                progressListeners = null;</a>
+<span class="sourceLineNo">091</span><a id="line.91">        }</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">        public static void main(String[] argv){</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">                FarmJob job = new FarmJob();</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">                if (argv.length  == 0 ) {</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        job.printHelp();</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        return;</a>
+<span class="sourceLineNo">100</span><a id="line.100">                }</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">                if ( argv.length == 1){</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        if (argv[0].equalsIgnoreCase("-h") || argv[0].equalsIgnoreCase("-help")|| argv[0].equalsIgnoreCase("--help")){</a>
+<span class="sourceLineNo">104</span><a id="line.104">                                job.printHelp();</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                return;</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        }</a>
+<span class="sourceLineNo">107</span><a id="line.107">                }</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">                FarmJobParameters params = new FarmJobParameters();</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                for (int i = 0 ; i &lt; argv.length; i++){</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        String arg   = argv[i];</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">                        String value = null;</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        if ( i &lt; argv.length -1)</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                value = argv[i+1];</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118">                        // if value starts with - then the arg does not have a value.</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        if (value != null &amp;&amp; value.startsWith("-"))</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                value = null;</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        else</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                i++;</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                        String[] tmp = {arg,value};</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                        try {</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">                                CliTools.configureBean(params, tmp);</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">                        } catch (ConfigurationException e){</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133">                                logger.error("Exception", e);</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">                                if ( mandatoryArgs.contains(arg) ) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                                        // there must not be a ConfigurationException with mandatory arguments.</a>
+<span class="sourceLineNo">137</span><a id="line.137">                                        return;</a>
+<span class="sourceLineNo">138</span><a id="line.138">                                } else {</a>
+<span class="sourceLineNo">139</span><a id="line.139">                                        // but there can be with optional ...</a>
+<span class="sourceLineNo">140</span><a id="line.140">                                }</a>
+<span class="sourceLineNo">141</span><a id="line.141">                        }</a>
+<span class="sourceLineNo">142</span><a id="line.142">                }</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">                if (( params.getNrAlignments() == -1) &amp;&amp; (params.getTime() == -1)){</a>
+<span class="sourceLineNo">146</span><a id="line.146">                        logger.error("Please provide either the -time or the -nrAlignments argument!");</a>
+<span class="sourceLineNo">147</span><a id="line.147">                        return;</a>
+<span class="sourceLineNo">148</span><a id="line.148">                }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                logger.info("Using parameters: {}", params);</a>
+<span class="sourceLineNo">152</span><a id="line.152"></a>
+<span class="sourceLineNo">153</span><a id="line.153">                job.setParams(params);</a>
+<span class="sourceLineNo">154</span><a id="line.154">                job.run();</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        @Override</a>
+<span class="sourceLineNo">159</span><a id="line.159">        public void run(){</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                // set the system wide PDB path</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164">                String path = params.getPdbFilePath();</a>
+<span class="sourceLineNo">165</span><a id="line.165">                System.setProperty(UserConfiguration.PDB_DIR,path);</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">                String cachePath = params.getCacheFilePath();</a>
+<span class="sourceLineNo">168</span><a id="line.168">                if ( cachePath != null &amp;&amp; ! cachePath.equals(""))</a>
+<span class="sourceLineNo">169</span><a id="line.169">                        System.setProperty(UserConfiguration.PDB_CACHE_DIR,cachePath);</a>
+<span class="sourceLineNo">170</span><a id="line.170">                else {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                        // if not provided, we use pdbFilePath as the default CACHE path</a>
+<span class="sourceLineNo">172</span><a id="line.172">                        System.setProperty(UserConfiguration.PDB_CACHE_DIR,path);</a>
+<span class="sourceLineNo">173</span><a id="line.173">                }</a>
+<span class="sourceLineNo">174</span><a id="line.174">                // declare SCOP to be locally cached, but fetching new stuff from remote</a>
+<span class="sourceLineNo">175</span><a id="line.175">                ScopDatabase scop = null;</a>
+<span class="sourceLineNo">176</span><a id="line.176">                try {</a>
+<span class="sourceLineNo">177</span><a id="line.177">                        scop = new CachedRemoteScopInstallation(true);</a>
+<span class="sourceLineNo">178</span><a id="line.178">                } catch (IOException e) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">                        throw new RuntimeException("Could not load " + CachedRemoteScopInstallation.class.getName(), e);</a>
+<span class="sourceLineNo">180</span><a id="line.180">                }</a>
+<span class="sourceLineNo">181</span><a id="line.181">                ScopFactory.setScopDatabase(scop);</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">                String username = params.getUsername();</a>
+<span class="sourceLineNo">184</span><a id="line.184">                jobs = new ArrayList&lt;FarmJobRunnable&gt;();</a>
+<span class="sourceLineNo">185</span><a id="line.185">                for ( int i = 0 ; i &lt; params.getThreads();i++){</a>
+<span class="sourceLineNo">186</span><a id="line.186">                        logger.info("starting thread #{}", (i+1));</a>
+<span class="sourceLineNo">187</span><a id="line.187">                        FarmJobRunnable runner = new FarmJobRunnable(params);</a>
+<span class="sourceLineNo">188</span><a id="line.188">                        params.setUsername(username+"_thread_" + (i+1));</a>
+<span class="sourceLineNo">189</span><a id="line.189">                        jobs.add(runner);</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                        if ( progressListeners != null) {</a>
+<span class="sourceLineNo">192</span><a id="line.192">                                for (AlignmentProgressListener li : progressListeners){</a>
+<span class="sourceLineNo">193</span><a id="line.193">                                        runner.addAlignmentProgressListener(li);</a>
+<span class="sourceLineNo">194</span><a id="line.194">                                }</a>
+<span class="sourceLineNo">195</span><a id="line.195">                        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">                        Thread t = new Thread(runner);</a>
+<span class="sourceLineNo">199</span><a id="line.199">                        if ( ( (params.getThreads() &gt; 1 ) &amp;&amp; ( i &lt; params.getThreads() - 1) )|| ( params.isRunBackground())) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">                                logger.info("starting thread #{} in background.", (i + 1));</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                t.start();</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        } else {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                // single CPU jobs are run in the main thread and the last job is also run in the main thread</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                logger.info("starting thread #{} in main thread.", (i + 1));</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                t.run();</a>
+<span class="sourceLineNo">206</span><a id="line.206">                        }</a>
+<span class="sourceLineNo">207</span><a id="line.207">                }</a>
+<span class="sourceLineNo">208</span><a id="line.208">        }</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">        public void terminate(){</a>
+<span class="sourceLineNo">211</span><a id="line.211"></a>
+<span class="sourceLineNo">212</span><a id="line.212">                logger.info("terminating jobs");</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                if ( jobs == null)</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        return;</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                int js = jobs.size();</a>
+<span class="sourceLineNo">218</span><a id="line.218">                logger.info("number of jobs: {}", js);</a>
+<span class="sourceLineNo">219</span><a id="line.219"></a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">                for (FarmJobRunnable runner : jobs){</a>
+<span class="sourceLineNo">222</span><a id="line.222">                        // runner.terminate() is already synchronized</a>
+<span class="sourceLineNo">223</span><a id="line.223">                        runner.terminate();</a>
+<span class="sourceLineNo">224</span><a id="line.224">                }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">                clearListeners();</a>
+<span class="sourceLineNo">227</span><a id="line.227">        }</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">        public void printHelp(){</a>
+<span class="sourceLineNo">230</span><a id="line.230">                System.out.println("-------------------");</a>
+<span class="sourceLineNo">231</span><a id="line.231">                System.out.println("FarmJob help:");</a>
+<span class="sourceLineNo">232</span><a id="line.232">                System.out.println("-------------------");</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">                System.out.println("FarmJob accepts the following parameters:");</a>
+<span class="sourceLineNo">235</span><a id="line.235">                System.out.println("");</a>
+<span class="sourceLineNo">236</span><a id="line.236">                System.out.println(" Mandatory:");</a>
+<span class="sourceLineNo">237</span><a id="line.237">                System.out.println("   -pdbFilePath (mandatory) Path to the directory in your file system that contains the PDB files.");</a>
+<span class="sourceLineNo">238</span><a id="line.238"></a>
+<span class="sourceLineNo">239</span><a id="line.239">                System.out.println("   provide either -time or -nrAlignments. If both are provided the job stops as soon as any of the criteria has been reached.");</a>
+<span class="sourceLineNo">240</span><a id="line.240">                System.out.println("   -time maximum number of time to run (in seconds). -1 means no time limit, but run -nrAlignment arguments. Default: " + FarmJobParameters.DEFAULT_JOB_TIME );</a>
+<span class="sourceLineNo">241</span><a id="line.241">                System.out.println("   -nrAlignments number of alignments to calculate. Default: " + FarmJobParameters.DEFAULT_NR_ALIGNMENTS) ;</a>
+<span class="sourceLineNo">242</span><a id="line.242">                System.out.println("");</a>
+<span class="sourceLineNo">243</span><a id="line.243">                System.out.println(" Optional: ");</a>
+<span class="sourceLineNo">244</span><a id="line.244">                System.out.println("   -threads number of parallel threads to calculate alignments. Should be nr. of available CPUs. Default: " + FarmJobParameters.DEFAULT_NR_THREADS);</a>
+<span class="sourceLineNo">245</span><a id="line.245">                System.out.println("   -server the location of the server URL to talk to. Default : " + FarmJobParameters.DEFAULT_SERVER_URL);</a>
+<span class="sourceLineNo">246</span><a id="line.246">                System.out.println("   -username a unique name that can be given to this client. Can be used to give credit for who is doing the calculations. Default: IP and a random id");</a>
+<span class="sourceLineNo">247</span><a id="line.247">                System.out.println("   -stepSize the number of pairs to be requsted from server. Default: " + FarmJobParameters.DEFAULT_BATCH_SIZE);</a>
+<span class="sourceLineNo">248</span><a id="line.248">        }</a>
+<span class="sourceLineNo">249</span><a id="line.249">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.aaproperties;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.HashSet;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Set;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * This is a utility class that contains utility methods which will facilitates the coding of other methods</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author kohchuanhock</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @version 2011.08.22</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * @since 3.0.2</a>
+<span class="sourceLineNo">035</span><a id="line.35"> */</a>
+<span class="sourceLineNo">036</span><a id="line.36">public class Utils {</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">        private final static Logger logger = LoggerFactory.getLogger(Utils.class);</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">        /**</a>
+<span class="sourceLineNo">041</span><a id="line.41">         * Returns a value with the desired number of decimal places.</a>
+<span class="sourceLineNo">042</span><a id="line.42">         *</a>
+<span class="sourceLineNo">043</span><a id="line.43">         * @param d</a>
+<span class="sourceLineNo">044</span><a id="line.44">         *              value to round</a>
+<span class="sourceLineNo">045</span><a id="line.45">         * @param c</a>
+<span class="sourceLineNo">046</span><a id="line.46">         *              number of decimal places desired.</a>
+<span class="sourceLineNo">047</span><a id="line.47">         *              Must be greater or equal to zero, otherwise, the given value d would be returned without any modification.</a>
+<span class="sourceLineNo">048</span><a id="line.48">         * @return</a>
+<span class="sourceLineNo">049</span><a id="line.49">         *              a value with the given number of decimal places.</a>
+<span class="sourceLineNo">050</span><a id="line.50">         */</a>
+<span class="sourceLineNo">051</span><a id="line.51">        public final static double roundToDecimals(double d, int c) {</a>
+<span class="sourceLineNo">052</span><a id="line.52">                if(c &lt; 0) return d;</a>
+<span class="sourceLineNo">053</span><a id="line.53">                double p = Math.pow(10,c);</a>
+<span class="sourceLineNo">054</span><a id="line.54">                d = d * p;</a>
+<span class="sourceLineNo">055</span><a id="line.55">                double tmp = Math.round(d);</a>
+<span class="sourceLineNo">056</span><a id="line.56">                return tmp/p;</a>
+<span class="sourceLineNo">057</span><a id="line.57">        }</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        /**</a>
+<span class="sourceLineNo">060</span><a id="line.60">         * Checks if given sequence contains invalid characters. Returns true if invalid characters are found, else return false.</a>
+<span class="sourceLineNo">061</span><a id="line.61">         * Note that any characters are deemed as valid only if it is found in cSet.</a>
+<span class="sourceLineNo">062</span><a id="line.62">         *</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * @param sequence</a>
+<span class="sourceLineNo">064</span><a id="line.64">         *              protein sequence to be check.</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * @param cSet</a>
+<span class="sourceLineNo">066</span><a id="line.66">         *              the set of characters that are deemed valid.</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * @return</a>
+<span class="sourceLineNo">068</span><a id="line.68">         *              true if invalid characters are found, else return false.</a>
+<span class="sourceLineNo">069</span><a id="line.69">         */</a>
+<span class="sourceLineNo">070</span><a id="line.70">        public final static boolean doesSequenceContainInvalidChar(String sequence, Set&lt;Character&gt; cSet){</a>
+<span class="sourceLineNo">071</span><a id="line.71">                for(char c:sequence.toCharArray()){</a>
+<span class="sourceLineNo">072</span><a id="line.72">                        if(!cSet.contains(c)) return true;</a>
+<span class="sourceLineNo">073</span><a id="line.73">                }</a>
+<span class="sourceLineNo">074</span><a id="line.74">                return false;</a>
+<span class="sourceLineNo">075</span><a id="line.75">        }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">        /**</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * Return the number of invalid characters in sequence.</a>
+<span class="sourceLineNo">079</span><a id="line.79">         *</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * @param sequence</a>
+<span class="sourceLineNo">081</span><a id="line.81">         *              protein sequence to count for invalid characters.</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * @param cSet</a>
+<span class="sourceLineNo">083</span><a id="line.83">         *              the set of characters that are deemed valid.</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * @param ignoreCase</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *              indicates if cases should be ignored</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @return</a>
+<span class="sourceLineNo">087</span><a id="line.87">         *              the number of invalid characters in sequence.</a>
+<span class="sourceLineNo">088</span><a id="line.88">         */</a>
+<span class="sourceLineNo">089</span><a id="line.89">        public final static int getNumberOfInvalidChar(String sequence, Set&lt;Character&gt; cSet, boolean ignoreCase){</a>
+<span class="sourceLineNo">090</span><a id="line.90">                int total = 0;</a>
+<span class="sourceLineNo">091</span><a id="line.91">                char[] cArray;</a>
+<span class="sourceLineNo">092</span><a id="line.92">                if(ignoreCase) cArray = sequence.toUpperCase().toCharArray();</a>
+<span class="sourceLineNo">093</span><a id="line.93">                else cArray = sequence.toCharArray();</a>
+<span class="sourceLineNo">094</span><a id="line.94">                if(cSet == null) cSet = PeptideProperties.standardAASet;</a>
+<span class="sourceLineNo">095</span><a id="line.95">                for(char c:cArray){</a>
+<span class="sourceLineNo">096</span><a id="line.96">                        if(!cSet.contains(c)) total++;</a>
+<span class="sourceLineNo">097</span><a id="line.97">                }</a>
+<span class="sourceLineNo">098</span><a id="line.98">                return total;</a>
+<span class="sourceLineNo">099</span><a id="line.99">        }</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">        /**</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * Returns a new sequence with all invalid characters being replaced by '-'.</a>
+<span class="sourceLineNo">103</span><a id="line.103">         * Note that any character outside of the 20 standard protein amino acid codes are considered as invalid.</a>
+<span class="sourceLineNo">104</span><a id="line.104">         *</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * @param sequence</a>
+<span class="sourceLineNo">106</span><a id="line.106">         *              protein sequence to be clean</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * @param cSet</a>
+<span class="sourceLineNo">108</span><a id="line.108">         *              user defined characters that are valid. Can be null. If null, then 20 standard protein amino acid codes will be considered as valid.</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * @return</a>
+<span class="sourceLineNo">110</span><a id="line.110">         *              a new sequence with all invalid characters being replaced by '-'.</a>
+<span class="sourceLineNo">111</span><a id="line.111">         */</a>
+<span class="sourceLineNo">112</span><a id="line.112">        public final static String cleanSequence(String sequence, Set&lt;Character&gt; cSet){</a>
+<span class="sourceLineNo">113</span><a id="line.113">                Set&lt;Character&gt; invalidCharSet = new HashSet&lt;Character&gt;();</a>
+<span class="sourceLineNo">114</span><a id="line.114">                StringBuilder cleanSeq = new StringBuilder();</a>
+<span class="sourceLineNo">115</span><a id="line.115">                if(cSet == null) cSet = PeptideProperties.standardAASet;</a>
+<span class="sourceLineNo">116</span><a id="line.116">                for(char c:sequence.toCharArray()){</a>
+<span class="sourceLineNo">117</span><a id="line.117">                        if(!cSet.contains(c)){</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                cleanSeq.append("-");</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                invalidCharSet.add(c);</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        }else{</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                cleanSeq.append(c);</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        }</a>
+<span class="sourceLineNo">123</span><a id="line.123">                }</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                // TODO: Should be StringJoiner once JDK8 used</a>
+<span class="sourceLineNo">126</span><a id="line.126">                StringBuilder stringBuilder = new StringBuilder();</a>
+<span class="sourceLineNo">127</span><a id="line.127">                for(char c: invalidCharSet){</a>
+<span class="sourceLineNo">128</span><a id="line.128">                        stringBuilder.append("\'" + c + "\'");</a>
+<span class="sourceLineNo">129</span><a id="line.129">                }</a>
+<span class="sourceLineNo">130</span><a id="line.130">                stringBuilder.deleteCharAt(stringBuilder.length()-1);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                stringBuilder.append(" are being replaced with '-'");</a>
+<span class="sourceLineNo">132</span><a id="line.132">                logger.warn(stringBuilder.toString());</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">                return cleanSeq.toString();</a>
+<span class="sourceLineNo">135</span><a id="line.135">        }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">        /**</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * Checks if the sequence contains invalid characters.</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * Note that any character outside of the 20 standard protein amino acid codes are considered as invalid.</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * If yes, it will return a new sequence where invalid characters are replaced with '-'.</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * If no, it will simply return the input sequence.</a>
+<span class="sourceLineNo">142</span><a id="line.142">         *</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * @param sequence</a>
+<span class="sourceLineNo">144</span><a id="line.144">         *              protein sequence to be check for invalid characters.</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * @return</a>
+<span class="sourceLineNo">146</span><a id="line.146">         *              a sequence with no invalid characters.</a>
+<span class="sourceLineNo">147</span><a id="line.147">         */</a>
+<span class="sourceLineNo">148</span><a id="line.148">        public static final String checkSequence(String sequence){</a>
+<span class="sourceLineNo">149</span><a id="line.149">                return checkSequence(sequence, null);</a>
+<span class="sourceLineNo">150</span><a id="line.150">        }</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">        /**</a>
+<span class="sourceLineNo">153</span><a id="line.153">         * Checks if the sequence contains invalid characters.</a>
+<span class="sourceLineNo">154</span><a id="line.154">         * Note that any character outside of the 20 standard protein amino acid codes are considered as invalid.</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * If yes, it will return a new sequence where invalid characters are replaced with '-'.</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * If no, it will simply return the input sequence.</a>
+<span class="sourceLineNo">157</span><a id="line.157">         *</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * @param sequence</a>
+<span class="sourceLineNo">159</span><a id="line.159">         *              protein sequence to be check for invalid characters.</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * @param cSet</a>
+<span class="sourceLineNo">161</span><a id="line.161">         *              character set which define the valid characters.</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * @return</a>
+<span class="sourceLineNo">163</span><a id="line.163">         *              a sequence with no invalid characters.</a>
+<span class="sourceLineNo">164</span><a id="line.164">         */</a>
+<span class="sourceLineNo">165</span><a id="line.165">        public static final String checkSequence(String sequence, Set&lt;Character&gt; cSet){</a>
+<span class="sourceLineNo">166</span><a id="line.166">                boolean containInvalid = false;</a>
+<span class="sourceLineNo">167</span><a id="line.167">                if(cSet != null){</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        containInvalid = sequence != null &amp;&amp; doesSequenceContainInvalidChar(sequence, cSet);</a>
+<span class="sourceLineNo">169</span><a id="line.169">                }else{</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        containInvalid = sequence != null &amp;&amp; doesSequenceContainInvalidChar(sequence, PeptideProperties.standardAASet);</a>
+<span class="sourceLineNo">171</span><a id="line.171">                }</a>
+<span class="sourceLineNo">172</span><a id="line.172">                if(containInvalid){</a>
+<span class="sourceLineNo">173</span><a id="line.173">                        String cSeq = cleanSequence(sequence, cSet);</a>
+<span class="sourceLineNo">174</span><a id="line.174">                        logger.warn("There exists invalid characters in the sequence. Computed results might not be precise.");</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        logger.warn("To remove this warning: Please use org.biojava.nbio.aaproperties.Utils.cleanSequence to clean sequence.");</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">                        return cSeq;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                }</a>
+<span class="sourceLineNo">179</span><a id="line.179">                else{</a>
+<span class="sourceLineNo">180</span><a id="line.180">                        return sequence;</a>
+<span class="sourceLineNo">181</span><a id="line.181">                }</a>
+<span class="sourceLineNo">182</span><a id="line.182">        }</a>
+<span class="sourceLineNo">183</span><a id="line.183">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

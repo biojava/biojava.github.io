@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on December 19, 2013</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Douglas Myers-Turnbull</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.structure;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.IOException;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.ArrayList;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Arrays;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.LinkedList;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.List;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.align.util.AtomCache;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.contact.Grid;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">/**</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * This is the canonical way to identify a part of a structure.</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;p&gt;The current syntax allows the specification of a set of residues from</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * the first model of a structure. Future versions may be extended to represent</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * additional properties.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * &lt;p&gt;Identifiers should adhere to the following specification, although some</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * additional forms may be tolerated where unambiguous for backwards compatibility.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *              name          := pdbID</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *                             | pdbID '.' chainID</a>
+<span class="sourceLineNo">049</span><a id="line.49"> *                             | pdbID '.' range</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *              range         := range (',' range)?</a>
+<span class="sourceLineNo">051</span><a id="line.51"> *                             | chainID</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *                             | chainID '_' resNum '-' resNum</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *              pdbID         := [0-9][a-zA-Z0-9]{3}</a>
+<span class="sourceLineNo">054</span><a id="line.54"> *              chainID       := [a-zA-Z0-9]+</a>
+<span class="sourceLineNo">055</span><a id="line.55"> *              resNum        := [-+]?[0-9]+[A-Za-z]?</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * For example:</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59"> *              1TIM                            #whole structure</a>
+<span class="sourceLineNo">060</span><a id="line.60"> *              1tim                            #same as above</a>
+<span class="sourceLineNo">061</span><a id="line.61"> *              4HHB.C                          #single chain</a>
+<span class="sourceLineNo">062</span><a id="line.62"> *              3AA0.A,B                        #two chains</a>
+<span class="sourceLineNo">063</span><a id="line.63"> *              4GCR.A_1-40                     #substructure</a>
+<span class="sourceLineNo">064</span><a id="line.64"> *      3iek.A_17-28,A_56-294,A_320-377 #substructure of 3 disjoint parts</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * More options may be added to the specification at a future time.</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68"> * @author dmyersturnbull</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">070</span><a id="line.70"> */</a>
+<span class="sourceLineNo">071</span><a id="line.71">public class SubstructureIdentifier implements StructureIdentifier {</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">        private static final long serialVersionUID = 1L;</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        private static final Logger logger = LoggerFactory.getLogger(SubstructureIdentifier.class);</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">        private final String pdbId;</a>
+<span class="sourceLineNo">079</span><a id="line.79">        private final List&lt;ResidueRange&gt; ranges;</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        /**</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * Create a new identifier from a string.</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * @param id</a>
+<span class="sourceLineNo">084</span><a id="line.84">         */</a>
+<span class="sourceLineNo">085</span><a id="line.85">        public SubstructureIdentifier(String id) {</a>
+<span class="sourceLineNo">086</span><a id="line.86">                String[] idRange = id.split("\\.");</a>
+<span class="sourceLineNo">087</span><a id="line.87">                if(1 &gt; idRange.length || idRange.length &gt; 2 ) {</a>
+<span class="sourceLineNo">088</span><a id="line.88">                        throw new IllegalArgumentException(String.format("Malformed %s: %s",getClass().getSimpleName(),id));</a>
+<span class="sourceLineNo">089</span><a id="line.89">                }</a>
+<span class="sourceLineNo">090</span><a id="line.90">                if(idRange[0].length() != 4) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">                        this.pdbId = idRange[0];</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        // Changed from Exception to a warning to support files and stuff -sbliven 2015/01/22</a>
+<span class="sourceLineNo">093</span><a id="line.93">                        logger.warn(String.format("Unrecognized PDB code %s",this.pdbId));</a>
+<span class="sourceLineNo">094</span><a id="line.94">                } else {</a>
+<span class="sourceLineNo">095</span><a id="line.95">                        this.pdbId = idRange[0].toUpperCase();</a>
+<span class="sourceLineNo">096</span><a id="line.96">                }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                if( idRange.length == 2) {</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        String rangeStr = idRange[1].trim();</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">                        this.ranges = ResidueRange.parseMultiple(rangeStr);</a>
+<span class="sourceLineNo">102</span><a id="line.102">                } else {</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        this.ranges = new LinkedList&lt;ResidueRange&gt;();</a>
+<span class="sourceLineNo">104</span><a id="line.104">                }</a>
+<span class="sourceLineNo">105</span><a id="line.105">        }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">        /**</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * Create a new identifier based on a set of ranges.</a>
+<span class="sourceLineNo">109</span><a id="line.109">         *</a>
+<span class="sourceLineNo">110</span><a id="line.110">         * If ranges is empty, includes all residues.</a>
+<span class="sourceLineNo">111</span><a id="line.111">         * @param pdbId</a>
+<span class="sourceLineNo">112</span><a id="line.112">         * @param ranges</a>
+<span class="sourceLineNo">113</span><a id="line.113">         */</a>
+<span class="sourceLineNo">114</span><a id="line.114">        public SubstructureIdentifier(String pdbId, List&lt;ResidueRange&gt; ranges) {</a>
+<span class="sourceLineNo">115</span><a id="line.115">                if(ranges == null) {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                        throw new NullPointerException("Null ranges list");</a>
+<span class="sourceLineNo">117</span><a id="line.117">                }</a>
+<span class="sourceLineNo">118</span><a id="line.118">                this.pdbId = pdbId;</a>
+<span class="sourceLineNo">119</span><a id="line.119">                this.ranges = ranges;</a>
+<span class="sourceLineNo">120</span><a id="line.120">        }</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">        @Override</a>
+<span class="sourceLineNo">123</span><a id="line.123">        public String toString() {</a>
+<span class="sourceLineNo">124</span><a id="line.124">                return getIdentifier();</a>
+<span class="sourceLineNo">125</span><a id="line.125">        }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">        /**</a>
+<span class="sourceLineNo">128</span><a id="line.128">         * Get the String form of this identifier.</a>
+<span class="sourceLineNo">129</span><a id="line.129">         *</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * This provides the canonical form for a StructureIdentifier and has</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * all the information needed to recreate a particular substructure.</a>
+<span class="sourceLineNo">132</span><a id="line.132">         *</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * Example: 3iek.A_17-28,A_56-294</a>
+<span class="sourceLineNo">134</span><a id="line.134">         * @return The String form of this identifier</a>
+<span class="sourceLineNo">135</span><a id="line.135">         */</a>
+<span class="sourceLineNo">136</span><a id="line.136">        @Override</a>
+<span class="sourceLineNo">137</span><a id="line.137">        public String getIdentifier() {</a>
+<span class="sourceLineNo">138</span><a id="line.138">                if (ranges.isEmpty()) return pdbId;</a>
+<span class="sourceLineNo">139</span><a id="line.139">                return pdbId + "." + ResidueRange.toString(ranges);</a>
+<span class="sourceLineNo">140</span><a id="line.140">        }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">        public String getPdbId() {</a>
+<span class="sourceLineNo">143</span><a id="line.143">                return pdbId;</a>
+<span class="sourceLineNo">144</span><a id="line.144">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146">        public List&lt;ResidueRange&gt; getResidueRanges() {</a>
+<span class="sourceLineNo">147</span><a id="line.147">                return ranges;</a>
+<span class="sourceLineNo">148</span><a id="line.148">        }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">        /**</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * Return itself. SubstructureIdentifiers are canonical!</a>
+<span class="sourceLineNo">152</span><a id="line.152">         */</a>
+<span class="sourceLineNo">153</span><a id="line.153">        @Override</a>
+<span class="sourceLineNo">154</span><a id="line.154">        public SubstructureIdentifier toCanonical() {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                return this;</a>
+<span class="sourceLineNo">156</span><a id="line.156">        }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        /**</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * Takes a complete structure as input and reduces it to residues present in</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * the specified ranges</a>
+<span class="sourceLineNo">161</span><a id="line.161">         *</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * &lt;p&gt;The returned structure will be a shallow copy of the input, with shared</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * Chains, Residues, etc.</a>
+<span class="sourceLineNo">164</span><a id="line.164">         *</a>
+<span class="sourceLineNo">165</span><a id="line.165">         * &lt;p&gt;Ligands are handled in a special way. If a full chain is selected</a>
+<span class="sourceLineNo">166</span><a id="line.166">         * (e.g. '1ABC.A') then any waters and ligands with matching chain name are</a>
+<span class="sourceLineNo">167</span><a id="line.167">         * included. If a residue range is present ('1ABC.A:1-100') then any</a>
+<span class="sourceLineNo">168</span><a id="line.168">         * ligands (technically non-water non-polymer atoms) within</a>
+<span class="sourceLineNo">169</span><a id="line.169">         * {@link StructureTools#DEFAULT_LIGAND_PROXIMITY_CUTOFF} of the selected</a>
+<span class="sourceLineNo">170</span><a id="line.170">         * range are included, regardless of chain.</a>
+<span class="sourceLineNo">171</span><a id="line.171">         * @param input A full structure, e.g. as loaded from the PDB. The structure</a>
+<span class="sourceLineNo">172</span><a id="line.172">         * ID should match that returned by getPdbId().</a>
+<span class="sourceLineNo">173</span><a id="line.173">         * @return</a>
+<span class="sourceLineNo">174</span><a id="line.174">         * @throws StructureException</a>
+<span class="sourceLineNo">175</span><a id="line.175">         * @see StructureTools#getReducedStructure(Structure, String)</a>
+<span class="sourceLineNo">176</span><a id="line.176">         */</a>
+<span class="sourceLineNo">177</span><a id="line.177">        @Override</a>
+<span class="sourceLineNo">178</span><a id="line.178">        public Structure reduce(Structure s) throws StructureException {</a>
+<span class="sourceLineNo">179</span><a id="line.179">                // Follows StructureImpl.clone()</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">                // Create new structure &amp; copy basic properties</a>
+<span class="sourceLineNo">182</span><a id="line.182">                Structure newS = new StructureImpl();</a>
+<span class="sourceLineNo">183</span><a id="line.183"></a>
+<span class="sourceLineNo">184</span><a id="line.184">                newS.setPDBCode(s.getPDBCode());</a>
+<span class="sourceLineNo">185</span><a id="line.185">                newS.setPDBHeader(s.getPDBHeader());</a>
+<span class="sourceLineNo">186</span><a id="line.186">                newS.setName(this.toString());</a>
+<span class="sourceLineNo">187</span><a id="line.187">                newS.setDBRefs(s.getDBRefs());</a>
+<span class="sourceLineNo">188</span><a id="line.188">                newS.setBiologicalAssembly(s.isBiologicalAssembly());</a>
+<span class="sourceLineNo">189</span><a id="line.189">                newS.getPDBHeader().setDescription(</a>
+<span class="sourceLineNo">190</span><a id="line.190">                                "sub-range " + ranges + " of "  + newS.getPDBCode() + " "</a>
+<span class="sourceLineNo">191</span><a id="line.191">                                                + s.getPDBHeader().getDescription());</a>
+<span class="sourceLineNo">192</span><a id="line.192">                newS.setEntityInfos(new ArrayList&lt;&gt;());</a>
+<span class="sourceLineNo">193</span><a id="line.193">                // TODO The following should be only copied for atoms which are present in the range.</a>
+<span class="sourceLineNo">194</span><a id="line.194">                newS.setSSBonds(s.getSSBonds());</a>
+<span class="sourceLineNo">195</span><a id="line.195">                newS.setSites(s.getSites());</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                newS.setStructureIdentifier(this);</a>
+<span class="sourceLineNo">198</span><a id="line.198"></a>
+<span class="sourceLineNo">199</span><a id="line.199">                for( int modelNr=0;modelNr&lt;s.nrModels();modelNr++) {</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">                        // Construct new model</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        newS.addModel(new ArrayList&lt;Chain&gt;());</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">                        if(getResidueRanges().isEmpty()) {</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                // Include all residues</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                newS.setEntityInfos(s.getEntityInfos());</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                newS.setSSBonds(s.getSSBonds());</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                newS.setSites(s.getSites());</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">                                newS.setModel(modelNr, s.getModel(modelNr));</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        } else {</a>
+<span class="sourceLineNo">212</span><a id="line.212">                                // Restrict residues</a>
+<span class="sourceLineNo">213</span><a id="line.213">                                for( ResidueRange range: getResidueRanges()) {</a>
+<span class="sourceLineNo">214</span><a id="line.214"></a>
+<span class="sourceLineNo">215</span><a id="line.215">                                        String chainName = range.getChainName();</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                        ResidueNumber pdbresnum1 = range.getStart();</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                        ResidueNumber pdbresnum2 = range.getEnd();</a>
+<span class="sourceLineNo">218</span><a id="line.218"></a>
+<span class="sourceLineNo">219</span><a id="line.219">//                                      StructureTools.addGroupsToStructure(newS, groups, modelNr, false);</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                        Chain polyChain; //polymer</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                        if(chainName.equals("_") ) {</a>
+<span class="sourceLineNo">222</span><a id="line.222">                                                // Handle special case of "_" chain for single-chain proteins</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                                polyChain = s.getPolyChains(modelNr).get(0);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                                chainName = polyChain.getName();</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                                if(pdbresnum1 != null)</a>
+<span class="sourceLineNo">226</span><a id="line.226">                                                        pdbresnum1.setChainName(chainName);</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                                if(pdbresnum2 != null)</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                                        pdbresnum2.setChainName(chainName);</a>
+<span class="sourceLineNo">229</span><a id="line.229"></a>
+<span class="sourceLineNo">230</span><a id="line.230">                                                if(s.getPolyChains().size() != 1) {</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                                        // SCOP 1.71 uses this for some proteins with multiple chains</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                                        // Print a warning in this ambiguous case</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                                        logger.warn("Multiple possible chains match '_'. Using chain {}",chainName);</a>
+<span class="sourceLineNo">234</span><a id="line.234">                                                }</a>
+<span class="sourceLineNo">235</span><a id="line.235">                                        } else {</a>
+<span class="sourceLineNo">236</span><a id="line.236">                                                // Explicit chain</a>
+<span class="sourceLineNo">237</span><a id="line.237">                                                polyChain = s.getPolyChainByPDB(chainName,modelNr);</a>
+<span class="sourceLineNo">238</span><a id="line.238">                                                if( polyChain == null ) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                                                        // Chain not found</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                                        // Maybe it was a chain index, masquerading as a chainName?</a>
+<span class="sourceLineNo">241</span><a id="line.241">                                                        try {</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                                                int chainNum = Integer.parseInt(chainName);</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                                                polyChain = s.getChainByIndex(modelNr, chainNum);</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                                                chainName = polyChain.getName();</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                                                if(pdbresnum1 != null)</a>
+<span class="sourceLineNo">246</span><a id="line.246">                                                                        pdbresnum1.setChainName(chainName);</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                                                if(pdbresnum2 != null)</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                                                        pdbresnum2.setChainName(chainName);</a>
+<span class="sourceLineNo">249</span><a id="line.249">                                                                logger.warn("No chain found for {}. Interpretting it as an index, using chain {} instead",chainName,polyChain.getId());</a>
+<span class="sourceLineNo">250</span><a id="line.250">                                                        } catch(NumberFormatException e3) {</a>
+<span class="sourceLineNo">251</span><a id="line.251">                                                                // Not an index. Throw the original exception</a>
+<span class="sourceLineNo">252</span><a id="line.252">                                                                throw new StructureException(String.format("Unrecognized chain %s in %s",chainName,getIdentifier()));</a>
+<span class="sourceLineNo">253</span><a id="line.253">                                                        }</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                                }</a>
+<span class="sourceLineNo">255</span><a id="line.255">                                        }</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">                                        if(pdbresnum1 == null &amp;&amp; pdbresnum2 == null) {</a>
+<span class="sourceLineNo">258</span><a id="line.258">                                                // Include all atoms with matching chainName</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                                StructureTools.addGroupsToStructure(newS, polyChain.getAtomGroups(), modelNr, false);</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                                for(Chain chain : s.getNonPolyChainsByPDB(chainName, modelNr) ) {</a>
+<span class="sourceLineNo">261</span><a id="line.261">                                                        StructureTools.addGroupsToStructure(newS, chain.getAtomGroups(), modelNr, false);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                                                }</a>
+<span class="sourceLineNo">263</span><a id="line.263">                                                Chain waters = s.getWaterChainByPDB(chainName, modelNr);</a>
+<span class="sourceLineNo">264</span><a id="line.264">                                                if( waters != null) {</a>
+<span class="sourceLineNo">265</span><a id="line.265">                                                        StructureTools.addGroupsToStructure(newS, waters.getAtomGroups(), modelNr, false);</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                                }</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">                                                // TODO do we need to prune SeqRes down to the atoms present? -SB 2016-10-7</a>
+<span class="sourceLineNo">269</span><a id="line.269">                                        } else {</a>
+<span class="sourceLineNo">270</span><a id="line.270">                                                // Include polymer range and any proximal ligands</a>
+<span class="sourceLineNo">271</span><a id="line.271">                                                List&lt;Group&gt; polygroups = Arrays.asList(polyChain.getGroupsByPDB(pdbresnum1, pdbresnum2));</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                                StructureTools.addGroupsToStructure(newS, polygroups, modelNr, false);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                                                copyLigandsByProximity(s,newS, StructureTools.DEFAULT_LIGAND_PROXIMITY_CUTOFF, modelNr, modelNr);</a>
+<span class="sourceLineNo">274</span><a id="line.274">                                        }</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                } // end range</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        }</a>
+<span class="sourceLineNo">277</span><a id="line.277">                } // end modelNr</a>
+<span class="sourceLineNo">278</span><a id="line.278"></a>
+<span class="sourceLineNo">279</span><a id="line.279">                return newS;</a>
+<span class="sourceLineNo">280</span><a id="line.280">        }</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">        /**</a>
+<span class="sourceLineNo">283</span><a id="line.283">         * Loads the complete structure based on {@link #getPdbId()}.</a>
+<span class="sourceLineNo">284</span><a id="line.284">         *</a>
+<span class="sourceLineNo">285</span><a id="line.285">         * @param AtomCache A source of structures</a>
+<span class="sourceLineNo">286</span><a id="line.286">         * @return A Structure containing at least the atoms identified by this,</a>
+<span class="sourceLineNo">287</span><a id="line.287">         *  or null if no PDB ID is set</a>
+<span class="sourceLineNo">288</span><a id="line.288">         * @throws StructureException For errors loading and parsing the structure</a>
+<span class="sourceLineNo">289</span><a id="line.289">         * @throws IOException Errors reading the structure from disk</a>
+<span class="sourceLineNo">290</span><a id="line.290">         */</a>
+<span class="sourceLineNo">291</span><a id="line.291">        @Override</a>
+<span class="sourceLineNo">292</span><a id="line.292">        public Structure loadStructure(AtomCache cache) throws IOException, StructureException {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                String pdb = getPdbId();</a>
+<span class="sourceLineNo">294</span><a id="line.294">                if(pdb == null)</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        return null;</a>
+<span class="sourceLineNo">296</span><a id="line.296">                return cache.getStructureForPdbId(pdb);</a>
+<span class="sourceLineNo">297</span><a id="line.297">        }</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299">        /**</a>
+<span class="sourceLineNo">300</span><a id="line.300">         * Supplements the reduced structure with ligands from the full structure based on</a>
+<span class="sourceLineNo">301</span><a id="line.301">         * a distance cutoff. Ligand groups are moved (destructively) from full to reduced</a>
+<span class="sourceLineNo">302</span><a id="line.302">         * if they fall within the cutoff of any atom in the reduced structure.</a>
+<span class="sourceLineNo">303</span><a id="line.303">         * The {@link StructureTools#DEFAULT_LIGAND_PROXIMITY_CUTOFF default cutoff}</a>
+<span class="sourceLineNo">304</span><a id="line.304">         * is used.</a>
+<span class="sourceLineNo">305</span><a id="line.305">         * @param full Structure containing all ligands</a>
+<span class="sourceLineNo">306</span><a id="line.306">         * @param reduced Structure with a subset of the polymer groups from full</a>
+<span class="sourceLineNo">307</span><a id="line.307">         * @see StructureTools#getLigandsByProximity(java.util.Collection, Atom[], double)</a>
+<span class="sourceLineNo">308</span><a id="line.308">         */</a>
+<span class="sourceLineNo">309</span><a id="line.309">        protected static void copyLigandsByProximity(Structure full, Structure reduced) {</a>
+<span class="sourceLineNo">310</span><a id="line.310">                // Normal case where all models should be copied from full to reduced</a>
+<span class="sourceLineNo">311</span><a id="line.311">                assert full.nrModels() &gt;= reduced.nrModels();</a>
+<span class="sourceLineNo">312</span><a id="line.312">                for(int model = 0; model&lt; reduced.nrModels(); model++) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                        copyLigandsByProximity(full, reduced, StructureTools.DEFAULT_LIGAND_PROXIMITY_CUTOFF, model, model);</a>
+<span class="sourceLineNo">314</span><a id="line.314">                }</a>
+<span class="sourceLineNo">315</span><a id="line.315">        }</a>
+<span class="sourceLineNo">316</span><a id="line.316">        /**</a>
+<span class="sourceLineNo">317</span><a id="line.317">         * Supplements the reduced structure with ligands from the full structure based on</a>
+<span class="sourceLineNo">318</span><a id="line.318">         * a distance cutoff. Ligand groups are moved (destructively) from full to reduced</a>
+<span class="sourceLineNo">319</span><a id="line.319">         * if they fall within the cutoff of any atom in the reduced structure.</a>
+<span class="sourceLineNo">320</span><a id="line.320">         * @param full Structure containing all ligands</a>
+<span class="sourceLineNo">321</span><a id="line.321">         * @param reduced Structure with a subset of the polymer groups from full</a>
+<span class="sourceLineNo">322</span><a id="line.322">         * @param cutoff Distance cutoff (Å)</a>
+<span class="sourceLineNo">323</span><a id="line.323">         * @param fromModel source model in full</a>
+<span class="sourceLineNo">324</span><a id="line.324">         * @param toModel destination model in reduced</a>
+<span class="sourceLineNo">325</span><a id="line.325">         * @see StructureTools#getLigandsByProximity(java.util.Collection, Atom[], double)</a>
+<span class="sourceLineNo">326</span><a id="line.326">         */</a>
+<span class="sourceLineNo">327</span><a id="line.327">        protected static void copyLigandsByProximity(Structure full, Structure reduced, double cutoff, int fromModel, int toModel) {</a>
+<span class="sourceLineNo">328</span><a id="line.328">                // Geometric hashing of the reduced structure</a>
+<span class="sourceLineNo">329</span><a id="line.329">                Grid grid = new Grid(cutoff);</a>
+<span class="sourceLineNo">330</span><a id="line.330">                Atom[] nonwaters = StructureTools.getAllNonHAtomArray(reduced,true,toModel);</a>
+<span class="sourceLineNo">331</span><a id="line.331">                if( nonwaters.length &lt; 1 )</a>
+<span class="sourceLineNo">332</span><a id="line.332">                        return;</a>
+<span class="sourceLineNo">333</span><a id="line.333">                grid.addAtoms(nonwaters);</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">                full.getNonPolyChains(fromModel).stream() //potential ligand chains</a>
+<span class="sourceLineNo">336</span><a id="line.336">                .flatMap((chain) -&gt; chain.getAtomGroups().stream() ) // potential ligand groups</a>
+<span class="sourceLineNo">337</span><a id="line.337">                .filter( (g) -&gt; !g.isWater() ) // ignore waters</a>
+<span class="sourceLineNo">338</span><a id="line.338">                .filter( (g) -&gt; !g.isPolymeric() ) // already shouldn't be polymeric, but filter anyways</a>
+<span class="sourceLineNo">339</span><a id="line.339">                .filter( (g) -&gt; grid.hasAnyContact(Calc.atomsToPoints(g.getAtoms())) ) // must contact reduced</a>
+<span class="sourceLineNo">340</span><a id="line.340">                .sequential() // Keeps ligands from the same chain together if possible</a>
+<span class="sourceLineNo">341</span><a id="line.341">                .reduce((Chain)null, // reduction updates the chain guess</a>
+<span class="sourceLineNo">342</span><a id="line.342">                                (guess, g ) -&gt; {</a>
+<span class="sourceLineNo">343</span><a id="line.343">                                        boolean wasAdded;</a>
+<span class="sourceLineNo">344</span><a id="line.344">                                        try {</a>
+<span class="sourceLineNo">345</span><a id="line.345">                                                // Check that it's not in reduced already</a>
+<span class="sourceLineNo">346</span><a id="line.346">                                                wasAdded = reduced.findGroup(g.getChainId(),</a>
+<span class="sourceLineNo">347</span><a id="line.347">                                                                g.getResidueNumber().toString(), toModel) != null;</a>
+<span class="sourceLineNo">348</span><a id="line.348">                                        } catch (StructureException e) {</a>
+<span class="sourceLineNo">349</span><a id="line.349">                                                // not found</a>
+<span class="sourceLineNo">350</span><a id="line.350">                                                wasAdded = false;</a>
+<span class="sourceLineNo">351</span><a id="line.351">                                        }</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                        if( !wasAdded ) {</a>
+<span class="sourceLineNo">353</span><a id="line.353">                                                // Add the ligand to reduced</a>
+<span class="sourceLineNo">354</span><a id="line.354">                                                // note this is not idempotent, but it is synchronized on reduced</a>
+<span class="sourceLineNo">355</span><a id="line.355">                                                logger.info("Adding ligand group {} {} by proximity",g.getPDBName(), g.getResidueNumber().toPDB());</a>
+<span class="sourceLineNo">356</span><a id="line.356">                                                return StructureTools.addGroupToStructure(reduced, g, toModel, guess, false);</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                        }</a>
+<span class="sourceLineNo">358</span><a id="line.358">                                        return guess;</a>
+<span class="sourceLineNo">359</span><a id="line.359">                                },</a>
+<span class="sourceLineNo">360</span><a id="line.360">                                // update to the new guess</a>
+<span class="sourceLineNo">361</span><a id="line.361">                                (oldGuess, newGuess) -&gt; newGuess );</a>
+<span class="sourceLineNo">362</span><a id="line.362">        }</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

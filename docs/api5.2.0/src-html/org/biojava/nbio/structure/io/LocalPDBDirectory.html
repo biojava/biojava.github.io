@@ -1,0 +1,848 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * created at Oct 18, 2008</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.nbio.structure.io;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.PDBStatus;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.PDBStatus.Status;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.StructureException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.align.util.UserConfiguration;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.core.util.FileDownloadUtils;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.rcsb.mmtf.utils.CodecUtils;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.core.util.InputStreamProvider;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.io.File;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.io.IOException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.io.InputStream;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.net.URL;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.nio.file.Files;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.text.ParseException;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.text.SimpleDateFormat;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import java.util.*;</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">/**</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * Superclass for classes which download and interact with the PDB's FTP server,</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * specifically {@link PDBFileReader} and {@link MMCIFFileReader}. The basic</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * functionality of downloading structure files from the FTP site is gathered</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * here, making the child classes responsible for only the specific paths and</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * file formats needed.</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *</a>
+<span class="sourceLineNo">053</span><a id="line.53"> */</a>
+<span class="sourceLineNo">054</span><a id="line.54">public abstract class LocalPDBDirectory implements StructureIOFile {</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        private static final Logger logger = LoggerFactory.getLogger(LocalPDBDirectory.class);</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">        /**</a>
+<span class="sourceLineNo">059</span><a id="line.59">         * The default server name, prefixed by the protocol string (http:// or ftp://).</a>
+<span class="sourceLineNo">060</span><a id="line.60">         * Note that we don't support file stamp retrieving for ftp protocol, thus some of the</a>
+<span class="sourceLineNo">061</span><a id="line.61">         * fetch modes will not work properly with ftp protocol</a>
+<span class="sourceLineNo">062</span><a id="line.62">         */</a>
+<span class="sourceLineNo">063</span><a id="line.63">        public static final String DEFAULT_PDB_FILE_SERVER = "http://ftp.wwpdb.org";</a>
+<span class="sourceLineNo">064</span><a id="line.64">        public static final String PDB_FILE_SERVER_PROPERTY = "PDB.FILE.SERVER";</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * Behaviors for when an obsolete structure is requested.</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * @author Spencer Bliven</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * @see LocalPDBDirectory#setObsoleteBehavior(ObsoleteBehavior)</a>
+<span class="sourceLineNo">070</span><a id="line.70">         */</a>
+<span class="sourceLineNo">071</span><a id="line.71">        public static enum ObsoleteBehavior {</a>
+<span class="sourceLineNo">072</span><a id="line.72">                /** Fetch the most recent version of the PDB entry. */</a>
+<span class="sourceLineNo">073</span><a id="line.73">                FETCH_CURRENT,</a>
+<span class="sourceLineNo">074</span><a id="line.74">                /** Fetch the obsolete entry from the PDB archives. */</a>
+<span class="sourceLineNo">075</span><a id="line.75">                FETCH_OBSOLETE,</a>
+<span class="sourceLineNo">076</span><a id="line.76">                /** Throw a StructureException for obsolete entries.*/</a>
+<span class="sourceLineNo">077</span><a id="line.77">                THROW_EXCEPTION;</a>
+<span class="sourceLineNo">078</span><a id="line.78"></a>
+<span class="sourceLineNo">079</span><a id="line.79">                public static final ObsoleteBehavior DEFAULT=THROW_EXCEPTION;</a>
+<span class="sourceLineNo">080</span><a id="line.80">        }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">        /**</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * Controls when the class should fetch files from the ftp server</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * @author Spencer Bliven</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *</a>
+<span class="sourceLineNo">086</span><a id="line.86">         */</a>
+<span class="sourceLineNo">087</span><a id="line.87">        public static enum FetchBehavior {</a>
+<span class="sourceLineNo">088</span><a id="line.88">                /** Never fetch from the server; Throw errors for missing files */</a>
+<span class="sourceLineNo">089</span><a id="line.89">                LOCAL_ONLY,</a>
+<span class="sourceLineNo">090</span><a id="line.90">                /** Fetch missing files from the server. Don't check for outdated files */</a>
+<span class="sourceLineNo">091</span><a id="line.91">                FETCH_FILES,</a>
+<span class="sourceLineNo">092</span><a id="line.92">                /**</a>
+<span class="sourceLineNo">093</span><a id="line.93">                 * Fetch missing files from the server, also fetch if file present but older than the</a>
+<span class="sourceLineNo">094</span><a id="line.94">                 * server file.</a>
+<span class="sourceLineNo">095</span><a id="line.95">                 * This requires always querying the server for the last modified time of the file, thus</a>
+<span class="sourceLineNo">096</span><a id="line.96">                 * it adds an overhead to getting files from cache.</a>
+<span class="sourceLineNo">097</span><a id="line.97">                 */</a>
+<span class="sourceLineNo">098</span><a id="line.98">                FETCH_IF_OUTDATED,</a>
+<span class="sourceLineNo">099</span><a id="line.99">                /**</a>
+<span class="sourceLineNo">100</span><a id="line.100">                 * Fetch missing files from the server.</a>
+<span class="sourceLineNo">101</span><a id="line.101">                 * Also force the download of files older than {@value #LAST_REMEDIATION_DATE_STRING}.</a>
+<span class="sourceLineNo">102</span><a id="line.102">                 */</a>
+<span class="sourceLineNo">103</span><a id="line.103">                FETCH_REMEDIATED,</a>
+<span class="sourceLineNo">104</span><a id="line.104">                /** For every file, force downloading from the server */</a>
+<span class="sourceLineNo">105</span><a id="line.105">                FORCE_DOWNLOAD;</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">                public static final FetchBehavior DEFAULT = FETCH_REMEDIATED;</a>
+<span class="sourceLineNo">108</span><a id="line.108">        }</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">        /**</a>
+<span class="sourceLineNo">111</span><a id="line.111">         * Date of the latest PDB file remediation</a>
+<span class="sourceLineNo">112</span><a id="line.112">         */</a>
+<span class="sourceLineNo">113</span><a id="line.113">        public static final long LAST_REMEDIATION_DATE ;</a>
+<span class="sourceLineNo">114</span><a id="line.114">        private static final String LAST_REMEDIATION_DATE_STRING = "2011/07/12";</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">        static {</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118">                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.US);</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">                long t = 0;</a>
+<span class="sourceLineNo">121</span><a id="line.121">                try {</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        Date d = formatter.parse(LAST_REMEDIATION_DATE_STRING);</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        t = d.getTime();</a>
+<span class="sourceLineNo">124</span><a id="line.124">                } catch (ParseException e){</a>
+<span class="sourceLineNo">125</span><a id="line.125">                        logger.error("Unexpected error! could not parse LAST_REMEDIATION_DATE: "+e.getMessage());</a>
+<span class="sourceLineNo">126</span><a id="line.126">                }</a>
+<span class="sourceLineNo">127</span><a id="line.127">                LAST_REMEDIATION_DATE = t;</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        protected static final String lineSplit = System.getProperty("file.separator");</a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">        /** Minimum size for a valid structure file (CIF or PDB), in bytes */</a>
+<span class="sourceLineNo">133</span><a id="line.133">        public static final long MIN_PDB_FILE_SIZE = 40;  // Empty gzip files are 20bytes. Add a few more for buffer.</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">        private File path;</a>
+<span class="sourceLineNo">136</span><a id="line.136">        private List&lt;String&gt; extensions;</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">        /**</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * The server name, prefixed by the protocol string (http:// or ftp://).</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * Note that we don't support file stamp retrieving for ftp protocol, thus some of the</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * fetch modes will not work properly with ftp protocol</a>
+<span class="sourceLineNo">142</span><a id="line.142">         */</a>
+<span class="sourceLineNo">143</span><a id="line.143">        private String serverName;</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">        private FileParsingParameters params;</a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">        private ObsoleteBehavior obsoleteBehavior;</a>
+<span class="sourceLineNo">148</span><a id="line.148">        private FetchBehavior fetchBehavior;</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">        // Cache results of get*DirPath()</a>
+<span class="sourceLineNo">152</span><a id="line.152">        private String splitDirURL; // path on the server, starting with a slash and ending before the 2-char split directories</a>
+<span class="sourceLineNo">153</span><a id="line.153">        private String obsoleteDirURL;</a>
+<span class="sourceLineNo">154</span><a id="line.154">        private File splitDirPath; // path to the directory before the 2-char split</a>
+<span class="sourceLineNo">155</span><a id="line.155">        private File obsoleteDirPath;</a>
+<span class="sourceLineNo">156</span><a id="line.156"></a>
+<span class="sourceLineNo">157</span><a id="line.157">        /**</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * Subclasses should provide default and single-string constructors.</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * They should use {@link #addExtension(String)} to add one or more extensions.</a>
+<span class="sourceLineNo">160</span><a id="line.160">         *</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * &lt;p&gt;If path is null, initialize using the system property/environment variable</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * {@link UserConfiguration#PDB_DIR}.</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * @param path Path to the PDB file directory</a>
+<span class="sourceLineNo">164</span><a id="line.164">         */</a>
+<span class="sourceLineNo">165</span><a id="line.165">        public LocalPDBDirectory(String path) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                extensions    = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                params = new FileParsingParameters();</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">                if( path == null) {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                        UserConfiguration config = new UserConfiguration();</a>
+<span class="sourceLineNo">172</span><a id="line.172">                        path = config.getPdbFilePath();</a>
+<span class="sourceLineNo">173</span><a id="line.173">                        logger.debug("Initialising from system property/environment variable to path: {}", path);</a>
+<span class="sourceLineNo">174</span><a id="line.174">                } else {</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        path = FileDownloadUtils.expandUserHome(path);</a>
+<span class="sourceLineNo">176</span><a id="line.176">                        logger.debug("Initialising with path {}", path);</a>
+<span class="sourceLineNo">177</span><a id="line.177">                }</a>
+<span class="sourceLineNo">178</span><a id="line.178">                this.path = new File(path);</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">                this.serverName = getServerName();</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">                // Initialize splitDirURL,obsoleteDirURL,splitDirPath,obsoleteDirPath</a>
+<span class="sourceLineNo">183</span><a id="line.183">                initPaths();</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">                fetchBehavior = FetchBehavior.DEFAULT;</a>
+<span class="sourceLineNo">186</span><a id="line.186">                obsoleteBehavior = ObsoleteBehavior.DEFAULT;</a>
+<span class="sourceLineNo">187</span><a id="line.187">        }</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">        public LocalPDBDirectory() {</a>
+<span class="sourceLineNo">190</span><a id="line.190">                this(null);</a>
+<span class="sourceLineNo">191</span><a id="line.191">        }</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">        /**</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * Sets the path for the directory where PDB files are read/written</a>
+<span class="sourceLineNo">195</span><a id="line.195">         */</a>
+<span class="sourceLineNo">196</span><a id="line.196">        public void setPath(String p){</a>
+<span class="sourceLineNo">197</span><a id="line.197">                path = new File(FileDownloadUtils.expandUserHome(p)) ;</a>
+<span class="sourceLineNo">198</span><a id="line.198">                initPaths();</a>
+<span class="sourceLineNo">199</span><a id="line.199">        }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        /**</a>
+<span class="sourceLineNo">202</span><a id="line.202">         * Returns the path value.</a>
+<span class="sourceLineNo">203</span><a id="line.203">         * @return a String representing the path value</a>
+<span class="sourceLineNo">204</span><a id="line.204">         * @see #setPath</a>
+<span class="sourceLineNo">205</span><a id="line.205">         *</a>
+<span class="sourceLineNo">206</span><a id="line.206">         */</a>
+<span class="sourceLineNo">207</span><a id="line.207">        public String getPath() {</a>
+<span class="sourceLineNo">208</span><a id="line.208">                return path.toString() ;</a>
+<span class="sourceLineNo">209</span><a id="line.209">        }</a>
+<span class="sourceLineNo">210</span><a id="line.210"></a>
+<span class="sourceLineNo">211</span><a id="line.211">        /** define supported file extensions</a>
+<span class="sourceLineNo">212</span><a id="line.212">         * compressed extensions .Z,.gz do not need to be specified</a>
+<span class="sourceLineNo">213</span><a id="line.213">         * they are dealt with automatically.</a>
+<span class="sourceLineNo">214</span><a id="line.214">         */</a>
+<span class="sourceLineNo">215</span><a id="line.215">        @Override</a>
+<span class="sourceLineNo">216</span><a id="line.216">        public void addExtension(String s){</a>
+<span class="sourceLineNo">217</span><a id="line.217">                //System.out.println("add Extension "+s);</a>
+<span class="sourceLineNo">218</span><a id="line.218">                extensions.add(s);</a>
+<span class="sourceLineNo">219</span><a id="line.219">        }</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">        @Override</a>
+<span class="sourceLineNo">222</span><a id="line.222">        public List&lt;String&gt; getExtensions() {</a>
+<span class="sourceLineNo">223</span><a id="line.223">                return Collections.unmodifiableList(extensions);</a>
+<span class="sourceLineNo">224</span><a id="line.224">        }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">        /** clear the supported file extensions</a>
+<span class="sourceLineNo">227</span><a id="line.227">         *</a>
+<span class="sourceLineNo">228</span><a id="line.228">         */</a>
+<span class="sourceLineNo">229</span><a id="line.229">        public void clearExtensions(){</a>
+<span class="sourceLineNo">230</span><a id="line.230">                extensions.clear();</a>
+<span class="sourceLineNo">231</span><a id="line.231">        }</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233">        @Override</a>
+<span class="sourceLineNo">234</span><a id="line.234">        public void setFileParsingParameters(FileParsingParameters params){</a>
+<span class="sourceLineNo">235</span><a id="line.235">                this.params= params;</a>
+<span class="sourceLineNo">236</span><a id="line.236">        }</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">        @Override</a>
+<span class="sourceLineNo">239</span><a id="line.239">        public FileParsingParameters getFileParsingParameters(){</a>
+<span class="sourceLineNo">240</span><a id="line.240">                return params;</a>
+<span class="sourceLineNo">241</span><a id="line.241">        }</a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243">        /**</a>
+<span class="sourceLineNo">244</span><a id="line.244">         * &lt;b&gt;[Optional]&lt;/b&gt; This method changes the behavior when obsolete entries</a>
+<span class="sourceLineNo">245</span><a id="line.245">         * are requested. Current behaviors are:</a>
+<span class="sourceLineNo">246</span><a id="line.246">         * &lt;ul&gt;</a>
+<span class="sourceLineNo">247</span><a id="line.247">         * &lt;li&gt;{@link ObsoleteBehavior#THROW_EXCEPTION THROW_EXCEPTION}</a>
+<span class="sourceLineNo">248</span><a id="line.248">         *   Throw a {@link StructureException} (the default)</a>
+<span class="sourceLineNo">249</span><a id="line.249">         * &lt;li&gt;{@link ObsoleteBehavior#FETCH_OBSOLETE FETCH_OBSOLETE}</a>
+<span class="sourceLineNo">250</span><a id="line.250">         *   Load the requested ID from the PDB's obsolete repository</a>
+<span class="sourceLineNo">251</span><a id="line.251">         * &lt;li&gt;{@link ObsoleteBehavior#FETCH_CURRENT FETCH_CURRENT}</a>
+<span class="sourceLineNo">252</span><a id="line.252">         *   Load the most recent version of the requested structure</a>
+<span class="sourceLineNo">253</span><a id="line.253">         *</a>
+<span class="sourceLineNo">254</span><a id="line.254">         * &lt;p&gt;This setting may be silently ignored by implementations which do not have</a>
+<span class="sourceLineNo">255</span><a id="line.255">         * access to the server to determine whether an entry is obsolete, such as</a>
+<span class="sourceLineNo">256</span><a id="line.256">         * if {@link #isAutoFetch()} is false. Note that an obsolete entry may still be</a>
+<span class="sourceLineNo">257</span><a id="line.257">         * returned even this is FETCH_CURRENT if the entry is found locally.</a>
+<span class="sourceLineNo">258</span><a id="line.258">         *</a>
+<span class="sourceLineNo">259</span><a id="line.259">         * @param fetchFileEvenIfObsolete Whether to fetch obsolete records</a>
+<span class="sourceLineNo">260</span><a id="line.260">         * @see #setFetchCurrent(boolean)</a>
+<span class="sourceLineNo">261</span><a id="line.261">         * @since 4.0.0</a>
+<span class="sourceLineNo">262</span><a id="line.262">         */</a>
+<span class="sourceLineNo">263</span><a id="line.263">        public void setObsoleteBehavior(ObsoleteBehavior behavior) {</a>
+<span class="sourceLineNo">264</span><a id="line.264">                obsoleteBehavior = behavior;</a>
+<span class="sourceLineNo">265</span><a id="line.265">        }</a>
+<span class="sourceLineNo">266</span><a id="line.266"></a>
+<span class="sourceLineNo">267</span><a id="line.267">        /**</a>
+<span class="sourceLineNo">268</span><a id="line.268">         * Returns how this instance deals with obsolete entries. Note that this</a>
+<span class="sourceLineNo">269</span><a id="line.269">         * setting may be ignored by some implementations or in some situations,</a>
+<span class="sourceLineNo">270</span><a id="line.270">         * such as when {@link #isAutoFetch()} is false.</a>
+<span class="sourceLineNo">271</span><a id="line.271">         *</a>
+<span class="sourceLineNo">272</span><a id="line.272">         * &lt;p&gt;For most implementations, the default value is</a>
+<span class="sourceLineNo">273</span><a id="line.273">         * {@link ObsoleteBehavior#THROW_EXCEPTION THROW_EXCEPTION}.</a>
+<span class="sourceLineNo">274</span><a id="line.274">         *</a>
+<span class="sourceLineNo">275</span><a id="line.275">         * @return The ObsoleteBehavior</a>
+<span class="sourceLineNo">276</span><a id="line.276">         * @since 4.0.0</a>
+<span class="sourceLineNo">277</span><a id="line.277">         */</a>
+<span class="sourceLineNo">278</span><a id="line.278">        public ObsoleteBehavior getObsoleteBehavior() {</a>
+<span class="sourceLineNo">279</span><a id="line.279">                return obsoleteBehavior;</a>
+<span class="sourceLineNo">280</span><a id="line.280">        }</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">        /**</a>
+<span class="sourceLineNo">283</span><a id="line.283">         * Get the behavior for fetching files from the server</a>
+<span class="sourceLineNo">284</span><a id="line.284">         * @return</a>
+<span class="sourceLineNo">285</span><a id="line.285">         */</a>
+<span class="sourceLineNo">286</span><a id="line.286">        public FetchBehavior getFetchBehavior() {</a>
+<span class="sourceLineNo">287</span><a id="line.287">                return fetchBehavior;</a>
+<span class="sourceLineNo">288</span><a id="line.288">        }</a>
+<span class="sourceLineNo">289</span><a id="line.289">        /**</a>
+<span class="sourceLineNo">290</span><a id="line.290">         * Set the behavior for fetching files from the server.</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * This replaces the {@link #setAutoFetch(boolean)} method with a more</a>
+<span class="sourceLineNo">292</span><a id="line.292">         * extensive set of options.</a>
+<span class="sourceLineNo">293</span><a id="line.293">         * @param fetchBehavior</a>
+<span class="sourceLineNo">294</span><a id="line.294">         */</a>
+<span class="sourceLineNo">295</span><a id="line.295">        public void setFetchBehavior(FetchBehavior fetchBehavior) {</a>
+<span class="sourceLineNo">296</span><a id="line.296">                this.fetchBehavior = fetchBehavior;</a>
+<span class="sourceLineNo">297</span><a id="line.297">        }</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299"></a>
+<span class="sourceLineNo">300</span><a id="line.300">        @Override</a>
+<span class="sourceLineNo">301</span><a id="line.301">        public Structure getStructure(String filename) throws IOException</a>
+<span class="sourceLineNo">302</span><a id="line.302">        {</a>
+<span class="sourceLineNo">303</span><a id="line.303">                filename = FileDownloadUtils.expandUserHome(filename);</a>
+<span class="sourceLineNo">304</span><a id="line.304">                File f = new File(filename);</a>
+<span class="sourceLineNo">305</span><a id="line.305">                return getStructure(f);</a>
+<span class="sourceLineNo">306</span><a id="line.306"></a>
+<span class="sourceLineNo">307</span><a id="line.307">        }</a>
+<span class="sourceLineNo">308</span><a id="line.308"></a>
+<span class="sourceLineNo">309</span><a id="line.309">        public Structure getStructure(URL u) throws IOException{</a>
+<span class="sourceLineNo">310</span><a id="line.310">                InputStreamProvider isp = new InputStreamProvider();</a>
+<span class="sourceLineNo">311</span><a id="line.311">                InputStream inStream = isp.getInputStream(u);</a>
+<span class="sourceLineNo">312</span><a id="line.312">                return getStructure(inStream);</a>
+<span class="sourceLineNo">313</span><a id="line.313">        }</a>
+<span class="sourceLineNo">314</span><a id="line.314"></a>
+<span class="sourceLineNo">315</span><a id="line.315">        @Override</a>
+<span class="sourceLineNo">316</span><a id="line.316">        public Structure getStructure(File filename) throws IOException {</a>
+<span class="sourceLineNo">317</span><a id="line.317">                InputStreamProvider isp = new InputStreamProvider();</a>
+<span class="sourceLineNo">318</span><a id="line.318"></a>
+<span class="sourceLineNo">319</span><a id="line.319">                InputStream inStream = isp.getInputStream(filename);</a>
+<span class="sourceLineNo">320</span><a id="line.320"></a>
+<span class="sourceLineNo">321</span><a id="line.321">                return getStructure(inStream);</a>
+<span class="sourceLineNo">322</span><a id="line.322">        }</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324"></a>
+<span class="sourceLineNo">325</span><a id="line.325">        @Override</a>
+<span class="sourceLineNo">326</span><a id="line.326">        public Structure getStructureById(String pdbId) throws IOException {</a>
+<span class="sourceLineNo">327</span><a id="line.327">                InputStream inStream = getInputStream(pdbId);</a>
+<span class="sourceLineNo">328</span><a id="line.328"></a>
+<span class="sourceLineNo">329</span><a id="line.329">                return getStructure(inStream);</a>
+<span class="sourceLineNo">330</span><a id="line.330">        }</a>
+<span class="sourceLineNo">331</span><a id="line.331"></a>
+<span class="sourceLineNo">332</span><a id="line.332">        /**</a>
+<span class="sourceLineNo">333</span><a id="line.333">         * Handles the actual parsing of the file into a Structure object.</a>
+<span class="sourceLineNo">334</span><a id="line.334">         * @param inStream</a>
+<span class="sourceLineNo">335</span><a id="line.335">         * @return</a>
+<span class="sourceLineNo">336</span><a id="line.336">         * @throws IOException</a>
+<span class="sourceLineNo">337</span><a id="line.337">         */</a>
+<span class="sourceLineNo">338</span><a id="line.338">        public abstract Structure getStructure(InputStream inStream) throws IOException;</a>
+<span class="sourceLineNo">339</span><a id="line.339"></a>
+<span class="sourceLineNo">340</span><a id="line.340">        /**</a>
+<span class="sourceLineNo">341</span><a id="line.341">         * Load or download the specified structure and return it as an InputStream</a>
+<span class="sourceLineNo">342</span><a id="line.342">         * for direct parsing.</a>
+<span class="sourceLineNo">343</span><a id="line.343">         * @param pdbId</a>
+<span class="sourceLineNo">344</span><a id="line.344">         * @return</a>
+<span class="sourceLineNo">345</span><a id="line.345">         * @throws IOException</a>
+<span class="sourceLineNo">346</span><a id="line.346">         */</a>
+<span class="sourceLineNo">347</span><a id="line.347">        protected InputStream getInputStream(String pdbId) throws IOException{</a>
+<span class="sourceLineNo">348</span><a id="line.348"></a>
+<span class="sourceLineNo">349</span><a id="line.349">                if ( pdbId.length() != 4)</a>
+<span class="sourceLineNo">350</span><a id="line.350">                        throw new IOException("The provided ID does not look like a PDB ID : " + pdbId);</a>
+<span class="sourceLineNo">351</span><a id="line.351"></a>
+<span class="sourceLineNo">352</span><a id="line.352">                // Check existing</a>
+<span class="sourceLineNo">353</span><a id="line.353">                File file = downloadStructure(pdbId);</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355">                if(!file.exists()) {</a>
+<span class="sourceLineNo">356</span><a id="line.356">                        throw new IOException("Structure "+pdbId+" not found and unable to download.");</a>
+<span class="sourceLineNo">357</span><a id="line.357">                }</a>
+<span class="sourceLineNo">358</span><a id="line.358"></a>
+<span class="sourceLineNo">359</span><a id="line.359">                InputStreamProvider isp = new InputStreamProvider();</a>
+<span class="sourceLineNo">360</span><a id="line.360"></a>
+<span class="sourceLineNo">361</span><a id="line.361">                InputStream inputStream = isp.getInputStream(file);</a>
+<span class="sourceLineNo">362</span><a id="line.362"></a>
+<span class="sourceLineNo">363</span><a id="line.363">                return inputStream;</a>
+<span class="sourceLineNo">364</span><a id="line.364">        }</a>
+<span class="sourceLineNo">365</span><a id="line.365"></a>
+<span class="sourceLineNo">366</span><a id="line.366">        /**</a>
+<span class="sourceLineNo">367</span><a id="line.367">         * Download a structure, but don't parse it yet or store it in memory.</a>
+<span class="sourceLineNo">368</span><a id="line.368">         *</a>
+<span class="sourceLineNo">369</span><a id="line.369">         * Used to pre-fetch large numbers of structures.</a>
+<span class="sourceLineNo">370</span><a id="line.370">         * @param pdbId</a>
+<span class="sourceLineNo">371</span><a id="line.371">         * @throws IOException</a>
+<span class="sourceLineNo">372</span><a id="line.372">         */</a>
+<span class="sourceLineNo">373</span><a id="line.373">        public void prefetchStructure(String pdbId) throws IOException {</a>
+<span class="sourceLineNo">374</span><a id="line.374">                if ( pdbId.length() != 4)</a>
+<span class="sourceLineNo">375</span><a id="line.375">                        throw new IOException("The provided ID does not look like a PDB ID : " + pdbId);</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">                // Check existing</a>
+<span class="sourceLineNo">378</span><a id="line.378">                File file = downloadStructure(pdbId);</a>
+<span class="sourceLineNo">379</span><a id="line.379"></a>
+<span class="sourceLineNo">380</span><a id="line.380">                if(!file.exists()) {</a>
+<span class="sourceLineNo">381</span><a id="line.381">                        throw new IOException("Structure "+pdbId+" not found and unable to download.");</a>
+<span class="sourceLineNo">382</span><a id="line.382">                }</a>
+<span class="sourceLineNo">383</span><a id="line.383">        }</a>
+<span class="sourceLineNo">384</span><a id="line.384"></a>
+<span class="sourceLineNo">385</span><a id="line.385">        /**</a>
+<span class="sourceLineNo">386</span><a id="line.386">         * Attempts to delete all versions of a structure from the local directory.</a>
+<span class="sourceLineNo">387</span><a id="line.387">         * @param pdbId</a>
+<span class="sourceLineNo">388</span><a id="line.388">         * @return True if one or more files were deleted</a>
+<span class="sourceLineNo">389</span><a id="line.389">         * @throws IOException if the file cannot be deleted</a>
+<span class="sourceLineNo">390</span><a id="line.390">         */</a>
+<span class="sourceLineNo">391</span><a id="line.391">        public boolean deleteStructure(String pdbId) throws IOException{</a>
+<span class="sourceLineNo">392</span><a id="line.392">                boolean deleted = false;</a>
+<span class="sourceLineNo">393</span><a id="line.393">                // Force getLocalFile to check in obsolete locations</a>
+<span class="sourceLineNo">394</span><a id="line.394">                ObsoleteBehavior obsolete = getObsoleteBehavior();</a>
+<span class="sourceLineNo">395</span><a id="line.395">                setObsoleteBehavior(ObsoleteBehavior.FETCH_OBSOLETE);</a>
+<span class="sourceLineNo">396</span><a id="line.396"></a>
+<span class="sourceLineNo">397</span><a id="line.397">                try {</a>
+<span class="sourceLineNo">398</span><a id="line.398">                        File existing = getLocalFile(pdbId);</a>
+<span class="sourceLineNo">399</span><a id="line.399">                        while(existing != null) {</a>
+<span class="sourceLineNo">400</span><a id="line.400">                                assert(existing.exists()); // should exist unless concurrency problems</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">                                if( getFetchBehavior() == FetchBehavior.LOCAL_ONLY) {</a>
+<span class="sourceLineNo">403</span><a id="line.403">                                        throw new RuntimeException("Refusing to delete from LOCAL_ONLY directory");</a>
+<span class="sourceLineNo">404</span><a id="line.404">                                }</a>
+<span class="sourceLineNo">405</span><a id="line.405"></a>
+<span class="sourceLineNo">406</span><a id="line.406">                                // delete file</a>
+<span class="sourceLineNo">407</span><a id="line.407">                                boolean success = existing.delete();</a>
+<span class="sourceLineNo">408</span><a id="line.408">                                if(success) {</a>
+<span class="sourceLineNo">409</span><a id="line.409">                                        logger.debug("Deleting "+existing.getAbsolutePath());</a>
+<span class="sourceLineNo">410</span><a id="line.410">                                }</a>
+<span class="sourceLineNo">411</span><a id="line.411">                                deleted = deleted || success;</a>
+<span class="sourceLineNo">412</span><a id="line.412"></a>
+<span class="sourceLineNo">413</span><a id="line.413">                                // delete parent if empty</a>
+<span class="sourceLineNo">414</span><a id="line.414">                                File parent = existing.getParentFile();</a>
+<span class="sourceLineNo">415</span><a id="line.415">                                if(parent != null) {</a>
+<span class="sourceLineNo">416</span><a id="line.416">                                        success = parent.delete();</a>
+<span class="sourceLineNo">417</span><a id="line.417">                                        if(success) {</a>
+<span class="sourceLineNo">418</span><a id="line.418">                                                logger.debug("Deleting "+parent.getAbsolutePath());</a>
+<span class="sourceLineNo">419</span><a id="line.419">                                        }</a>
+<span class="sourceLineNo">420</span><a id="line.420">                                }</a>
+<span class="sourceLineNo">421</span><a id="line.421"></a>
+<span class="sourceLineNo">422</span><a id="line.422">                                existing = getLocalFile(pdbId);</a>
+<span class="sourceLineNo">423</span><a id="line.423">                        }</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        return deleted;</a>
+<span class="sourceLineNo">425</span><a id="line.425"></a>
+<span class="sourceLineNo">426</span><a id="line.426">                } finally {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                        setObsoleteBehavior(obsolete);</a>
+<span class="sourceLineNo">428</span><a id="line.428">                }</a>
+<span class="sourceLineNo">429</span><a id="line.429">        }</a>
+<span class="sourceLineNo">430</span><a id="line.430"></a>
+<span class="sourceLineNo">431</span><a id="line.431">        /**</a>
+<span class="sourceLineNo">432</span><a id="line.432">         * Downloads an MMCIF file from the PDB to the local path</a>
+<span class="sourceLineNo">433</span><a id="line.433">         * @param pdbId</a>
+<span class="sourceLineNo">434</span><a id="line.434">         * @return The file, or null if it was unavailable for download</a>
+<span class="sourceLineNo">435</span><a id="line.435">         * @throws IOException for errors downloading or writing, or if the</a>
+<span class="sourceLineNo">436</span><a id="line.436">         *  fetchBehavior is {@link FetchBehavior#LOCAL_ONLY}</a>
+<span class="sourceLineNo">437</span><a id="line.437">         */</a>
+<span class="sourceLineNo">438</span><a id="line.438">        protected File downloadStructure(String pdbId) throws IOException{</a>
+<span class="sourceLineNo">439</span><a id="line.439">                if ( pdbId.length() != 4)</a>
+<span class="sourceLineNo">440</span><a id="line.440">                        throw new IOException("The provided ID does not look like a PDB ID : " + pdbId);</a>
+<span class="sourceLineNo">441</span><a id="line.441"></a>
+<span class="sourceLineNo">442</span><a id="line.442">                // decide whether download is required</a>
+<span class="sourceLineNo">443</span><a id="line.443">                File existing =  getLocalFile(pdbId);</a>
+<span class="sourceLineNo">444</span><a id="line.444">                switch(fetchBehavior) {</a>
+<span class="sourceLineNo">445</span><a id="line.445">                case LOCAL_ONLY:</a>
+<span class="sourceLineNo">446</span><a id="line.446">                        if( existing == null ) {</a>
+<span class="sourceLineNo">447</span><a id="line.447">                                throw new IOException(String.format("Structure %s not found in %s "</a>
+<span class="sourceLineNo">448</span><a id="line.448">                                                + "and configured not to download.",pdbId,getPath()));</a>
+<span class="sourceLineNo">449</span><a id="line.449">                        } else {</a>
+<span class="sourceLineNo">450</span><a id="line.450">                                return existing;</a>
+<span class="sourceLineNo">451</span><a id="line.451">                        }</a>
+<span class="sourceLineNo">452</span><a id="line.452">                case FETCH_FILES:</a>
+<span class="sourceLineNo">453</span><a id="line.453">                        // Use existing if present</a>
+<span class="sourceLineNo">454</span><a id="line.454">                        if( existing != null) {</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                return existing;</a>
+<span class="sourceLineNo">456</span><a id="line.456">                        }</a>
+<span class="sourceLineNo">457</span><a id="line.457">                        // existing is null, downloadStructure(String,String,boolean,File) will download it</a>
+<span class="sourceLineNo">458</span><a id="line.458">                        break;</a>
+<span class="sourceLineNo">459</span><a id="line.459">                case FETCH_IF_OUTDATED:</a>
+<span class="sourceLineNo">460</span><a id="line.460">                        // here existing can be null or not:</a>
+<span class="sourceLineNo">461</span><a id="line.461">                        // existing == null : downloadStructure(String,String,boolean,File) will download it</a>
+<span class="sourceLineNo">462</span><a id="line.462">                        // existing != null : downloadStructure(String,String,boolean,File) will check its date and download if older</a>
+<span class="sourceLineNo">463</span><a id="line.463">                        break;</a>
+<span class="sourceLineNo">464</span><a id="line.464">                case FETCH_REMEDIATED:</a>
+<span class="sourceLineNo">465</span><a id="line.465">                        // Use existing if present and recent enough</a>
+<span class="sourceLineNo">466</span><a id="line.466">                        if( existing != null) {</a>
+<span class="sourceLineNo">467</span><a id="line.467">                                long lastModified = existing.lastModified();</a>
+<span class="sourceLineNo">468</span><a id="line.468"></a>
+<span class="sourceLineNo">469</span><a id="line.469">                                if (lastModified &lt; LAST_REMEDIATION_DATE) {</a>
+<span class="sourceLineNo">470</span><a id="line.470">                                        // the file is too old, replace with newer version</a>
+<span class="sourceLineNo">471</span><a id="line.471">                                        logger.warn("Replacing file {} with latest remediated (remediation of {}) file from PDB.",</a>
+<span class="sourceLineNo">472</span><a id="line.472">                                                        existing, LAST_REMEDIATION_DATE_STRING);</a>
+<span class="sourceLineNo">473</span><a id="line.473">                                        existing = null;</a>
+<span class="sourceLineNo">474</span><a id="line.474">                                        break;</a>
+<span class="sourceLineNo">475</span><a id="line.475">                                } else {</a>
+<span class="sourceLineNo">476</span><a id="line.476">                                        return existing;</a>
+<span class="sourceLineNo">477</span><a id="line.477">                                }</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        }</a>
+<span class="sourceLineNo">479</span><a id="line.479">                case FORCE_DOWNLOAD:</a>
+<span class="sourceLineNo">480</span><a id="line.480">                        // discard the existing file to force redownload</a>
+<span class="sourceLineNo">481</span><a id="line.481">                        existing = null; // downloadStructure(String,String,boolean,File) will download it</a>
+<span class="sourceLineNo">482</span><a id="line.482">                        break;</a>
+<span class="sourceLineNo">483</span><a id="line.483">                }</a>
+<span class="sourceLineNo">484</span><a id="line.484"></a>
+<span class="sourceLineNo">485</span><a id="line.485">                // Force the download now</a>
+<span class="sourceLineNo">486</span><a id="line.486">                if(obsoleteBehavior == ObsoleteBehavior.FETCH_CURRENT) {</a>
+<span class="sourceLineNo">487</span><a id="line.487">                        String current = PDBStatus.getCurrent(pdbId);</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">                        if(current == null) {</a>
+<span class="sourceLineNo">490</span><a id="line.490">                                // either an error or there is not current entry</a>
+<span class="sourceLineNo">491</span><a id="line.491">                                current = pdbId;</a>
+<span class="sourceLineNo">492</span><a id="line.492">                        }</a>
+<span class="sourceLineNo">493</span><a id="line.493">                        return downloadStructure(current, splitDirURL,false, existing);</a>
+<span class="sourceLineNo">494</span><a id="line.494">                } else if(obsoleteBehavior == ObsoleteBehavior.FETCH_OBSOLETE</a>
+<span class="sourceLineNo">495</span><a id="line.495">                                &amp;&amp; PDBStatus.getStatus(pdbId) == Status.OBSOLETE) {</a>
+<span class="sourceLineNo">496</span><a id="line.496">                        return downloadStructure(pdbId, obsoleteDirURL, true, existing);</a>
+<span class="sourceLineNo">497</span><a id="line.497">                } else {</a>
+<span class="sourceLineNo">498</span><a id="line.498">                        return downloadStructure(pdbId, splitDirURL, false, existing);</a>
+<span class="sourceLineNo">499</span><a id="line.499">                }</a>
+<span class="sourceLineNo">500</span><a id="line.500">        }</a>
+<span class="sourceLineNo">501</span><a id="line.501"></a>
+<span class="sourceLineNo">502</span><a id="line.502">        /**</a>
+<span class="sourceLineNo">503</span><a id="line.503">         * Download a file from the ftp server, replacing any existing files if needed</a>
+<span class="sourceLineNo">504</span><a id="line.504">         * @param pdbId PDB ID</a>
+<span class="sourceLineNo">505</span><a id="line.505">         * @param pathOnServer Path on the FTP server, e.g. data/structures/divided/pdb</a>
+<span class="sourceLineNo">506</span><a id="line.506">         * @param obsolete Whether or not file should be saved to the obsolete location locally</a>
+<span class="sourceLineNo">507</span><a id="line.507">         * @param existingFile if not null and checkServerFileDate is true, the last modified date of the</a>
+<span class="sourceLineNo">508</span><a id="line.508">         * server file and this file will be compared to decide whether to download or not</a>
+<span class="sourceLineNo">509</span><a id="line.509">         * @return</a>
+<span class="sourceLineNo">510</span><a id="line.510">         * @throws IOException</a>
+<span class="sourceLineNo">511</span><a id="line.511">         */</a>
+<span class="sourceLineNo">512</span><a id="line.512">        private File downloadStructure(String pdbId, String pathOnServer, boolean obsolete, File existingFile)</a>
+<span class="sourceLineNo">513</span><a id="line.513">                        throws IOException{</a>
+<span class="sourceLineNo">514</span><a id="line.514"></a>
+<span class="sourceLineNo">515</span><a id="line.515">                File dir = getDir(pdbId,obsolete);</a>
+<span class="sourceLineNo">516</span><a id="line.516">                File realFile = new File(dir,getFilename(pdbId));</a>
+<span class="sourceLineNo">517</span><a id="line.517"></a>
+<span class="sourceLineNo">518</span><a id="line.518">                String ftp;</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                if (getFilename(pdbId).endsWith(".mmtf.gz")){</a>
+<span class="sourceLineNo">521</span><a id="line.521">                        ftp = CodecUtils.getMmtfEntryUrl(pdbId, true, false);</a>
+<span class="sourceLineNo">522</span><a id="line.522">                } else {</a>
+<span class="sourceLineNo">523</span><a id="line.523">                        ftp = String.format("%s%s/%s/%s",</a>
+<span class="sourceLineNo">524</span><a id="line.524">                        serverName, pathOnServer, pdbId.substring(1,3).toLowerCase(), getFilename(pdbId));</a>
+<span class="sourceLineNo">525</span><a id="line.525">                }</a>
+<span class="sourceLineNo">526</span><a id="line.526"></a>
+<span class="sourceLineNo">527</span><a id="line.527">                URL url = new URL(ftp);</a>
+<span class="sourceLineNo">528</span><a id="line.528"></a>
+<span class="sourceLineNo">529</span><a id="line.529">                Date serverFileDate = null;</a>
+<span class="sourceLineNo">530</span><a id="line.530">                if (existingFile!=null) {</a>
+<span class="sourceLineNo">531</span><a id="line.531"></a>
+<span class="sourceLineNo">532</span><a id="line.532">                        serverFileDate = getLastModifiedTime(url);</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">                        if (serverFileDate!=null) {</a>
+<span class="sourceLineNo">535</span><a id="line.535">                                if (existingFile.lastModified()&gt;=serverFileDate.getTime()) {</a>
+<span class="sourceLineNo">536</span><a id="line.536">                                        return existingFile;</a>
+<span class="sourceLineNo">537</span><a id="line.537">                                } else {</a>
+<span class="sourceLineNo">538</span><a id="line.538">                                        // otherwise we go ahead and download, warning about it first</a>
+<span class="sourceLineNo">539</span><a id="line.539">                                        logger.warn("File {} is outdated, will download new one from PDB (updated on {})",</a>
+<span class="sourceLineNo">540</span><a id="line.540">                                                        existingFile, serverFileDate.toString());</a>
+<span class="sourceLineNo">541</span><a id="line.541">                                }</a>
+<span class="sourceLineNo">542</span><a id="line.542">                        } else {</a>
+<span class="sourceLineNo">543</span><a id="line.543">                                logger.warn("Could not determine if file {} is outdated (could not get timestamp from server). Will force redownload", existingFile);</a>
+<span class="sourceLineNo">544</span><a id="line.544">                        }</a>
+<span class="sourceLineNo">545</span><a id="line.545">                }</a>
+<span class="sourceLineNo">546</span><a id="line.546"></a>
+<span class="sourceLineNo">547</span><a id="line.547">                logger.info("Fetching " + ftp);</a>
+<span class="sourceLineNo">548</span><a id="line.548">                logger.info("Writing to "+ realFile);</a>
+<span class="sourceLineNo">549</span><a id="line.549"></a>
+<span class="sourceLineNo">550</span><a id="line.550">                FileDownloadUtils.downloadFile(url, realFile);</a>
+<span class="sourceLineNo">551</span><a id="line.551"></a>
+<span class="sourceLineNo">552</span><a id="line.552">                // Commented out following code used for setting the modified date to the downloaded file - JD 2015-01-15</a>
+<span class="sourceLineNo">553</span><a id="line.553">                // The only reason to have it was in order to get an rsync-like behavior, respecting the timestamps</a>
+<span class="sourceLineNo">554</span><a id="line.554">                // but the issue is that it would make the FETCH_REMEDIATED mode redownload files with timestamps before</a>
+<span class="sourceLineNo">555</span><a id="line.555">                // the remediation.</a>
+<span class="sourceLineNo">556</span><a id="line.556">                //if (serverFileDate==null)</a>
+<span class="sourceLineNo">557</span><a id="line.557">                //      serverFileDate = getLastModifiedTime(url);</a>
+<span class="sourceLineNo">558</span><a id="line.558">                //</a>
+<span class="sourceLineNo">559</span><a id="line.559">                //if (serverFileDate!=null) {</a>
+<span class="sourceLineNo">560</span><a id="line.560">                //      logger.debug("Setting modified time of downloaded file {} to {}",realFile,serverFileDate.toString());</a>
+<span class="sourceLineNo">561</span><a id="line.561">                //      realFile.setLastModified(serverFileDate.getTime());</a>
+<span class="sourceLineNo">562</span><a id="line.562">                //} else {</a>
+<span class="sourceLineNo">563</span><a id="line.563">                //      logger.warn("Unknown modified time of file {}, will set its modified time to now.", ftp);</a>
+<span class="sourceLineNo">564</span><a id="line.564">                //}</a>
+<span class="sourceLineNo">565</span><a id="line.565"></a>
+<span class="sourceLineNo">566</span><a id="line.566"></a>
+<span class="sourceLineNo">567</span><a id="line.567">                return realFile;</a>
+<span class="sourceLineNo">568</span><a id="line.568">        }</a>
+<span class="sourceLineNo">569</span><a id="line.569"></a>
+<span class="sourceLineNo">570</span><a id="line.570">        /**</a>
+<span class="sourceLineNo">571</span><a id="line.571">         * Get the last modified time of the file in given url by retrieveing the "Last-Modified" header.</a>
+<span class="sourceLineNo">572</span><a id="line.572">         * Note that this only works for http URLs</a>
+<span class="sourceLineNo">573</span><a id="line.573">         * @param url</a>
+<span class="sourceLineNo">574</span><a id="line.574">         * @return the last modified date or null if it couldn't be retrieved (in that case a warning will be logged)</a>
+<span class="sourceLineNo">575</span><a id="line.575">         */</a>
+<span class="sourceLineNo">576</span><a id="line.576">        private Date getLastModifiedTime(URL url) {</a>
+<span class="sourceLineNo">577</span><a id="line.577"></a>
+<span class="sourceLineNo">578</span><a id="line.578">                // see http://stackoverflow.com/questions/2416872/how-do-you-obtain-modified-date-from-a-remote-file-java</a>
+<span class="sourceLineNo">579</span><a id="line.579">                Date date = null;</a>
+<span class="sourceLineNo">580</span><a id="line.580">                try {</a>
+<span class="sourceLineNo">581</span><a id="line.581">                        String lastModified = url.openConnection().getHeaderField("Last-Modified");</a>
+<span class="sourceLineNo">582</span><a id="line.582">                        logger.debug("Last modified date of server file ({}) is {}",url.toString(),lastModified);</a>
+<span class="sourceLineNo">583</span><a id="line.583"></a>
+<span class="sourceLineNo">584</span><a id="line.584"></a>
+<span class="sourceLineNo">585</span><a id="line.585">                        if (lastModified!=null) {</a>
+<span class="sourceLineNo">586</span><a id="line.586"></a>
+<span class="sourceLineNo">587</span><a id="line.587">                                try {</a>
+<span class="sourceLineNo">588</span><a id="line.588">                                        date = new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH).parse(lastModified);</a>
+<span class="sourceLineNo">589</span><a id="line.589">                                } catch (ParseException e) {</a>
+<span class="sourceLineNo">590</span><a id="line.590">                                        logger.warn("Could not parse last modified time from string '{}', no last modified time available for file {}",</a>
+<span class="sourceLineNo">591</span><a id="line.591">                                                        lastModified, url.toString());</a>
+<span class="sourceLineNo">592</span><a id="line.592">                                        // this will return null</a>
+<span class="sourceLineNo">593</span><a id="line.593">                                }</a>
+<span class="sourceLineNo">594</span><a id="line.594"></a>
+<span class="sourceLineNo">595</span><a id="line.595">                        }</a>
+<span class="sourceLineNo">596</span><a id="line.596">                } catch (IOException e) {</a>
+<span class="sourceLineNo">597</span><a id="line.597">                        logger.warn("Problems while retrieving last modified time for file {}", url.toString());</a>
+<span class="sourceLineNo">598</span><a id="line.598">                }</a>
+<span class="sourceLineNo">599</span><a id="line.599">                return date;</a>
+<span class="sourceLineNo">600</span><a id="line.600"></a>
+<span class="sourceLineNo">601</span><a id="line.601">        }</a>
+<span class="sourceLineNo">602</span><a id="line.602"></a>
+<span class="sourceLineNo">603</span><a id="line.603">        /**</a>
+<span class="sourceLineNo">604</span><a id="line.604">         * Gets the directory in which the file for a given MMCIF file would live,</a>
+<span class="sourceLineNo">605</span><a id="line.605">         * creating it if necessary.</a>
+<span class="sourceLineNo">606</span><a id="line.606">         *</a>
+<span class="sourceLineNo">607</span><a id="line.607">         * The obsolete parameter is necessary to avoid additional server queries.</a>
+<span class="sourceLineNo">608</span><a id="line.608">         * @param pdbId</a>
+<span class="sourceLineNo">609</span><a id="line.609">         * @param obsolete Whether the pdbId is obsolete or not</a>
+<span class="sourceLineNo">610</span><a id="line.610">         * @return File pointing to the directory,</a>
+<span class="sourceLineNo">611</span><a id="line.611">         */</a>
+<span class="sourceLineNo">612</span><a id="line.612">        protected File getDir(String pdbId, boolean obsolete) {</a>
+<span class="sourceLineNo">613</span><a id="line.613"></a>
+<span class="sourceLineNo">614</span><a id="line.614">                File dir = null;</a>
+<span class="sourceLineNo">615</span><a id="line.615"></a>
+<span class="sourceLineNo">616</span><a id="line.616">                if (obsolete) {</a>
+<span class="sourceLineNo">617</span><a id="line.617">                        // obsolete is always split</a>
+<span class="sourceLineNo">618</span><a id="line.618">                        String middle = pdbId.substring(1,3).toLowerCase();</a>
+<span class="sourceLineNo">619</span><a id="line.619">                        dir = new File(obsoleteDirPath, middle);</a>
+<span class="sourceLineNo">620</span><a id="line.620">                } else {</a>
+<span class="sourceLineNo">621</span><a id="line.621">                        String middle = pdbId.substring(1,3).toLowerCase();</a>
+<span class="sourceLineNo">622</span><a id="line.622">                        dir = new File(splitDirPath, middle);</a>
+<span class="sourceLineNo">623</span><a id="line.623">                }</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+<span class="sourceLineNo">625</span><a id="line.625"></a>
+<span class="sourceLineNo">626</span><a id="line.626">                if (!dir.exists()) {</a>
+<span class="sourceLineNo">627</span><a id="line.627">                        boolean success = dir.mkdirs();</a>
+<span class="sourceLineNo">628</span><a id="line.628">                        if (!success) logger.error("Could not create mmCIF dir {}",dir.toString());</a>
+<span class="sourceLineNo">629</span><a id="line.629">                }</a>
+<span class="sourceLineNo">630</span><a id="line.630"></a>
+<span class="sourceLineNo">631</span><a id="line.631">                return dir;</a>
+<span class="sourceLineNo">632</span><a id="line.632">        }</a>
+<span class="sourceLineNo">633</span><a id="line.633"></a>
+<span class="sourceLineNo">634</span><a id="line.634">        /**</a>
+<span class="sourceLineNo">635</span><a id="line.635">         * Searches for previously downloaded files</a>
+<span class="sourceLineNo">636</span><a id="line.636">         * @param pdbId</a>
+<span class="sourceLineNo">637</span><a id="line.637">         * @return A file pointing to the existing file, or null if not found</a>
+<span class="sourceLineNo">638</span><a id="line.638">         * @throws IOException If the file exists but is empty and can't be deleted</a>
+<span class="sourceLineNo">639</span><a id="line.639">         */</a>
+<span class="sourceLineNo">640</span><a id="line.640">        public File getLocalFile(String pdbId) throws IOException {</a>
+<span class="sourceLineNo">641</span><a id="line.641"></a>
+<span class="sourceLineNo">642</span><a id="line.642">                // Search for existing files</a>
+<span class="sourceLineNo">643</span><a id="line.643"></a>
+<span class="sourceLineNo">644</span><a id="line.644">                // Search directories:</a>
+<span class="sourceLineNo">645</span><a id="line.645">                // 1) LOCAL_MMCIF_SPLIT_DIR/&lt;middle&gt;/(pdb)?&lt;pdbId&gt;.&lt;ext&gt;</a>
+<span class="sourceLineNo">646</span><a id="line.646">                // 2) LOCAL_MMCIF_ALL_DIR/&lt;middle&gt;/(pdb)?&lt;pdbId&gt;.&lt;ext&gt;</a>
+<span class="sourceLineNo">647</span><a id="line.647">                LinkedList&lt;File&gt; searchdirs = new LinkedList&lt;File&gt;();</a>
+<span class="sourceLineNo">648</span><a id="line.648">                String middle = pdbId.substring(1,3).toLowerCase();</a>
+<span class="sourceLineNo">649</span><a id="line.649"></a>
+<span class="sourceLineNo">650</span><a id="line.650">                File splitdir = new File(splitDirPath, middle);</a>
+<span class="sourceLineNo">651</span><a id="line.651">                searchdirs.add(splitdir);</a>
+<span class="sourceLineNo">652</span><a id="line.652">                // Search obsolete files if requested</a>
+<span class="sourceLineNo">653</span><a id="line.653">                if(getObsoleteBehavior() == ObsoleteBehavior.FETCH_OBSOLETE) {</a>
+<span class="sourceLineNo">654</span><a id="line.654">                        File obsdir = new File(obsoleteDirPath,middle);</a>
+<span class="sourceLineNo">655</span><a id="line.655">                        searchdirs.add(obsdir);</a>
+<span class="sourceLineNo">656</span><a id="line.656">                }</a>
+<span class="sourceLineNo">657</span><a id="line.657"></a>
+<span class="sourceLineNo">658</span><a id="line.658">                // valid prefixes before the &lt;pdbId&gt; in the filename</a>
+<span class="sourceLineNo">659</span><a id="line.659">                String[] prefixes = new String[] {"", "pdb"};</a>
+<span class="sourceLineNo">660</span><a id="line.660"></a>
+<span class="sourceLineNo">661</span><a id="line.661">                for( File searchdir :searchdirs){</a>
+<span class="sourceLineNo">662</span><a id="line.662">                        for( String prefix : prefixes) {</a>
+<span class="sourceLineNo">663</span><a id="line.663">                                for(String ex : getExtensions() ){</a>
+<span class="sourceLineNo">664</span><a id="line.664">                                        File f = new File(searchdir,prefix + pdbId.toLowerCase() + ex) ;</a>
+<span class="sourceLineNo">665</span><a id="line.665">                                        if ( f.exists()) {</a>
+<span class="sourceLineNo">666</span><a id="line.666">                                                // delete files that are too short to have contents</a>
+<span class="sourceLineNo">667</span><a id="line.667">                                                if( f.length() &lt; MIN_PDB_FILE_SIZE ) {</a>
+<span class="sourceLineNo">668</span><a id="line.668">                                                        Files.delete(f.toPath());</a>
+<span class="sourceLineNo">669</span><a id="line.669">                                                        return null;</a>
+<span class="sourceLineNo">670</span><a id="line.670">                                                }</a>
+<span class="sourceLineNo">671</span><a id="line.671">                                                return f;</a>
+<span class="sourceLineNo">672</span><a id="line.672">                                        }</a>
+<span class="sourceLineNo">673</span><a id="line.673">                                }</a>
+<span class="sourceLineNo">674</span><a id="line.674">                        }</a>
+<span class="sourceLineNo">675</span><a id="line.675">                }</a>
+<span class="sourceLineNo">676</span><a id="line.676">                //Not found</a>
+<span class="sourceLineNo">677</span><a id="line.677">                return null;</a>
+<span class="sourceLineNo">678</span><a id="line.678">        }</a>
+<span class="sourceLineNo">679</span><a id="line.679"></a>
+<span class="sourceLineNo">680</span><a id="line.680">        protected boolean checkFileExists(String pdbId){</a>
+<span class="sourceLineNo">681</span><a id="line.681">                try {</a>
+<span class="sourceLineNo">682</span><a id="line.682">                        File path =  getLocalFile(pdbId);</a>
+<span class="sourceLineNo">683</span><a id="line.683">                        if ( path != null)</a>
+<span class="sourceLineNo">684</span><a id="line.684">                                return true;</a>
+<span class="sourceLineNo">685</span><a id="line.685">                } catch(IOException e) {}</a>
+<span class="sourceLineNo">686</span><a id="line.686">                return false;</a>
+<span class="sourceLineNo">687</span><a id="line.687">        }</a>
+<span class="sourceLineNo">688</span><a id="line.688"></a>
+<span class="sourceLineNo">689</span><a id="line.689">        /**</a>
+<span class="sourceLineNo">690</span><a id="line.690">         * Return the String with the PDB server name, including the leading protocol</a>
+<span class="sourceLineNo">691</span><a id="line.691">         * String (http:// or ftp://).</a>
+<span class="sourceLineNo">692</span><a id="line.692">         * The server name will be by default the value {@value #DEFAULT_PDB_FILE_SERVER} or the one</a>
+<span class="sourceLineNo">693</span><a id="line.693">         * read from system property {@value #PDB_FILE_SERVER_PROPERTY}</a>
+<span class="sourceLineNo">694</span><a id="line.694">         *</a>
+<span class="sourceLineNo">695</span><a id="line.695">         * @return the server name including the leading protocol string</a>
+<span class="sourceLineNo">696</span><a id="line.696">         */</a>
+<span class="sourceLineNo">697</span><a id="line.697">        public static String getServerName() {</a>
+<span class="sourceLineNo">698</span><a id="line.698">                String name = System.getProperty(PDB_FILE_SERVER_PROPERTY);</a>
+<span class="sourceLineNo">699</span><a id="line.699"></a>
+<span class="sourceLineNo">700</span><a id="line.700">                if ( name == null || name.trim().isEmpty()) {</a>
+<span class="sourceLineNo">701</span><a id="line.701">                        name = DEFAULT_PDB_FILE_SERVER;</a>
+<span class="sourceLineNo">702</span><a id="line.702">                        logger.debug("Using default PDB file server {}",name);</a>
+<span class="sourceLineNo">703</span><a id="line.703">                } else {</a>
+<span class="sourceLineNo">704</span><a id="line.704">                        if (!name.startsWith("http://") &amp;&amp; !name.startsWith("ftp://") &amp;&amp; !name.startsWith("https://")) {</a>
+<span class="sourceLineNo">705</span><a id="line.705">                                logger.warn("Server name {} read from system property {} does not have a leading protocol string. Adding http:// to it", name, PDB_FILE_SERVER_PROPERTY);</a>
+<span class="sourceLineNo">706</span><a id="line.706">                                name = "http://"+name;</a>
+<span class="sourceLineNo">707</span><a id="line.707">                        }</a>
+<span class="sourceLineNo">708</span><a id="line.708">                        logger.info("Using PDB file server {} read from system property {}", name, PDB_FILE_SERVER_PROPERTY);</a>
+<span class="sourceLineNo">709</span><a id="line.709">                }</a>
+<span class="sourceLineNo">710</span><a id="line.710">                return name;</a>
+<span class="sourceLineNo">711</span><a id="line.711">        }</a>
+<span class="sourceLineNo">712</span><a id="line.712"></a>
+<span class="sourceLineNo">713</span><a id="line.713">        /**</a>
+<span class="sourceLineNo">714</span><a id="line.714">         * Should be called whenever any of the path variables change.</a>
+<span class="sourceLineNo">715</span><a id="line.715">         * Thus, if {@link getSplitDirPath()} or {@link getObsoleteDirPath()}</a>
+<span class="sourceLineNo">716</span><a id="line.716">         * depend on anything, they should call this function when that thing</a>
+<span class="sourceLineNo">717</span><a id="line.717">         * changes (possibly including at the end of the constructor).</a>
+<span class="sourceLineNo">718</span><a id="line.718">         */</a>
+<span class="sourceLineNo">719</span><a id="line.719">        protected void initPaths() {</a>
+<span class="sourceLineNo">720</span><a id="line.720">                // Hand-rolled String.join(), for java 6</a>
+<span class="sourceLineNo">721</span><a id="line.721">                String[] split = getSplitDirPath();</a>
+<span class="sourceLineNo">722</span><a id="line.722">                String[] obsolete = getObsoleteDirPath();</a>
+<span class="sourceLineNo">723</span><a id="line.723"></a>
+<span class="sourceLineNo">724</span><a id="line.724">                //URLs are joined with '/'</a>
+<span class="sourceLineNo">725</span><a id="line.725">                StringBuilder splitURL = new StringBuilder("/pub/pdb");</a>
+<span class="sourceLineNo">726</span><a id="line.726">                for(int i=0;i&lt;split.length;i++) {</a>
+<span class="sourceLineNo">727</span><a id="line.727">                        splitURL.append("/");</a>
+<span class="sourceLineNo">728</span><a id="line.728">                        splitURL.append(split[i]);</a>
+<span class="sourceLineNo">729</span><a id="line.729">                }</a>
+<span class="sourceLineNo">730</span><a id="line.730">                StringBuilder obsoleteURL = new StringBuilder("/pub/pdb");</a>
+<span class="sourceLineNo">731</span><a id="line.731">                for(int i=0;i&lt;obsolete.length;i++) {</a>
+<span class="sourceLineNo">732</span><a id="line.732">                        obsoleteURL.append("/");</a>
+<span class="sourceLineNo">733</span><a id="line.733">                        obsoleteURL.append(obsolete[i]);</a>
+<span class="sourceLineNo">734</span><a id="line.734">                }</a>
+<span class="sourceLineNo">735</span><a id="line.735"></a>
+<span class="sourceLineNo">736</span><a id="line.736">                splitDirURL = splitURL.toString();</a>
+<span class="sourceLineNo">737</span><a id="line.737">                obsoleteDirURL = obsoleteURL.toString();</a>
+<span class="sourceLineNo">738</span><a id="line.738"></a>
+<span class="sourceLineNo">739</span><a id="line.739"></a>
+<span class="sourceLineNo">740</span><a id="line.740">                //Files join themselves iteratively</a>
+<span class="sourceLineNo">741</span><a id="line.741">                splitDirPath = path;</a>
+<span class="sourceLineNo">742</span><a id="line.742">                for(int i=0;i&lt;split.length;i++) {</a>
+<span class="sourceLineNo">743</span><a id="line.743">                        splitDirPath = new File(splitDirPath,split[i]);</a>
+<span class="sourceLineNo">744</span><a id="line.744">                }</a>
+<span class="sourceLineNo">745</span><a id="line.745">                obsoleteDirPath = path;</a>
+<span class="sourceLineNo">746</span><a id="line.746">                for(int i=0;i&lt;obsolete.length;i++) {</a>
+<span class="sourceLineNo">747</span><a id="line.747">                        obsoleteDirPath = new File(obsoleteDirPath,obsolete[i]);</a>
+<span class="sourceLineNo">748</span><a id="line.748">                }</a>
+<span class="sourceLineNo">749</span><a id="line.749">        }</a>
+<span class="sourceLineNo">750</span><a id="line.750"></a>
+<span class="sourceLineNo">751</span><a id="line.751">        /**</a>
+<span class="sourceLineNo">752</span><a id="line.752">         * Converts a PDB ID into a filename with the proper extension</a>
+<span class="sourceLineNo">753</span><a id="line.753">         * @param pdbId</a>
+<span class="sourceLineNo">754</span><a id="line.754">         * @return The filename, e.g. "4hhb.pdb.gz"</a>
+<span class="sourceLineNo">755</span><a id="line.755">         */</a>
+<span class="sourceLineNo">756</span><a id="line.756">        protected abstract String getFilename(String pdbId);</a>
+<span class="sourceLineNo">757</span><a id="line.757"></a>
+<span class="sourceLineNo">758</span><a id="line.758">        /**</a>
+<span class="sourceLineNo">759</span><a id="line.759">         * Location of split files within the directory, as an array of paths.</a>
+<span class="sourceLineNo">760</span><a id="line.760">         * These will be joined with either slashes (for the URL) or the file</a>
+<span class="sourceLineNo">761</span><a id="line.761">         * separator (for directories). The returned results should be constant,</a>
+<span class="sourceLineNo">762</span><a id="line.762">         * to allow for caching.</a>
+<span class="sourceLineNo">763</span><a id="line.763">         * @return A list of directories, relative to the /pub/pdb directory on the server</a>
+<span class="sourceLineNo">764</span><a id="line.764">         */</a>
+<span class="sourceLineNo">765</span><a id="line.765">        protected abstract String[] getSplitDirPath();</a>
+<span class="sourceLineNo">766</span><a id="line.766">        /**</a>
+<span class="sourceLineNo">767</span><a id="line.767">         * Location of obsolete files within the directory, as an array of paths.</a>
+<span class="sourceLineNo">768</span><a id="line.768">         * These will be joined with either slashes (for the URL) or the file</a>
+<span class="sourceLineNo">769</span><a id="line.769">         * separator (for directories). The returned results should be constant,</a>
+<span class="sourceLineNo">770</span><a id="line.770">         * to allow for caching.</a>
+<span class="sourceLineNo">771</span><a id="line.771">         * @return A list of directories, relative to the /pub/pdb directory on the server</a>
+<span class="sourceLineNo">772</span><a id="line.772">         */</a>
+<span class="sourceLineNo">773</span><a id="line.773">        protected abstract String[] getObsoleteDirPath();</a>
+<span class="sourceLineNo">774</span><a id="line.774">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.align.multiple;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.util.List;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.StructureIdentifier;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * A MultipleAlignmentEnsemble is a collection of {@link MultipleAlignment}s</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * that share the same structures (Atoms) and creation properties (algorithm,</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * version, creation time, etc.).</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * &lt;p&gt;</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * This class is the top level of the hierarchy and allows the storage of a set</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * of alignment alternatives created by a multiple structure alignment</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * algorithm, so that only one object is returned with more than one alignment</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * option.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> *</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * @since 4.1.0</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public interface MultipleAlignmentEnsemble extends ScoresCache {</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">         * Creates and returns an identical copy of this ensemble, including a deep</a>
+<span class="sourceLineNo">048</span><a id="line.48">         * clone of all constituent alignments.</a>
+<span class="sourceLineNo">049</span><a id="line.49">         *</a>
+<span class="sourceLineNo">050</span><a id="line.50">         * @return MultipleAlignmentEnsemble identical copy of this object.</a>
+<span class="sourceLineNo">051</span><a id="line.51">         */</a>
+<span class="sourceLineNo">052</span><a id="line.52">        public MultipleAlignmentEnsemble clone();</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        /**</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * Returns the name of the multiple structure alignment algorithm that</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * created the MultipleAlignment objects.</a>
+<span class="sourceLineNo">057</span><a id="line.57">         *</a>
+<span class="sourceLineNo">058</span><a id="line.58">         * @return String name of the algorithm.</a>
+<span class="sourceLineNo">059</span><a id="line.59">         * @see #setAlgorithmName(String)</a>
+<span class="sourceLineNo">060</span><a id="line.60">         */</a>
+<span class="sourceLineNo">061</span><a id="line.61">        public String getAlgorithmName();</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        /**</a>
+<span class="sourceLineNo">064</span><a id="line.64">         * Set the name of the multiple structure alignment algorithm that created</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * the MultipleAlignment objects.</a>
+<span class="sourceLineNo">066</span><a id="line.66">         *</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * @param algorithmName name of the algorithm.</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * @see #getAlgorithmName()</a>
+<span class="sourceLineNo">069</span><a id="line.69">         */</a>
+<span class="sourceLineNo">070</span><a id="line.70">        public void setAlgorithmName(String algorithmName);</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">        /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * Returns the version of the algorithm used to generate the</a>
+<span class="sourceLineNo">074</span><a id="line.74">         * MultipleAlignment objects.</a>
+<span class="sourceLineNo">075</span><a id="line.75">         *</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * @return String version of the algorithm.</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * @see #setVersion(String)</a>
+<span class="sourceLineNo">078</span><a id="line.78">         */</a>
+<span class="sourceLineNo">079</span><a id="line.79">        public String getVersion();</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        /**</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * Sets the version of the algorithm used to generate the MultipleAlignment</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * objects.</a>
+<span class="sourceLineNo">084</span><a id="line.84">         *</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * @param version the version of the algorithm.</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @see #getVersion()</a>
+<span class="sourceLineNo">087</span><a id="line.87">         */</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public void setVersion(String version);</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">        /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">         * Returns a List containing the names of the structures aligned</a>
+<span class="sourceLineNo">092</span><a id="line.92">         * (i.e.: PDB code, SCOP domain, etc.).&lt;p&gt;</a>
+<span class="sourceLineNo">093</span><a id="line.93">         * The names are structure identifiers of the structures.</a>
+<span class="sourceLineNo">094</span><a id="line.94">         * They are in the same order as in the alignment Blocks (same index number</a>
+<span class="sourceLineNo">095</span><a id="line.95">         * for same structure).</a>
+<span class="sourceLineNo">096</span><a id="line.96">         *</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * @return List of String names of the structures</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @see #setStructureIdentifiers(List)</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @see #getAtomArrays()</a>
+<span class="sourceLineNo">100</span><a id="line.100">         */</a>
+<span class="sourceLineNo">101</span><a id="line.101">        public List&lt;StructureIdentifier&gt; getStructureIdentifiers();</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">        /**</a>
+<span class="sourceLineNo">104</span><a id="line.104">         * Set the List containing the names of the structures aligned</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * (i.e.: PDB code, SCOP domain, etc.).&lt;p&gt;</a>
+<span class="sourceLineNo">106</span><a id="line.106">         * The names are structure identifiers of the structures.</a>
+<span class="sourceLineNo">107</span><a id="line.107">         *</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @param structureIdentifiers names of the structures, structure identifiers</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * @see #getStructureIdentifiers()</a>
+<span class="sourceLineNo">110</span><a id="line.110">         * @see #setAtomArrays(List)</a>
+<span class="sourceLineNo">111</span><a id="line.111">         */</a>
+<span class="sourceLineNo">112</span><a id="line.112">        public void setStructureIdentifiers(List&lt;StructureIdentifier&gt; structureIdentifiers);</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">        /**</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * Get an array of representative atoms for each structure (CA atoms for</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * proteins).&lt;p&gt;</a>
+<span class="sourceLineNo">117</span><a id="line.117">         * Atoms should be unrotated. Thus, to obtain a superimposed set of</a>
+<span class="sourceLineNo">118</span><a id="line.118">         * structures, each atom array should be cloned and then rotated according</a>
+<span class="sourceLineNo">119</span><a id="line.119">         * to the transformation matrix.&lt;p&gt;</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * If atoms have not previously been set using</a>
+<span class="sourceLineNo">121</span><a id="line.121">         * {@link #setAtomArrays(List)}, attempts to load representative atoms</a>
+<span class="sourceLineNo">122</span><a id="line.122">         * based on {@link #getStructureIdentifiers()}.</a>
+<span class="sourceLineNo">123</span><a id="line.123">         * If it fails to load the Atoms it gives a NullPointerException before</a>
+<span class="sourceLineNo">124</span><a id="line.124">         * returning null.</a>
+<span class="sourceLineNo">125</span><a id="line.125">         *</a>
+<span class="sourceLineNo">126</span><a id="line.126">         * @return List of Atom[].</a>
+<span class="sourceLineNo">127</span><a id="line.127">         * @see #setAtomArrays(List)</a>
+<span class="sourceLineNo">128</span><a id="line.128">         */</a>
+<span class="sourceLineNo">129</span><a id="line.129">        public List&lt;Atom[]&gt; getAtomArrays();</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">        /**</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * Sets the List of Atom arrays. Every structure has an Atom array</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * associated. Note that this should be called in conjunction with</a>
+<span class="sourceLineNo">134</span><a id="line.134">         * {@link #setStructureIdentifiers(List)}.&lt;p&gt;</a>
+<span class="sourceLineNo">135</span><a id="line.135">         * Setting the atom arrays to null will cause them to be automatically</a>
+<span class="sourceLineNo">136</span><a id="line.136">         * regenerated based on {@link #getStructureIdentifiers()} during the next call</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * to {@link #getAtomArrays()}.</a>
+<span class="sourceLineNo">138</span><a id="line.138">         *</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * @param atomArrays the List of representative (C-alpha) atom arrays</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @see #getAtomArrays()</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * @see #setStructureIdentifiers(List)</a>
+<span class="sourceLineNo">142</span><a id="line.142">         */</a>
+<span class="sourceLineNo">143</span><a id="line.143">        public void setAtomArrays(List&lt;Atom[]&gt; atomArrays);</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">        /**</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * Returns the List containing the interatomic distance Matrix of each</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * structure.</a>
+<span class="sourceLineNo">148</span><a id="line.148">         *</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * @return List of Matrix interatomic distance matrices.</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * @see #updateDistanceMatrix()</a>
+<span class="sourceLineNo">151</span><a id="line.151">         */</a>
+<span class="sourceLineNo">152</span><a id="line.152">        public List&lt;Matrix&gt; getDistanceMatrix();</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        /**</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * Returns the List of MultipleAlignments in the ensemble.</a>
+<span class="sourceLineNo">156</span><a id="line.156">         *</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * @return List of MultipleAlignment in the ensemble.</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * @see #setMultipleAlignments()</a>
+<span class="sourceLineNo">159</span><a id="line.159">         */</a>
+<span class="sourceLineNo">160</span><a id="line.160">        public List&lt;MultipleAlignment&gt; getMultipleAlignments();</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">        /**</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * Returns the MultipleAlignments at the specified index</a>
+<span class="sourceLineNo">164</span><a id="line.164">         * in the ensemble. Throws an exception equivalently to</a>
+<span class="sourceLineNo">165</span><a id="line.165">         * accessing an index of a List</a>
+<span class="sourceLineNo">166</span><a id="line.166">         *</a>
+<span class="sourceLineNo">167</span><a id="line.167">         * @return MultipleAlignment at the index in the ensemble.</a>
+<span class="sourceLineNo">168</span><a id="line.168">         * @see #setMultipleAlignments()</a>
+<span class="sourceLineNo">169</span><a id="line.169">         */</a>
+<span class="sourceLineNo">170</span><a id="line.170">        public MultipleAlignment getMultipleAlignment(int index);</a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">        /**</a>
+<span class="sourceLineNo">173</span><a id="line.173">         * Set the List of MultipleAlignments in the ensemble.</a>
+<span class="sourceLineNo">174</span><a id="line.174">         *</a>
+<span class="sourceLineNo">175</span><a id="line.175">         * @param alignments List of MultipleAlignments that are part of the</a>
+<span class="sourceLineNo">176</span><a id="line.176">         * ensemble.</a>
+<span class="sourceLineNo">177</span><a id="line.177">         * @see #addMultipleAlignment(MultipleAlignment)</a>
+<span class="sourceLineNo">178</span><a id="line.178">         */</a>
+<span class="sourceLineNo">179</span><a id="line.179">        public void setMultipleAlignments(List&lt;MultipleAlignment&gt; alignments);</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">        /**</a>
+<span class="sourceLineNo">182</span><a id="line.182">         * Add a new MultipleAlignment to the end of the ensemble and set its</a>
+<span class="sourceLineNo">183</span><a id="line.183">         * parent ensemble to this.</a>
+<span class="sourceLineNo">184</span><a id="line.184">         *</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * @param alignment</a>
+<span class="sourceLineNo">186</span><a id="line.186">         */</a>
+<span class="sourceLineNo">187</span><a id="line.187">        public void addMultipleAlignment(MultipleAlignment alignment);</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">        /**</a>
+<span class="sourceLineNo">190</span><a id="line.190">         * Returns the number of aligned structures in the MultipleAlignments.</a>
+<span class="sourceLineNo">191</span><a id="line.191">         *</a>
+<span class="sourceLineNo">192</span><a id="line.192">         * @return int number of aligned structures.</a>
+<span class="sourceLineNo">193</span><a id="line.193">         * @see #getStructureIdentifiers()</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * @see #getAtomArrays()</a>
+<span class="sourceLineNo">195</span><a id="line.195">         */</a>
+<span class="sourceLineNo">196</span><a id="line.196">        public int size();</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        /**</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * Returns the io time for this object, in milliseconds.</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * @return long creation time, or null if unset</a>
+<span class="sourceLineNo">201</span><a id="line.201">         */</a>
+<span class="sourceLineNo">202</span><a id="line.202">        public Long getIoTime();</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">        /**</a>
+<span class="sourceLineNo">205</span><a id="line.205">         * Set the IO time to load this object</a>
+<span class="sourceLineNo">206</span><a id="line.206">         * @param millis</a>
+<span class="sourceLineNo">207</span><a id="line.207">         */</a>
+<span class="sourceLineNo">208</span><a id="line.208">        public void setIoTime(Long millis);</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">        /**</a>
+<span class="sourceLineNo">211</span><a id="line.211">         * Returns the running time of the structure alignment calculation, in</a>
+<span class="sourceLineNo">212</span><a id="line.212">         * milliseconds.</a>
+<span class="sourceLineNo">213</span><a id="line.213">         *</a>
+<span class="sourceLineNo">214</span><a id="line.214">         * @return long running time of the calculation, or null if unset</a>
+<span class="sourceLineNo">215</span><a id="line.215">         * @see #getIoTime()</a>
+<span class="sourceLineNo">216</span><a id="line.216">         */</a>
+<span class="sourceLineNo">217</span><a id="line.217">        public Long getCalculationTime();</a>
+<span class="sourceLineNo">218</span><a id="line.218"></a>
+<span class="sourceLineNo">219</span><a id="line.219">        /**</a>
+<span class="sourceLineNo">220</span><a id="line.220">         * Set the running time spent to calculate this alignment.</a>
+<span class="sourceLineNo">221</span><a id="line.221">         *</a>
+<span class="sourceLineNo">222</span><a id="line.222">         * @param millis</a>
+<span class="sourceLineNo">223</span><a id="line.223">         */</a>
+<span class="sourceLineNo">224</span><a id="line.224">        public void setCalculationTime(Long millis);</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">        /**</a>
+<span class="sourceLineNo">227</span><a id="line.227">         * Clear scores and other properties which depend on the specific</a>
+<span class="sourceLineNo">228</span><a id="line.228">         * alignment. This frees memory and ensures consistency of the cached</a>
+<span class="sourceLineNo">229</span><a id="line.229">         * variables.&lt;p&gt;</a>
+<span class="sourceLineNo">230</span><a id="line.230">         * Recursively clears the member MultipleAlignments.</a>
+<span class="sourceLineNo">231</span><a id="line.231">         */</a>
+<span class="sourceLineNo">232</span><a id="line.232">        public void clear();</a>
+<span class="sourceLineNo">233</span><a id="line.233">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

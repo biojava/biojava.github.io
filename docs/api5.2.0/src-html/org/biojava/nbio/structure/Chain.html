@@ -1,0 +1,542 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on 25.04.2004</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.structure;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.sequence.template.Sequence;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.io.FileParsingParameters;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.io.mmcif.model.ChemComp;</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.Serializable;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.List;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">/**</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * &lt;p&gt;</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * Defines the interface for a Chain. A Chain corresponds to a Chain in a PDB file.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * A chain consists out of a list of {@link Group} objects. A Group can either be</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * an {@link AminoAcid}, {@link HetatomImpl Hetatom} or {@link NucleotideImpl Nucleotide}.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;p&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * The BioJava API provides access to both the ATOM and SEQRES records in a PDB file.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * During parsing of a PDB file it aligns the ATOM and SEQRES groups and joins them.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * The SEQRES sequence can be accessed via  {@link #getSeqResGroups()} and the</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * ATOM groups via {@link #getAtomGroups()}. Groups that have been observed</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * (i.e. they are in the ATOM records) can be detected by {@link Group}.has3D()</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *  &lt;/p&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @version %I% %G%</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * @since 1.4</a>
+<span class="sourceLineNo">051</span><a id="line.51"> */</a>
+<span class="sourceLineNo">052</span><a id="line.52">public interface Chain extends Serializable {</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        /** returns an identical copy of this Chain.</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @return  an identical copy of this Chain</a>
+<span class="sourceLineNo">056</span><a id="line.56">         */</a>
+<span class="sourceLineNo">057</span><a id="line.57">        Object clone();</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        /** add a group to the list of ATOM record group of this chain.</a>
+<span class="sourceLineNo">060</span><a id="line.60">         * To add SEQRES records a more complex alignment between ATOM and SEQRES residues</a>
+<span class="sourceLineNo">061</span><a id="line.61">         * is required, please see SeqRes2AtomAligner for more details on that.</a>
+<span class="sourceLineNo">062</span><a id="line.62">         * @param group  a Group object</a>
+<span class="sourceLineNo">063</span><a id="line.63">         */</a>
+<span class="sourceLineNo">064</span><a id="line.64">        void addGroup(Group group);</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /** Get the 'private' asymId (internal chain IDs in mmCif) for this chain.</a>
+<span class="sourceLineNo">067</span><a id="line.67">         *</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * @return the asymId</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * @see #setId(String)</a>
+<span class="sourceLineNo">070</span><a id="line.70">         * @see #getName()</a>
+<span class="sourceLineNo">071</span><a id="line.71">         */</a>
+<span class="sourceLineNo">072</span><a id="line.72">        String getId() ;</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        /**</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * Set the 'private' asymId (internal chain IDs in mmCif) for this chain.</a>
+<span class="sourceLineNo">077</span><a id="line.77">         *</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * @param asymId the internal chain Id</a>
+<span class="sourceLineNo">079</span><a id="line.79">         */</a>
+<span class="sourceLineNo">080</span><a id="line.80">        void setId(String asymId) ;</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * Set the 'public' authId (chain ID in PDB file)</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @param authId the 'public' authId (chain ID in PDB file)</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * @see #getId()</a>
+<span class="sourceLineNo">088</span><a id="line.88">         */</a>
+<span class="sourceLineNo">089</span><a id="line.89">        void setName(String authId);</a>
+<span class="sourceLineNo">090</span><a id="line.90"></a>
+<span class="sourceLineNo">091</span><a id="line.91">        /**</a>
+<span class="sourceLineNo">092</span><a id="line.92">         * Get the 'public' authId (chain ID in PDB file)</a>
+<span class="sourceLineNo">093</span><a id="line.93">         *</a>
+<span class="sourceLineNo">094</span><a id="line.94">         * @return the authId for this chain.</a>
+<span class="sourceLineNo">095</span><a id="line.95">         * @see #getId()</a>
+<span class="sourceLineNo">096</span><a id="line.96">         */</a>
+<span class="sourceLineNo">097</span><a id="line.97">        String getName();</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">        /**</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * Return the Group at given position,</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * from within Groups with observed density in the chain, i.e.</a>
+<span class="sourceLineNo">103</span><a id="line.103">         * those with coordinates in ATOM and HETATMS (including waters) records.</a>
+<span class="sourceLineNo">104</span><a id="line.104">         * @param position  an int</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * @return a Group object</a>
+<span class="sourceLineNo">106</span><a id="line.106">         * @see #getAtomLength()</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * @see #getAtomGroups()</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @see #getSeqResGroup(int)</a>
+<span class="sourceLineNo">109</span><a id="line.109">         */</a>
+<span class="sourceLineNo">110</span><a id="line.110">        Group getAtomGroup (int position);</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">        /**</a>
+<span class="sourceLineNo">113</span><a id="line.113">         * Return the Group at given position,</a>
+<span class="sourceLineNo">114</span><a id="line.114">         * from within groups in the SEQRES records of the chain, i.e.</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * the aminoacids/nucleotides in the construct.</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * @param position  an int</a>
+<span class="sourceLineNo">117</span><a id="line.117">         * @return a Group object</a>
+<span class="sourceLineNo">118</span><a id="line.118">         * @see #getSeqResLength()</a>
+<span class="sourceLineNo">119</span><a id="line.119">         * @see #getSeqResGroups()</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * @see #getAtomGroup(int)</a>
+<span class="sourceLineNo">121</span><a id="line.121">         */</a>
+<span class="sourceLineNo">122</span><a id="line.122">        Group getSeqResGroup (int position);</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">        /**</a>
+<span class="sourceLineNo">126</span><a id="line.126">         * Return all Groups with observed density in the chain, i.e.</a>
+<span class="sourceLineNo">127</span><a id="line.127">         * those with coordinates in ATOM and HETATMS (including waters) records.</a>
+<span class="sourceLineNo">128</span><a id="line.128">         *</a>
+<span class="sourceLineNo">129</span><a id="line.129">         * @return a List object representing the Groups of this Chain.</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * @see #setAtomGroups(List)</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * @see #getAtomLength()</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * @see #getSeqResGroups()</a>
+<span class="sourceLineNo">133</span><a id="line.133">         */</a>
+<span class="sourceLineNo">134</span><a id="line.134">        List&lt;Group&gt; getAtomGroups();</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">        /**</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * Set all Groups with observed density in the chain, i.e.</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * those with coordinates in ATOM and HETATMs (including waters) records.</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * @param groups a List object representing the Groups of this Chain.</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @see #getAtomGroups()</a>
+<span class="sourceLineNo">141</span><a id="line.141">         */</a>
+<span class="sourceLineNo">142</span><a id="line.142">        void setAtomGroups(List&lt;Group&gt; groups);</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">        /**</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * Return a List of all (observed) Groups of a special type, one of: {@link GroupType#AMINOACID},</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * {@link GroupType#HETATM} or {@link GroupType#NUCLEOTIDE}.</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * Note that if a standard aminoacid appears as a HETATM (because it is part of a ligand) then</a>
+<span class="sourceLineNo">148</span><a id="line.148">         * it is still considered as {@link GroupType#AMINOACID} and not as {@link GroupType#HETATM}.</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * @param type  GroupType</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * @return a List object</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * @see #setAtomGroups(List)</a>
+<span class="sourceLineNo">152</span><a id="line.152">         */</a>
+<span class="sourceLineNo">153</span><a id="line.153">        List&lt;Group&gt; getAtomGroups (GroupType type);</a>
+<span class="sourceLineNo">154</span><a id="line.154"></a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        /**</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * Get a group by its PDB residue numbering. If the PDB residue number is not known,</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * throws a StructureException.</a>
+<span class="sourceLineNo">159</span><a id="line.159">         *</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * @param resNum the PDB residue number of the group</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * @return the matching group</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * @throws StructureException</a>
+<span class="sourceLineNo">163</span><a id="line.163">         */</a>
+<span class="sourceLineNo">164</span><a id="line.164">        Group getGroupByPDB(ResidueNumber resNum) throws StructureException;</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">        /**</a>
+<span class="sourceLineNo">167</span><a id="line.167">         * Get all groups that are located between two PDB residue numbers.</a>
+<span class="sourceLineNo">168</span><a id="line.168">         *</a>
+<span class="sourceLineNo">169</span><a id="line.169">         * @param pdbresnumStart PDB residue number of start. If null, defaults to the chain start.</a>
+<span class="sourceLineNo">170</span><a id="line.170">         * @param pdbresnumEnd PDB residue number of end. If null, defaults to the chain end.</a>
+<span class="sourceLineNo">171</span><a id="line.171">         * @return Groups in between. or throws a StructureException if either start or end can not be found,</a>
+<span class="sourceLineNo">172</span><a id="line.172">         * @throws StructureException</a>
+<span class="sourceLineNo">173</span><a id="line.173">         */</a>
+<span class="sourceLineNo">174</span><a id="line.174">        Group[] getGroupsByPDB(ResidueNumber pdbresnumStart, ResidueNumber pdbresnumEnd) throws StructureException;</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        /**</a>
+<span class="sourceLineNo">178</span><a id="line.178">         * Get all groups that are located between two PDB residue numbers. In contrast to getGroupsByPDB</a>
+<span class="sourceLineNo">179</span><a id="line.179">         * this method call ignores if the exact outer groups are not found. This is useful e.g. when requesting the range</a>
+<span class="sourceLineNo">180</span><a id="line.180">         * of groups as specified by the DBREF records - these frequently are rather inaccurate.</a>
+<span class="sourceLineNo">181</span><a id="line.181">         *</a>
+<span class="sourceLineNo">182</span><a id="line.182">         *</a>
+<span class="sourceLineNo">183</span><a id="line.183">         * @param pdbresnumStart PDB residue number of start. If null, defaults to the chain start.</a>
+<span class="sourceLineNo">184</span><a id="line.184">         * @param pdbresnumEnd PDB residue number of end. If null, defaults to the chain end.</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * @param ignoreMissing ignore missing groups in this range.</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * @return Groups in between. or throws a StructureException if either start or end can not be found,</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * @throws StructureException</a>
+<span class="sourceLineNo">188</span><a id="line.188">         *</a>
+<span class="sourceLineNo">189</span><a id="line.189">         */</a>
+<span class="sourceLineNo">190</span><a id="line.190">        Group[] getGroupsByPDB(ResidueNumber pdbresnumStart, ResidueNumber pdbresnumEnd,boolean ignoreMissing) throws StructureException;</a>
+<span class="sourceLineNo">191</span><a id="line.191"></a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">        /**</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * Returns the number of Groups with observed density in the chain, i.e.</a>
+<span class="sourceLineNo">195</span><a id="line.195">         * those with coordinates in ATOM and HETATMs (including waters) records</a>
+<span class="sourceLineNo">196</span><a id="line.196">         *</a>
+<span class="sourceLineNo">197</span><a id="line.197">         * @return the length</a>
+<span class="sourceLineNo">198</span><a id="line.198">         * @see #getAtomGroup(int)</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * @see #getAtomGroups()</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * @see #getSeqResLength())</a>
+<span class="sourceLineNo">201</span><a id="line.201">         */</a>
+<span class="sourceLineNo">202</span><a id="line.202">        int getAtomLength();</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">        /**</a>
+<span class="sourceLineNo">205</span><a id="line.205">         * Returns the number of groups in the SEQRES records of the chain, i.e.</a>
+<span class="sourceLineNo">206</span><a id="line.206">         * the number of aminoacids/nucleotides in the construct</a>
+<span class="sourceLineNo">207</span><a id="line.207">         *</a>
+<span class="sourceLineNo">208</span><a id="line.208">         * @return the length</a>
+<span class="sourceLineNo">209</span><a id="line.209">         * @see #getSeqResGroup(int)</a>
+<span class="sourceLineNo">210</span><a id="line.210">         * @see #getSeqResGroups()</a>
+<span class="sourceLineNo">211</span><a id="line.211">         * @see #getAtomLength()</a>
+<span class="sourceLineNo">212</span><a id="line.212">         */</a>
+<span class="sourceLineNo">213</span><a id="line.213">        int getSeqResLength();</a>
+<span class="sourceLineNo">214</span><a id="line.214"></a>
+<span class="sourceLineNo">215</span><a id="line.215">        /**</a>
+<span class="sourceLineNo">216</span><a id="line.216">         * Sets the Entity information</a>
+<span class="sourceLineNo">217</span><a id="line.217">         * @param entityInfo the EntityInfo</a>
+<span class="sourceLineNo">218</span><a id="line.218">         * @see #getEntityInfo()</a>
+<span class="sourceLineNo">219</span><a id="line.219">         */</a>
+<span class="sourceLineNo">220</span><a id="line.220">        void setEntityInfo(EntityInfo entityInfo);</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">        /**</a>
+<span class="sourceLineNo">223</span><a id="line.223">         * Returns the EntityInfo for this chain.</a>
+<span class="sourceLineNo">224</span><a id="line.224">         *</a>
+<span class="sourceLineNo">225</span><a id="line.225">         * @return the EntityInfo object</a>
+<span class="sourceLineNo">226</span><a id="line.226">         * @see #setEntityInfo(EntityInfo)</a>
+<span class="sourceLineNo">227</span><a id="line.227">         */</a>
+<span class="sourceLineNo">228</span><a id="line.228">        EntityInfo getEntityInfo();</a>
+<span class="sourceLineNo">229</span><a id="line.229"></a>
+<span class="sourceLineNo">230</span><a id="line.230">        /**</a>
+<span class="sourceLineNo">231</span><a id="line.231">         * Sets the 'private' asymId of this chain (Chain id in PDB file ).</a>
+<span class="sourceLineNo">232</span><a id="line.232">         * @param asymId  a String specifying the name value</a>
+<span class="sourceLineNo">233</span><a id="line.233">         * @see #getChainID()</a>
+<span class="sourceLineNo">234</span><a id="line.234">         * @deprecated  use {@link #setId(String asymId)} instead</a>
+<span class="sourceLineNo">235</span><a id="line.235">         */</a>
+<span class="sourceLineNo">236</span><a id="line.236">        @Deprecated</a>
+<span class="sourceLineNo">237</span><a id="line.237">        void setChainID(String asymId);</a>
+<span class="sourceLineNo">238</span><a id="line.238"></a>
+<span class="sourceLineNo">239</span><a id="line.239"></a>
+<span class="sourceLineNo">240</span><a id="line.240"></a>
+<span class="sourceLineNo">241</span><a id="line.241">        /**</a>
+<span class="sourceLineNo">242</span><a id="line.242">         * Gets the 'private' asymId of this chain.</a>
+<span class="sourceLineNo">243</span><a id="line.243">         * @return a String representing the name value</a>
+<span class="sourceLineNo">244</span><a id="line.244">         * @see #setChainID(String)</a>
+<span class="sourceLineNo">245</span><a id="line.245">         * @deprecated  use getId() instead</a>
+<span class="sourceLineNo">246</span><a id="line.246">         */</a>
+<span class="sourceLineNo">247</span><a id="line.247">        @Deprecated</a>
+<span class="sourceLineNo">248</span><a id="line.248">        String getChainID();</a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">        /**</a>
+<span class="sourceLineNo">252</span><a id="line.252">         * If available, returns the internal chain ID that is used in mmCIF files (asym_id), otherwise null</a>
+<span class="sourceLineNo">253</span><a id="line.253">         *</a>
+<span class="sourceLineNo">254</span><a id="line.254">         * @return String or null</a>
+<span class="sourceLineNo">255</span><a id="line.255">         * @since 3.0.5</a>
+<span class="sourceLineNo">256</span><a id="line.256">         * @deprecated  use {@link #getId()} instead</a>
+<span class="sourceLineNo">257</span><a id="line.257">         */</a>
+<span class="sourceLineNo">258</span><a id="line.258">        String getInternalChainID();</a>
+<span class="sourceLineNo">259</span><a id="line.259"></a>
+<span class="sourceLineNo">260</span><a id="line.260">        /**</a>
+<span class="sourceLineNo">261</span><a id="line.261">         * Sets the internal chain ID that is used in mmCif files</a>
+<span class="sourceLineNo">262</span><a id="line.262">         *</a>
+<span class="sourceLineNo">263</span><a id="line.263">         * @param internalChainID</a>
+<span class="sourceLineNo">264</span><a id="line.264">         * @since 3.0.5</a>
+<span class="sourceLineNo">265</span><a id="line.265">         * @deprecated use {@link #setId()} instead</a>
+<span class="sourceLineNo">266</span><a id="line.266">         */</a>
+<span class="sourceLineNo">267</span><a id="line.267">        void setInternalChainID(String internalChainID);</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">        @Override</a>
+<span class="sourceLineNo">271</span><a id="line.271">        String toString();</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273"></a>
+<span class="sourceLineNo">274</span><a id="line.274">        /**</a>
+<span class="sourceLineNo">275</span><a id="line.275">         * Converts the SEQRES groups of a Chain to a Biojava Sequence object.</a>
+<span class="sourceLineNo">276</span><a id="line.276">         *</a>
+<span class="sourceLineNo">277</span><a id="line.277">         * @return the SEQRES groups of the Chain as a Sequence object.</a>
+<span class="sourceLineNo">278</span><a id="line.278">         */</a>
+<span class="sourceLineNo">279</span><a id="line.279">        Sequence&lt;?&gt; getBJSequence()  ;</a>
+<span class="sourceLineNo">280</span><a id="line.280"></a>
+<span class="sourceLineNo">281</span><a id="line.281">        /**</a>
+<span class="sourceLineNo">282</span><a id="line.282">         * Returns the sequence of amino acids as it has been provided in the ATOM records.</a>
+<span class="sourceLineNo">283</span><a id="line.283">         * Non-standard residues will be present in the string only if the property</a>
+<span class="sourceLineNo">284</span><a id="line.284">         * {@value org.biojava.nbio.structure.io.PDBFileReader#LOAD_CHEM_COMP_PROPERTY} has been set.</a>
+<span class="sourceLineNo">285</span><a id="line.285">         * @return amino acid sequence as string</a>
+<span class="sourceLineNo">286</span><a id="line.286">         * @see #getSeqResSequence()</a>
+<span class="sourceLineNo">287</span><a id="line.287">         */</a>
+<span class="sourceLineNo">288</span><a id="line.288">        String getAtomSequence();</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">        /**</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * Returns the PDB SEQRES sequence as a one-letter sequence string.</a>
+<span class="sourceLineNo">292</span><a id="line.292">         * Non-standard residues are represented by an "X".</a>
+<span class="sourceLineNo">293</span><a id="line.293">         * @return one-letter PDB SEQRES sequence as string</a>
+<span class="sourceLineNo">294</span><a id="line.294">         * @see #getAtomSequence()</a>
+<span class="sourceLineNo">295</span><a id="line.295">         */</a>
+<span class="sourceLineNo">296</span><a id="line.296">        String getSeqResSequence();</a>
+<span class="sourceLineNo">297</span><a id="line.297"></a>
+<span class="sourceLineNo">298</span><a id="line.298">        /**</a>
+<span class="sourceLineNo">299</span><a id="line.299">         * Sets the Swissprot id of this chain.</a>
+<span class="sourceLineNo">300</span><a id="line.300">         * @param sp_id  a String specifying the swissprot id value</a>
+<span class="sourceLineNo">301</span><a id="line.301">         * @see #getSwissprotId()</a>
+<span class="sourceLineNo">302</span><a id="line.302">         */</a>
+<span class="sourceLineNo">303</span><a id="line.303">        void setSwissprotId(String sp_id);</a>
+<span class="sourceLineNo">304</span><a id="line.304"></a>
+<span class="sourceLineNo">305</span><a id="line.305">        /**</a>
+<span class="sourceLineNo">306</span><a id="line.306">         * Gets the Swissprot id of this chain.</a>
+<span class="sourceLineNo">307</span><a id="line.307">         * @return a String representing the swissprot id value</a>
+<span class="sourceLineNo">308</span><a id="line.308">         * @see #setSwissprotId(String sp_id)</a>
+<span class="sourceLineNo">309</span><a id="line.309">         */</a>
+<span class="sourceLineNo">310</span><a id="line.310">        String getSwissprotId() ;</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312"></a>
+<span class="sourceLineNo">313</span><a id="line.313">        /**</a>
+<span class="sourceLineNo">314</span><a id="line.314">         * Returns a List of all SEQRES groups of a special type, one of: {@link GroupType#AMINOACID},</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * {@link GroupType#HETATM} or {@link GroupType#NUCLEOTIDE}.</a>
+<span class="sourceLineNo">316</span><a id="line.316">         * @param type  a GroupType</a>
+<span class="sourceLineNo">317</span><a id="line.317">         * @return an List object</a>
+<span class="sourceLineNo">318</span><a id="line.318">         * @see #setSeqResGroups(List)</a>
+<span class="sourceLineNo">319</span><a id="line.319">         */</a>
+<span class="sourceLineNo">320</span><a id="line.320">        List&lt;Group&gt; getSeqResGroups (GroupType type);</a>
+<span class="sourceLineNo">321</span><a id="line.321"></a>
+<span class="sourceLineNo">322</span><a id="line.322">        /**</a>
+<span class="sourceLineNo">323</span><a id="line.323">         * Returns a list of all groups in SEQRES records of the chain, i.e.</a>
+<span class="sourceLineNo">324</span><a id="line.324">         * the aminoacids/nucleotides in the construct.</a>
+<span class="sourceLineNo">325</span><a id="line.325">         * @return a List of all Group objects of this chain</a>
+<span class="sourceLineNo">326</span><a id="line.326">         * @see #setSeqResGroups(List)</a>
+<span class="sourceLineNo">327</span><a id="line.327">         * @see #getSeqResLength()</a>
+<span class="sourceLineNo">328</span><a id="line.328">         * @see #getAtomGroups()</a>
+<span class="sourceLineNo">329</span><a id="line.329">         */</a>
+<span class="sourceLineNo">330</span><a id="line.330">        List&lt;Group&gt; getSeqResGroups ();</a>
+<span class="sourceLineNo">331</span><a id="line.331"></a>
+<span class="sourceLineNo">332</span><a id="line.332">        /**</a>
+<span class="sourceLineNo">333</span><a id="line.333">         * Sets the list of SeqResGroups for this chain.</a>
+<span class="sourceLineNo">334</span><a id="line.334">         *</a>
+<span class="sourceLineNo">335</span><a id="line.335">         * @param seqResGroups a List of Group objects that from the SEQRES groups of this chain.</a>
+<span class="sourceLineNo">336</span><a id="line.336">         * @see #getSeqResGroups()</a>
+<span class="sourceLineNo">337</span><a id="line.337">         */</a>
+<span class="sourceLineNo">338</span><a id="line.338">        void setSeqResGroups(List&lt;Group&gt; seqResGroups);</a>
+<span class="sourceLineNo">339</span><a id="line.339"></a>
+<span class="sourceLineNo">340</span><a id="line.340">        /**</a>
+<span class="sourceLineNo">341</span><a id="line.341">         * Sets the back-reference to its parent Structure.</a>
+<span class="sourceLineNo">342</span><a id="line.342">         * @param parent the parent Structure object for this Chain</a>
+<span class="sourceLineNo">343</span><a id="line.343">         * @see #getStructure()</a>
+<span class="sourceLineNo">344</span><a id="line.344">         * @deprecated  use setStructure instead</a>
+<span class="sourceLineNo">345</span><a id="line.345">         *</a>
+<span class="sourceLineNo">346</span><a id="line.346">         */</a>
+<span class="sourceLineNo">347</span><a id="line.347">        @Deprecated</a>
+<span class="sourceLineNo">348</span><a id="line.348">         void setParent(Structure parent) ;</a>
+<span class="sourceLineNo">349</span><a id="line.349"></a>
+<span class="sourceLineNo">350</span><a id="line.350">        /**</a>
+<span class="sourceLineNo">351</span><a id="line.351">         * Sets the back-reference to its parent Structure.</a>
+<span class="sourceLineNo">352</span><a id="line.352">         *</a>
+<span class="sourceLineNo">353</span><a id="line.353">         * @param parent</a>
+<span class="sourceLineNo">354</span><a id="line.354">         */</a>
+<span class="sourceLineNo">355</span><a id="line.355">        void setStructure(Structure parent) ;</a>
+<span class="sourceLineNo">356</span><a id="line.356"></a>
+<span class="sourceLineNo">357</span><a id="line.357">        /**</a>
+<span class="sourceLineNo">358</span><a id="line.358">         * Returns the parent Structure of this chain.</a>
+<span class="sourceLineNo">359</span><a id="line.359">         *</a>
+<span class="sourceLineNo">360</span><a id="line.360">         * @return the parent Structure object</a>
+<span class="sourceLineNo">361</span><a id="line.361">         * @see #setStructure(Structure)</a>
+<span class="sourceLineNo">362</span><a id="line.362">         * @deprecated use getStructure(Structure) instead.</a>
+<span class="sourceLineNo">363</span><a id="line.363">         */</a>
+<span class="sourceLineNo">364</span><a id="line.364">        @Deprecated</a>
+<span class="sourceLineNo">365</span><a id="line.365">        Structure getParent() ;</a>
+<span class="sourceLineNo">366</span><a id="line.366"></a>
+<span class="sourceLineNo">367</span><a id="line.367"></a>
+<span class="sourceLineNo">368</span><a id="line.368">        /**</a>
+<span class="sourceLineNo">369</span><a id="line.369">         * Returns the parent Structure of this chain.</a>
+<span class="sourceLineNo">370</span><a id="line.370">         *</a>
+<span class="sourceLineNo">371</span><a id="line.371">         * @return the parent Structure object</a>
+<span class="sourceLineNo">372</span><a id="line.372">         * @see #setStructure(Structure)</a>
+<span class="sourceLineNo">373</span><a id="line.373">         */</a>
+<span class="sourceLineNo">374</span><a id="line.374">        Structure getStructure() ;</a>
+<span class="sourceLineNo">375</span><a id="line.375"></a>
+<span class="sourceLineNo">376</span><a id="line.376">        /**</a>
+<span class="sourceLineNo">377</span><a id="line.377">         * Gets all groups that are not polymer groups and that are not solvent groups.</a>
+<span class="sourceLineNo">378</span><a id="line.378">         * Will automatically fetch Chemical Component files from the PDB web site, even if</a>
+<span class="sourceLineNo">379</span><a id="line.379">         * {@link FileParsingParameters#setLoadChemCompInfo(boolean)} has not been set to true.</a>
+<span class="sourceLineNo">380</span><a id="line.380">         * Otherwise the Ligands could not correctly be identified.</a>
+<span class="sourceLineNo">381</span><a id="line.381">         * @return list of Groups that are ligands</a>
+<span class="sourceLineNo">382</span><a id="line.382">         * @deprecated since biojava 5.0 this does not apply anymore. Chains contain either</a>
+<span class="sourceLineNo">383</span><a id="line.383">         * polymeric groups or non-polymeric groups</a>
+<span class="sourceLineNo">384</span><a id="line.384">         */</a>
+<span class="sourceLineNo">385</span><a id="line.385">        @Deprecated</a>
+<span class="sourceLineNo">386</span><a id="line.386">        List&lt;Group&gt; getAtomLigands();</a>
+<span class="sourceLineNo">387</span><a id="line.387"></a>
+<span class="sourceLineNo">388</span><a id="line.388">        /**</a>
+<span class="sourceLineNo">389</span><a id="line.389">         * Convert this Chain to a String in PDB format</a>
+<span class="sourceLineNo">390</span><a id="line.390">         * @return</a>
+<span class="sourceLineNo">391</span><a id="line.391">         */</a>
+<span class="sourceLineNo">392</span><a id="line.392">        String toPDB();</a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394">        /**</a>
+<span class="sourceLineNo">395</span><a id="line.395">         * Convert this Chain to a String in mmCIF format</a>
+<span class="sourceLineNo">396</span><a id="line.396">         * @return</a>
+<span class="sourceLineNo">397</span><a id="line.397">         */</a>
+<span class="sourceLineNo">398</span><a id="line.398">        String toMMCIF();</a>
+<span class="sourceLineNo">399</span><a id="line.399"></a>
+<span class="sourceLineNo">400</span><a id="line.400"></a>
+<span class="sourceLineNo">401</span><a id="line.401">        /**</a>
+<span class="sourceLineNo">402</span><a id="line.402">         * Sets annotated sequence mismatches for this chain. This is based on the STRUCT_REF_SEQ_DIF mmCif category</a>
+<span class="sourceLineNo">403</span><a id="line.403">         *</a>
+<span class="sourceLineNo">404</span><a id="line.404">         * @param seqMisMatches</a>
+<span class="sourceLineNo">405</span><a id="line.405">         */</a>
+<span class="sourceLineNo">406</span><a id="line.406">        void setSeqMisMatches(List&lt;SeqMisMatch&gt; seqMisMatches);</a>
+<span class="sourceLineNo">407</span><a id="line.407"></a>
+<span class="sourceLineNo">408</span><a id="line.408">        /**</a>
+<span class="sourceLineNo">409</span><a id="line.409">         * Gets annotated sequence mismatches for this chain. This is based on the STRUCT_REF_SEQ_DIF mmCif category</a>
+<span class="sourceLineNo">410</span><a id="line.410">         *</a>
+<span class="sourceLineNo">411</span><a id="line.411">         * @returns a list of sequence mismatches (or null if none found)</a>
+<span class="sourceLineNo">412</span><a id="line.412">         */</a>
+<span class="sourceLineNo">413</span><a id="line.413">        List&lt;SeqMisMatch&gt; getSeqMisMatches();</a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415">        /**</a>
+<span class="sourceLineNo">416</span><a id="line.416">         * Returns the EntityType of this chain. Equivalent to getEntityInfo().getType()</a>
+<span class="sourceLineNo">417</span><a id="line.417">         * @return</a>
+<span class="sourceLineNo">418</span><a id="line.418">         * @see EntityType</a>
+<span class="sourceLineNo">419</span><a id="line.419">         */</a>
+<span class="sourceLineNo">420</span><a id="line.420">        EntityType getEntityType();</a>
+<span class="sourceLineNo">421</span><a id="line.421"></a>
+<span class="sourceLineNo">422</span><a id="line.422">        /** Tests if a chain is consisting of water molecules only</a>
+<span class="sourceLineNo">423</span><a id="line.423">         *</a>
+<span class="sourceLineNo">424</span><a id="line.424">         * @return true if there are only solvent molecules in this chain.</a>
+<span class="sourceLineNo">425</span><a id="line.425">         */</a>
+<span class="sourceLineNo">426</span><a id="line.426">        public boolean isWaterOnly();</a>
+<span class="sourceLineNo">427</span><a id="line.427"></a>
+<span class="sourceLineNo">428</span><a id="line.428">        /**  Returns true if the given chain is composed of non-polymeric (including water) groups only.</a>
+<span class="sourceLineNo">429</span><a id="line.429">         *</a>
+<span class="sourceLineNo">430</span><a id="line.430">         * @return true if only non-polymeric groups in this chain.</a>
+<span class="sourceLineNo">431</span><a id="line.431">         */</a>
+<span class="sourceLineNo">432</span><a id="line.432">        public boolean isPureNonPolymer();</a>
+<span class="sourceLineNo">433</span><a id="line.433"></a>
+<span class="sourceLineNo">434</span><a id="line.434">        /**</a>
+<span class="sourceLineNo">435</span><a id="line.435">         * Get the predominant {@link GroupType} for a given Chain, following these</a>
+<span class="sourceLineNo">436</span><a id="line.436">         * rules: &lt;li&gt;if the ratio of number of residues of a certain</a>
+<span class="sourceLineNo">437</span><a id="line.437">         * {@link GroupType} to total non-water residues is above the threshold</a>
+<span class="sourceLineNo">438</span><a id="line.438">         * {@value #org.biojava.nbio.structure.StructureTools.RATIO_RESIDUES_TO_TOTAL}, then that {@link GroupType} is</a>
+<span class="sourceLineNo">439</span><a id="line.439">         * returned&lt;/li&gt; &lt;li&gt;if there is no {@link GroupType} that is above the</a>
+<span class="sourceLineNo">440</span><a id="line.440">         * threshold then the {@link GroupType} with most members is chosen, logging</a>
+<span class="sourceLineNo">441</span><a id="line.441">         * it&lt;/li&gt;</a>
+<span class="sourceLineNo">442</span><a id="line.442">         * &lt;p&gt;</a>
+<span class="sourceLineNo">443</span><a id="line.443">         * See also {@link ChemComp#getPolymerType()} and</a>
+<span class="sourceLineNo">444</span><a id="line.444">         * {@link ChemComp#getResidueType()} which follow the PDB chemical component</a>
+<span class="sourceLineNo">445</span><a id="line.445">         * dictionary and provide a much more accurate description of groups and</a>
+<span class="sourceLineNo">446</span><a id="line.446">         * their linking.</a>
+<span class="sourceLineNo">447</span><a id="line.447">         * &lt;/p&gt;</a>
+<span class="sourceLineNo">448</span><a id="line.448">         *</a>
+<span class="sourceLineNo">449</span><a id="line.449">         * @return</a>
+<span class="sourceLineNo">450</span><a id="line.450">         */</a>
+<span class="sourceLineNo">451</span><a id="line.451">        public GroupType getPredominantGroupType();</a>
+<span class="sourceLineNo">452</span><a id="line.452"></a>
+<span class="sourceLineNo">453</span><a id="line.453">        /**</a>
+<span class="sourceLineNo">454</span><a id="line.454">         * Tell whether given chain is a protein chain</a>
+<span class="sourceLineNo">455</span><a id="line.455">         *</a>
+<span class="sourceLineNo">456</span><a id="line.456">         * @return true if protein, false if nucleotide or ligand</a>
+<span class="sourceLineNo">457</span><a id="line.457">         * @see #getPredominantGroupType()</a>
+<span class="sourceLineNo">458</span><a id="line.458">         */</a>
+<span class="sourceLineNo">459</span><a id="line.459">        public  boolean isProtein();</a>
+<span class="sourceLineNo">460</span><a id="line.460"></a>
+<span class="sourceLineNo">461</span><a id="line.461">        /**</a>
+<span class="sourceLineNo">462</span><a id="line.462">         * Tell whether given chain is DNA or RNA</a>
+<span class="sourceLineNo">463</span><a id="line.463">         *</a>
+<span class="sourceLineNo">464</span><a id="line.464">         * @return true if nucleic acid, false if protein or ligand</a>
+<span class="sourceLineNo">465</span><a id="line.465">         * @see #getPredominantGroupType()</a>
+<span class="sourceLineNo">466</span><a id="line.466">         */</a>
+<span class="sourceLineNo">467</span><a id="line.467">        public  boolean isNucleicAcid();</a>
+<span class="sourceLineNo">468</span><a id="line.468">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

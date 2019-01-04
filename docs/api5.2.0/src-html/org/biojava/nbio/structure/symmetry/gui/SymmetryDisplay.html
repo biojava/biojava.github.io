@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.symmetry.gui;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.awt.event.KeyEvent;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.ArrayList;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Arrays;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.List;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">import javax.swing.JMenu;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import javax.swing.JMenuBar;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import javax.swing.JMenuItem;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.Group;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.structure.StructureException;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.structure.StructureTools;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.structure.align.gui.MultipleAlignmentJmolDisplay;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.nbio.structure.align.gui.StructureAlignmentDisplay;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.nbio.structure.align.gui.jmol.AbstractAlignmentJmol;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.nbio.structure.align.gui.jmol.MultipleAlignmentJmol;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.nbio.structure.align.multiple.MultipleAlignment;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.nbio.structure.align.util.RotationAxis;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.nbio.structure.symmetry.axis.AxisAligner;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.nbio.structure.symmetry.core.QuatSymmetryResults;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.nbio.structure.symmetry.internal.CeSymmResult;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.nbio.structure.symmetry.internal.SymmetryAxes;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.nbio.structure.symmetry.internal.SymmetryAxes.Axis;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.nbio.structure.symmetry.jmolScript.JmolSymmetryScriptGenerator;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.nbio.structure.symmetry.jmolScript.JmolSymmetryScriptGeneratorPointGroup;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.nbio.structure.symmetry.utils.SymmetryTools;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">/**</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * Class that provides visualizations methods for symmetry alignments. Call the</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * display() method for the default visualization of symmetry.</a>
+<span class="sourceLineNo">056</span><a id="line.56"> *</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * @since 4.2.0</a>
+<span class="sourceLineNo">059</span><a id="line.59"> *</a>
+<span class="sourceLineNo">060</span><a id="line.60"> */</a>
+<span class="sourceLineNo">061</span><a id="line.61">public class SymmetryDisplay {</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        private static final Logger logger = LoggerFactory</a>
+<span class="sourceLineNo">064</span><a id="line.64">                        .getLogger(SymmetryDisplay.class);</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * Displays a multiple alignment of the symmetry repeats.</a>
+<span class="sourceLineNo">068</span><a id="line.68">         *</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * * @param symm CeSymmResult</a>
+<span class="sourceLineNo">070</span><a id="line.70">         *</a>
+<span class="sourceLineNo">071</span><a id="line.71">         * @throws StructureException</a>
+<span class="sourceLineNo">072</span><a id="line.72">         */</a>
+<span class="sourceLineNo">073</span><a id="line.73">        public static MultipleAlignmentJmol displayRepeats(CeSymmResult symm)</a>
+<span class="sourceLineNo">074</span><a id="line.74">                        throws StructureException {</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">                MultipleAlignment repeats = SymmetryTools.toRepeatsAlignment(symm);</a>
+<span class="sourceLineNo">077</span><a id="line.77">                MultipleAlignmentJmol jmol = MultipleAlignmentJmolDisplay</a>
+<span class="sourceLineNo">078</span><a id="line.78">                                .display(repeats);</a>
+<span class="sourceLineNo">079</span><a id="line.79">                jmol.setTitle(getSymmTitle(symm));</a>
+<span class="sourceLineNo">080</span><a id="line.80">                return jmol;</a>
+<span class="sourceLineNo">081</span><a id="line.81">        }</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * Displays a multiple alignment of the whole structure transformations</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * colored by blocks, corresponding to the symmetric protodomains.</a>
+<span class="sourceLineNo">086</span><a id="line.86">         *</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * @param symm</a>
+<span class="sourceLineNo">088</span><a id="line.88">         *            CeSymmResult</a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @throws StructureException</a>
+<span class="sourceLineNo">090</span><a id="line.90">         */</a>
+<span class="sourceLineNo">091</span><a id="line.91">        public static MultipleAlignmentJmol displayFull(CeSymmResult symm)</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        throws StructureException {</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">                MultipleAlignment full = SymmetryTools.toFullAlignment(symm);</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">                MultipleAlignmentJmol jmol = MultipleAlignmentJmolDisplay.display(full);</a>
+<span class="sourceLineNo">097</span><a id="line.97">                jmol.setColorByBlocks(true);</a>
+<span class="sourceLineNo">098</span><a id="line.98">                jmol.setTitle(getSymmTitle(symm));</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">                return jmol;</a>
+<span class="sourceLineNo">101</span><a id="line.101">        }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">        /**</a>
+<span class="sourceLineNo">104</span><a id="line.104">         * Displays a single structure in a cartoon representation with each</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * symmetric repeat colored differently.</a>
+<span class="sourceLineNo">106</span><a id="line.106">         *</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * @param msa</a>
+<span class="sourceLineNo">108</span><a id="line.108">         *            the symmetry multiple alignment obtained from CeSymm</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * @throws StructureException</a>
+<span class="sourceLineNo">110</span><a id="line.110">         */</a>
+<span class="sourceLineNo">111</span><a id="line.111">        public static AbstractAlignmentJmol display(CeSymmResult symmResult)</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        throws StructureException {</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">                if (symmResult.isSignificant() &amp;&amp; symmResult.isRefined()) {</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        // Show the structure colored by repeat (do not rotate)</a>
+<span class="sourceLineNo">116</span><a id="line.116">                        MultipleAlignment msa = symmResult.getMultipleAlignment();</a>
+<span class="sourceLineNo">117</span><a id="line.117">                        List&lt;Atom[]&gt; atoms = msa.getAtomArrays();</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">                        // Add non polymer protein groups</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        Atom[] allAtoms = atoms.get(0);</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        List&lt;Group&gt; hetatms = StructureTools.getUnalignedGroups(allAtoms);</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        allAtoms = Arrays</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                        .copyOf(allAtoms, allAtoms.length + hetatms.size());</a>
+<span class="sourceLineNo">124</span><a id="line.124">                        for (int h = 0; h &lt; hetatms.size(); h++) {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                int index = (allAtoms.length - hetatms.size()) + h;</a>
+<span class="sourceLineNo">126</span><a id="line.126">                                allAtoms[index] = hetatms.get(h).getAtom(0);</a>
+<span class="sourceLineNo">127</span><a id="line.127">                        }</a>
+<span class="sourceLineNo">128</span><a id="line.128">                        for (int s = 0; s &lt; msa.size(); s++)</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                atoms.set(s, allAtoms);</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">                        MultipleAlignmentJmol jmol = new MultipleAlignmentJmol(msa, atoms);</a>
+<span class="sourceLineNo">132</span><a id="line.132">                        jmol.setTitle(jmol.getStructure().getPDBHeader().getTitle());</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        addSymmetryMenu(jmol, symmResult);</a>
+<span class="sourceLineNo">134</span><a id="line.134">                        jmol.evalString(printSymmetryGroup(symmResult));</a>
+<span class="sourceLineNo">135</span><a id="line.135">                        jmol.evalString(printSymmetryAxes(symmResult));</a>
+<span class="sourceLineNo">136</span><a id="line.136">                        jmol.setTitle(getSymmTitle(symmResult));</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        jmol.evalString("save STATE state_1");</a>
+<span class="sourceLineNo">138</span><a id="line.138">                        return jmol;</a>
+<span class="sourceLineNo">139</span><a id="line.139">                } else {</a>
+<span class="sourceLineNo">140</span><a id="line.140">                        // Show the optimal self-alignment</a>
+<span class="sourceLineNo">141</span><a id="line.141">                        logger.info("Showing optimal self-alignment");</a>
+<span class="sourceLineNo">142</span><a id="line.142">                        Atom[] cloned = StructureTools</a>
+<span class="sourceLineNo">143</span><a id="line.143">                                        .cloneAtomArray(symmResult.getAtoms());</a>
+<span class="sourceLineNo">144</span><a id="line.144">                        AbstractAlignmentJmol jmol = StructureAlignmentDisplay.display(</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                        symmResult.getSelfAlignment(), symmResult.getAtoms(),</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                        cloned);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                        RotationAxis axis = new RotationAxis(symmResult.getSelfAlignment());</a>
+<span class="sourceLineNo">148</span><a id="line.148">                        jmol.evalString(axis.getJmolScript(symmResult.getAtoms()));</a>
+<span class="sourceLineNo">149</span><a id="line.149">                        jmol.evalString("save STATE state_1");</a>
+<span class="sourceLineNo">150</span><a id="line.150">                        return jmol;</a>
+<span class="sourceLineNo">151</span><a id="line.151">                }</a>
+<span class="sourceLineNo">152</span><a id="line.152">        }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        /**</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * Adds a Symmetry menu to the Jmol display, so that further symmetry</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * analysis can be triggered.</a>
+<span class="sourceLineNo">157</span><a id="line.157">         *</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * @param jmol</a>
+<span class="sourceLineNo">159</span><a id="line.159">         *            parent jmol</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * @param symmResult</a>
+<span class="sourceLineNo">161</span><a id="line.161">         *            CeSymmResult</a>
+<span class="sourceLineNo">162</span><a id="line.162">         */</a>
+<span class="sourceLineNo">163</span><a id="line.163">        private static void addSymmetryMenu(MultipleAlignmentJmol jmol,</a>
+<span class="sourceLineNo">164</span><a id="line.164">                        CeSymmResult symmResult) {</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                JMenuBar menubar = jmol.getFrame().getJMenuBar();</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                JMenu symm = new JMenu("Symmetry");</a>
+<span class="sourceLineNo">169</span><a id="line.169">                symm.setMnemonic(KeyEvent.VK_S);</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">                SymmetryListener li = new SymmetryListener(jmol, symmResult);</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">                JMenuItem repeats = new JMenuItem("Repeats Superposition");</a>
+<span class="sourceLineNo">174</span><a id="line.174">                repeats.addActionListener(li);</a>
+<span class="sourceLineNo">175</span><a id="line.175">                symm.add(repeats);</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">                JMenuItem multiple = new JMenuItem("Multiple Structure Alignment");</a>
+<span class="sourceLineNo">178</span><a id="line.178">                multiple.addActionListener(li);</a>
+<span class="sourceLineNo">179</span><a id="line.179">                symm.add(multiple);</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">                JMenuItem self = new JMenuItem("Optimal Self Alignment");</a>
+<span class="sourceLineNo">182</span><a id="line.182">                self.addActionListener(li);</a>
+<span class="sourceLineNo">183</span><a id="line.183">                symm.add(self);</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">                JMenuItem pg = new JMenuItem("Show Symmetry Group");</a>
+<span class="sourceLineNo">186</span><a id="line.186">                pg.addActionListener(li);</a>
+<span class="sourceLineNo">187</span><a id="line.187">                symm.add(pg);</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">                JMenuItem ax = new JMenuItem("Show Symmetry Axes");</a>
+<span class="sourceLineNo">190</span><a id="line.190">                ax.addActionListener(li);</a>
+<span class="sourceLineNo">191</span><a id="line.191">                symm.add(ax);</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">                JMenuItem news = new JMenuItem("New Symmetry Analysis");</a>
+<span class="sourceLineNo">194</span><a id="line.194">                news.addActionListener(li);</a>
+<span class="sourceLineNo">195</span><a id="line.195">                symm.add(news);</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                menubar.add(symm, 3);</a>
+<span class="sourceLineNo">198</span><a id="line.198">                jmol.getFrame().pack();</a>
+<span class="sourceLineNo">199</span><a id="line.199">        }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        /**</a>
+<span class="sourceLineNo">202</span><a id="line.202">         * Generates a String that displays the symmetry axes of a structure.</a>
+<span class="sourceLineNo">203</span><a id="line.203">         *</a>
+<span class="sourceLineNo">204</span><a id="line.204">         * @param symm</a>
+<span class="sourceLineNo">205</span><a id="line.205">         *            CeSymmResult</a>
+<span class="sourceLineNo">206</span><a id="line.206">         * @return</a>
+<span class="sourceLineNo">207</span><a id="line.207">         * @throws StructureException</a>
+<span class="sourceLineNo">208</span><a id="line.208">         */</a>
+<span class="sourceLineNo">209</span><a id="line.209">        public static String printSymmetryAxes(CeSymmResult symm)</a>
+<span class="sourceLineNo">210</span><a id="line.210">                        throws StructureException {</a>
+<span class="sourceLineNo">211</span><a id="line.211">                return printSymmetryAxes(symm,true);</a>
+<span class="sourceLineNo">212</span><a id="line.212">        }</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">        /**</a>
+<span class="sourceLineNo">215</span><a id="line.215">         * Generates a String that displays the symmetry axes of a structure.</a>
+<span class="sourceLineNo">216</span><a id="line.216">         *</a>
+<span class="sourceLineNo">217</span><a id="line.217">         * @param symm</a>
+<span class="sourceLineNo">218</span><a id="line.218">         *            CeSymmResult</a>
+<span class="sourceLineNo">219</span><a id="line.219">         * @param allAxes Indicates whether all axes should be displayed or just</a>
+<span class="sourceLineNo">220</span><a id="line.220">         *  the elemenatary ones</a>
+<span class="sourceLineNo">221</span><a id="line.221">         * @return</a>
+<span class="sourceLineNo">222</span><a id="line.222">         * @throws StructureException</a>
+<span class="sourceLineNo">223</span><a id="line.223">         */</a>
+<span class="sourceLineNo">224</span><a id="line.224">        public static String printSymmetryAxes(CeSymmResult symm,boolean allAxes)</a>
+<span class="sourceLineNo">225</span><a id="line.225">                        throws StructureException {</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">                int id = 0;</a>
+<span class="sourceLineNo">228</span><a id="line.228">                String script = "";</a>
+<span class="sourceLineNo">229</span><a id="line.229">                SymmetryAxes axes = symm.getAxes();</a>
+<span class="sourceLineNo">230</span><a id="line.230">                List&lt;Atom[]&gt; repeats = SymmetryTools.toRepeatsAlignment(symm)</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                .getAtomArrays();</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233">                List&lt;Axis&gt; symmAxes;</a>
+<span class="sourceLineNo">234</span><a id="line.234">                if(allAxes) {</a>
+<span class="sourceLineNo">235</span><a id="line.235">                        symmAxes = axes.getSymmetryAxes();</a>
+<span class="sourceLineNo">236</span><a id="line.236">                } else {</a>
+<span class="sourceLineNo">237</span><a id="line.237">                        symmAxes= axes.getElementaryAxesObjects();</a>
+<span class="sourceLineNo">238</span><a id="line.238">                }</a>
+<span class="sourceLineNo">239</span><a id="line.239">                for (Axis a : symmAxes) {</a>
+<span class="sourceLineNo">240</span><a id="line.240">                        RotationAxis rot = a.getRotationAxis();</a>
+<span class="sourceLineNo">241</span><a id="line.241">                        List&lt;List&lt;Integer&gt;&gt; cyclicForm = axes.getRepeatsCyclicForm(a);</a>
+<span class="sourceLineNo">242</span><a id="line.242">                        List&lt;Atom&gt; repAtoms = new ArrayList&lt;Atom&gt;();</a>
+<span class="sourceLineNo">243</span><a id="line.243">                        for(List&lt;Integer&gt; cycle : cyclicForm) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                for(Integer repeat : cycle) {</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                        repAtoms.addAll(Arrays.asList(repeats.get(repeat)));</a>
+<span class="sourceLineNo">246</span><a id="line.246">                                }</a>
+<span class="sourceLineNo">247</span><a id="line.247">                        }</a>
+<span class="sourceLineNo">248</span><a id="line.248"></a>
+<span class="sourceLineNo">249</span><a id="line.249">                        script += rot.getJmolScript(</a>
+<span class="sourceLineNo">250</span><a id="line.250">                                        repAtoms.toArray(new Atom[repAtoms.size()]), id);</a>
+<span class="sourceLineNo">251</span><a id="line.251">                        id++;</a>
+<span class="sourceLineNo">252</span><a id="line.252">                }</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254">                return script;</a>
+<span class="sourceLineNo">255</span><a id="line.255">        }</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">        /**</a>
+<span class="sourceLineNo">258</span><a id="line.258">         * Given a symmetry alignment, it draws the symmetry group axes and the</a>
+<span class="sourceLineNo">259</span><a id="line.259">         * polyhedron box around the structure. It uses the quaternary symmetry</a>
+<span class="sourceLineNo">260</span><a id="line.260">         * detection code, but tries to factor out the alignment and detection</a>
+<span class="sourceLineNo">261</span><a id="line.261">         * steps.</a>
+<span class="sourceLineNo">262</span><a id="line.262">         *</a>
+<span class="sourceLineNo">263</span><a id="line.263">         * @param symm</a>
+<span class="sourceLineNo">264</span><a id="line.264">         *            CeSymmResult</a>
+<span class="sourceLineNo">265</span><a id="line.265">         * @return</a>
+<span class="sourceLineNo">266</span><a id="line.266">         * @throws StructureException</a>
+<span class="sourceLineNo">267</span><a id="line.267">         */</a>
+<span class="sourceLineNo">268</span><a id="line.268">        public static String printSymmetryGroup(CeSymmResult symm)</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        throws StructureException {</a>
+<span class="sourceLineNo">270</span><a id="line.270"></a>
+<span class="sourceLineNo">271</span><a id="line.271">                QuatSymmetryResults gSymmetry = SymmetryTools</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                .getQuaternarySymmetry(symm);</a>
+<span class="sourceLineNo">273</span><a id="line.273"></a>
+<span class="sourceLineNo">274</span><a id="line.274">                AxisAligner axes = AxisAligner.getInstance(gSymmetry);</a>
+<span class="sourceLineNo">275</span><a id="line.275"></a>
+<span class="sourceLineNo">276</span><a id="line.276">                // Draw the axes as in the quaternary symmetry</a>
+<span class="sourceLineNo">277</span><a id="line.277">                JmolSymmetryScriptGenerator scriptGenerator = JmolSymmetryScriptGeneratorPointGroup</a>
+<span class="sourceLineNo">278</span><a id="line.278">                                .getInstance(axes, "g");</a>
+<span class="sourceLineNo">279</span><a id="line.279"></a>
+<span class="sourceLineNo">280</span><a id="line.280">                String script = "save selection; set measurementUnits ANGSTROMS;"</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                + "select all; set antialiasDisplay true; autobond=false; ";</a>
+<span class="sourceLineNo">282</span><a id="line.282"></a>
+<span class="sourceLineNo">283</span><a id="line.283">                script += scriptGenerator.getInstantaneousOrientation(0);</a>
+<span class="sourceLineNo">284</span><a id="line.284">                script += "restore selection; ";</a>
+<span class="sourceLineNo">285</span><a id="line.285">                script += scriptGenerator.drawPolyhedron();</a>
+<span class="sourceLineNo">286</span><a id="line.286">                script += scriptGenerator.drawAxes();</a>
+<span class="sourceLineNo">287</span><a id="line.287">                script += "draw axes* on; draw poly* on; ";</a>
+<span class="sourceLineNo">288</span><a id="line.288"></a>
+<span class="sourceLineNo">289</span><a id="line.289">                return script;</a>
+<span class="sourceLineNo">290</span><a id="line.290">        }</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">        /**</a>
+<span class="sourceLineNo">293</span><a id="line.293">         * Create a symmetry title for a display frame (Jmol, alignment, etc). The</a>
+<span class="sourceLineNo">294</span><a id="line.294">         * title contains information about the algorithm, structure id and</a>
+<span class="sourceLineNo">295</span><a id="line.295">         * parameters used.</a>
+<span class="sourceLineNo">296</span><a id="line.296">         *</a>
+<span class="sourceLineNo">297</span><a id="line.297">         * @param result</a>
+<span class="sourceLineNo">298</span><a id="line.298">         * @return title String</a>
+<span class="sourceLineNo">299</span><a id="line.299">         */</a>
+<span class="sourceLineNo">300</span><a id="line.300">        public static String getSymmTitle(CeSymmResult result) {</a>
+<span class="sourceLineNo">301</span><a id="line.301"></a>
+<span class="sourceLineNo">302</span><a id="line.302">                StringBuffer buff = new StringBuffer();</a>
+<span class="sourceLineNo">303</span><a id="line.303"></a>
+<span class="sourceLineNo">304</span><a id="line.304">                // Add algorithm name and version</a>
+<span class="sourceLineNo">305</span><a id="line.305">                buff.append(result.getMultipleAlignment().getEnsemble()</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                .getAlgorithmName());</a>
+<span class="sourceLineNo">307</span><a id="line.307">                buff.append(" V");</a>
+<span class="sourceLineNo">308</span><a id="line.308">                buff.append(result.getMultipleAlignment().getEnsemble().getVersion());</a>
+<span class="sourceLineNo">309</span><a id="line.309">                buff.append(": ");</a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">                // Add the result summary string</a>
+<span class="sourceLineNo">312</span><a id="line.312">                buff.append(result.toString());</a>
+<span class="sourceLineNo">313</span><a id="line.313">                return buff.toString();</a>
+<span class="sourceLineNo">314</span><a id="line.314">        }</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
