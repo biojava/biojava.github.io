@@ -24,8 +24,27 @@ The Javadoc APIs
 
 And finally the collection of Javadoc APIs. The link will take you to the generated HTML version of the Javadoc. You can choose from the following versions:
 
-- [Javadoc API for BioJava 5.0.0]({{site.baseurl}}/docs/api5.0.0/index.html)
-- [Javadoc API for BioJava 4.2.9]({{site.baseurl}}/docs/api4.2.9/index.html)
-- [Javadoc API for BioJava 4.2.1]({{site.baseurl}}/docs/api4.2.1/index.html)
-- [Javadoc API for BioJava 4.2.0]({{site.baseurl}}/docs/api4.2.0/index.html)
-- [Javadoc API for BioJava legacy 1.9.1]({{site.baseurl}}/docs/api1.9.1/index.html)
+{% comment %}
+    List all biojava versions.
+
+    Relies on site.static_files, which lists all static files. Matches /docs/api<version>/*
+
+    Note that the split starts with an empty "", so the api is in position 2. Directories are not
+    enumerated, so we get it from each file and then get a unique list as a second step.
+
+    Adds about 40s to the build time.
+{% endcomment %}
+{%- capture versions -%}
+    {%- for file in site.static_files-%}
+        {%- assign splitpath = file.path | split: '/' -%}
+        {%- if splitpath.size == 4 and splitpath[1] == "docs" and splitpath[2] contains "api" -%}
+            {{splitpath[2]|replace_first:"api", ""}},
+        {%- endif -%}
+    {%- endfor %}
+{%- endcapture -%}
+{%- assign uniq_versions = versions | split: "," | uniq | sort_natural | reverse-%}
+{% for version in uniq_versions %}
+{%- if version != "" -%}
+* [Javadoc API for BioJava {% if version < "3.0.0" %}legacy {% endif %}{{version}}]({{site.baseurl}}/docs/api{{version}}/index.html)
+{% endif -%}
+{% endfor %}
