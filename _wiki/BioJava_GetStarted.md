@@ -66,7 +66,7 @@ consult your Java vendor.
 
 You can now compile and run BioJava programs using the *javac* and
 *java* commands. You might like to look at the developer section on the
-[Main page](http://www.biojava.org/wiki/Main_Page) for documentation,
+[Main page](http://www.biojava.org) for documentation,
 cookbook and tutorials. Finally, you can learn a lot about BioJava by
 trying the demo programs included in the source distribution (see
 below).
@@ -77,4 +77,4 @@ Building your own
 If you want to modify BioJava, you can clone or fork the GitHub repository or obtain the source code from any of the previous releases from the [releases page](https://github.com/biojava/biojava/releases).
 Source releases are distributed in .tar.gz format.
 
-If you think your modifications can benefit others do not hesitate to submit a [pull request on GitHub](https://github.com/biojava/biojava/pulls). We always welcome new contributions. Here is how you can [get involved]({{site.baseurl}}/getinvolved.html).
+If you think your modifications can benefit others do not hesitate to submit a [pull request on GitHub](https://github.com/biojava/biojava/pulls). We always welcome new contributions. Here is how you can [get involved](GetInvolved).
