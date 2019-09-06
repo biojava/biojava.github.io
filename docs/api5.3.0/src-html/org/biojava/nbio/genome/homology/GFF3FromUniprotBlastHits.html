@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.genome.homology;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.genome.GeneFeatureHelper;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.alignment.Alignments;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.alignment.SimpleGapPenalty;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.core.alignment.matrices.SimpleSubstitutionMatrix;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.core.alignment.template.SequencePair;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.nbio.core.sequence.*;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.nbio.core.sequence.features.DBReferenceInfo;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.nbio.core.sequence.features.DatabaseReferenceInterface;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.nbio.core.sequence.features.FeaturesKeyWordInterface;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.nbio.core.sequence.loader.UniprotProxySequenceReader;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.slf4j.Logger;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.slf4j.LoggerFactory;<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>import java.io.File;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import java.io.FileOutputStream;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import java.io.OutputStream;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import java.util.ArrayList;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import java.util.LinkedHashMap;<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>/**<a name="line.45"></a>
+<span class="sourceLineNo">046</span> *<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @author Scooter Willis &lt;willishf at gmail dot com&gt;<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @author Mark Chapman<a name="line.48"></a>
+<span class="sourceLineNo">049</span> */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>public class GFF3FromUniprotBlastHits {<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>        private static final Logger logger = LoggerFactory.getLogger(GFF3FromUniprotBlastHits.class);<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>        public void process(File xmlBlastHits, double ecutoff, LinkedHashMap&lt;String, GeneSequence&gt; geneSequenceHashMap, OutputStream gff3Output) throws Exception {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                LinkedHashMap&lt;String, ArrayList&lt;String&gt;&gt; hits = BlastHomologyHits.getMatches(xmlBlastHits, ecutoff);<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                process(hits, geneSequenceHashMap, gff3Output);<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>        public void process(LinkedHashMap&lt;String, ArrayList&lt;String&gt;&gt; hits, LinkedHashMap&lt;String, GeneSequence&gt; geneSequenceHashMap, OutputStream gff3Output) throws Exception {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                int size = hits.size();<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                int index = 0;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>//              HashMap&lt;String, String&gt; scaffoldsReferencedHashMap = new HashMap&lt;String, String&gt;();<a name="line.62"></a>
+<span class="sourceLineNo">063</span>                for (String accessionid : hits.keySet()) {<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                        index++;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                        if (index == 12) {<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                                index = 12;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                        }<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                        logger.error(accessionid + " " + index + "/" + size);<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                        try {<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>                                String[] data = accessionid.split(" ");<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                                String id = data[0];<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                                GeneSequence geneSequence = geneSequenceHashMap.get(id);<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                                if (geneSequence == null) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                                        logger.error("Not found " + id);<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                                        continue;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                                }<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                                ArrayList&lt;String&gt; uniprotProteinHits = hits.get(accessionid);<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                                String uniprotBestHit = uniprotProteinHits.get(0);<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                                UniprotProxySequenceReader&lt;AminoAcidCompound&gt; uniprotSequence = new UniprotProxySequenceReader&lt;AminoAcidCompound&gt;(uniprotBestHit, AminoAcidCompoundSet.getAminoAcidCompoundSet());<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>                                ProteinSequence proteinSequence = new ProteinSequence(uniprotSequence);<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                                String hitSequence = proteinSequence.getSequenceAsString();<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                                for (TranscriptSequence transcriptSequence : geneSequence.getTranscripts().values()) {<a name="line.84"></a>
+<span class="sourceLineNo">085</span><a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>                                        String predictedProteinSequence = transcriptSequence.getProteinSequence().getSequenceAsString();<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                                        ArrayList&lt;ProteinSequence&gt; cdsProteinList = transcriptSequence.getProteinCDSSequences();<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>                                        ArrayList&lt;CDSSequence&gt; cdsSequenceList = new ArrayList&lt;CDSSequence&gt;(transcriptSequence.getCDSSequences().values());<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                                        String testSequence = "";<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                                        for (ProteinSequence cdsProteinSequence : cdsProteinList) {<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                                                testSequence = testSequence + cdsProteinSequence.getSequenceAsString();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                                        }<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                                        if (!testSequence.equals(predictedProteinSequence) &amp;&amp; (!predictedProteinSequence.equals(testSequence.substring(0, testSequence.length() - 1)))) {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                                                DNASequence codingSequence = transcriptSequence.getDNACodingSequence();<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                                                logger.info("Coding Sequence: {}", codingSequence.getSequenceAsString());<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                                                logger.info("Sequence agreement error");<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                                                logger.info("CDS seq={}", testSequence);<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                                                logger.info("PRE seq={}", predictedProteinSequence);<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                                                logger.info("UNI seq={}", hitSequence);<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                                                //  throw new Exception("Protein Sequence compare error " + id);<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                                        }<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                        SequencePair&lt;ProteinSequence, AminoAcidCompound&gt; alignment = Alignments.getPairwiseAlignment(<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                                                        transcriptSequence.getProteinSequence(), proteinSequence,<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                                                        PairwiseSequenceAlignerType.LOCAL, new SimpleGapPenalty(),<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                                                        SimpleSubstitutionMatrix.getBlosum62()<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                                                        );<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                                        // System.out.println();<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                                        //    System.out.println(alignment.getSummary());<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                                        //   System.out.println(new Pair().format(alignment));<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                                        int proteinIndex = 0;<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                                        int gff3Index = 0;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                                        for (int i = 0; i &lt; cdsProteinList.size(); i++) {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                                                ProteinSequence peptideSequence = cdsProteinList.get(i);<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                                                String seq = peptideSequence.getSequenceAsString();<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                                                Integer startIndex = null;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                                                int offsetStartIndex = 0;<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                                                for (int s = 0; s &lt; seq.length(); s++) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                                                        startIndex = alignment.getIndexInTargetForQueryAt(proteinIndex + s);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                                                        if (startIndex != null) {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                                                                startIndex = startIndex + 1;<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                                                                offsetStartIndex = s;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                                                                break;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                                                        }<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                                                }<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                                                Integer endIndex = null;<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>                                                int offsetEndIndex = 0;<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                                                for (int e = 0; e &lt; seq.length(); e++) {<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                                                        endIndex = alignment.getIndexInTargetForQueryAt(proteinIndex + seq.length() - 1 - e);<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                                                        if (endIndex != null) {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                                                                endIndex = endIndex + 1;<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                                                                offsetEndIndex = e;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                                                                break;<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                                                        }<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                                }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                                proteinIndex = proteinIndex + seq.length();<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                                if (startIndex != null &amp;&amp; endIndex != null &amp;&amp; startIndex != endIndex) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                                                        CDSSequence cdsSequence = cdsSequenceList.get(i);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                                                        String hitLabel = "";<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                                                        if (transcriptSequence.getStrand() == Strand.POSITIVE) {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                                                                hitLabel = uniprotBestHit + "_" + startIndex + "_" + endIndex;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                                        } else {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                                                                hitLabel = uniprotBestHit + "_" + endIndex + "_" + startIndex;<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                                                        }<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                                                        int dnaBeginIndex = cdsSequence.getBioBegin() + (3 * offsetStartIndex);<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                                                        int dnaEndIndex = cdsSequence.getBioEnd() - (3 * offsetEndIndex);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                                                        String scaffold = geneSequence.getParentChromosomeSequence().getAccession().getID();<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                                        //        if (scaffoldsReferencedHashMap.containsKey(scaffold) == false) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                                        //            String gff3line = scaffold + "\t" + geneSequence.getSource() + "\t" + "size" + "\t" + "1" + "\t" + geneSequence.getParentChromosomeSequence().getBioEnd() + "\t.\t.\t.\tName=" + scaffold + "\r\n";<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                                        //            gff3Output.write(gff3line.getBytes());<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                                        //            scaffoldsReferencedHashMap.put(scaffold, scaffold);<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                                        //        }<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>                                                        String line = scaffold + "\t" + geneSequence.getSource() + "_" + "UNIPROT\tmatch\t" + dnaBeginIndex + "\t" + dnaEndIndex + "\t.\t" + transcriptSequence.getStrand().getStringRepresentation() + "\t.\t";<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                                                        if (gff3Index == 0) {<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                                                                FeaturesKeyWordInterface featureKeyWords = proteinSequence.getFeaturesKeyWord();<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                                                                String notes = "";<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                                                                if (featureKeyWords != null) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                                                                        ArrayList&lt;String&gt; keyWords = featureKeyWords.getKeyWords();<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                                                                        if (keyWords.size() &gt; 0) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                                                                                notes = ";Note=";<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                                                                                for (String note : keyWords) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                                                                                        if (note.equals("Complete proteome")) {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                                                                                continue;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                                                                        }<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                                                                                        if (note.equals("Direct protein sequencing")) {<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                                                                                                continue;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                                                                                        }<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>                                                                                        notes = notes + " " + note;<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                                                                                        geneSequence.addNote(note); // add note/keyword which can be output in fasta header if needed<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                                                                                }<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                                                                        }<a name="line.177"></a>
+<span class="sourceLineNo">178</span><a name="line.178"></a>
+<span class="sourceLineNo">179</span>                                                                }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>                                                                DatabaseReferenceInterface databaseReferences = proteinSequence.getDatabaseReferences();<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                                                                if (databaseReferences != null) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                                                                        LinkedHashMap&lt;String, ArrayList&lt;DBReferenceInfo&gt;&gt; databaseReferenceHashMap = databaseReferences.getDatabaseReferences();<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                                                                        ArrayList&lt;DBReferenceInfo&gt; pfamList = databaseReferenceHashMap.get("Pfam");<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                                                                        ArrayList&lt;DBReferenceInfo&gt; cazyList = databaseReferenceHashMap.get("CAZy");<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                                                                        ArrayList&lt;DBReferenceInfo&gt; goList = databaseReferenceHashMap.get("GO");<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                                                                        ArrayList&lt;DBReferenceInfo&gt; eccList = databaseReferenceHashMap.get("BRENDA");<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                                                                        if (pfamList != null &amp;&amp; pfamList.size() &gt; 0) {<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                                                                                if (notes.length() == 0) {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                                                                                        notes = ";Note=";<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                                                                                }<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                                                                                for (DBReferenceInfo note : pfamList) {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                                                                                        notes = notes + " " + note.getId();<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                                                                                        geneSequence.addNote(note.getId()); // add note/keyword which can be output in fasta header if needed<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                                                                                }<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                                                                        }<a name="line.196"></a>
+<span class="sourceLineNo">197</span><a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                                                        if (cazyList != null &amp;&amp; cazyList.size() &gt; 0) {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                                                                                if (notes.length() == 0) {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                                                                                        notes = ";Note=";<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                                                                                }<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                                                                for (DBReferenceInfo note : cazyList) {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                                                                        notes = notes + " " + note.getId();<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                                                                        geneSequence.addNote(note.getId()); // add note/keyword which can be output in fasta header if needed<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                                                                        // System.out.println("CAZy=" + note);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                                                                                }<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                                                                        }<a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                                                        if (eccList != null &amp;&amp; eccList.size() &gt; 0) {<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                                                                if (notes.length() == 0) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                                                                                        notes = ";Note=";<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                                                                }<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                                                                                for (DBReferenceInfo note : eccList) {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                                                                                        String dbid = note.getId();<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                                                                                        dbid = dbid.replace(".", "_"); //replace . with _ to facilitate searching in gbrowse<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                                                                                        notes = notes + " " + "EC:" + dbid;<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                                                                                        geneSequence.addNote("EC:" + dbid); // add note/keyword which can be output in fasta header if needed<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>                                                                                }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                                                                        }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                                                        if (goList != null &amp;&amp; goList.size() &gt; 0) {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                                                                                if (notes.length() == 0) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                                                                                        notes = ";Note=";<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                                                                                }<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                                                                                for (DBReferenceInfo note : goList) {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                                                                                        notes = notes + " " + note.getId();<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                                                                                        geneSequence.addNote(note.getId()); // add note/keyword which can be output in fasta header if needed<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                                                                                        LinkedHashMap&lt;String, String&gt; properties = note.getProperties();<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                                                                                        for (String propertytype : properties.keySet()) {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                                                                                                if (propertytype.equals("evidence")) {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>                                                                                                        continue;<a name="line.232"></a>
+<span class="sourceLineNo">233</span>                                                                                                }<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                                                                                                String property = properties.get(propertytype);<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>                                                                                                if (property.startsWith("C:")) {<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                                                                                                        continue; // skip over the location<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                                                                                                }<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                                                                                                if (property.endsWith("...")) {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                                                                                                        property = property.substring(0, property.length() - 3);<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                                                                                                }<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                                                                                                notes = notes + " " + property;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                                                                                                geneSequence.addNote(property);<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                                                                                        }<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                                                                                }<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                                                                        }<a name="line.246"></a>
+<span class="sourceLineNo">247</span><a name="line.247"></a>
+<span class="sourceLineNo">248</span>                                                                }<a name="line.248"></a>
+<span class="sourceLineNo">249</span><a name="line.249"></a>
+<span class="sourceLineNo">250</span><a name="line.250"></a>
+<span class="sourceLineNo">251</span>                                                                line = line + "Name=" + hitLabel + ";Alias=" + uniprotBestHit + notes + "\n";<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                                                        } else {<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                                                                line = line + "Name=" + hitLabel + "\n";<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                                                        }<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                                                        gff3Index++;<a name="line.255"></a>
+<span class="sourceLineNo">256</span><a name="line.256"></a>
+<span class="sourceLineNo">257</span>                                                        gff3Output.write(line.getBytes());<a name="line.257"></a>
+<span class="sourceLineNo">258</span>                                                }<a name="line.258"></a>
+<span class="sourceLineNo">259</span>                                        }<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                                }<a name="line.260"></a>
+<span class="sourceLineNo">261</span>                        } catch (Exception e) {<a name="line.261"></a>
+<span class="sourceLineNo">262</span>                                logger.info("Accession Id: {}", accessionid, e);<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                        }<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                }<a name="line.264"></a>
+<span class="sourceLineNo">265</span><a name="line.265"></a>
+<span class="sourceLineNo">266</span><a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>        }<a name="line.268"></a>
+<span class="sourceLineNo">269</span><a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span><a name="line.271"></a>
+<span class="sourceLineNo">272</span><a name="line.272"></a>
+<span class="sourceLineNo">273</span>        public static void main(String[] args) {<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                /*<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                        try {<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                                LinkedHashMap&lt;String, ChromosomeSequence&gt; dnaSequenceList = GeneFeatureHelper.loadFastaAddGeneFeaturesFromGeneMarkGTF(new File("/Users/Scooter/scripps/dyadic/analysis/454Scaffolds/454Scaffolds.fna"), new File("/Users/Scooter/scripps/dyadic/analysis/454Scaffolds/genemark_hmm.gtf"));<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                                LinkedHashMap&lt;String, GeneSequence&gt; geneSequenceList = GeneFeatureHelper.getGeneSequences(dnaSequenceList.values());<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                                FileOutputStream fo = new FileOutputStream("/Users/Scooter/scripps/dyadic/analysis/454Scaffolds/genemark_uniprot_match.gff3");<a name="line.278"></a>
+<span class="sourceLineNo">279</span><a name="line.279"></a>
+<span class="sourceLineNo">280</span>                                GFF3FromUniprotBlastHits gff3FromUniprotBlastHits = new GFF3FromUniprotBlastHits();<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                                gff3FromUniprotBlastHits.process(new File("/Users/Scooter/scripps/dyadic/analysis/454Scaffolds/c1-454Scaffolds-hits-uniprot_fungi.xml"), 1E-10, geneSequenceList, fo);<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                                fo.close();<a name="line.282"></a>
+<span class="sourceLineNo">283</span><a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>                        } catch (Exception e) {<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                                logger.error("Exception: ", e);<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span><a name="line.288"></a>
+<span class="sourceLineNo">289</span>                        }<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                */<a name="line.290"></a>
+<span class="sourceLineNo">291</span><a name="line.291"></a>
+<span class="sourceLineNo">292</span>                        try {<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                                LinkedHashMap&lt;String, ChromosomeSequence&gt; dnaSequenceHashMap = GeneFeatureHelper.loadFastaAddGeneFeaturesFromGlimmerGFF3(new File("/Users/Scooter/scripps/dyadic/analysis/454Scaffolds/454Scaffolds-16.fna"), new File("/Users/Scooter/scripps/dyadic/GlimmerHMM/c1_glimmerhmm-16.gff"));<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                                LinkedHashMap&lt;String, GeneSequence&gt; geneSequenceList = GeneFeatureHelper.getGeneSequences(dnaSequenceHashMap.values());<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                FileOutputStream fo = new FileOutputStream("/Users/Scooter/scripps/dyadic/outputGlimmer/genemark_uniprot_match-16.gff3");<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                                LinkedHashMap&lt;String, ArrayList&lt;String&gt;&gt; blasthits = BlastHomologyHits.getMatches(new File("/Users/Scooter/scripps/dyadic/blastresults/c1_glimmer_in_uniprot.xml"), 1E-10);<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                logger.error("Number of uniprot hits " + blasthits.size());<a name="line.297"></a>
+<span class="sourceLineNo">298</span><a name="line.298"></a>
+<span class="sourceLineNo">299</span>                                GFF3FromUniprotBlastHits gff3FromUniprotBlastHits = new GFF3FromUniprotBlastHits();<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                                gff3FromUniprotBlastHits.process(blasthits, geneSequenceList, fo);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                                fo.close();<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                        } catch (Exception e) {<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                                logger.error("Exception: ", e);<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                        }<a name="line.304"></a>
+<span class="sourceLineNo">305</span>        }<a name="line.305"></a>
+<span class="sourceLineNo">306</span>}<a name="line.306"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

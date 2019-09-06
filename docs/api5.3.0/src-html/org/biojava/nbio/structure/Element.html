@@ -1,0 +1,553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * Created on 29.04.2010<a name="line.20"></a>
+<span class="sourceLineNo">021</span> *<a name="line.21"></a>
+<span class="sourceLineNo">022</span> */<a name="line.22"></a>
+<span class="sourceLineNo">023</span>package org.biojava.nbio.structure;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.HashMap;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Map;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>/**<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * Element is an enumeration of the elements of the periodic table. In addition,<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * several attributes of each element are accessible.<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * &lt;B&gt;Note:&lt;/B&gt; Deuterium and Tritium are treated as separate elements D and T,<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * respectively. Sometimes part of a molecule is represented as an R-group, which<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * is represented as the element R.<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> *<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * @author Peter Rose<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * @version %I% %G%<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * @since 3.0<a name="line.38"></a>
+<span class="sourceLineNo">039</span> *<a name="line.39"></a>
+<span class="sourceLineNo">040</span> */<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>public enum Element {<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>        // most frequently used elements first<a name="line.44"></a>
+<span class="sourceLineNo">045</span>        H(1, 1, 39, 1.10f, 0.32f, 1, 1, 1, 1, 1, 1.008f, 0, 1, new int[] {1}, 2.20f, ElementType.OTHER_NONMETAL),<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        C(6, 2, 0, 1.55f, 0.77f, 4, 4, 4, 4, 4, 12.011f, 2, -4, new int[] {-4,-3,-2,0,-1,1,2,3,4}, 2.55f, ElementType.OTHER_NONMETAL),<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        N(7, 2, 57, 1.40f, 0.75f, 5, 2, 5, 3, 4, 14.007f, 2, -3, new int[] {-3,-2,-1,0,1,2,3,4,5}, 3.04f, ElementType.OTHER_NONMETAL),<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        O(8, 2, 65, 1.35f, 0.73f, 6, 1, 2, 2, 2, 16.000f, 2, -2, new int[] {-2,-1,0,1,2}, 3.44f, ElementType.OTHER_NONMETAL),<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * Deuterium<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        D(1, 1, 27, 1.10f, 0.32f, 1, 1, 1, 1, 1, 1.008f, 0, 1, new int[] {0,1}, 2.20f, ElementType.OTHER_NONMETAL), // need to edit properties!<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        /**<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * Tritium<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         */<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        T(1, 1, 90, 1.10f, 0.32f, 1, 1, 1, 1, 1, 1.008f, 0, 1, new int[] {0,1}, 2.20f, ElementType.OTHER_NONMETAL), // need to edit properties!<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        He(2, 1, 40, 2.20f, 1.60f, 2, 0, 12, 0, 0, 4.003f, 2, 0, new int[] {0}, 0.0f, ElementType.NOBLE_GAS), // electroneg not reported<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        Li(3, 2, 50, 1.22f, 1.34f, 1, 0, 12, 0, 1, 6.940f, 2, 1, new int[] {0,1}, 0.98f, ElementType.ALKALI_METAL),<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        Be(4, 2, 12, 0.63f, 0.90f, 2, 0, 12, 2, 2, 9.012f, 2, 2, new int[] {0,1,2}, 1.57f, ElementType.TRANSITION_METAL),<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        B(5, 2, 10, 1.55f, 0.82f, 3, 3, 5, 3, 4, 10.810f, 2, 3, new int[] {0,1,2,3}, 2.04f, ElementType.METALLOID),<a name="line.60"></a>
+<span class="sourceLineNo">061</span>        F(9, 2, 32, 1.30f, 0.72f, 7, 0, 1, 1, 1, 18.998f, 2, -1, new int[] {-1,0,1}, 3.98f, ElementType.HALOGEN),<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        Ne(10, 2, 61, 2.02f, 1.12f, 8, 0, 12, 0, 0, 20.170f, 10, 0, new int[] {}, 0.00f, ElementType.NOBLE_GAS), // electroneg not reported<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        Na(11, 3, 58, 2.20f, 1.54f, 1, 0, 1, 0, 0, 22.990f, 10, 1, new int[] {-1,0,1}, 0.93f, ElementType.ALKALI_METAL),<a name="line.63"></a>
+<span class="sourceLineNo">064</span>        Mg(12, 3, 54, 1.50f, 1.30f, 2, 0, 2, 0, 2, 24.305f, 10, 2, new int[] {0,1,2}, 1.31f, ElementType.ALKALINE_EARTH_METAL),<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        Al(13, 3, 4, 1.50f, 1.18f, 3, 0, 5, 0, 4, 26.982f, 10, 3, new int[] {0,1,2,3}, 1.61f, ElementType.POST_TRANSITION_METAL),<a name="line.65"></a>
+<span class="sourceLineNo">066</span>        Si(14, 3, 86, 2.20f, 1.11f, 4, 4, 4, 4, 4, 28.086f, 10, 4, new int[] {-4,-3,-2,-1,0,1,2,3,4}, 1.90f, ElementType.METALLOID),<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        P(15, 3, 67, 1.88f, 1.06f, 5, 3, 5, 3, 5, 30.974f, 10, 5, new int[] {-3,-2,-1,0,1,2,3,4,5}, 2.19f, ElementType.OTHER_NONMETAL),<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        S(16, 3, 82, 1.81f, 1.02f, 6, 2, 6, 2, 6, 32.060f, 10, -2, new int[] {-2,-1,0,1,2,3,4,5,6}, 2.58f, ElementType.OTHER_NONMETAL),<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        Cl(17, 3, 21, 1.75f, 0.99f, 7, 0, 1, 1, 1, 35.453f, 10, -1, new int[] {-1,0,1,2,3,4,5,6,7}, 3.16f, ElementType.HALOGEN),<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        Ar(18, 4, 6, 2.77f, 1.54f, 8, 0, 12, 0, 0, 39.948f, 18, 0, new int[] {0}, 0.00f, ElementType.NOBLE_GAS), // electroneg not reported<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        K(19, 4, 47, 2.39f, 1.96f, 1, 0, 12, 0, 0, 39.102f, 18, 1, new int[] {-1,0,1}, 0.82f, ElementType.ALKALI_METAL),<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        Ca(20, 4, 17, 1.95f, 1.74f, 2, 0, 2, 0, 0, 40.080f, 18, 2, new int[] {0,1,2}, 1.00f, ElementType.ALKALINE_EARTH_METAL),<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        Sc(21, 4, 84, 1.32f, 1.44f, 3, 0, 12, 3, 0, 44.956f, 18, 3, new int[] {0,1,2,3}, 1.36f, ElementType.TRANSITION_METAL),<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        Ti(22, 4, 96, 1.95f, 1.36f, 4, 2, 4, 3, 4, 47.880f, 18, 4, new int[] {-1,0,1,2,3,4}, 1.54f, ElementType.TRANSITION_METAL),<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        V(23, 4, 100, 1.06f, 1.25f, 5, 0, 12, 3, 0, 50.040f, 18, 5, new int[] {-1,0,1,2,3,4,5}, 1.63f, ElementType.TRANSITION_METAL),<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        Cr(24, 4, 24, 1.13f, 1.27f, 6, 0, 12, 2, 0, 51.996f, 18, 3, new int[] {-2,-1,0,1,2,3,4,5,6}, 1.66f, ElementType.TRANSITION_METAL),<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        Mn(25, 4, 55, 1.19f, 1.39f, 7, 0, 12, 0, 0, 54.938f, 18, 2, new int[] {-3,-2,-1,0,1,2,3,4,5,6,7}, 1.55f, ElementType.TRANSITION_METAL),<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        Fe(26, 4, 33, 1.95f, 1.25f, 3, 0, 8, 0, 0, 55.847f, 18, 3, new int[] {-2,-1,0,1,2,3,4,5,6}, 1.83f, ElementType.TRANSITION_METAL),<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        Co(27, 4, 23, 1.13f, 1.26f, 3, 0, 12, 0, 0, 58.933f, 18, 2, new int[] {-1,0,1,2,3,4,5}, 1.88f, ElementType.TRANSITION_METAL),<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        Ni(28, 4, 62, 1.24f, 1.21f, 3, 0, 12, 0, 0, 58.710f, 18, 2, new int[] {-1,0,1,2,3,4}, 1.91f, ElementType.TRANSITION_METAL),<a name="line.80"></a>
+<span class="sourceLineNo">081</span>        Cu(29, 4, 26, 1.15f, 1.38f, 2, 0, 4, 0, 0, 63.546f, 18, 2, new int[] {0,1,2,3,4}, 1.90f, ElementType.TRANSITION_METAL),<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        Zn(30, 4, 106, 1.15f, 1.31f, 2, 0, 2, 0, 0, 65.380f, 18, 2, new int[] {0,1,2}, 1.65f, ElementType.TRANSITION_METAL),<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        Ga(31, 4, 36, 1.55f, 1.26f, 3, 1, 4, 2, 4, 69.720f, 28, 3, new int[] {0,1,2,3}, 1.81f, ElementType.POST_TRANSITION_METAL),<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        Ge(32, 4, 38, 2.72f, 1.22f, 4, 0, 12, 4, 4, 72.590f, 28, 4, new int[] {-4,-3,-2,-1,0,1,2,3,4}, 2.01f, ElementType.METALLOID),<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        As(33, 4, 7, 0.83f, 1.19f, 5, 0, 12, 3, 5, 74.922f, 28, -3, new int[] {-3,0,1,2,3,5}, 2.18f, ElementType.METALLOID),<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        Se(34, 4, 85, 0.90f, 1.16f, 6, 0, 12, 2, 6, 78.960f, 28, 4, new int[] {-2,0,1,2,4,6}, 2.55f, ElementType.OTHER_NONMETAL),<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        Br(35, 4, 15, 1.95f, 1.14f, 7, 0, 1, 1, 1, 79.904f, 28, -1, new int[] {-1,0,1,2,3,4,5,7}, 2.96f, ElementType.HALOGEN),<a name="line.87"></a>
+<span class="sourceLineNo">088</span>        Kr(36, 4, 48, 1.90f, 1.60f, 8, 0, 12, 0, 0, 83.800f, 28, 0, new int[] {0,2}, 3.00f, ElementType.NOBLE_GAS),<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        Rb(37, 5, 77, 2.65f, 2.11f, 1, 0, 12, 0, 0, 85.467f, 36, 1, new int[] {-1,0,1}, 0.82f, ElementType.ALKALI_METAL),<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        Sr(38, 5, 89, 2.02f, 1.92f, 2, 0, 12, 2, 0, 87.620f, 36, 2, new int[] {0,1,2}, 0.95f, ElementType.ALKALINE_EARTH_METAL),<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        Y(39, 5, 103, 1.61f, 1.62f, 3, 0, 12, 3, 0, 88.806f, 36, 3, new int[] {0,1,2,3}, 1.22f, ElementType.TRANSITION_METAL),<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        Zr(40, 5, 105, 1.42f, 1.48f, 4, 0, 12, 4, 0, 91.220f, 36, 4, new int[] {0,1,2,3,4}, 1.33f, ElementType.TRANSITION_METAL),<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        Nb(41, 5, 59, 1.33f, 1.37f, 5, 0, 12, 3, 0, 92.906f, 36, 5, new int[] {-1,0,1,2,3,4,5}, 1.60f, ElementType.TRANSITION_METAL),<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        Mo(42, 5, 56, 1.75f, 1.45f, 6, 1, 6, 3, 0, 95.940f, 36, 6, new int[] {-2,-1,0,1,2,3,4,5,6}, 2.16f, ElementType.TRANSITION_METAL),<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        Tc(43, 5, 93, 1.80f, 1.56f, 7, 0, 12, 6, 0, 98.910f, 36, 7, new int[] {-3,-1,0,1,2,3,4,5,6,7}, 1.90f, ElementType.TRANSITION_METAL),<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        Ru(44, 5, 81, 1.20f, 1.26f, 8, 0, 12, 3, 0, 101.070f, 36, 4, new int[] {-2,0,1,2,3,4,5,6,7,8}, 2.20f, ElementType.TRANSITION_METAL),<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        Rh(45, 5, 79, 1.22f, 1.35f, 4, 0, 12, 3, 0, 102.906f, 36, 3, new int[] {-1,0,1,2,3,4,5,6}, 2.28f, ElementType.TRANSITION_METAL),<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        Pd(46, 5, 70, 1.44f, 1.31f, 4, 0, 12, 2, 0, 106.400f, 36, 2, new int[] {0,1,2,4}, 2.20f, ElementType.TRANSITION_METAL),<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        Ag(47, 5, 3, 1.55f, 1.53f, 1, 0, 6, 0, 0, 107.868f, 36, 1, new int[] {0,1,2,3,4}, 1.93f, ElementType.TRANSITION_METAL),<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        Cd(48, 5, 18, 1.75f, 1.48f, 2, 0, 12, 0, 0, 112.400f, 36, 2, new int[] {0,1,2}, 1.69f, ElementType.TRANSITION_METAL),<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        In(49, 5, 45, 1.46f, 1.44f, 3, 0, 12, 3, 0, 114.820f, 46, 3, new int[] {0,1,2,3}, 1.78f, ElementType.POST_TRANSITION_METAL),<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        Sn(50, 5, 88, 1.67f, 1.41f, 4, 0, 12, 2, 4, 118.690f, 46, 4, new int[] {-4,0,2,4}, 1.96f, ElementType.POST_TRANSITION_METAL),<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        Sb(51, 5, 83, 1.12f, 1.38f, 5, 0, 12, 4, 5, 121.750f, 46, -3, new int[] {-3,0,3,5}, 2.05f, ElementType.METALLOID),<a name="line.103"></a>
+<span class="sourceLineNo">104</span>        Te(52, 5, 94, 1.26f, 1.35f, 6, 0, 12, 2, 6, 127.600f, 46, 4, new int[] {-2,0,2,4,5,6}, 2.10f, ElementType.METALLOID),<a name="line.104"></a>
+<span class="sourceLineNo">105</span>        I(53, 5, 44, 2.15f, 1.33f, 7, 1, 1, 1, 1, 126.905f, 46, -1, new int[] {-1,0,1,3,4,5,7}, 2.66f, ElementType.HALOGEN),<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        Xe(54, 5, 102, 2.10f, 1.70f, 8, 0, 12, 0, 0, 131.300f, 46, 0, new int[] {0,1,2,4,6,8}, 2.60f, ElementType.NOBLE_GAS),<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        Cs(55, 6, 25, 3.01f, 2.25f, 1, 0, 12, 0, 0, 132.905f, 54, 1, new int[] {-1,0,1}, 0.79f, ElementType.ALKALI_METAL),<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        Ba(56, 6, 11, 2.41f, 1.98f, 2, 0, 12, 0, 0, 137.340f, 54, 2, new int[] {0,2}, 0.89f, ElementType.ALKALINE_EARTH_METAL),<a name="line.108"></a>
+<span class="sourceLineNo">109</span>        La(57, 6, 49, 1.83f, 1.95f, 3, 0, 12, 3, 0, 138.905f, 54, 3, new int[] {0,2,3}, 1.10f, ElementType.LANTHANOID),<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        Ce(58, 6, 19, 1.86f, 1.03f, 4, 0, 12, 3, 0, 140.120f, 54, 3, new int[] {0,2,3,4}, 1.12f, ElementType.LANTHANOID),<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        Pr(59, 6, 73, 1.62f, 0.90f, 4, 0, 12, 3, 0, 140.908f, 55, 3, new int[] {0,2,3,4}, 1.13f, ElementType.LANTHANOID),<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        Nd(60, 6, 60, 1.79f, 0.99f, 3, 0, 12, 3, 0, 144.240f, 56, 3, new int[] {0,2,3,4}, 1.14f, ElementType.LANTHANOID),<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        Pm(61, 6, 71, 1.76f, 0.98f, 3, 0, 12, 3, 0, 145.000f, 58, 3, new int[] {0,2,3}, 1.13f, ElementType.LANTHANOID),<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        Sm(62, 6, 87, 1.74f, 0.96f, 3, 0, 12, 2, 0, 150.400f, 59, 3, new int[] {0,2,3}, 1.17f, ElementType.LANTHANOID),<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        Eu(63, 6, 31, 1.96f, 1.09f, 3, 0, 12, 2, 0, 151.960f, 60, 3, new int[] {0,2,3}, 1.20f, ElementType.LANTHANOID),<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        Gd(64, 6, 37, 1.69f, 0.94f, 3, 0, 12, 3, 0, 157.250f, 61, 3, new int[] {0,1,2,3}, 1.20f, ElementType.LANTHANOID),<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        Tb(65, 6, 92, 1.66f, 0.92f, 4, 0, 12, 3, 0, 158.925f, 61, 3, new int[] {0,1,2,3,4}, 1.10f, ElementType.LANTHANOID),<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        Dy(66, 6, 28, 1.63f, 0.91f, 3, 0, 12, 3, 0, 162.500f, 62, 3, new int[] {0,2,3,4}, 1.22f, ElementType.LANTHANOID),<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        Ho(67, 6, 43, 1.61f, 0.89f, 3, 0, 12, 3, 0, 164.930f, 64, 3, new int[] {0,2,3}, 1.23f, ElementType.LANTHANOID),<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        Er(68, 6, 29, 1.59f, 0.88f, 3, 0, 12, 3, 0, 167.260f, 65, 3, new int[] {0,2,3}, 1.24f, ElementType.LANTHANOID),<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        Tm(69, 6, 98, 1.57f, 0.87f, 3, 0, 12, 3, 0, 168.934f, 66, 3, new int[] {0,2,3,4}, 1.25f, ElementType.LANTHANOID),<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        Yb(70, 6, 104, 1.54f, 0.86f, 3, 0, 12, 2, 0, 173.040f, 67, 3, new int[] {0,2,3}, 1.10f, ElementType.LANTHANOID),<a name="line.122"></a>
+<span class="sourceLineNo">123</span>        Lu(71, 6, 52, 1.53f, 0.85f, 3, 0, 12, 3, 0, 174.970f, 68, 3, new int[] {0,3}, 1.27f, ElementType.LANTHANOID),<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        Hf(72, 6, 41, 1.40f, 1.58f, 4, 0, 12, 4, 0, 178.490f, 68, 4, new int[] {0,2,3,4}, 1.30f, ElementType.TRANSITION_METAL),<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        Ta(73, 6, 91, 1.22f, 1.38f, 5, 0, 12, 5, 0, 180.850f, 68, 5, new int[] {-1,0,2,3,4,5}, 1.50f, ElementType.TRANSITION_METAL),<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        W(74, 6, 101, 1.26f, 1.46f, 6, 0, 12, 6, 0, 183.850f, 68, 6, new int[] {-2,-1,0,1,2,3,4,5,6}, 2.36f, ElementType.TRANSITION_METAL),<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        Re(75, 6, 78, 1.30f, 1.59f, 7, 0, 12, 4, 0, 186.200f, 68, 7, new int[] {-3,-1,0,1,2,3,4,5,6,7}, 1.90f, ElementType.TRANSITION_METAL),<a name="line.127"></a>
+<span class="sourceLineNo">128</span>        Os(76, 6, 66, 1.58f, 1.28f, 8, 0, 12, 2, 0, 190.200f, 68, 4, new int[] {-2,-1,0,1,2,3,4,5,6,7,8}, 2.20f, ElementType.TRANSITION_METAL),<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        Ir(77, 6, 46, 1.22f, 1.37f, 6, 0, 12, 3, 0, 192.220f, 68, 4, new int[] {-3,-1,0,1,2,3,4,5,6,8}, 2.20f, ElementType.TRANSITION_METAL),<a name="line.129"></a>
+<span class="sourceLineNo">130</span>        Pt(78, 6, 74, 1.55f, 1.28f, 4, 0, 6, 0, 0, 195.090f, 68, 4, new int[] {-2,-1,0,1,2,3,4,5,6}, 2.28f, ElementType.TRANSITION_METAL),<a name="line.130"></a>
+<span class="sourceLineNo">131</span>        Au(79, 6, 9, 1.45f, 1.44f, 3, 0, 6, 0, 0, 196.967f, 68, 3, new int[] {-1,0,1,2,3,5}, 2.54f, ElementType.TRANSITION_METAL),<a name="line.131"></a>
+<span class="sourceLineNo">132</span>        Hg(80, 6, 42, 1.55f, 1.32f, 2, 0, 12, 1, 2, 200.59f, 78, 1, new int[] {0,1,2,4}, 2.00f, ElementType.TRANSITION_METAL),<a name="line.132"></a>
+<span class="sourceLineNo">133</span>        Tl(81, 6, 97, 1.96f, 1.45f, 3, 0, 12, 1, 3, 204.3833f, 78, 1, new int[] {-1,0,1,3}, 1.62f, ElementType.POST_TRANSITION_METAL),<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        Pb(82, 6, 69, 2.16f, 1.47f, 4, 0, 12, 2, 4, 207.200f, 78, 2, new int[] {-4,0,2,4}, 2.33f, ElementType.POST_TRANSITION_METAL),<a name="line.134"></a>
+<span class="sourceLineNo">135</span>        Bi(83, 6, 13, 1.73f, 1.46f, 5, 0, 12, 3, 3, 208.981f, 78, 3, new int[] {-3,0,1,3,5}, 2.20f, ElementType.POST_TRANSITION_METAL),<a name="line.135"></a>
+<span class="sourceLineNo">136</span>        Po(84, 6, 72, 1.21f, 0.67f, 6, 0, 12, 4, 2, 209.000f, 78, 4, new int[] {-2,0,2,4,5,6}, 2.0f, ElementType.METALLOID),<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        At(85, 6, 8, 1.12f, 0.62f, 7, 0, 12, 1, 1, 210.000f, 78, -1, new int[] {-1,0,1,3,5,7}, 2.20f, ElementType.HALOGEN),<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        Rn(86, 6, 80, 2.30f, 1.90f, 8, 0, 12, 0, 0, 222.000f, 78, 0, new int[] {0,2,6}, 0.0f, ElementType.NOBLE_GAS), // electroneg not reported<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        Fr(87, 7, 35, 3.24f, 1.80f, 1, 0, 12, 0, 0, 223.000f, -1, 1, new int[] {0,1}, 0.70f, ElementType.ALKALI_METAL),<a name="line.139"></a>
+<span class="sourceLineNo">140</span>        Ra(88, 7, 76, 2.57f, 1.43f, 2, 0, 12, 2, 0, 226.000f, -1, 2, new int[] {0,2}, 0.9f, ElementType.ALKALINE_EARTH_METAL),<a name="line.140"></a>
+<span class="sourceLineNo">141</span>        Ac(89, 7, 2, 2.12f, 1.18f, 3, 0, 12, 4, 0, 227.000f, -1, 3, new int[] {0,2,3}, 1.1f, ElementType.ACTINOID),<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        Th(90, 7, 95, 1.84f, 1.02f, 4, 0, 12, 1, 0, 232.038f, -1, 4, new int[] {0,2,3,4}, 1.30f, ElementType.ACTINOID),<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        Pa(91, 7, 68, 1.60f, 0.89f, 5, 0, 12, 4, 0, 231.036f, -1, 5, new int[] {0,2,3,4,5}, 1.50f, ElementType.ACTINOID),<a name="line.143"></a>
+<span class="sourceLineNo">144</span>        U(92, 7, 99, 1.75f, 0.97f, 6, 0, 12, 4, 0, 238.029f, -1, 6, new int[] {0,2,3,4,5,6}, 1.38f, ElementType.ACTINOID),<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        Np(93, 7, 64, 1.71f, 0.95f, 6, 0, 12, 4, 0, 237.048f, -1, 5, new int[] {0,3,4,5,6,7}, 1.36f, ElementType.ACTINOID),<a name="line.145"></a>
+<span class="sourceLineNo">146</span>        Pu(94, 7, 75, 1.67f, 0.93f, 6, 0, 12, 3, 0, 244.000f, -1, 4, new int[] {0,3,4,5,6,7,8}, 1.28f, ElementType.ACTINOID),<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        Am(95, 7, 5, 1.66f, 0.92f, 6, 0, 12, 3, 0, 243.000f, -1, 3, new int[] {0,2,3,4,5,6,7}, 1.13f, ElementType.ACTINOID),<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        Cm(96, 7, 22, 1.65f, 0.91f, 3, 0, 12, 3, 0, 248.000f, -1, 3, new int[] {0,3,4}, 1.28f, ElementType.ACTINOID),<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        Bk(97, 7, 14, 1.64f, 0.90f, 4, 0, 12, 3, 0, 247.000f, -1, 3, new int[] {0,2,3,4}, 1.30f, ElementType.ACTINOID),<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        Cf(98, 7, 20, 1.63f, 0.89f, 3, 0, 12, 4, 0, 251.000f, -1, 3, new int[] {0,2,3,4}, 1.30f, ElementType.ACTINOID),<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        Es(99, 7, 30, 1.62f, 0.88f, -1, 0, 12, 4, 0, 254.000f, -1, 3, new int[] {0,2,3}, 1.30f, ElementType.ACTINOID),<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        Fm(100, 7, 34, 1.61f, 0.87f, -1, 0, 12, 4, 0, 257.000f, -1, 3, new int[] {0,2,3}, 1.30f, ElementType.ACTINOID),<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        Md(101, 7, 53, 1.60f, 0.86f, -1, 0, 12, 4, 0, 256.000f, -1, 3, new int[] {0,2,3}, 1.30f, ElementType.ACTINOID),<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        No(102, 7, 63, 1.59f, 0.85f, -1, 0, 12, 4, 0, 254.000f, -1, 3, new int[] {0,2,3}, 1.30f, ElementType.ACTINOID),<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        Lr(103, 7, 51, 1.58f, 0.84f, -1, 0, 12, 4, 0, 257.000f, -1, 3, new int[] {0,3}, 0.00f, ElementType.ACTINOID), // electroneg not reported<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        /**<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * R-group to represent generic groups that are sometimes present in MDL .sdf<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         * files.<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         */<a name="line.159"></a>
+<span class="sourceLineNo">160</span>        R(104, 0, 105, 0.0f, 0.0f, 0, 0, 4, 1, 0, 0.000f, -1, 3, null, 0.00f, ElementType.UNKNOWN); // this is an R-group<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        // should these be declared final?<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        private int atomicNumber;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>        private int period;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        //private int hillOrder;<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        private float VDWRadius; // in Angstroms<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        private float covalentRadius; // in Angstroms<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        private int valenceElectronCount;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        private int minimumValence;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        private int maximumValence;<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        private int commonValence;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        private int maximumCovalentValence;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        private float atomicMass;<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        private int coreElectronCount;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>        private int oxidationState;<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        private int[] allOxidationStates;<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        // Pauling electronegativity: http://en.wikipedia.org/wiki/Electronegativity<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        private float paulingElectronegativity;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        // Element type: http://www.ptable.com/<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        private ElementType elementType;<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        //private static final Element[] hillOrderIndex;<a name="line.180"></a>
+<span class="sourceLineNo">181</span><a name="line.181"></a>
+<span class="sourceLineNo">182</span>//<a name="line.182"></a>
+<span class="sourceLineNo">183</span>//    static {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>//        hillOrderIndex = new Element[Element.values().length + 1];<a name="line.184"></a>
+<span class="sourceLineNo">185</span>//        for (Element e : Element.values()) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>//            hillOrderIndex[e.getHillOrder()] = e;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>//        }<a name="line.187"></a>
+<span class="sourceLineNo">188</span>//        hillOrderIndex[Element.H.getHillOrder()] = Element.H; // special case for hydrogen<a name="line.188"></a>
+<span class="sourceLineNo">189</span>//    }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>        private static final Map&lt;String,Element&gt; allElements ;<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>        static {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                allElements = new HashMap&lt;String,Element&gt;();<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                for (Element e : Element.values()){<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                        allElements.put(e.toString().toLowerCase(), e);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>        }<a name="line.198"></a>
+<span class="sourceLineNo">199</span>        private Element(int atomicNumber,<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                        int period,<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                        int hillOrder,<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                        float VDWRadius,<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                        float covalentRadius,<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                        int valenceElectronCount,<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                        int minimumValence,<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                        int maximumValence,<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                        int commonValence,<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                        int maximumCovalentValence,<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                        float atomicMass,<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                        int coreElectronCount,<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                        int oxidationState,<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                        int[] allOxidationStates,<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                        float paulingElectronegativity,<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                        ElementType elementType) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>                this.atomicNumber = atomicNumber;<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                this.period = period;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                //this.hillOrder = hillOrder;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                this.VDWRadius = VDWRadius;<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                this.covalentRadius = covalentRadius;<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                this.valenceElectronCount = valenceElectronCount;<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                this.minimumValence = minimumValence;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                this.maximumValence = maximumValence;<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                this.commonValence = commonValence;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                this.maximumCovalentValence = maximumCovalentValence;<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                this.atomicMass = atomicMass;<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                this.coreElectronCount = coreElectronCount;<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                this.oxidationState = oxidationState;<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                this.allOxidationStates = allOxidationStates;<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                this.paulingElectronegativity = paulingElectronegativity;<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                this.elementType = elementType;<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span><a name="line.233"></a>
+<span class="sourceLineNo">234</span>        }<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>        /**<a name="line.236"></a>
+<span class="sourceLineNo">237</span>         * Returns a list of all oxidation states the element is found in.<a name="line.237"></a>
+<span class="sourceLineNo">238</span>         * The set is by Greenwood and Norman in "Chemistry of the Elements (ISBN:0080379419).<a name="line.238"></a>
+<span class="sourceLineNo">239</span>         * @return An array of oxidation states sorted from most negative to most positive.<a name="line.239"></a>
+<span class="sourceLineNo">240</span>         */<a name="line.240"></a>
+<span class="sourceLineNo">241</span>        public int[] getAllOxidationStates() {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                return allOxidationStates;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>        }<a name="line.243"></a>
+<span class="sourceLineNo">244</span><a name="line.244"></a>
+<span class="sourceLineNo">245</span>        /**<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         * Returns the atomic number of this Element.<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         * @return the atomic number of this Element.<a name="line.247"></a>
+<span class="sourceLineNo">248</span>         */<a name="line.248"></a>
+<span class="sourceLineNo">249</span>        public int getAtomicNumber() {<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                return atomicNumber;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>        }<a name="line.251"></a>
+<span class="sourceLineNo">252</span><a name="line.252"></a>
+<span class="sourceLineNo">253</span>        /**<a name="line.253"></a>
+<span class="sourceLineNo">254</span>         * Returns the period in the periodic table of this Element.<a name="line.254"></a>
+<span class="sourceLineNo">255</span>         * @return the period in the periodic table of this Element.<a name="line.255"></a>
+<span class="sourceLineNo">256</span>         */<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        public int getPeriod() {<a name="line.257"></a>
+<span class="sourceLineNo">258</span>                return period;<a name="line.258"></a>
+<span class="sourceLineNo">259</span>        }<a name="line.259"></a>
+<span class="sourceLineNo">260</span><a name="line.260"></a>
+<span class="sourceLineNo">261</span>        /**<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         * Returns the Hill Order of this Element. The Hill Order represents the<a name="line.262"></a>
+<span class="sourceLineNo">263</span>         * priority by which elements are sorted in molecular formulas.<a name="line.263"></a>
+<span class="sourceLineNo">264</span>         * The Hill system is a system of writing chemical formulas such that the<a name="line.264"></a>
+<span class="sourceLineNo">265</span>         * number of carbon atoms in a molecule is indicated first, the number of<a name="line.265"></a>
+<span class="sourceLineNo">266</span>         * hydrogen atoms next, and then the number of all other chemical elements<a name="line.266"></a>
+<span class="sourceLineNo">267</span>         * subsequently, in alphabetical order. When the formula contains no carbon,<a name="line.267"></a>
+<span class="sourceLineNo">268</span>         * all the elements, including hydrogen, are listed alphabetically.<a name="line.268"></a>
+<span class="sourceLineNo">269</span>         * &lt;p&gt;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>         * Edwin A. Hill, "On A System Of Indexing Chemical Literature;<a name="line.270"></a>
+<span class="sourceLineNo">271</span>         * Adopted By The Classification Division Of The U. S. Patent Office".<a name="line.271"></a>
+<span class="sourceLineNo">272</span>         * J. Am. Chem. Soc. 1900, 22(8), 478-494.<a name="line.272"></a>
+<span class="sourceLineNo">273</span>         * &lt;p&gt;<a name="line.273"></a>
+<span class="sourceLineNo">274</span>         * &lt;a href="http://en.wikipedia.org/wiki/Hill_system"&gt;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>         * http://en.wikipedia.org/wiki/Hill_system&lt;/a&gt;<a name="line.275"></a>
+<span class="sourceLineNo">276</span>         * &lt;p&gt;<a name="line.276"></a>
+<span class="sourceLineNo">277</span>         * @return the Hill Order of this Element.<a name="line.277"></a>
+<span class="sourceLineNo">278</span>         */<a name="line.278"></a>
+<span class="sourceLineNo">279</span>        public int getHillOrder() {<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                throw new RuntimeException("Not implemented, yet!");<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                //throw new NotImplementedYetException();<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                //return hillOrder;<a name="line.282"></a>
+<span class="sourceLineNo">283</span>        }<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>        /**<a name="line.285"></a>
+<span class="sourceLineNo">286</span>         * Returns the van der Waals radius of this Element.<a name="line.286"></a>
+<span class="sourceLineNo">287</span>         * @return the van der Waals radius of this Element, measured in Angstroms.<a name="line.287"></a>
+<span class="sourceLineNo">288</span>         */<a name="line.288"></a>
+<span class="sourceLineNo">289</span>        public float getVDWRadius() {<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                return VDWRadius;<a name="line.290"></a>
+<span class="sourceLineNo">291</span>        }<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>        /**<a name="line.293"></a>
+<span class="sourceLineNo">294</span>         * Returns the covalent radius of this Element.<a name="line.294"></a>
+<span class="sourceLineNo">295</span>         * @return covalent radius, measured in Angstroms.<a name="line.295"></a>
+<span class="sourceLineNo">296</span>         */<a name="line.296"></a>
+<span class="sourceLineNo">297</span>        public float getCovalentRadius() {<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                return covalentRadius;<a name="line.298"></a>
+<span class="sourceLineNo">299</span>        }<a name="line.299"></a>
+<span class="sourceLineNo">300</span><a name="line.300"></a>
+<span class="sourceLineNo">301</span>        /**<a name="line.301"></a>
+<span class="sourceLineNo">302</span>         * Returns the number of valence electrons for this Element.<a name="line.302"></a>
+<span class="sourceLineNo">303</span>         * @return the number of valence electrons for this Element.<a name="line.303"></a>
+<span class="sourceLineNo">304</span>         */<a name="line.304"></a>
+<span class="sourceLineNo">305</span>        public int getValenceElectronCount() {<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                return valenceElectronCount;<a name="line.306"></a>
+<span class="sourceLineNo">307</span>        }<a name="line.307"></a>
+<span class="sourceLineNo">308</span><a name="line.308"></a>
+<span class="sourceLineNo">309</span>        /**<a name="line.309"></a>
+<span class="sourceLineNo">310</span>         * Returns the minimum valence for this Element.<a name="line.310"></a>
+<span class="sourceLineNo">311</span>         * @return the minimum valence of this atom.<a name="line.311"></a>
+<span class="sourceLineNo">312</span>         */<a name="line.312"></a>
+<span class="sourceLineNo">313</span>        public int getMinimumValence() {<a name="line.313"></a>
+<span class="sourceLineNo">314</span>                return minimumValence;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>        }<a name="line.315"></a>
+<span class="sourceLineNo">316</span><a name="line.316"></a>
+<span class="sourceLineNo">317</span>        /**<a name="line.317"></a>
+<span class="sourceLineNo">318</span>         * Returns the maximum valence for this Element.<a name="line.318"></a>
+<span class="sourceLineNo">319</span>         * @return the maximum valence for this Element.<a name="line.319"></a>
+<span class="sourceLineNo">320</span>         */<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        public int getMaximumValence() {<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                return maximumValence;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>        /**<a name="line.325"></a>
+<span class="sourceLineNo">326</span>         * Returns the common valence for this Element.<a name="line.326"></a>
+<span class="sourceLineNo">327</span>         * @return the common valence for this Element.<a name="line.327"></a>
+<span class="sourceLineNo">328</span>         */<a name="line.328"></a>
+<span class="sourceLineNo">329</span>        public int getCommonValence() {<a name="line.329"></a>
+<span class="sourceLineNo">330</span>                return commonValence;<a name="line.330"></a>
+<span class="sourceLineNo">331</span>        }<a name="line.331"></a>
+<span class="sourceLineNo">332</span><a name="line.332"></a>
+<span class="sourceLineNo">333</span>        /**<a name="line.333"></a>
+<span class="sourceLineNo">334</span>         * Returns the maximum valence for this Element.<a name="line.334"></a>
+<span class="sourceLineNo">335</span>         * @return the maximum valence of this element.<a name="line.335"></a>
+<span class="sourceLineNo">336</span>         */<a name="line.336"></a>
+<span class="sourceLineNo">337</span>        public int getMaximumCovalentValence() {<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                return maximumCovalentValence;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        }<a name="line.339"></a>
+<span class="sourceLineNo">340</span><a name="line.340"></a>
+<span class="sourceLineNo">341</span>        /**<a name="line.341"></a>
+<span class="sourceLineNo">342</span>         * Returns the atomic mass for this Element.<a name="line.342"></a>
+<span class="sourceLineNo">343</span>         * @return the atomic mass for this Element, measured in g/mol.<a name="line.343"></a>
+<span class="sourceLineNo">344</span>         */<a name="line.344"></a>
+<span class="sourceLineNo">345</span>        public float getAtomicMass() {<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                return atomicMass;<a name="line.346"></a>
+<span class="sourceLineNo">347</span>        }<a name="line.347"></a>
+<span class="sourceLineNo">348</span><a name="line.348"></a>
+<span class="sourceLineNo">349</span>        /**<a name="line.349"></a>
+<span class="sourceLineNo">350</span>         * Returns the number of core electrons for this Element.<a name="line.350"></a>
+<span class="sourceLineNo">351</span>         * @return number of core electrons for this Element.<a name="line.351"></a>
+<span class="sourceLineNo">352</span>         */<a name="line.352"></a>
+<span class="sourceLineNo">353</span>        public int getCoreElectronCount() {<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                return coreElectronCount;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>        }<a name="line.355"></a>
+<span class="sourceLineNo">356</span><a name="line.356"></a>
+<span class="sourceLineNo">357</span>        /**<a name="line.357"></a>
+<span class="sourceLineNo">358</span>         * Returns a typical oxidation state for this Element. This information is mostly<a name="line.358"></a>
+<span class="sourceLineNo">359</span>         * useful for metals.<a name="line.359"></a>
+<span class="sourceLineNo">360</span>         * @return a typical oxidation state for this Element.<a name="line.360"></a>
+<span class="sourceLineNo">361</span>         */<a name="line.361"></a>
+<span class="sourceLineNo">362</span>        public int getOxidationState() {<a name="line.362"></a>
+<span class="sourceLineNo">363</span>                return oxidationState;<a name="line.363"></a>
+<span class="sourceLineNo">364</span>        }<a name="line.364"></a>
+<span class="sourceLineNo">365</span><a name="line.365"></a>
+<span class="sourceLineNo">366</span>        /**<a name="line.366"></a>
+<span class="sourceLineNo">367</span>         * Returns the Pauling electronegativity for this Element.<a name="line.367"></a>
+<span class="sourceLineNo">368</span>         * @return the Pauling electronegativity for this Element.<a name="line.368"></a>
+<span class="sourceLineNo">369</span>         */<a name="line.369"></a>
+<span class="sourceLineNo">370</span>        public float getPaulingElectronegativity() {<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                return paulingElectronegativity;<a name="line.371"></a>
+<span class="sourceLineNo">372</span>        }<a name="line.372"></a>
+<span class="sourceLineNo">373</span><a name="line.373"></a>
+<span class="sourceLineNo">374</span>        /**<a name="line.374"></a>
+<span class="sourceLineNo">375</span>         * Returns the Element Type for this Element.<a name="line.375"></a>
+<span class="sourceLineNo">376</span>         * @return the Element Type for this Element.<a name="line.376"></a>
+<span class="sourceLineNo">377</span>         */<a name="line.377"></a>
+<span class="sourceLineNo">378</span>        public ElementType getElementType() {<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                return elementType;<a name="line.379"></a>
+<span class="sourceLineNo">380</span>        }<a name="line.380"></a>
+<span class="sourceLineNo">381</span><a name="line.381"></a>
+<span class="sourceLineNo">382</span>        /**<a name="line.382"></a>
+<span class="sourceLineNo">383</span>         * Returns the Element that corresponds to the specified element symbol. The case<a name="line.383"></a>
+<span class="sourceLineNo">384</span>         * of the element symbol is ignored. Example: FE, fe, Fe represent iron.<a name="line.384"></a>
+<span class="sourceLineNo">385</span>         * @param elementSymbol element symbol to specify Element.<a name="line.385"></a>
+<span class="sourceLineNo">386</span>         * @return the Element specified by the element symbol.<a name="line.386"></a>
+<span class="sourceLineNo">387</span>         */<a name="line.387"></a>
+<span class="sourceLineNo">388</span>        public static Element valueOfIgnoreCase(String elementSymbol) throws IllegalArgumentException {<a name="line.388"></a>
+<span class="sourceLineNo">389</span><a name="line.389"></a>
+<span class="sourceLineNo">390</span>                Element e = allElements.get(elementSymbol.toLowerCase());<a name="line.390"></a>
+<span class="sourceLineNo">391</span>                if ( e != null)<a name="line.391"></a>
+<span class="sourceLineNo">392</span>                        return e;<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                throw new IllegalArgumentException("Invalid element symbol: " + elementSymbol);<a name="line.393"></a>
+<span class="sourceLineNo">394</span>        }<a name="line.394"></a>
+<span class="sourceLineNo">395</span><a name="line.395"></a>
+<span class="sourceLineNo">396</span>        /**<a name="line.396"></a>
+<span class="sourceLineNo">397</span>         * Returns &lt;code&gt;true&lt;/code&gt; if this Element is Hydrogen.<a name="line.397"></a>
+<span class="sourceLineNo">398</span>         * &lt;p&gt;<a name="line.398"></a>
+<span class="sourceLineNo">399</span>         * &lt;strong&gt;Note:&lt;/strong&gt; Deuterium ({@link #D}) and Tritium ({@link Element#T}) will return<a name="line.399"></a>
+<span class="sourceLineNo">400</span>         * &lt;code&gt;true&lt;/code&gt; to this method.<a name="line.400"></a>
+<span class="sourceLineNo">401</span>         * &lt;/p&gt;<a name="line.401"></a>
+<span class="sourceLineNo">402</span>         *<a name="line.402"></a>
+<span class="sourceLineNo">403</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if the Element is Hydrogen.<a name="line.403"></a>
+<span class="sourceLineNo">404</span>         */<a name="line.404"></a>
+<span class="sourceLineNo">405</span>        public boolean isHydrogen() {<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                return this == H || this == D || this == T;<a name="line.406"></a>
+<span class="sourceLineNo">407</span>        }<a name="line.407"></a>
+<span class="sourceLineNo">408</span><a name="line.408"></a>
+<span class="sourceLineNo">409</span>        /**<a name="line.409"></a>
+<span class="sourceLineNo">410</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; is the Element is an not Hydrogen (or an<a name="line.410"></a>
+<span class="sourceLineNo">411</span>         * isotope of Hydrogen).<a name="line.411"></a>
+<span class="sourceLineNo">412</span>         * &lt;p&gt;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>         * This method is the exact opposite of {@link #isHydrogen()}.<a name="line.413"></a>
+<span class="sourceLineNo">414</span>         * &lt;/p&gt;<a name="line.414"></a>
+<span class="sourceLineNo">415</span>         *<a name="line.415"></a>
+<span class="sourceLineNo">416</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; is Element is not Hydrogen.<a name="line.416"></a>
+<span class="sourceLineNo">417</span>         */<a name="line.417"></a>
+<span class="sourceLineNo">418</span>        public boolean isHeavyAtom() {<a name="line.418"></a>
+<span class="sourceLineNo">419</span>                return !isHydrogen();<a name="line.419"></a>
+<span class="sourceLineNo">420</span>        }<a name="line.420"></a>
+<span class="sourceLineNo">421</span><a name="line.421"></a>
+<span class="sourceLineNo">422</span>        /**<a name="line.422"></a>
+<span class="sourceLineNo">423</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if Element is not Hydrogen and not Carbon.<a name="line.423"></a>
+<span class="sourceLineNo">424</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if Element is not Hydrogen and not Carbon.<a name="line.424"></a>
+<span class="sourceLineNo">425</span>         */<a name="line.425"></a>
+<span class="sourceLineNo">426</span>        public boolean isHeteroAtom() {<a name="line.426"></a>
+<span class="sourceLineNo">427</span>                return !(this == C || this == H);<a name="line.427"></a>
+<span class="sourceLineNo">428</span>        }<a name="line.428"></a>
+<span class="sourceLineNo">429</span><a name="line.429"></a>
+<span class="sourceLineNo">430</span>        /**<a name="line.430"></a>
+<span class="sourceLineNo">431</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a metal.<a name="line.431"></a>
+<span class="sourceLineNo">432</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a metal.<a name="line.432"></a>
+<span class="sourceLineNo">433</span>         */<a name="line.433"></a>
+<span class="sourceLineNo">434</span>        public boolean isMetal() {<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                return elementType.isMetal();<a name="line.435"></a>
+<span class="sourceLineNo">436</span>        }<a name="line.436"></a>
+<span class="sourceLineNo">437</span><a name="line.437"></a>
+<span class="sourceLineNo">438</span>        /**<a name="line.438"></a>
+<span class="sourceLineNo">439</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a metalloid.<a name="line.439"></a>
+<span class="sourceLineNo">440</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a metalloid.<a name="line.440"></a>
+<span class="sourceLineNo">441</span>         */<a name="line.441"></a>
+<span class="sourceLineNo">442</span>        public boolean isMetalloid() {<a name="line.442"></a>
+<span class="sourceLineNo">443</span>                return elementType.isMetalloid();<a name="line.443"></a>
+<span class="sourceLineNo">444</span>        }<a name="line.444"></a>
+<span class="sourceLineNo">445</span><a name="line.445"></a>
+<span class="sourceLineNo">446</span>        /**<a name="line.446"></a>
+<span class="sourceLineNo">447</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a non-metal.<a name="line.447"></a>
+<span class="sourceLineNo">448</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if ElementType is a non-metal.<a name="line.448"></a>
+<span class="sourceLineNo">449</span>         */<a name="line.449"></a>
+<span class="sourceLineNo">450</span>        public boolean isNonMetal() {<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                return elementType.isNonMetal();<a name="line.451"></a>
+<span class="sourceLineNo">452</span>        }<a name="line.452"></a>
+<span class="sourceLineNo">453</span><a name="line.453"></a>
+<span class="sourceLineNo">454</span>        /**<a name="line.454"></a>
+<span class="sourceLineNo">455</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if Element is a halogen (F, Cl, Br, I, At).<a name="line.455"></a>
+<span class="sourceLineNo">456</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if Element is a halogen.<a name="line.456"></a>
+<span class="sourceLineNo">457</span>         */<a name="line.457"></a>
+<span class="sourceLineNo">458</span>        public boolean isHalogen() {<a name="line.458"></a>
+<span class="sourceLineNo">459</span>                return elementType.equals(ElementType.HALOGEN);<a name="line.459"></a>
+<span class="sourceLineNo">460</span>        }<a name="line.460"></a>
+<span class="sourceLineNo">461</span><a name="line.461"></a>
+<span class="sourceLineNo">462</span>        /**<a name="line.462"></a>
+<span class="sourceLineNo">463</span>         * Returns &lt;CODE&gt;true&lt;/CODE&gt; if Element is a chalcogen (O, S, Se, Te, Po).<a name="line.463"></a>
+<span class="sourceLineNo">464</span>         * @return &lt;CODE&gt;true&lt;/CODE&gt; if Element is a chalcogen.<a name="line.464"></a>
+<span class="sourceLineNo">465</span>         */<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        public boolean isChalcogen() {<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                return (this == O || this == S || this == Se || this == Te ||<a name="line.467"></a>
+<span class="sourceLineNo">468</span>                                this == Po);<a name="line.468"></a>
+<span class="sourceLineNo">469</span>        }<a name="line.469"></a>
+<span class="sourceLineNo">470</span><a name="line.470"></a>
+<span class="sourceLineNo">471</span>        /**<a name="line.471"></a>
+<span class="sourceLineNo">472</span>         * Returns the Element that corresponds to the specified Hill Order.<a name="line.472"></a>
+<span class="sourceLineNo">473</span>         * @param index the Hill Order.<a name="line.473"></a>
+<span class="sourceLineNo">474</span>         * @return the Element that corresponds to the specified Hill Order.<a name="line.474"></a>
+<span class="sourceLineNo">475</span>         * @see #getHillOrder()<a name="line.475"></a>
+<span class="sourceLineNo">476</span>         */<a name="line.476"></a>
+<span class="sourceLineNo">477</span>        public static Element getElementFromHillIndex(int index) {<a name="line.477"></a>
+<span class="sourceLineNo">478</span>                throw new UnsupportedOperationException("Not implemented, yet!");<a name="line.478"></a>
+<span class="sourceLineNo">479</span>                //return hillOrderIndex[index];<a name="line.479"></a>
+<span class="sourceLineNo">480</span>        }<a name="line.480"></a>
+<span class="sourceLineNo">481</span>}<a name="line.481"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

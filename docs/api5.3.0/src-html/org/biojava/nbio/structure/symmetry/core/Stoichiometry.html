@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.structure.symmetry.core;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.structure.cluster.SubunitCluster;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.structure.cluster.SubunitClustererMethod;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.*;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.function.Function;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.stream.Collectors;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * A utility object that describes Stoichiometry (composition of a protein assembly),<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * determined via clustering procedure {@link org.biojava.nbio.structure.cluster.SubunitClusterer},<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * and implements human-readable representation using various strategies.<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * @author Dmytro Guzenko<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * @since 5.0.0<a name="line.36"></a>
+<span class="sourceLineNo">037</span> */<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>public class Stoichiometry {<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>        /**<a name="line.41"></a>
+<span class="sourceLineNo">042</span>         * What to do when the number of {@link SubunitCluster} exceeds the length of the alphabet.<a name="line.42"></a>
+<span class="sourceLineNo">043</span>         */<a name="line.43"></a>
+<span class="sourceLineNo">044</span>        public enum StringOverflowStrategy {<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                /**<a name="line.45"></a>
+<span class="sourceLineNo">046</span>                 * Put '?' symbol for every (alphabet.length+i)-th cluster<a name="line.46"></a>
+<span class="sourceLineNo">047</span>                 */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                QUESTIONMARK,<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>                 * Cycle through the alphabet (e.g., ...xyzABC...)<a name="line.50"></a>
+<span class="sourceLineNo">051</span>                 */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>                CYCLE,<a name="line.52"></a>
+<span class="sourceLineNo">053</span>                /**<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                 * Represent every cluster with two symbols from the alphabet,<a name="line.54"></a>
+<span class="sourceLineNo">055</span>                 * this forces us to specify number of subunits for every subunit (e.g., AA1AB1AC1...).<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                 * This strategy will not work correctly if there are more than alphabet.length^2 subunit clusters.<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                 */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                DOUBLE,<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                 * The strategy is defined via an external function, we do not have to do anything.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                 */<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                CUSTOM<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        }<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>        /**<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         * Alphabet (a sequence of characters) used in this stoichiometry to construct human-readable representation.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>        /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * Strategy determines how this stoichiometry will construct human-readable representation in case number<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         * of clusters exceeds number of letters in the alphabet.<a name="line.72"></a>
+<span class="sourceLineNo">073</span>         */<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        private StringOverflowStrategy strategy = StringOverflowStrategy.CYCLE;<a name="line.74"></a>
+<span class="sourceLineNo">075</span><a name="line.75"></a>
+<span class="sourceLineNo">076</span>        /**<a name="line.76"></a>
+<span class="sourceLineNo">077</span>         * Full customisation of the string generation is supported via an external function<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         */<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        private Function&lt;List&lt;SubunitCluster&gt;,String&gt; customStringGenerator = null;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         * Subunit clusters that define this stoichiometry.<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         */<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        private List&lt;SubunitCluster&gt; orderedClusters = new ArrayList&lt;&gt;();<a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>        /** Prevent instantiation **/<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        @SuppressWarnings("unused")<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        private Stoichiometry() {<a name="line.87"></a>
+<span class="sourceLineNo">088</span>        }<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>        /**<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         * Constructor for Stoichiometry. The default strategy is CYCLE,<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * the letters assigned for each cluster will be reset.<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         *<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         * @param clusters<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         *            List of {@link SubunitCluster} that defines assembly composition.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         */<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        public Stoichiometry(List&lt;SubunitCluster&gt; clusters) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                this(clusters,StringOverflowStrategy.CYCLE,true);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        }<a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span>        /**<a name="line.101"></a>
+<span class="sourceLineNo">102</span>         * Constructor for Stoichiometry. The default strategy is CYCLE.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>         *<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * @param clusters<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         *            List of {@link SubunitCluster} that defines assembly composition.<a name="line.105"></a>
+<span class="sourceLineNo">106</span>         * @param resetAlphas<a name="line.106"></a>
+<span class="sourceLineNo">107</span>         *            Whether to keep alphas assigned to {@link SubunitCluster} object (useful for local symmetry detection)<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         *            or to generate them anew.<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         */<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        public Stoichiometry(List&lt;SubunitCluster&gt; clusters, boolean resetAlphas) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                this(clusters,StringOverflowStrategy.CYCLE,resetAlphas);<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        }<a name="line.112"></a>
+<span class="sourceLineNo">113</span><a name="line.113"></a>
+<span class="sourceLineNo">114</span>        /**<a name="line.114"></a>
+<span class="sourceLineNo">115</span>         * Constructor for Stoichiometry. The alphas assigned to {@link SubunitCluster} objects will be reset.<a name="line.115"></a>
+<span class="sourceLineNo">116</span>         *<a name="line.116"></a>
+<span class="sourceLineNo">117</span>         * @param clusters<a name="line.117"></a>
+<span class="sourceLineNo">118</span>         *            List of {@link SubunitCluster} that defines assembly composition.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>         * @param strategy<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         *            What to do if number of {@link SubunitCluster} exceeds the alphabet length.<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         */<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        public Stoichiometry(List&lt;SubunitCluster&gt; clusters, StringOverflowStrategy strategy) {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                this(clusters,strategy,true);<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        }<a name="line.124"></a>
+<span class="sourceLineNo">125</span><a name="line.125"></a>
+<span class="sourceLineNo">126</span>        /**<a name="line.126"></a>
+<span class="sourceLineNo">127</span>         * Constructor for Stoichiometry.<a name="line.127"></a>
+<span class="sourceLineNo">128</span>         *<a name="line.128"></a>
+<span class="sourceLineNo">129</span>         * @param clusters<a name="line.129"></a>
+<span class="sourceLineNo">130</span>         *            List of {@link SubunitCluster} that defines assembly composition.<a name="line.130"></a>
+<span class="sourceLineNo">131</span>         * @param strategy<a name="line.131"></a>
+<span class="sourceLineNo">132</span>         *            What to do if number of {@link SubunitCluster} exceeds the alphabet length.<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         * @param resetAlphas<a name="line.133"></a>
+<span class="sourceLineNo">134</span>         *            Whether to keep alphas assigned to {@link SubunitCluster} object (useful for local symmetry detection)<a name="line.134"></a>
+<span class="sourceLineNo">135</span>         *            or to generate them anew.<a name="line.135"></a>
+<span class="sourceLineNo">136</span>         */<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        public Stoichiometry(List&lt;SubunitCluster&gt; clusters, StringOverflowStrategy strategy, boolean resetAlphas) {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                this.strategy = strategy;<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                this.orderedClusters =<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                clusters.stream().<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                        sorted(Comparator.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                                                comparing(SubunitCluster::size).<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                                                reversed()).<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                                        collect(Collectors.toList());<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                if (resetAlphas) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                        doResetAlphas();<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                }<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        }<a name="line.148"></a>
+<span class="sourceLineNo">149</span><a name="line.149"></a>
+<span class="sourceLineNo">150</span>        /**<a name="line.150"></a>
+<span class="sourceLineNo">151</span>         * Constructor for Stoichiometry.<a name="line.151"></a>
+<span class="sourceLineNo">152</span>         *<a name="line.152"></a>
+<span class="sourceLineNo">153</span>         * @param clusters<a name="line.153"></a>
+<span class="sourceLineNo">154</span>         *            List of {@link SubunitCluster} that defines assembly composition.<a name="line.154"></a>
+<span class="sourceLineNo">155</span>         * @param customStringGenerator<a name="line.155"></a>
+<span class="sourceLineNo">156</span>         *            A function which produces a string for a composition (list of subunit clusters).<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         */<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        public Stoichiometry(List&lt;SubunitCluster&gt; clusters, Function&lt;List&lt;SubunitCluster&gt;,String&gt; customStringGenerator) {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                this(clusters,StringOverflowStrategy.CUSTOM,false);<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                this.customStringGenerator = customStringGenerator;<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        }<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>        /**<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         * Reassign alpha-strings for each cluster according to the current strategy.<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         * Has no effect if custom string generator is used.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         */<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        public void resetAlphas() {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                doResetAlphas();<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        }<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>        private void doResetAlphas() {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                if(strategy == StringOverflowStrategy.CUSTOM) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                        return;<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                }<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                for (int i = 0; i &lt; this.orderedClusters.size(); i++) {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                        this.orderedClusters.get(i).setAlpha(generateAlpha(i));<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>        /**<a name="line.181"></a>
+<span class="sourceLineNo">182</span>         * Produce a string ("alpha") that describes each component depending on the current strategy.<a name="line.182"></a>
+<span class="sourceLineNo">183</span>         * @param clusterInd<a name="line.183"></a>
+<span class="sourceLineNo">184</span>         *          component index<a name="line.184"></a>
+<span class="sourceLineNo">185</span>         * @return alphanumeric string.<a name="line.185"></a>
+<span class="sourceLineNo">186</span>         */<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        private String generateAlpha(int clusterInd) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                String key;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                int alphabetInd;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                switch (strategy) {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                        case CYCLE:<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                                alphabetInd = clusterInd % alphabet.length();<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                                key = alphabet.substring(alphabetInd, alphabetInd + 1);<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                                break;<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>                        case DOUBLE:<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                                if (orderedClusters.size()&gt;alphabet.length()) {<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                        int alphabetInd1 = clusterInd / alphabet.length();<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                                        int alphabetInd2 = clusterInd % alphabet.length();<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                                        key = alphabet.substring(alphabetInd1, alphabetInd1 + 1);<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                                        key+=alphabet.substring(alphabetInd2, alphabetInd2 + 1);<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                } else {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                        key = alphabet.substring(clusterInd, clusterInd + 1);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                }<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                break;<a name="line.205"></a>
+<span class="sourceLineNo">206</span><a name="line.206"></a>
+<span class="sourceLineNo">207</span>                        case QUESTIONMARK:<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                                key = "?";<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                if(clusterInd&lt;alphabet.length()) {<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                        key = alphabet.substring(clusterInd, clusterInd + 1);<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                                }<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                break;<a name="line.212"></a>
+<span class="sourceLineNo">213</span><a name="line.213"></a>
+<span class="sourceLineNo">214</span>                        case CUSTOM:<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                                throw new IllegalStateException("Alphas should be handled by the custom generator function.");<a name="line.215"></a>
+<span class="sourceLineNo">216</span><a name="line.216"></a>
+<span class="sourceLineNo">217</span>                        default:<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                                key = "?";<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                                if(clusterInd&lt;alphabet.length()) {<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                                        key = alphabet.substring(clusterInd, clusterInd + 1);<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                                }<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                break;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                return key;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        }<a name="line.225"></a>
+<span class="sourceLineNo">226</span>        /**<a name="line.226"></a>
+<span class="sourceLineNo">227</span>         * @return list of {@link SubunitCluster}, ordered by the number of subunits (decreasing).<a name="line.227"></a>
+<span class="sourceLineNo">228</span>         */<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        public List&lt;SubunitCluster&gt; getClusters() {<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                return orderedClusters;<a name="line.230"></a>
+<span class="sourceLineNo">231</span>        }<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>        /**<a name="line.233"></a>
+<span class="sourceLineNo">234</span>         * @return Number of distinct components in this stoichiometry.<a name="line.234"></a>
+<span class="sourceLineNo">235</span>         */<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        public int numberOfComponents() {<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                return orderedClusters.size();<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        }<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>        /**<a name="line.240"></a>
+<span class="sourceLineNo">241</span>         * Make a combined Stoichiometry object of &lt;i&gt;this&lt;/&gt; and the &lt;i&gt;other&lt;/&gt;.<a name="line.241"></a>
+<span class="sourceLineNo">242</span>         * The combined list of clusters will be ordered by the number of subunits.<a name="line.242"></a>
+<span class="sourceLineNo">243</span>         * @return new {@link Stoichiometry} object.<a name="line.243"></a>
+<span class="sourceLineNo">244</span>         */<a name="line.244"></a>
+<span class="sourceLineNo">245</span>        public Stoichiometry combineWith(Stoichiometry other) {<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                Set&lt;SubunitCluster&gt; combinedClusters = new LinkedHashSet&lt;&gt;();<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                combinedClusters.addAll(this.orderedClusters);<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                combinedClusters.addAll(other.orderedClusters);<a name="line.248"></a>
+<span class="sourceLineNo">249</span><a name="line.249"></a>
+<span class="sourceLineNo">250</span>                Stoichiometry combinedStoichiometry;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                if (this.strategy == StringOverflowStrategy.CUSTOM) {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                        combinedStoichiometry = new Stoichiometry(new ArrayList&lt;&gt;(combinedClusters),this.customStringGenerator);<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                } else {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                        combinedStoichiometry = new Stoichiometry(new ArrayList&lt;&gt;(combinedClusters),this.strategy,false);<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                }<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                return combinedStoichiometry;<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        }<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span>        /**<a name="line.259"></a>
+<span class="sourceLineNo">260</span>         * Make a Stoichiometry object that corresponds to a single component.<a name="line.260"></a>
+<span class="sourceLineNo">261</span>         * @param i component index<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         * @return new {@link Stoichiometry} object.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>         */<a name="line.263"></a>
+<span class="sourceLineNo">264</span>        public Stoichiometry getComponent(int i) {<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                return new Stoichiometry(Collections.singletonList(orderedClusters.get(i)),this.strategy,false);<a name="line.265"></a>
+<span class="sourceLineNo">266</span>        }<a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>        /**<a name="line.268"></a>
+<span class="sourceLineNo">269</span>         * @return {@link StringOverflowStrategy} used in this stoichiometry<a name="line.269"></a>
+<span class="sourceLineNo">270</span>         *          to construct human-readable representation in case number<a name="line.270"></a>
+<span class="sourceLineNo">271</span>         *          of clusters exceeds number of letters in the alphabet.<a name="line.271"></a>
+<span class="sourceLineNo">272</span>         */<a name="line.272"></a>
+<span class="sourceLineNo">273</span>        public StringOverflowStrategy getStrategy() {<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                return strategy;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>        }<a name="line.275"></a>
+<span class="sourceLineNo">276</span><a name="line.276"></a>
+<span class="sourceLineNo">277</span>        /**<a name="line.277"></a>
+<span class="sourceLineNo">278</span>         * Change string representation of a stoichiometry in case number of clusters exceeds number of letters in the alphabet.<a name="line.278"></a>
+<span class="sourceLineNo">279</span>         * This action may invalidate alphas already assigned to the clusters.<a name="line.279"></a>
+<span class="sourceLineNo">280</span>         * @param strategy<a name="line.280"></a>
+<span class="sourceLineNo">281</span>         *          {@link StringOverflowStrategy} used in this stoichiometry<a name="line.281"></a>
+<span class="sourceLineNo">282</span>         *          to construct human-readable representation in case number<a name="line.282"></a>
+<span class="sourceLineNo">283</span>         *          of clusters exceeds number of letters in the alphabet.<a name="line.283"></a>
+<span class="sourceLineNo">284</span>         */<a name="line.284"></a>
+<span class="sourceLineNo">285</span>        public void setStrategy(StringOverflowStrategy strategy) {<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                if(strategy==StringOverflowStrategy.CUSTOM) {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                        throw new IllegalArgumentException("Set this strategy by providing a function of the type Function&lt;List&lt;SubunitCluster&gt;,String&gt;.");<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                }<a name="line.288"></a>
+<span class="sourceLineNo">289</span><a name="line.289"></a>
+<span class="sourceLineNo">290</span>                if(this.strategy != strategy) {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                        this.strategy = strategy;<a name="line.291"></a>
+<span class="sourceLineNo">292</span>                        if(orderedClusters.size()&gt;alphabet.length())<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                                doResetAlphas();<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                }<a name="line.294"></a>
+<span class="sourceLineNo">295</span>        }<a name="line.295"></a>
+<span class="sourceLineNo">296</span><a name="line.296"></a>
+<span class="sourceLineNo">297</span><a name="line.297"></a>
+<span class="sourceLineNo">298</span>        /**<a name="line.298"></a>
+<span class="sourceLineNo">299</span>         * Let a user-defined function handle the entire string representation of a stoichiometry.<a name="line.299"></a>
+<span class="sourceLineNo">300</span>         * @param customStringGenerator<a name="line.300"></a>
+<span class="sourceLineNo">301</span>         *          A function which accepts a list of subunit clusters and returns a string.<a name="line.301"></a>
+<span class="sourceLineNo">302</span>         */<a name="line.302"></a>
+<span class="sourceLineNo">303</span>        public void setCustomStringGenerator(Function&lt;List&lt;SubunitCluster&gt;,String&gt; customStringGenerator) {<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                this.strategy = StringOverflowStrategy.CUSTOM;<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                this.customStringGenerator = customStringGenerator;<a name="line.305"></a>
+<span class="sourceLineNo">306</span>        }<a name="line.306"></a>
+<span class="sourceLineNo">307</span><a name="line.307"></a>
+<span class="sourceLineNo">308</span>        /**<a name="line.308"></a>
+<span class="sourceLineNo">309</span>         * @return Alphabet (a sequence of characters) used in this stoichiometry to construct human-readable representation.<a name="line.309"></a>
+<span class="sourceLineNo">310</span>         */<a name="line.310"></a>
+<span class="sourceLineNo">311</span>        public String getAlphabet() {<a name="line.311"></a>
+<span class="sourceLineNo">312</span>                return alphabet;<a name="line.312"></a>
+<span class="sourceLineNo">313</span>        }<a name="line.313"></a>
+<span class="sourceLineNo">314</span><a name="line.314"></a>
+<span class="sourceLineNo">315</span>        /**<a name="line.315"></a>
+<span class="sourceLineNo">316</span>         * Change alphabet used for string representation of a stoichiometry.<a name="line.316"></a>
+<span class="sourceLineNo">317</span>         * This action invalidates alphas already assigned to the clusters.<a name="line.317"></a>
+<span class="sourceLineNo">318</span>         * @param alphabet<a name="line.318"></a>
+<span class="sourceLineNo">319</span>         *          a sequence of characters used in this stoichiometry to construct human-readable representation.<a name="line.319"></a>
+<span class="sourceLineNo">320</span>         */<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        public void setAlphabet(String alphabet) {<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                this.alphabet = alphabet;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>                doResetAlphas();<a name="line.323"></a>
+<span class="sourceLineNo">324</span>        }<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>        /**<a name="line.326"></a>
+<span class="sourceLineNo">327</span>         * @return Human-readable representation of this stoichiometry.<a name="line.327"></a>
+<span class="sourceLineNo">328</span>         */<a name="line.328"></a>
+<span class="sourceLineNo">329</span>        @Override<a name="line.329"></a>
+<span class="sourceLineNo">330</span>        public String toString() {<a name="line.330"></a>
+<span class="sourceLineNo">331</span><a name="line.331"></a>
+<span class="sourceLineNo">332</span>                if(strategy == StringOverflowStrategy.CUSTOM) {<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                        if(customStringGenerator == null) {<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                                throw new IllegalStateException("The strategy is CUSTOM, yet the string generator function is not defined.");<a name="line.334"></a>
+<span class="sourceLineNo">335</span>                        }<a name="line.335"></a>
+<span class="sourceLineNo">336</span>                        return customStringGenerator.apply(orderedClusters);<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                }<a name="line.337"></a>
+<span class="sourceLineNo">338</span><a name="line.338"></a>
+<span class="sourceLineNo">339</span>                StringBuilder formula = new StringBuilder();<a name="line.339"></a>
+<span class="sourceLineNo">340</span><a name="line.340"></a>
+<span class="sourceLineNo">341</span>                orderedClusters.forEach((SubunitCluster r) -&gt; {<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                        formula.append(r.getAlpha());<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                        if(r.getAlpha().length()&gt;1 || r.size()&gt;1)<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                                formula.append(r.size());<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                });<a name="line.345"></a>
+<span class="sourceLineNo">346</span><a name="line.346"></a>
+<span class="sourceLineNo">347</span>                return formula.toString();<a name="line.347"></a>
+<span class="sourceLineNo">348</span>        }<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
+<span class="sourceLineNo">350</span>        /**<a name="line.350"></a>
+<span class="sourceLineNo">351</span>         * A pseudostoichiometric {@link SubunitCluster} was obtained using the<a name="line.351"></a>
+<span class="sourceLineNo">352</span>         * {@link SubunitClustererMethod#STRUCTURE} similarity,<a name="line.352"></a>
+<span class="sourceLineNo">353</span>         * or {@link SubunitClustererMethod#SEQUENCE} similarity with low scores.<a name="line.353"></a>
+<span class="sourceLineNo">354</span>         *<a name="line.354"></a>
+<span class="sourceLineNo">355</span>         * @return true if any of the clusters is pseudostoichiometric, false<a name="line.355"></a>
+<span class="sourceLineNo">356</span>         *         otherwise<a name="line.356"></a>
+<span class="sourceLineNo">357</span>         */<a name="line.357"></a>
+<span class="sourceLineNo">358</span>        public boolean isPseudoStoichiometric() {<a name="line.358"></a>
+<span class="sourceLineNo">359</span>                for (SubunitCluster c : orderedClusters) {<a name="line.359"></a>
+<span class="sourceLineNo">360</span>                        if(c.isPseudoStoichiometric())<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                                return true;<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                }<a name="line.362"></a>
+<span class="sourceLineNo">363</span>                return false;<a name="line.363"></a>
+<span class="sourceLineNo">364</span>        }<a name="line.364"></a>
+<span class="sourceLineNo">365</span><a name="line.365"></a>
+<span class="sourceLineNo">366</span>}<a name="line.366"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.core.alignment.matrices;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.nbio.core.alignment.template.SubstitutionMatrix;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.core.sequence.compound.AminoAcidCompoundSet;<a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.io.BufferedReader;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.io.IOException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.io.InputStream;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.io.InputStreamReader;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.ArrayList;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.HashMap;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import java.util.List;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import java.util.Map;<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span><a name="line.37"></a>
+<span class="sourceLineNo">038</span>public class AAIndexFileParser {<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        int scale = -1;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>        Map&lt;String,SubstitutionMatrix&lt;AminoAcidCompound&gt;&gt; matrices;<a name="line.41"></a>
+<span class="sourceLineNo">042</span><a name="line.42"></a>
+<span class="sourceLineNo">043</span>        ScaledSubstitutionMatrix currentMatrix;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>        String currentRows;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>        String currentCols;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        int currentRowPos;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        private short[][] matrix;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        short max;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        short min;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        private List&lt;AminoAcidCompound&gt; rows, cols;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        boolean inMatrix;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        boolean symmetricMatrix ;<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>        public AAIndexFileParser(){<a name="line.55"></a>
+<span class="sourceLineNo">056</span>                matrices  = new HashMap&lt;String, SubstitutionMatrix&lt;AminoAcidCompound&gt;&gt;();<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>        /** parse an inputStream that points to an AAINDEX database file<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         *<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * @param inputStream<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         * @throws IOException<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         */<a name="line.63"></a>
+<span class="sourceLineNo">064</span>        public void parse(InputStream inputStream) throws IOException {<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>                currentMatrix = null;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                currentRows = "";<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                currentCols = "";<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                max = Short.MIN_VALUE;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                min = Short.MAX_VALUE;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                inMatrix = false;<a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">073</span>                BufferedReader buf = new BufferedReader (new InputStreamReader (inputStream));<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                String line = null;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                line = buf.readLine();<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>                while (  line != null ) {<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>                        if ( line.startsWith("//")) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                                finalizeMatrix();<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                                inMatrix = false;<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>                        } else if ( line.startsWith("H ")){<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                                // a new matric!<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                                newMatrix(line);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                        } else if ( line.startsWith("D ")) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                                currentMatrix.setDescription(line.substring(2));<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                        } else if ( line.startsWith("M ")) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                                initMatrix(line);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                                inMatrix = true;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                        } else if ( line.startsWith("  ")){<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                                if ( inMatrix)<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                                        processScores(line);<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                        }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>                        line = buf.readLine();<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                }<a name="line.97"></a>
+<span class="sourceLineNo">098</span><a name="line.98"></a>
+<span class="sourceLineNo">099</span>        }<a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>        //  process a line such as &gt;    -0.3     1.6     0.7     0.8    -2.6     3.0&lt;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        private void processScores(String line) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>                String[] values = line.trim().split(" +");<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>                // increment the current row we are talking about<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                currentRowPos++;<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span><a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>                for ( int i =0 ; i &lt; values.length ; i++){<a name="line.112"></a>
+<span class="sourceLineNo">113</span><a name="line.113"></a>
+<span class="sourceLineNo">114</span>                        if ( values[i].endsWith(".")) {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                                values[i] = values[i] + "0";<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                        }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>                        // special case: MEHP950101<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                        if (values[i].equals("-")) {<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                                values[i] = "0";<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                        }<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>                        if ( scale == -1 ) {<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                                scale = determineScale(values[0]);<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                        }<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span><a name="line.127"></a>
+<span class="sourceLineNo">128</span>                        Float score = Float.parseFloat(values[i]);<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                        score = scale * score;<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">131</span>                        Short s = (short) Math.round(score);<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>                        matrix[currentRowPos][i] = s;<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>                        if ( values.length &lt; cols.size() || ( symmetricMatrix)){<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                                //System.out.println(values.length + " " + cols.size() + " " + currentRowPos + " " + i + " " +  line);<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                matrix[i][currentRowPos] = s;<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                symmetricMatrix = true;<a name="line.140"></a>
+<span class="sourceLineNo">141</span><a name="line.141"></a>
+<span class="sourceLineNo">142</span>                        }<a name="line.142"></a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span>                        if ( score &gt; max)<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                                max = s;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                        if ( score &lt; min)<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                                min = s;<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span><a name="line.149"></a>
+<span class="sourceLineNo">150</span>                }<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        }<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>        private int determineScale(String value) {<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>                String[] spl = value.split("\\.");<a name="line.155"></a>
+<span class="sourceLineNo">156</span><a name="line.156"></a>
+<span class="sourceLineNo">157</span>                if (spl.length &lt;= 1)<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                        return 1;<a name="line.158"></a>
+<span class="sourceLineNo">159</span><a name="line.159"></a>
+<span class="sourceLineNo">160</span>                String digits = spl[1];<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                return (int)Math.round(Math.pow(10, digits.length()));<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>        }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>        // process a line of type &gt;M rows = ARNDCQEGHILKMFPSTWYV, cols = ARNDCQEGHILKMFPSTWYV&lt;<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        private void initMatrix(String line) {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                String[] spl = line.split(" ");<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>                // trim off the final , character<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                currentRows = spl[3].substring(0, spl[3].length()-1);<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                currentCols = spl[6];<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                currentRowPos = -1;<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>                int nrRows = currentRows.length();<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                int nrCols = currentCols.length();<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>                matrix = new short[nrRows][nrCols];<a name="line.178"></a>
+<span class="sourceLineNo">179</span><a name="line.179"></a>
+<span class="sourceLineNo">180</span>                rows = new ArrayList&lt;AminoAcidCompound&gt;();<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                cols = new ArrayList&lt;AminoAcidCompound&gt;();<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span><a name="line.183"></a>
+<span class="sourceLineNo">184</span>                //System.out.println("&gt;" + currentRows+"&lt;");<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                AminoAcidCompoundSet compoundSet = AminoAcidCompoundSet.getAminoAcidCompoundSet();<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                for ( int i = 0 ; i &lt; currentRows.length() ; i ++){<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                        char c = currentRows.charAt(i);<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                        AminoAcidCompound aa = compoundSet.getCompoundForString(String.valueOf(c));<a name="line.188"></a>
+<span class="sourceLineNo">189</span><a name="line.189"></a>
+<span class="sourceLineNo">190</span>                        rows.add(aa);<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                }<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>                for ( int i = 0 ; i &lt; currentCols.length() ; i ++){<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                        char c = currentRows.charAt(i);<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                        AminoAcidCompound aa = compoundSet.getCompoundForString(String.valueOf(c));<a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span>                        cols.add(aa);<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                }<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span><a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>                currentMatrix.setScale(scale);<a name="line.204"></a>
+<span class="sourceLineNo">205</span>        }<a name="line.205"></a>
+<span class="sourceLineNo">206</span><a name="line.206"></a>
+<span class="sourceLineNo">207</span><a name="line.207"></a>
+<span class="sourceLineNo">208</span>        private void newMatrix(String line) {<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                symmetricMatrix = false;<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                scale = -1;<a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>                currentMatrix = new ScaledSubstitutionMatrix();<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                currentMatrix.setName(line.substring(2));<a name="line.213"></a>
+<span class="sourceLineNo">214</span><a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>                //System.out.println("new Matrix " + currentMatrix.getName());<a name="line.216"></a>
+<span class="sourceLineNo">217</span>        }<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>        //<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        private SubstitutionMatrix&lt;AminoAcidCompound&gt; finalizeMatrix() {<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>                currentMatrix.setMatrix(matrix);<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                currentMatrix.setMax(max);<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                currentMatrix.setMin(min);<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                currentMatrix.setCols(cols);<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                currentMatrix.setRows(rows);<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                currentMatrix.setScale(scale);<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                matrices.put(currentMatrix.getName(), currentMatrix);<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>                return currentMatrix;<a name="line.230"></a>
+<span class="sourceLineNo">231</span><a name="line.231"></a>
+<span class="sourceLineNo">232</span>        }<a name="line.232"></a>
+<span class="sourceLineNo">233</span><a name="line.233"></a>
+<span class="sourceLineNo">234</span>        public Map&lt;String, SubstitutionMatrix&lt;AminoAcidCompound&gt;&gt; getMatrices() {<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                return matrices;<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        }<a name="line.236"></a>
+<span class="sourceLineNo">237</span>}<a name="line.237"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

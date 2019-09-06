@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.structure.geometry;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import javax.vecmath.AxisAngle4d;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import javax.vecmath.Point3d;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import javax.vecmath.Quat4d;<a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.nbio.structure.jama.EigenvalueDecomposition;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.nbio.structure.jama.Matrix;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * UnitQuaternions is a static Class that contains methods for calculating and<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * using unit quaternions. It assumes the use of {@link Quat4d} Class from<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * vecmath to represent the unit quaternions, and it also implements some of the<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * basic methods that the library is missing.<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;p&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * A Unit Quaternion is a four-dimensional vector used to describe a<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * three-dimensional attitude representation (axis and angle of rotation). By<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * definition, unit quaternions are always normalized, so their length is always<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * 1.<a name="line.39"></a>
+<span class="sourceLineNo">040</span> *<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @author Aleix Lafita<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @since 5.0.0<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> */<a name="line.44"></a>
+<span class="sourceLineNo">045</span>public class UnitQuaternions {<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>        /** Prevent instantiation */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        private UnitQuaternions() {<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        }<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>        /**<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         * The orientation metric is obtained by comparing the quaternion<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * orientations of the principal axes of each set of points in 3D.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * &lt;p&gt;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * First, the quaternion orientation of each set of points is calculated<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         * using their principal axes with {@link #orientation(Point3d[])}. Then,<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         * the two quaternions are compared using the method<a name="line.57"></a>
+<span class="sourceLineNo">058</span>         * {@link #orientationMetric(Quat4d, Quat4d)}.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         * &lt;p&gt;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         * A requisite for this method to work properly is that both sets of points<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * have to define the same shape (or very low RMSD), otherwise some of the<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         * principal axes might change or be inverted, resulting in an unreliable<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         * metric. For shapes with some deviations in their shape, use the metric<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * {@link #orientationAngle(Point3d[], Point3d[])}.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         *<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         * @param a<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         *            array of Point3d<a name="line.67"></a>
+<span class="sourceLineNo">068</span>         * @param b<a name="line.68"></a>
+<span class="sourceLineNo">069</span>         *            array of Point3d<a name="line.69"></a>
+<span class="sourceLineNo">070</span>         * @return the quaternion orientation metric<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         */<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        public static double orientationMetric(Point3d[] a, Point3d[] b) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>                Quat4d qa = orientation(a);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                Quat4d qb = orientation(b);<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>                return orientationMetric(qa, qb);<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        }<a name="line.78"></a>
+<span class="sourceLineNo">079</span><a name="line.79"></a>
+<span class="sourceLineNo">080</span>        /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         * The orientation metric is obtained by comparing two unit quaternion<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * orientations.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         * &lt;p&gt;<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         * The two quaternions are compared using the formula: d(q1,q2) =<a name="line.84"></a>
+<span class="sourceLineNo">085</span>         * arccos(|q1*q2|). The range of the metric is [0, Pi/2], where 0 means the<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         * same orientation and Pi/2 means the opposite orientation.<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         * &lt;p&gt;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * The formula is taken from: Huynh, D. Q. (2009). Metrics for 3D rotations:<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         * comparison and analysis. Journal of Mathematical Imaging and Vision,<a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * 35(2), 155–164. http://doi.org/10.1007/s10851-009-0161-2<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         *<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * @param q1<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         *            quaternion as Quat4d object<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         * @param q2<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         *            quaternion as Quat4d object<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         * @return the quaternion orientation metric<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         */<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        public static double orientationMetric(Quat4d q1, Quat4d q2) {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                return Math.acos(Math.abs(dotProduct(q1, q2)));<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        }<a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>        /**<a name="line.102"></a>
+<span class="sourceLineNo">103</span>         * The orientation represents the rotation of the principal axes with<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * respect to the axes of the coordinate system (unit vectors [1,0,0],<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         * [0,1,0] and [0,0,1]).<a name="line.105"></a>
+<span class="sourceLineNo">106</span>         * &lt;p&gt;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>         * The orientation can be expressed as a unit quaternion.<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         *<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         * @param points<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         *            array of Point3d<a name="line.110"></a>
+<span class="sourceLineNo">111</span>         * @return the orientation of the point cloud as a unit quaternion<a name="line.111"></a>
+<span class="sourceLineNo">112</span>         */<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        public static Quat4d orientation(Point3d[] points) {<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>                MomentsOfInertia moi = new MomentsOfInertia();<a name="line.115"></a>
+<span class="sourceLineNo">116</span><a name="line.116"></a>
+<span class="sourceLineNo">117</span>                for (Point3d p : points)<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                        moi.addPoint(p, 1.0);<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>                // Convert rotation matrix to quaternion<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                Quat4d quat = new Quat4d();<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                quat.set(moi.getOrientationMatrix());<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>                return quat;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        }<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span>        /**<a name="line.127"></a>
+<span class="sourceLineNo">128</span>         * Calculate the rotation angle component of the input unit quaternion.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>         *<a name="line.129"></a>
+<span class="sourceLineNo">130</span>         * @param q<a name="line.130"></a>
+<span class="sourceLineNo">131</span>         *            unit quaternion Quat4d<a name="line.131"></a>
+<span class="sourceLineNo">132</span>         * @return the angle in radians of the input quaternion<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         */<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        public static double angle(Quat4d q) {<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                AxisAngle4d axis = new AxisAngle4d();<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                axis.set(q);<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                return axis.angle;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>        /**<a name="line.140"></a>
+<span class="sourceLineNo">141</span>         * The angle of the relative orientation of the two sets of points in 3D.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         * Equivalent to {@link #angle(Quat4d)} of the unit quaternion obtained by<a name="line.142"></a>
+<span class="sourceLineNo">143</span>         * {@link #relativeOrientation(Point3d[], Point3d[])}.<a name="line.143"></a>
+<span class="sourceLineNo">144</span>         * &lt;p&gt;<a name="line.144"></a>
+<span class="sourceLineNo">145</span>         * The arrays of points need to be centered at the origin. To center the<a name="line.145"></a>
+<span class="sourceLineNo">146</span>         * points use {@link CalcPoint#center(Point3d[])}.<a name="line.146"></a>
+<span class="sourceLineNo">147</span>         *<a name="line.147"></a>
+<span class="sourceLineNo">148</span>         * @param fixed<a name="line.148"></a>
+<span class="sourceLineNo">149</span>         *            array of Point3d, centered at origin. Original coordinates<a name="line.149"></a>
+<span class="sourceLineNo">150</span>         *            will not be modified.<a name="line.150"></a>
+<span class="sourceLineNo">151</span>         * @param moved<a name="line.151"></a>
+<span class="sourceLineNo">152</span>         *            array of Point3d, centered at origin. Original coordinates<a name="line.152"></a>
+<span class="sourceLineNo">153</span>         *            will not be modified.<a name="line.153"></a>
+<span class="sourceLineNo">154</span>         * @return the angle in radians of the relative orientation of the points,<a name="line.154"></a>
+<span class="sourceLineNo">155</span>         *         angle to rotate moved to bring it to the same orientation as<a name="line.155"></a>
+<span class="sourceLineNo">156</span>         *         fixed.<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         */<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        public static double orientationAngle(Point3d[] fixed, Point3d[] moved) {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                Quat4d q = relativeOrientation(fixed, moved);<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                return angle(q);<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        }<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>        /**<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         * The angle of the relative orientation of the two sets of points in 3D.<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         * Equivalent to {@link #angle(Quat4d)} of the unit quaternion obtained by<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         * {@link #relativeOrientation(Point3d[], Point3d[])}.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         *<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         * @param fixed<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         *            array of Point3d. Original coordinates will not be modified.<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         * @param moved<a name="line.170"></a>
+<span class="sourceLineNo">171</span>         *            array of Point3d. Original coordinates will not be modified.<a name="line.171"></a>
+<span class="sourceLineNo">172</span>         * @param centered<a name="line.172"></a>
+<span class="sourceLineNo">173</span>         *            true if the points are already centered at the origin<a name="line.173"></a>
+<span class="sourceLineNo">174</span>         * @return the angle in radians of the relative orientation of the points,<a name="line.174"></a>
+<span class="sourceLineNo">175</span>         *         angle to rotate moved to bring it to the same orientation as<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         *         fixed.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         */<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        public static double orientationAngle(Point3d[] fixed, Point3d[] moved,<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                        boolean centered) {<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                if (!centered) {<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                        fixed = CalcPoint.clonePoint3dArray(fixed);<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        moved = CalcPoint.clonePoint3dArray(moved);<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                        CalcPoint.center(fixed);<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                        CalcPoint.center(moved);<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                }<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                return orientationAngle(fixed, moved);<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        }<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>        /**<a name="line.189"></a>
+<span class="sourceLineNo">190</span>         * Calculate the relative quaternion orientation of two arrays of points.<a name="line.190"></a>
+<span class="sourceLineNo">191</span>         *<a name="line.191"></a>
+<span class="sourceLineNo">192</span>         * @param fixed<a name="line.192"></a>
+<span class="sourceLineNo">193</span>         *            point array, coordinates will not be modified<a name="line.193"></a>
+<span class="sourceLineNo">194</span>         * @param moved<a name="line.194"></a>
+<span class="sourceLineNo">195</span>         *            point array, coordinates will not be modified<a name="line.195"></a>
+<span class="sourceLineNo">196</span>         * @return a unit quaternion representing the relative orientation, to<a name="line.196"></a>
+<span class="sourceLineNo">197</span>         *         rotate moved to bring it to the same orientation as fixed.<a name="line.197"></a>
+<span class="sourceLineNo">198</span>         */<a name="line.198"></a>
+<span class="sourceLineNo">199</span>        public static Quat4d relativeOrientation(Point3d[] fixed, Point3d[] moved) {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                Matrix m = CalcPoint.formMatrix(moved, fixed); // inverse<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                EigenvalueDecomposition eig = m.eig();<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                double[][] v = eig.getV().getArray();<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                Quat4d q = new Quat4d(v[1][3], v[2][3], v[3][3], v[0][3]);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                q.normalize();<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                q.conjugate();<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                return q;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>        }<a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>        /**<a name="line.209"></a>
+<span class="sourceLineNo">210</span>         * Compute the dot (inner) product of two quaternions.<a name="line.210"></a>
+<span class="sourceLineNo">211</span>         *<a name="line.211"></a>
+<span class="sourceLineNo">212</span>         * @param q1<a name="line.212"></a>
+<span class="sourceLineNo">213</span>         *            quaternion as Quat4d object<a name="line.213"></a>
+<span class="sourceLineNo">214</span>         * @param q2<a name="line.214"></a>
+<span class="sourceLineNo">215</span>         *            quaternion as Quat4d object<a name="line.215"></a>
+<span class="sourceLineNo">216</span>         * @return the value of the quaternion dot product<a name="line.216"></a>
+<span class="sourceLineNo">217</span>         */<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        public static double dotProduct(Quat4d q1, Quat4d q2) {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                return q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>}<a name="line.222"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

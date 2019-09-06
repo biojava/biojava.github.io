@@ -1,0 +1,547 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.structure.contact;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.Serializable;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.ArrayList;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.Collections;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Iterator;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.List;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.Map;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.Optional;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.util.Set;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.TreeMap;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.nbio.core.util.SingleLinkageClusterer;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.nbio.structure.Atom;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.nbio.structure.Structure;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.nbio.structure.asa.AsaCalculator;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.nbio.structure.xtal.CrystalBuilder;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.slf4j.Logger;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.slf4j.LoggerFactory;<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>/**<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * A list of interfaces between 2 molecules (2 sets of atoms)<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author Jose Duarte<a name="line.45"></a>
+<span class="sourceLineNo">046</span> *<a name="line.46"></a>
+<span class="sourceLineNo">047</span> */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>public class StructureInterfaceList implements Serializable, Iterable&lt;StructureInterface&gt; {<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>        private static final Logger logger = LoggerFactory.getLogger(StructureInterfaceList.class);<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>        /**<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * Default minimum area for a contact between two chains to be considered a<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * valid interface.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * @see #removeInterfacesBelowArea(double);<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        public static final double DEFAULT_MINIMUM_INTERFACE_AREA = 35.0;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        /**<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         * Default number of points to use when calculating ASAs<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         * @see #calcAsas(int, int, int)<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         */<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        public static final int DEFAULT_ASA_SPHERE_POINTS = 3000;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * Default minimum size of cofactor molecule (non-chain HET atoms) that will be used<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * @see #calcAsas(int, int, int)<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        public static final int DEFAULT_MIN_COFACTOR_SIZE = 40;<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>        /**<a name="line.69"></a>
+<span class="sourceLineNo">070</span>         * Any 2 interfaces with contact overlap score larger than this value<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * will be considered to be clustered<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         */<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        public static final double DEFAULT_CONTACT_OVERLAP_SCORE_CLUSTER_CUTOFF = 0.2;<a name="line.73"></a>
+<span class="sourceLineNo">074</span><a name="line.74"></a>
+<span class="sourceLineNo">075</span>        private static final long serialVersionUID = 1L;<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>        private List&lt;StructureInterface&gt; list;<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>        private List&lt;StructureInterfaceCluster&gt; clusters = null;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        private List&lt;StructureInterfaceCluster&gt; clustersNcs = null;<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>        private Map&lt;String, String&gt; chainOrigNamesMap;<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>        public StructureInterfaceList() {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                this.list = new ArrayList&lt;&gt;();<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        }<a name="line.86"></a>
+<span class="sourceLineNo">087</span><a name="line.87"></a>
+<span class="sourceLineNo">088</span>        public void add(StructureInterface interf) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                this.list.add(interf);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        }<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>        public int size() {<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                return this.list.size();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>        /**<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * Gets the interface corresponding to given id.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         * The ids go from 1 to n<a name="line.98"></a>
+<span class="sourceLineNo">099</span>         * If {@link #sort()} was called then the order is descendent by area.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>         * @param id<a name="line.100"></a>
+<span class="sourceLineNo">101</span>         * @return<a name="line.101"></a>
+<span class="sourceLineNo">102</span>         */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        public StructureInterface get(int id) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                return list.get(id-1);<a name="line.104"></a>
+<span class="sourceLineNo">105</span>        }<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>        /**<a name="line.107"></a>
+<span class="sourceLineNo">108</span>         * Calculates ASAs for all interfaces in list, both for the unbound<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         * chains and for the complex of the two chains together.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         * Also sorts the interfaces based on calculated BSA areas (descending).<a name="line.110"></a>
+<span class="sourceLineNo">111</span>         *<a name="line.111"></a>
+<span class="sourceLineNo">112</span>         * &lt;p&gt;Uses default parameters<a name="line.112"></a>
+<span class="sourceLineNo">113</span>         */<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        public void calcAsas() {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                calcAsas( DEFAULT_ASA_SPHERE_POINTS,<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                                Runtime.getRuntime().availableProcessors(),<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                                DEFAULT_MIN_COFACTOR_SIZE );<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        }<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        /**<a name="line.119"></a>
+<span class="sourceLineNo">120</span>         * Calculates ASAs for all interfaces in list, both for the unbound<a name="line.120"></a>
+<span class="sourceLineNo">121</span>         * chains and for the complex of the two chains together.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         * Also sorts the interfaces based on calculated BSA areas (descending)<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         * @param nSpherePoints<a name="line.123"></a>
+<span class="sourceLineNo">124</span>         * @param nThreads<a name="line.124"></a>
+<span class="sourceLineNo">125</span>         * @param cofactorSizeToUse the minimum size of cofactor molecule (non-chain HET atoms) that will be used<a name="line.125"></a>
+<span class="sourceLineNo">126</span>         */<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        public void calcAsas(int nSpherePoints, int nThreads, int cofactorSizeToUse) {<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>                // asa/bsa calculation<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                // NOTE in principle it is more efficient to calculate asas only once per unique chain<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                // BUT! the rolling ball algorithm gives slightly different values for same molecule in different<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                // rotations (due to sampling depending on orientation of axes grid).<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                // Both NACCESS and our own implementation behave like that.<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                // That's why we calculate ASAs for each rotation-unique molecule, otherwise<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                // we get discrepancies (not very big but annoying) which lead to things like negative (small) bsa values<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>                Map&lt;String, Atom[]&gt; uniqAsaChains = new TreeMap&lt;&gt;();<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                Map&lt;String, double[]&gt; chainAsas = new TreeMap&lt;&gt;();<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>                List&lt;StructureInterface&gt; redundancyReducedList;<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                if (clustersNcs != null) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                        redundancyReducedList = new ArrayList&lt;&gt;();<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                        for (StructureInterfaceCluster ncsCluster : clustersNcs) {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                                // we use the first one in list as the only one for which we calculate ASAs<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                redundancyReducedList.add(ncsCluster.getMembers().get(0));<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                        }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>                } else {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                        redundancyReducedList = list;<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                }<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>                // first we gather rotation-unique chains (in terms of AU id and transform id)<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                for (StructureInterface interf:redundancyReducedList) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                        String molecId1 = interf.getMoleculeIds().getFirst()+interf.getTransforms().getFirst().getTransformId();<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                        String molecId2 = interf.getMoleculeIds().getSecond()+interf.getTransforms().getSecond().getTransformId();<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>                        uniqAsaChains.put(molecId1, interf.getFirstAtomsForAsa(cofactorSizeToUse));<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                        uniqAsaChains.put(molecId2, interf.getSecondAtomsForAsa(cofactorSizeToUse));<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                }<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                logger.debug("Will calculate uncomplexed ASA for {} orientation-unique chains.", uniqAsaChains.size());<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>                long start = System.currentTimeMillis();<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>                // we only need to calculate ASA for that subset (any translation of those will have same values)<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                for (String molecId:uniqAsaChains.keySet()) {<a name="line.167"></a>
+<span class="sourceLineNo">168</span><a name="line.168"></a>
+<span class="sourceLineNo">169</span>                        logger.debug("Calculating uncomplexed ASA for molecId {}, with {} atoms", molecId, uniqAsaChains.get(molecId).length);<a name="line.169"></a>
+<span class="sourceLineNo">170</span><a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        AsaCalculator asaCalc = new AsaCalculator(uniqAsaChains.get(molecId),<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                                        AsaCalculator.DEFAULT_PROBE_SIZE, nSpherePoints, nThreads);<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>                        double[] atomAsas = asaCalc.calculateAsas();<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>                        chainAsas.put(molecId, atomAsas);<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>                }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                long end = System.currentTimeMillis();<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>                logger.debug("Calculated uncomplexed ASA for {} orientation-unique chains. Time: {} s", uniqAsaChains.size(), ((end-start)/1000.0));<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>                logger.debug ("Will calculate complexed ASA for {} pairwise complexes.", redundancyReducedList.size());<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>                start = System.currentTimeMillis();<a name="line.185"></a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span>                // now we calculate the ASAs for each of the complexes<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                for (StructureInterface interf:redundancyReducedList) {<a name="line.188"></a>
+<span class="sourceLineNo">189</span><a name="line.189"></a>
+<span class="sourceLineNo">190</span>                        String molecId1 = interf.getMoleculeIds().getFirst()+interf.getTransforms().getFirst().getTransformId();<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                        String molecId2 = interf.getMoleculeIds().getSecond()+interf.getTransforms().getSecond().getTransformId();<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>                        logger.debug("Calculating complexed ASAs for interface {} between molecules {} and {}", interf.getId(), molecId1, molecId2);<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span>                        interf.setAsas(chainAsas.get(molecId1), chainAsas.get(molecId2), nSpherePoints, nThreads, cofactorSizeToUse);<a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span>                }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                end = System.currentTimeMillis();<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>                logger.debug("Calculated complexes ASA for {} pairwise complexes. Time: {} s", redundancyReducedList.size(), ((end-start)/1000.0));<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span>                // now let's populate the interface area value for the NCS-redundant ones from the reference interface (first one in list)<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                if (clustersNcs!=null) {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                        if (chainOrigNamesMap==null)  {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                logger.warn("No chainOrigNamesMap is set. Considering NCS interfaces in same order as reference. This is likely a bug.");<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                        }<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                        for (StructureInterfaceCluster ncsCluster : clustersNcs) {<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                                StructureInterface refInterf = ncsCluster.getMembers().get(0);<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                String refMolecId1 = refInterf.getMoleculeIds().getFirst();<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                for (int i=1;i&lt;ncsCluster.getMembers().size();i++) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                                        StructureInterface member = ncsCluster.getMembers().get(i);<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                        member.setTotalArea(refInterf.getTotalArea());<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                                        String molecId1 = member.getMoleculeIds().getFirst();<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                                        if (areMolecIdsSameOrder(refMolecId1, molecId1)) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                                                // we add the reference interface GroupAsas as the GroupAsas for all other members, like that<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                                                // ResidueNumbers won't match in their chain ids, but otherwise all info is there without using a lot of memory<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                                                member.setFirstGroupAsas(refInterf.getFirstGroupAsas());<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                                                member.setSecondGroupAsas(refInterf.getSecondGroupAsas());<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                                        } else {<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                                                member.setFirstGroupAsas(refInterf.getSecondGroupAsas());<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                                                member.setSecondGroupAsas(refInterf.getFirstGroupAsas());<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                        }<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                                }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                        }<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                }<a name="line.225"></a>
+<span class="sourceLineNo">226</span><a name="line.226"></a>
+<span class="sourceLineNo">227</span>                // finally we sort based on the ChainInterface.comparable() (based in interfaceArea)<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                sort();<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        }<a name="line.229"></a>
+<span class="sourceLineNo">230</span><a name="line.230"></a>
+<span class="sourceLineNo">231</span>        private boolean areMolecIdsSameOrder(String refMolecId, String molecId) {<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>                if (chainOrigNamesMap==null) {<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                        // we've already warned above<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                        return true;<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                }<a name="line.236"></a>
+<span class="sourceLineNo">237</span><a name="line.237"></a>
+<span class="sourceLineNo">238</span>                String refMolecIdOrig = chainOrigNamesMap.get(refMolecId);<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                String molecIdOrig = chainOrigNamesMap.get(molecId);<a name="line.239"></a>
+<span class="sourceLineNo">240</span><a name="line.240"></a>
+<span class="sourceLineNo">241</span>                return (refMolecIdOrig.equals(molecIdOrig));<a name="line.241"></a>
+<span class="sourceLineNo">242</span>        }<a name="line.242"></a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span>        /**<a name="line.244"></a>
+<span class="sourceLineNo">245</span>         * Sorts the interface list and reassigns ids based on new sorting<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         *<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         */<a name="line.247"></a>
+<span class="sourceLineNo">248</span>        public void sort() {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                Collections.sort(list);<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                int i=1;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                for (StructureInterface interf:list) {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                        interf.setId(i);<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                        i++;<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                }<a name="line.254"></a>
+<span class="sourceLineNo">255</span>        }<a name="line.255"></a>
+<span class="sourceLineNo">256</span><a name="line.256"></a>
+<span class="sourceLineNo">257</span>        /**<a name="line.257"></a>
+<span class="sourceLineNo">258</span>         * Get the interface clusters for this StructureInterfaceList grouped by NCS-equivalence.<a name="line.258"></a>
+<span class="sourceLineNo">259</span>         * This means that for any two interfaces in the same cluster:<a name="line.259"></a>
+<span class="sourceLineNo">260</span>         * 1. The chains forming the first interface are NCS-copies of the chains forming the second interface, in any order.<a name="line.260"></a>
+<span class="sourceLineNo">261</span>         * 2. Relative orientation of the chains is preserved, i.e. the contacts are identical.<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         * @return list of {@link StructureInterfaceCluster} objects.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>         * @since 5.0.0<a name="line.263"></a>
+<span class="sourceLineNo">264</span>         */<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        public List&lt;StructureInterfaceCluster&gt; getClustersNcs() {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                return clustersNcs;<a name="line.266"></a>
+<span class="sourceLineNo">267</span>        }<a name="line.267"></a>
+<span class="sourceLineNo">268</span><a name="line.268"></a>
+<span class="sourceLineNo">269</span>        /**<a name="line.269"></a>
+<span class="sourceLineNo">270</span>         * Add an interface to the list, possibly defining it as NCS-equivalent to an interface already in the list.<a name="line.270"></a>
+<span class="sourceLineNo">271</span>         * Used to build up the NCS clustering.<a name="line.271"></a>
+<span class="sourceLineNo">272</span>         * @param interfaceNew<a name="line.272"></a>
+<span class="sourceLineNo">273</span>         *          an interface to be added to the list.<a name="line.273"></a>
+<span class="sourceLineNo">274</span>         * @param interfaceRef<a name="line.274"></a>
+<span class="sourceLineNo">275</span>         *          interfaceNew will be added to the cluster which contains interfaceRef.<a name="line.275"></a>
+<span class="sourceLineNo">276</span>         *          If interfaceRef is null, new cluster will be created for interfaceNew.<a name="line.276"></a>
+<span class="sourceLineNo">277</span>         * @since 5.0.0<a name="line.277"></a>
+<span class="sourceLineNo">278</span>         */<a name="line.278"></a>
+<span class="sourceLineNo">279</span>        public void addNcsEquivalent(StructureInterface interfaceNew, StructureInterface interfaceRef) {<a name="line.279"></a>
+<span class="sourceLineNo">280</span><a name="line.280"></a>
+<span class="sourceLineNo">281</span>                this.add(interfaceNew);<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                if (clustersNcs == null) {<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                        clustersNcs = new ArrayList&lt;&gt;();<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                }<a name="line.284"></a>
+<span class="sourceLineNo">285</span><a name="line.285"></a>
+<span class="sourceLineNo">286</span>                if (interfaceRef == null) {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                        StructureInterfaceCluster newCluster = new StructureInterfaceCluster();<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                        newCluster.addMember(interfaceNew);<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                        clustersNcs.add(newCluster);<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                        return;<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                }<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>                Optional&lt;StructureInterfaceCluster&gt; clusterRef =<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                                clustersNcs.stream().<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                        filter(r-&gt;r.getMembers().stream().<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                                                anyMatch(c -&gt; c.equals(interfaceRef))).<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                                findFirst();<a name="line.297"></a>
+<span class="sourceLineNo">298</span><a name="line.298"></a>
+<span class="sourceLineNo">299</span>                if (clusterRef.isPresent()) {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                        clusterRef.get().addMember(interfaceNew);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                        return;<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                }<a name="line.302"></a>
+<span class="sourceLineNo">303</span><a name="line.303"></a>
+<span class="sourceLineNo">304</span>                logger.warn("The specified reference interface, if not null, should have been added to this set previously. " +<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                                "Creating new cluster and adding both interfaces. This is likely a bug.");<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                this.add(interfaceRef);<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                StructureInterfaceCluster newCluster = new StructureInterfaceCluster();<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                newCluster.addMember(interfaceRef);<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                newCluster.addMember(interfaceNew);<a name="line.309"></a>
+<span class="sourceLineNo">310</span>                clustersNcs.add(newCluster);<a name="line.310"></a>
+<span class="sourceLineNo">311</span>        }<a name="line.311"></a>
+<span class="sourceLineNo">312</span><a name="line.312"></a>
+<span class="sourceLineNo">313</span>        /**<a name="line.313"></a>
+<span class="sourceLineNo">314</span>         * Sets a map with mapping from NCS chain names to original chain names.<a name="line.314"></a>
+<span class="sourceLineNo">315</span>         * Necessary when {@link #addNcsEquivalent(StructureInterface, StructureInterface)} is used and NCS equivalent<a name="line.315"></a>
+<span class="sourceLineNo">316</span>         * interfaces exist in this list and their names need mapping when setting ASAs.<a name="line.316"></a>
+<span class="sourceLineNo">317</span>         * @param chainOrigNamesMap a map of NCS chain name to original chain name<a name="line.317"></a>
+<span class="sourceLineNo">318</span>         */<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        public void setChainOrigNamesMap(Map&lt;String, String&gt; chainOrigNamesMap) {<a name="line.319"></a>
+<span class="sourceLineNo">320</span>                this.chainOrigNamesMap = chainOrigNamesMap;<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        }<a name="line.321"></a>
+<span class="sourceLineNo">322</span><a name="line.322"></a>
+<span class="sourceLineNo">323</span>        /**<a name="line.323"></a>
+<span class="sourceLineNo">324</span>         * Removes from this interface list all interfaces with areas<a name="line.324"></a>
+<span class="sourceLineNo">325</span>         * below the default cutoff area.<a name="line.325"></a>
+<span class="sourceLineNo">326</span>     * Note that this must be called after {@link #calcAsas(int, int, int)}, otherwise all areas would<a name="line.326"></a>
+<span class="sourceLineNo">327</span>     * be 0 and thus all removed.<a name="line.327"></a>
+<span class="sourceLineNo">328</span>         * @see #DEFAULT_MINIMUM_INTERFACE_AREA<a name="line.328"></a>
+<span class="sourceLineNo">329</span>         */<a name="line.329"></a>
+<span class="sourceLineNo">330</span>        public void removeInterfacesBelowArea() {<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                removeInterfacesBelowArea(DEFAULT_MINIMUM_INTERFACE_AREA);<a name="line.331"></a>
+<span class="sourceLineNo">332</span>        }<a name="line.332"></a>
+<span class="sourceLineNo">333</span><a name="line.333"></a>
+<span class="sourceLineNo">334</span>        /**<a name="line.334"></a>
+<span class="sourceLineNo">335</span>         * Removes from this interface list all interfaces with areas<a name="line.335"></a>
+<span class="sourceLineNo">336</span>         * below the given cutoff area.<a name="line.336"></a>
+<span class="sourceLineNo">337</span>     * Note that this must be called after {@link #calcAsas(int, int, int)}, otherwise all areas would<a name="line.337"></a>
+<span class="sourceLineNo">338</span>     * be 0 and thus all removed.<a name="line.338"></a>
+<span class="sourceLineNo">339</span>         * @param area the minimum interface buried surface area to keep. Interfaces below this value will be removed.<a name="line.339"></a>
+<span class="sourceLineNo">340</span>         */<a name="line.340"></a>
+<span class="sourceLineNo">341</span>        public void removeInterfacesBelowArea(double area) {<a name="line.341"></a>
+<span class="sourceLineNo">342</span><a name="line.342"></a>
+<span class="sourceLineNo">343</span>                list.removeIf(interf -&gt; interf.getTotalArea() &lt; area);<a name="line.343"></a>
+<span class="sourceLineNo">344</span><a name="line.344"></a>
+<span class="sourceLineNo">345</span>            if (clustersNcs != null) {<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                clustersNcs.removeIf(ncsCluster -&gt; ncsCluster.getMembers().get(0).getTotalArea() &lt; area);<a name="line.346"></a>
+<span class="sourceLineNo">347</span>        }<a name="line.347"></a>
+<span class="sourceLineNo">348</span>        }<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
+<span class="sourceLineNo">350</span>        /**<a name="line.350"></a>
+<span class="sourceLineNo">351</span>         * Calculate the interface clusters for this StructureInterfaceList<a name="line.351"></a>
+<span class="sourceLineNo">352</span>         * using a contact overlap score to measure the similarity of interfaces.<a name="line.352"></a>
+<span class="sourceLineNo">353</span>         * Subsequent calls will use the cached value without recomputing the clusters.<a name="line.353"></a>
+<span class="sourceLineNo">354</span>         * The contact overlap score cutoff to consider a pair in the same cluster is<a name="line.354"></a>
+<span class="sourceLineNo">355</span>         * the value {@link #DEFAULT_CONTACT_OVERLAP_SCORE_CLUSTER_CUTOFF}<a name="line.355"></a>
+<span class="sourceLineNo">356</span>         * @return<a name="line.356"></a>
+<span class="sourceLineNo">357</span>         */<a name="line.357"></a>
+<span class="sourceLineNo">358</span>        public List&lt;StructureInterfaceCluster&gt; getClusters() {<a name="line.358"></a>
+<span class="sourceLineNo">359</span>                return getClusters(DEFAULT_CONTACT_OVERLAP_SCORE_CLUSTER_CUTOFF);<a name="line.359"></a>
+<span class="sourceLineNo">360</span>        }<a name="line.360"></a>
+<span class="sourceLineNo">361</span><a name="line.361"></a>
+<span class="sourceLineNo">362</span>        /**<a name="line.362"></a>
+<span class="sourceLineNo">363</span>         * Calculate the interface clusters for this StructureInterfaceList<a name="line.363"></a>
+<span class="sourceLineNo">364</span>         * using a contact overlap score to measure the similarity of interfaces.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>         * Subsequent calls will use the cached value without recomputing the clusters.<a name="line.365"></a>
+<span class="sourceLineNo">366</span>         * The clusters will be assigned ids by sorting descending by {@link StructureInterfaceCluster#getTotalArea()}<a name="line.366"></a>
+<span class="sourceLineNo">367</span>         * @param contactOverlapScoreClusterCutoff the contact overlap score above which a pair will be<a name="line.367"></a>
+<span class="sourceLineNo">368</span>         * clustered<a name="line.368"></a>
+<span class="sourceLineNo">369</span>         * @return<a name="line.369"></a>
+<span class="sourceLineNo">370</span>         */<a name="line.370"></a>
+<span class="sourceLineNo">371</span>        public List&lt;StructureInterfaceCluster&gt; getClusters(double contactOverlapScoreClusterCutoff) {<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                if (clusters!=null) {<a name="line.372"></a>
+<span class="sourceLineNo">373</span>                        return clusters;<a name="line.373"></a>
+<span class="sourceLineNo">374</span>                }<a name="line.374"></a>
+<span class="sourceLineNo">375</span><a name="line.375"></a>
+<span class="sourceLineNo">376</span>                clusters = new ArrayList&lt;&gt;();<a name="line.376"></a>
+<span class="sourceLineNo">377</span><a name="line.377"></a>
+<span class="sourceLineNo">378</span>                // nothing to do if we have no interfaces<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                if (list.size()==0) return clusters;<a name="line.379"></a>
+<span class="sourceLineNo">380</span><a name="line.380"></a>
+<span class="sourceLineNo">381</span>                double[][] matrix = new double[list.size()][list.size()];<a name="line.381"></a>
+<span class="sourceLineNo">382</span><a name="line.382"></a>
+<span class="sourceLineNo">383</span>                for (int i=0;i&lt;list.size();i++) {<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                        for (int j=i+1;j&lt;list.size();j++) {<a name="line.384"></a>
+<span class="sourceLineNo">385</span>                                StructureInterface iInterf = list.get(i);<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                                StructureInterface jInterf = list.get(j);<a name="line.386"></a>
+<span class="sourceLineNo">387</span><a name="line.387"></a>
+<span class="sourceLineNo">388</span>                                double scoreDirect = iInterf.getContactOverlapScore(jInterf, false);<a name="line.388"></a>
+<span class="sourceLineNo">389</span>                                double scoreInvert = iInterf.getContactOverlapScore(jInterf, true);<a name="line.389"></a>
+<span class="sourceLineNo">390</span><a name="line.390"></a>
+<span class="sourceLineNo">391</span>                                double maxScore = Math.max(scoreDirect, scoreInvert);<a name="line.391"></a>
+<span class="sourceLineNo">392</span><a name="line.392"></a>
+<span class="sourceLineNo">393</span>                                matrix[i][j] = maxScore;<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                        }<a name="line.394"></a>
+<span class="sourceLineNo">395</span><a name="line.395"></a>
+<span class="sourceLineNo">396</span>                }<a name="line.396"></a>
+<span class="sourceLineNo">397</span><a name="line.397"></a>
+<span class="sourceLineNo">398</span>                SingleLinkageClusterer slc = new SingleLinkageClusterer(matrix, true);<a name="line.398"></a>
+<span class="sourceLineNo">399</span><a name="line.399"></a>
+<span class="sourceLineNo">400</span>                Map&lt;Integer, Set&lt;Integer&gt;&gt; clusteredIndices = slc.getClusters(contactOverlapScoreClusterCutoff);<a name="line.400"></a>
+<span class="sourceLineNo">401</span>                for (int clusterIdx:clusteredIndices.keySet()) {<a name="line.401"></a>
+<span class="sourceLineNo">402</span>                        List&lt;StructureInterface&gt; members = new ArrayList&lt;&gt;();<a name="line.402"></a>
+<span class="sourceLineNo">403</span>                        for (int idx:clusteredIndices.get(clusterIdx)) {<a name="line.403"></a>
+<span class="sourceLineNo">404</span>                                members.add(list.get(idx));<a name="line.404"></a>
+<span class="sourceLineNo">405</span>                        }<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                        StructureInterfaceCluster cluster = new StructureInterfaceCluster();<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                        cluster.setMembers(members);<a name="line.407"></a>
+<span class="sourceLineNo">408</span>                        double averageScore = 0.0;<a name="line.408"></a>
+<span class="sourceLineNo">409</span>                        int countPairs = 0;<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                        for (int i=0;i&lt;members.size();i++) {<a name="line.410"></a>
+<span class="sourceLineNo">411</span>                int iIdx = list.indexOf(members.get(i));<a name="line.411"></a>
+<span class="sourceLineNo">412</span>                                for (int j=i+1;j&lt;members.size();j++) {<a name="line.412"></a>
+<span class="sourceLineNo">413</span>                                        averageScore += matrix[iIdx][list.indexOf(members.get(j))];<a name="line.413"></a>
+<span class="sourceLineNo">414</span>                                        countPairs++;<a name="line.414"></a>
+<span class="sourceLineNo">415</span>                                }<a name="line.415"></a>
+<span class="sourceLineNo">416</span>                        }<a name="line.416"></a>
+<span class="sourceLineNo">417</span>                        if (countPairs&gt;0) {<a name="line.417"></a>
+<span class="sourceLineNo">418</span>                                averageScore = averageScore/countPairs;<a name="line.418"></a>
+<span class="sourceLineNo">419</span>                        } else {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>                                // if only one interface in cluster we set the score to the maximum<a name="line.420"></a>
+<span class="sourceLineNo">421</span>                                averageScore = 1.0;<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                        }<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                        cluster.setAverageScore(averageScore);<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                        clusters.add(cluster);<a name="line.424"></a>
+<span class="sourceLineNo">425</span>                }<a name="line.425"></a>
+<span class="sourceLineNo">426</span><a name="line.426"></a>
+<span class="sourceLineNo">427</span>                // finally we have to set the back-references in each StructureInterface<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                for (StructureInterfaceCluster cluster:clusters) {<a name="line.428"></a>
+<span class="sourceLineNo">429</span>                        for (StructureInterface interf:cluster.getMembers()) {<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                                interf.setCluster(cluster);<a name="line.430"></a>
+<span class="sourceLineNo">431</span>                        }<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                }<a name="line.432"></a>
+<span class="sourceLineNo">433</span><a name="line.433"></a>
+<span class="sourceLineNo">434</span>                // now we sort by areas (descending) and assign ids based on that sorting<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                clusters.sort((o1, o2) -&gt; {<a name="line.435"></a>
+<span class="sourceLineNo">436</span>                        return Double.compare(o2.getTotalArea(), o1.getTotalArea()); //note we invert so that sorting is descending<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                });<a name="line.437"></a>
+<span class="sourceLineNo">438</span>                int id = 1;<a name="line.438"></a>
+<span class="sourceLineNo">439</span>                for (StructureInterfaceCluster cluster:clusters) {<a name="line.439"></a>
+<span class="sourceLineNo">440</span>                        cluster.setId(id);<a name="line.440"></a>
+<span class="sourceLineNo">441</span>                        id++;<a name="line.441"></a>
+<span class="sourceLineNo">442</span>                }<a name="line.442"></a>
+<span class="sourceLineNo">443</span><a name="line.443"></a>
+<span class="sourceLineNo">444</span>                return clusters;<a name="line.444"></a>
+<span class="sourceLineNo">445</span>        }<a name="line.445"></a>
+<span class="sourceLineNo">446</span><a name="line.446"></a>
+<span class="sourceLineNo">447</span>        @Override<a name="line.447"></a>
+<span class="sourceLineNo">448</span>        public Iterator&lt;StructureInterface&gt; iterator() {<a name="line.448"></a>
+<span class="sourceLineNo">449</span>                return list.iterator();<a name="line.449"></a>
+<span class="sourceLineNo">450</span>        }<a name="line.450"></a>
+<span class="sourceLineNo">451</span><a name="line.451"></a>
+<span class="sourceLineNo">452</span>        @Override<a name="line.452"></a>
+<span class="sourceLineNo">453</span>        public String toString() {<a name="line.453"></a>
+<span class="sourceLineNo">454</span>                return list.toString();<a name="line.454"></a>
+<span class="sourceLineNo">455</span>        }<a name="line.455"></a>
+<span class="sourceLineNo">456</span><a name="line.456"></a>
+<span class="sourceLineNo">457</span>        /**<a name="line.457"></a>
+<span class="sourceLineNo">458</span>         * Calculates the interfaces for a structure using default parameters<a name="line.458"></a>
+<span class="sourceLineNo">459</span>         * @param struc<a name="line.459"></a>
+<span class="sourceLineNo">460</span>         * @return<a name="line.460"></a>
+<span class="sourceLineNo">461</span>         */<a name="line.461"></a>
+<span class="sourceLineNo">462</span>        public static StructureInterfaceList calculateInterfaces(Structure struc) {<a name="line.462"></a>
+<span class="sourceLineNo">463</span>                CrystalBuilder builder = new CrystalBuilder(struc);<a name="line.463"></a>
+<span class="sourceLineNo">464</span>                StructureInterfaceList interfaces = builder.getUniqueInterfaces();<a name="line.464"></a>
+<span class="sourceLineNo">465</span>                logger.debug("Calculating ASA for "+interfaces.size()+" potential interfaces");<a name="line.465"></a>
+<span class="sourceLineNo">466</span>                interfaces.calcAsas(StructureInterfaceList.DEFAULT_ASA_SPHERE_POINTS, //fewer for performance<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                                Runtime.getRuntime().availableProcessors(),<a name="line.467"></a>
+<span class="sourceLineNo">468</span>                                StructureInterfaceList.DEFAULT_MIN_COFACTOR_SIZE);<a name="line.468"></a>
+<span class="sourceLineNo">469</span>                interfaces.removeInterfacesBelowArea();<a name="line.469"></a>
+<span class="sourceLineNo">470</span>                interfaces.getClusters();<a name="line.470"></a>
+<span class="sourceLineNo">471</span>                logger.debug("Found "+interfaces.size()+" interfaces");<a name="line.471"></a>
+<span class="sourceLineNo">472</span>                return interfaces;<a name="line.472"></a>
+<span class="sourceLineNo">473</span>        }<a name="line.473"></a>
+<span class="sourceLineNo">474</span><a name="line.474"></a>
+<span class="sourceLineNo">475</span>}<a name="line.475"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

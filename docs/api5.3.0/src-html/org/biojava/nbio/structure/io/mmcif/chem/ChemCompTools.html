@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * created at Mar 4, 2008<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.nbio.structure.io.mmcif.chem;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.nbio.structure.io.mmcif.ChemicalComponentDictionary;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.nbio.structure.io.mmcif.model.ChemComp;<a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.*;<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>/** Some tools for working with chemical compounds.<a name="line.29"></a>
+<span class="sourceLineNo">030</span> *<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * @author Andreas Prlic<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * @since 1.7<a name="line.32"></a>
+<span class="sourceLineNo">033</span> *<a name="line.33"></a>
+<span class="sourceLineNo">034</span> */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>public class ChemCompTools {<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>        private static final Character UNKNOWN_ONE_LETTER_CODE = 'X';<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        private static final Character UNKNOWN_NUCLEOTIDE = 'N';<a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>        /**<a name="line.40"></a>
+<span class="sourceLineNo">041</span>         * Lookup table to convert standard amino acid's monomer ids to one-letter-codes<a name="line.41"></a>
+<span class="sourceLineNo">042</span>         */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>        private static final Map&lt;String, Character&gt; AMINO_ACID_LOOKUP_3TO1;<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>        /**<a name="line.45"></a>
+<span class="sourceLineNo">046</span>         * Lookup table to convert standard amino acid's one-letter-codes to monomer ids<a name="line.46"></a>
+<span class="sourceLineNo">047</span>         */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        private static final Map&lt;Character, String&gt; AMINO_ACID_LOOKUP_1TO3;<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>        /**<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         * Lookup table to convert standard nucleic acid's monomer ids to one-letter-codes<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         */<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        private static final Map&lt;String, Character&gt; DNA_LOOKUP_2TO1;<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>        /**<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         * Lookup table to convert standard nucleic acid's one-letter-codes to monomer ids<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        private static final Map&lt;Character, String&gt; DNA_LOOKUP_1TO2;<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>        /**<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         * Static block that initializes lookup maps and initializes their &lt;tt&gt;ResidueInfo&lt;/tt&gt; instances<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         */<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        static<a name="line.63"></a>
+<span class="sourceLineNo">064</span>        {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                Map&lt;String, Character&gt; foo = new HashMap&lt;String, Character&gt;();<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                foo.put("ALA", 'A');<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                foo.put("ASP", 'D');<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                foo.put("ASN", 'N');<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                foo.put("ASX", 'B');<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                foo.put("ARG", 'R');<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                foo.put("CYS", 'C');<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                foo.put("GLU", 'E');<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                foo.put("GLN", 'Q');<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                foo.put("GLY", 'G');<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                foo.put("GLX", 'Z');<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                foo.put("HIS", 'H');<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                foo.put("ILE", 'I');<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                foo.put("LYS", 'K');<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                foo.put("LEU", 'L');<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                foo.put("MET", 'M');<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                foo.put("PHE", 'F');<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                foo.put("PRO", 'P');<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                foo.put("SER", 'S');<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                foo.put("THR", 'T');<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                foo.put("TRP", 'W');<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                foo.put("TYR", 'Y');<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                foo.put("VAL", 'V');<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                AMINO_ACID_LOOKUP_3TO1 = Collections.unmodifiableMap((Collections.synchronizedMap(foo)));<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>                Map&lt;Character, String&gt; bar = new HashMap&lt;Character, String&gt;();<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                bar.put('A', "ALA");<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                bar.put('D', "ASP");<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                bar.put('N', "ASN");<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                bar.put('B', "ASX");<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                bar.put('R', "ARG");<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                bar.put('C', "CYS");<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                bar.put('E', "GLU");<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                bar.put('Q', "GLN");<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                bar.put('G', "GLY");<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                bar.put('Z', "GLX");<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                bar.put('H', "HIS");<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                bar.put('I', "ILE");<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                bar.put('K', "LYS");<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                bar.put('L', "LEU");<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                bar.put('M', "MET");<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                bar.put('F', "PHE");<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                bar.put('P', "PRO");<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                bar.put('S', "SER");<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                bar.put('T', "THR");<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                bar.put('W', "TRP");<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                bar.put('Y', "TYR");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                bar.put('V', "VAL");<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                AMINO_ACID_LOOKUP_1TO3 = Collections.unmodifiableMap(Collections.synchronizedMap(bar));<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>                foo = new HashMap&lt;String, Character&gt;();<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                foo.put("DA",'A');<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                foo.put("DC",'C');<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                foo.put("DG",'G');<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                foo.put("DI",'I');<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                foo.put("DU",'U');<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                foo.put("DT",'T');<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                DNA_LOOKUP_2TO1 = Collections.unmodifiableMap((Collections.synchronizedMap(foo)));<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>                bar = new HashMap&lt;Character, String&gt;();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                bar.put('A',"DA");<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                bar.put('C',"DC");<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                bar.put('G',"DG");<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                bar.put('I',"DI");<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                bar.put('U',"DU");<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                bar.put('T',"DT");<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                DNA_LOOKUP_1TO2 = Collections.unmodifiableMap(Collections.synchronizedMap(bar));<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span>                // initialise standard chemical components<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                List&lt;String&gt; stdMonIds = new ArrayList&lt;String&gt;();<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                stdMonIds.addAll(AMINO_ACID_LOOKUP_3TO1.keySet());<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                stdMonIds.addAll(DNA_LOOKUP_2TO1.keySet());<a name="line.137"></a>
+<span class="sourceLineNo">138</span><a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>        }<a name="line.141"></a>
+<span class="sourceLineNo">142</span><a name="line.142"></a>
+<span class="sourceLineNo">143</span>        public static Character getAminoOneLetter(String chemCompId){<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                return  AMINO_ACID_LOOKUP_3TO1.get(chemCompId);<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span><a name="line.147"></a>
+<span class="sourceLineNo">148</span>        public static Character getDNAOneLetter(String chemCompId){<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                return  DNA_LOOKUP_2TO1.get(chemCompId) ;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        }<a name="line.150"></a>
+<span class="sourceLineNo">151</span><a name="line.151"></a>
+<span class="sourceLineNo">152</span>        public static String getAminoThreeLetter(Character c){<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                return AMINO_ACID_LOOKUP_1TO3.get(c);<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        }<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>        public static String getDNATwoLetter(Character c){<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                return DNA_LOOKUP_1TO2.get(c);<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        }<a name="line.158"></a>
+<span class="sourceLineNo">159</span><a name="line.159"></a>
+<span class="sourceLineNo">160</span>        public static final boolean isStandardChemComp(ChemComp cc){<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                String pid = cc.getMon_nstd_parent_comp_id();<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                String one = cc.getOne_letter_code();<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>                PolymerType polymerType = cc.getPolymerType();<a name="line.165"></a>
+<span class="sourceLineNo">166</span><a name="line.166"></a>
+<span class="sourceLineNo">167</span>                // standard residues have no parent<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                if ((pid == null) || (pid.equals("?"))){<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>                        // and they have a one letter code<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        if ( ( one != null) &amp;&amp; ( ! one.equals("?") )){<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>                                // peptides and dpeptides must not have X<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                                if ( (polymerType == PolymerType.peptide) ||<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                                                ( polymerType == PolymerType.dpeptide)) {<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                                        return performPeptideCheck(cc, one);<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>                                }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                                if (polymerType == PolymerType.rna){<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                                        return performRNACheck(cc);<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                                }<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                                if (polymerType == PolymerType.dna) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span><a name="line.183"></a>
+<span class="sourceLineNo">184</span>                                        return performDNACheck(cc);<a name="line.184"></a>
+<span class="sourceLineNo">185</span><a name="line.185"></a>
+<span class="sourceLineNo">186</span>                                }<a name="line.186"></a>
+<span class="sourceLineNo">187</span><a name="line.187"></a>
+<span class="sourceLineNo">188</span>                                //System.err.println("Non standard chem comp: " + cc);<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                                return false;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                        }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                }<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                return false;<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        }<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>        private static boolean performRNACheck(ChemComp cc) {<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                if (cc.getId().length() == 1)<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                        return true;<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                else<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                        return false;<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        }<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span><a name="line.203"></a>
+<span class="sourceLineNo">204</span>        private static boolean performDNACheck(ChemComp cc) {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                if ( cc.getId().equals(UNKNOWN_NUCLEOTIDE.toString()))<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                        return false;<a name="line.206"></a>
+<span class="sourceLineNo">207</span><a name="line.207"></a>
+<span class="sourceLineNo">208</span>                Character c = getDNAOneLetter(cc.getId());<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                if ( c==null){<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                        // we did not find it in the list of standard nucleotides<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                        return false;<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                }<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                return true;<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        }<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span><a name="line.216"></a>
+<span class="sourceLineNo">217</span>        private static boolean performPeptideCheck(ChemComp cc, String one) {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                if (one.equals(UNKNOWN_ONE_LETTER_CODE.toString())) {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                        return false;<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                }<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                Character c =  getAminoOneLetter(cc.getId());<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                if ( c==null){<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                        // we did not find it in the list of standard aminos<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                        return false;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                }<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                return true;<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        }<a name="line.227"></a>
+<span class="sourceLineNo">228</span><a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>        // TODO: component 175 has 3 chars as a one letter code...<a name="line.230"></a>
+<span class="sourceLineNo">231</span>        // Figure out what to do with it...<a name="line.231"></a>
+<span class="sourceLineNo">232</span>        // so does: 4F3,5ZA and others<a name="line.232"></a>
+<span class="sourceLineNo">233</span>        public static Character getOneLetterCode(ChemComp cc, ChemicalComponentDictionary dictionary){<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                if ( cc.getResidueType() == ResidueType.nonPolymer )<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                        return null;<a name="line.235"></a>
+<span class="sourceLineNo">236</span><a name="line.236"></a>
+<span class="sourceLineNo">237</span>                if ( cc.isStandard())<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                        return cc.getOne_letter_code().charAt(0);<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>                ChemComp parent = dictionary.getParent(cc);<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                if ( parent == null){<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                        //System.err.println("parent is null " + cc);<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                        return cc.getOne_letter_code().charAt(0);<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                }<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                PolymerType poly = cc.getPolymerType();<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                if (( poly == PolymerType.peptide) || ( poly == PolymerType.dpeptide)){<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                        Character c = getAminoOneLetter(parent.getId());<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                        if ( c == null)<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                                c = UNKNOWN_ONE_LETTER_CODE;<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                        return c;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                }<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                if ( poly == PolymerType.dna){<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                        Character c = getDNAOneLetter(parent.getId());<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                        if (c == null)<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                                c = UNKNOWN_NUCLEOTIDE;<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                        return c;<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>                }<a name="line.258"></a>
+<span class="sourceLineNo">259</span>                return cc.getMon_nstd_parent_comp_id().charAt(0);<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        }<a name="line.260"></a>
+<span class="sourceLineNo">261</span>}<a name="line.261"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

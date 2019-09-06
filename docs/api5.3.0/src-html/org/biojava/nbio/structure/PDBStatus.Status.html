@@ -1,0 +1,780 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>/**<a name="line.21"></a>
+<span class="sourceLineNo">022</span> *<a name="line.22"></a>
+<span class="sourceLineNo">023</span> */<a name="line.23"></a>
+<span class="sourceLineNo">024</span>package org.biojava.nbio.structure;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.nbio.structure.align.util.URLConnectionTools;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.slf4j.Logger;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.slf4j.LoggerFactory;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.xml.sax.*;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.xml.sax.helpers.DefaultHandler;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>import javax.xml.parsers.ParserConfigurationException;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import javax.xml.parsers.SAXParser;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import javax.xml.parsers.SAXParserFactory;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import java.io.BufferedReader;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import java.io.IOException;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import java.io.InputStream;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import java.io.InputStreamReader;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import java.net.URL;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import java.util.*;<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>/**<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * Methods for getting the status of a PDB file (current, obsolete, etc)<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * and for accessing different versions of the structure.<a name="line.44"></a>
+<span class="sourceLineNo">045</span> *<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * &lt;p&gt;All methods query the<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * &lt;a href="http://www.rcsb.org/pdb/rest/idStatus?structureId=1HHB,3HHB,4HHB"&gt;<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * PDB website.&lt;/a&gt;<a name="line.48"></a>
+<span class="sourceLineNo">049</span> *<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * &lt;p&gt;PDB supersessions form a directed acyclic graph, where edges point from an<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * obsolete ID to the entry that directly superseded it. For example, here are<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * edges from one portion of the graph:&lt;br/&gt;<a name="line.52"></a>
+<span class="sourceLineNo">053</span> *<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * 1CAT -&gt; 3CAT&lt;br/&gt;<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * 3CAT -&gt; 7CAT&lt;br/&gt;<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * 3CAT -&gt; 8CAT&lt;br/&gt;<a name="line.56"></a>
+<span class="sourceLineNo">057</span> *<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * &lt;p&gt;The methods {@link #getReplaces(String, boolean) getReplaces(pdbId, false)}/<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * {@link #getReplacement(String, boolean, boolean) getReplacement(pdbId, false, true)}<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * just get the incoming/outgoing edges for a single node. The recursive versions<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * ({@link #getReplaces(String, boolean) getReplaces(pdbId, true)},<a name="line.61"></a>
+<span class="sourceLineNo">062</span> * {@link #getReplacement(String, boolean, boolean) getReplacement(pdbId, true, false)})<a name="line.62"></a>
+<span class="sourceLineNo">063</span> * will do a depth-first search up/down the tree and return a list of all nodes ]<a name="line.63"></a>
+<span class="sourceLineNo">064</span> * reached.<a name="line.64"></a>
+<span class="sourceLineNo">065</span> *<a name="line.65"></a>
+<span class="sourceLineNo">066</span> * &lt;p&gt;Finally, the getCurrent() method returns a single PDB ID from among the<a name="line.66"></a>
+<span class="sourceLineNo">067</span> * results of<a name="line.67"></a>
+<span class="sourceLineNo">068</span> * {@link #getReplacement(String, boolean) getReplacement(pdbId, true)}.<a name="line.68"></a>
+<span class="sourceLineNo">069</span> * To be consistent with the old REST ordering, this is the PDB ID that occurs<a name="line.69"></a>
+<span class="sourceLineNo">070</span> * last alphabetically.<a name="line.70"></a>
+<span class="sourceLineNo">071</span> *<a name="line.71"></a>
+<span class="sourceLineNo">072</span> * &lt;p&gt;Results are cached to reduce server load.<a name="line.72"></a>
+<span class="sourceLineNo">073</span> *<a name="line.73"></a>
+<span class="sourceLineNo">074</span> * @author Spencer Bliven &lt;sbliven@ucsd.edu&gt;<a name="line.74"></a>
+<span class="sourceLineNo">075</span> * @author Amr AL-Hossary<a name="line.75"></a>
+<span class="sourceLineNo">076</span> * @since 3.0.2<a name="line.76"></a>
+<span class="sourceLineNo">077</span> */<a name="line.77"></a>
+<span class="sourceLineNo">078</span>public class PDBStatus {<a name="line.78"></a>
+<span class="sourceLineNo">079</span><a name="line.79"></a>
+<span class="sourceLineNo">080</span>        private static final Logger logger = LoggerFactory.getLogger(PDBStatus.class);<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>        public static final String DEFAULT_PDB_SERVER = "www.rcsb.org";<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        public static final String PDB_SERVER_PROPERTY = "PDB.SERVER";<a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>        /**<a name="line.85"></a>
+<span class="sourceLineNo">086</span>         * saves the returned results for further use.<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         *<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         */<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        //TODO Use SoftReferences to allow garbage collection<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        private static Map&lt;String, Map&lt;String, String&gt;&gt; recordsCache= new Hashtable&lt;String, Map&lt;String, String&gt;&gt;();<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>        /**<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         * Represents the status of PDB IDs. 'OBSOLETE' and 'CURRENT' are the most<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         * common.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * @author Spencer Bliven &lt;sbliven@ucsd.edu&gt;<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         *<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         */<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        public enum Status {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                OBSOLETE,<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                CURRENT,<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                AUTH,<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                HOLD,<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                HPUB,<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                POLC,<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                PROC,<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                REFI,<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                REPL,<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                WAIT,<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                WDRN,<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                MODEL,<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                UNKNOWN;<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span><a name="line.113"></a>
+<span class="sourceLineNo">114</span>                /**<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                 *<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                 * @param statusStr<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                 * @return<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                 * @throws IllegalArgumentException If the string is not recognized<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                 */<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                public static Status fromString(String statusStr) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                        Status status;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                        String statusStrUpper = statusStr.toUpperCase();<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                        if(statusStrUpper.equalsIgnoreCase("OBSOLETE"))<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                                status = Status.OBSOLETE;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                        else if(statusStrUpper.equalsIgnoreCase("CURRENT"))<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                                status = Status.CURRENT;<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                        else if(statusStrUpper.equalsIgnoreCase("AUTH"))<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                                status = Status.AUTH;<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                        else if(statusStrUpper.equalsIgnoreCase("HOLD"))<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                                status = Status.HOLD;<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                        else if(statusStrUpper.equalsIgnoreCase("HPUB"))<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                                status = Status.HPUB;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                        else if(statusStrUpper.equalsIgnoreCase("POLC"))<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                                status = Status.POLC;<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                        else if(statusStrUpper.equalsIgnoreCase("PROC"))<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                                status = Status.PROC;<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                        else if(statusStrUpper.equalsIgnoreCase("REFI"))<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                status = Status.REFI;<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                        else if(statusStrUpper.equalsIgnoreCase("REPL"))<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                status = Status.REPL;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                        else if(statusStrUpper.equalsIgnoreCase("WAIT"))<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                                status = Status.WAIT;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                        else if(statusStrUpper.equalsIgnoreCase("WDRN"))<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                                status = Status.WDRN;<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                        else if(statusStrUpper.equalsIgnoreCase("MODEL"))<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                status = Status.MODEL;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                        else if(statusStrUpper.equalsIgnoreCase("UNKNOWN"))<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                                status = Status.UNKNOWN;<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                        else {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                                throw new IllegalArgumentException("Unable to parse status '"+statusStrUpper+"'.");<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                        }<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                        return status;<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                }<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        }<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>        /**<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * Get the status of the PDB in question.<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         *<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * @param pdbId<a name="line.159"></a>
+<span class="sourceLineNo">160</span>         * @return The status, or null if an error occurred.<a name="line.160"></a>
+<span class="sourceLineNo">161</span>         */<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        public static Status getStatus(String pdbId) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                Status[] statuses = getStatus(new String[] {pdbId});<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                if(statuses != null) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                        assert(statuses.length == 1);<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                        return statuses[0];<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                } else {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                        return null;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                }<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        }<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>        /**<a name="line.172"></a>
+<span class="sourceLineNo">173</span>         * Get the status of the a collection of PDBs in question in a single query.<a name="line.173"></a>
+<span class="sourceLineNo">174</span>         *<a name="line.174"></a>
+<span class="sourceLineNo">175</span>         * @see #getStatus(String)<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         * @param pdbIds<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         * @return The status array, or null if an error occurred.<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         */<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        public static Status[] getStatus(String[] pdbIds) {<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                Status[] statuses = new Status[pdbIds.length];<a name="line.180"></a>
+<span class="sourceLineNo">181</span><a name="line.181"></a>
+<span class="sourceLineNo">182</span>                List&lt;Map&lt;String,String&gt;&gt; attrList = getStatusIdRecords(pdbIds);<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                //Expect a single record<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                if(attrList == null || attrList.size() != pdbIds.length) {<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                        logger.error("Error getting Status for {} from the PDB website.", Arrays.toString(pdbIds));<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                        return null;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                }<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span><a name="line.189"></a>
+<span class="sourceLineNo">190</span>                for(int pdbNum = 0;pdbNum&lt;pdbIds.length;pdbNum++) {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                        //Locate first element of attrList with matching structureId.<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                        //attrList is usually short, so don't worry about performance<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                        boolean foundAttr = false;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                        for( Map&lt;String,String&gt; attrs : attrList) {<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>                                //Check that the record matches pdbId<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                                String id = attrs.get("structureId");<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                if(id == null || !id.equalsIgnoreCase(pdbIds[pdbNum])) {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                                        continue;<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                                }<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                //Check that the status is given<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                String statusStr = attrs.get("status");<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                Status status = null;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                if(statusStr == null ) {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                                        logger.error("No status returned for {}", pdbIds[pdbNum]);<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                                        statuses[pdbNum] = null;<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                                } else {<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                        status = Status.fromString(statusStr);<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                }<a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                if(status == null) {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                                        logger.error("Unknown status '{}'", statusStr);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                                        statuses[pdbNum] = null;<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                                }<a name="line.215"></a>
+<span class="sourceLineNo">216</span><a name="line.216"></a>
+<span class="sourceLineNo">217</span>                                statuses[pdbNum] = status;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                                foundAttr = true;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                        }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                        if(!foundAttr) {<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                                logger.error("No result found for {}", pdbIds[pdbNum]);<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                statuses[pdbNum] = null;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                        }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                }<a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>                return statuses;<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        }<a name="line.227"></a>
+<span class="sourceLineNo">228</span><a name="line.228"></a>
+<span class="sourceLineNo">229</span>        /**<a name="line.229"></a>
+<span class="sourceLineNo">230</span>         * Gets the current version of a PDB ID. This is equivalent to selecting<a name="line.230"></a>
+<span class="sourceLineNo">231</span>         * the first element from<a name="line.231"></a>
+<span class="sourceLineNo">232</span>         * {@link #getReplacement(String,boolean,boolean)<a name="line.232"></a>
+<span class="sourceLineNo">233</span>         *<a name="line.233"></a>
+<span class="sourceLineNo">234</span>         * @param oldPdbId<a name="line.234"></a>
+<span class="sourceLineNo">235</span>         * @return The replacement for oldPdbId, or null if none are found or if an error occurred.<a name="line.235"></a>
+<span class="sourceLineNo">236</span>         */<a name="line.236"></a>
+<span class="sourceLineNo">237</span>        public static String getCurrent(String oldPdbId) {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                List&lt;String&gt; replacements =  getReplacement(oldPdbId,true, false);<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                if(replacements != null &amp;&amp; !replacements.isEmpty())<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                        return replacements.get(0);<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                else<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                        return null;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>        }<a name="line.243"></a>
+<span class="sourceLineNo">244</span><a name="line.244"></a>
+<span class="sourceLineNo">245</span>        /**<a name="line.245"></a>
+<span class="sourceLineNo">246</span>         * Gets the PDB which superseded oldPdbId. For CURRENT IDs, this will<a name="line.246"></a>
+<span class="sourceLineNo">247</span>         * be itself. For obsolete IDs, the behavior depends on the recursion<a name="line.247"></a>
+<span class="sourceLineNo">248</span>         * parameter. If false, only IDs which directly supersede oldPdbId are<a name="line.248"></a>
+<span class="sourceLineNo">249</span>         * returned. If true, the replacements for obsolete records are recursively<a name="line.249"></a>
+<span class="sourceLineNo">250</span>         * fetched, yielding a list of all current replacements of oldPdbId.<a name="line.250"></a>
+<span class="sourceLineNo">251</span>         *<a name="line.251"></a>
+<span class="sourceLineNo">252</span>         *<a name="line.252"></a>
+<span class="sourceLineNo">253</span>         *<a name="line.253"></a>
+<span class="sourceLineNo">254</span>         * @param oldPdbId A pdb ID<a name="line.254"></a>
+<span class="sourceLineNo">255</span>         * @param recurse Indicates whether the replacements for obsolete records<a name="line.255"></a>
+<span class="sourceLineNo">256</span>         *              should be fetched.<a name="line.256"></a>
+<span class="sourceLineNo">257</span>         * @param includeObsolete Indicates whether obsolete records should be<a name="line.257"></a>
+<span class="sourceLineNo">258</span>         *              included in the results.<a name="line.258"></a>
+<span class="sourceLineNo">259</span>         * @return The PDB which replaced oldPdbId. This may be oldPdbId itself, for<a name="line.259"></a>
+<span class="sourceLineNo">260</span>         *              current records. A return value of null indicates that the ID has<a name="line.260"></a>
+<span class="sourceLineNo">261</span>         *              been removed from the PDB or that an error has occurred.<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         */<a name="line.262"></a>
+<span class="sourceLineNo">263</span>        public static List&lt;String&gt; getReplacement(String oldPdbId, boolean recurse, boolean includeObsolete) {<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                List&lt;Map&lt;String,String&gt;&gt; attrList = getStatusIdRecords(new String[] {oldPdbId});<a name="line.264"></a>
+<span class="sourceLineNo">265</span>                //Expect a single record<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                if(attrList == null || attrList.size() != 1) {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        logger.error("Error getting Status for {} from the PDB website.", oldPdbId);<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                        return null;<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                }<a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span>                Map&lt;String,String&gt; attrs = attrList.get(0);<a name="line.271"></a>
+<span class="sourceLineNo">272</span><a name="line.272"></a>
+<span class="sourceLineNo">273</span>                //Check that the record matches pdbId<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                String id = attrs.get("structureId");<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                if(id == null || !id.equalsIgnoreCase(oldPdbId)) {<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                        logger.error("Results returned from the query don't match {}", oldPdbId);<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                        return null;<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                }<a name="line.278"></a>
+<span class="sourceLineNo">279</span><a name="line.279"></a>
+<span class="sourceLineNo">280</span>                //Check that the status is given<a name="line.280"></a>
+<span class="sourceLineNo">281</span>                String statusStr = attrs.get("status");<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                if(statusStr == null ) {<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                        logger.error("No status returned for {}", oldPdbId);<a name="line.283"></a>
+<span class="sourceLineNo">284</span>                        return null;<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                }<a name="line.285"></a>
+<span class="sourceLineNo">286</span><a name="line.286"></a>
+<span class="sourceLineNo">287</span>                Status status = Status.fromString(statusStr);<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                if(status == null ) {<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                        logger.error("Unknown status '{}'", statusStr);<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                        return null;<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                }<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>                // If we're current, just return<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                LinkedList&lt;String&gt; results = new LinkedList&lt;String&gt;();<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                switch(status) {<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                        case CURRENT:<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                results.add(oldPdbId);<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                                return results;<a name="line.298"></a>
+<span class="sourceLineNo">299</span>                        case OBSOLETE: {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                                String replacementStr = attrs.get("replacedBy");<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                                if(replacementStr == null) {<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                                        logger.error("{} is OBSOLETE but lacks a replacedBy attribute.", oldPdbId);<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                                        return null;<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                                }<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                                replacementStr = replacementStr.toUpperCase();<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                                //include this result<a name="line.306"></a>
+<span class="sourceLineNo">307</span>                                if(includeObsolete) {<a name="line.307"></a>
+<span class="sourceLineNo">308</span>                                        results.add(oldPdbId);<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                                }<a name="line.309"></a>
+<span class="sourceLineNo">310</span>                                // Some PDBs are not replaced.<a name="line.310"></a>
+<span class="sourceLineNo">311</span>                                if(replacementStr.equals("NONE")) {<a name="line.311"></a>
+<span class="sourceLineNo">312</span>                                        return results; //empty<a name="line.312"></a>
+<span class="sourceLineNo">313</span>                                }<a name="line.313"></a>
+<span class="sourceLineNo">314</span><a name="line.314"></a>
+<span class="sourceLineNo">315</span>                                String[] replacements = replacementStr.split(" ");<a name="line.315"></a>
+<span class="sourceLineNo">316</span>                                Arrays.sort(replacements, new Comparator&lt;String&gt;() {<a name="line.316"></a>
+<span class="sourceLineNo">317</span>                                        @Override<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                                        public int compare(String o1, String o2) {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>                                                return o2.compareToIgnoreCase(o1);<a name="line.319"></a>
+<span class="sourceLineNo">320</span>                                        }<a name="line.320"></a>
+<span class="sourceLineNo">321</span>                                });<a name="line.321"></a>
+<span class="sourceLineNo">322</span>                                for(String replacement : replacements) {<a name="line.322"></a>
+<span class="sourceLineNo">323</span><a name="line.323"></a>
+<span class="sourceLineNo">324</span>                                        // Return the replacement.<a name="line.324"></a>
+<span class="sourceLineNo">325</span>                                        if(recurse) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>                                                List&lt;String&gt; others = PDBStatus.getReplacement(replacement, recurse, includeObsolete);<a name="line.326"></a>
+<span class="sourceLineNo">327</span>                                                mergeReversed(results,others);<a name="line.327"></a>
+<span class="sourceLineNo">328</span>                                        }<a name="line.328"></a>
+<span class="sourceLineNo">329</span>                                        else {<a name="line.329"></a>
+<span class="sourceLineNo">330</span>                                                if(includeObsolete) {<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                                                        mergeReversed(results,Arrays.asList(replacement));<a name="line.331"></a>
+<span class="sourceLineNo">332</span>                                                } else {<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                                                        // check status of replacement<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                                                        Status replacementStatus = getStatus(replacement);<a name="line.334"></a>
+<span class="sourceLineNo">335</span>                                                        switch(replacementStatus) {<a name="line.335"></a>
+<span class="sourceLineNo">336</span>                                                                case OBSOLETE:<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                                                                        //ignore obsolete<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                                                                        break;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>                                                                case CURRENT:<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                                                                default:<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                                                                        // include it<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                                                                        mergeReversed(results,Arrays.asList(replacement));<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                                                        }<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                                                }<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                                        }<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                                }<a name="line.346"></a>
+<span class="sourceLineNo">347</span><a name="line.347"></a>
+<span class="sourceLineNo">348</span><a name="line.348"></a>
+<span class="sourceLineNo">349</span>                                return results;<a name="line.349"></a>
+<span class="sourceLineNo">350</span>                        }<a name="line.350"></a>
+<span class="sourceLineNo">351</span>                        case UNKNOWN:<a name="line.351"></a>
+<span class="sourceLineNo">352</span>                                return null;<a name="line.352"></a>
+<span class="sourceLineNo">353</span>                        default: { //TODO handle other cases explicitly. They might have other syntax than "replacedBy"<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                                String replacementStr = attrs.get("replacedBy");<a name="line.354"></a>
+<span class="sourceLineNo">355</span><a name="line.355"></a>
+<span class="sourceLineNo">356</span>                                if(replacementStr == null) {<a name="line.356"></a>
+<span class="sourceLineNo">357</span>                                        // If no "replacedBy" attribute, treat like we're current<a name="line.357"></a>
+<span class="sourceLineNo">358</span>                                        // TODO is this correct?<a name="line.358"></a>
+<span class="sourceLineNo">359</span>                                        results.add(oldPdbId);<a name="line.359"></a>
+<span class="sourceLineNo">360</span>                                        return results;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                                }<a name="line.361"></a>
+<span class="sourceLineNo">362</span><a name="line.362"></a>
+<span class="sourceLineNo">363</span>                                replacementStr = replacementStr.toUpperCase();<a name="line.363"></a>
+<span class="sourceLineNo">364</span>                                // Some PDBs are not replaced.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                                if(replacementStr.equals("NONE")) {<a name="line.365"></a>
+<span class="sourceLineNo">366</span>                                        return null;<a name="line.366"></a>
+<span class="sourceLineNo">367</span>                                }<a name="line.367"></a>
+<span class="sourceLineNo">368</span><a name="line.368"></a>
+<span class="sourceLineNo">369</span><a name="line.369"></a>
+<span class="sourceLineNo">370</span>                                //include this result, since it's not obsolete<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                                results.add(oldPdbId);<a name="line.371"></a>
+<span class="sourceLineNo">372</span><a name="line.372"></a>
+<span class="sourceLineNo">373</span>                                String[] replacements = replacementStr.split(" ");<a name="line.373"></a>
+<span class="sourceLineNo">374</span>                                Arrays.sort(replacements, new Comparator&lt;String&gt;() {<a name="line.374"></a>
+<span class="sourceLineNo">375</span>                                        @Override<a name="line.375"></a>
+<span class="sourceLineNo">376</span>                                        public int compare(String o1, String o2) {<a name="line.376"></a>
+<span class="sourceLineNo">377</span>                                                return o2.compareToIgnoreCase(o1);<a name="line.377"></a>
+<span class="sourceLineNo">378</span>                                        }<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                                });<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                                for(String replacement : replacements) {<a name="line.380"></a>
+<span class="sourceLineNo">381</span><a name="line.381"></a>
+<span class="sourceLineNo">382</span>                                        // Return the replacement.<a name="line.382"></a>
+<span class="sourceLineNo">383</span>                                        if(recurse) {<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                                                List&lt;String&gt; others = PDBStatus.getReplacement(replacement, recurse, includeObsolete);<a name="line.384"></a>
+<span class="sourceLineNo">385</span>                                                mergeReversed(results,others);<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                                        }<a name="line.386"></a>
+<span class="sourceLineNo">387</span>                                        else {<a name="line.387"></a>
+<span class="sourceLineNo">388</span>                                                mergeReversed(results,Arrays.asList(replacement));<a name="line.388"></a>
+<span class="sourceLineNo">389</span>                                        }<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                                }<a name="line.390"></a>
+<span class="sourceLineNo">391</span><a name="line.391"></a>
+<span class="sourceLineNo">392</span><a name="line.392"></a>
+<span class="sourceLineNo">393</span>                                return results;<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                        }<a name="line.394"></a>
+<span class="sourceLineNo">395</span>                }<a name="line.395"></a>
+<span class="sourceLineNo">396</span>        }<a name="line.396"></a>
+<span class="sourceLineNo">397</span><a name="line.397"></a>
+<span class="sourceLineNo">398</span>        /**<a name="line.398"></a>
+<span class="sourceLineNo">399</span>         * Takes two reverse sorted lists of strings and merges the second into the<a name="line.399"></a>
+<span class="sourceLineNo">400</span>         * first. Duplicates are removed.<a name="line.400"></a>
+<span class="sourceLineNo">401</span>         *<a name="line.401"></a>
+<span class="sourceLineNo">402</span>         * @param merged A reverse sorted list. Modified by this method to contain<a name="line.402"></a>
+<span class="sourceLineNo">403</span>         *              the contents of other.<a name="line.403"></a>
+<span class="sourceLineNo">404</span>         * @param other A reverse sorted list. Not modified.<a name="line.404"></a>
+<span class="sourceLineNo">405</span>         */<a name="line.405"></a>
+<span class="sourceLineNo">406</span>        private static void mergeReversed(List&lt;String&gt; merged,<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                                          final List&lt;String&gt; other) {<a name="line.407"></a>
+<span class="sourceLineNo">408</span><a name="line.408"></a>
+<span class="sourceLineNo">409</span>                if(other.isEmpty())<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                        return;<a name="line.410"></a>
+<span class="sourceLineNo">411</span><a name="line.411"></a>
+<span class="sourceLineNo">412</span>                if(merged.isEmpty()) {<a name="line.412"></a>
+<span class="sourceLineNo">413</span>                        merged.addAll(other);<a name="line.413"></a>
+<span class="sourceLineNo">414</span>                        return;<a name="line.414"></a>
+<span class="sourceLineNo">415</span>                }<a name="line.415"></a>
+<span class="sourceLineNo">416</span><a name="line.416"></a>
+<span class="sourceLineNo">417</span>                ListIterator&lt;String&gt; m = merged.listIterator();<a name="line.417"></a>
+<span class="sourceLineNo">418</span>                ListIterator&lt;String&gt; o = other.listIterator();<a name="line.418"></a>
+<span class="sourceLineNo">419</span><a name="line.419"></a>
+<span class="sourceLineNo">420</span>                String nextM, prevO;<a name="line.420"></a>
+<span class="sourceLineNo">421</span>                prevO = o.next();<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                while(m.hasNext()) {<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                        // peek at m<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                        nextM = m.next();<a name="line.424"></a>
+<span class="sourceLineNo">425</span>                        m.previous();<a name="line.425"></a>
+<span class="sourceLineNo">426</span><a name="line.426"></a>
+<span class="sourceLineNo">427</span>                        //insert from O until exhausted or occurs after nextM<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                        while(prevO.compareTo(nextM) &gt; 0) {<a name="line.428"></a>
+<span class="sourceLineNo">429</span>                                m.add(prevO);<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                                if(!o.hasNext()) {<a name="line.430"></a>
+<span class="sourceLineNo">431</span>                                        return;<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                                }<a name="line.432"></a>
+<span class="sourceLineNo">433</span>                                prevO = o.next();<a name="line.433"></a>
+<span class="sourceLineNo">434</span>                        }<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                        //remove duplicates<a name="line.435"></a>
+<span class="sourceLineNo">436</span>                        if(prevO.equals(nextM)) {<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                                if(!o.hasNext()) {<a name="line.437"></a>
+<span class="sourceLineNo">438</span>                                        return;<a name="line.438"></a>
+<span class="sourceLineNo">439</span>                                }<a name="line.439"></a>
+<span class="sourceLineNo">440</span>                                prevO = o.next();<a name="line.440"></a>
+<span class="sourceLineNo">441</span>                        }<a name="line.441"></a>
+<span class="sourceLineNo">442</span><a name="line.442"></a>
+<span class="sourceLineNo">443</span>                        m.next();<a name="line.443"></a>
+<span class="sourceLineNo">444</span>                }<a name="line.444"></a>
+<span class="sourceLineNo">445</span>                m.add(prevO);<a name="line.445"></a>
+<span class="sourceLineNo">446</span>                while(o.hasNext()) {<a name="line.446"></a>
+<span class="sourceLineNo">447</span>                        m.add(o.next());<a name="line.447"></a>
+<span class="sourceLineNo">448</span>                }<a name="line.448"></a>
+<span class="sourceLineNo">449</span><a name="line.449"></a>
+<span class="sourceLineNo">450</span>        }<a name="line.450"></a>
+<span class="sourceLineNo">451</span><a name="line.451"></a>
+<span class="sourceLineNo">452</span><a name="line.452"></a>
+<span class="sourceLineNo">453</span>        /**<a name="line.453"></a>
+<span class="sourceLineNo">454</span>         * Get the ID of the protein which was made obsolete by newPdbId.<a name="line.454"></a>
+<span class="sourceLineNo">455</span>         *<a name="line.455"></a>
+<span class="sourceLineNo">456</span>         * @param newPdbId PDB ID of the newer structure<a name="line.456"></a>
+<span class="sourceLineNo">457</span>         * @param recurse If true, return all ancestors of newPdbId.<a name="line.457"></a>
+<span class="sourceLineNo">458</span>         *              Otherwise, just go one step newer than oldPdbId.<a name="line.458"></a>
+<span class="sourceLineNo">459</span>         * @return A (possibly empty) list of ID(s) of the ancestor(s) of<a name="line.459"></a>
+<span class="sourceLineNo">460</span>         *              newPdbId, or &lt;tt&gt;null&lt;/tt&gt; if an error occurred.<a name="line.460"></a>
+<span class="sourceLineNo">461</span>         */<a name="line.461"></a>
+<span class="sourceLineNo">462</span>        public static List&lt;String&gt; getReplaces(String newPdbId, boolean recurse) {<a name="line.462"></a>
+<span class="sourceLineNo">463</span>                List&lt;Map&lt;String,String&gt;&gt; attrList = getStatusIdRecords(new String[] {newPdbId});<a name="line.463"></a>
+<span class="sourceLineNo">464</span>                //Expect a single record<a name="line.464"></a>
+<span class="sourceLineNo">465</span>                if(attrList == null || attrList.size() != 1) {<a name="line.465"></a>
+<span class="sourceLineNo">466</span>                        //TODO Is it possible to have multiple record per ID?<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                        // They seem to be combined into one record with space-delimited 'replaces'<a name="line.467"></a>
+<span class="sourceLineNo">468</span>                        logger.error("Error getting Status for {} from the PDB website.", newPdbId);<a name="line.468"></a>
+<span class="sourceLineNo">469</span>                        return null;<a name="line.469"></a>
+<span class="sourceLineNo">470</span>                }<a name="line.470"></a>
+<span class="sourceLineNo">471</span><a name="line.471"></a>
+<span class="sourceLineNo">472</span>                Map&lt;String,String&gt; attrs = attrList.get(0);<a name="line.472"></a>
+<span class="sourceLineNo">473</span><a name="line.473"></a>
+<span class="sourceLineNo">474</span>                //Check that the record matches pdbId<a name="line.474"></a>
+<span class="sourceLineNo">475</span>                String id = attrs.get("structureId");<a name="line.475"></a>
+<span class="sourceLineNo">476</span>                if(id == null || !id.equals(newPdbId)) {<a name="line.476"></a>
+<span class="sourceLineNo">477</span>                        logger.error("Results returned from the query don't match {}", newPdbId);<a name="line.477"></a>
+<span class="sourceLineNo">478</span>                        return null;<a name="line.478"></a>
+<span class="sourceLineNo">479</span>                }<a name="line.479"></a>
+<span class="sourceLineNo">480</span><a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>                String replacedList = attrs.get("replaces"); //space-delimited list<a name="line.482"></a>
+<span class="sourceLineNo">483</span>                if(replacedList == null) {<a name="line.483"></a>
+<span class="sourceLineNo">484</span>                        // no replaces value; assume root<a name="line.484"></a>
+<span class="sourceLineNo">485</span>                        return new ArrayList&lt;String&gt;();<a name="line.485"></a>
+<span class="sourceLineNo">486</span>                }<a name="line.486"></a>
+<span class="sourceLineNo">487</span>                String[] directDescendents = replacedList.split("\\s");<a name="line.487"></a>
+<span class="sourceLineNo">488</span><a name="line.488"></a>
+<span class="sourceLineNo">489</span>                // Not the root! Return the replaced PDB.<a name="line.489"></a>
+<span class="sourceLineNo">490</span>                if(recurse) {<a name="line.490"></a>
+<span class="sourceLineNo">491</span>                        // Note: Assumes a proper directed acyclic graph of revisions<a name="line.491"></a>
+<span class="sourceLineNo">492</span>                        // Cycles will cause infinite loops.<a name="line.492"></a>
+<span class="sourceLineNo">493</span>                        List&lt;String&gt; allDescendents = new LinkedList&lt;String&gt;();<a name="line.493"></a>
+<span class="sourceLineNo">494</span>                        for(String replaced : directDescendents) {<a name="line.494"></a>
+<span class="sourceLineNo">495</span>                                List&lt;String&gt; roots = PDBStatus.getReplaces(replaced, recurse);<a name="line.495"></a>
+<span class="sourceLineNo">496</span>                                mergeReversed(allDescendents,roots);<a name="line.496"></a>
+<span class="sourceLineNo">497</span>                        }<a name="line.497"></a>
+<span class="sourceLineNo">498</span>                        mergeReversed(allDescendents,Arrays.asList(directDescendents));<a name="line.498"></a>
+<span class="sourceLineNo">499</span><a name="line.499"></a>
+<span class="sourceLineNo">500</span>                        return allDescendents;<a name="line.500"></a>
+<span class="sourceLineNo">501</span>                } else {<a name="line.501"></a>
+<span class="sourceLineNo">502</span>                        return Arrays.asList(directDescendents);<a name="line.502"></a>
+<span class="sourceLineNo">503</span>                }<a name="line.503"></a>
+<span class="sourceLineNo">504</span>        }<a name="line.504"></a>
+<span class="sourceLineNo">505</span><a name="line.505"></a>
+<span class="sourceLineNo">506</span><a name="line.506"></a>
+<span class="sourceLineNo">507</span>        /**<a name="line.507"></a>
+<span class="sourceLineNo">508</span>         * The status of PDB IDs are cached to reduce server overload.<a name="line.508"></a>
+<span class="sourceLineNo">509</span>         *<a name="line.509"></a>
+<span class="sourceLineNo">510</span>         * This method clears the cached records.<a name="line.510"></a>
+<span class="sourceLineNo">511</span>         */<a name="line.511"></a>
+<span class="sourceLineNo">512</span>        public static void clearCache() {<a name="line.512"></a>
+<span class="sourceLineNo">513</span>                recordsCache.clear();<a name="line.513"></a>
+<span class="sourceLineNo">514</span>        }<a name="line.514"></a>
+<span class="sourceLineNo">515</span><a name="line.515"></a>
+<span class="sourceLineNo">516</span>        /**<a name="line.516"></a>
+<span class="sourceLineNo">517</span>         * Fetches the status of one or more pdbIDs from the server.<a name="line.517"></a>
+<span class="sourceLineNo">518</span>         *<a name="line.518"></a>
+<span class="sourceLineNo">519</span>         * &lt;p&gt;Returns the results as a list of Attributes.<a name="line.519"></a>
+<span class="sourceLineNo">520</span>         * Each attribute should contain "structureId" and "status" attributes, and<a name="line.520"></a>
+<span class="sourceLineNo">521</span>         * possibly more.<a name="line.521"></a>
+<span class="sourceLineNo">522</span>         *<a name="line.522"></a>
+<span class="sourceLineNo">523</span>         * &lt;p&gt;Example:&lt;/br&gt;<a name="line.523"></a>
+<span class="sourceLineNo">524</span>         * &lt;tt&gt;http://www.rcsb.org/pdb/rest/idStatus?structureID=1HHB,4HHB&lt;/tt&gt;&lt;/br&gt;<a name="line.524"></a>
+<span class="sourceLineNo">525</span>         *&lt;pre&gt;&amp;lt;idStatus&amp;gt;<a name="line.525"></a>
+<span class="sourceLineNo">526</span>         *  &amp;lt;record structureId="1HHB" status="OBSOLETE" replacedBy="4HHB"/&amp;gt;<a name="line.526"></a>
+<span class="sourceLineNo">527</span>         *  &amp;lt;record structureId="4HHB" status="CURRENT" replaces="1HHB"/&amp;gt;<a name="line.527"></a>
+<span class="sourceLineNo">528</span>         *&amp;lt;/idStatus&amp;gt;<a name="line.528"></a>
+<span class="sourceLineNo">529</span>         * &lt;/pre&gt;<a name="line.529"></a>
+<span class="sourceLineNo">530</span>         *<a name="line.530"></a>
+<span class="sourceLineNo">531</span>         * &lt;p&gt;Results are not guaranteed to be returned in the same order as pdbIDs.<a name="line.531"></a>
+<span class="sourceLineNo">532</span>         * Refer to the structureId property to match them.<a name="line.532"></a>
+<span class="sourceLineNo">533</span>         *<a name="line.533"></a>
+<span class="sourceLineNo">534</span>         * @param pdbIDs<a name="line.534"></a>
+<span class="sourceLineNo">535</span>         * @return A map between attributes and values<a name="line.535"></a>
+<span class="sourceLineNo">536</span>         */<a name="line.536"></a>
+<span class="sourceLineNo">537</span>        private static List&lt;Map&lt;String, String&gt;&gt; getStatusIdRecords(String[] pdbIDs) {<a name="line.537"></a>
+<span class="sourceLineNo">538</span><a name="line.538"></a>
+<span class="sourceLineNo">539</span>                List&lt;Map&lt;String,String&gt;&gt; result = new ArrayList&lt;Map&lt;String,String&gt;&gt;(pdbIDs.length);<a name="line.539"></a>
+<span class="sourceLineNo">540</span><a name="line.540"></a>
+<span class="sourceLineNo">541</span>                String serverName = System.getProperty(PDB_SERVER_PROPERTY);<a name="line.541"></a>
+<span class="sourceLineNo">542</span><a name="line.542"></a>
+<span class="sourceLineNo">543</span>                if ( serverName == null)<a name="line.543"></a>
+<span class="sourceLineNo">544</span>                        serverName = DEFAULT_PDB_SERVER;<a name="line.544"></a>
+<span class="sourceLineNo">545</span>                else<a name="line.545"></a>
+<span class="sourceLineNo">546</span>                        logger.info(String.format("Got System property %s=%s",PDB_SERVER_PROPERTY,serverName));<a name="line.546"></a>
+<span class="sourceLineNo">547</span><a name="line.547"></a>
+<span class="sourceLineNo">548</span>                // Build REST query URL<a name="line.548"></a>
+<span class="sourceLineNo">549</span>                if(pdbIDs.length &lt; 1) {<a name="line.549"></a>
+<span class="sourceLineNo">550</span>                        throw new IllegalArgumentException("No pdbIDs specified");<a name="line.550"></a>
+<span class="sourceLineNo">551</span>                }<a name="line.551"></a>
+<span class="sourceLineNo">552</span>                String urlStr = String.format("http://%s/pdb/rest/idStatus?structureId=",serverName);<a name="line.552"></a>
+<span class="sourceLineNo">553</span>                for(String pdbId : pdbIDs) {<a name="line.553"></a>
+<span class="sourceLineNo">554</span>                        pdbId = pdbId.toUpperCase();<a name="line.554"></a>
+<span class="sourceLineNo">555</span>                        //check the cache<a name="line.555"></a>
+<span class="sourceLineNo">556</span>                        if (recordsCache.containsKey(pdbId)) {<a name="line.556"></a>
+<span class="sourceLineNo">557</span>                                //logger.debug("Fetching "+pdbId+" from Cache");<a name="line.557"></a>
+<span class="sourceLineNo">558</span>                                result.add( recordsCache.get(pdbId) );<a name="line.558"></a>
+<span class="sourceLineNo">559</span>                        } else {<a name="line.559"></a>
+<span class="sourceLineNo">560</span>                                urlStr += pdbId + ",";<a name="line.560"></a>
+<span class="sourceLineNo">561</span>                        }<a name="line.561"></a>
+<span class="sourceLineNo">562</span>                }<a name="line.562"></a>
+<span class="sourceLineNo">563</span><a name="line.563"></a>
+<span class="sourceLineNo">564</span>                // check if any ids still need fetching<a name="line.564"></a>
+<span class="sourceLineNo">565</span>                if(urlStr.charAt(urlStr.length()-1) == '=') {<a name="line.565"></a>
+<span class="sourceLineNo">566</span>                        return result;<a name="line.566"></a>
+<span class="sourceLineNo">567</span>                }<a name="line.567"></a>
+<span class="sourceLineNo">568</span><a name="line.568"></a>
+<span class="sourceLineNo">569</span>                try {<a name="line.569"></a>
+<span class="sourceLineNo">570</span>                        logger.info("Fetching {}", urlStr);<a name="line.570"></a>
+<span class="sourceLineNo">571</span><a name="line.571"></a>
+<span class="sourceLineNo">572</span>                        URL url = new URL(urlStr);<a name="line.572"></a>
+<span class="sourceLineNo">573</span><a name="line.573"></a>
+<span class="sourceLineNo">574</span>                        InputStream uStream = url.openStream();<a name="line.574"></a>
+<span class="sourceLineNo">575</span><a name="line.575"></a>
+<span class="sourceLineNo">576</span>                        InputSource source = new InputSource(uStream);<a name="line.576"></a>
+<span class="sourceLineNo">577</span>                        SAXParserFactory parserFactory = SAXParserFactory.newInstance();<a name="line.577"></a>
+<span class="sourceLineNo">578</span>                        SAXParser parser = parserFactory.newSAXParser();<a name="line.578"></a>
+<span class="sourceLineNo">579</span>                        XMLReader reader = parser.getXMLReader();<a name="line.579"></a>
+<span class="sourceLineNo">580</span><a name="line.580"></a>
+<span class="sourceLineNo">581</span>                        PDBStatusXMLHandler handler = new PDBStatusXMLHandler();<a name="line.581"></a>
+<span class="sourceLineNo">582</span><a name="line.582"></a>
+<span class="sourceLineNo">583</span>                        reader.setContentHandler(handler);<a name="line.583"></a>
+<span class="sourceLineNo">584</span>                        reader.parse(source);<a name="line.584"></a>
+<span class="sourceLineNo">585</span><a name="line.585"></a>
+<span class="sourceLineNo">586</span>                        // Fetch results of SAX parsing<a name="line.586"></a>
+<span class="sourceLineNo">587</span>                        List&lt;Map&lt;String,String&gt;&gt; records = handler.getRecords();<a name="line.587"></a>
+<span class="sourceLineNo">588</span><a name="line.588"></a>
+<span class="sourceLineNo">589</span>                        //add to cache<a name="line.589"></a>
+<span class="sourceLineNo">590</span>                        for(Map&lt;String,String&gt; record : records) {<a name="line.590"></a>
+<span class="sourceLineNo">591</span>                                String pdbId = record.get("structureId").toUpperCase();<a name="line.591"></a>
+<span class="sourceLineNo">592</span>                                if(pdbId != null) {<a name="line.592"></a>
+<span class="sourceLineNo">593</span>                                        recordsCache.put(pdbId, record);<a name="line.593"></a>
+<span class="sourceLineNo">594</span>                                }<a name="line.594"></a>
+<span class="sourceLineNo">595</span>                        }<a name="line.595"></a>
+<span class="sourceLineNo">596</span><a name="line.596"></a>
+<span class="sourceLineNo">597</span>                        // return results<a name="line.597"></a>
+<span class="sourceLineNo">598</span>                        result.addAll(handler.getRecords());<a name="line.598"></a>
+<span class="sourceLineNo">599</span><a name="line.599"></a>
+<span class="sourceLineNo">600</span>                        // TODO should throw these forward and let the caller log<a name="line.600"></a>
+<span class="sourceLineNo">601</span>                } catch (IOException e){<a name="line.601"></a>
+<span class="sourceLineNo">602</span>                        logger.error("Problem getting status for {} from PDB server. Error: {}", Arrays.toString(pdbIDs), e.getMessage());<a name="line.602"></a>
+<span class="sourceLineNo">603</span>                        return null;<a name="line.603"></a>
+<span class="sourceLineNo">604</span>                } catch (SAXException e) {<a name="line.604"></a>
+<span class="sourceLineNo">605</span>                        logger.error("Problem getting status for {} from PDB server. Error: {}", Arrays.toString(pdbIDs), e.getMessage());<a name="line.605"></a>
+<span class="sourceLineNo">606</span>                        return null;<a name="line.606"></a>
+<span class="sourceLineNo">607</span>                } catch (ParserConfigurationException e) {<a name="line.607"></a>
+<span class="sourceLineNo">608</span>                        logger.error("Problem getting status for {} from PDB server. Error: {}", Arrays.toString(pdbIDs), e.getMessage());<a name="line.608"></a>
+<span class="sourceLineNo">609</span>                        return null;<a name="line.609"></a>
+<span class="sourceLineNo">610</span>                }<a name="line.610"></a>
+<span class="sourceLineNo">611</span><a name="line.611"></a>
+<span class="sourceLineNo">612</span>                return result;<a name="line.612"></a>
+<span class="sourceLineNo">613</span>        }<a name="line.613"></a>
+<span class="sourceLineNo">614</span><a name="line.614"></a>
+<span class="sourceLineNo">615</span>        /**<a name="line.615"></a>
+<span class="sourceLineNo">616</span>         * Handles idStatus xml by storing attributes for all record elements.<a name="line.616"></a>
+<span class="sourceLineNo">617</span>         *<a name="line.617"></a>
+<span class="sourceLineNo">618</span>         * @author Spencer Bliven &lt;sbliven@ucsd.edu&gt;<a name="line.618"></a>
+<span class="sourceLineNo">619</span>         *<a name="line.619"></a>
+<span class="sourceLineNo">620</span>         */<a name="line.620"></a>
+<span class="sourceLineNo">621</span>        private static class PDBStatusXMLHandler extends DefaultHandler {<a name="line.621"></a>
+<span class="sourceLineNo">622</span>                private List&lt;Map&lt;String,String&gt;&gt; records;<a name="line.622"></a>
+<span class="sourceLineNo">623</span><a name="line.623"></a>
+<span class="sourceLineNo">624</span>                public PDBStatusXMLHandler() {<a name="line.624"></a>
+<span class="sourceLineNo">625</span>                        records = new ArrayList&lt;Map&lt;String,String&gt;&gt;();<a name="line.625"></a>
+<span class="sourceLineNo">626</span>                }<a name="line.626"></a>
+<span class="sourceLineNo">627</span><a name="line.627"></a>
+<span class="sourceLineNo">628</span>                /**<a name="line.628"></a>
+<span class="sourceLineNo">629</span>                 * @param uri<a name="line.629"></a>
+<span class="sourceLineNo">630</span>                 * @param localName<a name="line.630"></a>
+<span class="sourceLineNo">631</span>                 * @param qName<a name="line.631"></a>
+<span class="sourceLineNo">632</span>                 * @param attributes<a name="line.632"></a>
+<span class="sourceLineNo">633</span>                 * @throws SAXException<a name="line.633"></a>
+<span class="sourceLineNo">634</span>                 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)<a name="line.634"></a>
+<span class="sourceLineNo">635</span>                 */<a name="line.635"></a>
+<span class="sourceLineNo">636</span>                @Override<a name="line.636"></a>
+<span class="sourceLineNo">637</span>                public void startElement(String uri, String localName, String qName,<a name="line.637"></a>
+<span class="sourceLineNo">638</span>                                         Attributes attributes) throws SAXException {<a name="line.638"></a>
+<span class="sourceLineNo">639</span>                        //System.out.format("Starting element: uri='%s' localName='%s' qName='%s'\n", uri, localName, qName);<a name="line.639"></a>
+<span class="sourceLineNo">640</span>                        if(qName.equals("record")) {<a name="line.640"></a>
+<span class="sourceLineNo">641</span>                                //Convert attributes into a Map, as it should have been.<a name="line.641"></a>
+<span class="sourceLineNo">642</span>                                //Important since SAX reuses Attributes objects for different calls<a name="line.642"></a>
+<span class="sourceLineNo">643</span>                                Map&lt;String,String&gt; attrMap = new HashMap&lt;String,String&gt;(attributes.getLength()*2);<a name="line.643"></a>
+<span class="sourceLineNo">644</span>                                for(int i=0;i&lt;attributes.getLength();i++) {<a name="line.644"></a>
+<span class="sourceLineNo">645</span>                                        attrMap.put(attributes.getQName(i), attributes.getValue(i));<a name="line.645"></a>
+<span class="sourceLineNo">646</span>                                }<a name="line.646"></a>
+<span class="sourceLineNo">647</span>                                records.add(attrMap);<a name="line.647"></a>
+<span class="sourceLineNo">648</span>                        }<a name="line.648"></a>
+<span class="sourceLineNo">649</span>                }<a name="line.649"></a>
+<span class="sourceLineNo">650</span><a name="line.650"></a>
+<span class="sourceLineNo">651</span><a name="line.651"></a>
+<span class="sourceLineNo">652</span>                /**<a name="line.652"></a>
+<span class="sourceLineNo">653</span>                 * @param e<a name="line.653"></a>
+<span class="sourceLineNo">654</span>                 * @throws SAXException<a name="line.654"></a>
+<span class="sourceLineNo">655</span>                 * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)<a name="line.655"></a>
+<span class="sourceLineNo">656</span>                 */<a name="line.656"></a>
+<span class="sourceLineNo">657</span>                @Override<a name="line.657"></a>
+<span class="sourceLineNo">658</span>                public void error(SAXParseException e) throws SAXException {<a name="line.658"></a>
+<span class="sourceLineNo">659</span>                        logger.error(e.getMessage());<a name="line.659"></a>
+<span class="sourceLineNo">660</span>                        super.error(e);<a name="line.660"></a>
+<span class="sourceLineNo">661</span>                }<a name="line.661"></a>
+<span class="sourceLineNo">662</span><a name="line.662"></a>
+<span class="sourceLineNo">663</span><a name="line.663"></a>
+<span class="sourceLineNo">664</span>                public List&lt;Map&lt;String, String&gt;&gt; getRecords() {<a name="line.664"></a>
+<span class="sourceLineNo">665</span>                        return records;<a name="line.665"></a>
+<span class="sourceLineNo">666</span>                }<a name="line.666"></a>
+<span class="sourceLineNo">667</span>        }<a name="line.667"></a>
+<span class="sourceLineNo">668</span><a name="line.668"></a>
+<span class="sourceLineNo">669</span>        /** Returns a list of current PDB IDs<a name="line.669"></a>
+<span class="sourceLineNo">670</span>         *<a name="line.670"></a>
+<span class="sourceLineNo">671</span>         * @return a list of PDB IDs, or null if a problem occurred<a name="line.671"></a>
+<span class="sourceLineNo">672</span>         */<a name="line.672"></a>
+<span class="sourceLineNo">673</span><a name="line.673"></a>
+<span class="sourceLineNo">674</span>        public static SortedSet&lt;String&gt; getCurrentPDBIds() throws IOException {<a name="line.674"></a>
+<span class="sourceLineNo">675</span><a name="line.675"></a>
+<span class="sourceLineNo">676</span>                SortedSet&lt;String&gt; allPDBs = new TreeSet&lt;String&gt;();<a name="line.676"></a>
+<span class="sourceLineNo">677</span>                String serverName = System.getProperty(PDB_SERVER_PROPERTY);<a name="line.677"></a>
+<span class="sourceLineNo">678</span><a name="line.678"></a>
+<span class="sourceLineNo">679</span>                if ( serverName == null)<a name="line.679"></a>
+<span class="sourceLineNo">680</span>                        serverName = DEFAULT_PDB_SERVER;<a name="line.680"></a>
+<span class="sourceLineNo">681</span>                else<a name="line.681"></a>
+<span class="sourceLineNo">682</span>                        logger.info(String.format("Got System property %s=%s",PDB_SERVER_PROPERTY,serverName));<a name="line.682"></a>
+<span class="sourceLineNo">683</span><a name="line.683"></a>
+<span class="sourceLineNo">684</span>                // Build REST query URL<a name="line.684"></a>
+<span class="sourceLineNo">685</span><a name="line.685"></a>
+<span class="sourceLineNo">686</span>                String urlStr = String.format("http://%s/pdb/rest/getCurrent",serverName);<a name="line.686"></a>
+<span class="sourceLineNo">687</span>                URL u = new URL(urlStr);<a name="line.687"></a>
+<span class="sourceLineNo">688</span><a name="line.688"></a>
+<span class="sourceLineNo">689</span>                InputStream stream = URLConnectionTools.getInputStream(u, 60000);<a name="line.689"></a>
+<span class="sourceLineNo">690</span><a name="line.690"></a>
+<span class="sourceLineNo">691</span>                if (stream != null) {<a name="line.691"></a>
+<span class="sourceLineNo">692</span>                        BufferedReader reader = new BufferedReader(<a name="line.692"></a>
+<span class="sourceLineNo">693</span>                                        new InputStreamReader(stream));<a name="line.693"></a>
+<span class="sourceLineNo">694</span><a name="line.694"></a>
+<span class="sourceLineNo">695</span>                        String line = null;<a name="line.695"></a>
+<span class="sourceLineNo">696</span><a name="line.696"></a>
+<span class="sourceLineNo">697</span>                        while ((line = reader.readLine()) != null) {<a name="line.697"></a>
+<span class="sourceLineNo">698</span>                                int index = line.lastIndexOf("structureId=");<a name="line.698"></a>
+<span class="sourceLineNo">699</span>                                if (index &gt; 0) {<a name="line.699"></a>
+<span class="sourceLineNo">700</span>                                        allPDBs.add(line.substring(index + 13, index + 17));<a name="line.700"></a>
+<span class="sourceLineNo">701</span>                                }<a name="line.701"></a>
+<span class="sourceLineNo">702</span>                        }<a name="line.702"></a>
+<span class="sourceLineNo">703</span>                }<a name="line.703"></a>
+<span class="sourceLineNo">704</span>                return allPDBs;<a name="line.704"></a>
+<span class="sourceLineNo">705</span><a name="line.705"></a>
+<span class="sourceLineNo">706</span>        }<a name="line.706"></a>
+<span class="sourceLineNo">707</span><a name="line.707"></a>
+<span class="sourceLineNo">708</span>}<a name="line.708"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

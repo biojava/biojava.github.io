@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.nbio.structure.align.quaternary;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.ArrayList;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Arrays;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.HashMap;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.List;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.Map;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.Map.Entry;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.vecmath.Matrix4d;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.nbio.structure.Atom;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.nbio.structure.Calc;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.nbio.structure.Structure;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.nbio.structure.StructureException;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.nbio.structure.StructureTools;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.nbio.structure.align.multiple.Block;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.nbio.structure.align.multiple.BlockImpl;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.biojava.nbio.structure.align.multiple.BlockSet;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.biojava.nbio.structure.align.multiple.BlockSetImpl;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.biojava.nbio.structure.align.multiple.MultipleAlignment;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.biojava.nbio.structure.align.multiple.MultipleAlignmentEnsembleImpl;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.biojava.nbio.structure.align.multiple.MultipleAlignmentImpl;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.biojava.nbio.structure.align.multiple.util.MultipleAlignmentScorer;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.biojava.nbio.structure.align.multiple.util.ReferenceSuperimposer;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.biojava.nbio.structure.cluster.Subunit;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.biojava.nbio.structure.cluster.SubunitCluster;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.biojava.nbio.structure.cluster.SubunitClusterer;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>import org.biojava.nbio.structure.cluster.SubunitClustererParameters;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>import org.biojava.nbio.structure.cluster.SubunitExtractor;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import org.biojava.nbio.structure.contact.Pair;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>import org.biojava.nbio.structure.geometry.SuperPositions;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>import org.biojava.nbio.structure.geometry.UnitQuaternions;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>import org.slf4j.Logger;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>import org.slf4j.LoggerFactory;<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>/**<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * Quaternary Structure Alignment (QS-Align). The algorithm takes as input two<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * protein structures at the quaternary structure level (multiple chains or<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * subunits) and calculates the equivalent subunit matching and a residue-based<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * alignment, together with usual alignment quality scores.<a name="line.61"></a>
+<span class="sourceLineNo">062</span> *<a name="line.62"></a>
+<span class="sourceLineNo">063</span> * @author Aleix Lafita<a name="line.63"></a>
+<span class="sourceLineNo">064</span> * @since 5.0.0<a name="line.64"></a>
+<span class="sourceLineNo">065</span> *<a name="line.65"></a>
+<span class="sourceLineNo">066</span> */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>public class QsAlign {<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>        private static final Logger logger = LoggerFactory.getLogger(QsAlign.class);<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>        public static QsAlignResult align(Structure s1, Structure s2,<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                        SubunitClustererParameters cParams, QsAlignParameters aParams)<a name="line.72"></a>
+<span class="sourceLineNo">073</span>                        throws StructureException {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                return align(<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                                SubunitExtractor.extractSubunits(s1,<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                                                cParams.getAbsoluteMinimumSequenceLength(),<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                                                cParams.getMinimumSequenceLengthFraction(),<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                                                cParams.getMinimumSequenceLength()),<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                                SubunitExtractor.extractSubunits(s2,<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                                                cParams.getAbsoluteMinimumSequenceLength(),<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                                                cParams.getMinimumSequenceLengthFraction(),<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                                                cParams.getMinimumSequenceLength()), cParams, aParams);<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        }<a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>        public static QsAlignResult align(List&lt;Subunit&gt; s1, List&lt;Subunit&gt; s2,<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                        SubunitClustererParameters cParams, QsAlignParameters aParams)<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                        throws StructureException {<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>                QsAlignResult result = new QsAlignResult(s1, s2);<a name="line.89"></a>
+<span class="sourceLineNo">090</span><a name="line.90"></a>
+<span class="sourceLineNo">091</span>                // SETP 1: cluster each group of subunits O(N^2*L^2) - intra<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>                List&lt;SubunitCluster&gt; c1 = SubunitClusterer.cluster(s1, cParams).getClusters();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                List&lt;SubunitCluster&gt; c2 = SubunitClusterer.cluster(s2, cParams).getClusters();<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>                // STEP 2: match each subunit cluster between groups O(N^2*L^2) - inter<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                Map&lt;Integer, Integer&gt; clusterMap = new HashMap&lt;Integer, Integer&gt;();<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                for (int i = 0; i &lt; c1.size(); i++) {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                        for (int j = 0; j &lt; c2.size(); j++) {<a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span>                                if (clusterMap.keySet().contains(i))<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                                        break;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                                if (clusterMap.values().contains(j))<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                                        continue;<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>                                // Use structural alignment to match the subunit clusters<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                                if (c1.get(i).mergeStructure(c2.get(j),cParams)) {<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                                        clusterMap.put(i, j);<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                                }<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                        }<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                }<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>                logger.info("Cluster Map: " + clusterMap.toString());<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                result.setClusters(c1);<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>                // STEP 3: Align the assemblies for each cluster match O(N^2*L)<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                for (int globalKey : clusterMap.keySet()) {<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>                        // Obtain the clusters<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                        SubunitCluster clust1 = c1.get(globalKey);<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                        SubunitCluster clust2 = c2.get(clusterMap.get(globalKey));<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>                        // Take a cluster match as reference<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                        int index1 = 0;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                        int index2 = clust1.size() - clust2.size();<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                        Map&lt;Integer, Integer&gt; subunitMap = new HashMap&lt;Integer, Integer&gt;();<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                        subunitMap.put(index1, index2);<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>                        // Map cluster id to their subunit matching<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                        Map&lt;Integer, Map&lt;Integer, Integer&gt;&gt; clustSubunitMap = new HashMap&lt;Integer, Map&lt;Integer, Integer&gt;&gt;();<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                        clustSubunitMap.put(globalKey, subunitMap);<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>                        // Change order of key set so that globalKey is first<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                        List&lt;Integer&gt; keySet = new ArrayList&lt;Integer&gt;(clusterMap.keySet());<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                        keySet.remove((Integer) globalKey);<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                        keySet.add(0, globalKey);<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>                        for (int key : clusterMap.keySet()) {<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                // Recover subunitMap if it is the reference, new one otherwise<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                if (key == globalKey)<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                                        subunitMap = clustSubunitMap.get(key);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                                else<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                                        subunitMap = new HashMap&lt;Integer, Integer&gt;();<a name="line.144"></a>
+<span class="sourceLineNo">145</span><a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                // Obtain the clusters of each subunit group<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                                clust1 = c1.get(key);<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                                clust2 = c2.get(clusterMap.get(key));<a name="line.148"></a>
+<span class="sourceLineNo">149</span><a name="line.149"></a>
+<span class="sourceLineNo">150</span>                                // Get the initial subunit indices of each group<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                                index1 = 0;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                                index2 = clust1.size() - clust2.size();<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>                                for (int i = 0; i &lt; index2; i++) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                                        for (int j = index2; j &lt; clust1.size(); j++) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span><a name="line.156"></a>
+<span class="sourceLineNo">157</span>                                                if (subunitMap.keySet().contains(i))<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                                                        break;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                                                if (subunitMap.values().contains(j))<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                                                        continue;<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                                                // Obtain cumulative transformation matrix<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                                                Matrix4d transform = getTransformForClusterSubunitMap(<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                                                                c1, clustSubunitMap);<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>                                                // Obtain Atom arrays of the subunit pair to match<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                                                Atom[] atoms1 = clust1.getAlignedAtomsSubunit(i);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                                Atom[] atoms2 = clust1.getAlignedAtomsSubunit(j);<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>                                                // Obtain centroids and transform the second<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                                                Atom centr1 = Calc.getCentroid(atoms1);<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                                                Atom centr2 = Calc.getCentroid(atoms2);<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                                                Calc.transform(centr2, transform);<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>                                                // 1- Check that the distance fulfills maximum<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                                                double dCentroid = Calc.getDistance(centr1, centr2);<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                                                if (dCentroid &gt; aParams.getdCutoff()) {<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                                                        logger.debug(String.format("Subunit matching %d "<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                                                                        + "vs %d of cluster %d could not be "<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                                                                        + "matched, because centroid distance is "<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                                                                        + "%.2f", index1, index2, key, dCentroid));<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                                                        continue;<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                                                }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>                                                // Transform coordinates of second<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                                                Atom[] atoms2c = StructureTools.cloneAtomArray(atoms2);<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                                                Calc.transform(atoms2c, transform);<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>                                                // 2- Check the orientation metric condition<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                                                double qOrient = UnitQuaternions.orientationAngle(<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                                                                Calc.atomsToPoints(atoms1),<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                                                                Calc.atomsToPoints(atoms2c), false);<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                                                qOrient = Math.min(Math.abs(2*Math.PI - qOrient), qOrient);<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                                                if (qOrient &gt; aParams.getMaxOrientationAngle()) {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                                                        logger.debug(String.format("Subunit matching %d "<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                                                                        + "vs %d of cluster %d could not be "<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                                                                        + "matched, because orientation metric is "<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                                                        + "%.2f", i, j, key, qOrient));<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                                                        continue;<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                                                }<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span>                                                // 3- Check the RMSD condition<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                                                double rmsd = Calc.rmsd(atoms1, atoms2c);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                                                if (rmsd &gt; aParams.getMaxRmsd()) {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>                                                        logger.debug(String.format("Subunit matching %d "<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                                                                        + "vs %d of cluster %d could not be "<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                                                                        + "matched, because RMSD is %.2f", i,<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                                                                        j, key, rmsd));<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                                                        continue;<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                                                }<a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>                                                logger.info(String.format("Subunit matching %d vs %d"<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                                                                + " of cluster %d with centroid distance %.2f"<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                                                                + ", orientation metric %.2f and RMSD %.2f",<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                                                                i, j, key, dCentroid, qOrient, rmsd));<a name="line.215"></a>
+<span class="sourceLineNo">216</span><a name="line.216"></a>
+<span class="sourceLineNo">217</span>                                                subunitMap.put(i, j);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                                        }<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                                }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>                                clustSubunitMap.put(key, subunitMap);<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                        }<a name="line.222"></a>
+<span class="sourceLineNo">223</span><a name="line.223"></a>
+<span class="sourceLineNo">224</span>                        logger.info("Cluster Subunit Map: " + clustSubunitMap.toString());<a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>                        // Unfold the nested map into subunit map and alignment<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                        subunitMap = new HashMap&lt;Integer, Integer&gt;();<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                        List&lt;Integer&gt; alignRes1 = new ArrayList&lt;Integer&gt;();<a name="line.228"></a>
+<span class="sourceLineNo">229</span>                        List&lt;Integer&gt; alignRes2 = new ArrayList&lt;Integer&gt;();<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                        List&lt;Atom&gt; atomArray1 = new ArrayList&lt;Atom&gt;();<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                        List&lt;Atom&gt; atomArray2 = new ArrayList&lt;Atom&gt;();<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>                        for (int key : clustSubunitMap.keySet()) {<a name="line.233"></a>
+<span class="sourceLineNo">234</span><a name="line.234"></a>
+<span class="sourceLineNo">235</span>                                // Obtain the cluster and the alignment in it<a name="line.235"></a>
+<span class="sourceLineNo">236</span>                                SubunitCluster cluster = c1.get(key);<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                                List&lt;List&lt;Integer&gt;&gt; clusterEqrs = cluster<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                                                .getMultipleAlignment().getBlock(0).getAlignRes();<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>                                for (Entry&lt;Integer, Integer&gt; pair : clustSubunitMap.get(key)<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                                                .entrySet()) {<a name="line.241"></a>
+<span class="sourceLineNo">242</span><a name="line.242"></a>
+<span class="sourceLineNo">243</span>                                        int i = pair.getKey();<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                                        int j = pair.getValue();<a name="line.244"></a>
+<span class="sourceLineNo">245</span><a name="line.245"></a>
+<span class="sourceLineNo">246</span>                                        // Obtain the indices of the original Subunit Lists<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                                        int orig1 = s1.indexOf(cluster.getSubunits().get(i));<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                                        int orig2 = s2.indexOf(cluster.getSubunits().get(j));<a name="line.248"></a>
+<span class="sourceLineNo">249</span><a name="line.249"></a>
+<span class="sourceLineNo">250</span>                                        // Append rescaled aligned residue indices<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                                        for (Integer eqr : clusterEqrs.get(i))<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                                                alignRes1.add(eqr + atomArray1.size());<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                                        for (Integer eqr : clusterEqrs.get(j))<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                                                alignRes2.add(eqr + atomArray2.size());<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>                                        // Apend atoms to the arrays<a name="line.256"></a>
+<span class="sourceLineNo">257</span>                                        atomArray1.addAll(Arrays.asList(s1.get(orig1)<a name="line.257"></a>
+<span class="sourceLineNo">258</span>                                                        .getRepresentativeAtoms()));<a name="line.258"></a>
+<span class="sourceLineNo">259</span>                                        atomArray2.addAll(Arrays.asList(s2.get(orig2)<a name="line.259"></a>
+<span class="sourceLineNo">260</span>                                                        .getRepresentativeAtoms()));<a name="line.260"></a>
+<span class="sourceLineNo">261</span><a name="line.261"></a>
+<span class="sourceLineNo">262</span>                                        subunitMap.put(orig1, orig2);<a name="line.262"></a>
+<span class="sourceLineNo">263</span>                                }<a name="line.263"></a>
+<span class="sourceLineNo">264</span>                        }<a name="line.264"></a>
+<span class="sourceLineNo">265</span><a name="line.265"></a>
+<span class="sourceLineNo">266</span>                        // Evaluate the goodness of the match with an alignment object<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        MultipleAlignment msa = new MultipleAlignmentImpl();<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                        msa.setEnsemble(new MultipleAlignmentEnsembleImpl());<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                        msa.getEnsemble().setAtomArrays(<a name="line.269"></a>
+<span class="sourceLineNo">270</span>                                        Arrays.asList(new Atom[][] {<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                                                        atomArray1.toArray(new Atom[atomArray1.size()]),<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                                                        atomArray2.toArray(new Atom[atomArray2.size()]) }));<a name="line.272"></a>
+<span class="sourceLineNo">273</span><a name="line.273"></a>
+<span class="sourceLineNo">274</span>                        // Fill in the alignment information<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                        BlockSet bs = new BlockSetImpl(msa);<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                        Block b = new BlockImpl(bs);<a name="line.276"></a>
+<span class="sourceLineNo">277</span>                        List&lt;List&lt;Integer&gt;&gt; alignRes = new ArrayList&lt;List&lt;Integer&gt;&gt;(2);<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                        alignRes.add(alignRes1);<a name="line.278"></a>
+<span class="sourceLineNo">279</span>                        alignRes.add(alignRes2);<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                        b.setAlignRes(alignRes);<a name="line.280"></a>
+<span class="sourceLineNo">281</span><a name="line.281"></a>
+<span class="sourceLineNo">282</span>                        // Fill in the transformation matrices<a name="line.282"></a>
+<span class="sourceLineNo">283</span>                        new ReferenceSuperimposer().superimpose(msa);<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>                        // Calculate some scores<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                        MultipleAlignmentScorer.calculateScores(msa);<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>                        // If it is the best match found so far store it<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                        if (subunitMap.size() &gt; result.getSubunitMap().size()) {<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                                result.setSubunitMap(subunitMap);<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                                result.setAlignment(msa);<a name="line.291"></a>
+<span class="sourceLineNo">292</span>                                logger.info("Better result found: " + result.toString());<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                        } else if (subunitMap.size() == result.getSubunitMap().size()) {<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                                if (result.getAlignment() == null) {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                        result.setSubunitMap(subunitMap);<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                                        result.setAlignment(msa);<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                                } else if (msa.getScore(MultipleAlignmentScorer.RMSD) &lt; result<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                                                .getRmsd()) {<a name="line.298"></a>
+<span class="sourceLineNo">299</span>                                        result.setSubunitMap(subunitMap);<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                                        result.setAlignment(msa);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                                        logger.info("Better result found: " + result.toString());<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                                }<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                        }<a name="line.303"></a>
+<span class="sourceLineNo">304</span><a name="line.304"></a>
+<span class="sourceLineNo">305</span>                }<a name="line.305"></a>
+<span class="sourceLineNo">306</span><a name="line.306"></a>
+<span class="sourceLineNo">307</span>                return result;<a name="line.307"></a>
+<span class="sourceLineNo">308</span>        }<a name="line.308"></a>
+<span class="sourceLineNo">309</span><a name="line.309"></a>
+<span class="sourceLineNo">310</span>        /**<a name="line.310"></a>
+<span class="sourceLineNo">311</span>         * Returns a pair of Atom arrays corresponding to the alignment of subunit<a name="line.311"></a>
+<span class="sourceLineNo">312</span>         * matchings, in order of appearance. Superposition of the two Atom sets<a name="line.312"></a>
+<span class="sourceLineNo">313</span>         * gives the transformation of the complex.<a name="line.313"></a>
+<span class="sourceLineNo">314</span>         * &lt;p&gt;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>         * Utility method to cumulative calculate the alignment Atoms.<a name="line.315"></a>
+<span class="sourceLineNo">316</span>         *<a name="line.316"></a>
+<span class="sourceLineNo">317</span>         * @param clusters<a name="line.317"></a>
+<span class="sourceLineNo">318</span>         *            List of SubunitClusters<a name="line.318"></a>
+<span class="sourceLineNo">319</span>         * @param clusterSubunitMap<a name="line.319"></a>
+<span class="sourceLineNo">320</span>         *            map from cluster id to subunit matching<a name="line.320"></a>
+<span class="sourceLineNo">321</span>         * @return pair of atom arrays to be superposed<a name="line.321"></a>
+<span class="sourceLineNo">322</span>         */<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        private static Pair&lt;Atom[]&gt; getAlignedAtomsForClusterSubunitMap(<a name="line.323"></a>
+<span class="sourceLineNo">324</span>                        List&lt;SubunitCluster&gt; clusters,<a name="line.324"></a>
+<span class="sourceLineNo">325</span>                        Map&lt;Integer, Map&lt;Integer, Integer&gt;&gt; clusterSubunitMap) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span><a name="line.326"></a>
+<span class="sourceLineNo">327</span>                List&lt;Atom&gt; atomArray1 = new ArrayList&lt;Atom&gt;();<a name="line.327"></a>
+<span class="sourceLineNo">328</span>                List&lt;Atom&gt; atomArray2 = new ArrayList&lt;Atom&gt;();<a name="line.328"></a>
+<span class="sourceLineNo">329</span><a name="line.329"></a>
+<span class="sourceLineNo">330</span>                // For each cluster of subunits<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                for (int key : clusterSubunitMap.keySet()) {<a name="line.331"></a>
+<span class="sourceLineNo">332</span><a name="line.332"></a>
+<span class="sourceLineNo">333</span>                        // Obtain the cluster and the alignment in it<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                        SubunitCluster cluster = clusters.get(key);<a name="line.334"></a>
+<span class="sourceLineNo">335</span><a name="line.335"></a>
+<span class="sourceLineNo">336</span>                        // For each subunit matching in the cluster<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                        for (Entry&lt;Integer, Integer&gt; pair : clusterSubunitMap.get(key)<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                                        .entrySet()) {<a name="line.338"></a>
+<span class="sourceLineNo">339</span><a name="line.339"></a>
+<span class="sourceLineNo">340</span>                                int i = pair.getKey();<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                                int j = pair.getValue();<a name="line.341"></a>
+<span class="sourceLineNo">342</span><a name="line.342"></a>
+<span class="sourceLineNo">343</span>                                // Apend atoms to the arrays<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                                atomArray1.addAll(Arrays.asList(cluster<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                                                .getAlignedAtomsSubunit(i)));<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                                atomArray2.addAll(Arrays.asList(cluster<a name="line.346"></a>
+<span class="sourceLineNo">347</span>                                                .getAlignedAtomsSubunit(j)));<a name="line.347"></a>
+<span class="sourceLineNo">348</span>                        }<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
+<span class="sourceLineNo">350</span>                }<a name="line.350"></a>
+<span class="sourceLineNo">351</span>                return new Pair&lt;Atom[]&gt;(<a name="line.351"></a>
+<span class="sourceLineNo">352</span>                                atomArray1.toArray(new Atom[atomArray1.size()]),<a name="line.352"></a>
+<span class="sourceLineNo">353</span>                                atomArray2.toArray(new Atom[atomArray2.size()]));<a name="line.353"></a>
+<span class="sourceLineNo">354</span>        }<a name="line.354"></a>
+<span class="sourceLineNo">355</span><a name="line.355"></a>
+<span class="sourceLineNo">356</span>        /**<a name="line.356"></a>
+<span class="sourceLineNo">357</span>         * Returns the transformation matrix corresponding to the alignment of<a name="line.357"></a>
+<span class="sourceLineNo">358</span>         * subunit matchings.<a name="line.358"></a>
+<span class="sourceLineNo">359</span>         * &lt;p&gt;<a name="line.359"></a>
+<span class="sourceLineNo">360</span>         * Utility method to cumulative calculate the alignment transformation.<a name="line.360"></a>
+<span class="sourceLineNo">361</span>         *<a name="line.361"></a>
+<span class="sourceLineNo">362</span>         * @param clusters<a name="line.362"></a>
+<span class="sourceLineNo">363</span>         *            List of SubunitClusters<a name="line.363"></a>
+<span class="sourceLineNo">364</span>         * @param clusterSubunitMap<a name="line.364"></a>
+<span class="sourceLineNo">365</span>         *            map from cluster id to subunit matching<a name="line.365"></a>
+<span class="sourceLineNo">366</span>         * @return transformation matrix<a name="line.366"></a>
+<span class="sourceLineNo">367</span>         * @throws StructureException<a name="line.367"></a>
+<span class="sourceLineNo">368</span>         */<a name="line.368"></a>
+<span class="sourceLineNo">369</span>        private static Matrix4d getTransformForClusterSubunitMap(<a name="line.369"></a>
+<span class="sourceLineNo">370</span>                        List&lt;SubunitCluster&gt; clusters,<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                        Map&lt;Integer, Map&lt;Integer, Integer&gt;&gt; clusterSubunitMap)<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                        throws StructureException {<a name="line.372"></a>
+<span class="sourceLineNo">373</span><a name="line.373"></a>
+<span class="sourceLineNo">374</span>                Pair&lt;Atom[]&gt; pair = getAlignedAtomsForClusterSubunitMap(clusters,<a name="line.374"></a>
+<span class="sourceLineNo">375</span>                                clusterSubunitMap);<a name="line.375"></a>
+<span class="sourceLineNo">376</span><a name="line.376"></a>
+<span class="sourceLineNo">377</span>                return SuperPositions.superpose(Calc.atomsToPoints(pair.getFirst()),<a name="line.377"></a>
+<span class="sourceLineNo">378</span>                                Calc.atomsToPoints(pair.getSecond()));<a name="line.378"></a>
+<span class="sourceLineNo">379</span><a name="line.379"></a>
+<span class="sourceLineNo">380</span>        }<a name="line.380"></a>
+<span class="sourceLineNo">381</span>}<a name="line.381"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
