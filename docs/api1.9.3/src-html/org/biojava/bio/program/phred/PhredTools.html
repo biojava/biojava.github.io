@@ -1,0 +1,432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.program.phred;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.BufferedReader;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.IOException;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.OutputStream;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.ArrayList;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.Iterator;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.List;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.bio.BioError;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.bio.BioException;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.bio.alignment.Alignment;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.bio.dist.Distribution;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.bio.dist.DistributionFactory;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.bio.dist.DistributionTools;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.bio.dist.DistributionTrainerContext;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.bio.dist.SimpleDistributionTrainerContext;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.biojava.bio.seq.DNATools;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.biojava.bio.seq.Sequence;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.biojava.bio.seq.SequenceIterator;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.biojava.bio.seq.db.HashSequenceDB;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.biojava.bio.seq.db.IDMaker;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.biojava.bio.seq.db.SequenceDB;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.biojava.bio.seq.impl.SimpleSequence;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.biojava.bio.seq.io.FastaDescriptionLineParser;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.biojava.bio.seq.io.FastaFormat;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.biojava.bio.seq.io.SeqIOTools;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>import org.biojava.bio.seq.io.SequenceBuilderFactory;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>import org.biojava.bio.seq.io.SimpleSequenceBuilder;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import org.biojava.bio.seq.io.StreamReader;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>import org.biojava.bio.seq.io.StreamWriter;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>import org.biojava.bio.seq.io.SymbolTokenization;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>import org.biojava.bio.symbol.Alphabet;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>import org.biojava.bio.symbol.AlphabetManager;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>import org.biojava.bio.symbol.BasisSymbol;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>import org.biojava.bio.symbol.FiniteAlphabet;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>import org.biojava.bio.symbol.IntegerAlphabet;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>import org.biojava.bio.symbol.SimpleSymbolList;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>import org.biojava.bio.symbol.Symbol;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>import org.biojava.bio.symbol.SymbolList;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>import org.biojava.utils.AssertionFailure;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>import org.biojava.utils.ChangeVetoException;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>import org.biojava.utils.ListTools;<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>/**<a name="line.68"></a>
+<span class="sourceLineNo">069</span> * &lt;p&gt;PhredTools contains static methods for working with phred<a name="line.69"></a>
+<span class="sourceLineNo">070</span> * quality data.&lt;/p&gt;<a name="line.70"></a>
+<span class="sourceLineNo">071</span> *<a name="line.71"></a>
+<span class="sourceLineNo">072</span> * &lt;p&gt;Copyright (c) 2001&lt;/p&gt;<a name="line.72"></a>
+<span class="sourceLineNo">073</span> * &lt;p&gt;Company:      AgResearch&lt;/p&gt;<a name="line.73"></a>
+<span class="sourceLineNo">074</span> *<a name="line.74"></a>
+<span class="sourceLineNo">075</span> * @author Mark Schreiber<a name="line.75"></a>
+<span class="sourceLineNo">076</span> * @author Matthew Pocock<a name="line.76"></a>
+<span class="sourceLineNo">077</span> * @since 1.1<a name="line.77"></a>
+<span class="sourceLineNo">078</span> *<a name="line.78"></a>
+<span class="sourceLineNo">079</span> * Note that Phred is a copyright of CodonCode Corporation.<a name="line.79"></a>
+<span class="sourceLineNo">080</span> */<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>public final class PhredTools {<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>   static{<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     try {<a name="line.85"></a>
+<span class="sourceLineNo">086</span>       List l = new ArrayList(2);<a name="line.86"></a>
+<span class="sourceLineNo">087</span>       l.add(DNATools.getDNA());<a name="line.87"></a>
+<span class="sourceLineNo">088</span>       l.add(IntegerAlphabet.getSubAlphabet(0,99));<a name="line.88"></a>
+<span class="sourceLineNo">089</span>       AlphabetManager.getCrossProductAlphabet(l, "PHRED");<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     } catch (IllegalAlphabetException iae) {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>       throw new BioError( "Could not create the Phred alphabet", iae);<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     }<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   }<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>  /**<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   * Retrieves the PHRED alphabet from the AlphabetManager. The Phred alphabet<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   * is a cross product of a subset of the IntegerAlphabet from 0...99 and the<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * DNA alphabet. The Phred alphabet is finite.<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   *<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * The Phred Alphabet contains 400 BasisSymbols named, for example, (guanine 47).<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   * The BasisSymbols can be fragmented into their component AtomicSymbols using<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   * the &lt;code&gt;getSymbols()&lt;/code&gt; method of BasisSymbol.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   */<a name="line.103"></a>
+<span class="sourceLineNo">104</span>  public static final FiniteAlphabet getPhredAlphabet(){<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    return (FiniteAlphabet)AlphabetManager.alphabetForName("PHRED");<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>  /**<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   * Retrives the DNA symbol component of the Phred BasisSymbol from the<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * PHRED alphabet.<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   * @throws IllegalSymbolException if the provided symbol is not from the<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   * PHRED alphabet.<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   */<a name="line.113"></a>
+<span class="sourceLineNo">114</span>  public static final Symbol dnaSymbolFromPhred(Symbol phredSym)<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    throws IllegalSymbolException{<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    //validate the symbol<a name="line.116"></a>
+<span class="sourceLineNo">117</span>    getPhredAlphabet().validate(phredSym);<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    //get the DNA component of the Phred Symbol<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    List l = ((BasisSymbol)phredSym).getSymbols();<a name="line.119"></a>
+<span class="sourceLineNo">120</span>    //the first symbol should be DNA<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    return (Symbol) l.get(0);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>  }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>  /**<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * Retrives the IntegerSymbol component of the Phred BasisSymbol from the<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   * PHRED alphabet.<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * @throws IllegalSymbolException if the provided symbol is not from the<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   * PHRED alphabet.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   */<a name="line.129"></a>
+<span class="sourceLineNo">130</span>  public static final IntegerAlphabet.IntegerSymbol integerSymbolFromPhred(Symbol phredSym)<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    throws IllegalSymbolException{<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    //validate the symbol<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    getPhredAlphabet().validate(phredSym);<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    //get the IntegerSymbol component of the Phred Symbol<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    List l = ((BasisSymbol)phredSym).getSymbols();<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    //the second symbol should be the IntegerSymbol<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    return (IntegerAlphabet.IntegerSymbol)(l.get(1));<a name="line.137"></a>
+<span class="sourceLineNo">138</span>  }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>  /**<a name="line.140"></a>
+<span class="sourceLineNo">141</span>   * Merges a Symbol List from the DNA alphabet with a SymbolList from the<a name="line.141"></a>
+<span class="sourceLineNo">142</span>   * [0..99] subset of the IntegerAlphabet into a SymbolList from<a name="line.142"></a>
+<span class="sourceLineNo">143</span>   * the PHRED alphabet.<a name="line.143"></a>
+<span class="sourceLineNo">144</span>   * @throws IllegalAlphabetException if the alphabets are not of the required alphabets<a name="line.144"></a>
+<span class="sourceLineNo">145</span>   * @throws IllegalArgumentException if the two SymbolLists are not of equal length.<a name="line.145"></a>
+<span class="sourceLineNo">146</span>   * @throws IllegalSymbolException if a combination of Symbols cannot be represented by<a name="line.146"></a>
+<span class="sourceLineNo">147</span>   * the PHRED alphabet.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>   */<a name="line.148"></a>
+<span class="sourceLineNo">149</span>  public static SymbolList createPhred(SymbolList dna, SymbolList quality)<a name="line.149"></a>
+<span class="sourceLineNo">150</span>    throws IllegalArgumentException, IllegalAlphabetException, IllegalSymbolException{<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    //perform initial checks<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    if(dna.length() != quality.length()){<a name="line.152"></a>
+<span class="sourceLineNo">153</span>      throw new IllegalArgumentException("SymbolLists must be of equal length "+<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        dna.length()+" : "+quality.length());<a name="line.154"></a>
+<span class="sourceLineNo">155</span>    }<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    if(dna.getAlphabet() != DNATools.getDNA()){<a name="line.156"></a>
+<span class="sourceLineNo">157</span>      throw new IllegalAlphabetException(<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        "Expecting SymbolList 'dna' to use the DNA alphabet, uses "<a name="line.158"></a>
+<span class="sourceLineNo">159</span>        +dna.getAlphabet().getName());<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    }<a name="line.160"></a>
+<span class="sourceLineNo">161</span>    Alphabet subint = IntegerAlphabet.getSubAlphabet(0,99);<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    if(quality.getAlphabet() != subint &amp;&amp; quality.getAlphabet() != IntegerAlphabet.getInstance()){<a name="line.162"></a>
+<span class="sourceLineNo">163</span>      throw new IllegalAlphabetException(<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        "Expecting SymbolList quality to use the "+subint.getName()+" alphabet"+<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        "or IntegerAlphabet instead uses "+<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        quality.getAlphabet().getName());<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    }<a name="line.167"></a>
+<span class="sourceLineNo">168</span><a name="line.168"></a>
+<span class="sourceLineNo">169</span>    //build the symbollist<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    SimpleSymbolList sl = new SimpleSymbolList(getPhredAlphabet());<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>    for(int i = 1; i &lt;= dna.length(); i++){<a name="line.172"></a>
+<span class="sourceLineNo">173</span>      Symbol d = dna.symbolAt(i);<a name="line.173"></a>
+<span class="sourceLineNo">174</span>      Symbol q = quality.symbolAt(i);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>      try{<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        sl.addSymbol(getPhredSymbol(d,q));<a name="line.176"></a>
+<span class="sourceLineNo">177</span>      }catch(ChangeVetoException e){<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        throw new AssertionFailure(e);<a name="line.178"></a>
+<span class="sourceLineNo">179</span>      }<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    }<a name="line.180"></a>
+<span class="sourceLineNo">181</span><a name="line.181"></a>
+<span class="sourceLineNo">182</span>    return sl;<a name="line.182"></a>
+<span class="sourceLineNo">183</span>  }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>  /**<a name="line.185"></a>
+<span class="sourceLineNo">186</span>   * Creates a symbol from the PHRED alphabet by combining a Symbol from the<a name="line.186"></a>
+<span class="sourceLineNo">187</span>   * DNA alphabet and a Symbol from the IntegerAlphabet (or one of its subsets).<a name="line.187"></a>
+<span class="sourceLineNo">188</span>   * @throws IllegalSymbolException if there is no Symbol in the PHRED alphabet<a name="line.188"></a>
+<span class="sourceLineNo">189</span>   * that represents the two arguments.<a name="line.189"></a>
+<span class="sourceLineNo">190</span>   */<a name="line.190"></a>
+<span class="sourceLineNo">191</span>  public static final Symbol getPhredSymbol(Symbol dna, Symbol integer)<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    throws IllegalSymbolException{<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    return getPhredAlphabet().getSymbol(new ListTools.Doublet(dna, integer));<a name="line.193"></a>
+<span class="sourceLineNo">194</span>  }<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>  /**<a name="line.196"></a>
+<span class="sourceLineNo">197</span>   * Writes Phred quality data in a Fasta type format.<a name="line.197"></a>
+<span class="sourceLineNo">198</span>   * @param db a bunch of PhredSequence objects<a name="line.198"></a>
+<span class="sourceLineNo">199</span>   * @param qual the OutputStream to write the quality data to.<a name="line.199"></a>
+<span class="sourceLineNo">200</span>   * @param seq the OutputStream to write the sequence data to.<a name="line.200"></a>
+<span class="sourceLineNo">201</span>   * @since 1.2<a name="line.201"></a>
+<span class="sourceLineNo">202</span>   */<a name="line.202"></a>
+<span class="sourceLineNo">203</span>   public static void writePhredQuality(OutputStream qual, OutputStream seq, SequenceDB db)<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    throws IOException, BioException{<a name="line.204"></a>
+<span class="sourceLineNo">205</span>      StreamWriter qualw = new StreamWriter(qual,new PhredFormat());<a name="line.205"></a>
+<span class="sourceLineNo">206</span>      StreamWriter seqw = new StreamWriter(seq, new FastaFormat());<a name="line.206"></a>
+<span class="sourceLineNo">207</span>      SequenceDB qualDB = new HashSequenceDB(IDMaker.byName);<a name="line.207"></a>
+<span class="sourceLineNo">208</span>      //Get the quality SymbolLists and add them to a SeqDB<a name="line.208"></a>
+<span class="sourceLineNo">209</span>      for(SequenceIterator i = db.sequenceIterator(); i.hasNext();){<a name="line.209"></a>
+<span class="sourceLineNo">210</span>        Sequence p = i.nextSequence();<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        if(p instanceof PhredSequence){<a name="line.211"></a>
+<span class="sourceLineNo">212</span>          PhredSequence ps = (PhredSequence)p;<a name="line.212"></a>
+<span class="sourceLineNo">213</span>          SymbolList ql = ps.getQuality();<a name="line.213"></a>
+<span class="sourceLineNo">214</span>          try{<a name="line.214"></a>
+<span class="sourceLineNo">215</span>            qualDB.addSequence( new SimpleSequence(ql,p.getURN(),p.getName(),p.getAnnotation()));<a name="line.215"></a>
+<span class="sourceLineNo">216</span>          }catch(ChangeVetoException cve){<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            throw new AssertionFailure("Cannot Add Quality Sequences to Database", cve);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>          }<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        else{<a name="line.220"></a>
+<span class="sourceLineNo">221</span>          throw new BioException("Expecting PhredSequence, got " + p.getClass().getName());<a name="line.221"></a>
+<span class="sourceLineNo">222</span>        }<a name="line.222"></a>
+<span class="sourceLineNo">223</span>      }<a name="line.223"></a>
+<span class="sourceLineNo">224</span>      qualw.writeStream(qualDB.sequenceIterator());<a name="line.224"></a>
+<span class="sourceLineNo">225</span>      seqw.writeStream(db.sequenceIterator());//this works as sequence methods act on the underlying SimpleSequence<a name="line.225"></a>
+<span class="sourceLineNo">226</span>   }<a name="line.226"></a>
+<span class="sourceLineNo">227</span><a name="line.227"></a>
+<span class="sourceLineNo">228</span>  /**<a name="line.228"></a>
+<span class="sourceLineNo">229</span>   * Constructs a StreamReader to read in Phred quality data in FASTA format.<a name="line.229"></a>
+<span class="sourceLineNo">230</span>   * The data is converted into sequences consisting of Symbols from the IntegerAlphabet.<a name="line.230"></a>
+<span class="sourceLineNo">231</span>   */<a name="line.231"></a>
+<span class="sourceLineNo">232</span>  public static StreamReader readPhredQuality(BufferedReader br){<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    return new StreamReader(br,<a name="line.233"></a>
+<span class="sourceLineNo">234</span>      new PhredFormat(),<a name="line.234"></a>
+<span class="sourceLineNo">235</span>      getQualityParser(),<a name="line.235"></a>
+<span class="sourceLineNo">236</span>      getFastaBuilderFactory());<a name="line.236"></a>
+<span class="sourceLineNo">237</span>  }<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span><a name="line.240"></a>
+<span class="sourceLineNo">241</span>  /**<a name="line.241"></a>
+<span class="sourceLineNo">242</span>   * Calls SeqIOTools.readFastaDNA(br), added here for convinience.<a name="line.242"></a>
+<span class="sourceLineNo">243</span>   */<a name="line.243"></a>
+<span class="sourceLineNo">244</span>  public static StreamReader readPhredSequence(BufferedReader br){<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    return (StreamReader)SeqIOTools.readFastaDNA(br);<a name="line.245"></a>
+<span class="sourceLineNo">246</span>  }<a name="line.246"></a>
+<span class="sourceLineNo">247</span><a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>  private static SequenceBuilderFactory _fastaBuilderFactory;<a name="line.249"></a>
+<span class="sourceLineNo">250</span><a name="line.250"></a>
+<span class="sourceLineNo">251</span>    /**<a name="line.251"></a>
+<span class="sourceLineNo">252</span>     * Get a default SequenceBuilderFactory for handling FASTA<a name="line.252"></a>
+<span class="sourceLineNo">253</span>     * files.<a name="line.253"></a>
+<span class="sourceLineNo">254</span>     */<a name="line.254"></a>
+<span class="sourceLineNo">255</span>  private static SequenceBuilderFactory getFastaBuilderFactory() {<a name="line.255"></a>
+<span class="sourceLineNo">256</span>      if (_fastaBuilderFactory == null) {<a name="line.256"></a>
+<span class="sourceLineNo">257</span>          _fastaBuilderFactory = new FastaDescriptionLineParser.Factory(SimpleSequenceBuilder.FACTORY);<a name="line.257"></a>
+<span class="sourceLineNo">258</span>      }<a name="line.258"></a>
+<span class="sourceLineNo">259</span>      return _fastaBuilderFactory;<a name="line.259"></a>
+<span class="sourceLineNo">260</span>  }<a name="line.260"></a>
+<span class="sourceLineNo">261</span><a name="line.261"></a>
+<span class="sourceLineNo">262</span>  /**<a name="line.262"></a>
+<span class="sourceLineNo">263</span>   * returns the IntegerAlphabet parser<a name="line.263"></a>
+<span class="sourceLineNo">264</span>   */<a name="line.264"></a>
+<span class="sourceLineNo">265</span>  private static SymbolTokenization getQualityParser() {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>    return IntegerAlphabet.getInstance().getTokenization("token");<a name="line.266"></a>
+<span class="sourceLineNo">267</span>  }<a name="line.267"></a>
+<span class="sourceLineNo">268</span><a name="line.268"></a>
+<span class="sourceLineNo">269</span>  /**<a name="line.269"></a>
+<span class="sourceLineNo">270</span>   * The quality value is related to the base call error probability<a name="line.270"></a>
+<span class="sourceLineNo">271</span>   * by the formula  QV = - 10 * log_10( P_e )<a name="line.271"></a>
+<span class="sourceLineNo">272</span>   * where P_e is the probability that the base call is an error.<a name="line.272"></a>
+<span class="sourceLineNo">273</span>   * @return a &lt;code&gt;double&lt;/code&gt; value, note that for most Phred scores this will be rounded<a name="line.273"></a>
+<span class="sourceLineNo">274</span>   * to the nearest &lt;code&gt;int&lt;/code&gt;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>   */<a name="line.275"></a>
+<span class="sourceLineNo">276</span>   public static double qualityFromP(double probOfError){<a name="line.276"></a>
+<span class="sourceLineNo">277</span>     return (-10 * (Math.log(probOfError)/Math.log(10.0)));<a name="line.277"></a>
+<span class="sourceLineNo">278</span>   }<a name="line.278"></a>
+<span class="sourceLineNo">279</span><a name="line.279"></a>
+<span class="sourceLineNo">280</span>   /**<a name="line.280"></a>
+<span class="sourceLineNo">281</span>    * Calculates the probability of an error from the quality score via the formula<a name="line.281"></a>
+<span class="sourceLineNo">282</span>    *  P_e = 10**(QV/-10)<a name="line.282"></a>
+<span class="sourceLineNo">283</span>    */<a name="line.283"></a>
+<span class="sourceLineNo">284</span>    public static double pFromQuality(double quality){<a name="line.284"></a>
+<span class="sourceLineNo">285</span>      return Math.pow(10.0,(quality/-10.0));<a name="line.285"></a>
+<span class="sourceLineNo">286</span>    }<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>    /**<a name="line.288"></a>
+<span class="sourceLineNo">289</span>     * Calculates the probability of an error from the quality score via the formula<a name="line.289"></a>
+<span class="sourceLineNo">290</span>     *  P_e = 10**(QV/-10)<a name="line.290"></a>
+<span class="sourceLineNo">291</span>     */<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    public static double pFromQuality(int quality){<a name="line.292"></a>
+<span class="sourceLineNo">293</span>      return pFromQuality((double)quality);<a name="line.293"></a>
+<span class="sourceLineNo">294</span>    }<a name="line.294"></a>
+<span class="sourceLineNo">295</span><a name="line.295"></a>
+<span class="sourceLineNo">296</span>    /**<a name="line.296"></a>
+<span class="sourceLineNo">297</span>     * Calculates the probability of an error from the quality score via the formula<a name="line.297"></a>
+<span class="sourceLineNo">298</span>     *  P_e = 10**(QV/-10)<a name="line.298"></a>
+<span class="sourceLineNo">299</span>     */<a name="line.299"></a>
+<span class="sourceLineNo">300</span>    public static double pFromQuality(IntegerAlphabet.IntegerSymbol quality){<a name="line.300"></a>
+<span class="sourceLineNo">301</span>      return pFromQuality(quality.intValue());<a name="line.301"></a>
+<span class="sourceLineNo">302</span>    }<a name="line.302"></a>
+<span class="sourceLineNo">303</span><a name="line.303"></a>
+<span class="sourceLineNo">304</span>    /**<a name="line.304"></a>
+<span class="sourceLineNo">305</span>     * Converts a Phred sequence to an array of distributions. Essentially a fuzzy sequence<a name="line.305"></a>
+<span class="sourceLineNo">306</span>     * Assumes that all of the non called bases are equiprobable<a name="line.306"></a>
+<span class="sourceLineNo">307</span>     */<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    public static Distribution[] phredToDistArray(PhredSequence s){<a name="line.308"></a>
+<span class="sourceLineNo">309</span>      Distribution[] pos = new Distribution[s.length()];<a name="line.309"></a>
+<span class="sourceLineNo">310</span>      DistributionTrainerContext dtc = new SimpleDistributionTrainerContext();<a name="line.310"></a>
+<span class="sourceLineNo">311</span><a name="line.311"></a>
+<span class="sourceLineNo">312</span>      for (int i = 0; i &lt; s.length(); i++) {// for each symbol in the phred sequence<a name="line.312"></a>
+<span class="sourceLineNo">313</span>        Symbol qual = s.getQualityAt(i + 1);<a name="line.313"></a>
+<span class="sourceLineNo">314</span>        Symbol base = s.getDNAAt(i + 1);<a name="line.314"></a>
+<span class="sourceLineNo">315</span>        double pBase = pFromQuality((IntegerAlphabet.IntegerSymbol)qual);<a name="line.315"></a>
+<span class="sourceLineNo">316</span>        double pOthers = (1.0 - pBase)/3;<a name="line.316"></a>
+<span class="sourceLineNo">317</span><a name="line.317"></a>
+<span class="sourceLineNo">318</span>        try{<a name="line.318"></a>
+<span class="sourceLineNo">319</span>          pos[i] = DistributionFactory.DEFAULT.createDistribution(DNATools.getDNA());<a name="line.319"></a>
+<span class="sourceLineNo">320</span>          dtc.registerDistribution(pos[i]);<a name="line.320"></a>
+<span class="sourceLineNo">321</span><a name="line.321"></a>
+<span class="sourceLineNo">322</span>          for(Iterator iter = (DNATools.getDNA().iterator()); iter.hasNext();){<a name="line.322"></a>
+<span class="sourceLineNo">323</span>            Symbol sym = (Symbol)iter.next();<a name="line.323"></a>
+<span class="sourceLineNo">324</span>            if(sym.equals(base)) pos[i].setWeight(sym,pBase);<a name="line.324"></a>
+<span class="sourceLineNo">325</span>            else pos[i].setWeight(sym,pOthers);<a name="line.325"></a>
+<span class="sourceLineNo">326</span>          }<a name="line.326"></a>
+<span class="sourceLineNo">327</span><a name="line.327"></a>
+<span class="sourceLineNo">328</span>          dtc.train();<a name="line.328"></a>
+<span class="sourceLineNo">329</span>        }catch(IllegalAlphabetException iae){<a name="line.329"></a>
+<span class="sourceLineNo">330</span>          throw new AssertionFailure("Sequence "+s.getName()+" contains an illegal alphabet", iae);<a name="line.330"></a>
+<span class="sourceLineNo">331</span>        }catch(ChangeVetoException cve){<a name="line.331"></a>
+<span class="sourceLineNo">332</span>          throw new AssertionFailure("The Distribution has become locked", cve);<a name="line.332"></a>
+<span class="sourceLineNo">333</span>        }catch(IllegalSymbolException ise){<a name="line.333"></a>
+<span class="sourceLineNo">334</span>          throw new AssertionFailure("Sequence "+s.getName()+" contains an illegal symbol", ise);<a name="line.334"></a>
+<span class="sourceLineNo">335</span>        }<a name="line.335"></a>
+<span class="sourceLineNo">336</span>      }<a name="line.336"></a>
+<span class="sourceLineNo">337</span>      return pos;<a name="line.337"></a>
+<span class="sourceLineNo">338</span>    }<a name="line.338"></a>
+<span class="sourceLineNo">339</span><a name="line.339"></a>
+<span class="sourceLineNo">340</span>    /**<a name="line.340"></a>
+<span class="sourceLineNo">341</span>     * converts an Alignment of PhredSequences to a Distribution[] where each position is the average<a name="line.341"></a>
+<span class="sourceLineNo">342</span>     * distribution of the underlying column of the alignment.<a name="line.342"></a>
+<span class="sourceLineNo">343</span>     * @throws ClassCastException if the sequences in the alignment are not instances of PhredSequence<a name="line.343"></a>
+<span class="sourceLineNo">344</span>     */<a name="line.344"></a>
+<span class="sourceLineNo">345</span>    public static Distribution[] phredAlignmentToDistArray(Alignment a){<a name="line.345"></a>
+<span class="sourceLineNo">346</span>      List&lt;String&gt; labels = a.getLabels();<a name="line.346"></a>
+<span class="sourceLineNo">347</span>      Distribution [] average = new Distribution[a.length()];<a name="line.347"></a>
+<span class="sourceLineNo">348</span><a name="line.348"></a>
+<span class="sourceLineNo">349</span>      Distribution[][] matrix = new Distribution[labels.size()][];<a name="line.349"></a>
+<span class="sourceLineNo">350</span>      for(int y = 0; y &lt; a.length(); y++){// for eaxh position<a name="line.350"></a>
+<span class="sourceLineNo">351</span>        for(Iterator&lt;String&gt; i = labels.iterator(); i.hasNext();){<a name="line.351"></a>
+<span class="sourceLineNo">352</span>          SymbolList sl = a.symbolListForLabel(i.next());<a name="line.352"></a>
+<span class="sourceLineNo">353</span>          matrix[y] = phredToDistArray((PhredSequence)sl);<a name="line.353"></a>
+<span class="sourceLineNo">354</span>        }<a name="line.354"></a>
+<span class="sourceLineNo">355</span>        average[y] = DistributionTools.average(matrix[y]);<a name="line.355"></a>
+<span class="sourceLineNo">356</span>      }<a name="line.356"></a>
+<span class="sourceLineNo">357</span><a name="line.357"></a>
+<span class="sourceLineNo">358</span>      return average;<a name="line.358"></a>
+<span class="sourceLineNo">359</span>    }<a name="line.359"></a>
+<span class="sourceLineNo">360</span>}<a name="line.360"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,921 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.symbol;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.ArrayList;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.Collection;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Collections;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.Iterator;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.List;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.ListIterator;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.bio.BioError;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.bio.BioException;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>/**<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * Tools class containing a number of operators for working with &lt;code&gt;Location&lt;/code&gt; objects.<a name="line.35"></a>
+<span class="sourceLineNo">036</span> *<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * &lt;p&gt;<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * Most of the methods in this class are simple set-wise binary operators: for example,<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * calculate the intersection of two locations.<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * &lt;/p&gt;<a name="line.40"></a>
+<span class="sourceLineNo">041</span> *<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * This class provides helpful methods for set-wise manipulation of Location objects.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @author Matthew Pocock<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author Greg Cox<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @author Thomas Down<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @author Mark Schreiber<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @author Francois Pepin<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * @since 1.2<a name="line.49"></a>
+<span class="sourceLineNo">050</span> */<a name="line.50"></a>
+<span class="sourceLineNo">051</span>final public class LocationTools {<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    /**<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     * Nobody needs one of these.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>     */<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>    private LocationTools() {<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>  /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   * Return the union of two locations.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   *<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   * &lt;p&gt;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   * The union will be a Location instance that contains every index contained<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   * by either locA or locB.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   * &lt;/p&gt;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>   *<a name="line.66"></a>
+<span class="sourceLineNo">067</span>   * @param locA  the first Location<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   * @param locB  the second Location<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * @return a Location that is the union of locA and locB<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   */<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  public static Location union(Location locA, Location locB) {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        if(isDecorated(locA) || isDecorated(locB))<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>          handleDecorations(locA, locB);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>          if(locA instanceof CircularLocation &amp;&amp; locB instanceof CircularLocation){<a name="line.75"></a>
+<span class="sourceLineNo">076</span>            return CircularLocationTools.union((CircularLocation)locA,(CircularLocation)locB);<a name="line.76"></a>
+<span class="sourceLineNo">077</span>          }<a name="line.77"></a>
+<span class="sourceLineNo">078</span>          if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.78"></a>
+<span class="sourceLineNo">079</span>            {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>               return BetweenLocationTools.union(locA, locB);<a name="line.80"></a>
+<span class="sourceLineNo">081</span>            }<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>    if(<a name="line.84"></a>
+<span class="sourceLineNo">085</span>      locA.isContiguous() &amp;&amp;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>      locB.isContiguous() &amp;&amp;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>      locA.overlaps(locB)<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    ) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>      // the simple case<a name="line.89"></a>
+<span class="sourceLineNo">090</span>      Location mloc = null;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>      try {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        mloc = MergeLocation.mergeLocations(locA, locB);<a name="line.92"></a>
+<span class="sourceLineNo">093</span>      }<a name="line.93"></a>
+<span class="sourceLineNo">094</span>      catch (BioException ex) {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        //this shouldn't happen as conditions have been checked above<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        throw new BioError("Assertion Error, cannot build MergeLocation",ex);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>      }<a name="line.97"></a>
+<span class="sourceLineNo">098</span>      return mloc;<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>    } else {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>      // either may be compound. They may not overlap. We must build the<a name="line.101"></a>
+<span class="sourceLineNo">102</span>      // complete list of blocks, merge overlapping blocks and then create the<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      // appropriate implementation of Location for the resulting list.<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>      // list of all blocks<a name="line.105"></a>
+<span class="sourceLineNo">106</span>      List locList = new ArrayList();<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>      // add all blocks in locA<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      for(Iterator i = locA.blockIterator(); i.hasNext(); ) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        locList.add(i.next());<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      }<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>      // add all blocks in locB<a name="line.113"></a>
+<span class="sourceLineNo">114</span>      for(Iterator i = locB.blockIterator(); i.hasNext(); ) {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        locList.add(i.next());<a name="line.115"></a>
+<span class="sourceLineNo">116</span>      }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>      return _union(locList);<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    }<a name="line.119"></a>
+<span class="sourceLineNo">120</span>  }<a name="line.120"></a>
+<span class="sourceLineNo">121</span><a name="line.121"></a>
+<span class="sourceLineNo">122</span>  /**<a name="line.122"></a>
+<span class="sourceLineNo">123</span>   * Return the intersection of two locations.<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   * &lt;p&gt;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * The intersection will be a Location instance that contains every index<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   * contained by both locA and locB.<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * &lt;/p&gt;<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   *<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   * @param locA  the first Location<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   * @param locB  the second Location<a name="line.130"></a>
+<span class="sourceLineNo">131</span>   * @return a Location that is the intersection of locA and locB<a name="line.131"></a>
+<span class="sourceLineNo">132</span>   */<a name="line.132"></a>
+<span class="sourceLineNo">133</span>  public static Location intersection(Location locA, Location locB) {<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>    if(isDecorated(locA) || isDecorated(locB))<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        handleDecorations(locA, locB);<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.138"></a>
+<span class="sourceLineNo">139</span>            {<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                return BetweenLocationTools.intersection(locA, locB);<a name="line.140"></a>
+<span class="sourceLineNo">141</span>            }<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        if (CircularLocationTools.isCircular(locA) || CircularLocationTools.isCircular(locB)) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>            return CircularLocationTools.intersection(locA, locB);<a name="line.143"></a>
+<span class="sourceLineNo">144</span>        }<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span>    if(locA.isContiguous() &amp;&amp; locB.isContiguous()) {<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        // handle easy case of solid locations<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        // Ought to make this bit more efficient --THOMASD<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        if (LocationTools.contains(locA, locB)) {<a name="line.150"></a>
+<span class="sourceLineNo">151</span>            return locB;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        } else if (LocationTools.contains(locB, locA)) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>            return locA;<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        } if(LocationTools.overlaps(locA, locB)) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>            int min = Math.max(locA.getMin(), locB.getMin());<a name="line.155"></a>
+<span class="sourceLineNo">156</span>            int max = Math.min(locA.getMax(), locB.getMax());<a name="line.156"></a>
+<span class="sourceLineNo">157</span>            return makeLocation(min, max);<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        } else {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>            return Location.empty;<a name="line.159"></a>
+<span class="sourceLineNo">160</span>        }<a name="line.160"></a>
+<span class="sourceLineNo">161</span>    } else {<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        // One or other of the locations is compound. Build a list of all<a name="line.162"></a>
+<span class="sourceLineNo">163</span>        // locations created by finding intersection of all pairwise combinations<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        // of blocks in locA and locB. Ignore all Location.empty. Create the<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        // appropriate Location instance.<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        List locList = new ArrayList();<a name="line.166"></a>
+<span class="sourceLineNo">167</span><a name="line.167"></a>
+<span class="sourceLineNo">168</span>        List blA = getBlockList(locA);<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        {<a name="line.169"></a>
+<span class="sourceLineNo">170</span>            int minBlock = blockContainingOrFollowingPoint(blA, locB.getMin());<a name="line.170"></a>
+<span class="sourceLineNo">171</span>            int maxBlock = blockContainingOrPreceedingPoint(blA, locB.getMax());<a name="line.171"></a>
+<span class="sourceLineNo">172</span>            if (minBlock == -1 || maxBlock == -1) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                return Location.empty;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>            }<a name="line.174"></a>
+<span class="sourceLineNo">175</span>            blA = blA.subList(minBlock, maxBlock + 1);<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        }<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        List blB = getBlockList(locB);<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>            int minBlock = blockContainingOrFollowingPoint(blB, locA.getMin());<a name="line.179"></a>
+<span class="sourceLineNo">180</span>            int maxBlock = blockContainingOrPreceedingPoint(blB, locA.getMax());<a name="line.180"></a>
+<span class="sourceLineNo">181</span>            if (minBlock == -1 || maxBlock == -1) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                return Location.empty;<a name="line.182"></a>
+<span class="sourceLineNo">183</span>            }<a name="line.183"></a>
+<span class="sourceLineNo">184</span>            blB = blB.subList(minBlock, maxBlock + 1);<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        }<a name="line.185"></a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span>        if (blA.size() &gt; blB.size()) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>            List temp = blA;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>            blA = blB;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>            blB = temp;<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        }<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>        for (Iterator i = blA.iterator(); i.hasNext(); ) {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>            Location blocA = (Location) i.next();<a name="line.194"></a>
+<span class="sourceLineNo">195</span>            int minHitIndex = blockContainingOrFollowingPoint(blB, blocA.getMin());<a name="line.195"></a>
+<span class="sourceLineNo">196</span>            int maxHitIndex = blockContainingOrPreceedingPoint(blB, blocA.getMax());<a name="line.196"></a>
+<span class="sourceLineNo">197</span>            for (int hitIndex = minHitIndex; hitIndex &lt;= maxHitIndex; ++hitIndex) {<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                Location blocB = (Location) blB.get(hitIndex);<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                locList.add(LocationTools.intersection(blocA, blocB));<a name="line.199"></a>
+<span class="sourceLineNo">200</span>            }<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        }<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>        return buildLoc(locList);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    }<a name="line.204"></a>
+<span class="sourceLineNo">205</span>  }<a name="line.205"></a>
+<span class="sourceLineNo">206</span><a name="line.206"></a>
+<span class="sourceLineNo">207</span>    /**<a name="line.207"></a>
+<span class="sourceLineNo">208</span>     * Return an ordered list of non-overlapping blocks of a location<a name="line.208"></a>
+<span class="sourceLineNo">209</span>     * (singleton list for contiguous locations, empty list for empty locations)<a name="line.209"></a>
+<span class="sourceLineNo">210</span>     *<a name="line.210"></a>
+<span class="sourceLineNo">211</span>     * Note that from this point of view, contiguous circular locations<a name="line.211"></a>
+<span class="sourceLineNo">212</span>     * aren't necessarily contiguous :-(.<a name="line.212"></a>
+<span class="sourceLineNo">213</span>     *<a name="line.213"></a>
+<span class="sourceLineNo">214</span>     * @param l the &lt;code&gt;Location&lt;/code&gt; to get the blocks from<a name="line.214"></a>
+<span class="sourceLineNo">215</span>     * @return and ordered &lt;code&gt;List&lt;/code&gt; of &lt;code&gt;Locations&lt;/code&gt;<a name="line.215"></a>
+<span class="sourceLineNo">216</span>     */<a name="line.216"></a>
+<span class="sourceLineNo">217</span><a name="line.217"></a>
+<span class="sourceLineNo">218</span>    private static List getBlockList(Location l) {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        if (l == Location.empty) {<a name="line.219"></a>
+<span class="sourceLineNo">220</span>            return Collections.EMPTY_LIST;<a name="line.220"></a>
+<span class="sourceLineNo">221</span>        } else if (l instanceof CompoundLocation) {<a name="line.221"></a>
+<span class="sourceLineNo">222</span>            return ((CompoundLocation )l).getBlockList();<a name="line.222"></a>
+<span class="sourceLineNo">223</span>        } else if (l.isContiguous() &amp;&amp; !CircularLocationTools.isCircular(l)) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>            return Collections.nCopies(1, l);<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        } else {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>            List bl = new ArrayList();<a name="line.226"></a>
+<span class="sourceLineNo">227</span>            for (Iterator bi = l.blockIterator(); bi.hasNext(); ) {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                bl.add(bi.next());<a name="line.228"></a>
+<span class="sourceLineNo">229</span>            }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>            Collections.sort(bl, Location.naturalOrder);<a name="line.230"></a>
+<span class="sourceLineNo">231</span>            return bl;<a name="line.231"></a>
+<span class="sourceLineNo">232</span>        }<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    }<a name="line.233"></a>
+<span class="sourceLineNo">234</span><a name="line.234"></a>
+<span class="sourceLineNo">235</span>    /**<a name="line.235"></a>
+<span class="sourceLineNo">236</span>     * Return the index into &lt;code&gt;bl&lt;/code&gt; of a block containing<a name="line.236"></a>
+<span class="sourceLineNo">237</span>     * &lt;code&gt;point&lt;/code&gt;, or -1 if it is not found.<a name="line.237"></a>
+<span class="sourceLineNo">238</span>     */<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>    private static int blockContainingPoint(List bl, int point) {<a name="line.240"></a>
+<span class="sourceLineNo">241</span>        int start = 0;<a name="line.241"></a>
+<span class="sourceLineNo">242</span>        int end = bl.size() - 1;<a name="line.242"></a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span>        while (start &lt;= end) {<a name="line.244"></a>
+<span class="sourceLineNo">245</span>            int mid = (start + end) / 2;<a name="line.245"></a>
+<span class="sourceLineNo">246</span>            Location block = (Location) bl.get(mid);<a name="line.246"></a>
+<span class="sourceLineNo">247</span>            if (block.contains(point)) {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                return mid;<a name="line.248"></a>
+<span class="sourceLineNo">249</span>            } else if (point &lt; block.getMin()) {<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                end = mid - 1;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>            } else if (point &gt; block.getMax()) {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                start = mid + 1;<a name="line.252"></a>
+<span class="sourceLineNo">253</span>            } else {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                throw new BioError("Assertion failed: overrun in binary search");<a name="line.254"></a>
+<span class="sourceLineNo">255</span>            }<a name="line.255"></a>
+<span class="sourceLineNo">256</span>        }<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        return -1;<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    }<a name="line.258"></a>
+<span class="sourceLineNo">259</span><a name="line.259"></a>
+<span class="sourceLineNo">260</span>    /**<a name="line.260"></a>
+<span class="sourceLineNo">261</span>     * Return the index of the block containing &lt;code&gt;point&lt;/code&gt;, if it exists,<a name="line.261"></a>
+<span class="sourceLineNo">262</span>     * or the block preceeding it.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>     */<a name="line.263"></a>
+<span class="sourceLineNo">264</span><a name="line.264"></a>
+<span class="sourceLineNo">265</span>    private static int blockContainingOrPreceedingPoint(List bl, int point) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>        // System.err.println("COPP");<a name="line.266"></a>
+<span class="sourceLineNo">267</span>        int start = 0;<a name="line.267"></a>
+<span class="sourceLineNo">268</span>        int length = bl.size();<a name="line.268"></a>
+<span class="sourceLineNo">269</span>        int end = length - 1;<a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span>        while (start &lt;= end) {<a name="line.271"></a>
+<span class="sourceLineNo">272</span>            int mid = (start + end) / 2;<a name="line.272"></a>
+<span class="sourceLineNo">273</span>            // System.err.println("Start=" + start + " mid=" + mid + " end=" + end);<a name="line.273"></a>
+<span class="sourceLineNo">274</span>            Location block = (Location) bl.get(mid);<a name="line.274"></a>
+<span class="sourceLineNo">275</span>            if (block.contains(point)) {<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                return mid;<a name="line.276"></a>
+<span class="sourceLineNo">277</span>            } else if (point &lt; block.getMin()) {<a name="line.277"></a>
+<span class="sourceLineNo">278</span>                end = mid - 1;<a name="line.278"></a>
+<span class="sourceLineNo">279</span>            } else if (point &gt; block.getMax()) {<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                start = mid + 1;<a name="line.280"></a>
+<span class="sourceLineNo">281</span>            } else {<a name="line.281"></a>
+<span class="sourceLineNo">282</span>                throw new BioError("Assertion failed: overrun in binary search");<a name="line.282"></a>
+<span class="sourceLineNo">283</span>            }<a name="line.283"></a>
+<span class="sourceLineNo">284</span>        }<a name="line.284"></a>
+<span class="sourceLineNo">285</span><a name="line.285"></a>
+<span class="sourceLineNo">286</span>        if (end &lt; length) {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>            return end;<a name="line.287"></a>
+<span class="sourceLineNo">288</span>        } else {<a name="line.288"></a>
+<span class="sourceLineNo">289</span>            return -1;<a name="line.289"></a>
+<span class="sourceLineNo">290</span>        }<a name="line.290"></a>
+<span class="sourceLineNo">291</span>    }<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>    /**<a name="line.293"></a>
+<span class="sourceLineNo">294</span>     * Return the index of the block containing &lt;code&gt;point&lt;/code&gt;, if it exists,<a name="line.294"></a>
+<span class="sourceLineNo">295</span>     * or the block preceeding it.<a name="line.295"></a>
+<span class="sourceLineNo">296</span>     */<a name="line.296"></a>
+<span class="sourceLineNo">297</span><a name="line.297"></a>
+<span class="sourceLineNo">298</span>    private static int blockContainingOrFollowingPoint(List bl, int point) {<a name="line.298"></a>
+<span class="sourceLineNo">299</span>        // System.err.println("COFP");<a name="line.299"></a>
+<span class="sourceLineNo">300</span>        int start = 0;<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        int length = bl.size();<a name="line.301"></a>
+<span class="sourceLineNo">302</span>        int end = length - 1;<a name="line.302"></a>
+<span class="sourceLineNo">303</span><a name="line.303"></a>
+<span class="sourceLineNo">304</span>        while (start &lt;= end) {<a name="line.304"></a>
+<span class="sourceLineNo">305</span>            int mid = (start + end) / 2;<a name="line.305"></a>
+<span class="sourceLineNo">306</span>            // System.err.println("Start=" + start + " mid=" + mid + " end=" + end);<a name="line.306"></a>
+<span class="sourceLineNo">307</span>            Location block = (Location) bl.get(mid);<a name="line.307"></a>
+<span class="sourceLineNo">308</span>            if (block.contains(point)) {<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                return mid;<a name="line.309"></a>
+<span class="sourceLineNo">310</span>            } else if (point &lt; block.getMin()) {<a name="line.310"></a>
+<span class="sourceLineNo">311</span>                end = mid - 1;<a name="line.311"></a>
+<span class="sourceLineNo">312</span>            } else if (point &gt; block.getMax()) {<a name="line.312"></a>
+<span class="sourceLineNo">313</span>                start = mid + 1;<a name="line.313"></a>
+<span class="sourceLineNo">314</span>            } else {<a name="line.314"></a>
+<span class="sourceLineNo">315</span>                throw new BioError("Assertion failed: overrun in binary search");<a name="line.315"></a>
+<span class="sourceLineNo">316</span>            }<a name="line.316"></a>
+<span class="sourceLineNo">317</span>        }<a name="line.317"></a>
+<span class="sourceLineNo">318</span>        if (start &gt;= 0) {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>            return start;<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        } else {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>            return -1;<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        }<a name="line.322"></a>
+<span class="sourceLineNo">323</span>    }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>    /**<a name="line.325"></a>
+<span class="sourceLineNo">326</span>     * Determines whether the locations are touching or not (if they could be<a name="line.326"></a>
+<span class="sourceLineNo">327</span>     * merged in a single Location.<a name="line.327"></a>
+<span class="sourceLineNo">328</span>     * &lt;p&gt;<a name="line.328"></a>
+<span class="sourceLineNo">329</span>     * Two locations can merge if they contain at least one index of one<a name="line.329"></a>
+<span class="sourceLineNo">330</span>     * beside one index of the other.<a name="line.330"></a>
+<span class="sourceLineNo">331</span>     * &lt;/p&gt;<a name="line.331"></a>
+<span class="sourceLineNo">332</span>     *<a name="line.332"></a>
+<span class="sourceLineNo">333</span>     * @param locA  the first Location<a name="line.333"></a>
+<span class="sourceLineNo">334</span>     * @param locB  the second Location<a name="line.334"></a>
+<span class="sourceLineNo">335</span>     * @return &lt;code&gt;true&lt;/code&gt; if they can merge, &lt;code&gt;false&lt;/code&gt; otherwise<a name="line.335"></a>
+<span class="sourceLineNo">336</span>     */<a name="line.336"></a>
+<span class="sourceLineNo">337</span>  public static boolean canMerge(Location locA, Location locB){<a name="line.337"></a>
+<span class="sourceLineNo">338</span>    if (overlaps(locA, locB)||<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        overlaps(locA.translate(1), locB)||<a name="line.339"></a>
+<span class="sourceLineNo">340</span>        overlaps(locA.translate(-1),locB))<a name="line.340"></a>
+<span class="sourceLineNo">341</span>      return true;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>    return false;<a name="line.342"></a>
+<span class="sourceLineNo">343</span>  }<a name="line.343"></a>
+<span class="sourceLineNo">344</span>  <a name="line.344"></a>
+<span class="sourceLineNo">345</span><a name="line.345"></a>
+<span class="sourceLineNo">346</span>  <a name="line.346"></a>
+<span class="sourceLineNo">347</span>    /**<a name="line.347"></a>
+<span class="sourceLineNo">348</span>     * Determines whether the locations overlap or not.<a name="line.348"></a>
+<span class="sourceLineNo">349</span>     * &lt;p&gt;<a name="line.349"></a>
+<span class="sourceLineNo">350</span>     * Two locations overlap if they contain at least one index in common.<a name="line.350"></a>
+<span class="sourceLineNo">351</span>     * &lt;/p&gt;<a name="line.351"></a>
+<span class="sourceLineNo">352</span>     *<a name="line.352"></a>
+<span class="sourceLineNo">353</span>     * @param locA  the first Location<a name="line.353"></a>
+<span class="sourceLineNo">354</span>     * @param locB  the second Location<a name="line.354"></a>
+<span class="sourceLineNo">355</span>     * @return &lt;code&gt;true&lt;/code&gt; if they overlap, &lt;code&gt;false&lt;/code&gt; otherwise<a name="line.355"></a>
+<span class="sourceLineNo">356</span>     */<a name="line.356"></a>
+<span class="sourceLineNo">357</span><a name="line.357"></a>
+<span class="sourceLineNo">358</span>    public static boolean overlaps(Location locA, Location locB) {<a name="line.358"></a>
+<span class="sourceLineNo">359</span>        if(isDecorated(locA) || isDecorated(locB))<a name="line.359"></a>
+<span class="sourceLineNo">360</span>        {<a name="line.360"></a>
+<span class="sourceLineNo">361</span>            handleDecorations(locA, locB);<a name="line.361"></a>
+<span class="sourceLineNo">362</span>            if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.362"></a>
+<span class="sourceLineNo">363</span>                {<a name="line.363"></a>
+<span class="sourceLineNo">364</span>                    return BetweenLocationTools.overlaps(locA, locB);<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                }<a name="line.365"></a>
+<span class="sourceLineNo">366</span>        }<a name="line.366"></a>
+<span class="sourceLineNo">367</span><a name="line.367"></a>
+<span class="sourceLineNo">368</span>        if(locA.isContiguous() &amp;&amp; locB.isContiguous()) {<a name="line.368"></a>
+<span class="sourceLineNo">369</span>            // if they are both solid, return whether the extents overlap<a name="line.369"></a>
+<span class="sourceLineNo">370</span>            return !(<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                     (locA.getMax() &lt; locB.getMin()) ||<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                     (locA.getMin() &gt; locB.getMax())<a name="line.372"></a>
+<span class="sourceLineNo">373</span>                     );<a name="line.373"></a>
+<span class="sourceLineNo">374</span>        } else {<a name="line.374"></a>
+<span class="sourceLineNo">375</span>            // System.err.println("Doing complex overlap stuff");<a name="line.375"></a>
+<span class="sourceLineNo">376</span><a name="line.376"></a>
+<span class="sourceLineNo">377</span>            List blA = getBlockList(locA);<a name="line.377"></a>
+<span class="sourceLineNo">378</span>            {<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                // System.err.println("In A restriction");<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                int minBlock = blockContainingOrFollowingPoint(blA, locB.getMin());<a name="line.380"></a>
+<span class="sourceLineNo">381</span>                int maxBlock = blockContainingOrPreceedingPoint(blA, locB.getMax());<a name="line.381"></a>
+<span class="sourceLineNo">382</span>                if (minBlock == -1 || maxBlock == -1) {<a name="line.382"></a>
+<span class="sourceLineNo">383</span>                    // System.err.println("blA empty: minBlock=" + minBlock +", maxBlock=" + maxBlock);<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                    return false;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>                }<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                blA = blA.subList(minBlock, maxBlock + 1);<a name="line.386"></a>
+<span class="sourceLineNo">387</span>            }<a name="line.387"></a>
+<span class="sourceLineNo">388</span>            List blB = getBlockList(locB);<a name="line.388"></a>
+<span class="sourceLineNo">389</span>            {<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                // System.err.println("In B restriction");<a name="line.390"></a>
+<span class="sourceLineNo">391</span>                int minBlock = blockContainingOrFollowingPoint(blB, locA.getMin());<a name="line.391"></a>
+<span class="sourceLineNo">392</span>                int maxBlock = blockContainingOrPreceedingPoint(blB, locA.getMax());<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                if (minBlock == -1 || maxBlock == -1) {<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                    // System.err.println("blB empty: minBlock=" + minBlock +", maxBlock=" + maxBlock);<a name="line.394"></a>
+<span class="sourceLineNo">395</span>                    return false;<a name="line.395"></a>
+<span class="sourceLineNo">396</span>                }<a name="line.396"></a>
+<span class="sourceLineNo">397</span>                blB = blB.subList(minBlock, maxBlock + 1);<a name="line.397"></a>
+<span class="sourceLineNo">398</span>            }<a name="line.398"></a>
+<span class="sourceLineNo">399</span><a name="line.399"></a>
+<span class="sourceLineNo">400</span>            // System.err.println("Restricted lists");<a name="line.400"></a>
+<span class="sourceLineNo">401</span><a name="line.401"></a>
+<span class="sourceLineNo">402</span>            for(Iterator aI = blA.iterator(); aI.hasNext(); ) {<a name="line.402"></a>
+<span class="sourceLineNo">403</span>                Location a = (Location) aI.next();<a name="line.403"></a>
+<span class="sourceLineNo">404</span>                for(Iterator bI = blB.iterator(); bI.hasNext(); ) {<a name="line.404"></a>
+<span class="sourceLineNo">405</span>                    Location b = (Location) bI.next();<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                    if(LocationTools.overlaps(a, b)) {<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                        return true;<a name="line.407"></a>
+<span class="sourceLineNo">408</span>                    }<a name="line.408"></a>
+<span class="sourceLineNo">409</span>                }<a name="line.409"></a>
+<span class="sourceLineNo">410</span>            }<a name="line.410"></a>
+<span class="sourceLineNo">411</span><a name="line.411"></a>
+<span class="sourceLineNo">412</span>            return false;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>        }<a name="line.413"></a>
+<span class="sourceLineNo">414</span>    }<a name="line.414"></a>
+<span class="sourceLineNo">415</span><a name="line.415"></a>
+<span class="sourceLineNo">416</span>    /**<a name="line.416"></a>
+<span class="sourceLineNo">417</span>     * Return &lt;code&gt;true&lt;/code&gt; iff all indices in &lt;code&gt;locB&lt;/code&gt; are also contained<a name="line.417"></a>
+<span class="sourceLineNo">418</span>     * by &lt;code&gt;locA&lt;/code&gt;.<a name="line.418"></a>
+<span class="sourceLineNo">419</span>     *<a name="line.419"></a>
+<span class="sourceLineNo">420</span>     * @param locA The containing location<a name="line.420"></a>
+<span class="sourceLineNo">421</span>     * @param locB The contained location<a name="line.421"></a>
+<span class="sourceLineNo">422</span>     * @return &lt;code&gt;true&lt;/code&gt; is locA contains locB<a name="line.422"></a>
+<span class="sourceLineNo">423</span>     */<a name="line.423"></a>
+<span class="sourceLineNo">424</span><a name="line.424"></a>
+<span class="sourceLineNo">425</span>    public static boolean contains(Location locA, Location locB) {<a name="line.425"></a>
+<span class="sourceLineNo">426</span>        if(isDecorated(locA) || isDecorated(locB))<a name="line.426"></a>
+<span class="sourceLineNo">427</span>        {<a name="line.427"></a>
+<span class="sourceLineNo">428</span>            handleDecorations(locA, locB);<a name="line.428"></a>
+<span class="sourceLineNo">429</span>            if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.429"></a>
+<span class="sourceLineNo">430</span>                {<a name="line.430"></a>
+<span class="sourceLineNo">431</span>                    return BetweenLocationTools.contains(locA, locB);<a name="line.431"></a>
+<span class="sourceLineNo">432</span>                }<a name="line.432"></a>
+<span class="sourceLineNo">433</span>        }<a name="line.433"></a>
+<span class="sourceLineNo">434</span><a name="line.434"></a>
+<span class="sourceLineNo">435</span>        if (locA.getMin() &lt;= locB.getMin() &amp;&amp; locA.getMax() &gt;= locB.getMax()) {<a name="line.435"></a>
+<span class="sourceLineNo">436</span>            if (locA.isContiguous()) {<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                return true;<a name="line.437"></a>
+<span class="sourceLineNo">438</span>            } else {<a name="line.438"></a>
+<span class="sourceLineNo">439</span>                List blA = getBlockList(locA);<a name="line.439"></a>
+<span class="sourceLineNo">440</span>                for (Iterator biB = locB.blockIterator(); biB.hasNext(); ) {<a name="line.440"></a>
+<span class="sourceLineNo">441</span>                    Location bloc = (Location) biB.next();<a name="line.441"></a>
+<span class="sourceLineNo">442</span>                    int hitIndex = blockContainingPoint(blA, bloc.getMin());<a name="line.442"></a>
+<span class="sourceLineNo">443</span>                    if (hitIndex &lt; 0) {<a name="line.443"></a>
+<span class="sourceLineNo">444</span>                        return false;<a name="line.444"></a>
+<span class="sourceLineNo">445</span>                    } else {<a name="line.445"></a>
+<span class="sourceLineNo">446</span>                        Location hitBloc = (Location) blA.get(hitIndex);<a name="line.446"></a>
+<span class="sourceLineNo">447</span>                        if (bloc.getMax() &gt; hitBloc.getMax()) {<a name="line.447"></a>
+<span class="sourceLineNo">448</span>                            return false;<a name="line.448"></a>
+<span class="sourceLineNo">449</span>                        }<a name="line.449"></a>
+<span class="sourceLineNo">450</span>                    }<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                }<a name="line.451"></a>
+<span class="sourceLineNo">452</span>                return true;<a name="line.452"></a>
+<span class="sourceLineNo">453</span>            }<a name="line.453"></a>
+<span class="sourceLineNo">454</span>        } else {<a name="line.454"></a>
+<span class="sourceLineNo">455</span>            return false;<a name="line.455"></a>
+<span class="sourceLineNo">456</span>        }<a name="line.456"></a>
+<span class="sourceLineNo">457</span>    }<a name="line.457"></a>
+<span class="sourceLineNo">458</span><a name="line.458"></a>
+<span class="sourceLineNo">459</span>  /**<a name="line.459"></a>
+<span class="sourceLineNo">460</span>   * Return whether two locations are equal.<a name="line.460"></a>
+<span class="sourceLineNo">461</span>   * &lt;p&gt;<a name="line.461"></a>
+<span class="sourceLineNo">462</span>   * They are equal if both a contains b and b contains a. Equivalently, they<a name="line.462"></a>
+<span class="sourceLineNo">463</span>   * are equal if for every point p, locA.contains(p) == locB.contains(p).<a name="line.463"></a>
+<span class="sourceLineNo">464</span>   * &lt;/p&gt;<a name="line.464"></a>
+<span class="sourceLineNo">465</span>   *<a name="line.465"></a>
+<span class="sourceLineNo">466</span>   * @param locA the first Location<a name="line.466"></a>
+<span class="sourceLineNo">467</span>   * @param locB the second Location<a name="line.467"></a>
+<span class="sourceLineNo">468</span>   * @return true if they are equivalent, false otherwise<a name="line.468"></a>
+<span class="sourceLineNo">469</span>   */<a name="line.469"></a>
+<span class="sourceLineNo">470</span>  public static boolean areEqual(Location locA, Location locB) {<a name="line.470"></a>
+<span class="sourceLineNo">471</span>        if(isDecorated(locA) || isDecorated(locB))<a name="line.471"></a>
+<span class="sourceLineNo">472</span>        {<a name="line.472"></a>
+<span class="sourceLineNo">473</span>                handleDecorations(locA, locB);<a name="line.473"></a>
+<span class="sourceLineNo">474</span>                if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.474"></a>
+<span class="sourceLineNo">475</span>                {<a name="line.475"></a>
+<span class="sourceLineNo">476</span>                        return BetweenLocationTools.areEqual(locA, locB);<a name="line.476"></a>
+<span class="sourceLineNo">477</span>                }<a name="line.477"></a>
+<span class="sourceLineNo">478</span>        }<a name="line.478"></a>
+<span class="sourceLineNo">479</span>    // simple check - if one is broken and the other isn't, they aren't equal.<a name="line.479"></a>
+<span class="sourceLineNo">480</span>    if(locA.isContiguous() != locB.isContiguous()) {<a name="line.480"></a>
+<span class="sourceLineNo">481</span>      return false;<a name="line.481"></a>
+<span class="sourceLineNo">482</span>    }<a name="line.482"></a>
+<span class="sourceLineNo">483</span><a name="line.483"></a>
+<span class="sourceLineNo">484</span>    // both contiguous if one is - check extent only<a name="line.484"></a>
+<span class="sourceLineNo">485</span>    if(locA.isContiguous()) {<a name="line.485"></a>
+<span class="sourceLineNo">486</span>      return<a name="line.486"></a>
+<span class="sourceLineNo">487</span>        (locA.getMin() == locB.getMin()) &amp;&amp;<a name="line.487"></a>
+<span class="sourceLineNo">488</span>        (locA.getMax() == locB.getMax());<a name="line.488"></a>
+<span class="sourceLineNo">489</span>    }<a name="line.489"></a>
+<span class="sourceLineNo">490</span><a name="line.490"></a>
+<span class="sourceLineNo">491</span>    // ok - both compound. The blocks returned from blockIterator should each be<a name="line.491"></a>
+<span class="sourceLineNo">492</span>    // equivalent.<a name="line.492"></a>
+<span class="sourceLineNo">493</span>    Iterator i1 = locA.blockIterator();<a name="line.493"></a>
+<span class="sourceLineNo">494</span>    Iterator i2 = locB.blockIterator();<a name="line.494"></a>
+<span class="sourceLineNo">495</span><a name="line.495"></a>
+<span class="sourceLineNo">496</span>    // while there are more pairs to check...<a name="line.496"></a>
+<span class="sourceLineNo">497</span>    while(i1.hasNext() &amp;&amp; i2.hasNext()) {<a name="line.497"></a>
+<span class="sourceLineNo">498</span>      // check that this pair is equivalent<a name="line.498"></a>
+<span class="sourceLineNo">499</span>      Location l1 = (Location) i1.next();<a name="line.499"></a>
+<span class="sourceLineNo">500</span>      Location l2 = (Location) i2.next();<a name="line.500"></a>
+<span class="sourceLineNo">501</span><a name="line.501"></a>
+<span class="sourceLineNo">502</span>      if(<a name="line.502"></a>
+<span class="sourceLineNo">503</span>        (l1.getMin() != l2.getMin()) ||<a name="line.503"></a>
+<span class="sourceLineNo">504</span>        (l1.getMax() != l2.getMax())<a name="line.504"></a>
+<span class="sourceLineNo">505</span>      ) {<a name="line.505"></a>
+<span class="sourceLineNo">506</span>        // not equivalent blocks so not equal<a name="line.506"></a>
+<span class="sourceLineNo">507</span>        return false;<a name="line.507"></a>
+<span class="sourceLineNo">508</span>      }<a name="line.508"></a>
+<span class="sourceLineNo">509</span>    }<a name="line.509"></a>
+<span class="sourceLineNo">510</span><a name="line.510"></a>
+<span class="sourceLineNo">511</span>    // One of the locations had more blocks than the other<a name="line.511"></a>
+<span class="sourceLineNo">512</span>    if(i1.hasNext() || i2.hasNext()) {<a name="line.512"></a>
+<span class="sourceLineNo">513</span>      return false;<a name="line.513"></a>
+<span class="sourceLineNo">514</span>    }<a name="line.514"></a>
+<span class="sourceLineNo">515</span><a name="line.515"></a>
+<span class="sourceLineNo">516</span>    // Same number of blocks, all equivalent. Must be equal.<a name="line.516"></a>
+<span class="sourceLineNo">517</span>    return true;<a name="line.517"></a>
+<span class="sourceLineNo">518</span>  }<a name="line.518"></a>
+<span class="sourceLineNo">519</span><a name="line.519"></a>
+<span class="sourceLineNo">520</span>  /**<a name="line.520"></a>
+<span class="sourceLineNo">521</span>   * Create a Location instance from the list of contiguous locations in<a name="line.521"></a>
+<span class="sourceLineNo">522</span>   * locList.<a name="line.522"></a>
+<span class="sourceLineNo">523</span>   * &lt;p&gt;<a name="line.523"></a>
+<span class="sourceLineNo">524</span>   * If the list is empty then Location.empty will be produced. If it is just<a name="line.524"></a>
+<span class="sourceLineNo">525</span>   * one element long, then this will be returned as-is. If there are multiple<a name="line.525"></a>
+<span class="sourceLineNo">526</span>   * locations then they will be sorted and then used to construct a<a name="line.526"></a>
+<span class="sourceLineNo">527</span>   * CompoundLocation.<a name="line.527"></a>
+<span class="sourceLineNo">528</span>   *<a name="line.528"></a>
+<span class="sourceLineNo">529</span>   * @param locList a List&lt;Location&gt;, where each element is a contiguous location.<a name="line.529"></a>
+<span class="sourceLineNo">530</span>   * @return a new Location instance<a name="line.530"></a>
+<span class="sourceLineNo">531</span>   */<a name="line.531"></a>
+<span class="sourceLineNo">532</span>  static Location buildLoc(List locList) {<a name="line.532"></a>
+<span class="sourceLineNo">533</span>    if(locList.size() == 0) {<a name="line.533"></a>
+<span class="sourceLineNo">534</span>      return Location.empty;<a name="line.534"></a>
+<span class="sourceLineNo">535</span>    } else if(locList.size() == 1) {<a name="line.535"></a>
+<span class="sourceLineNo">536</span>      return (Location) locList.get(0);<a name="line.536"></a>
+<span class="sourceLineNo">537</span>    } else {<a name="line.537"></a>
+<span class="sourceLineNo">538</span>      Collections.sort(locList, Location.naturalOrder);<a name="line.538"></a>
+<span class="sourceLineNo">539</span>      return new CompoundLocation(locList);<a name="line.539"></a>
+<span class="sourceLineNo">540</span>    }<a name="line.540"></a>
+<span class="sourceLineNo">541</span>  }<a name="line.541"></a>
+<span class="sourceLineNo">542</span>  <a name="line.542"></a>
+<span class="sourceLineNo">543</span>  /**<a name="line.543"></a>
+<span class="sourceLineNo">544</span>   * Create a Location instance from the sorted list of contiguous locations in<a name="line.544"></a>
+<span class="sourceLineNo">545</span>   * locList.<a name="line.545"></a>
+<span class="sourceLineNo">546</span>   * &lt;p&gt;<a name="line.546"></a>
+<span class="sourceLineNo">547</span>   * If the list is empty then Location.empty will be produced. If it is just<a name="line.547"></a>
+<span class="sourceLineNo">548</span>   * one element long, then this will be returned as-is. If there are multiple<a name="line.548"></a>
+<span class="sourceLineNo">549</span>   * locations then they will be sorted and then used to construct a<a name="line.549"></a>
+<span class="sourceLineNo">550</span>   * CompoundLocation.<a name="line.550"></a>
+<span class="sourceLineNo">551</span>   *<a name="line.551"></a>
+<span class="sourceLineNo">552</span>   * @param locList a List&lt;Location&gt;, where each element is a contiguous location.<a name="line.552"></a>
+<span class="sourceLineNo">553</span>   * @return a new Location instance<a name="line.553"></a>
+<span class="sourceLineNo">554</span>   */<a name="line.554"></a>
+<span class="sourceLineNo">555</span>  <a name="line.555"></a>
+<span class="sourceLineNo">556</span>  static Location buildLocSorted(List locList) {<a name="line.556"></a>
+<span class="sourceLineNo">557</span>      if(locList.size() == 0) {<a name="line.557"></a>
+<span class="sourceLineNo">558</span>        return Location.empty;<a name="line.558"></a>
+<span class="sourceLineNo">559</span>      } else if(locList.size() == 1) {<a name="line.559"></a>
+<span class="sourceLineNo">560</span>        return (Location) locList.get(0);<a name="line.560"></a>
+<span class="sourceLineNo">561</span>      } else {<a name="line.561"></a>
+<span class="sourceLineNo">562</span>        return new CompoundLocation(locList);<a name="line.562"></a>
+<span class="sourceLineNo">563</span>      }<a name="line.563"></a>
+<span class="sourceLineNo">564</span>    }<a name="line.564"></a>
+<span class="sourceLineNo">565</span><a name="line.565"></a>
+<span class="sourceLineNo">566</span>    /**<a name="line.566"></a>
+<span class="sourceLineNo">567</span>     * The n-way union of a Collection of locations.  Returns a Location<a name="line.567"></a>
+<span class="sourceLineNo">568</span>     * which covers every point covered by at least one of the locations<a name="line.568"></a>
+<span class="sourceLineNo">569</span>     * in &lt;code&gt;locs&lt;/code&gt;<a name="line.569"></a>
+<span class="sourceLineNo">570</span>     *<a name="line.570"></a>
+<span class="sourceLineNo">571</span>     * @param locs A collection of locations.<a name="line.571"></a>
+<span class="sourceLineNo">572</span>     * @return A union location<a name="line.572"></a>
+<span class="sourceLineNo">573</span>     * @throws ClassCastException if the collection contains non-Location objects.<a name="line.573"></a>
+<span class="sourceLineNo">574</span>     */<a name="line.574"></a>
+<span class="sourceLineNo">575</span><a name="line.575"></a>
+<span class="sourceLineNo">576</span>    public static Location union(Collection locs) {<a name="line.576"></a>
+<span class="sourceLineNo">577</span>        boolean circular = false;<a name="line.577"></a>
+<span class="sourceLineNo">578</span>        List locList = new ArrayList();<a name="line.578"></a>
+<span class="sourceLineNo">579</span>        for (Iterator li = locs.iterator(); li.hasNext(); ) {<a name="line.579"></a>
+<span class="sourceLineNo">580</span>            Location loc = (Location) li.next();<a name="line.580"></a>
+<span class="sourceLineNo">581</span>            if((loc instanceof CircularLocation)){<a name="line.581"></a>
+<span class="sourceLineNo">582</span>              circular = true;<a name="line.582"></a>
+<span class="sourceLineNo">583</span>              locList.add(loc);<a name="line.583"></a>
+<span class="sourceLineNo">584</span>            }else{<a name="line.584"></a>
+<span class="sourceLineNo">585</span>              for (Iterator bi = loc.blockIterator(); bi.hasNext(); ) {<a name="line.585"></a>
+<span class="sourceLineNo">586</span>                locList.add(bi.next());<a name="line.586"></a>
+<span class="sourceLineNo">587</span>              }<a name="line.587"></a>
+<span class="sourceLineNo">588</span>            }<a name="line.588"></a>
+<span class="sourceLineNo">589</span>        }<a name="line.589"></a>
+<span class="sourceLineNo">590</span>        if(circular){<a name="line.590"></a>
+<span class="sourceLineNo">591</span>          //need to add these one at a time<a name="line.591"></a>
+<span class="sourceLineNo">592</span>          ListIterator li = locList.listIterator();<a name="line.592"></a>
+<span class="sourceLineNo">593</span>          CircularLocation loc = (CircularLocation)li.next();<a name="line.593"></a>
+<span class="sourceLineNo">594</span>          while(li.hasNext()){<a name="line.594"></a>
+<span class="sourceLineNo">595</span>            loc = (CircularLocation)union(loc, (Location)li.next());<a name="line.595"></a>
+<span class="sourceLineNo">596</span>          }<a name="line.596"></a>
+<span class="sourceLineNo">597</span>          return loc;<a name="line.597"></a>
+<span class="sourceLineNo">598</span>        }else{<a name="line.598"></a>
+<span class="sourceLineNo">599</span>          return _union(locList);<a name="line.599"></a>
+<span class="sourceLineNo">600</span>        }<a name="line.600"></a>
+<span class="sourceLineNo">601</span>    }<a name="line.601"></a>
+<span class="sourceLineNo">602</span><a name="line.602"></a>
+<span class="sourceLineNo">603</span><a name="line.603"></a>
+<span class="sourceLineNo">604</span>    static Location _union(List locList) {<a name="line.604"></a>
+<span class="sourceLineNo">605</span>      // sort these blocks<a name="line.605"></a>
+<span class="sourceLineNo">606</span>      Collections.sort(locList, Location.naturalOrder);<a name="line.606"></a>
+<span class="sourceLineNo">607</span><a name="line.607"></a>
+<span class="sourceLineNo">608</span>      // merge into this list...<a name="line.608"></a>
+<span class="sourceLineNo">609</span>      List joinList = new ArrayList();<a name="line.609"></a>
+<span class="sourceLineNo">610</span><a name="line.610"></a>
+<span class="sourceLineNo">611</span>      // start iterating over sorted list.<a name="line.611"></a>
+<span class="sourceLineNo">612</span>      // last is used as loop variable. We must be careful about zero lengthed<a name="line.612"></a>
+<span class="sourceLineNo">613</span>      // lists and also careful to merge overlaps before adding to joinList.<a name="line.613"></a>
+<span class="sourceLineNo">614</span>      Iterator i = locList.iterator();<a name="line.614"></a>
+<span class="sourceLineNo">615</span>      Location last = Location.empty;<a name="line.615"></a>
+<span class="sourceLineNo">616</span><a name="line.616"></a>
+<span class="sourceLineNo">617</span><a name="line.617"></a>
+<span class="sourceLineNo">618</span>      // prime last<a name="line.618"></a>
+<span class="sourceLineNo">619</span>      if(i.hasNext()) {<a name="line.619"></a>
+<span class="sourceLineNo">620</span>        last = (Location) i.next();<a name="line.620"></a>
+<span class="sourceLineNo">621</span>      }<a name="line.621"></a>
+<span class="sourceLineNo">622</span><a name="line.622"></a>
+<span class="sourceLineNo">623</span>      // merge or add last with next location<a name="line.623"></a>
+<span class="sourceLineNo">624</span>      while(i.hasNext()) {<a name="line.624"></a>
+<span class="sourceLineNo">625</span>        Location cur = (Location) i.next();<a name="line.625"></a>
+<span class="sourceLineNo">626</span>        if(canMerge(last,cur)) {<a name="line.626"></a>
+<span class="sourceLineNo">627</span>          try {<a name="line.627"></a>
+<span class="sourceLineNo">628</span>            last = MergeLocation.mergeLocations(last,cur);<a name="line.628"></a>
+<span class="sourceLineNo">629</span>          }<a name="line.629"></a>
+<span class="sourceLineNo">630</span>          catch (BioException ex) {<a name="line.630"></a>
+<span class="sourceLineNo">631</span>            throw new BioError("Cannot make MergeLocation",ex);<a name="line.631"></a>
+<span class="sourceLineNo">632</span>          }<a name="line.632"></a>
+<span class="sourceLineNo">633</span>        } else {<a name="line.633"></a>
+<span class="sourceLineNo">634</span>          joinList.add(last);<a name="line.634"></a>
+<span class="sourceLineNo">635</span>          last = cur;<a name="line.635"></a>
+<span class="sourceLineNo">636</span>        }<a name="line.636"></a>
+<span class="sourceLineNo">637</span>      }<a name="line.637"></a>
+<span class="sourceLineNo">638</span><a name="line.638"></a>
+<span class="sourceLineNo">639</span>      // handle the end of the loop<a name="line.639"></a>
+<span class="sourceLineNo">640</span>      if(last == Location.empty) {<a name="line.640"></a>
+<span class="sourceLineNo">641</span>        return Location.empty;<a name="line.641"></a>
+<span class="sourceLineNo">642</span>      } else {<a name="line.642"></a>
+<span class="sourceLineNo">643</span>        joinList.add(last);<a name="line.643"></a>
+<span class="sourceLineNo">644</span>      }<a name="line.644"></a>
+<span class="sourceLineNo">645</span><a name="line.645"></a>
+<span class="sourceLineNo">646</span>      // now make the appropriate Location instance<a name="line.646"></a>
+<span class="sourceLineNo">647</span>      return buildLocSorted(joinList);<a name="line.647"></a>
+<span class="sourceLineNo">648</span>    }<a name="line.648"></a>
+<span class="sourceLineNo">649</span><a name="line.649"></a>
+<span class="sourceLineNo">650</span>  /**<a name="line.650"></a>
+<span class="sourceLineNo">651</span>   * Return a contiguous Location from min to max.<a name="line.651"></a>
+<span class="sourceLineNo">652</span>   * &lt;p&gt;<a name="line.652"></a>
+<span class="sourceLineNo">653</span>   * If min == max then a PointLocation will be made, otherwise, a RangeLocation<a name="line.653"></a>
+<span class="sourceLineNo">654</span>   * will be returned.<a name="line.654"></a>
+<span class="sourceLineNo">655</span>   *<a name="line.655"></a>
+<span class="sourceLineNo">656</span>   * @param min  the Location min value<a name="line.656"></a>
+<span class="sourceLineNo">657</span>   * @param max  the Location max value<a name="line.657"></a>
+<span class="sourceLineNo">658</span>   * @return a new Location from min to max<a name="line.658"></a>
+<span class="sourceLineNo">659</span>   */<a name="line.659"></a>
+<span class="sourceLineNo">660</span>  public static Location makeLocation(int min, int max) {<a name="line.660"></a>
+<span class="sourceLineNo">661</span>    if(min == max) {<a name="line.661"></a>
+<span class="sourceLineNo">662</span>      return new PointLocation(min);<a name="line.662"></a>
+<span class="sourceLineNo">663</span>    } else {<a name="line.663"></a>
+<span class="sourceLineNo">664</span>      return new RangeLocation(min, max);<a name="line.664"></a>
+<span class="sourceLineNo">665</span>    }<a name="line.665"></a>
+<span class="sourceLineNo">666</span>  }<a name="line.666"></a>
+<span class="sourceLineNo">667</span><a name="line.667"></a>
+<span class="sourceLineNo">668</span>    /**<a name="line.668"></a>
+<span class="sourceLineNo">669</span>     * A simple method to generate a RangeLocation wrapped<a name="line.669"></a>
+<span class="sourceLineNo">670</span>     * in a CircularLocation. The method will cope with situtations<a name="line.670"></a>
+<span class="sourceLineNo">671</span>     * where the min is greater than the max. Either of min or max can<a name="line.671"></a>
+<span class="sourceLineNo">672</span>     * be negative, or greater than the underlying sequence length. If min and<a name="line.672"></a>
+<span class="sourceLineNo">673</span>     * max are equal a wrapped point location will be made.<a name="line.673"></a>
+<span class="sourceLineNo">674</span>     *<a name="line.674"></a>
+<span class="sourceLineNo">675</span>     * @param min the "left" end of the location<a name="line.675"></a>
+<span class="sourceLineNo">676</span>     * @param max the "right" end of the location<a name="line.676"></a>
+<span class="sourceLineNo">677</span>     * @param seqLength the lenght of the sequence that the location will<a name="line.677"></a>
+<span class="sourceLineNo">678</span>     * be applied to (for purposes of determining origin).<a name="line.678"></a>
+<span class="sourceLineNo">679</span>     * @return the new &lt;code&gt;CircularLocation&lt;/code&gt;<a name="line.679"></a>
+<span class="sourceLineNo">680</span>     */<a name="line.680"></a>
+<span class="sourceLineNo">681</span>    public static CircularLocation makeCircularLocation(int min, int max, int seqLength){<a name="line.681"></a>
+<span class="sourceLineNo">682</span>        return CircularLocationTools.makeCircLoc(min,max,seqLength);<a name="line.682"></a>
+<span class="sourceLineNo">683</span>    }<a name="line.683"></a>
+<span class="sourceLineNo">684</span><a name="line.684"></a>
+<span class="sourceLineNo">685</span>  /**<a name="line.685"></a>
+<span class="sourceLineNo">686</span>   * Checks if the location has a decorator.<a name="line.686"></a>
+<span class="sourceLineNo">687</span>   *<a name="line.687"></a>
+<span class="sourceLineNo">688</span>   * @param theLocation The location to test for decorators<a name="line.688"></a>
+<span class="sourceLineNo">689</span>   * @return True if the location has a decorator and false otherwise<a name="line.689"></a>
+<span class="sourceLineNo">690</span>   */<a name="line.690"></a>
+<span class="sourceLineNo">691</span>  static boolean isDecorated(Location theLocation)<a name="line.691"></a>
+<span class="sourceLineNo">692</span>  {<a name="line.692"></a>
+<span class="sourceLineNo">693</span>        return (theLocation instanceof AbstractLocationDecorator);<a name="line.693"></a>
+<span class="sourceLineNo">694</span>  }<a name="line.694"></a>
+<span class="sourceLineNo">695</span><a name="line.695"></a>
+<span class="sourceLineNo">696</span>  /**<a name="line.696"></a>
+<span class="sourceLineNo">697</span>   * Currently CircularLocations are handled if and only if<a name="line.697"></a>
+<span class="sourceLineNo">698</span>   * CircularLocationTools.safeOperation returns true. For this to be true<a name="line.698"></a>
+<span class="sourceLineNo">699</span>   * the locations must have the same sequence length.<a name="line.699"></a>
+<span class="sourceLineNo">700</span>   *<a name="line.700"></a>
+<span class="sourceLineNo">701</span>   * BetweenLocations are handled in all cases.  Overlap cases, such as<a name="line.701"></a>
+<span class="sourceLineNo">702</span>   * between, circular locations have indeterminate behavior.<a name="line.702"></a>
+<span class="sourceLineNo">703</span>   *<a name="line.703"></a>
+<span class="sourceLineNo">704</span>   * The default behavior is to not handle decorators.  Any new decorators<a name="line.704"></a>
+<span class="sourceLineNo">705</span>   * will have to re-visit this method<a name="line.705"></a>
+<span class="sourceLineNo">706</span>   */<a name="line.706"></a>
+<span class="sourceLineNo">707</span>  private static void handleDecorations(Location locA, Location locB){<a name="line.707"></a>
+<span class="sourceLineNo">708</span>    if(CircularLocationTools.isCircular(locA)|| CircularLocationTools.isCircular(locB)){<a name="line.708"></a>
+<span class="sourceLineNo">709</span>        if(CircularLocationTools.safeOperation(locA, locB) == false){<a name="line.709"></a>
+<span class="sourceLineNo">710</span>              throw new UnsupportedOperationException(<a name="line.710"></a>
+<span class="sourceLineNo">711</span>                "Binary operations between Circular and"+<a name="line.711"></a>
+<span class="sourceLineNo">712</span>                " Non-Circular locations, or CircularLocations"+<a name="line.712"></a>
+<span class="sourceLineNo">713</span>                " from sequences of differing length are currently unsupported.");<a name="line.713"></a>
+<span class="sourceLineNo">714</span>        }<a name="line.714"></a>
+<span class="sourceLineNo">715</span>      }<a name="line.715"></a>
+<span class="sourceLineNo">716</span>    else if(BetweenLocationTools.isBetween(locA) || (BetweenLocationTools.isBetween(locB)))<a name="line.716"></a>
+<span class="sourceLineNo">717</span>    {<a name="line.717"></a>
+<span class="sourceLineNo">718</span>        // Intentionally blank<a name="line.718"></a>
+<span class="sourceLineNo">719</span>    }<a name="line.719"></a>
+<span class="sourceLineNo">720</span>    else{<a name="line.720"></a>
+<span class="sourceLineNo">721</span>        throw new ClassCastException("Decorated locations are not handled in this version: " + locA.getClass().getName() + ", " + locB.getClass().getName());<a name="line.721"></a>
+<span class="sourceLineNo">722</span>      }<a name="line.722"></a>
+<span class="sourceLineNo">723</span>  }<a name="line.723"></a>
+<span class="sourceLineNo">724</span><a name="line.724"></a>
+<span class="sourceLineNo">725</span>  /**<a name="line.725"></a>
+<span class="sourceLineNo">726</span>   * Flips a location relative to a length.<a name="line.726"></a>
+<span class="sourceLineNo">727</span>   *<a name="line.727"></a>
+<span class="sourceLineNo">728</span>   * &lt;p&gt;It is very common in biological sequences to represent locations on a sequence and then reverse that<a name="line.728"></a>
+<span class="sourceLineNo">729</span>   * sequence. This method allows locations in the original coordinate space to be transformed int<a name="line.729"></a>
+<span class="sourceLineNo">730</span>   * locations in the reverse one.&lt;/p&gt;<a name="line.730"></a>
+<span class="sourceLineNo">731</span>   *<a name="line.731"></a>
+<span class="sourceLineNo">732</span>   * @param loc  the Location to flip<a name="line.732"></a>
+<span class="sourceLineNo">733</span>   * @param len  the length of the region to flip within<a name="line.733"></a>
+<span class="sourceLineNo">734</span>   * @return  a flipped view of the location<a name="line.734"></a>
+<span class="sourceLineNo">735</span>   */<a name="line.735"></a>
+<span class="sourceLineNo">736</span>  public static Location flip(Location loc, int len) {<a name="line.736"></a>
+<span class="sourceLineNo">737</span>      if(loc instanceof PointLocation) {<a name="line.737"></a>
+<span class="sourceLineNo">738</span>          return new PointLocation(len - loc.getMin() + 1);<a name="line.738"></a>
+<span class="sourceLineNo">739</span>      } else if(loc instanceof RangeLocation) {<a name="line.739"></a>
+<span class="sourceLineNo">740</span>          return new RangeLocation(<a name="line.740"></a>
+<span class="sourceLineNo">741</span>            len - loc.getMax() + 1,<a name="line.741"></a>
+<span class="sourceLineNo">742</span>            len - loc.getMin() + 1<a name="line.742"></a>
+<span class="sourceLineNo">743</span>          );<a name="line.743"></a>
+<span class="sourceLineNo">744</span>      } else {<a name="line.744"></a>
+<span class="sourceLineNo">745</span>          Iterator bi = loc.blockIterator();<a name="line.745"></a>
+<span class="sourceLineNo">746</span>          Location res = (Location) bi.next();<a name="line.746"></a>
+<span class="sourceLineNo">747</span>          while(bi.hasNext()) {<a name="line.747"></a>
+<span class="sourceLineNo">748</span>              res = LocationTools.union(res, (Location) bi.next());<a name="line.748"></a>
+<span class="sourceLineNo">749</span>          }<a name="line.749"></a>
+<span class="sourceLineNo">750</span>          return res;<a name="line.750"></a>
+<span class="sourceLineNo">751</span>      }<a name="line.751"></a>
+<span class="sourceLineNo">752</span>  }<a name="line.752"></a>
+<span class="sourceLineNo">753</span><a name="line.753"></a>
+<span class="sourceLineNo">754</span>    /**<a name="line.754"></a>
+<span class="sourceLineNo">755</span>     * Subtract one location from another.  This methods calculates the set of<a name="line.755"></a>
+<span class="sourceLineNo">756</span>     * points which are contains in location &lt;code&gt;keep&lt;/code&gt; but not in<a name="line.756"></a>
+<span class="sourceLineNo">757</span>     * &lt;code&gt;remove&lt;/code&gt;.<a name="line.757"></a>
+<span class="sourceLineNo">758</span>     *<a name="line.758"></a>
+<span class="sourceLineNo">759</span>     * @param keep A location<a name="line.759"></a>
+<span class="sourceLineNo">760</span>     * @param remove A location<a name="line.760"></a>
+<span class="sourceLineNo">761</span>     * @return a location containing all points which are in x but not y<a name="line.761"></a>
+<span class="sourceLineNo">762</span>     * @since 1.3<a name="line.762"></a>
+<span class="sourceLineNo">763</span>     */<a name="line.763"></a>
+<span class="sourceLineNo">764</span><a name="line.764"></a>
+<span class="sourceLineNo">765</span>    public static Location subtract(Location keep, Location remove) {<a name="line.765"></a>
+<span class="sourceLineNo">766</span>        // fixme: documentation hack - I should re-factor this method<a name="line.766"></a>
+<span class="sourceLineNo">767</span>        Location x = keep;<a name="line.767"></a>
+<span class="sourceLineNo">768</span>        Location y = remove;<a name="line.768"></a>
+<span class="sourceLineNo">769</span>        <a name="line.769"></a>
+<span class="sourceLineNo">770</span>        if (isDecorated(x) || isDecorated(y)) {<a name="line.770"></a>
+<span class="sourceLineNo">771</span>            handleDecorations(x, y);<a name="line.771"></a>
+<span class="sourceLineNo">772</span>        }<a name="line.772"></a>
+<span class="sourceLineNo">773</span><a name="line.773"></a>
+<span class="sourceLineNo">774</span>        List spans = new ArrayList();<a name="line.774"></a>
+<span class="sourceLineNo">775</span>        for (Iterator i = x.blockIterator(); i.hasNext(); ) {<a name="line.775"></a>
+<span class="sourceLineNo">776</span>            Location xb = (Location) i.next();<a name="line.776"></a>
+<span class="sourceLineNo">777</span>            Location yb = LocationTools.intersection(xb, y);<a name="line.777"></a>
+<span class="sourceLineNo">778</span>            int pos = xb.getMin();<a name="line.778"></a>
+<span class="sourceLineNo">779</span>            for (Iterator j = yb.blockIterator(); j.hasNext(); ) {<a name="line.779"></a>
+<span class="sourceLineNo">780</span>                Location sb = (Location) j.next();<a name="line.780"></a>
+<span class="sourceLineNo">781</span>                if (sb.getMin() &gt; pos) {<a name="line.781"></a>
+<span class="sourceLineNo">782</span>                    spans.add(new RangeLocation(pos, sb.getMin() - 1));<a name="line.782"></a>
+<span class="sourceLineNo">783</span>                }<a name="line.783"></a>
+<span class="sourceLineNo">784</span>                pos = sb.getMax() + 1;<a name="line.784"></a>
+<span class="sourceLineNo">785</span>            }<a name="line.785"></a>
+<span class="sourceLineNo">786</span>            if (pos &lt;= xb.getMax()) {<a name="line.786"></a>
+<span class="sourceLineNo">787</span>                spans.add(new RangeLocation(pos, xb.getMax()));<a name="line.787"></a>
+<span class="sourceLineNo">788</span>            }<a name="line.788"></a>
+<span class="sourceLineNo">789</span>        }<a name="line.789"></a>
+<span class="sourceLineNo">790</span>        return LocationTools.union(spans);<a name="line.790"></a>
+<span class="sourceLineNo">791</span>    }<a name="line.791"></a>
+<span class="sourceLineNo">792</span>    <a name="line.792"></a>
+<span class="sourceLineNo">793</span>    /**<a name="line.793"></a>
+<span class="sourceLineNo">794</span>     * Return the number of positions which are covered by a &lt;code&gt;Location&lt;/code&gt;<a name="line.794"></a>
+<span class="sourceLineNo">795</span>     *<a name="line.795"></a>
+<span class="sourceLineNo">796</span>     * @param loc A location<a name="line.796"></a>
+<span class="sourceLineNo">797</span>     * @return the number of distinct points contained by that location<a name="line.797"></a>
+<span class="sourceLineNo">798</span>     * @since 1.4<a name="line.798"></a>
+<span class="sourceLineNo">799</span>     */<a name="line.799"></a>
+<span class="sourceLineNo">800</span>    <a name="line.800"></a>
+<span class="sourceLineNo">801</span>    public static int coverage(Location loc) {<a name="line.801"></a>
+<span class="sourceLineNo">802</span>        int cov = 0;<a name="line.802"></a>
+<span class="sourceLineNo">803</span>        for (Iterator i = loc.blockIterator(); i.hasNext(); ) {<a name="line.803"></a>
+<span class="sourceLineNo">804</span>            Location bloc = (Location) i.next();<a name="line.804"></a>
+<span class="sourceLineNo">805</span>            cov += (bloc.getMax() - bloc.getMin() + 1);<a name="line.805"></a>
+<span class="sourceLineNo">806</span>        }<a name="line.806"></a>
+<span class="sourceLineNo">807</span>        return cov;<a name="line.807"></a>
+<span class="sourceLineNo">808</span>    }<a name="line.808"></a>
+<span class="sourceLineNo">809</span>    <a name="line.809"></a>
+<span class="sourceLineNo">810</span>    /**<a name="line.810"></a>
+<span class="sourceLineNo">811</span>     * Return a contiguous location running from the minimum to the maximum points of<a name="line.811"></a>
+<span class="sourceLineNo">812</span>     * the specified location.<a name="line.812"></a>
+<span class="sourceLineNo">813</span>     * <a name="line.813"></a>
+<span class="sourceLineNo">814</span>     * @param loc a location<a name="line.814"></a>
+<span class="sourceLineNo">815</span>     * @return a corresponding contiguous location<a name="line.815"></a>
+<span class="sourceLineNo">816</span>     */<a name="line.816"></a>
+<span class="sourceLineNo">817</span>    <a name="line.817"></a>
+<span class="sourceLineNo">818</span>    public static Location shadow(Location loc) {<a name="line.818"></a>
+<span class="sourceLineNo">819</span>        if (loc.isContiguous()) {<a name="line.819"></a>
+<span class="sourceLineNo">820</span>            return loc;<a name="line.820"></a>
+<span class="sourceLineNo">821</span>        } else {<a name="line.821"></a>
+<span class="sourceLineNo">822</span>            return new RangeLocation(loc.getMin(), loc.getMax());<a name="line.822"></a>
+<span class="sourceLineNo">823</span>        }<a name="line.823"></a>
+<span class="sourceLineNo">824</span>    }<a name="line.824"></a>
+<span class="sourceLineNo">825</span>    <a name="line.825"></a>
+<span class="sourceLineNo">826</span>    /**<a name="line.826"></a>
+<span class="sourceLineNo">827</span>     * Return the number of contiguous blocks in a location.<a name="line.827"></a>
+<span class="sourceLineNo">828</span>     * <a name="line.828"></a>
+<span class="sourceLineNo">829</span>     * @param loc a location<a name="line.829"></a>
+<span class="sourceLineNo">830</span>     * @return the number of blocks<a name="line.830"></a>
+<span class="sourceLineNo">831</span>     * @since 1.4<a name="line.831"></a>
+<span class="sourceLineNo">832</span>     */<a name="line.832"></a>
+<span class="sourceLineNo">833</span>    <a name="line.833"></a>
+<span class="sourceLineNo">834</span>    public static int blockCount(Location loc) {<a name="line.834"></a>
+<span class="sourceLineNo">835</span>        if (loc.isContiguous()) {<a name="line.835"></a>
+<span class="sourceLineNo">836</span>            if (loc instanceof EmptyLocation) {<a name="line.836"></a>
+<span class="sourceLineNo">837</span>                return 0;<a name="line.837"></a>
+<span class="sourceLineNo">838</span>            } else {<a name="line.838"></a>
+<span class="sourceLineNo">839</span>                return 1;<a name="line.839"></a>
+<span class="sourceLineNo">840</span>            }<a name="line.840"></a>
+<span class="sourceLineNo">841</span>        } else {<a name="line.841"></a>
+<span class="sourceLineNo">842</span>            int cnt = 0;<a name="line.842"></a>
+<span class="sourceLineNo">843</span>            for (Iterator bi = loc.blockIterator(); bi.hasNext(); ) {<a name="line.843"></a>
+<span class="sourceLineNo">844</span>                bi.next(); ++cnt;<a name="line.844"></a>
+<span class="sourceLineNo">845</span>            }<a name="line.845"></a>
+<span class="sourceLineNo">846</span>            return cnt;<a name="line.846"></a>
+<span class="sourceLineNo">847</span>        }<a name="line.847"></a>
+<span class="sourceLineNo">848</span>    }<a name="line.848"></a>
+<span class="sourceLineNo">849</span>}<a name="line.849"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

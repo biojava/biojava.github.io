@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojavax.utils;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.BufferedReader;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.IOException;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.StringReader;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.regex.Pattern;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import javax.xml.parsers.ParserConfigurationException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import javax.xml.parsers.SAXParser;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.xml.parsers.SAXParserFactory;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.xml.sax.InputSource;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.xml.sax.SAXException;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.xml.sax.helpers.DefaultHandler;<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span>/**<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * Utility class for reading chunks of XML files and feeding them to SAX.<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * @author Richard Holland<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @since 1.5<a name="line.39"></a>
+<span class="sourceLineNo">040</span> */<a name="line.40"></a>
+<span class="sourceLineNo">041</span>public class XMLTools {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>    <a name="line.42"></a>
+<span class="sourceLineNo">043</span>    // Static methods so should never be instantiated.<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    private XMLTools() {}<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    <a name="line.45"></a>
+<span class="sourceLineNo">046</span>    /**<a name="line.46"></a>
+<span class="sourceLineNo">047</span>     * Attempts to read XML file in chunks, passing each chunk to a SAX parser.<a name="line.47"></a>
+<span class="sourceLineNo">048</span>     * As each chunk is read into memory in a buffer, you need to ensure that each chunk<a name="line.48"></a>
+<span class="sourceLineNo">049</span>     * is small enough to fit into available memory. Only one chunk is held in memory<a name="line.49"></a>
+<span class="sourceLineNo">050</span>     * at any one time, and then only long enough for it to be parsed.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * When checking for the presence of further chunks, it'll only read up to 1000 chars<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     * further into the file, after which results will be unpredictable.<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     * @param reader the reader to read the XML from<a name="line.53"></a>
+<span class="sourceLineNo">054</span>     * @param m_handler the SAX parser to feed the XML to<a name="line.54"></a>
+<span class="sourceLineNo">055</span>     * @param chunkToken the token to read. The parser will locate the first instance of<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * &amp;lt;chunkToken and will buffer all content, including the opening tag and up to<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * and including the closing &amp;lt;/chunkToken&gt; tag. It will not currently handle<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * &amp;lt;chunkToken/&gt; instances, nor instances where more than one tag appears per line,<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     * or extra spaces appear between the angle brackets, slashes, and tag name of the<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * tag we are searching for.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * @return true if there is another chunk left to read after this one, false if not.<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * @throws ParserConfigurationException if there was a problem setting up the SAX parser.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     * @throws SAXException if there was a problem parsing the XML.<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     * @throws IOException if there was a problem reading the XML from the reader.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     */<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    public static boolean readXMLChunk(BufferedReader reader, DefaultHandler m_handler, String chunkToken) throws ParserConfigurationException, SAXException, IOException {<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        // read next chunk from &lt;chunkToken&gt; to &lt;chunkToken/&gt; inclusive into buffer<a name="line.67"></a>
+<span class="sourceLineNo">068</span>        // process buffer through XML parser<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        StringBuffer buffer = new StringBuffer();<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>        Pattern start = Pattern.compile(".*&lt;"+chunkToken+".*");<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        Pattern end = Pattern.compile(".*&lt;/"+chunkToken+"&gt;.*");<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        <a name="line.73"></a>
+<span class="sourceLineNo">074</span>        boolean begunChunk = false;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        boolean filledBuffer = false;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        String line = null;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        while (!filledBuffer &amp;&amp; (line=reader.readLine())!=null) {<a name="line.77"></a>
+<span class="sourceLineNo">078</span>            line = line.trim();<a name="line.78"></a>
+<span class="sourceLineNo">079</span>            if (!begunChunk &amp;&amp; !start.matcher(line).matches()) continue;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>            else begunChunk = true;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>            buffer.append(line+"\n");<a name="line.81"></a>
+<span class="sourceLineNo">082</span>            if (end.matcher(line).matches()) filledBuffer = true;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        }<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        if (!filledBuffer) throw new SAXException("Unexpectedly reached end of file");<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        reader.mark(10000);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        boolean hasAnotherChunk = false;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        while (!hasAnotherChunk &amp;&amp; (line=reader.readLine())!=null) {<a name="line.87"></a>
+<span class="sourceLineNo">088</span>            line = line.trim();<a name="line.88"></a>
+<span class="sourceLineNo">089</span>            if (start.matcher(line).matches()) hasAnotherChunk = true;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        }<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        reader.reset();<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        <a name="line.92"></a>
+<span class="sourceLineNo">093</span>        SAXParser m_xmlParser;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        SAXParserFactory factory = SAXParserFactory.newInstance();<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        factory.setValidating(true);<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        m_xmlParser = factory.newSAXParser();<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        <a name="line.97"></a>
+<span class="sourceLineNo">098</span>        InputSource source = new InputSource(new StringReader(buffer.toString()));<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        m_xmlParser.parse(source, m_handler);<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        <a name="line.100"></a>
+<span class="sourceLineNo">101</span>        // return true if there are more in our buffer<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        return hasAnotherChunk;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    }<a name="line.103"></a>
+<span class="sourceLineNo">104</span>}<a name="line.104"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

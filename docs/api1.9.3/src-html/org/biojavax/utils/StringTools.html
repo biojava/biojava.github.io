@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojavax.utils;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.PrintStream;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.ArrayList;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.List;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.regex.Matcher;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.regex.Pattern;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>/**<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * Utility class for formatting strings into regular-sized blocks.<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * @author Richard Holland<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * @since 1.5<a name="line.33"></a>
+<span class="sourceLineNo">034</span> */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>public class StringTools {<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    <a name="line.36"></a>
+<span class="sourceLineNo">037</span>    // Static methods so should never be instantiated.<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    private StringTools() {}<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    <a name="line.39"></a>
+<span class="sourceLineNo">040</span>    /**<a name="line.40"></a>
+<span class="sourceLineNo">041</span>     * Takes an input string and appends spaces to the left. Ignores<a name="line.41"></a>
+<span class="sourceLineNo">042</span>     * any existing leading whitespace when counting the indent size.<a name="line.42"></a>
+<span class="sourceLineNo">043</span>     * @param input the input string<a name="line.43"></a>
+<span class="sourceLineNo">044</span>     * @param leftIndent the number of spaces to indent it by.<a name="line.44"></a>
+<span class="sourceLineNo">045</span>     * @return the indented string.<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     */<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    public static String leftIndent(String input, int leftIndent) {<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        StringBuffer b = new StringBuffer();<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        for (int i = 0; i &lt; leftIndent; i++) b.append(" "); // yuck!<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        b.append(input);<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        return b.toString();<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    }<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    <a name="line.53"></a>
+<span class="sourceLineNo">054</span>    /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>     * Pads a string to be a certain width by prepending spaces.<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * @param input the string to pad.<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * @param totalWidth the final width required including padded space.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     */<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    public static String leftPad(String input, int totalWidth) {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        return leftPad(input, ' ', totalWidth);<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    }<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    <a name="line.62"></a>
+<span class="sourceLineNo">063</span>    /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     * Pads a string to be a certain width by prepending given symbols.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * @param input the string to pad.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * @param padChar the symbol to pad with.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     * @param totalWidth the final width required including padded symbols.<a name="line.67"></a>
+<span class="sourceLineNo">068</span>     */<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    public static String leftPad(String input, char padChar, int totalWidth) {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        StringBuffer b = new StringBuffer();<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        b.append(input);<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        while(b.length()&lt;totalWidth) b.insert(0,padChar); // yuck!<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        return b.toString();<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    }<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    <a name="line.75"></a>
+<span class="sourceLineNo">076</span>    /**<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     * Pads a string to be a certain width by appending spaces.<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * @param input the string to pad.<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * @param totalWidth the final width required including padded space.<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     */<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    public static String rightPad(String input, int totalWidth) {<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        return rightPad(input, ' ', totalWidth);<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    }<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    <a name="line.84"></a>
+<span class="sourceLineNo">085</span>    /**<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * Pads a string to be a certain width by appending given symbols.<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     * @param input the string to pad.<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     * @param padChar the symbol to pad with.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>     * @param totalWidth the final width required including padded symbols.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     */<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    public static String rightPad(String input, char padChar, int totalWidth) {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        StringBuffer b = new StringBuffer();<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        b.append(input);<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        while(b.length()&lt;totalWidth)<a name="line.94"></a>
+<span class="sourceLineNo">095</span>            b.append(padChar); // yuck!<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        return b.toString();<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    }<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    <a name="line.98"></a>
+<span class="sourceLineNo">099</span>    /**<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * Word-wraps a string into an array of lines of no more than the given width.<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * The string is split into chunks using the regex supplied to identify the<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     * points where it can be broken. If a word is longer than the width required,<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     * it is broken mid-word, otherwise the string is always broken between words.<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     * @param input the string to format<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     * @param sepRegex the regex identifying the break points in the string, to be<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * compiled using Pattern.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     * @param width the width of the lines required<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     * @return an array of strings, one per line, containing the wrapped output.<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * @see Pattern<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    public static String[] wordWrap(String input, String sepRegex, int width) {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        List lines = new ArrayList();<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        Pattern p = Pattern.compile(sepRegex);<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        int start = 0;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        while (start &lt; input.length()) {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>            //begin from start+width<a name="line.116"></a>
+<span class="sourceLineNo">117</span>            int splitPoint = start+width;<a name="line.117"></a>
+<span class="sourceLineNo">118</span>            //if has newline before end, use it<a name="line.118"></a>
+<span class="sourceLineNo">119</span>           int newline = input.indexOf('\n',start);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>           if (newline&gt;=start &amp;&amp; newline&lt;splitPoint) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                splitPoint = newline;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>            }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>            //easy case where only small portion of line remains<a name="line.123"></a>
+<span class="sourceLineNo">124</span>            if (splitPoint &gt;= input.length()) splitPoint=input.length();<a name="line.124"></a>
+<span class="sourceLineNo">125</span>            //hard case, have to split it!<a name="line.125"></a>
+<span class="sourceLineNo">126</span>            else {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                //if not match sep, find first point that does<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                while (splitPoint&gt;=start) {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>                    char c = input.charAt(splitPoint);<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                    Matcher m = p.matcher(""+c);<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                    if (m.matches()) {<a name="line.131"></a>
+<span class="sourceLineNo">132</span>                        splitPoint+=1;// splitpoint is index of separator - include on this line - assumes a single character separator<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                        break;<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                    }<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                    splitPoint--;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>                }<a name="line.136"></a>
+<span class="sourceLineNo">137</span>                //if ended up at splitPoint=start, splitPoint=start+width<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                //in order to break word mid-way through<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                if (splitPoint&lt;=start) splitPoint = start+width;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>            }<a name="line.140"></a>
+<span class="sourceLineNo">141</span>            //trailing blanks - which may include the separator - are not in genbank lines - so they are removed<a name="line.141"></a>
+<span class="sourceLineNo">142</span>            //output chunk from start to splitPoint - do not include trailing newline - it will be added by writeKeyValueLine<a name="line.142"></a>
+<span class="sourceLineNo">143</span>            lines.add(trimTrailingBlanks(newline==splitPoint-1?input.substring(start, splitPoint-1):input.substring(start, splitPoint)));<a name="line.143"></a>
+<span class="sourceLineNo">144</span>            start=splitPoint;// start right after the separator<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        }<a name="line.145"></a>
+<span class="sourceLineNo">146</span>        return (String[])lines.toArray(new String[0]);<a name="line.146"></a>
+<span class="sourceLineNo">147</span>    }<a name="line.147"></a>
+<span class="sourceLineNo">148</span>    <a name="line.148"></a>
+<span class="sourceLineNo">149</span>    private final static String trimTrailingBlanks(final String theString) {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        if (theString.length() ==0 || theString.charAt(theString.length()-1) != ' ') return theString;<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        int len = theString.length();<a name="line.151"></a>
+<span class="sourceLineNo">152</span>        final char[] val = theString.toCharArray();<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        while (len &gt; 0 &amp;&amp; (val[len - 1] &lt;= ' ')) len--;<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        return ((len &lt;  theString.length())) ? theString.substring(0, len) : theString;<a name="line.154"></a>
+<span class="sourceLineNo">155</span>    }<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    <a name="line.156"></a>
+<span class="sourceLineNo">157</span>    /**<a name="line.157"></a>
+<span class="sourceLineNo">158</span>     * Writes some text to the output stream in the following format:<a name="line.158"></a>
+<span class="sourceLineNo">159</span>     *    key         text<a name="line.159"></a>
+<span class="sourceLineNo">160</span>     *                continuation of text<a name="line.160"></a>
+<span class="sourceLineNo">161</span>     * where the key/wrappedKey column is keyWidth wide, and the total line width is lineWidth,<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     * and the text is split over multiple lines at the nearest occurrence of whitespace.<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     * @param key the key to write on the first line only<a name="line.163"></a>
+<span class="sourceLineNo">164</span>     * @param text the text to write out<a name="line.164"></a>
+<span class="sourceLineNo">165</span>     * @param keyWidth the width to indent the text by (in which the key will be printed)<a name="line.165"></a>
+<span class="sourceLineNo">166</span>     * @param os the stream to write the formatted output to<a name="line.166"></a>
+<span class="sourceLineNo">167</span>     */<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    public static void writeKeyValueLine(String key, String text, int keyWidth, int lineWidth, PrintStream os) {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        writeKeyValueLine(key,text,keyWidth,lineWidth,null,null,os);<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    }<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    <a name="line.171"></a>
+<span class="sourceLineNo">172</span>    /**<a name="line.172"></a>
+<span class="sourceLineNo">173</span>     * Writes some text to the output stream in the following format:<a name="line.173"></a>
+<span class="sourceLineNo">174</span>     *    key         text<a name="line.174"></a>
+<span class="sourceLineNo">175</span>     *                continuation of text<a name="line.175"></a>
+<span class="sourceLineNo">176</span>     * where the key/wrappedKey column is keyWidth wide, and the total line width is lineWidth,<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     * and the text is split over multiple lines at the nearest occurrence of separator sep.<a name="line.177"></a>
+<span class="sourceLineNo">178</span>     * @param key the key to write on the first line only<a name="line.178"></a>
+<span class="sourceLineNo">179</span>     * @param text the text to write out<a name="line.179"></a>
+<span class="sourceLineNo">180</span>     * @param keyWidth the width to indent the text by (in which the key will be printed)<a name="line.180"></a>
+<span class="sourceLineNo">181</span>     * @param sep the separator to split the text on if it exceeds the line width<a name="line.181"></a>
+<span class="sourceLineNo">182</span>     * @param os the stream to write the formatted output to<a name="line.182"></a>
+<span class="sourceLineNo">183</span>     */<a name="line.183"></a>
+<span class="sourceLineNo">184</span>    public static void writeKeyValueLine(String key, String text, int keyWidth, int lineWidth, String sep, PrintStream os) {<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        writeKeyValueLine(key,text,keyWidth,lineWidth,sep,null,os);<a name="line.185"></a>
+<span class="sourceLineNo">186</span>    }<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    <a name="line.187"></a>
+<span class="sourceLineNo">188</span>    /**<a name="line.188"></a>
+<span class="sourceLineNo">189</span>     * Writes some text to the output stream in the following format:<a name="line.189"></a>
+<span class="sourceLineNo">190</span>     *    key         text<a name="line.190"></a>
+<span class="sourceLineNo">191</span>     *    wrappedKey  continuation of text<a name="line.191"></a>
+<span class="sourceLineNo">192</span>     * where the key/wrappedKey column is keyWidth wide, and the total line width is lineWidth,<a name="line.192"></a>
+<span class="sourceLineNo">193</span>     * and the text is split over multiple lines at the nearest occurrence of separator sep.<a name="line.193"></a>
+<span class="sourceLineNo">194</span>     * @param key the key to write on the first line only<a name="line.194"></a>
+<span class="sourceLineNo">195</span>     * @param text the text to write out<a name="line.195"></a>
+<span class="sourceLineNo">196</span>     * @param keyWidth the width to indent the text by (in which the key will be printed)<a name="line.196"></a>
+<span class="sourceLineNo">197</span>     * @param sep the separator to split the text on if it exceeds the line width<a name="line.197"></a>
+<span class="sourceLineNo">198</span>     * @param wrappedKey the key to print on second and subsequent lines<a name="line.198"></a>
+<span class="sourceLineNo">199</span>     * @param os the stream to write the formatted output to<a name="line.199"></a>
+<span class="sourceLineNo">200</span>     */<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    public static void writeKeyValueLine(String key, String text, int keyWidth, int lineWidth, String sep, String wrappedKey, PrintStream os) {<a name="line.201"></a>
+<span class="sourceLineNo">202</span>        if (key==null || text==null) return; // skip blank lines<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        if (wrappedKey==null) wrappedKey=""; // stop null pointer exceptions on wrapped keys<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        if (sep==null) sep="\\s+"; // stop null pointer exceptions on the separator<a name="line.204"></a>
+<span class="sourceLineNo">205</span>//        text = text.trim(); // trim leading/trailing whitespace from text - this deletes leading blank lines from comments: e.g. AC140936<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        String[] lines = StringTools.wordWrap(text, sep, lineWidth-keyWidth);<a name="line.206"></a>
+<span class="sourceLineNo">207</span>        if (lines.length==0) os.println(StringTools.rightPad(key,keyWidth));<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        else {<a name="line.208"></a>
+<span class="sourceLineNo">209</span>            lines[0] = StringTools.rightPad(key,keyWidth)+<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                    lines[0];<a name="line.210"></a>
+<span class="sourceLineNo">211</span>            os.println(lines[0]);<a name="line.211"></a>
+<span class="sourceLineNo">212</span>            for (int i = 1; i &lt; lines.length; i++) os.println(StringTools.rightPad(wrappedKey,keyWidth)+lines[i]);<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        }<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    }<a name="line.214"></a>
+<span class="sourceLineNo">215</span>}<a name="line.215"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
