@@ -1,0 +1,558 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.HashSet;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.Iterator;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Set;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>/**<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * &lt;p&gt;&lt;code&gt;PropertyConstraint&lt;/code&gt;s describes a constraint applied<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * to the members of an annotation bundle.&lt;/p&gt;<a name="line.30"></a>
+<span class="sourceLineNo">031</span> *<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * &lt;p&gt;&lt;code&gt;PropertyConstraint&lt;/code&gt;s are usually used in conjunction<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * with the &lt;code&gt;AnnotationType&lt;/code&gt; interface to describe a class<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * of annotations by the values of their properties. In this way, you<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * can generate controlled vocabularies over Java objects.&lt;/p&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> *<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * &lt;p&gt;The constraints accept or reject individual objects.<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * In general, it is not possible to get back a set of all items<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * that would be accepted by a particular constraint.&lt;/p&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * Instantiate PropertyConstraint classes when populating an<a name="line.40"></a>
+<span class="sourceLineNo">041</span> *            AnnotationType instance<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * Implement PropertyContraint to provide meta-data about a new<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *            type of object relationship. For example, if there was a<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *            data-structure representing an inheritance hierachy, then an<a name="line.44"></a>
+<span class="sourceLineNo">045</span> *            implementation of PropertyConstraint could be written that allowed<a name="line.45"></a>
+<span class="sourceLineNo">046</span> *            a propertie's value to be constrained to be a child of a<a name="line.46"></a>
+<span class="sourceLineNo">047</span> *            particular node in the hierachy<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @since 1.3<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * @author Matthew Pocock<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * @author Keith James<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * @author Thomas Down<a name="line.51"></a>
+<span class="sourceLineNo">052</span> *<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * <a name="line.53"></a>
+<span class="sourceLineNo">054</span> */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>public interface PropertyConstraint {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>    /**<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * &lt;code&gt;accept&lt;/code&gt; returns true if the value fulfills the<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * constraint.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     *<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * Manually compare items with the PropertyConstraint. Node:<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * this will ususaly be done for you in an AnnotationType instance<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     *<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     * Use for implementing accept() on AnnotatoinType<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     * <a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * @param value an &lt;code&gt;Object&lt;/code&gt; to check.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * @return a &lt;code&gt;boolean&lt;/code&gt;.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    boolean accept(Object value);<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>    /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>     * &lt;p&gt;&lt;code&gt;subConstraintOf&lt;/code&gt; returns true if the constraint<a name="line.71"></a>
+<span class="sourceLineNo">072</span>     * is a sub-constraint.&lt;p&gt;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     *<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     * &lt;p&gt;A pair of constraints super and sub are in a<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * superConstraint/subConstraint relationship if every object<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * accepted by sub is also accepted by super. To put it another<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     * way, if instanceOf was used as a set-membership indicator<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * function over some set of objects, then the set produced by<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * super would be a superset of that produced by sub.&lt;/p&gt;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     *<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * &lt;p&gt;It is not expected that constraints will neccesarily<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     * maintain references to super/sub types. It will be more usual<a name="line.82"></a>
+<span class="sourceLineNo">083</span>     * to infer this relationship by introspecting the constraints<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * themselves. For example,<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     * &lt;code&gt;PropertyConstraint.ByClass&lt;/code&gt; will infer<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * subConstraintOf by looking at the possible class of all items<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     * matching subConstraint.&lt;/p&gt;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     *<a name="line.88"></a>
+<span class="sourceLineNo">089</span>     * Useful when attempting to compare two constraints to see<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     * if it is necisary to retain both. You may want to check the more<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * general or the more specific constraint only.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     * <a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * @param subConstraint a &lt;code&gt;PropertyConstraint&lt;/code&gt; to check.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * @return a &lt;code&gt;boolean&lt;/code&gt;.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * <a name="line.95"></a>
+<span class="sourceLineNo">096</span>     */<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    boolean subConstraintOf(PropertyConstraint subConstraint);<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        <a name="line.98"></a>
+<span class="sourceLineNo">099</span>    /**<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * &lt;code&gt;ANY&lt;/code&gt; is a constraint which accepts a property for<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * addition under all conditions.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     *<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     * Whenever a PropertyConstraint is needed and you want to allow<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     * any value there<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     */<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    PropertyConstraint ANY = new AnyPropertyConstraint();<a name="line.106"></a>
+<span class="sourceLineNo">107</span>    <a name="line.107"></a>
+<span class="sourceLineNo">108</span>    /**<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * &lt;code&gt;NONE&lt;/code&gt; is a constraint which accepts no value for a property<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     * under any condition.<a name="line.110"></a>
+<span class="sourceLineNo">111</span>     *<a name="line.111"></a>
+<span class="sourceLineNo">112</span>     * Whenever a PropertyConstraint is needed and you want to<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * dissalow all values there e.g. when marking a property as having to be unset<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     */<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    PropertyConstraint NONE = new NonePropertyConstraint();<a name="line.115"></a>
+<span class="sourceLineNo">116</span>  <a name="line.116"></a>
+<span class="sourceLineNo">117</span>    /**<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     * &lt;code&gt;ByClass&lt;/code&gt; accepts a property value if it is an<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     * instance of a specific Java class.<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     *<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     * @since 1.3<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     * @author Matthew Pocock<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     * Constrain a property to containing values of a particular class<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     *       e.g. &lt;code&gt;new ByClass(String.class)&lt;/code&gt; or <a name="line.124"></a>
+<span class="sourceLineNo">125</span>     *       &lt;code&gt;new ByClass(Double)&lt;/code&gt; will ensure<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     *       that the property is a String or a Double respecitvely.<a name="line.126"></a>
+<span class="sourceLineNo">127</span>     */<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    class ByClass implements PropertyConstraint {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        private Class cl;<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">131</span>        /**<a name="line.131"></a>
+<span class="sourceLineNo">132</span>         * Create a new ByClass instance.<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         *<a name="line.133"></a>
+<span class="sourceLineNo">134</span>         * @param cl the Class that all properties must be assignable to<a name="line.134"></a>
+<span class="sourceLineNo">135</span>         */<a name="line.135"></a>
+<span class="sourceLineNo">136</span>        public ByClass(Class cl) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>            this.cl = cl;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>      /**<a name="line.140"></a>
+<span class="sourceLineNo">141</span>       * Get the Class used as the constraint.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>       *<a name="line.142"></a>
+<span class="sourceLineNo">143</span>       * @return the Class all properties must be instances of<a name="line.143"></a>
+<span class="sourceLineNo">144</span>       */<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        public Class getPropertyClass() {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>            return cl;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>        public boolean accept(Object value) {<a name="line.149"></a>
+<span class="sourceLineNo">150</span>            return cl.isInstance(value);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        }<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>        public boolean subConstraintOf(PropertyConstraint subConstraint) {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>            if (subConstraint instanceof ByClass) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                ByClass sc = (ByClass) subConstraint;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                return cl.isAssignableFrom(sc.getPropertyClass());<a name="line.156"></a>
+<span class="sourceLineNo">157</span>            } else if(subConstraint instanceof Enumeration) {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>              Set values = ((Enumeration) subConstraint).getValues();<a name="line.158"></a>
+<span class="sourceLineNo">159</span>              for(Iterator i = values.iterator(); i.hasNext(); ) {<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                if(!accept(i.next())) {<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                  return false;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                }<a name="line.162"></a>
+<span class="sourceLineNo">163</span>              }<a name="line.163"></a>
+<span class="sourceLineNo">164</span>              <a name="line.164"></a>
+<span class="sourceLineNo">165</span>              return true;<a name="line.165"></a>
+<span class="sourceLineNo">166</span>            } else if(subConstraint instanceof ExactValue) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>              return accept(((ExactValue) subConstraint).getValue());<a name="line.167"></a>
+<span class="sourceLineNo">168</span>            }<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>            return false;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        }<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        <a name="line.172"></a>
+<span class="sourceLineNo">173</span>        public String toString() {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>          return "Class:" + cl.toString();<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        }<a name="line.175"></a>
+<span class="sourceLineNo">176</span>    }<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>    /**<a name="line.178"></a>
+<span class="sourceLineNo">179</span>     * &lt;p&gt;&lt;code&gt;ByAnnotationType&lt;/code&gt; accepts a property value if it<a name="line.179"></a>
+<span class="sourceLineNo">180</span>     * belongs to type defined by AnnotationType.&lt;/p&gt;<a name="line.180"></a>
+<span class="sourceLineNo">181</span>     *<a name="line.181"></a>
+<span class="sourceLineNo">182</span>     * &lt;p&gt;If you had an Embl AnnotationType then you could say that the REF<a name="line.182"></a>
+<span class="sourceLineNo">183</span>     * property must contain annotations that fits your reference AnnotationType<a name="line.183"></a>
+<span class="sourceLineNo">184</span>     * (with author list, title, optinal medline ID etc.).&lt;/p&gt;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>     * If you wish to build a tree of Annotations so that a<a name="line.185"></a>
+<span class="sourceLineNo">186</span>     * property in one is guaranteed to be itself an Annotation of a<a name="line.186"></a>
+<span class="sourceLineNo">187</span>     * particular type. Effectively this lets you build your own<a name="line.187"></a>
+<span class="sourceLineNo">188</span>     * type system using AnnotationType and PropertyConstraint.<a name="line.188"></a>
+<span class="sourceLineNo">189</span>     * @since 1.3<a name="line.189"></a>
+<span class="sourceLineNo">190</span>     * @author Matthew Pocock<a name="line.190"></a>
+<span class="sourceLineNo">191</span>     *<a name="line.191"></a>
+<span class="sourceLineNo">192</span>     */<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    class ByAnnotationType implements PropertyConstraint {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        private AnnotationType annType;<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>        /**<a name="line.196"></a>
+<span class="sourceLineNo">197</span>         * Create a new constraint by type.<a name="line.197"></a>
+<span class="sourceLineNo">198</span>         *<a name="line.198"></a>
+<span class="sourceLineNo">199</span>         * @param annType the AnnotationType to constrain to<a name="line.199"></a>
+<span class="sourceLineNo">200</span>         */<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        public ByAnnotationType(AnnotationType annType) {<a name="line.201"></a>
+<span class="sourceLineNo">202</span>            this.annType = annType;<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        }<a name="line.203"></a>
+<span class="sourceLineNo">204</span><a name="line.204"></a>
+<span class="sourceLineNo">205</span>      /**<a name="line.205"></a>
+<span class="sourceLineNo">206</span>       * Get the AnnotationType used as a constraint.<a name="line.206"></a>
+<span class="sourceLineNo">207</span>       *<a name="line.207"></a>
+<span class="sourceLineNo">208</span>       * @return the AnnotationType constraint<a name="line.208"></a>
+<span class="sourceLineNo">209</span>       */<a name="line.209"></a>
+<span class="sourceLineNo">210</span>        public AnnotationType getAnnotationType() {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>            return annType;<a name="line.211"></a>
+<span class="sourceLineNo">212</span>        }<a name="line.212"></a>
+<span class="sourceLineNo">213</span><a name="line.213"></a>
+<span class="sourceLineNo">214</span>        public boolean accept(Object value) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>            if (value instanceof Annotation) {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                return annType.instanceOf((Annotation) value);<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            }<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>            return false;<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>        public boolean subConstraintOf(PropertyConstraint subConstraint) {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>            if (subConstraint instanceof ByAnnotationType) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>                ByAnnotationType at = (ByAnnotationType) subConstraint;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>                return annType.subTypeOf(at.getAnnotationType());<a name="line.225"></a>
+<span class="sourceLineNo">226</span>            }<a name="line.226"></a>
+<span class="sourceLineNo">227</span><a name="line.227"></a>
+<span class="sourceLineNo">228</span>            return false;<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        <a name="line.230"></a>
+<span class="sourceLineNo">231</span>        public String toString() {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>          return "AnnotationType:" + annType.getProperties();<a name="line.232"></a>
+<span class="sourceLineNo">233</span>        }<a name="line.233"></a>
+<span class="sourceLineNo">234</span>    }<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>    /**<a name="line.236"></a>
+<span class="sourceLineNo">237</span>     * &lt;p&gt;Matches properties if they have exactly this one value.&lt;/p&gt;<a name="line.237"></a>
+<span class="sourceLineNo">238</span>     *<a name="line.238"></a>
+<span class="sourceLineNo">239</span>     * &lt;p&gt;This is like the extreme case of an Enumeration which has just one<a name="line.239"></a>
+<span class="sourceLineNo">240</span>     * member. It is most usefull for selecting annotations with a particular<a name="line.240"></a>
+<span class="sourceLineNo">241</span>     * property set to a particular value e.g. ID="01234".&lt;/p&gt;<a name="line.241"></a>
+<span class="sourceLineNo">242</span>     *<a name="line.242"></a>
+<span class="sourceLineNo">243</span>     * <a name="line.243"></a>
+<span class="sourceLineNo">244</span>     * If you want to declare that a property must have a single value<a name="line.244"></a>
+<span class="sourceLineNo">245</span>     *<a name="line.245"></a>
+<span class="sourceLineNo">246</span>     * In conjunction with CardinalityConstraint.ZERO_OR_ONE you<a name="line.246"></a>
+<span class="sourceLineNo">247</span>     * could make a property that is potional but if present must have this<a name="line.247"></a>
+<span class="sourceLineNo">248</span>     * value<a name="line.248"></a>
+<span class="sourceLineNo">249</span>     *<a name="line.249"></a>
+<span class="sourceLineNo">250</span>     * Use with FilterUtils.byAnnotation() to search for features<a name="line.250"></a>
+<span class="sourceLineNo">251</span>     * with properties set to specific values<a name="line.251"></a>
+<span class="sourceLineNo">252</span>     * @author Matthew Pocock<a name="line.252"></a>
+<span class="sourceLineNo">253</span>     */<a name="line.253"></a>
+<span class="sourceLineNo">254</span>    class ExactValue implements PropertyConstraint {<a name="line.254"></a>
+<span class="sourceLineNo">255</span>      private Object value;<a name="line.255"></a>
+<span class="sourceLineNo">256</span>      <a name="line.256"></a>
+<span class="sourceLineNo">257</span>      /**<a name="line.257"></a>
+<span class="sourceLineNo">258</span>       * Get a PropertyConstraint that matches this object and all those that<a name="line.258"></a>
+<span class="sourceLineNo">259</span>       * are equal to it (by the Object.equals() method).<a name="line.259"></a>
+<span class="sourceLineNo">260</span>       *<a name="line.260"></a>
+<span class="sourceLineNo">261</span>       * @param value  the Object to match against<a name="line.261"></a>
+<span class="sourceLineNo">262</span>       */<a name="line.262"></a>
+<span class="sourceLineNo">263</span>      public ExactValue(Object value) {<a name="line.263"></a>
+<span class="sourceLineNo">264</span>        this.value = value;<a name="line.264"></a>
+<span class="sourceLineNo">265</span>      }<a name="line.265"></a>
+<span class="sourceLineNo">266</span><a name="line.266"></a>
+<span class="sourceLineNo">267</span>      /**<a name="line.267"></a>
+<span class="sourceLineNo">268</span>       * Get the value that all properties must match.<a name="line.268"></a>
+<span class="sourceLineNo">269</span>       *<a name="line.269"></a>
+<span class="sourceLineNo">270</span>       * @return  the value Object<a name="line.270"></a>
+<span class="sourceLineNo">271</span>       */<a name="line.271"></a>
+<span class="sourceLineNo">272</span>      public Object getValue() {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>        return value;<a name="line.273"></a>
+<span class="sourceLineNo">274</span>      }<a name="line.274"></a>
+<span class="sourceLineNo">275</span>      <a name="line.275"></a>
+<span class="sourceLineNo">276</span>      public boolean accept(Object obj) {<a name="line.276"></a>
+<span class="sourceLineNo">277</span>        return value.equals(obj);<a name="line.277"></a>
+<span class="sourceLineNo">278</span>      }<a name="line.278"></a>
+<span class="sourceLineNo">279</span>      <a name="line.279"></a>
+<span class="sourceLineNo">280</span>      public boolean subConstraintOf(PropertyConstraint pc) {<a name="line.280"></a>
+<span class="sourceLineNo">281</span>        if(pc instanceof ExactValue) {<a name="line.281"></a>
+<span class="sourceLineNo">282</span>          return value.equals(((ExactValue) pc).getValue());<a name="line.282"></a>
+<span class="sourceLineNo">283</span>        } else if(pc instanceof Enumeration) {<a name="line.283"></a>
+<span class="sourceLineNo">284</span>          Enumeration e = (Enumeration) pc;<a name="line.284"></a>
+<span class="sourceLineNo">285</span>          return e.getValues().size() == 1 &amp;&amp; e.accept(value);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>        }<a name="line.286"></a>
+<span class="sourceLineNo">287</span>        <a name="line.287"></a>
+<span class="sourceLineNo">288</span>        return false;<a name="line.288"></a>
+<span class="sourceLineNo">289</span>      }<a name="line.289"></a>
+<span class="sourceLineNo">290</span>      <a name="line.290"></a>
+<span class="sourceLineNo">291</span>      public String toString() {<a name="line.291"></a>
+<span class="sourceLineNo">292</span>        return "ExactValue: " + value;<a name="line.292"></a>
+<span class="sourceLineNo">293</span>      }<a name="line.293"></a>
+<span class="sourceLineNo">294</span>    }<a name="line.294"></a>
+<span class="sourceLineNo">295</span>    <a name="line.295"></a>
+<span class="sourceLineNo">296</span>    /**<a name="line.296"></a>
+<span class="sourceLineNo">297</span>     * &lt;code&gt;Enumeration&lt;/code&gt; accepts a property if it is present<a name="line.297"></a>
+<span class="sourceLineNo">298</span>     * in the specified set of values.<a name="line.298"></a>
+<span class="sourceLineNo">299</span>     *<a name="line.299"></a>
+<span class="sourceLineNo">300</span>     * <a name="line.300"></a>
+<span class="sourceLineNo">301</span>     *<a name="line.301"></a>
+<span class="sourceLineNo">302</span>     * If you want to declare that a property must be within a range<a name="line.302"></a>
+<span class="sourceLineNo">303</span>     * of values, for example PRIMARY_COLOR is one of "RED, YELLOW, BLUE"<a name="line.303"></a>
+<span class="sourceLineNo">304</span>     *<a name="line.304"></a>
+<span class="sourceLineNo">305</span>     * Use with FilterUtils.byAnnotation() to search for features<a name="line.305"></a>
+<span class="sourceLineNo">306</span>     * with properties set to a range of values<a name="line.306"></a>
+<span class="sourceLineNo">307</span>     * @since 1.3<a name="line.307"></a>
+<span class="sourceLineNo">308</span>     * @author Matthew Pocock<a name="line.308"></a>
+<span class="sourceLineNo">309</span>     */<a name="line.309"></a>
+<span class="sourceLineNo">310</span>    class Enumeration implements PropertyConstraint {<a name="line.310"></a>
+<span class="sourceLineNo">311</span>        private Set values;<a name="line.311"></a>
+<span class="sourceLineNo">312</span><a name="line.312"></a>
+<span class="sourceLineNo">313</span>        /**<a name="line.313"></a>
+<span class="sourceLineNo">314</span>         * Creates a new &lt;code&gt;Enumeration&lt;/code&gt; using the members of<a name="line.314"></a>
+<span class="sourceLineNo">315</span>         * the specified set as a constraint.<a name="line.315"></a>
+<span class="sourceLineNo">316</span>         *<a name="line.316"></a>
+<span class="sourceLineNo">317</span>         * @param values a &lt;code&gt;Set&lt;/code&gt; of all possible values<a name="line.317"></a>
+<span class="sourceLineNo">318</span>         * <a name="line.318"></a>
+<span class="sourceLineNo">319</span>         */<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        public Enumeration(Set values) {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>            this.values = values;<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        }<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        <a name="line.323"></a>
+<span class="sourceLineNo">324</span>        /**<a name="line.324"></a>
+<span class="sourceLineNo">325</span>         * Creates a new &lt;code&gt;Enumeration&lt;/code&gt; using the elements of the<a name="line.325"></a>
+<span class="sourceLineNo">326</span>         * specified array as a constraint.<a name="line.326"></a>
+<span class="sourceLineNo">327</span>         *<a name="line.327"></a>
+<span class="sourceLineNo">328</span>         * @param values an &lt;code&gt;Array&lt;/code&gt; of all possible values<a name="line.328"></a>
+<span class="sourceLineNo">329</span>         * <a name="line.329"></a>
+<span class="sourceLineNo">330</span>         */<a name="line.330"></a>
+<span class="sourceLineNo">331</span>        public Enumeration(Object[] values) {<a name="line.331"></a>
+<span class="sourceLineNo">332</span>          this.values = new HashSet();<a name="line.332"></a>
+<span class="sourceLineNo">333</span>          for(int i = 0; i &lt; values.length; i++) {<a name="line.333"></a>
+<span class="sourceLineNo">334</span>            this.values.add(values[i]);<a name="line.334"></a>
+<span class="sourceLineNo">335</span>          }<a name="line.335"></a>
+<span class="sourceLineNo">336</span>        }<a name="line.336"></a>
+<span class="sourceLineNo">337</span><a name="line.337"></a>
+<span class="sourceLineNo">338</span>        /**<a name="line.338"></a>
+<span class="sourceLineNo">339</span>         * &lt;code&gt;getValues&lt;/code&gt; returns the set of values which<a name="line.339"></a>
+<span class="sourceLineNo">340</span>         * constrain the property.<a name="line.340"></a>
+<span class="sourceLineNo">341</span>         *<a name="line.341"></a>
+<span class="sourceLineNo">342</span>         * @return a &lt;code&gt;Set&lt;/code&gt;.<a name="line.342"></a>
+<span class="sourceLineNo">343</span>         */<a name="line.343"></a>
+<span class="sourceLineNo">344</span>        public Set getValues() {<a name="line.344"></a>
+<span class="sourceLineNo">345</span>            return values;<a name="line.345"></a>
+<span class="sourceLineNo">346</span>        }<a name="line.346"></a>
+<span class="sourceLineNo">347</span><a name="line.347"></a>
+<span class="sourceLineNo">348</span>        public boolean accept(Object value) {<a name="line.348"></a>
+<span class="sourceLineNo">349</span>            return values.contains(value);<a name="line.349"></a>
+<span class="sourceLineNo">350</span>        }<a name="line.350"></a>
+<span class="sourceLineNo">351</span><a name="line.351"></a>
+<span class="sourceLineNo">352</span>        public boolean subConstraintOf(PropertyConstraint subConstraint) {<a name="line.352"></a>
+<span class="sourceLineNo">353</span>            if (subConstraint instanceof Enumeration) {<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                Enumeration subE = (Enumeration) subConstraint;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>                return values.containsAll(subE.getValues());<a name="line.355"></a>
+<span class="sourceLineNo">356</span>            } else if(subConstraint instanceof ExactValue) {<a name="line.356"></a>
+<span class="sourceLineNo">357</span>              return accept(((ExactValue) subConstraint).getValue());<a name="line.357"></a>
+<span class="sourceLineNo">358</span>            }<a name="line.358"></a>
+<span class="sourceLineNo">359</span><a name="line.359"></a>
+<span class="sourceLineNo">360</span>            return false;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>        }<a name="line.361"></a>
+<span class="sourceLineNo">362</span>        <a name="line.362"></a>
+<span class="sourceLineNo">363</span>        public String toString() {<a name="line.363"></a>
+<span class="sourceLineNo">364</span>          return "Enumeration:" + values;<a name="line.364"></a>
+<span class="sourceLineNo">365</span>        }<a name="line.365"></a>
+<span class="sourceLineNo">366</span>    }<a name="line.366"></a>
+<span class="sourceLineNo">367</span>    <a name="line.367"></a>
+<span class="sourceLineNo">368</span>    /**<a name="line.368"></a>
+<span class="sourceLineNo">369</span>     * A property constraint that accpepts items iff they are accepted by both<a name="line.369"></a>
+<span class="sourceLineNo">370</span>     * child constraints. This effectively matches the intersection of the items<a name="line.370"></a>
+<span class="sourceLineNo">371</span>     * matched by the two constraints.<a name="line.371"></a>
+<span class="sourceLineNo">372</span>     *<a name="line.372"></a>
+<span class="sourceLineNo">373</span>     * <a name="line.373"></a>
+<span class="sourceLineNo">374</span>     * Use this to combine multiple constraints. You can make one<a name="line.374"></a>
+<span class="sourceLineNo">375</span>     *            or both of the children And instances if you need a tighter<a name="line.375"></a>
+<span class="sourceLineNo">376</span>     *            intersection.<a name="line.376"></a>
+<span class="sourceLineNo">377</span>     * @author Matthew Pocock<a name="line.377"></a>
+<span class="sourceLineNo">378</span>     */<a name="line.378"></a>
+<span class="sourceLineNo">379</span>    class And implements PropertyConstraint {<a name="line.379"></a>
+<span class="sourceLineNo">380</span>      private PropertyConstraint c1;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>      private PropertyConstraint c2;<a name="line.381"></a>
+<span class="sourceLineNo">382</span>      <a name="line.382"></a>
+<span class="sourceLineNo">383</span>      /**<a name="line.383"></a>
+<span class="sourceLineNo">384</span>       * Create a new &lt;code&gt;And&lt;/code&gt; from two child constraints.<a name="line.384"></a>
+<span class="sourceLineNo">385</span>       *<a name="line.385"></a>
+<span class="sourceLineNo">386</span>       * @param c1 the first child<a name="line.386"></a>
+<span class="sourceLineNo">387</span>       * @param c2 the seccond child<a name="line.387"></a>
+<span class="sourceLineNo">388</span>       */<a name="line.388"></a>
+<span class="sourceLineNo">389</span>      public And(PropertyConstraint c1, PropertyConstraint c2) {<a name="line.389"></a>
+<span class="sourceLineNo">390</span>        this.c1 = c1;<a name="line.390"></a>
+<span class="sourceLineNo">391</span>        this.c2 = c2;<a name="line.391"></a>
+<span class="sourceLineNo">392</span>      }<a name="line.392"></a>
+<span class="sourceLineNo">393</span>      <a name="line.393"></a>
+<span class="sourceLineNo">394</span>      /**<a name="line.394"></a>
+<span class="sourceLineNo">395</span>       * Get the first child PropertyConstraint.<a name="line.395"></a>
+<span class="sourceLineNo">396</span>       *<a name="line.396"></a>
+<span class="sourceLineNo">397</span>       * @return the first child PropertyConstraint<a name="line.397"></a>
+<span class="sourceLineNo">398</span>       *<a name="line.398"></a>
+<span class="sourceLineNo">399</span>       */<a name="line.399"></a>
+<span class="sourceLineNo">400</span>      public PropertyConstraint getChild1() {<a name="line.400"></a>
+<span class="sourceLineNo">401</span>        return c1;<a name="line.401"></a>
+<span class="sourceLineNo">402</span>      }<a name="line.402"></a>
+<span class="sourceLineNo">403</span>      <a name="line.403"></a>
+<span class="sourceLineNo">404</span>      /**<a name="line.404"></a>
+<span class="sourceLineNo">405</span>       * Get the seccond child PropertyConstraint.<a name="line.405"></a>
+<span class="sourceLineNo">406</span>       *<a name="line.406"></a>
+<span class="sourceLineNo">407</span>       * @return the seccond child PropertyConstraint<a name="line.407"></a>
+<span class="sourceLineNo">408</span>       *<a name="line.408"></a>
+<span class="sourceLineNo">409</span>       * <a name="line.409"></a>
+<span class="sourceLineNo">410</span>       */<a name="line.410"></a>
+<span class="sourceLineNo">411</span>      public PropertyConstraint getChild2() {<a name="line.411"></a>
+<span class="sourceLineNo">412</span>        return c2;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>      }<a name="line.413"></a>
+<span class="sourceLineNo">414</span>      <a name="line.414"></a>
+<span class="sourceLineNo">415</span>      public boolean accept(Object object) {<a name="line.415"></a>
+<span class="sourceLineNo">416</span>        return c1.accept(object) &amp;&amp; c2.accept(object);<a name="line.416"></a>
+<span class="sourceLineNo">417</span>      }<a name="line.417"></a>
+<span class="sourceLineNo">418</span>      <a name="line.418"></a>
+<span class="sourceLineNo">419</span>      public boolean subConstraintOf(PropertyConstraint pc) {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>        return c1.subConstraintOf(pc) &amp;&amp; c2.subConstraintOf(pc);<a name="line.420"></a>
+<span class="sourceLineNo">421</span>      }<a name="line.421"></a>
+<span class="sourceLineNo">422</span>      <a name="line.422"></a>
+<span class="sourceLineNo">423</span>      public String toString() {<a name="line.423"></a>
+<span class="sourceLineNo">424</span>        return "And(" + c1 + ", " + c2 + ")";<a name="line.424"></a>
+<span class="sourceLineNo">425</span>      }<a name="line.425"></a>
+<span class="sourceLineNo">426</span>    }<a name="line.426"></a>
+<span class="sourceLineNo">427</span>    <a name="line.427"></a>
+<span class="sourceLineNo">428</span>    /**<a name="line.428"></a>
+<span class="sourceLineNo">429</span>     * A property constraint that accepts items iff they are accepted by either<a name="line.429"></a>
+<span class="sourceLineNo">430</span>     * child constraints. This effectively matches the union of the items<a name="line.430"></a>
+<span class="sourceLineNo">431</span>     * matched by the two constraints. Use this to combine multiple constraints. You can make one<a name="line.431"></a>
+<span class="sourceLineNo">432</span>     *            or both of the children Or instances if you need a wider<a name="line.432"></a>
+<span class="sourceLineNo">433</span>     *            union.<a name="line.433"></a>
+<span class="sourceLineNo">434</span>     *<a name="line.434"></a>
+<span class="sourceLineNo">435</span>     * @author Matthew Pocock<a name="line.435"></a>
+<span class="sourceLineNo">436</span>     */<a name="line.436"></a>
+<span class="sourceLineNo">437</span>    class Or implements PropertyConstraint {<a name="line.437"></a>
+<span class="sourceLineNo">438</span>      private PropertyConstraint c1;<a name="line.438"></a>
+<span class="sourceLineNo">439</span>      private PropertyConstraint c2;<a name="line.439"></a>
+<span class="sourceLineNo">440</span>      <a name="line.440"></a>
+<span class="sourceLineNo">441</span>      /**<a name="line.441"></a>
+<span class="sourceLineNo">442</span>       * Create a new &lt;code&gt;Or&lt;/code&gt; from two child constraints.<a name="line.442"></a>
+<span class="sourceLineNo">443</span>       *<a name="line.443"></a>
+<span class="sourceLineNo">444</span>       * @param c1 the first child<a name="line.444"></a>
+<span class="sourceLineNo">445</span>       * @param c2 the seccond child<a name="line.445"></a>
+<span class="sourceLineNo">446</span>       */<a name="line.446"></a>
+<span class="sourceLineNo">447</span>      public Or(PropertyConstraint c1, PropertyConstraint c2) {<a name="line.447"></a>
+<span class="sourceLineNo">448</span>        this.c1 = c1;<a name="line.448"></a>
+<span class="sourceLineNo">449</span>        this.c2 = c2;<a name="line.449"></a>
+<span class="sourceLineNo">450</span>      }<a name="line.450"></a>
+<span class="sourceLineNo">451</span>      <a name="line.451"></a>
+<span class="sourceLineNo">452</span>      /**<a name="line.452"></a>
+<span class="sourceLineNo">453</span>       * Get the first child PropertyConstraint.<a name="line.453"></a>
+<span class="sourceLineNo">454</span>       *<a name="line.454"></a>
+<span class="sourceLineNo">455</span>       * @return the first child PropertyConstraint<a name="line.455"></a>
+<span class="sourceLineNo">456</span>       * <a name="line.456"></a>
+<span class="sourceLineNo">457</span>       */<a name="line.457"></a>
+<span class="sourceLineNo">458</span>      public PropertyConstraint getChild1() {<a name="line.458"></a>
+<span class="sourceLineNo">459</span>        return c1;<a name="line.459"></a>
+<span class="sourceLineNo">460</span>      }<a name="line.460"></a>
+<span class="sourceLineNo">461</span>      <a name="line.461"></a>
+<span class="sourceLineNo">462</span>      /**<a name="line.462"></a>
+<span class="sourceLineNo">463</span>       * Get the seccond child PropertyConstraint.<a name="line.463"></a>
+<span class="sourceLineNo">464</span>       *<a name="line.464"></a>
+<span class="sourceLineNo">465</span>       * @return the seccond child PropertyConstraint<a name="line.465"></a>
+<span class="sourceLineNo">466</span>       * <a name="line.466"></a>
+<span class="sourceLineNo">467</span>       */<a name="line.467"></a>
+<span class="sourceLineNo">468</span>      public PropertyConstraint getChild2() {<a name="line.468"></a>
+<span class="sourceLineNo">469</span>        return c2;<a name="line.469"></a>
+<span class="sourceLineNo">470</span>      }<a name="line.470"></a>
+<span class="sourceLineNo">471</span>      <a name="line.471"></a>
+<span class="sourceLineNo">472</span>      public boolean accept(Object object) {<a name="line.472"></a>
+<span class="sourceLineNo">473</span>        return c1.accept(object) || c2.accept(object);<a name="line.473"></a>
+<span class="sourceLineNo">474</span>      }<a name="line.474"></a>
+<span class="sourceLineNo">475</span>      <a name="line.475"></a>
+<span class="sourceLineNo">476</span>      public boolean subConstraintOf(PropertyConstraint pc) {<a name="line.476"></a>
+<span class="sourceLineNo">477</span>        return c1.subConstraintOf(pc) || c2.subConstraintOf(pc);<a name="line.477"></a>
+<span class="sourceLineNo">478</span>      }<a name="line.478"></a>
+<span class="sourceLineNo">479</span>      <a name="line.479"></a>
+<span class="sourceLineNo">480</span>      public String toString() {<a name="line.480"></a>
+<span class="sourceLineNo">481</span>        return "Or(" + c1 + ", " + c2 + ")";<a name="line.481"></a>
+<span class="sourceLineNo">482</span>      }<a name="line.482"></a>
+<span class="sourceLineNo">483</span>    }<a name="line.483"></a>
+<span class="sourceLineNo">484</span>}<a name="line.484"></a>
+<span class="sourceLineNo">485</span><a name="line.485"></a>
+<span class="sourceLineNo">486</span><a name="line.486"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

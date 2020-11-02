@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>package org.biojava.bio.symbol;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.List;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.NoSuchElementException;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.Set;<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.bio.Annotatable;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.bio.BioException;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.bio.seq.io.SymbolTokenization;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.utils.ChangeType;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>/**<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;p&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * The set of AtomicSymbols which can be concatenated together to make a<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * SymbolList.<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * &lt;/p&gt;<a name="line.38"></a>
+<span class="sourceLineNo">039</span> *<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * &lt;p&gt;<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * A non-atomic symbol is considered to be contained within this alphabet if<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * all of the atomic symbols that it could match are members of this alphabet.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * &lt;/p&gt;<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author Matthew Pocock<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @author Thomas Down<a name="line.46"></a>
+<span class="sourceLineNo">047</span> */<a name="line.47"></a>
+<span class="sourceLineNo">048</span> <a name="line.48"></a>
+<span class="sourceLineNo">049</span>public interface Alphabet extends Annotatable {<a name="line.49"></a>
+<span class="sourceLineNo">050</span>  /** <a name="line.50"></a>
+<span class="sourceLineNo">051</span>   * &lt;p&gt;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   * This ChangeType indicates that some symbols have been added or removed from<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * the alphabet. The current and previous fields should indicate what symbols<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   * were there originally, and what they have been replaced with.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   * &lt;p&gt;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>   *<a name="line.56"></a>
+<span class="sourceLineNo">057</span>   * &lt;p&gt;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>   * If the alphabet wishes to propagate that the symbol has changed state, then<a name="line.58"></a>
+<span class="sourceLineNo">059</span>   * previous and current should be null, but the chainedEvent property should<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   * rever to the ChangeEvent on the unerlying Symbol.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   * &lt;/p&gt;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   */<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  public static ChangeType SYMBOLS = new ChangeType(<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    "The set of symbols in this alphabet has changed.",<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    "org.biojava.bio.symbol.Alphabet",<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    "SYMBOLS"<a name="line.66"></a>
+<span class="sourceLineNo">067</span>  );<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  <a name="line.68"></a>
+<span class="sourceLineNo">069</span>  /**<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * This signals that the available parsers have changed. If a parser is added,<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   * it will appear in getChanged(). If it is removed, it will appear in<a name="line.71"></a>
+<span class="sourceLineNo">072</span>   * getPrevious().<a name="line.72"></a>
+<span class="sourceLineNo">073</span>   */<a name="line.73"></a>
+<span class="sourceLineNo">074</span>  public static ChangeType PARSERS = new ChangeType(<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    "The set of parsers has changed.",<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    "org.biojava.bio.symbol.Alphabet",<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    "PARSERS"<a name="line.77"></a>
+<span class="sourceLineNo">078</span>  );<a name="line.78"></a>
+<span class="sourceLineNo">079</span>  <a name="line.79"></a>
+<span class="sourceLineNo">080</span>  /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   * Get the name of the alphabet.<a name="line.81"></a>
+<span class="sourceLineNo">082</span>   *<a name="line.82"></a>
+<span class="sourceLineNo">083</span>   * @return  the name as a string.<a name="line.83"></a>
+<span class="sourceLineNo">084</span>   */<a name="line.84"></a>
+<span class="sourceLineNo">085</span>  String getName();<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>  /**<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * Return an ordered List of the alphabets which make up a<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   * compound alphabet.  For simple alphabets, this will return<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * a singleton list of itself. The returned list should be immutable.<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   *<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   * @return a List of alphabets<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   */<a name="line.93"></a>
+<span class="sourceLineNo">094</span>  List&lt;Alphabet&gt; getAlphabets();<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>  /**<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   * &lt;p&gt;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * Get a symbol from the Alphabet which corresponds<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   * to the specified ordered list of symbols.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * &lt;/p&gt;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   *<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   * &lt;p&gt;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   * The symbol at i in the list must be a member of the i'th alphabet in<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   * getAlphabets. If all of the symbols in rl are atomic, then the resulting<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   * symbol will also be atomic. If any one of them is an ambiguity symbol then<a name="line.105"></a>
+<span class="sourceLineNo">106</span>   * the resulting symbol will be the appropriate ambiguity symbol.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>   * &lt;/p&gt;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>   *<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   * @param rl A list of Symbol instances<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * @throws IllegalSymbolException if the members of rl are<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   *            not Symbols over the alphabets returned from<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   *            &lt;code&gt;getAlphabets&lt;/code&gt;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   */<a name="line.113"></a>
+<span class="sourceLineNo">114</span>  Symbol getSymbol(List&lt;Symbol&gt; rl) <a name="line.114"></a>
+<span class="sourceLineNo">115</span>    throws IllegalSymbolException;<a name="line.115"></a>
+<span class="sourceLineNo">116</span><a name="line.116"></a>
+<span class="sourceLineNo">117</span>  /**<a name="line.117"></a>
+<span class="sourceLineNo">118</span>   * &lt;p&gt;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>   * Get a symbol that represents the set of symbols in syms.<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   * &lt;/p&gt;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>   *<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   * &lt;p&gt;<a name="line.122"></a>
+<span class="sourceLineNo">123</span>   * Syms must be a set of Symbol instances each of which is contained within<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   * this alphabet. This method is used to retrieve ambiguity symbols.<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * &lt;/p&gt;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   *<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * @param syms  the Set of Symbols that will be found in getMatches of the<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   *            returned symbol<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   * @return a Symbol (possibly fly-weighted) for the Set of symbols in syms<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   */<a name="line.130"></a>
+<span class="sourceLineNo">131</span>  Symbol getAmbiguity(Set&lt;Symbol&gt; syms)<a name="line.131"></a>
+<span class="sourceLineNo">132</span>  throws IllegalSymbolException;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>  <a name="line.133"></a>
+<span class="sourceLineNo">134</span>  /**<a name="line.134"></a>
+<span class="sourceLineNo">135</span>   * &lt;p&gt;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>   * Get the 'gap' ambiguity symbol that is most appropriate for this alphabet.<a name="line.136"></a>
+<span class="sourceLineNo">137</span>   * &lt;/p&gt;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>   *<a name="line.138"></a>
+<span class="sourceLineNo">139</span>   * &lt;p&gt;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>   * In general, this will be a BasisSymbol that represents a list of<a name="line.140"></a>
+<span class="sourceLineNo">141</span>   * AlphabetManager.getGapSymbol() the same length as the getAlphabets list.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>   * &lt;/p&gt;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>   *<a name="line.143"></a>
+<span class="sourceLineNo">144</span>   * @return the appropriate gap Symbol instance<a name="line.144"></a>
+<span class="sourceLineNo">145</span>   */<a name="line.145"></a>
+<span class="sourceLineNo">146</span>  Symbol getGapSymbol();<a name="line.146"></a>
+<span class="sourceLineNo">147</span>  <a name="line.147"></a>
+<span class="sourceLineNo">148</span>  /**<a name="line.148"></a>
+<span class="sourceLineNo">149</span>   * &lt;p&gt;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>   * Returns whether or not this Alphabet contains the symbol.<a name="line.150"></a>
+<span class="sourceLineNo">151</span>   * &lt;/p&gt;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>   *<a name="line.152"></a>
+<span class="sourceLineNo">153</span>   * &lt;p&gt;<a name="line.153"></a>
+<span class="sourceLineNo">154</span>   * An alphabet contains an ambiguity symbol iff the ambiguity symbol's<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   * getMatches() returns an alphabet that is a proper sub-set of this<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   * alphabet. That means that every one of the symbols that could match the<a name="line.156"></a>
+<span class="sourceLineNo">157</span>   * ambiguity symbol is also a member of this alphabet.<a name="line.157"></a>
+<span class="sourceLineNo">158</span>   * &lt;/p&gt;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>   *<a name="line.159"></a>
+<span class="sourceLineNo">160</span>   * @param s the Symbol to check<a name="line.160"></a>
+<span class="sourceLineNo">161</span>   * @return  boolean true if the Alphabet contains the symbol and false otherwise<a name="line.161"></a>
+<span class="sourceLineNo">162</span>   */<a name="line.162"></a>
+<span class="sourceLineNo">163</span>  boolean contains(Symbol s);<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>  /**<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   * &lt;p&gt;<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   * Throws a precanned IllegalSymbolException if the symbol is not contained<a name="line.167"></a>
+<span class="sourceLineNo">168</span>   * within this Alphabet.<a name="line.168"></a>
+<span class="sourceLineNo">169</span>   * &lt;/p&gt;<a name="line.169"></a>
+<span class="sourceLineNo">170</span>   *<a name="line.170"></a>
+<span class="sourceLineNo">171</span>   * &lt;p&gt;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>   * This function is used all over the code to validate symbols as they enter<a name="line.172"></a>
+<span class="sourceLineNo">173</span>   * a method. Also, the code is littered with catches for<a name="line.173"></a>
+<span class="sourceLineNo">174</span>   * IllegalSymbolException. There is a preferred style of handling this,<a name="line.174"></a>
+<span class="sourceLineNo">175</span>   * which should be covererd in the package documentation.<a name="line.175"></a>
+<span class="sourceLineNo">176</span>   * &lt;/p&gt;<a name="line.176"></a>
+<span class="sourceLineNo">177</span>   *<a name="line.177"></a>
+<span class="sourceLineNo">178</span>   * @param s the Symbol to validate<a name="line.178"></a>
+<span class="sourceLineNo">179</span>   * @throws  IllegalSymbolException if r is not contained in this alphabet<a name="line.179"></a>
+<span class="sourceLineNo">180</span>   */<a name="line.180"></a>
+<span class="sourceLineNo">181</span>  void validate(Symbol s) throws IllegalSymbolException;<a name="line.181"></a>
+<span class="sourceLineNo">182</span>  <a name="line.182"></a>
+<span class="sourceLineNo">183</span>  /**<a name="line.183"></a>
+<span class="sourceLineNo">184</span>   * &lt;p&gt;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>   * Get a SymbolTokenization by name.<a name="line.185"></a>
+<span class="sourceLineNo">186</span>   * &lt;/p&gt;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>   *<a name="line.187"></a>
+<span class="sourceLineNo">188</span>   * &lt;p&gt;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>   * The parser returned is guaranteed to return Symbols and SymbolLists that<a name="line.189"></a>
+<span class="sourceLineNo">190</span>   * conform to this alphabet.<a name="line.190"></a>
+<span class="sourceLineNo">191</span>   * &lt;/p&gt;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>   *<a name="line.192"></a>
+<span class="sourceLineNo">193</span>   * &lt;p&gt;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>   * Every alphabet should have a SymbolTokenzation under the name 'token' that<a name="line.194"></a>
+<span class="sourceLineNo">195</span>   * uses the symbol token characters to translate a string into a<a name="line.195"></a>
+<span class="sourceLineNo">196</span>   * SymbolList. Likewise, there should be a SymbolTokenization under the name<a name="line.196"></a>
+<span class="sourceLineNo">197</span>   * 'name' that uses symbol names to identify symbols. Any other names may<a name="line.197"></a>
+<span class="sourceLineNo">198</span>   * also be defined, but the behavior of the returned SymbolTokenization is<a name="line.198"></a>
+<span class="sourceLineNo">199</span>   * not defined here.<a name="line.199"></a>
+<span class="sourceLineNo">200</span>   * &lt;/p&gt;<a name="line.200"></a>
+<span class="sourceLineNo">201</span>   * &lt;p&gt;<a name="line.201"></a>
+<span class="sourceLineNo">202</span>   * A SymbolTokenization under the name 'default' should be defined for all<a name="line.202"></a>
+<span class="sourceLineNo">203</span>   * sequences, that determines the behavior when printing out a<a name="line.203"></a>
+<span class="sourceLineNo">204</span>   * sequence. Standard behavior is to define the 'token' SymbolTokenization<a name="line.204"></a>
+<span class="sourceLineNo">205</span>   * as default if it exists, else to define the 'name' SymbolTokenization as<a name="line.205"></a>
+<span class="sourceLineNo">206</span>   * the default, but others are possible.<a name="line.206"></a>
+<span class="sourceLineNo">207</span>   * &lt;/p&gt;<a name="line.207"></a>
+<span class="sourceLineNo">208</span>   *<a name="line.208"></a>
+<span class="sourceLineNo">209</span>   * @param name  the name of the parser<a name="line.209"></a>
+<span class="sourceLineNo">210</span>   * @return  a parser for that name<a name="line.210"></a>
+<span class="sourceLineNo">211</span>   * @throws NoSuchElementException if the name is unknown<a name="line.211"></a>
+<span class="sourceLineNo">212</span>   * @throws BioException if for any reason the tokenization could not be built<a name="line.212"></a>
+<span class="sourceLineNo">213</span>   * @since 1.2<a name="line.213"></a>
+<span class="sourceLineNo">214</span>   */<a name="line.214"></a>
+<span class="sourceLineNo">215</span>    <a name="line.215"></a>
+<span class="sourceLineNo">216</span>    public SymbolTokenization getTokenization(String name) throws BioException;<a name="line.216"></a>
+<span class="sourceLineNo">217</span>  <a name="line.217"></a>
+<span class="sourceLineNo">218</span>  /**<a name="line.218"></a>
+<span class="sourceLineNo">219</span>   * A really useful static alphabet that is always empty.<a name="line.219"></a>
+<span class="sourceLineNo">220</span>   */<a name="line.220"></a>
+<span class="sourceLineNo">221</span>  static final FiniteAlphabet EMPTY_ALPHABET = new EmptyAlphabet();<a name="line.221"></a>
+<span class="sourceLineNo">222</span>}<a name="line.222"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
