@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.bio.seq.io.agave;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.util.ArrayList;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.Iterator;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.List;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.ListIterator;<a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.bio.seq.Sequence;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.xml.sax.Attributes;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.xml.sax.SAXException;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>/**<a name="line.31"></a>
+<span class="sourceLineNo">032</span> *<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * Handles the AGAVE &amp;lt;chromosome&amp;gt; element<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * @author Hanning Ni     Doubletwist Inc<a name="line.35"></a>
+<span class="sourceLineNo">036</span> */<a name="line.36"></a>
+<span class="sourceLineNo">037</span>public class AGAVEChromosomeHandler<a name="line.37"></a>
+<span class="sourceLineNo">038</span>               extends StAXFeatureHandler  implements AGAVEChromosomeCallbackItf, SequenceHandler<a name="line.38"></a>
+<span class="sourceLineNo">039</span>{<a name="line.39"></a>
+<span class="sourceLineNo">040</span>  public static final StAXHandlerFactory AGAVE_CHROMOSOME_HANDLER_FACTORY<a name="line.40"></a>
+<span class="sourceLineNo">041</span>    = new StAXHandlerFactory() {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>    public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>      return new AGAVEChromosomeHandler();<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    }<a name="line.44"></a>
+<span class="sourceLineNo">045</span>  };<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>  private List sequenceSet ;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>  private String chromNum ;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>  private String chromLen ;<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>  AGAVEChromosomeHandler() {<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    super();<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    setHandlerCharacteristics("chromosome", true);<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    sequenceSet = new ArrayList(1) ;<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>    // setup handlers<a name="line.56"></a>
+<span class="sourceLineNo">057</span>       // ignore it , view<a name="line.57"></a>
+<span class="sourceLineNo">058</span>       super.addHandler(new ElementRecognizer.ByLocalName("view"),<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         AGAVEViewPropHandler.AGAVE_VIEW_PROP_HANDLER_FACTORY);<a name="line.59"></a>
+<span class="sourceLineNo">060</span>      // &lt;note&gt;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>       super.addHandler(new ElementRecognizer.ByLocalName("contig"),<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         AGAVEContigHandler.AGAVE_CONTIG_HANDLER_FACTORY);<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  }<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>  public void reportSequence(Sequence sequence)<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  {<a name="line.66"></a>
+<span class="sourceLineNo">067</span>      sequenceSet.add( sequence ) ;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  }<a name="line.68"></a>
+<span class="sourceLineNo">069</span>  public Iterator getSequences()<a name="line.69"></a>
+<span class="sourceLineNo">070</span>  {<a name="line.70"></a>
+<span class="sourceLineNo">071</span>      return sequenceSet.iterator() ;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  }<a name="line.72"></a>
+<span class="sourceLineNo">073</span>  public void startElementHandler(<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                String nsURI,<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                String localName,<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                String qName,<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                Attributes attrs)<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                throws SAXException<a name="line.78"></a>
+<span class="sourceLineNo">079</span>  {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>       chromNum = attrs.getValue("number") ;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>       chromLen = attrs.getValue("length") ;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>  public void endElementHandler(<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                String nsURI,<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                String localName,<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                String qName,<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                StAXContentHandler handler)<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                throws SAXException<a name="line.89"></a>
+<span class="sourceLineNo">090</span>  {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>       try{<a name="line.91"></a>
+<span class="sourceLineNo">092</span>       for (ListIterator i = sequenceSet.listIterator(); i.hasNext();)<a name="line.92"></a>
+<span class="sourceLineNo">093</span>       {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>           Sequence seq = ( Sequence ) i.next() ;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>           if( chromNum !=  null )<a name="line.95"></a>
+<span class="sourceLineNo">096</span>               seq. getAnnotation().setProperty( "chromosome_number", chromNum);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>           if( chromLen != null )<a name="line.97"></a>
+<span class="sourceLineNo">098</span>               seq. getAnnotation().setProperty( "chromosome_length", chromLen);<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>           appendToTop(seq, staxenv) ;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>       }<a name="line.101"></a>
+<span class="sourceLineNo">102</span>       }catch(Exception e){<a name="line.102"></a>
+<span class="sourceLineNo">103</span>          throw new SAXException( e.getMessage() ) ;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>        }<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>  }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>     private void appendToTop(Sequence sequence, StAXFeatureHandler staxenv)<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        if( staxenv instanceof AGAVECallbackItf)<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>             ((AGAVECallbackItf) staxenv).reportSequence( sequence );<a name="line.112"></a>
+<span class="sourceLineNo">113</span>             return;<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        }<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        else appendToTop(sequence, staxenv.staxenv );<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>}<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

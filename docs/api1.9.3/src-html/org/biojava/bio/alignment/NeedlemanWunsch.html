@@ -1,0 +1,660 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>package org.biojava.bio.alignment;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.biojava.bio.BioException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.biojava.bio.SimpleAnnotation;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.bio.seq.Sequence;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.bio.seq.impl.SimpleGappedSequence;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.bio.seq.impl.SimpleSequence;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.bio.seq.io.SymbolTokenization;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.bio.symbol.SimpleSymbolList;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.bio.symbol.SymbolList;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>/**<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * Needleman and Wunsch defined the problem of global sequence alignments, from<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * the first till the last symbol of a sequence. This class is able to perform<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * such global sequence comparisons efficiently by dynamic programming. If<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * inserts and deletes are equally expensive and as expensive as the extension<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * of a gap, the alignment method of this class does not use affine gap<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * penalties. Otherwise it does. Those costs need four times as much memory,<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * which has significant effects on the run time, if the computer needs to swap.<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * <a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @author Andreas Dr&amp;auml;ger<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @author Gero Greiner<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * @author Mark Schreiber<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @since 1.5<a name="line.44"></a>
+<span class="sourceLineNo">045</span> */<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>public class NeedlemanWunsch extends AlignmentAlgorithm {<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * This just computes the minimum of three integer values.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         * <a name="line.51"></a>
+<span class="sourceLineNo">052</span>         * @param x<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * @param y<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         * @param z<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * @return Gives the minimum of three integers<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        protected static int min(int x, int y, int z) {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                if ((x &lt; y) &amp;&amp; (x &lt; z))<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                        return x;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                if (y &lt; z)<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                        return y;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                return z;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        }<a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span>        /**<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         * Prints a String representation of the CostMatrix for the given Alignment<a name="line.66"></a>
+<span class="sourceLineNo">067</span>         * on the screen. This can be used to get a better understanding of the<a name="line.67"></a>
+<span class="sourceLineNo">068</span>         * algorithm. There is no other purpose. This method also works for all<a name="line.68"></a>
+<span class="sourceLineNo">069</span>         * extensions of this class with all kinds of matrices.<a name="line.69"></a>
+<span class="sourceLineNo">070</span>         * <a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * @param CostMatrix<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         *            The matrix that contains all expenses for swapping symbols.<a name="line.72"></a>
+<span class="sourceLineNo">073</span>         * @param queryChar<a name="line.73"></a>
+<span class="sourceLineNo">074</span>         *            a character representation of the query sequence (<a name="line.74"></a>
+<span class="sourceLineNo">075</span>         *            &lt;code&gt;mySequence.seqString().toCharArray()&lt;/code&gt;).<a name="line.75"></a>
+<span class="sourceLineNo">076</span>         * @param targetChar<a name="line.76"></a>
+<span class="sourceLineNo">077</span>         *            a character representation of the target sequence.<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         * @return a String representation of the matrix.<a name="line.78"></a>
+<span class="sourceLineNo">079</span>         */<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        public static String printCostMatrix(int[][] CostMatrix, char[] queryChar,<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                        char[] targetChar) {<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                int line, col;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                StringBuilder output = new StringBuilder();<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                output.append('\t');<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                String ls = System.getProperty("line.separator");<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>                for (col = 0; col &lt;= targetChar.length; col++)<a name="line.87"></a>
+<span class="sourceLineNo">088</span>                        if (col == 0) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>                                output.append('[');<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                                output.append(col);<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                                output.append("]\t");<a name="line.91"></a>
+<span class="sourceLineNo">092</span>                        } else {<a name="line.92"></a>
+<span class="sourceLineNo">093</span>                                output.append('[');<a name="line.93"></a>
+<span class="sourceLineNo">094</span>                                output.append(targetChar[col - 1]);<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                                output.append("]\t");<a name="line.95"></a>
+<span class="sourceLineNo">096</span>                        }<a name="line.96"></a>
+<span class="sourceLineNo">097</span>                for (line = 0; line &lt;= queryChar.length; line++) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>                        if (line == 0) {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>                                output.append(ls);<a name="line.99"></a>
+<span class="sourceLineNo">100</span>                                output.append('[');<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                                output.append(line);<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                                output.append("]\t");<a name="line.102"></a>
+<span class="sourceLineNo">103</span>                        } else {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                                output.append(ls);<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                output.append('[');<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                                output.append(queryChar[line - 1]);<a name="line.106"></a>
+<span class="sourceLineNo">107</span>                                output.append("]\t");<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                        }<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                        for (col = 0; col &lt;= targetChar.length; col++) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                                output.append(CostMatrix[line][col]);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                                output.append('\t');<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                        }<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                }<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                output.append(ls);<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                output.append("delta[Edit] = ");<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                output.append(CostMatrix[line - 1][col - 1]);<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                output.append(ls);<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                return output.toString();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        }<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span>        /**<a name="line.121"></a>
+<span class="sourceLineNo">122</span>         * A matrix with the size length(sequence1) times length(sequence2)<a name="line.122"></a>
+<span class="sourceLineNo">123</span>         */<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        protected int[][] CostMatrix;<a name="line.124"></a>
+<span class="sourceLineNo">125</span><a name="line.125"></a>
+<span class="sourceLineNo">126</span>        /**<a name="line.126"></a>
+<span class="sourceLineNo">127</span>         * Expenses for deletes.<a name="line.127"></a>
+<span class="sourceLineNo">128</span>         */<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        private short delete;<a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">131</span>        /**<a name="line.131"></a>
+<span class="sourceLineNo">132</span>         * Expenses for the extension of a gap.<a name="line.132"></a>
+<span class="sourceLineNo">133</span>         */<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        private short gapExt;<a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>        /**<a name="line.136"></a>
+<span class="sourceLineNo">137</span>         * Expenses for inserts.<a name="line.137"></a>
+<span class="sourceLineNo">138</span>         */<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        private short insert;<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>        /**<a name="line.141"></a>
+<span class="sourceLineNo">142</span>         * Expenses for matches.<a name="line.142"></a>
+<span class="sourceLineNo">143</span>         */<a name="line.143"></a>
+<span class="sourceLineNo">144</span>        private short match;<a name="line.144"></a>
+<span class="sourceLineNo">145</span><a name="line.145"></a>
+<span class="sourceLineNo">146</span>        /**<a name="line.146"></a>
+<span class="sourceLineNo">147</span>         * Expenses for replaces.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>         */<a name="line.148"></a>
+<span class="sourceLineNo">149</span>        private short replace;<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>        /**<a name="line.151"></a>
+<span class="sourceLineNo">152</span>         * A matrix with the size length(alphabet) times length(alphabet)<a name="line.152"></a>
+<span class="sourceLineNo">153</span>         */<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        protected SubstitutionMatrix subMatrix;<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>        /**<a name="line.156"></a>
+<span class="sourceLineNo">157</span>         * Constructs a new Object with the given parameters based on the<a name="line.157"></a>
+<span class="sourceLineNo">158</span>         * Needleman-Wunsch algorithm The alphabet of sequences to be aligned will<a name="line.158"></a>
+<span class="sourceLineNo">159</span>         * be taken from the given substitution matrix.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>         * <a name="line.160"></a>
+<span class="sourceLineNo">161</span>         * @param match<a name="line.161"></a>
+<span class="sourceLineNo">162</span>         *            This gives the costs for a match operation. It is only used,<a name="line.162"></a>
+<span class="sourceLineNo">163</span>         *            if there is no entry for a certain match of two symbols in the<a name="line.163"></a>
+<span class="sourceLineNo">164</span>         *            substitution matrix (default value).<a name="line.164"></a>
+<span class="sourceLineNo">165</span>         * @param replace<a name="line.165"></a>
+<span class="sourceLineNo">166</span>         *            This is like the match parameter just the default, if there is<a name="line.166"></a>
+<span class="sourceLineNo">167</span>         *            no entry in the substitution matrix object.<a name="line.167"></a>
+<span class="sourceLineNo">168</span>         * @param insert<a name="line.168"></a>
+<span class="sourceLineNo">169</span>         *            The costs of a single insert operation.<a name="line.169"></a>
+<span class="sourceLineNo">170</span>         * @param delete<a name="line.170"></a>
+<span class="sourceLineNo">171</span>         *            The expenses of a single delete operation.<a name="line.171"></a>
+<span class="sourceLineNo">172</span>         * @param gapExtend<a name="line.172"></a>
+<span class="sourceLineNo">173</span>         *            The expenses of an extension of a existing gap (that is a<a name="line.173"></a>
+<span class="sourceLineNo">174</span>         *            previous insert or delete. If the costs for insert and delete<a name="line.174"></a>
+<span class="sourceLineNo">175</span>         *            are equal and also equal to gapExtend, no affine gap penalties<a name="line.175"></a>
+<span class="sourceLineNo">176</span>         *            will be used, which saves a significant amount of memory.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>         * @param subMat<a name="line.177"></a>
+<span class="sourceLineNo">178</span>         *            The substitution matrix object which gives the costs for<a name="line.178"></a>
+<span class="sourceLineNo">179</span>         *            matches and replaces.<a name="line.179"></a>
+<span class="sourceLineNo">180</span>         */<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        public NeedlemanWunsch(short match, short replace, short insert,<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        short delete, short gapExtend, SubstitutionMatrix subMat) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                this.subMatrix = subMat;<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                this.insert = insert;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                this.delete = delete;<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                this.gapExt = gapExtend;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                this.match = match;<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                this.replace = replace;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>        }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>        /**<a name="line.191"></a>
+<span class="sourceLineNo">192</span>         * Returns the current expenses of a single delete operation.<a name="line.192"></a>
+<span class="sourceLineNo">193</span>         * <a name="line.193"></a>
+<span class="sourceLineNo">194</span>         * @return delete<a name="line.194"></a>
+<span class="sourceLineNo">195</span>         */<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        public short getDelete() {<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                return delete;<a name="line.197"></a>
+<span class="sourceLineNo">198</span>        }<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>        /**<a name="line.200"></a>
+<span class="sourceLineNo">201</span>         * This gives the edit distance according to the given parameters of this<a name="line.201"></a>
+<span class="sourceLineNo">202</span>         * certain object. It returns just the last element of the internal cost<a name="line.202"></a>
+<span class="sourceLineNo">203</span>         * matrix (left side down). So if you extend this class, you can just do the<a name="line.203"></a>
+<span class="sourceLineNo">204</span>         * following:<a name="line.204"></a>
+<span class="sourceLineNo">205</span>         * &lt;code&gt;int myDistanceValue = foo; this.CostMatrix = new int[1][1]; this.CostMatrix[0][0] = myDistanceValue;&lt;/code&gt;<a name="line.205"></a>
+<span class="sourceLineNo">206</span>         * <a name="line.206"></a>
+<span class="sourceLineNo">207</span>         * @return returns the edit_distance computed with the given parameters.<a name="line.207"></a>
+<span class="sourceLineNo">208</span>         */<a name="line.208"></a>
+<span class="sourceLineNo">209</span>        public int getEditDistance() {<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                return CostMatrix[CostMatrix.length - 1][CostMatrix[CostMatrix.length - 1].length - 1];<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        }<a name="line.211"></a>
+<span class="sourceLineNo">212</span><a name="line.212"></a>
+<span class="sourceLineNo">213</span>        /**<a name="line.213"></a>
+<span class="sourceLineNo">214</span>         * Returns the current expenses of any extension of a gap operation.<a name="line.214"></a>
+<span class="sourceLineNo">215</span>         * <a name="line.215"></a>
+<span class="sourceLineNo">216</span>         * @return gapExt<a name="line.216"></a>
+<span class="sourceLineNo">217</span>         */<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        public short getGapExt() {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                return gapExt;<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>        /**<a name="line.222"></a>
+<span class="sourceLineNo">223</span>         * Returns the current expenses of a single insert operation.<a name="line.223"></a>
+<span class="sourceLineNo">224</span>         * <a name="line.224"></a>
+<span class="sourceLineNo">225</span>         * @return insert<a name="line.225"></a>
+<span class="sourceLineNo">226</span>         */<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        public short getInsert() {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>                return insert;<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        }<a name="line.229"></a>
+<span class="sourceLineNo">230</span><a name="line.230"></a>
+<span class="sourceLineNo">231</span>        /**<a name="line.231"></a>
+<span class="sourceLineNo">232</span>         * Returns the current expenses of a single match operation.<a name="line.232"></a>
+<span class="sourceLineNo">233</span>         * <a name="line.233"></a>
+<span class="sourceLineNo">234</span>         * @return match<a name="line.234"></a>
+<span class="sourceLineNo">235</span>         */<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        public short getMatch() {<a name="line.236"></a>
+<span class="sourceLineNo">237</span>                return match;<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        }<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>        /**<a name="line.240"></a>
+<span class="sourceLineNo">241</span>         * Returns the current expenses of a single replace operation.<a name="line.241"></a>
+<span class="sourceLineNo">242</span>         * <a name="line.242"></a>
+<span class="sourceLineNo">243</span>         * @return replace<a name="line.243"></a>
+<span class="sourceLineNo">244</span>         */<a name="line.244"></a>
+<span class="sourceLineNo">245</span>        public short getReplace() {<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                return replace;<a name="line.246"></a>
+<span class="sourceLineNo">247</span>        }<a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>        /**<a name="line.249"></a>
+<span class="sourceLineNo">250</span>         * This method computes the scores for the substitution of the i-th symbol<a name="line.250"></a>
+<span class="sourceLineNo">251</span>         * of query by the j-th symbol of subject.<a name="line.251"></a>
+<span class="sourceLineNo">252</span>         * <a name="line.252"></a>
+<span class="sourceLineNo">253</span>         * @param query<a name="line.253"></a>
+<span class="sourceLineNo">254</span>         *            The query sequence<a name="line.254"></a>
+<span class="sourceLineNo">255</span>         * @param subject<a name="line.255"></a>
+<span class="sourceLineNo">256</span>         *            The target sequence<a name="line.256"></a>
+<span class="sourceLineNo">257</span>         * @param i<a name="line.257"></a>
+<span class="sourceLineNo">258</span>         *            The position of the symbol under consideration within the<a name="line.258"></a>
+<span class="sourceLineNo">259</span>         *            query sequence (starting from one)<a name="line.259"></a>
+<span class="sourceLineNo">260</span>         * @param j<a name="line.260"></a>
+<span class="sourceLineNo">261</span>         *            The position of the symbol under consideration within the<a name="line.261"></a>
+<span class="sourceLineNo">262</span>         *            target sequence<a name="line.262"></a>
+<span class="sourceLineNo">263</span>         * @return The score for the given substitution.<a name="line.263"></a>
+<span class="sourceLineNo">264</span>         */<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        private int matchReplace(Sequence query, Sequence subject, int i, int j) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>                try {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>                        return subMatrix.getValueAt(query.symbolAt(i), subject.symbolAt(j));<a name="line.267"></a>
+<span class="sourceLineNo">268</span>                } catch (Exception exc) {<a name="line.268"></a>
+<span class="sourceLineNo">269</span>                        if (query.symbolAt(i).getMatches().contains(subject.symbolAt(j))<a name="line.269"></a>
+<span class="sourceLineNo">270</span>                                        || subject.symbolAt(j).getMatches().contains(<a name="line.270"></a>
+<span class="sourceLineNo">271</span>                                                        query.symbolAt(i)))<a name="line.271"></a>
+<span class="sourceLineNo">272</span>                                return -match;<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                        return -replace;<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                }<a name="line.274"></a>
+<span class="sourceLineNo">275</span>        }<a name="line.275"></a>
+<span class="sourceLineNo">276</span><a name="line.276"></a>
+<span class="sourceLineNo">277</span>        /**<a name="line.277"></a>
+<span class="sourceLineNo">278</span>         * Global pairwise sequence alignment of two BioJava-Sequence objects<a name="line.278"></a>
+<span class="sourceLineNo">279</span>         * according to the Needleman-Wunsch-algorithm.<a name="line.279"></a>
+<span class="sourceLineNo">280</span>         * <a name="line.280"></a>
+<span class="sourceLineNo">281</span>         * @see org.biojava.bio.alignment.AlignmentAlgorithm#pairwiseAlignment(org.biojava.bio.symbol.SymbolList,<a name="line.281"></a>
+<span class="sourceLineNo">282</span>         *      org.biojava.bio.symbol.SymbolList)<a name="line.282"></a>
+<span class="sourceLineNo">283</span>         */<a name="line.283"></a>
+<span class="sourceLineNo">284</span>        @Override<a name="line.284"></a>
+<span class="sourceLineNo">285</span>        public AlignmentPair pairwiseAlignment(SymbolList query, SymbolList subject)<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                        throws BioException {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>                Sequence squery = null;<a name="line.287"></a>
+<span class="sourceLineNo">288</span>                Sequence ssubject = null;<a name="line.288"></a>
+<span class="sourceLineNo">289</span><a name="line.289"></a>
+<span class="sourceLineNo">290</span>                if (query instanceof Sequence) {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                        squery = (Sequence) query;<a name="line.291"></a>
+<span class="sourceLineNo">292</span>                } else {<a name="line.292"></a>
+<span class="sourceLineNo">293</span>                        // make it a sequence<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                        squery = new SimpleSequence(query, "", "query",<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                                        new SimpleAnnotation());<a name="line.295"></a>
+<span class="sourceLineNo">296</span>                }<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                if (subject instanceof Sequence) {<a name="line.297"></a>
+<span class="sourceLineNo">298</span>                        ssubject = (Sequence) subject;<a name="line.298"></a>
+<span class="sourceLineNo">299</span>                } else {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>                        // make it a sequence<a name="line.300"></a>
+<span class="sourceLineNo">301</span>                        ssubject = new SimpleSequence(subject, "", "subject",<a name="line.301"></a>
+<span class="sourceLineNo">302</span>                                        new SimpleAnnotation());<a name="line.302"></a>
+<span class="sourceLineNo">303</span>                }<a name="line.303"></a>
+<span class="sourceLineNo">304</span><a name="line.304"></a>
+<span class="sourceLineNo">305</span>                SymbolTokenization st = null;<a name="line.305"></a>
+<span class="sourceLineNo">306</span>                st = subMatrix.getAlphabet().getTokenization("default");<a name="line.306"></a>
+<span class="sourceLineNo">307</span><a name="line.307"></a>
+<span class="sourceLineNo">308</span>                if (squery.getAlphabet().equals(ssubject.getAlphabet())<a name="line.308"></a>
+<span class="sourceLineNo">309</span>                                &amp;&amp; squery.getAlphabet().equals(subMatrix.getAlphabet())) {<a name="line.309"></a>
+<span class="sourceLineNo">310</span><a name="line.310"></a>
+<span class="sourceLineNo">311</span>                        StringBuffer[] align = { new StringBuffer(), new StringBuffer() };<a name="line.311"></a>
+<span class="sourceLineNo">312</span><a name="line.312"></a>
+<span class="sourceLineNo">313</span>                        long time = System.currentTimeMillis();<a name="line.313"></a>
+<span class="sourceLineNo">314</span>                        int i, j;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>                        this.CostMatrix = new int[squery.length() + 1][ssubject.length() + 1];<a name="line.315"></a>
+<span class="sourceLineNo">316</span><a name="line.316"></a>
+<span class="sourceLineNo">317</span>                        /*<a name="line.317"></a>
+<span class="sourceLineNo">318</span>                         * Variables for the traceback<a name="line.318"></a>
+<span class="sourceLineNo">319</span>                         */<a name="line.319"></a>
+<span class="sourceLineNo">320</span><a name="line.320"></a>
+<span class="sourceLineNo">321</span>                        StringBuffer path = new StringBuffer();<a name="line.321"></a>
+<span class="sourceLineNo">322</span><a name="line.322"></a>
+<span class="sourceLineNo">323</span>                        // construct the matrix:<a name="line.323"></a>
+<span class="sourceLineNo">324</span>                        CostMatrix[0][0] = 0;<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>                        /*<a name="line.326"></a>
+<span class="sourceLineNo">327</span>                         * If we want to have affine gap penalties, we have to initialise<a name="line.327"></a>
+<span class="sourceLineNo">328</span>                         * additional matrices: If this is not necessary, we won't do that<a name="line.328"></a>
+<span class="sourceLineNo">329</span>                         * (because it's expensive).<a name="line.329"></a>
+<span class="sourceLineNo">330</span>                         */<a name="line.330"></a>
+<span class="sourceLineNo">331</span>                        if ((gapExt != delete) || (gapExt != insert)) {<a name="line.331"></a>
+<span class="sourceLineNo">332</span><a name="line.332"></a>
+<span class="sourceLineNo">333</span>                                int[][] E = new int[squery.length() + 1][ssubject.length() + 1]; // Inserts<a name="line.333"></a>
+<span class="sourceLineNo">334</span>                                int[][] F = new int[squery.length() + 1][ssubject.length() + 1]; // Deletes<a name="line.334"></a>
+<span class="sourceLineNo">335</span><a name="line.335"></a>
+<span class="sourceLineNo">336</span>                                E[0][0] = F[0][0] = Integer.MAX_VALUE; // Double.MAX_VALUE;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                                for (i = 1; i &lt;= squery.length(); i++) {<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                                        // CostMatrix[i][0] = CostMatrix[i-1][0] + delete;<a name="line.338"></a>
+<span class="sourceLineNo">339</span>                                        E[i][0] = Integer.MAX_VALUE; // Double.POSITIVE_INFINITY;<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                                        CostMatrix[i][0] = F[i][0] = delete + i * gapExt;<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                                }<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                                for (j = 1; j &lt;= ssubject.length(); j++) {<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                                        // CostMatrix[0][j] = CostMatrix[0][j - 1] + insert;<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                                        F[0][j] = Integer.MAX_VALUE; // Double.POSITIVE_INFINITY;<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                                        CostMatrix[0][j] = E[0][j] = insert + j * gapExt;<a name="line.345"></a>
+<span class="sourceLineNo">346</span>                                }<a name="line.346"></a>
+<span class="sourceLineNo">347</span>                                for (i = 1; i &lt;= squery.length(); i++)<a name="line.347"></a>
+<span class="sourceLineNo">348</span>                                        for (j = 1; j &lt;= ssubject.length(); j++) {<a name="line.348"></a>
+<span class="sourceLineNo">349</span>                                                E[i][j] = Math.min(E[i][j - 1], CostMatrix[i][j - 1]<a name="line.349"></a>
+<span class="sourceLineNo">350</span>                                                                + insert)<a name="line.350"></a>
+<span class="sourceLineNo">351</span>                                                                + gapExt;<a name="line.351"></a>
+<span class="sourceLineNo">352</span>                                                F[i][j] = Math.min(F[i - 1][j], CostMatrix[i - 1][j]<a name="line.352"></a>
+<span class="sourceLineNo">353</span>                                                                + delete)<a name="line.353"></a>
+<span class="sourceLineNo">354</span>                                                                + gapExt;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>                                                CostMatrix[i][j] = min(E[i][j], F[i][j],<a name="line.355"></a>
+<span class="sourceLineNo">356</span>                                                                CostMatrix[i - 1][j - 1]<a name="line.356"></a>
+<span class="sourceLineNo">357</span>                                                                                - matchReplace(squery, ssubject, i, j));<a name="line.357"></a>
+<span class="sourceLineNo">358</span>                                        }<a name="line.358"></a>
+<span class="sourceLineNo">359</span><a name="line.359"></a>
+<span class="sourceLineNo">360</span>                                /*<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                                 * Traceback for affine gap penalties.<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                                 */<a name="line.362"></a>
+<span class="sourceLineNo">363</span><a name="line.363"></a>
+<span class="sourceLineNo">364</span>                                boolean[] gap_extend = { false, false };<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                                j = this.CostMatrix[CostMatrix.length - 1].length - 1;<a name="line.365"></a>
+<span class="sourceLineNo">366</span><a name="line.366"></a>
+<span class="sourceLineNo">367</span>                                for (i = this.CostMatrix.length - 1; i &gt; 0;) {<a name="line.367"></a>
+<span class="sourceLineNo">368</span>                                        do {<a name="line.368"></a>
+<span class="sourceLineNo">369</span>                                                // only Insert.<a name="line.369"></a>
+<span class="sourceLineNo">370</span>                                                if (i == 0) {<a name="line.370"></a>
+<span class="sourceLineNo">371</span>                                                        align[0].insert(0, '-');<a name="line.371"></a>
+<span class="sourceLineNo">372</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.372"></a>
+<span class="sourceLineNo">373</span>                                                                        .symbolAt(j--)));<a name="line.373"></a>
+<span class="sourceLineNo">374</span>                                                        path.insert(0, ' ');<a name="line.374"></a>
+<span class="sourceLineNo">375</span><a name="line.375"></a>
+<span class="sourceLineNo">376</span>                                                        // only Delete.<a name="line.376"></a>
+<span class="sourceLineNo">377</span>                                                } else if (j == 0) {<a name="line.377"></a>
+<span class="sourceLineNo">378</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.378"></a>
+<span class="sourceLineNo">379</span>                                                                        .symbolAt(i--)));<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                                                        align[1].insert(0, '-');<a name="line.380"></a>
+<span class="sourceLineNo">381</span>                                                        path.insert(0, ' ');<a name="line.381"></a>
+<span class="sourceLineNo">382</span><a name="line.382"></a>
+<span class="sourceLineNo">383</span>                                                        // Match/Replace<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                                                } else if ((CostMatrix[i][j] == CostMatrix[i - 1][j - 1]<a name="line.384"></a>
+<span class="sourceLineNo">385</span>                                                                - matchReplace(squery, ssubject, i, j))<a name="line.385"></a>
+<span class="sourceLineNo">386</span>                                                                &amp;&amp; !(gap_extend[0] || gap_extend[1])) {<a name="line.386"></a>
+<span class="sourceLineNo">387</span>                                                        if (squery.symbolAt(i) == ssubject.symbolAt(j))<a name="line.387"></a>
+<span class="sourceLineNo">388</span>                                                                path.insert(0, '|');<a name="line.388"></a>
+<span class="sourceLineNo">389</span>                                                        else<a name="line.389"></a>
+<span class="sourceLineNo">390</span>                                                                path.insert(0, ' ');<a name="line.390"></a>
+<span class="sourceLineNo">391</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.391"></a>
+<span class="sourceLineNo">392</span>                                                                        .symbolAt(i--)));<a name="line.392"></a>
+<span class="sourceLineNo">393</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.393"></a>
+<span class="sourceLineNo">394</span>                                                                        .symbolAt(j--)));<a name="line.394"></a>
+<span class="sourceLineNo">395</span><a name="line.395"></a>
+<span class="sourceLineNo">396</span>                                                        // Insert || finish gap if extended gap is<a name="line.396"></a>
+<span class="sourceLineNo">397</span>                                                        // opened<a name="line.397"></a>
+<span class="sourceLineNo">398</span>                                                } else if (CostMatrix[i][j] == E[i][j] || gap_extend[0]) {<a name="line.398"></a>
+<span class="sourceLineNo">399</span>                                                        // check if gap has been extended or freshly<a name="line.399"></a>
+<span class="sourceLineNo">400</span>                                                        // opened<a name="line.400"></a>
+<span class="sourceLineNo">401</span>                                                        gap_extend[0] = (E[i][j] != CostMatrix[i][j - 1]<a name="line.401"></a>
+<span class="sourceLineNo">402</span>                                                                        + insert + gapExt);<a name="line.402"></a>
+<span class="sourceLineNo">403</span><a name="line.403"></a>
+<span class="sourceLineNo">404</span>                                                        align[0].insert(0, '-');<a name="line.404"></a>
+<span class="sourceLineNo">405</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.405"></a>
+<span class="sourceLineNo">406</span>                                                                        .symbolAt(j--)));<a name="line.406"></a>
+<span class="sourceLineNo">407</span>                                                        path.insert(0, ' ');<a name="line.407"></a>
+<span class="sourceLineNo">408</span><a name="line.408"></a>
+<span class="sourceLineNo">409</span>                                                        // Delete || finish gap if extended gap is<a name="line.409"></a>
+<span class="sourceLineNo">410</span>                                                        // opened<a name="line.410"></a>
+<span class="sourceLineNo">411</span>                                                } else {<a name="line.411"></a>
+<span class="sourceLineNo">412</span>                                                        // check if gap has been extended or freshly<a name="line.412"></a>
+<span class="sourceLineNo">413</span>                                                        // opened<a name="line.413"></a>
+<span class="sourceLineNo">414</span>                                                        gap_extend[1] = (F[i][j] != CostMatrix[i - 1][j]<a name="line.414"></a>
+<span class="sourceLineNo">415</span>                                                                        + delete + gapExt);<a name="line.415"></a>
+<span class="sourceLineNo">416</span><a name="line.416"></a>
+<span class="sourceLineNo">417</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.417"></a>
+<span class="sourceLineNo">418</span>                                                                        .symbolAt(i--)));<a name="line.418"></a>
+<span class="sourceLineNo">419</span>                                                        align[1].insert(0, '-');<a name="line.419"></a>
+<span class="sourceLineNo">420</span>                                                        path.insert(0, ' ');<a name="line.420"></a>
+<span class="sourceLineNo">421</span>                                                }<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                                        } while (j &gt; 0);<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                                }<a name="line.423"></a>
+<span class="sourceLineNo">424</span><a name="line.424"></a>
+<span class="sourceLineNo">425</span>                                /*<a name="line.425"></a>
+<span class="sourceLineNo">426</span>                                 * No affine gap penalties, constant gap penalties, which is<a name="line.426"></a>
+<span class="sourceLineNo">427</span>                                 * much faster and needs less memory.<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                                 */<a name="line.428"></a>
+<span class="sourceLineNo">429</span><a name="line.429"></a>
+<span class="sourceLineNo">430</span>                        } else {<a name="line.430"></a>
+<span class="sourceLineNo">431</span><a name="line.431"></a>
+<span class="sourceLineNo">432</span>                                for (i = 1; i &lt;= squery.length(); i++)<a name="line.432"></a>
+<span class="sourceLineNo">433</span>                                        CostMatrix[i][0] = CostMatrix[i - 1][0] + delete;<a name="line.433"></a>
+<span class="sourceLineNo">434</span>                                for (j = 1; j &lt;= ssubject.length(); j++)<a name="line.434"></a>
+<span class="sourceLineNo">435</span>                                        CostMatrix[0][j] = CostMatrix[0][j - 1] + insert;<a name="line.435"></a>
+<span class="sourceLineNo">436</span>                                for (i = 1; i &lt;= squery.length(); i++)<a name="line.436"></a>
+<span class="sourceLineNo">437</span>                                        for (j = 1; j &lt;= ssubject.length(); j++) {<a name="line.437"></a>
+<span class="sourceLineNo">438</span>                                                CostMatrix[i][j] = min(CostMatrix[i - 1][j] + delete,<a name="line.438"></a>
+<span class="sourceLineNo">439</span>                                                                CostMatrix[i][j - 1] + insert,<a name="line.439"></a>
+<span class="sourceLineNo">440</span>                                                                CostMatrix[i - 1][j - 1]<a name="line.440"></a>
+<span class="sourceLineNo">441</span>                                                                                - matchReplace(squery, ssubject, i, j));<a name="line.441"></a>
+<span class="sourceLineNo">442</span>                                        }<a name="line.442"></a>
+<span class="sourceLineNo">443</span><a name="line.443"></a>
+<span class="sourceLineNo">444</span>                                /*<a name="line.444"></a>
+<span class="sourceLineNo">445</span>                                 * Traceback for constant gap penalties.<a name="line.445"></a>
+<span class="sourceLineNo">446</span>                                 */<a name="line.446"></a>
+<span class="sourceLineNo">447</span>                                j = this.CostMatrix[CostMatrix.length - 1].length - 1;<a name="line.447"></a>
+<span class="sourceLineNo">448</span><a name="line.448"></a>
+<span class="sourceLineNo">449</span>                                // System.out.println(printCostMatrix(CostMatrix,<a name="line.449"></a>
+<span class="sourceLineNo">450</span>                                // query.seqString().toCharArray(),<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                                // subject.seqString().toCharArray()));<a name="line.451"></a>
+<span class="sourceLineNo">452</span><a name="line.452"></a>
+<span class="sourceLineNo">453</span>                                for (i = this.CostMatrix.length - 1; i &gt; 0;) {<a name="line.453"></a>
+<span class="sourceLineNo">454</span>                                        do {<a name="line.454"></a>
+<span class="sourceLineNo">455</span>                                                // only Insert.<a name="line.455"></a>
+<span class="sourceLineNo">456</span>                                                if (i == 0) {<a name="line.456"></a>
+<span class="sourceLineNo">457</span>                                                        align[0].insert(0, '-');<a name="line.457"></a>
+<span class="sourceLineNo">458</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.458"></a>
+<span class="sourceLineNo">459</span>                                                                        .symbolAt(j--)));<a name="line.459"></a>
+<span class="sourceLineNo">460</span>                                                        path.insert(0, ' ');<a name="line.460"></a>
+<span class="sourceLineNo">461</span><a name="line.461"></a>
+<span class="sourceLineNo">462</span>                                                        // only Delete.<a name="line.462"></a>
+<span class="sourceLineNo">463</span>                                                } else if (j == 0) {<a name="line.463"></a>
+<span class="sourceLineNo">464</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.464"></a>
+<span class="sourceLineNo">465</span>                                                                        .symbolAt(i--)));<a name="line.465"></a>
+<span class="sourceLineNo">466</span>                                                        align[1].insert(0, '-');<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                                                        path.insert(0, ' ');<a name="line.467"></a>
+<span class="sourceLineNo">468</span><a name="line.468"></a>
+<span class="sourceLineNo">469</span>                                                        // Match/Replace<a name="line.469"></a>
+<span class="sourceLineNo">470</span>                                                } else if (CostMatrix[i][j] == CostMatrix[i - 1][j - 1]<a name="line.470"></a>
+<span class="sourceLineNo">471</span>                                                                - matchReplace(squery, ssubject, i, j)) {<a name="line.471"></a>
+<span class="sourceLineNo">472</span><a name="line.472"></a>
+<span class="sourceLineNo">473</span>                                                        if (squery.symbolAt(i) == ssubject.symbolAt(j))<a name="line.473"></a>
+<span class="sourceLineNo">474</span>                                                                path.insert(0, '|');<a name="line.474"></a>
+<span class="sourceLineNo">475</span>                                                        else<a name="line.475"></a>
+<span class="sourceLineNo">476</span>                                                                path.insert(0, ' ');<a name="line.476"></a>
+<span class="sourceLineNo">477</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.477"></a>
+<span class="sourceLineNo">478</span>                                                                        .symbolAt(i--)));<a name="line.478"></a>
+<span class="sourceLineNo">479</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.479"></a>
+<span class="sourceLineNo">480</span>                                                                        .symbolAt(j--)));<a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>                                                        // Insert<a name="line.482"></a>
+<span class="sourceLineNo">483</span>                                                } else if (CostMatrix[i][j] == CostMatrix[i][j - 1]<a name="line.483"></a>
+<span class="sourceLineNo">484</span>                                                                + insert) {<a name="line.484"></a>
+<span class="sourceLineNo">485</span>                                                        align[0].insert(0, '-');<a name="line.485"></a>
+<span class="sourceLineNo">486</span>                                                        align[1].insert(0, st.tokenizeSymbol(ssubject<a name="line.486"></a>
+<span class="sourceLineNo">487</span>                                                                        .symbolAt(j--)));<a name="line.487"></a>
+<span class="sourceLineNo">488</span>                                                        path.insert(0, ' ');<a name="line.488"></a>
+<span class="sourceLineNo">489</span><a name="line.489"></a>
+<span class="sourceLineNo">490</span>                                                        // Delete<a name="line.490"></a>
+<span class="sourceLineNo">491</span>                                                } else {<a name="line.491"></a>
+<span class="sourceLineNo">492</span>                                                        align[0].insert(0, st.tokenizeSymbol(squery<a name="line.492"></a>
+<span class="sourceLineNo">493</span>                                                                        .symbolAt(i--)));<a name="line.493"></a>
+<span class="sourceLineNo">494</span>                                                        align[1].insert(0, '-');<a name="line.494"></a>
+<span class="sourceLineNo">495</span>                                                        path.insert(0, ' ');<a name="line.495"></a>
+<span class="sourceLineNo">496</span>                                                }<a name="line.496"></a>
+<span class="sourceLineNo">497</span>                                        } while (j &gt; 0);<a name="line.497"></a>
+<span class="sourceLineNo">498</span>                                }<a name="line.498"></a>
+<span class="sourceLineNo">499</span><a name="line.499"></a>
+<span class="sourceLineNo">500</span>                        }<a name="line.500"></a>
+<span class="sourceLineNo">501</span><a name="line.501"></a>
+<span class="sourceLineNo">502</span>                        /*<a name="line.502"></a>
+<span class="sourceLineNo">503</span>                         * From here both cases are equal again.<a name="line.503"></a>
+<span class="sourceLineNo">504</span>                         */<a name="line.504"></a>
+<span class="sourceLineNo">505</span>                        squery = new SimpleGappedSequence(new SimpleSequence(<a name="line.505"></a>
+<span class="sourceLineNo">506</span>                                        new SimpleSymbolList(squery.getAlphabet().getTokenization(<a name="line.506"></a>
+<span class="sourceLineNo">507</span>                                                        "token"), align[0].toString()), squery.getURN(),<a name="line.507"></a>
+<span class="sourceLineNo">508</span>                                        squery.getName(), squery.getAnnotation()));<a name="line.508"></a>
+<span class="sourceLineNo">509</span>                        ssubject = new SimpleGappedSequence(new SimpleSequence(<a name="line.509"></a>
+<span class="sourceLineNo">510</span>                                        new SimpleSymbolList(ssubject.getAlphabet()<a name="line.510"></a>
+<span class="sourceLineNo">511</span>                                                        .getTokenization("token"), align[1].toString()),<a name="line.511"></a>
+<span class="sourceLineNo">512</span>                                        ssubject.getURN(), ssubject.getName(), ssubject<a name="line.512"></a>
+<span class="sourceLineNo">513</span>                                                        .getAnnotation()));<a name="line.513"></a>
+<span class="sourceLineNo">514</span>                        AlignmentPair pairalign = new AlignmentPair(squery, ssubject, 1,<a name="line.514"></a>
+<span class="sourceLineNo">515</span>                                        squery.length(), 1, ssubject.length(), subMatrix);<a name="line.515"></a>
+<span class="sourceLineNo">516</span>                        pairalign.setComputationTime(System.currentTimeMillis() - time);<a name="line.516"></a>
+<span class="sourceLineNo">517</span>                        pairalign.setScore((-1) * getEditDistance());<a name="line.517"></a>
+<span class="sourceLineNo">518</span>                        return pairalign;<a name="line.518"></a>
+<span class="sourceLineNo">519</span>                } else {<a name="line.519"></a>
+<span class="sourceLineNo">520</span>                        throw new BioException(<a name="line.520"></a>
+<span class="sourceLineNo">521</span>                                        "Alphabet missmatch occured: sequences with different alphabet cannot be aligned.");<a name="line.521"></a>
+<span class="sourceLineNo">522</span>                }<a name="line.522"></a>
+<span class="sourceLineNo">523</span>        }<a name="line.523"></a>
+<span class="sourceLineNo">524</span><a name="line.524"></a>
+<span class="sourceLineNo">525</span>        /**<a name="line.525"></a>
+<span class="sourceLineNo">526</span>         * Sets the penalty for a delete operation to the specified value.<a name="line.526"></a>
+<span class="sourceLineNo">527</span>         * <a name="line.527"></a>
+<span class="sourceLineNo">528</span>         * @param del<a name="line.528"></a>
+<span class="sourceLineNo">529</span>         *            costs for a single deletion operation<a name="line.529"></a>
+<span class="sourceLineNo">530</span>         */<a name="line.530"></a>
+<span class="sourceLineNo">531</span>        public void setDelete(short del) {<a name="line.531"></a>
+<span class="sourceLineNo">532</span>                this.delete = del;<a name="line.532"></a>
+<span class="sourceLineNo">533</span>        }<a name="line.533"></a>
+<span class="sourceLineNo">534</span><a name="line.534"></a>
+<span class="sourceLineNo">535</span>        /**<a name="line.535"></a>
+<span class="sourceLineNo">536</span>         * Sets the penalty for an extension of any gap (insert or delete) to the<a name="line.536"></a>
+<span class="sourceLineNo">537</span>         * specified value.<a name="line.537"></a>
+<span class="sourceLineNo">538</span>         * <a name="line.538"></a>
+<span class="sourceLineNo">539</span>         * @param ge<a name="line.539"></a>
+<span class="sourceLineNo">540</span>         *            costs for any gap extension<a name="line.540"></a>
+<span class="sourceLineNo">541</span>         */<a name="line.541"></a>
+<span class="sourceLineNo">542</span>        public void setGapExt(short ge) {<a name="line.542"></a>
+<span class="sourceLineNo">543</span>                this.gapExt = ge;<a name="line.543"></a>
+<span class="sourceLineNo">544</span>        }<a name="line.544"></a>
+<span class="sourceLineNo">545</span><a name="line.545"></a>
+<span class="sourceLineNo">546</span>        /**<a name="line.546"></a>
+<span class="sourceLineNo">547</span>         * Sets the penalty for an insert operation to the specified value.<a name="line.547"></a>
+<span class="sourceLineNo">548</span>         * <a name="line.548"></a>
+<span class="sourceLineNo">549</span>         * @param ins<a name="line.549"></a>
+<span class="sourceLineNo">550</span>         *            costs for a single insert operation<a name="line.550"></a>
+<span class="sourceLineNo">551</span>         */<a name="line.551"></a>
+<span class="sourceLineNo">552</span>        public void setInsert(short ins) {<a name="line.552"></a>
+<span class="sourceLineNo">553</span>                this.insert = ins;<a name="line.553"></a>
+<span class="sourceLineNo">554</span>        }<a name="line.554"></a>
+<span class="sourceLineNo">555</span><a name="line.555"></a>
+<span class="sourceLineNo">556</span>        /**<a name="line.556"></a>
+<span class="sourceLineNo">557</span>         * Sets the penalty for a match operation to the specified value.<a name="line.557"></a>
+<span class="sourceLineNo">558</span>         * <a name="line.558"></a>
+<span class="sourceLineNo">559</span>         * @param ma<a name="line.559"></a>
+<span class="sourceLineNo">560</span>         *            costs for a single match operation<a name="line.560"></a>
+<span class="sourceLineNo">561</span>         */<a name="line.561"></a>
+<span class="sourceLineNo">562</span>        public void setMatch(short ma) {<a name="line.562"></a>
+<span class="sourceLineNo">563</span>                this.match = ma;<a name="line.563"></a>
+<span class="sourceLineNo">564</span>        }<a name="line.564"></a>
+<span class="sourceLineNo">565</span><a name="line.565"></a>
+<span class="sourceLineNo">566</span>        /**<a name="line.566"></a>
+<span class="sourceLineNo">567</span>         * Sets the penalty for a replace operation to the specified value.<a name="line.567"></a>
+<span class="sourceLineNo">568</span>         * <a name="line.568"></a>
+<span class="sourceLineNo">569</span>         * @param rep<a name="line.569"></a>
+<span class="sourceLineNo">570</span>         *            costs for a single replace operation<a name="line.570"></a>
+<span class="sourceLineNo">571</span>         */<a name="line.571"></a>
+<span class="sourceLineNo">572</span>        public void setReplace(short rep) {<a name="line.572"></a>
+<span class="sourceLineNo">573</span>                this.replace = rep;<a name="line.573"></a>
+<span class="sourceLineNo">574</span>        }<a name="line.574"></a>
+<span class="sourceLineNo">575</span><a name="line.575"></a>
+<span class="sourceLineNo">576</span>        /**<a name="line.576"></a>
+<span class="sourceLineNo">577</span>         * Sets the substitution matrix to be used to the specified one. Afterwards<a name="line.577"></a>
+<span class="sourceLineNo">578</span>         * it is only possible to align sequences of the alphabet of this<a name="line.578"></a>
+<span class="sourceLineNo">579</span>         * substitution matrix.<a name="line.579"></a>
+<span class="sourceLineNo">580</span>         * <a name="line.580"></a>
+<span class="sourceLineNo">581</span>         * @param matrix<a name="line.581"></a>
+<span class="sourceLineNo">582</span>         *            an instance of a substitution matrix.<a name="line.582"></a>
+<span class="sourceLineNo">583</span>         */<a name="line.583"></a>
+<span class="sourceLineNo">584</span>        public void setSubstitutionMatrix(SubstitutionMatrix matrix) {<a name="line.584"></a>
+<span class="sourceLineNo">585</span>                this.subMatrix = matrix;<a name="line.585"></a>
+<span class="sourceLineNo">586</span>        }<a name="line.586"></a>
+<span class="sourceLineNo">587</span><a name="line.587"></a>
+<span class="sourceLineNo">588</span>}<a name="line.588"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

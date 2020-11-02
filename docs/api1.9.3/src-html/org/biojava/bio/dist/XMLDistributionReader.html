@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> */<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.dist;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.IOException;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.io.InputStream;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.io.InputStreamReader;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.ArrayList;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.List;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.xml.parsers.ParserConfigurationException;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import javax.xml.parsers.SAXParser;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import javax.xml.parsers.SAXParserFactory;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.bio.BioException;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojava.bio.seq.io.SymbolTokenization;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.biojava.bio.symbol.Alphabet;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.biojava.bio.symbol.AlphabetManager;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.biojava.bio.symbol.AtomicSymbol;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.biojava.bio.symbol.Symbol;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.biojava.utils.ChangeVetoException;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.xml.sax.Attributes;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.xml.sax.InputSource;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.xml.sax.SAXException;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.xml.sax.helpers.DefaultHandler;<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>/**<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * A SAX parser that reads an XML representation of a<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * Distribution from a file and recreates it as a Distribution Object.<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * Handles OrderNDistributions and Simple Distributions but<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * ensure the OrderNDistributions being read in was made using<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * conditioning and conditioned Alphabets.<a name="line.54"></a>
+<span class="sourceLineNo">055</span> *<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * @author Russell Smithies<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * @author Mark Schreiber<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * @author Matthew Pocock<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * @since 1.3<a name="line.59"></a>
+<span class="sourceLineNo">060</span> */<a name="line.60"></a>
+<span class="sourceLineNo">061</span>public class XMLDistributionReader extends DefaultHandler {<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  //fixme: the handler and the user API seem to be muddled up - can the<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  // DefaultHandler impl be factored out into a static and hopefully private<a name="line.63"></a>
+<span class="sourceLineNo">064</span>  // class?<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    private Alphabet alpha = null;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    private Distribution dist = null;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    private DistributionFactory fact = null;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    //private OrderNDistributionFactory ondFact = null;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    private SymbolTokenization nameParser = null;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    private Symbol sym = null;<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    private Alphabet conditioningAlpha = null;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    private AtomicSymbol conditioningSymbol = null;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    private SymbolTokenization conditioningTok = null;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    private Alphabet conditionedAlpha = null;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    private AtomicSymbol conditionedSymbol = null;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    private SymbolTokenization conditionedTok = null;<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>    private Distribution getDist() {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        return dist;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    } //end getDist<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>    /**<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * Reads an XML representation of a Distribution from a file.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     *<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * @param is input in XML format<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     * @return dist the Distribution created.<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     * @throws IOException if an error occurs during reading.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>     * @throws SAXException if the XML is not as expected.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     */<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    public Distribution parseXML(InputStream is) throws IOException, SAXException{<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        //org.xml.sax.XMLReader parser = new org.apache.xerces.parsers.SAXParser();<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        SAXParserFactory fact = SAXParserFactory.newInstance();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        fact.setNamespaceAware(true);<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        try {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>          SAXParser parser = fact.newSAXParser();<a name="line.96"></a>
+<span class="sourceLineNo">097</span><a name="line.97"></a>
+<span class="sourceLineNo">098</span>//          parser.setContentHandler(this);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>//<a name="line.99"></a>
+<span class="sourceLineNo">100</span>//          parser.setErrorHandler(this);<a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>          InputSource xml = null;<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>          xml = new InputSource(new InputStreamReader(is));<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>          parser.parse(xml, this);<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        }<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        catch (ParserConfigurationException ex) {<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         //really shouldn't happen<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         throw new SAXException("Cannot make SAXParser",ex);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        }<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>        return this.getDist();<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    }<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>    /**<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     * Required by SAXParser to be public.<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     *<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     * &lt;p&gt;<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     * It is not reccomended that you use this method directly. Use ParseXML<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     * instead.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     * &lt;/p&gt;<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     */<a name="line.123"></a>
+<span class="sourceLineNo">124</span>    public void startElement(String nameSpaceURI, String localName, String rawName, Attributes attributes)<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                      throws SAXException{<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        if (localName.equals("Distribution") || localName.equals("OrderNDistribution")) {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>            processDistElement(attributes);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>        } else if (localName.equals("alphabet")) {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>            processAlphabetElement(attributes);<a name="line.129"></a>
+<span class="sourceLineNo">130</span>        } else if (localName.equals("conditioning_symbol")) {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>            processConditioningSymbol(attributes);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>        } else if (localName.equals("weight")) {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>            processWeightElement(attributes);<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        }<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    } //end startElement<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>    private void processConditioningSymbol(Attributes attr)<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                    throws SAXException {<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        String name = attr.getValue("name");<a name="line.139"></a>
+<span class="sourceLineNo">140</span>        try {<a name="line.140"></a>
+<span class="sourceLineNo">141</span>          conditioningSymbol = (AtomicSymbol)conditioningTok.parseToken(name);<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        }<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        catch (IllegalSymbolException ex) {<a name="line.143"></a>
+<span class="sourceLineNo">144</span>          throw new SAXException(ex);<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        }<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span>    }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>    private void processWeightElement(Attributes attr)<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                               throws SAXException{<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        double weight = 0.0;<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>        try {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>            //get the weight of the symbol<a name="line.154"></a>
+<span class="sourceLineNo">155</span>            weight = Double.parseDouble(attr.getValue("prob"));<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        } catch (NumberFormatException ex) {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>            //catches the "NAN" string<a name="line.157"></a>
+<span class="sourceLineNo">158</span>            weight = 0.0;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>        }<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>        //add counts if SIMPLE DISTRIBUTION<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        if ((dist instanceof OrderNDistribution) == false) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>            try {<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                //initialize the tokenizer<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                nameParser = dist.getAlphabet().getTokenization("name");<a name="line.165"></a>
+<span class="sourceLineNo">166</span>            } catch (BioException ex) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                throw new SAXException("Couldn't get tokenization for "<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                       +dist.getAlphabet().getName(), ex);<a name="line.168"></a>
+<span class="sourceLineNo">169</span>            }<a name="line.169"></a>
+<span class="sourceLineNo">170</span><a name="line.170"></a>
+<span class="sourceLineNo">171</span>            try {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                //get the symbol name<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                sym = nameParser.parseToken(attr.getValue("sym"));<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>                //add count to dist<a name="line.176"></a>
+<span class="sourceLineNo">177</span>                dist.setWeight(sym, weight);<a name="line.177"></a>
+<span class="sourceLineNo">178</span>            } catch (IllegalSymbolException ex) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                throw new SAXException("Illegal symbol found", ex);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>            } catch (ChangeVetoException ex) {<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                throw new SAXException("Distribution has been locked, possible synchronization problem !?",ex);<a name="line.181"></a>
+<span class="sourceLineNo">182</span>            }<a name="line.182"></a>
+<span class="sourceLineNo">183</span><a name="line.183"></a>
+<span class="sourceLineNo">184</span>            //add countf if ORDER N DISTRIBUTION<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        } else if (dist instanceof OrderNDistribution) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span><a name="line.187"></a>
+<span class="sourceLineNo">188</span>            //get the weight for symbol<a name="line.188"></a>
+<span class="sourceLineNo">189</span>            try {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                //get the weight of the symbol<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                weight = Double.parseDouble(attr.getValue("prob"));<a name="line.191"></a>
+<span class="sourceLineNo">192</span>            } catch (NumberFormatException ex) {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                weight = 0.0;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>            }<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>            //rebuild the symbol from the conditioning and conditioned symbol<a name="line.196"></a>
+<span class="sourceLineNo">197</span>            String name = attr.getValue("sym");<a name="line.197"></a>
+<span class="sourceLineNo">198</span>            try {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>              conditionedSymbol = (AtomicSymbol)conditionedTok.parseToken(name);<a name="line.199"></a>
+<span class="sourceLineNo">200</span>            }<a name="line.200"></a>
+<span class="sourceLineNo">201</span>            catch (IllegalSymbolException ex) {<a name="line.201"></a>
+<span class="sourceLineNo">202</span>              throw new SAXException(ex);<a name="line.202"></a>
+<span class="sourceLineNo">203</span>            }<a name="line.203"></a>
+<span class="sourceLineNo">204</span>            List l = new ArrayList();<a name="line.204"></a>
+<span class="sourceLineNo">205</span>            l.add(conditioningSymbol);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>            l.add(conditionedSymbol);<a name="line.206"></a>
+<span class="sourceLineNo">207</span><a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>            try {<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                sym = alpha.getSymbol(l);<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                //set weights on distribution<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                dist.setWeight(sym, weight);<a name="line.212"></a>
+<span class="sourceLineNo">213</span>            } catch (IllegalSymbolException ex) {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                throw new SAXException("Illegal symbol found", ex);<a name="line.214"></a>
+<span class="sourceLineNo">215</span>            } catch (ChangeVetoException ex) {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                throw new SAXException("Distribution has been locked, possible synchronization problem !?",ex);<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            }<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        }<a name="line.218"></a>
+<span class="sourceLineNo">219</span>    } //end processWeight<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>    private void processAlphabetElement(Attributes attr)<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                                 throws SAXException {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>        String alphaName = attr.getValue("name");<a name="line.223"></a>
+<span class="sourceLineNo">224</span><a name="line.224"></a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span>        //get Alphabet<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        alpha = AlphabetManager.alphabetForName(alphaName);<a name="line.227"></a>
+<span class="sourceLineNo">228</span><a name="line.228"></a>
+<span class="sourceLineNo">229</span>        //make the Distribution<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        try {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>            dist = fact.createDistribution(alpha);<a name="line.231"></a>
+<span class="sourceLineNo">232</span>            if(dist instanceof OrderNDistribution){<a name="line.232"></a>
+<span class="sourceLineNo">233</span>              conditionedAlpha = ((OrderNDistribution)dist).getConditionedAlphabet();<a name="line.233"></a>
+<span class="sourceLineNo">234</span>              conditionedTok = conditionedAlpha.getTokenization("name");<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>              conditioningAlpha = ((OrderNDistribution)dist).getConditioningAlphabet();<a name="line.236"></a>
+<span class="sourceLineNo">237</span>              conditioningTok = conditioningAlpha.getTokenization("name");<a name="line.237"></a>
+<span class="sourceLineNo">238</span>            }<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>        } catch (IllegalAlphabetException ex) {<a name="line.240"></a>
+<span class="sourceLineNo">241</span>            throw new SAXException(ex);<a name="line.241"></a>
+<span class="sourceLineNo">242</span>        } catch (BioException ex) {<a name="line.242"></a>
+<span class="sourceLineNo">243</span>            throw new SAXException(ex);<a name="line.243"></a>
+<span class="sourceLineNo">244</span>        }<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    } //end processAlphabetElement<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span>    private void processDistElement(Attributes attr) throws SAXException {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>        if (attr.getValue("type").equals("Distribution")) {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>            fact = DistributionFactory.DEFAULT;<a name="line.249"></a>
+<span class="sourceLineNo">250</span>        } else if (attr.getValue("type").equals("OrderNDistribution")) {<a name="line.250"></a>
+<span class="sourceLineNo">251</span>            fact = OrderNDistributionFactory.DEFAULT;<a name="line.251"></a>
+<span class="sourceLineNo">252</span>        } else {<a name="line.252"></a>
+<span class="sourceLineNo">253</span>            throw new SAXException("Element must be a distribution");<a name="line.253"></a>
+<span class="sourceLineNo">254</span>        }<a name="line.254"></a>
+<span class="sourceLineNo">255</span>    } //end processDistElement<a name="line.255"></a>
+<span class="sourceLineNo">256</span><a name="line.256"></a>
+<span class="sourceLineNo">257</span>}<a name="line.257"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

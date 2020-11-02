@@ -1,0 +1,522 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.molbio;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.Serializable;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.bio.BioError;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.bio.BioException;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.bio.seq.DNATools;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.bio.symbol.FiniteAlphabet;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.bio.symbol.IllegalAlphabetException;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.bio.symbol.IllegalSymbolException;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojava.bio.symbol.MotifTools;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojava.bio.symbol.Symbol;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojava.bio.symbol.SymbolList;<a name="line.34"></a>
+<span class="sourceLineNo">035</span><a name="line.35"></a>
+<span class="sourceLineNo">036</span>/**<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * &lt;code&gt;RestrictionEnzyme&lt;/code&gt; represents a restriction enzyme<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * according to the REBASE standard. The cut positions are indicated<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * relative to the 5' end of the recognition site and occur downstream<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * of the given residue. Note that some enzymes cut in more than one<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * position and that cut positions may occur outside the recognition<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * site.<a name="line.42"></a>
+<span class="sourceLineNo">043</span> *<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @author Keith James<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author George Waldon<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @since 1.3<a name="line.46"></a>
+<span class="sourceLineNo">047</span> */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>public class RestrictionEnzyme implements Serializable<a name="line.48"></a>
+<span class="sourceLineNo">049</span>{<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    /**<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * &lt;code&gt;CUT_SIMPLE&lt;/code&gt; a cut type where the enzyme cuts in one<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     * position relative to the recognition site. This covers the vast<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     * majority of cases.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>     */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>    public static final int CUT_SIMPLE = 0;<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>    /**<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * &lt;code&gt;CUT_COMPOUND&lt;/code&gt; a cut type where the enzyme cuts in<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     * two positions relative to the recognition site.<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     */<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    public static final int CUT_COMPOUND = 1;<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>    /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     * &lt;code&gt;OVERHANG_5PRIME&lt;/code&gt; the sticky end type created by<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * enzymes which leave a 5' overhang (e.g. a stretch of single-stranded<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * DNA with a free 5' end).<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public static final int OVERHANG_5PRIME = 0;<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>    /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>     * &lt;code&gt;OVERHANG_3PRIME&lt;/code&gt; the sticky end type created by<a name="line.71"></a>
+<span class="sourceLineNo">072</span>     * enzymes which leave a 3' overhang (e.g. a stretch of single-stranded<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     * DNA with a free 3' end).<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     */<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    public static final int OVERHANG_3PRIME = 1;<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>    /**<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * &lt;code&gt;BLUNT&lt;/code&gt; the end type created by enzymes which leave<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * a blunt end.<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     */<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    public static final int BLUNT = 2;<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>    protected String name;<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    protected SymbolList site;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    protected int cutType;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    protected int [] dsCutPositions;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    protected int [] usCutPositions;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    private double size = 0.0;<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>    protected String forwardRegex;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    protected String reverseRegex;<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>    private String summary;<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>    private RestrictionEnzyme prototype;<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>    /**<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * Creates a new &lt;code&gt;RestrictionEnzyme&lt;/code&gt; which cuts within<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     * or downstream of the recognition site. The cut position indices<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * are &lt;strong&gt;always&lt;/strong&gt; in the same coordinate space as the<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * recognition site. &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s are<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     * immutable.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     *<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     * @param name a &lt;code&gt;String&lt;/code&gt; such as EcoRI.<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     * @param site a &lt;code&gt;SymbolList&lt;/code&gt; recognition site.<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * @param dsForward an &lt;code&gt;int&lt;/code&gt; index in the forward<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     * strand (the strand conventionally written<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     * &lt;strong&gt;5'&lt;/strong&gt;-3') of the recognition site at which the<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * cut occurs. The cut occurs between this base and the following<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     * one.<a name="line.110"></a>
+<span class="sourceLineNo">111</span>     * @param dsReverse an &lt;code&gt;int&lt;/code&gt; index in the reverse<a name="line.111"></a>
+<span class="sourceLineNo">112</span>     * strand (the strand conventionally written<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * &lt;strong&gt;3'&lt;/strong&gt;-5') of the recognition site at which the<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     * cut occurs. The cut occurs between this base and the following<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     * one.<a name="line.115"></a>
+<span class="sourceLineNo">116</span>     *<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     * @exception IllegalAlphabetException if an error occurs.<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     */<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    public RestrictionEnzyme(String name, SymbolList site,<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                             int dsForward, int dsReverse)<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        throws IllegalAlphabetException<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>        this(name, site,<a name="line.123"></a>
+<span class="sourceLineNo">124</span>             null,<a name="line.124"></a>
+<span class="sourceLineNo">125</span>             new int [] { dsForward, dsReverse });<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        cutType = CUT_SIMPLE;<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    }<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>    /**<a name="line.129"></a>
+<span class="sourceLineNo">130</span>     * Creates a new &lt;code&gt;RestrictionEnzyme&lt;/code&gt; of the unusual<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     * type which cuts both upstream and downstream of its recognition<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     * site. The cut position indices are &lt;strong&gt;always&lt;/strong&gt; in<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     * the same coordinate space as the recognition site.<a name="line.133"></a>
+<span class="sourceLineNo">134</span>     *<a name="line.134"></a>
+<span class="sourceLineNo">135</span>     * @param name a &lt;code&gt;String&lt;/code&gt; such as Bsp24I.<a name="line.135"></a>
+<span class="sourceLineNo">136</span>     * @param site a &lt;code&gt;SymbolList&lt;/code&gt; recognition site.<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * @param usForward an &lt;code&gt;int&lt;/code&gt; index in the forward<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * strand (the strand conventionally written<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     * &lt;strong&gt;5'&lt;/strong&gt;-3' upstream of the recognition site at<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     * which the cut occurs. The cut occurs between this base and the<a name="line.140"></a>
+<span class="sourceLineNo">141</span>     * following one.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>     * @param usReverse an &lt;code&gt;int&lt;/code&gt; index in the reverse<a name="line.142"></a>
+<span class="sourceLineNo">143</span>     * strand (the strand conventionally written<a name="line.143"></a>
+<span class="sourceLineNo">144</span>     * &lt;strong&gt;3'&lt;/strong&gt;-5) upstream of the recognition site at<a name="line.144"></a>
+<span class="sourceLineNo">145</span>     * which the cut occurs. The cut occurs between this base and the<a name="line.145"></a>
+<span class="sourceLineNo">146</span>     * following one.<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * @param dsForward an &lt;code&gt;int&lt;/code&gt; index in the forward<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     * strand (the strand conventionally written<a name="line.148"></a>
+<span class="sourceLineNo">149</span>     * &lt;strong&gt;5'&lt;/strong&gt;-3') downstream of the recognition site at<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     * which the cut occurs. The cut occurs between this base and the<a name="line.150"></a>
+<span class="sourceLineNo">151</span>     * following one.<a name="line.151"></a>
+<span class="sourceLineNo">152</span>     * @param dsReverse an &lt;code&gt;int&lt;/code&gt; index in the reverse<a name="line.152"></a>
+<span class="sourceLineNo">153</span>     * strand (the strand conventionally written<a name="line.153"></a>
+<span class="sourceLineNo">154</span>     * &lt;strong&gt;3'&lt;/strong&gt;-5') downstream of the recognition site at<a name="line.154"></a>
+<span class="sourceLineNo">155</span>     * which the cut occurs. The cut occurs between this base and the<a name="line.155"></a>
+<span class="sourceLineNo">156</span>     * following one.<a name="line.156"></a>
+<span class="sourceLineNo">157</span>     *<a name="line.157"></a>
+<span class="sourceLineNo">158</span>     * @exception IllegalAlphabetException if an error occurs.<a name="line.158"></a>
+<span class="sourceLineNo">159</span>     */<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    public RestrictionEnzyme(String name, SymbolList site,<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                             int usForward, int usReverse,<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                             int dsForward, int dsReverse)<a name="line.162"></a>
+<span class="sourceLineNo">163</span>        throws IllegalAlphabetException<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        this(name, site,<a name="line.165"></a>
+<span class="sourceLineNo">166</span>             new int [] { usForward, usReverse },<a name="line.166"></a>
+<span class="sourceLineNo">167</span>             new int [] { dsForward, dsReverse });<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        cutType = CUT_COMPOUND;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    }<a name="line.169"></a>
+<span class="sourceLineNo">170</span><a name="line.170"></a>
+<span class="sourceLineNo">171</span>    /**<a name="line.171"></a>
+<span class="sourceLineNo">172</span>     * Creates a new &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.<a name="line.172"></a>
+<span class="sourceLineNo">173</span>     *<a name="line.173"></a>
+<span class="sourceLineNo">174</span>     * @param name a &lt;code&gt;String&lt;/code&gt; name.<a name="line.174"></a>
+<span class="sourceLineNo">175</span>     * @param site a &lt;code&gt;SymbolList&lt;/code&gt; site.<a name="line.175"></a>
+<span class="sourceLineNo">176</span>     * @param usCutPositions an &lt;code&gt;int []&lt;/code&gt; array of optional<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     * upstream indices.<a name="line.177"></a>
+<span class="sourceLineNo">178</span>     * @param dsCutPositions an &lt;code&gt;int []&lt;/code&gt; array of<a name="line.178"></a>
+<span class="sourceLineNo">179</span>     * downstream indices.<a name="line.179"></a>
+<span class="sourceLineNo">180</span>     *<a name="line.180"></a>
+<span class="sourceLineNo">181</span>     * @exception IllegalAlphabetException if an error occurs.<a name="line.181"></a>
+<span class="sourceLineNo">182</span>     */<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    private RestrictionEnzyme(String name, SymbolList site,<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                              int [] usCutPositions,<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                              int [] dsCutPositions)<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        throws IllegalAlphabetException<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        if (site.getAlphabet() != DNATools.getDNA())<a name="line.188"></a>
+<span class="sourceLineNo">189</span>            throw new IllegalAlphabetException("RestrictionEnzyme site can only be a DNA SymbolList."<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                                               + " A SymbolList using the "<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                                               + site.getAlphabet().getName()<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                                               + " was supplied" );<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        this.name = name;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        this.site = site;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>        this.usCutPositions = usCutPositions;<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        this.dsCutPositions = dsCutPositions;<a name="line.196"></a>
+<span class="sourceLineNo">197</span><a name="line.197"></a>
+<span class="sourceLineNo">198</span>        forwardRegex = MotifTools.createRegex(site);<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>        try<a name="line.200"></a>
+<span class="sourceLineNo">201</span>        {<a name="line.201"></a>
+<span class="sourceLineNo">202</span>            reverseRegex =<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                MotifTools.createRegex(DNATools.reverseComplement(site));<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        }<a name="line.204"></a>
+<span class="sourceLineNo">205</span>        catch (IllegalAlphabetException iae)<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>            throw new BioError("RestrictionEnzyme site was not composed of a complementable Alphabet", iae);<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        }<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>        StringBuffer sb = new StringBuffer();<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        sb.append(name);<a name="line.211"></a>
+<span class="sourceLineNo">212</span>        sb.append(" ");<a name="line.212"></a>
+<span class="sourceLineNo">213</span><a name="line.213"></a>
+<span class="sourceLineNo">214</span>        if (usCutPositions != null)<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>            sb.append("(");<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            sb.append(usCutPositions[0]);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>            sb.append("/");<a name="line.218"></a>
+<span class="sourceLineNo">219</span>            sb.append(usCutPositions[1]);<a name="line.219"></a>
+<span class="sourceLineNo">220</span>            sb.append(") ");<a name="line.220"></a>
+<span class="sourceLineNo">221</span>        }<a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222"></a>
+<span class="sourceLineNo">223</span>        try<a name="line.223"></a>
+<span class="sourceLineNo">224</span>        {<a name="line.224"></a>
+<span class="sourceLineNo">225</span>            for (int i = 1; i &lt;= site.length(); i++)<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                sb.append(Character.toUpperCase(DNATools.dnaToken(site.symbolAt(i))));<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        }<a name="line.227"></a>
+<span class="sourceLineNo">228</span>        catch (IllegalSymbolException ise)<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        {<a name="line.229"></a>
+<span class="sourceLineNo">230</span>            throw new BioError("RestrictionEnzyme site contained non-DNA Symbol", ise);<a name="line.230"></a>
+<span class="sourceLineNo">231</span>        }<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>        sb.append(" (");<a name="line.233"></a>
+<span class="sourceLineNo">234</span>        sb.append(dsCutPositions[0]);<a name="line.234"></a>
+<span class="sourceLineNo">235</span>        sb.append("/");<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        sb.append(dsCutPositions[1]);<a name="line.236"></a>
+<span class="sourceLineNo">237</span>        sb.append(")");<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>        summary = sb.substring(0);<a name="line.239"></a>
+<span class="sourceLineNo">240</span>    }<a name="line.240"></a>
+<span class="sourceLineNo">241</span><a name="line.241"></a>
+<span class="sourceLineNo">242</span>    /**<a name="line.242"></a>
+<span class="sourceLineNo">243</span>     * &lt;code&gt;getName&lt;/code&gt; returns the enzyme name.<a name="line.243"></a>
+<span class="sourceLineNo">244</span>     *<a name="line.244"></a>
+<span class="sourceLineNo">245</span>     * @return a &lt;code&gt;String&lt;/code&gt;.<a name="line.245"></a>
+<span class="sourceLineNo">246</span>     */<a name="line.246"></a>
+<span class="sourceLineNo">247</span>    public String getName()<a name="line.247"></a>
+<span class="sourceLineNo">248</span>    {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>        return name;<a name="line.249"></a>
+<span class="sourceLineNo">250</span>    }<a name="line.250"></a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span>    /**<a name="line.252"></a>
+<span class="sourceLineNo">253</span>     * &lt;code&gt;getRecognitionSite&lt;/code&gt; returns the forward strand of<a name="line.253"></a>
+<span class="sourceLineNo">254</span>     * the recognition site.<a name="line.254"></a>
+<span class="sourceLineNo">255</span>     *<a name="line.255"></a>
+<span class="sourceLineNo">256</span>     * @return a &lt;code&gt;SymbolList&lt;/code&gt;.<a name="line.256"></a>
+<span class="sourceLineNo">257</span>     */<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    public SymbolList getRecognitionSite()<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        return site;<a name="line.260"></a>
+<span class="sourceLineNo">261</span>    }<a name="line.261"></a>
+<span class="sourceLineNo">262</span><a name="line.262"></a>
+<span class="sourceLineNo">263</span>    /**<a name="line.263"></a>
+<span class="sourceLineNo">264</span>     * &lt;code&gt;getForwardRegex&lt;/code&gt; returns a regular expression which<a name="line.264"></a>
+<span class="sourceLineNo">265</span>     * matches the forward strand of the recognition site.<a name="line.265"></a>
+<span class="sourceLineNo">266</span>     *<a name="line.266"></a>
+<span class="sourceLineNo">267</span>     * @return a &lt;code&gt;String&lt;/code&gt;.<a name="line.267"></a>
+<span class="sourceLineNo">268</span>     */<a name="line.268"></a>
+<span class="sourceLineNo">269</span>    public String getForwardRegex()<a name="line.269"></a>
+<span class="sourceLineNo">270</span>    {<a name="line.270"></a>
+<span class="sourceLineNo">271</span>        return forwardRegex;<a name="line.271"></a>
+<span class="sourceLineNo">272</span>    }<a name="line.272"></a>
+<span class="sourceLineNo">273</span><a name="line.273"></a>
+<span class="sourceLineNo">274</span>    /**<a name="line.274"></a>
+<span class="sourceLineNo">275</span>     * &lt;code&gt;getReverseRegex&lt;/code&gt; returns a regular expression which<a name="line.275"></a>
+<span class="sourceLineNo">276</span>     * matches the reverse strand of the recognition site.<a name="line.276"></a>
+<span class="sourceLineNo">277</span>     *<a name="line.277"></a>
+<span class="sourceLineNo">278</span>     * @return a &lt;code&gt;String&lt;/code&gt;.<a name="line.278"></a>
+<span class="sourceLineNo">279</span>     */<a name="line.279"></a>
+<span class="sourceLineNo">280</span>    public String getReverseRegex()<a name="line.280"></a>
+<span class="sourceLineNo">281</span>    {<a name="line.281"></a>
+<span class="sourceLineNo">282</span>        return reverseRegex;<a name="line.282"></a>
+<span class="sourceLineNo">283</span>    }<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>    /**<a name="line.285"></a>
+<span class="sourceLineNo">286</span>     * &lt;code&gt;isPalindromic&lt;/code&gt; returns true if the recognition site<a name="line.286"></a>
+<span class="sourceLineNo">287</span>     * is palindromic.<a name="line.287"></a>
+<span class="sourceLineNo">288</span>     *<a name="line.288"></a>
+<span class="sourceLineNo">289</span>     * @return a &lt;code&gt;boolean&lt;/code&gt;.<a name="line.289"></a>
+<span class="sourceLineNo">290</span>     */<a name="line.290"></a>
+<span class="sourceLineNo">291</span>    public boolean isPalindromic()<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    {<a name="line.292"></a>
+<span class="sourceLineNo">293</span>        return forwardRegex.equals(reverseRegex);<a name="line.293"></a>
+<span class="sourceLineNo">294</span>    }<a name="line.294"></a>
+<span class="sourceLineNo">295</span><a name="line.295"></a>
+<span class="sourceLineNo">296</span>    /**<a name="line.296"></a>
+<span class="sourceLineNo">297</span>     * &lt;code&gt;getCutType&lt;/code&gt; returns the type of cut produced by the<a name="line.297"></a>
+<span class="sourceLineNo">298</span>     * enzyme. This will be one of either RestrictionEnzyme.CUT_SIMPLE<a name="line.298"></a>
+<span class="sourceLineNo">299</span>     * (where it cuts in one position relative to the recognition site<a name="line.299"></a>
+<span class="sourceLineNo">300</span>     * i.e. the vast majority of cases) or<a name="line.300"></a>
+<span class="sourceLineNo">301</span>     * RestrictionEnzyme.CUT_COMPOUND (where it cuts in two positions).<a name="line.301"></a>
+<span class="sourceLineNo">302</span>     *<a name="line.302"></a>
+<span class="sourceLineNo">303</span>     * @return an &lt;code&gt;int&lt;/code&gt;.<a name="line.303"></a>
+<span class="sourceLineNo">304</span>     */<a name="line.304"></a>
+<span class="sourceLineNo">305</span>    public int getCutType()<a name="line.305"></a>
+<span class="sourceLineNo">306</span>    {<a name="line.306"></a>
+<span class="sourceLineNo">307</span>        return cutType;<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    }<a name="line.308"></a>
+<span class="sourceLineNo">309</span><a name="line.309"></a>
+<span class="sourceLineNo">310</span>    /**<a name="line.310"></a>
+<span class="sourceLineNo">311</span>     * &lt;code&gt;getDownstreamCut&lt;/code&gt; returns the cut site within or<a name="line.311"></a>
+<span class="sourceLineNo">312</span>     * downstream of the recognition site.<a name="line.312"></a>
+<span class="sourceLineNo">313</span>     *<a name="line.313"></a>
+<span class="sourceLineNo">314</span>     * @return an &lt;code&gt;int []&lt;/code&gt; array with the position in the<a name="line.314"></a>
+<span class="sourceLineNo">315</span>     * 5'-strand at index 0 and the 3'-strand at index 1.<a name="line.315"></a>
+<span class="sourceLineNo">316</span>     */<a name="line.316"></a>
+<span class="sourceLineNo">317</span>    public int [] getDownstreamCut()<a name="line.317"></a>
+<span class="sourceLineNo">318</span>    {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        return dsCutPositions;<a name="line.319"></a>
+<span class="sourceLineNo">320</span>    }<a name="line.320"></a>
+<span class="sourceLineNo">321</span><a name="line.321"></a>
+<span class="sourceLineNo">322</span>    /**<a name="line.322"></a>
+<span class="sourceLineNo">323</span>     * &lt;code&gt;getUpstreamCut&lt;/code&gt; returns the cut site upstream of<a name="line.323"></a>
+<span class="sourceLineNo">324</span>     * the recognition site.<a name="line.324"></a>
+<span class="sourceLineNo">325</span>     *<a name="line.325"></a>
+<span class="sourceLineNo">326</span>     * @return an &lt;code&gt;int []&lt;/code&gt; array with the position in the<a name="line.326"></a>
+<span class="sourceLineNo">327</span>     * 5'-strand at index 0 and the 3'-strand at index 1. For example,<a name="line.327"></a>
+<span class="sourceLineNo">328</span>     * Bsp24I will return -8 and -13:<a name="line.328"></a>
+<span class="sourceLineNo">329</span>     *<a name="line.329"></a>
+<span class="sourceLineNo">330</span>     *          5'      ^NNNNNNNNGACNNNNNNTGGNNNNNNNNNNNN^   3'<a name="line.330"></a>
+<span class="sourceLineNo">331</span>     *          3' ^NNNNNNNNNNNNNCTGNNNNNNACCNNNNNNN^        5'<a name="line.331"></a>
+<span class="sourceLineNo">332</span>     *<a name="line.332"></a>
+<span class="sourceLineNo">333</span>     * @exception BioException if the enzyme does not cleave on both<a name="line.333"></a>
+<span class="sourceLineNo">334</span>     * sides of its recognition site.<a name="line.334"></a>
+<span class="sourceLineNo">335</span>     */<a name="line.335"></a>
+<span class="sourceLineNo">336</span>    public int [] getUpstreamCut() throws BioException<a name="line.336"></a>
+<span class="sourceLineNo">337</span>    {<a name="line.337"></a>
+<span class="sourceLineNo">338</span>        if (cutType == CUT_SIMPLE)<a name="line.338"></a>
+<span class="sourceLineNo">339</span>            throw new BioException(name + " does not cut upstream of the recognition site");<a name="line.339"></a>
+<span class="sourceLineNo">340</span><a name="line.340"></a>
+<span class="sourceLineNo">341</span>        return usCutPositions;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>    }<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span>    /**<a name="line.344"></a>
+<span class="sourceLineNo">345</span>     * &lt;code&gt;getDownstreamEndType&lt;/code&gt; returns the double-stranded<a name="line.345"></a>
+<span class="sourceLineNo">346</span>     * end type produced by the primary (intra-site or downstream)<a name="line.346"></a>
+<span class="sourceLineNo">347</span>     * cut.<a name="line.347"></a>
+<span class="sourceLineNo">348</span>     *<a name="line.348"></a>
+<span class="sourceLineNo">349</span>     * @return an &lt;code&gt;int&lt;/code&gt; equal to one of the constant fields<a name="line.349"></a>
+<span class="sourceLineNo">350</span>     * OVERHANG_5PRIME, OVERHANG_3PRIME or BLUNT.<a name="line.350"></a>
+<span class="sourceLineNo">351</span>     */<a name="line.351"></a>
+<span class="sourceLineNo">352</span>    public int getDownstreamEndType()<a name="line.352"></a>
+<span class="sourceLineNo">353</span>    {<a name="line.353"></a>
+<span class="sourceLineNo">354</span>        if (dsCutPositions[0] &gt; dsCutPositions[1])<a name="line.354"></a>
+<span class="sourceLineNo">355</span>            return OVERHANG_3PRIME;<a name="line.355"></a>
+<span class="sourceLineNo">356</span>        else if (dsCutPositions[0] &lt; dsCutPositions[1])<a name="line.356"></a>
+<span class="sourceLineNo">357</span>            return OVERHANG_5PRIME;<a name="line.357"></a>
+<span class="sourceLineNo">358</span>        else<a name="line.358"></a>
+<span class="sourceLineNo">359</span>            return BLUNT;<a name="line.359"></a>
+<span class="sourceLineNo">360</span>    }<a name="line.360"></a>
+<span class="sourceLineNo">361</span><a name="line.361"></a>
+<span class="sourceLineNo">362</span>    /**<a name="line.362"></a>
+<span class="sourceLineNo">363</span>     * &lt;code&gt;getUpstreamEndType&lt;/code&gt; returns the double-stranded end<a name="line.363"></a>
+<span class="sourceLineNo">364</span>     * type produced by the secondary (upstream) cut.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>     *<a name="line.365"></a>
+<span class="sourceLineNo">366</span>     * @return an &lt;code&gt;int&lt;/code&gt; equal to one of the constant fields<a name="line.366"></a>
+<span class="sourceLineNo">367</span>     * OVERHANG_5PRIME, OVERHANG_3PRIME or BLUNT.<a name="line.367"></a>
+<span class="sourceLineNo">368</span>     *<a name="line.368"></a>
+<span class="sourceLineNo">369</span>     * @exception BioException if the enzyme does not cleave on both<a name="line.369"></a>
+<span class="sourceLineNo">370</span>     * sides of its recognition site.<a name="line.370"></a>
+<span class="sourceLineNo">371</span>     */<a name="line.371"></a>
+<span class="sourceLineNo">372</span>    public int getUpstreamEndType() throws BioException<a name="line.372"></a>
+<span class="sourceLineNo">373</span>    {<a name="line.373"></a>
+<span class="sourceLineNo">374</span>        if (cutType == CUT_SIMPLE)<a name="line.374"></a>
+<span class="sourceLineNo">375</span>            throw new BioException(name + " does not cut upstream of the recognition site");<a name="line.375"></a>
+<span class="sourceLineNo">376</span><a name="line.376"></a>
+<span class="sourceLineNo">377</span>        if (usCutPositions[0] &gt; usCutPositions[1])<a name="line.377"></a>
+<span class="sourceLineNo">378</span>            return OVERHANG_3PRIME;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>        else if (usCutPositions[0] &lt; usCutPositions[1])<a name="line.379"></a>
+<span class="sourceLineNo">380</span>            return OVERHANG_5PRIME;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>        else<a name="line.381"></a>
+<span class="sourceLineNo">382</span>            return BLUNT;<a name="line.382"></a>
+<span class="sourceLineNo">383</span>    }<a name="line.383"></a>
+<span class="sourceLineNo">384</span><a name="line.384"></a>
+<span class="sourceLineNo">385</span>    /** Set the prototype of this &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.<a name="line.385"></a>
+<span class="sourceLineNo">386</span>     *<a name="line.386"></a>
+<span class="sourceLineNo">387</span>     * @param proto an isoschizomer of this enzyme.<a name="line.387"></a>
+<span class="sourceLineNo">388</span>     */<a name="line.388"></a>
+<span class="sourceLineNo">389</span>    public void setProtype(RestrictionEnzyme proto) {<a name="line.389"></a>
+<span class="sourceLineNo">390</span>        prototype = proto;<a name="line.390"></a>
+<span class="sourceLineNo">391</span>    }<a name="line.391"></a>
+<span class="sourceLineNo">392</span><a name="line.392"></a>
+<span class="sourceLineNo">393</span>    /** The prototype is a &lt;code&gt;RestrictionEnzyme&lt;/code&gt; that represents a set<a name="line.393"></a>
+<span class="sourceLineNo">394</span>     * of isoshizomers. The choice of the representative/prototype is arbitrary;<a name="line.394"></a>
+<span class="sourceLineNo">395</span>     * there is one and only one prototype per set of<a name="line.395"></a>
+<span class="sourceLineNo">396</span>     * isoschizomers.<a name="line.396"></a>
+<span class="sourceLineNo">397</span>     *<a name="line.397"></a>
+<span class="sourceLineNo">398</span>     * @return A representative isoschisomer or null if prototypes are not defined.<a name="line.398"></a>
+<span class="sourceLineNo">399</span>     */<a name="line.399"></a>
+<span class="sourceLineNo">400</span>    public RestrictionEnzyme getPrototype() {<a name="line.400"></a>
+<span class="sourceLineNo">401</span>        return prototype;<a name="line.401"></a>
+<span class="sourceLineNo">402</span>    }<a name="line.402"></a>
+<span class="sourceLineNo">403</span><a name="line.403"></a>
+<span class="sourceLineNo">404</span>    public boolean isPrototype() {<a name="line.404"></a>
+<span class="sourceLineNo">405</span>        if(prototype==null)<a name="line.405"></a>
+<span class="sourceLineNo">406</span>            return false;<a name="line.406"></a>
+<span class="sourceLineNo">407</span>        return this==prototype;<a name="line.407"></a>
+<span class="sourceLineNo">408</span>    }<a name="line.408"></a>
+<span class="sourceLineNo">409</span><a name="line.409"></a>
+<span class="sourceLineNo">410</span>    /** The cutting size of a restriction enzyme is defined has the number<a name="line.410"></a>
+<span class="sourceLineNo">411</span>     * of nucleotides that are directly involved in the recognition sequence.<a name="line.411"></a>
+<span class="sourceLineNo">412</span>     * The size is ponderated as follow: 1 for a single nucleotide, 1/2<a name="line.412"></a>
+<span class="sourceLineNo">413</span>     * for a degeneracy of 2, 1/4 for a degeneracy of 3, and 0 for any N nucleotides.<a name="line.413"></a>
+<span class="sourceLineNo">414</span>     */<a name="line.414"></a>
+<span class="sourceLineNo">415</span>    public synchronized double getCuttingSize() {<a name="line.415"></a>
+<span class="sourceLineNo">416</span>        if(size == 0) {<a name="line.416"></a>
+<span class="sourceLineNo">417</span>            SymbolList symbols = getRecognitionSite();<a name="line.417"></a>
+<span class="sourceLineNo">418</span>            double tempsize = 0;<a name="line.418"></a>
+<span class="sourceLineNo">419</span>            for (int i = 1; i &lt;= symbols.length(); i++) {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>                Symbol s = symbols.symbolAt(i);<a name="line.420"></a>
+<span class="sourceLineNo">421</span>                FiniteAlphabet a = (FiniteAlphabet) s.getMatches();<a name="line.421"></a>
+<span class="sourceLineNo">422</span>                int cs = a.size();<a name="line.422"></a>
+<span class="sourceLineNo">423</span>                if(cs==1)<a name="line.423"></a>
+<span class="sourceLineNo">424</span>                    tempsize++;<a name="line.424"></a>
+<span class="sourceLineNo">425</span>                else if(cs==2)<a name="line.425"></a>
+<span class="sourceLineNo">426</span>                    tempsize += 0.5;<a name="line.426"></a>
+<span class="sourceLineNo">427</span>                else if(cs==3)<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                    tempsize += 0.25;<a name="line.428"></a>
+<span class="sourceLineNo">429</span>            }<a name="line.429"></a>
+<span class="sourceLineNo">430</span>            size = tempsize;<a name="line.430"></a>
+<span class="sourceLineNo">431</span>        }<a name="line.431"></a>
+<span class="sourceLineNo">432</span>      return size;<a name="line.432"></a>
+<span class="sourceLineNo">433</span>    }<a name="line.433"></a>
+<span class="sourceLineNo">434</span><a name="line.434"></a>
+<span class="sourceLineNo">435</span>    public int hashCode()<a name="line.435"></a>
+<span class="sourceLineNo">436</span>    {<a name="line.436"></a>
+<span class="sourceLineNo">437</span>        return name.hashCode() ^ forwardRegex.hashCode();<a name="line.437"></a>
+<span class="sourceLineNo">438</span>    }<a name="line.438"></a>
+<span class="sourceLineNo">439</span><a name="line.439"></a>
+<span class="sourceLineNo">440</span>    public boolean equals(Object o)<a name="line.440"></a>
+<span class="sourceLineNo">441</span>    {<a name="line.441"></a>
+<span class="sourceLineNo">442</span>        return (o instanceof RestrictionEnzyme)<a name="line.442"></a>
+<span class="sourceLineNo">443</span>            &amp;&amp; name.equals(((RestrictionEnzyme) o).getName());<a name="line.443"></a>
+<span class="sourceLineNo">444</span>    }<a name="line.444"></a>
+<span class="sourceLineNo">445</span><a name="line.445"></a>
+<span class="sourceLineNo">446</span>    public String toString()<a name="line.446"></a>
+<span class="sourceLineNo">447</span>    {<a name="line.447"></a>
+<span class="sourceLineNo">448</span>        return summary;<a name="line.448"></a>
+<span class="sourceLineNo">449</span>    }<a name="line.449"></a>
+<span class="sourceLineNo">450</span>}<a name="line.450"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
