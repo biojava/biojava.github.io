@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojavax.bio.db.biosql;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.lang.reflect.Method;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.biojava.bio.symbol.Alphabet;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.biojava.bio.symbol.FiniteAlphabet;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.biojava.bio.symbol.SymbolList;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojavax.CrossRef;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojavax.CrossReferenceResolver;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojavax.Namespace;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojavax.RichObjectFactory;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.biojavax.SimpleNamespace;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.biojavax.bio.BioEntry;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.biojavax.bio.seq.InfinitelyAmbiguousSymbolList;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.biojavax.bio.seq.RichSequence;<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>/**<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * A simple implementation of CrossReferenceResolver<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @author Richard Holland<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @author Mark Schreiber<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @author David Scott<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @since 1.5<a name="line.42"></a>
+<span class="sourceLineNo">043</span> */<a name="line.43"></a>
+<span class="sourceLineNo">044</span>public class BioSQLCrossReferenceResolver implements CrossReferenceResolver {<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    <a name="line.45"></a>
+<span class="sourceLineNo">046</span>    private Object session;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    private Method createQuery;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    private Method setParameter;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>    private Method uniqueResult;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    <a name="line.50"></a>
+<span class="sourceLineNo">051</span>    /**<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     * Requires a Hibernate session to work correctly. The session parameter<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     * is a Hibernate Session object and must not be null. It is this session<a name="line.53"></a>
+<span class="sourceLineNo">054</span>     * that database objects will be retrieved from/persisted to.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>     * @see &lt;a href="http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Session.html"&gt; org.hibernate.Session&lt;/a&gt;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    public BioSQLCrossReferenceResolver(Object session) {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        try {<a name="line.58"></a>
+<span class="sourceLineNo">059</span>            // Lazy load the Session class from Hibernate.<a name="line.59"></a>
+<span class="sourceLineNo">060</span>            Class hibernateSession = session.getClass();<a name="line.60"></a>
+<span class="sourceLineNo">061</span>            Class realHibernateSession = Class.forName("org.hibernate.Session");<a name="line.61"></a>
+<span class="sourceLineNo">062</span>            // Test to see if our parameter is really a Session<a name="line.62"></a>
+<span class="sourceLineNo">063</span>            if (!realHibernateSession.isAssignableFrom(hibernateSession))<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                throw new IllegalArgumentException("Parameter must be a org.hibernate.Session object");<a name="line.64"></a>
+<span class="sourceLineNo">065</span>            this.session = session;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>            // Lookup the createQuery method<a name="line.66"></a>
+<span class="sourceLineNo">067</span>            this.createQuery = hibernateSession.getMethod("createQuery", new Class[]{String.class});<a name="line.67"></a>
+<span class="sourceLineNo">068</span>            // Lazy load the Query class from Hibernate.<a name="line.68"></a>
+<span class="sourceLineNo">069</span>            Class hibernateQuery = Class.forName("org.hibernate.Query");<a name="line.69"></a>
+<span class="sourceLineNo">070</span>            // Lookup the setParameter and uniqueQuery methods<a name="line.70"></a>
+<span class="sourceLineNo">071</span>            this.setParameter = hibernateQuery.getMethod("setParameter", new Class[]{int.class,Object.class});<a name="line.71"></a>
+<span class="sourceLineNo">072</span>            this.uniqueResult = hibernateQuery.getMethod("uniqueResult", new Class[]{});<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        } catch (ClassNotFoundException e) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>            throw new RuntimeException(e);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        } catch (NoSuchMethodException e) {<a name="line.75"></a>
+<span class="sourceLineNo">076</span>            throw new RuntimeException(e);<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        }<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    }<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    <a name="line.79"></a>
+<span class="sourceLineNo">080</span>    /**<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     * {@inheritDoc}<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     */<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    public SymbolList getRemoteSymbolList(CrossRef cr, Alphabet a) {<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        BioEntry be = this.getRemoteBioEntry(cr);<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        if (be instanceof RichSequence) return (RichSequence)be;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        // If we get here we didn't find it, so we must create a dummy sequence instead<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        if (!(a instanceof FiniteAlphabet)) throw new IllegalArgumentException("Cannot construct dummy symbol list for a non-finite alphabet");<a name="line.87"></a>
+<span class="sourceLineNo">088</span>        return new InfinitelyAmbiguousSymbolList((FiniteAlphabet)a);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    }<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    <a name="line.90"></a>
+<span class="sourceLineNo">091</span>    /**<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     * {@inheritDoc}<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     */<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    public BioEntry getRemoteBioEntry(CrossRef cr){<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        Namespace ns = (Namespace)RichObjectFactory.getObject(SimpleNamespace.class, new Object[]{cr.getDbname()});<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        try {<a name="line.96"></a>
+<span class="sourceLineNo">097</span>            // Build the query object<a name="line.97"></a>
+<span class="sourceLineNo">098</span>            String queryText = "from BioEntry where namespace = ? and accession = ? and version = ?";<a name="line.98"></a>
+<span class="sourceLineNo">099</span>            Object query = this.createQuery.invoke(this.session, new Object[]{queryText});<a name="line.99"></a>
+<span class="sourceLineNo">100</span>            // Set the parameters<a name="line.100"></a>
+<span class="sourceLineNo">101</span>            query = this.setParameter.invoke(query, new Object[]{new Integer(0), ns}); <a name="line.101"></a>
+<span class="sourceLineNo">102</span>            query = this.setParameter.invoke(query, new Object[]{new Integer(1), cr.getAccession()}); <a name="line.102"></a>
+<span class="sourceLineNo">103</span>            query = this.setParameter.invoke(query, new Object[]{new Integer(2), new Integer(cr.getVersion())}); <a name="line.103"></a>
+<span class="sourceLineNo">104</span>            // Get the results<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            Object result = this.uniqueResult.invoke(query, (Object[])null);<a name="line.105"></a>
+<span class="sourceLineNo">106</span>            // Return the found object, if found - null if not.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            return (BioEntry)result;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        } catch (Exception e) {<a name="line.108"></a>
+<span class="sourceLineNo">109</span>            // Throw the exception with our nice message<a name="line.109"></a>
+<span class="sourceLineNo">110</span>            throw new RuntimeException("Error while trying to locate remote cross reference "+cr,e);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        }<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    }<a name="line.112"></a>
+<span class="sourceLineNo">113</span>}<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

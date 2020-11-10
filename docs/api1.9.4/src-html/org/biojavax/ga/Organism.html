@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * BioJava development code This code may be freely distributed and modified<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * under the terms of the GNU Lesser General Public Licence. This should be<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with the code. If you do not have a copy, see:<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * http://www.gnu.org/copyleft/lesser.html Copyright for this code is held<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * jointly by the individual authors. These should be listed in @author doc<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * comments. For more information on the BioJava project and its aims, or to<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * join the biojava-l mailing list, visit the home page at:<a name="line.8"></a>
+<span class="sourceLineNo">009</span> * http://www.biojava.org/<a name="line.9"></a>
+<span class="sourceLineNo">010</span> */<a name="line.10"></a>
+<span class="sourceLineNo">011</span><a name="line.11"></a>
+<span class="sourceLineNo">012</span>package org.biojavax.ga;<a name="line.12"></a>
+<span class="sourceLineNo">013</span><a name="line.13"></a>
+<span class="sourceLineNo">014</span>import org.biojava.bio.symbol.SymbolList;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import org.biojava.utils.ChangeType;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import org.biojava.utils.ChangeVetoException;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>import org.biojava.utils.Changeable;<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>/**<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * A GA 'organism' contains one or more Chromosomes<a name="line.20"></a>
+<span class="sourceLineNo">021</span> *<a name="line.21"></a>
+<span class="sourceLineNo">022</span> * @author Mark Schreiber<a name="line.22"></a>
+<span class="sourceLineNo">023</span> * @author Susanne Merz<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * @author Andreas Dr&amp;auml;ger<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * @version 1.0<a name="line.25"></a>
+<span class="sourceLineNo">026</span> * @since 1.5<a name="line.26"></a>
+<span class="sourceLineNo">027</span> */<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>public interface Organism extends Changeable {<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>        /**<a name="line.31"></a>
+<span class="sourceLineNo">032</span>         * This method allows to set the fitness of this organism to the specified<a name="line.32"></a>
+<span class="sourceLineNo">033</span>         * value. Generally this will be an array, which in the most cases contains<a name="line.33"></a>
+<span class="sourceLineNo">034</span>         * just a single entry. In cases where we want to have multi-objective<a name="line.34"></a>
+<span class="sourceLineNo">035</span>         * optimization we may want to make use of a more general fitness array with<a name="line.35"></a>
+<span class="sourceLineNo">036</span>         * mutliple entries.<a name="line.36"></a>
+<span class="sourceLineNo">037</span>         *<a name="line.37"></a>
+<span class="sourceLineNo">038</span>         * @param fitness<a name="line.38"></a>
+<span class="sourceLineNo">039</span>         */<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        public void setFitness(double[] fitness);<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>        /**<a name="line.42"></a>
+<span class="sourceLineNo">043</span>         * Returns the current fitness of this organism. This is an array. Note that<a name="line.43"></a>
+<span class="sourceLineNo">044</span>         * in the most cases this array may only contain one single value, but for<a name="line.44"></a>
+<span class="sourceLineNo">045</span>         * multi-objective optimization it is necessary to store multiple fitness<a name="line.45"></a>
+<span class="sourceLineNo">046</span>         * values.<a name="line.46"></a>
+<span class="sourceLineNo">047</span>         *<a name="line.47"></a>
+<span class="sourceLineNo">048</span>         * @return the fitness of the organism<a name="line.48"></a>
+<span class="sourceLineNo">049</span>         */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        public double[] getFitness();<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>        /**<a name="line.52"></a>
+<span class="sourceLineNo">053</span>         * Gets the organisms 'chromosome' sequences<a name="line.53"></a>
+<span class="sourceLineNo">054</span>         *<a name="line.54"></a>
+<span class="sourceLineNo">055</span>         * @return a &lt;code&gt;SymbolList[]&lt;/code&gt;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>         */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        public SymbolList[] getChromosomes();<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>        /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>         * Sets the organisms 'chromosome' sequences.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>         *<a name="line.61"></a>
+<span class="sourceLineNo">062</span>         * @param chromosomes<a name="line.62"></a>
+<span class="sourceLineNo">063</span>         *          a &lt;code&gt;SymbolList[]&lt;/code&gt;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * @throws ChangeVetoException<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         *           if the Chromosome collection of the Organism is unchangable<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        public void setChromosomes(SymbolList[] chromosomes)<a name="line.67"></a>
+<span class="sourceLineNo">068</span>            throws ChangeVetoException;<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>        /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * Gets the organisms name<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         *<a name="line.72"></a>
+<span class="sourceLineNo">073</span>         * @return the name String<a name="line.73"></a>
+<span class="sourceLineNo">074</span>         */<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        public String getName();<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>        /**<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         * Sets the organisms name<a name="line.78"></a>
+<span class="sourceLineNo">079</span>         *<a name="line.79"></a>
+<span class="sourceLineNo">080</span>         * @param name<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         *          the name of the organism.<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * @throws ChangeVetoException<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         *           if the name may not be changed.<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         */<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        public void setName(String name) throws ChangeVetoException;<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>        /**<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         * Creates a replica of this &lt;code&gt;Organism&lt;/code&gt; with a new name.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         *<a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * @param name<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         *          the new name for the sequence.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * @return the replicated organism.<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         */<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        public Organism replicate(String name);<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>        /**<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * Is the organism Haploid?<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         *<a name="line.98"></a>
+<span class="sourceLineNo">099</span>         * @return true if it is.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>         */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        public boolean isHaploid();<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>        public static final ChangeType  CHROMOSOMES     = new ChangeType(<a name="line.103"></a>
+<span class="sourceLineNo">104</span>                                                        "Chromosomes changed",<a name="line.104"></a>
+<span class="sourceLineNo">105</span>                                                        "ga.Organism", "CHROMOSOMES");<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>        public static final ChangeType  NAME          = new ChangeType("Name changed",<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                                                        "ga.Organism", "NAME");<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>}<a name="line.110"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
