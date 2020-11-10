@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.bio.gui.sequence;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.awt.Graphics2D;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.awt.event.MouseEvent;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.List;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.utils.ChangeEvent;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.utils.ChangeForwarder;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.biojava.utils.ChangeSupport;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.biojava.utils.ChangeType;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>/**<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * &lt;code&gt;PairwiseSequenceRenderer&lt;/code&gt;s render information about the<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * relationship between two sequences. Its function is analagous to<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * &lt;code&gt;SequenceRenderer&lt;/code&gt; for single sequences and is<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * extensively based on that code.<a name="line.37"></a>
+<span class="sourceLineNo">038</span> *<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @author Keith James<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @since 1.2<a name="line.40"></a>
+<span class="sourceLineNo">041</span> */<a name="line.41"></a>
+<span class="sourceLineNo">042</span>public interface PairwiseSequenceRenderer<a name="line.42"></a>
+<span class="sourceLineNo">043</span>{<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    /**<a name="line.44"></a>
+<span class="sourceLineNo">045</span>     * &lt;code&gt;paint&lt;/code&gt;s some or all of the information about the<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     * sequence pair.<a name="line.46"></a>
+<span class="sourceLineNo">047</span>     *<a name="line.47"></a>
+<span class="sourceLineNo">048</span>     * @param g2 a &lt;code&gt;Graphics2D&lt;/code&gt;.<a name="line.48"></a>
+<span class="sourceLineNo">049</span>     * @param prc a &lt;code&gt;PairwiseRenderContext&lt;/code&gt; encapsulating<a name="line.49"></a>
+<span class="sourceLineNo">050</span>     * the information to be displayed.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    public void paint(Graphics2D g2, PairwiseRenderContext prc);<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>    /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>     * &lt;code&gt;processMouseEvent&lt;/code&gt; produces a<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * &lt;code&gt;SequenceViewerEvent&lt;/code&gt; in response to a mouse<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * gesture.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     *<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     * @param prc a &lt;code&gt;PairwiseRenderContext&lt;/code&gt;.<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * @param me a &lt;code&gt;MouseEvent&lt;/code&gt; that caused the request.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * @param path a &lt;code&gt;List&lt;/code&gt; of<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * &lt;code&gt;PairwiseSequenceRenderer&lt;/code&gt; instances passed through<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     * so far.<a name="line.63"></a>
+<span class="sourceLineNo">064</span>     *<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * @return a &lt;code&gt;SequenceViewerEvent&lt;/code&gt; encapsulating the<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * mouse gesture.<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public SequenceViewerEvent processMouseEvent(PairwiseRenderContext prc,<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                                                 MouseEvent            me,<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                                                 List                  path);<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    /**<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     * &lt;code&gt;PairwiseRendererForwarder&lt;/code&gt; forward events to other<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     * renderers. This is closely based on the regular<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * &lt;code&gt;RendererForwarder&lt;/code&gt;.<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     */<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    public static class PairwiseRendererForwarder extends ChangeForwarder<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    {<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        /**<a name="line.79"></a>
+<span class="sourceLineNo">080</span>         * Creates a new &lt;code&gt;PairwiseRendererForwarder&lt;/code&gt;.<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         *<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * @param source a &lt;code&gt;PairwiseSequenceRenderer&lt;/code&gt;.<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         * @param cs a &lt;code&gt;ChangeSupport&lt;/code&gt;.<a name="line.83"></a>
+<span class="sourceLineNo">084</span>         */<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        public PairwiseRendererForwarder(PairwiseSequenceRenderer source,<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                                         ChangeSupport            cs)<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        {<a name="line.87"></a>
+<span class="sourceLineNo">088</span>            super(source, cs);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        }<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    <a name="line.90"></a>
+<span class="sourceLineNo">091</span>        /**<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * &lt;code&gt;generateEvent&lt;/code&gt; generates events in response to<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         * layout change and repaint requests.<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         *<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * @param ce a &lt;code&gt;ChangeEvent&lt;/code&gt;.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         *<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * @return a &lt;code&gt;ChangeEvent&lt;/code&gt;. <a name="line.97"></a>
+<span class="sourceLineNo">098</span>         */<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        public ChangeEvent generateEvent(ChangeEvent ce)<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>            ChangeType type = ce.getType();<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>            ChangeType newType;<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>            if (type.isMatchingType(SequenceRenderContext.LAYOUT))<a name="line.105"></a>
+<span class="sourceLineNo">106</span>                newType = SequenceRenderContext.LAYOUT;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            else if (type.isMatchingType(SequenceRenderContext.REPAINT))<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                newType = SequenceRenderContext.REPAINT;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>            else<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                return null;<a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>            return new ChangeEvent(getSource(), newType, null, null, ce);<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        }<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    }<a name="line.114"></a>
+<span class="sourceLineNo">115</span>}<a name="line.115"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
