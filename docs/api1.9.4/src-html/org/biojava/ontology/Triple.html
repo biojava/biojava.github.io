@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> *                    BioJava development code<a name="line.2"></a>
+<span class="sourceLineNo">003</span> *<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * This code may be freely distributed and modified under the<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * terms of the GNU Lesser General Public Licence.  This should<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * be distributed with the code.  If you do not have a copy,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * see:<a name="line.7"></a>
+<span class="sourceLineNo">008</span> *<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *      http://www.gnu.org/copyleft/lesser.html<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Copyright for this code is held jointly by the individual<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * authors.  These should be listed in @author doc comments.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * For more information on the BioJava project and its aims,<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * or to join the biojava-l mailing list, visit the home page<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * at:<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> *      http://www.biojava.org/<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> */<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.biojava.ontology;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Arrays;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.Set;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.TreeSet;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.biojava.bio.Annotation;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.biojava.utils.Unchangeable;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>/**<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * A triple in an ontology.  This is two terms and a relationship between<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * them, similar to RDF and other similar logic systems.<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;p&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * For documentation purposes, a Triple may provide a name. However, a Triple<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * may also be named as "(subject, object, predicate)" if no specific name is<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * provided.<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * &lt;/p&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> *<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @author Thomas Down<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * @author Matthew Pocock<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * @since 1.4<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * @see org.biojavax.ontology.ComparableTriple<a name="line.44"></a>
+<span class="sourceLineNo">045</span> */<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>public interface Triple<a name="line.47"></a>
+<span class="sourceLineNo">048</span>extends Term {<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>         * Return the subject term of this triple<a name="line.50"></a>
+<span class="sourceLineNo">051</span>         * @return the subject term<a name="line.51"></a>
+<span class="sourceLineNo">052</span>         */<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>        public Term getSubject();<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>        /**<a name="line.56"></a>
+<span class="sourceLineNo">057</span>         * Return the object term of this triple.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>         * @return the object term<a name="line.58"></a>
+<span class="sourceLineNo">059</span>         */<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>        public Term getObject();<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>        /**<a name="line.63"></a>
+<span class="sourceLineNo">064</span>         * Return a Term which defines the type of relationship between the subject and object terms.<a name="line.64"></a>
+<span class="sourceLineNo">065</span>         * @return the predicate<a name="line.65"></a>
+<span class="sourceLineNo">066</span>         */<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>        public Term getPredicate();<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>        /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>         * The hashcode for a Triple.<a name="line.71"></a>
+<span class="sourceLineNo">072</span>         *<a name="line.72"></a>
+<span class="sourceLineNo">073</span>         * &lt;p&gt;This &lt;em&gt;must&lt;/em&gt; be implemented as:<a name="line.73"></a>
+<span class="sourceLineNo">074</span>         * &lt;pre&gt;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>         * return getSubject().hashCode() +<a name="line.75"></a>
+<span class="sourceLineNo">076</span>   31 * getObject().hashCode() +<a name="line.76"></a>
+<span class="sourceLineNo">077</span>   31 * 31 * getPredicate().hashCode();<a name="line.77"></a>
+<span class="sourceLineNo">078</span>         * &lt;/pre&gt;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>         * If you do not implement hashcode in this way then you have no guarantee<a name="line.79"></a>
+<span class="sourceLineNo">080</span>         * that your Triple objects will be found in an ontology and that they will<a name="line.80"></a>
+<span class="sourceLineNo">081</span>         * not be duplicated.<a name="line.81"></a>
+<span class="sourceLineNo">082</span>         * &lt;/p&gt;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>         */<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        public int hashCode();<a name="line.84"></a>
+<span class="sourceLineNo">085</span><a name="line.85"></a>
+<span class="sourceLineNo">086</span>        /**<a name="line.86"></a>
+<span class="sourceLineNo">087</span>         * Check to see if an object is an equivalent Triple.<a name="line.87"></a>
+<span class="sourceLineNo">088</span>         *<a name="line.88"></a>
+<span class="sourceLineNo">089</span>         * &lt;p&gt;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>         * Two triples are equivalent if they have the same subject, object and<a name="line.90"></a>
+<span class="sourceLineNo">091</span>         * predicate fields.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>         * &lt;pre&gt;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>         * if (! (o instanceof Triple)) {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>         *     return false;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>         * }<a name="line.95"></a>
+<span class="sourceLineNo">096</span>         * Triple to = (Triple) o;<a name="line.96"></a>
+<span class="sourceLineNo">097</span>         * return to.getSubject() == getSubject() &amp;&amp;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>         *        to.getObject() == getObject() &amp;&amp;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>         *        to.getPredicate() == getPredicate();<a name="line.99"></a>
+<span class="sourceLineNo">100</span>         * &lt;/pre&gt;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>         * If you do not implement equals in this way then you have no guarantee<a name="line.101"></a>
+<span class="sourceLineNo">102</span>         * that your Triple objects will be found in an ontology and that they will<a name="line.102"></a>
+<span class="sourceLineNo">103</span>         * not be duplicated.<a name="line.103"></a>
+<span class="sourceLineNo">104</span>         * &lt;/p&gt;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>         */<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        public boolean equals(Object obj);<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>        /**<a name="line.108"></a>
+<span class="sourceLineNo">109</span>         * Basic in-memory implementation of a Triple in an ontology<a name="line.109"></a>
+<span class="sourceLineNo">110</span>         *<a name="line.110"></a>
+<span class="sourceLineNo">111</span>         * This can be used to implement Ontology.createTriple<a name="line.111"></a>
+<span class="sourceLineNo">112</span>         * @see org.biojavax.ontology.SimpleComparableTriple<a name="line.112"></a>
+<span class="sourceLineNo">113</span>         */<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>        public static final class Impl<a name="line.115"></a>
+<span class="sourceLineNo">116</span>        extends Unchangeable<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        implements Triple, java.io.Serializable {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                /**<a name="line.118"></a>
+<span class="sourceLineNo">119</span>                 * <a name="line.119"></a>
+<span class="sourceLineNo">120</span>                 */<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                private static final long serialVersionUID = 3807331980372839221L;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                private final Term subject;<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                private final Term object;<a name="line.123"></a>
+<span class="sourceLineNo">124</span>                private final Term predicate;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>                private /*final*/ String name;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>                private /*final*/ String description;<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                private Set&lt;Object&gt; synonyms;<a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128"></a>
+<span class="sourceLineNo">129</span>                public Impl(Term subject, Term object, Term predicate) {<a name="line.129"></a>
+<span class="sourceLineNo">130</span>                        this(subject, object, predicate, null, null, null);<a name="line.130"></a>
+<span class="sourceLineNo">131</span>                }<a name="line.131"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>                public Impl(Term subject, Term object, Term predicate, Object[] synonyms) {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                        this(subject, object, predicate, null, null, synonyms);<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                }<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>                public Impl(Term subject,<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                                Term object,<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                                Term predicate,<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                                String name,<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                                String description) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                        this(subject,object,predicate,name,description,null);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>                }<a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144"></a>
+<span class="sourceLineNo">145</span>                public Impl(Term subject,<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                                Term object,<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                                Term predicate,<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                                String name,<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                                String description,<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                                Object[] synonyms)<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                        if (subject == null) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                                throw new NullPointerException("Subject must not be null");<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                        }<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                        if (object == null) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                                throw new NullPointerException("Object must not be null");<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                        }<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                        if (predicate == null) {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                                throw new NullPointerException("predicate must not be null");<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                        }<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                        if(<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                                        subject.getOntology() != object.getOntology() ||<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                                        subject.getOntology() != predicate.getOntology()<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                        ) {<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                                throw new IllegalArgumentException(<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                                                "All terms must be from the same ontology: " +<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                                                subject.getOntology().getName() + ", " +<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                                                object.getOntology().getName() + ", " +<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                                                predicate.getOntology().getName());<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        }<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>                        if(description == null) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                                description = "";<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                        }<a name="line.175"></a>
+<span class="sourceLineNo">176</span><a name="line.176"></a>
+<span class="sourceLineNo">177</span>                        this.subject = subject;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>                        this.object = object;<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                        this.predicate = predicate;<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                        this.name = name;<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                        this.description = description;<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>                        this.synonyms = new TreeSet&lt;Object&gt;();<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                        if (synonyms!=null) this.synonyms.addAll(Arrays.asList(synonyms));<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                }<a name="line.185"></a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span>                public void addSynonym(Object synonym) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>                        this.synonyms.add(synonym);<a name="line.188"></a>
+<span class="sourceLineNo">189</span>                }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>                public void removeSynonym(Object synonym) {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                        this.synonyms.remove(synonym);<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                }<a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194"></a>
+<span class="sourceLineNo">195</span>                public Object[] getSynonyms() {<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                        return this.synonyms.toArray();<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>                public String getName() {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                        if(name == null) {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                                name = predicate + "(" + subject + ", " + object + ")";<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                        }<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                        return name;<a name="line.203"></a>
+<span class="sourceLineNo">204</span>                }<a name="line.204"></a>
+<span class="sourceLineNo">205</span><a name="line.205"></a>
+<span class="sourceLineNo">206</span>                public String getDescription() {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                        return description;<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                }<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                public void setDescription(String desc){<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                        this.description = desc;<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                }<a name="line.211"></a>
+<span class="sourceLineNo">212</span><a name="line.212"></a>
+<span class="sourceLineNo">213</span>                public Ontology getOntology() {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                        return subject.getOntology();<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                }<a name="line.215"></a>
+<span class="sourceLineNo">216</span><a name="line.216"></a>
+<span class="sourceLineNo">217</span>                public Term getSubject() {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                        return subject;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>                public Term getObject() {<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                        return object;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>                }<a name="line.223"></a>
+<span class="sourceLineNo">224</span><a name="line.224"></a>
+<span class="sourceLineNo">225</span>                public Term getPredicate() {<a name="line.225"></a>
+<span class="sourceLineNo">226</span>                        return predicate;<a name="line.226"></a>
+<span class="sourceLineNo">227</span>                }<a name="line.227"></a>
+<span class="sourceLineNo">228</span><a name="line.228"></a>
+<span class="sourceLineNo">229</span>                public Annotation getAnnotation() {<a name="line.229"></a>
+<span class="sourceLineNo">230</span>                        return Annotation.EMPTY_ANNOTATION;<a name="line.230"></a>
+<span class="sourceLineNo">231</span>                }<a name="line.231"></a>
+<span class="sourceLineNo">232</span><a name="line.232"></a>
+<span class="sourceLineNo">233</span>                /**<a name="line.233"></a>
+<span class="sourceLineNo">234</span>                 * Two triples are equal if all their fields are identical.<a name="line.234"></a>
+<span class="sourceLineNo">235</span>                 */<a name="line.235"></a>
+<span class="sourceLineNo">236</span><a name="line.236"></a>
+<span class="sourceLineNo">237</span>                public boolean equals(Object o) {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>                        if (! (o instanceof Triple)) {<a name="line.238"></a>
+<span class="sourceLineNo">239</span>                                return false;<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                        }<a name="line.240"></a>
+<span class="sourceLineNo">241</span>                        Triple to = (Triple) o;<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                        return to.getSubject().equals(getSubject()) &amp;&amp;<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                        to.getObject().equals(getObject()) &amp;&amp;<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                        to.getPredicate().equals(getPredicate());<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                }<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span>                public int hashCode() {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>                        return getSubject().hashCode() +<a name="line.248"></a>
+<span class="sourceLineNo">249</span>                        31 * getObject().hashCode() +<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                        31 * 31 * getPredicate().hashCode();<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                }<a name="line.251"></a>
+<span class="sourceLineNo">252</span><a name="line.252"></a>
+<span class="sourceLineNo">253</span>                public String toString() {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                        if (getName().length() &gt; 0)<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                        return getName();<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                        return subject + " " + predicate + " " + object;<a name="line.256"></a>
+<span class="sourceLineNo">257</span>                }<a name="line.257"></a>
+<span class="sourceLineNo">258</span>        }<a name="line.258"></a>
+<span class="sourceLineNo">259</span>}<a name="line.259"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
