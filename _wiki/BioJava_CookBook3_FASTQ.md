@@ -33,8 +33,7 @@ FastqWriter fastqWriter = new SangerFastqWriter();
 FileWriter fileWriter = new FileWriter(new File("sanger.fastq"))));
 
 for (Fastq fastq : fastqReader.read(new File("illumina.fastq"))) {
-  if (fastq.getSequence().length() > 16)
-  {
+  if (fastq.getSequence().length() > 16) {
     fastqWriter.append(fileWriter, fastq);`  
   }
 }
@@ -48,11 +47,9 @@ BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fas
 final FastqWriter fastqWriter = new SangerFastqWriter();
 final FileWriter fileWriter = new FileWriter(new File("sanger.fastq"))));
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     fastqWriter.append(fileWriter, fastq);
   }
 });
@@ -66,13 +63,10 @@ BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fas
 FastqWriter fastqWriter = new SangerFastqWriter();
 FileWriter fileWriter = new FileWriter(new File("sanger.fastq"))));
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
-    if (fastq.getSequence().length() > 16)
-    {
+  public void fastq(final Fastq fastq) {
+    if (fastq.getSequence().length() > 16) {
       fastqWriter.append(fileWriter, fastq);
     }
   }
@@ -98,11 +92,9 @@ FastqReader fastqReader = new IlluminaFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
 final AtomicInteger count = new AtomicInteger();
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     count.incrementAndGet();
   }
 });
@@ -117,11 +109,9 @@ FastqReader fastqReader = new IlluminaFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
 final AtomicInteger count = new AtomicInteger();
-fastqReader.parse(reader, new ParseAdapter()
-{
+fastqReader.parse(reader, new ParseAdapter() {
   @Override
-  public void complete() throws IOException
-  {
+  public void complete() throws IOException {
     count.incrementAndGet();
   }
 });
@@ -136,13 +126,10 @@ final Pattern pattern = Pattern.compile("^HWUSI-EAS100R:.\*$");
 FastqReader fastqReader = new IlluminaFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
-fastqReader.parse(reader, new ParseAdapter()
-{
+fastqReader.parse(reader, new ParseAdapter() {
   @Override
-  public void description(final String description) throws IOException
-  {
-    if (pattern.matches(description))
-    {
+  public void description(final String description) throws IOException {
+    if (pattern.matches(description)) {
       System.out.println(description);
     }
   }
@@ -189,11 +176,9 @@ FastqReader fastqReader = new SangerFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
 List<DNASequence> sequences = new ArrayList<DNASequence>();
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     sequences.add(FastqTools.createDNASequence(fastq));
   }
 });
@@ -206,11 +191,9 @@ FastqReader fastqReader = new SangerFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
 List<DNASequence> sequences = new ArrayList<DNASequence>();
 
-fastqReader.stream(inputSupplier, new StreamListener()
-{
+fastqReader.stream(inputSupplier, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     sequences.add(FastqTools.createDNASequenceWithQualityScores(fastq));
   }
 });
@@ -223,11 +206,9 @@ FastqReader fastqReader = new SangerFastqReader();
 BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
 List<DNASequence> sequences = new ArrayList<DNASequence>();
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     sequences.add(FastqTools.createDNASequenceWithQualityScoresAndErrorProbabilities(fastq));
   }
 });
@@ -241,14 +222,11 @@ BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq
 SummaryStatistics stats = new SummaryStatistics();
 StringBuilder sb = new StringBuilder(512);
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     stats.clear();
-    for (Double errorProbability : FastqTools.errorProbabilities(fastq))
-    {
+    for (Double errorProbability : FastqTools.errorProbabilities(fastq)) {
       stats.addValue(errorProbability);
     }
     sb.delete(0, sb.length());
@@ -270,16 +248,13 @@ BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq
 SummaryStatistics stats = new SummaryStatistics();
 StringBuilder sb = new StringBuilder(512);
 
-fastqReader.stream(reader, new StreamListener()
-{
+fastqReader.stream(reader, new StreamListener() {
   @Override
-  public void fastq(final Fastq fastq)
-  {
+  public void fastq(final Fastq fastq) {
     stats.clear();
     int size = fastq.getSequence().length();
     double[] errorProbabilities = FastqTools.errorProbabilties(fastq, new double[size]);
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
       stats.addValue(errorProbabilities[i]);
     }
     sb.delete(0, sb.length());
