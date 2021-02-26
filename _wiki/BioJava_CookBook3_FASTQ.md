@@ -6,7 +6,7 @@ permalink: wiki/BioJava%3ACookBook3%3AFASTQ
 How do I work with nextgen sequencing reads in FASTQ format?
 ------------------------------------------------------------
 
-The org.biojava3.sequencing.io.fastq package provides support for
+The org.biojava.nbio.genome.io.fastq package provides support for
 reading and writing nextgen sequencing reads in FASTQ format
 (FastqReader and FastqWriter, respectively) and for converting FASTQ
 sequences into proper biojava3 DNASequences for analysis purposes
@@ -44,17 +44,17 @@ for (Fastq fastq : fastqReader.read(new File("illumina.fastq"))) {
 
 ```java
 FastqReader fastqReader = new IlluminaFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("illumina.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 final FastqWriter fastqWriter = new SangerFastqWriter();
 final FileWriter fileWriter = new FileWriter(new File("sanger.fastq"))));
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
-  @Override
-  public void fastq(final Fastq fastq)
-  {
-    fastqWriter.append(fileWriter, fastq);
-  }
+  @Override
+  public void fastq(final Fastq fastq)
+  {
+    fastqWriter.append(fileWriter, fastq);
+  }
 });
 ```
 
@@ -62,11 +62,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 ```java
 FastqReader fastqReader = new IlluminaFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("illumina.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 FastqWriter fastqWriter = new SangerFastqWriter();
 FileWriter fileWriter = new FileWriter(new File("sanger.fastq"))));
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
@@ -95,11 +95,10 @@ System.out.println(count);
 
 ```java
 FastqReader fastqReader = new IlluminaFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new
-File("illumina.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
 final AtomicInteger count = new AtomicInteger();
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
@@ -115,11 +114,10 @@ System.out.println(count.get());
 
 ```java
 FastqReader fastqReader = new IlluminaFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new
-File("illumina.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
 final AtomicInteger count = new AtomicInteger();
-fastqReader.parse(inputSupplier, new ParseAdapter()
+fastqReader.parse(reader, new ParseAdapter()
 {
   @Override
   public void complete() throws IOException
@@ -136,9 +134,9 @@ System.out.println(count.get());
 ```java
 final Pattern pattern = Pattern.compile("^HWUSI-EAS100R:.\*$");
 FastqReader fastqReader = new IlluminaFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("illumina.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("illumina.fastq")));
 
-fastqReader.parse(inputSupplier, new ParseAdapter()
+fastqReader.parse(reader, new ParseAdapter()
 {
   @Override
   public void description(final String description) throws IOException
@@ -155,7 +153,7 @@ fastqReader.parse(inputSupplier, new ParseAdapter()
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
   sequences.add(FastqTools.createDNASequence(fastq));
@@ -166,7 +164,7 @@ for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
   sequences.add(FastqTools.createDNASequenceWithQualityScores(fastq));
@@ -177,7 +175,7 @@ for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
 for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
   sequences.add(FastqTools.createDNASequenceWithQualityScoresAndErrorProbabilities(fastq));
@@ -188,10 +186,10 @@ for (Fastq fastq : fastqReader.read(new File("sanger.fastq"))) {
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
@@ -205,8 +203,8 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
 fastqReader.stream(inputSupplier, new StreamListener()
 {
@@ -222,10 +220,10 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
-List<DNASequence> sequences = new LinkedList<DNASequence>();
+BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
+List<DNASequence> sequences = new ArrayList<DNASequence>();
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
@@ -239,11 +237,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
 SummaryStatistics stats = new SummaryStatistics();
 StringBuilder sb = new StringBuilder(512);
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
@@ -268,11 +266,11 @@ fastqReader.stream(inputSupplier, new StreamListener()
 
 ```java
 FastqReader fastqReader = new SangerFastqReader();
-InputSupplier inputSupplier = Files.newReaderSupplier(new File("sanger.fastq"));
+BufferedReader reader = new BufferedReader(new FileReader(new File("sanger.fastq")));
 SummaryStatistics stats = new SummaryStatistics();
 StringBuilder sb = new StringBuilder(512);
 
-fastqReader.stream(inputSupplier, new StreamListener()
+fastqReader.stream(reader, new StreamListener()
 {
   @Override
   public void fastq(final Fastq fastq)
