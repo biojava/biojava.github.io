@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.bio.dp.twohead;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.Serializable;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Arrays;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.HashMap;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.List;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Map;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.dist.Distribution;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.dp.EmissionState;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.bio.dp.MagicalState;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.bio.dp.ScoreType;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.dp.State;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.symbol.Alphabet;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.symbol.AlphabetManager;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.utils.ListTools;</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">/**</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * Cache for columns of emission probabilities in pair-wise alignment</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * algorithms. </a>
+<span class="sourceLineNo">045</span><a id="line.45"> *</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * @author David Huen (fixes for magical state)</a>
+<span class="sourceLineNo">048</span><a id="line.48"> */</a>
+<span class="sourceLineNo">049</span><a id="line.49">public class EmissionCache implements Serializable{</a>
+<span class="sourceLineNo">050</span><a id="line.50">  private final Map eMap;</a>
+<span class="sourceLineNo">051</span><a id="line.51">  private final Alphabet alpha;</a>
+<span class="sourceLineNo">052</span><a id="line.52">  private final State[] states;</a>
+<span class="sourceLineNo">053</span><a id="line.53">  private final int dsi;</a>
+<span class="sourceLineNo">054</span><a id="line.54">  private final ScoreType scoreType;</a>
+<span class="sourceLineNo">055</span><a id="line.55">  private final Symbol[] gap;</a>
+<span class="sourceLineNo">056</span><a id="line.56">  </a>
+<span class="sourceLineNo">057</span><a id="line.57">  public EmissionCache(</a>
+<span class="sourceLineNo">058</span><a id="line.58">    Alphabet alpha,</a>
+<span class="sourceLineNo">059</span><a id="line.59">    State[] states,</a>
+<span class="sourceLineNo">060</span><a id="line.60">    int dsi,</a>
+<span class="sourceLineNo">061</span><a id="line.61">    ScoreType scoreType</a>
+<span class="sourceLineNo">062</span><a id="line.62">  ) {</a>
+<span class="sourceLineNo">063</span><a id="line.63">    this.eMap = new HashMap();</a>
+<span class="sourceLineNo">064</span><a id="line.64">    this.alpha = alpha;</a>
+<span class="sourceLineNo">065</span><a id="line.65">    this.states = states;</a>
+<span class="sourceLineNo">066</span><a id="line.66">    this.dsi = dsi;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    this.scoreType = scoreType;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    </a>
+<span class="sourceLineNo">069</span><a id="line.69">    List alphas = alpha.getAlphabets();</a>
+<span class="sourceLineNo">070</span><a id="line.70">    this.gap = new Symbol[alphas.size()];</a>
+<span class="sourceLineNo">071</span><a id="line.71">    for(int i = 0; i &lt; this.gap.length; i++) {</a>
+<span class="sourceLineNo">072</span><a id="line.72">      this.gap[i] = ((Alphabet) alphas.get(i)).getGapSymbol();</a>
+<span class="sourceLineNo">073</span><a id="line.73">    }</a>
+<span class="sourceLineNo">074</span><a id="line.74">  }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">    public final double [] getEmissions(List symList)</a>
+<span class="sourceLineNo">077</span><a id="line.77">        throws IllegalSymbolException</a>
+<span class="sourceLineNo">078</span><a id="line.78">    {</a>
+<span class="sourceLineNo">079</span><a id="line.79">        return getEmissions(symList, true);</a>
+<span class="sourceLineNo">080</span><a id="line.80">    }</a>
+<span class="sourceLineNo">081</span><a id="line.81"> </a>
+<span class="sourceLineNo">082</span><a id="line.82">    /**</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * Retrieve the emission scores from the cache for every EmissionState</a>
+<span class="sourceLineNo">084</span><a id="line.84">     * for the specified symbols.  The scores</a>
+<span class="sourceLineNo">085</span><a id="line.85">     *  will be computed and cached if not already available.</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;p&gt;</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * The correct behaviour should be to exclude emission from the</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * MagicalState except at the origin and bottom-right of the DP</a>
+<span class="sourceLineNo">089</span><a id="line.89">     * matrix.  As such, the emission vector is only cached when it</a>
+<span class="sourceLineNo">090</span><a id="line.90">     * it is computed for exorcise set to true. The vector is computed</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * afresh every time when exorcise is false.  it should be noted that</a>
+<span class="sourceLineNo">092</span><a id="line.92">     * if exorcise is &lt;b&gt;NOT&lt;b&gt; set to false with the emission vector</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * at the ends of the matrix, the model will fail as the start and</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * and end transitions become impossible.</a>
+<span class="sourceLineNo">095</span><a id="line.95">     *</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * @param symList a list of the symbols in each head that require a lookup for emission probabilities.</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * @param exorcise Prevents emission from the MagicalState.</a>
+<span class="sourceLineNo">098</span><a id="line.98">     */</a>
+<span class="sourceLineNo">099</span><a id="line.99">    public final double [] getEmissions(List symList, boolean exorcise)</a>
+<span class="sourceLineNo">100</span><a id="line.100">        throws IllegalSymbolException </a>
+<span class="sourceLineNo">101</span><a id="line.101">    {</a>
+<span class="sourceLineNo">102</span><a id="line.102">        double [] emission;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        if (exorcise) {</a>
+<span class="sourceLineNo">104</span><a id="line.104">            emission = (double []) eMap.get(symList);</a>
+<span class="sourceLineNo">105</span><a id="line.105">            if(emission == null) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                emission = computeEmissions(symList, true);</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                eMap.put(ListTools.createList(symList), emission);</a>
+<span class="sourceLineNo">109</span><a id="line.109">            } else {</a>
+<span class="sourceLineNo">110</span><a id="line.110">                //System.out.print("-");</a>
+<span class="sourceLineNo">111</span><a id="line.111">            }</a>
+<span class="sourceLineNo">112</span><a id="line.112">        }</a>
+<span class="sourceLineNo">113</span><a id="line.113">        else {</a>
+<span class="sourceLineNo">114</span><a id="line.114">            emission = computeEmissions(symList, false);</a>
+<span class="sourceLineNo">115</span><a id="line.115">        }</a>
+<span class="sourceLineNo">116</span><a id="line.116">        return emission;    </a>
+<span class="sourceLineNo">117</span><a id="line.117">    }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">    private double [] computeEmissions(List symList, boolean exorcise)</a>
+<span class="sourceLineNo">120</span><a id="line.120">        throws IllegalSymbolException</a>
+<span class="sourceLineNo">121</span><a id="line.121">    {</a>
+<span class="sourceLineNo">122</span><a id="line.122">        // create a Symbol array to permit lookup of</a>
+<span class="sourceLineNo">123</span><a id="line.123">        // the Symbol to query the emission Distributions with</a>
+<span class="sourceLineNo">124</span><a id="line.124">        // for different values of advance for an EmissionState.</a>
+<span class="sourceLineNo">125</span><a id="line.125">        Symbol sym[][] = new Symbol[2][2];</a>
+<span class="sourceLineNo">126</span><a id="line.126">//        List ll = ListTools.createList(symList);</a>
+<span class="sourceLineNo">127</span><a id="line.127">        sym[0][0] = AlphabetManager.getGapSymbol();</a>
+<span class="sourceLineNo">128</span><a id="line.128">        sym[1][1] = alpha.getSymbol(Arrays.asList(new Symbol [] {</a>
+<span class="sourceLineNo">129</span><a id="line.129">            (Symbol) symList.get(0),</a>
+<span class="sourceLineNo">130</span><a id="line.130">            (Symbol) symList.get(1)</a>
+<span class="sourceLineNo">131</span><a id="line.131">            }));</a>
+<span class="sourceLineNo">132</span><a id="line.132">        sym[1][0] = alpha.getSymbol(Arrays.asList(new Symbol [] {</a>
+<span class="sourceLineNo">133</span><a id="line.133">            (Symbol) symList.get(0),</a>
+<span class="sourceLineNo">134</span><a id="line.134">            gap[1]</a>
+<span class="sourceLineNo">135</span><a id="line.135">            }));</a>
+<span class="sourceLineNo">136</span><a id="line.136">        sym[0][1] = alpha.getSymbol(Arrays.asList(new Symbol [] {</a>
+<span class="sourceLineNo">137</span><a id="line.137">            gap[0],</a>
+<span class="sourceLineNo">138</span><a id="line.138">            (Symbol) symList.get(1)</a>
+<span class="sourceLineNo">139</span><a id="line.139">            }));</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">        double [] emission = new double[dsi];</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">        // compute the log(emission probability)</a>
+<span class="sourceLineNo">144</span><a id="line.144">        for(int i = 0; i &lt; dsi; i++) {</a>
+<span class="sourceLineNo">145</span><a id="line.145">            if (exorcise &amp;&amp; (states[i] instanceof MagicalState)) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                // exclude emission from MagicalState</a>
+<span class="sourceLineNo">147</span><a id="line.147">                emission[i] = Double.NEGATIVE_INFINITY;</a>
+<span class="sourceLineNo">148</span><a id="line.148">            }</a>
+<span class="sourceLineNo">149</span><a id="line.149">            else {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                EmissionState es = (EmissionState) states[i];</a>
+<span class="sourceLineNo">151</span><a id="line.151">                int [] advance = es.getAdvance();</a>
+<span class="sourceLineNo">152</span><a id="line.152">                Distribution dis = es.getDistribution();</a>
+<span class="sourceLineNo">153</span><a id="line.153">                Symbol s = sym[advance[0]][advance[1]];</a>
+<span class="sourceLineNo">154</span><a id="line.154">                emission[i] = Math.log(scoreType.calculateScore(dis, s));</a>
+<span class="sourceLineNo">155</span><a id="line.155">            }</a>
+<span class="sourceLineNo">156</span><a id="line.156">        }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        return emission;</a>
+<span class="sourceLineNo">159</span><a id="line.159">    }</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">  public void clear() {</a>
+<span class="sourceLineNo">162</span><a id="line.162">    eMap.clear();</a>
+<span class="sourceLineNo">163</span><a id="line.163">  }</a>
+<span class="sourceLineNo">164</span><a id="line.164">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

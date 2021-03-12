@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.stats.svm;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Collection;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.HashMap;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.HashSet;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Iterator;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Map;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Set;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">/**</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * A no-frills implementation of an SVM classifier model.</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">036</span><a id="line.36"> */</a>
+<span class="sourceLineNo">037</span><a id="line.37">public class SimpleSVMClassifierModel extends AbstractSVMClassifierModel {</a>
+<span class="sourceLineNo">038</span><a id="line.38">  private SVMKernel kernel;</a>
+<span class="sourceLineNo">039</span><a id="line.39">  private double threshold;</a>
+<span class="sourceLineNo">040</span><a id="line.40">  </a>
+<span class="sourceLineNo">041</span><a id="line.41">  private Set itemAlphaSet;</a>
+<span class="sourceLineNo">042</span><a id="line.42">  private Map itemToItemAlpha;</a>
+<span class="sourceLineNo">043</span><a id="line.43">  </a>
+<span class="sourceLineNo">044</span><a id="line.44">  public SimpleSVMClassifierModel(SVMKernel kernel) {</a>
+<span class="sourceLineNo">045</span><a id="line.45">    this.kernel = kernel;</a>
+<span class="sourceLineNo">046</span><a id="line.46">    itemAlphaSet = new HashSet();</a>
+<span class="sourceLineNo">047</span><a id="line.47">    itemToItemAlpha = new HashMap();</a>
+<span class="sourceLineNo">048</span><a id="line.48">  }</a>
+<span class="sourceLineNo">049</span><a id="line.49">  </a>
+<span class="sourceLineNo">050</span><a id="line.50">  public SimpleSVMClassifierModel(SVMKernel kernel, Collection items) {</a>
+<span class="sourceLineNo">051</span><a id="line.51">    this(kernel);</a>
+<span class="sourceLineNo">052</span><a id="line.52">    for(Iterator i = items.iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">053</span><a id="line.53">      addItem(i.next());</a>
+<span class="sourceLineNo">054</span><a id="line.54">    }</a>
+<span class="sourceLineNo">055</span><a id="line.55">  }    </a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">  public SimpleSVMClassifierModel(SVMKernel kernel, SVMTarget target) {</a>
+<span class="sourceLineNo">058</span><a id="line.58">    this(kernel, target.items());</a>
+<span class="sourceLineNo">059</span><a id="line.59">  }</a>
+<span class="sourceLineNo">060</span><a id="line.60">  </a>
+<span class="sourceLineNo">061</span><a id="line.61">  public SVMKernel getKernel() {</a>
+<span class="sourceLineNo">062</span><a id="line.62">    return kernel;</a>
+<span class="sourceLineNo">063</span><a id="line.63">  }</a>
+<span class="sourceLineNo">064</span><a id="line.64">  </a>
+<span class="sourceLineNo">065</span><a id="line.65">  public void setThreshold(double threshold) {</a>
+<span class="sourceLineNo">066</span><a id="line.66">    this.threshold = threshold;</a>
+<span class="sourceLineNo">067</span><a id="line.67">  }</a>
+<span class="sourceLineNo">068</span><a id="line.68">  </a>
+<span class="sourceLineNo">069</span><a id="line.69">  public double getThreshold() {</a>
+<span class="sourceLineNo">070</span><a id="line.70">    return threshold;</a>
+<span class="sourceLineNo">071</span><a id="line.71">  }</a>
+<span class="sourceLineNo">072</span><a id="line.72">  </a>
+<span class="sourceLineNo">073</span><a id="line.73">  public Set items() {</a>
+<span class="sourceLineNo">074</span><a id="line.74">    return itemToItemAlpha.keySet();</a>
+<span class="sourceLineNo">075</span><a id="line.75">  }</a>
+<span class="sourceLineNo">076</span><a id="line.76">  </a>
+<span class="sourceLineNo">077</span><a id="line.77">  public Set itemAlphas() {</a>
+<span class="sourceLineNo">078</span><a id="line.78">    return itemAlphaSet;</a>
+<span class="sourceLineNo">079</span><a id="line.79">  }</a>
+<span class="sourceLineNo">080</span><a id="line.80">  </a>
+<span class="sourceLineNo">081</span><a id="line.81">  public double getAlpha(Object item) {</a>
+<span class="sourceLineNo">082</span><a id="line.82">    return ((ItemValue) itemToItemAlpha.get(item)).getValue();</a>
+<span class="sourceLineNo">083</span><a id="line.83">  }</a>
+<span class="sourceLineNo">084</span><a id="line.84">  </a>
+<span class="sourceLineNo">085</span><a id="line.85">  public void setAlpha(Object item, double alpha) {</a>
+<span class="sourceLineNo">086</span><a id="line.86">    ItemValue iv = (ItemValue) itemToItemAlpha.get(item);</a>
+<span class="sourceLineNo">087</span><a id="line.87">    iv.setValue(alpha);</a>
+<span class="sourceLineNo">088</span><a id="line.88">  }</a>
+<span class="sourceLineNo">089</span><a id="line.89">  </a>
+<span class="sourceLineNo">090</span><a id="line.90">  public void addItem(Object item) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">    ItemValue iv = new SimpleItemValue(item, 0.0);</a>
+<span class="sourceLineNo">092</span><a id="line.92">    itemToItemAlpha.put(item, iv);</a>
+<span class="sourceLineNo">093</span><a id="line.93">    itemAlphaSet.add(iv);</a>
+<span class="sourceLineNo">094</span><a id="line.94">  }</a>
+<span class="sourceLineNo">095</span><a id="line.95">  </a>
+<span class="sourceLineNo">096</span><a id="line.96">  public void addItemAlpha(Object item, double alpha) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">    ItemValue iv = new SimpleItemValue(item, alpha);</a>
+<span class="sourceLineNo">098</span><a id="line.98">    itemToItemAlpha.put(item, iv);</a>
+<span class="sourceLineNo">099</span><a id="line.99">    itemAlphaSet.add(iv);</a>
+<span class="sourceLineNo">100</span><a id="line.100">  }</a>
+<span class="sourceLineNo">101</span><a id="line.101">  </a>
+<span class="sourceLineNo">102</span><a id="line.102">  public void removeItem(Object item) {</a>
+<span class="sourceLineNo">103</span><a id="line.103">    itemToItemAlpha.remove(item);</a>
+<span class="sourceLineNo">104</span><a id="line.104">    itemAlphaSet.remove(item);</a>
+<span class="sourceLineNo">105</span><a id="line.105">  }</a>
+<span class="sourceLineNo">106</span><a id="line.106">  </a>
+<span class="sourceLineNo">107</span><a id="line.107">  public void clear() {</a>
+<span class="sourceLineNo">108</span><a id="line.108">    itemAlphaSet.clear();</a>
+<span class="sourceLineNo">109</span><a id="line.109">    itemToItemAlpha.clear();</a>
+<span class="sourceLineNo">110</span><a id="line.110">  }</a>
+<span class="sourceLineNo">111</span><a id="line.111">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

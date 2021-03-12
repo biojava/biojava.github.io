@@ -1,0 +1,668 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.program.ssbind;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.ArrayList;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Arrays;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.HashMap;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.List;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Map;</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.alignment.SimpleAlignment;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.bio.search.SearchBuilder;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.bio.search.SeqSimilaritySearchHit;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.search.SeqSimilaritySearchResult;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.search.SeqSimilaritySearchSubHit;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.search.SimpleSeqSimilaritySearchHit;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.search.SimpleSeqSimilaritySearchResult;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.search.SimpleSeqSimilaritySearchSubHit;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.seq.StrandedFeature;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.seq.StrandedFeature.Strand;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.bio.seq.db.SequenceDB;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.bio.seq.db.SequenceDBInstallation;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.symbol.FiniteAlphabet;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.symbol.SimpleSymbolList;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.utils.SmallMap;</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">/**</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * &lt;p&gt;&lt;code&gt;BlastLikeSearchBuilder&lt;/code&gt; will create</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * &lt;code&gt;SeqSimilaritySearchResult&lt;/code&gt;s from SAX events via a</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * &lt;code&gt;SeqSimilarityAdapter&lt;/code&gt;. The SAX events should describe</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * elements conforming to the BioJava BlastLikeDataSetCollection</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * DTD. Suitable sources are &lt;code&gt;BlastLikeSAXParser&lt;/code&gt; or</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * &lt;code&gt;FastaSearchSAXParser&lt;/code&gt;. The result objects are placed in</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * the &lt;code&gt;List&lt;/code&gt; supplied to the constructor.&lt;/p&gt;</a>
+<span class="sourceLineNo">058</span><a id="line.58"> *</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * &lt;p&gt;The start/end/strand of &lt;code&gt;SeqSimilaritySearchHit&lt;/code&gt;s are</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * calculated from their constituent</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * &lt;code&gt;SeqSimilaritySearchSubHit&lt;/code&gt;s as follows:&lt;/p&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62"> *</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * &lt;ul&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * &lt;li&gt;The query start is the lowest query start coordinate of its</a>
+<span class="sourceLineNo">065</span><a id="line.65"> *     sub-hits, regardless of strand&lt;/li&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * &lt;li&gt;The query end is the highest query end coordinate of its sub-hits,</a>
+<span class="sourceLineNo">067</span><a id="line.67"> *     regardless of strand&lt;/li&gt;</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * &lt;li&gt;The hit start is the lowest hit start coordinate of its sub-hits,</a>
+<span class="sourceLineNo">069</span><a id="line.69"> *     regardless of strand&lt;/li&gt;</a>
+<span class="sourceLineNo">070</span><a id="line.70"> * &lt;li&gt;The hit end is the highest hit end coordinate of its sub-hits,</a>
+<span class="sourceLineNo">071</span><a id="line.71"> *     regardless of strand&lt;/li&gt;</a>
+<span class="sourceLineNo">072</span><a id="line.72"> * &lt;li&gt;The query strand is null for protein sequences. Otherwise it is</a>
+<span class="sourceLineNo">073</span><a id="line.73"> *     equal to the query strand of its sub-hits if they are all on the</a>
+<span class="sourceLineNo">074</span><a id="line.74"> *     same strand, or &lt;code&gt;StrandedFeature.UNKNOWN&lt;/code&gt; if the sub-hits</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *     have mixed query strands&lt;/li&gt;</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * &lt;li&gt;The hit strand is null for protein sequences. Otherwise it is</a>
+<span class="sourceLineNo">077</span><a id="line.77"> *     equal to the hit strand of its sub-hits if they are all on the same</a>
+<span class="sourceLineNo">078</span><a id="line.78"> *     strand, or &lt;code&gt;StrandedFeature.UNKNOWN&lt;/code&gt; if the sub-hits have</a>
+<span class="sourceLineNo">079</span><a id="line.79"> *     mixed hit strands&lt;/li&gt;</a>
+<span class="sourceLineNo">080</span><a id="line.80"> * &lt;/ul&gt;</a>
+<span class="sourceLineNo">081</span><a id="line.81"> *</a>
+<span class="sourceLineNo">082</span><a id="line.82"> * &lt;p&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83"> * This class has special meanings for particular keys: if you want to</a>
+<span class="sourceLineNo">084</span><a id="line.84"> * adapt this class for another parser, you will need to be aware of</a>
+<span class="sourceLineNo">085</span><a id="line.85"> * this. These originate from and are fully described in the</a>
+<span class="sourceLineNo">086</span><a id="line.86"> * BlastLikeDataSetCollection DTD.</a>
+<span class="sourceLineNo">087</span><a id="line.87"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88"> * &lt;table&gt;</a>
+<span class="sourceLineNo">089</span><a id="line.89"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">090</span><a id="line.90"> *   &lt;th&gt;Key&lt;/th&gt;</a>
+<span class="sourceLineNo">091</span><a id="line.91"> *   &lt;th&gt;Meaning&lt;/th&gt;</a>
+<span class="sourceLineNo">092</span><a id="line.92"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">093</span><a id="line.93"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">094</span><a id="line.94"> *   &lt;td&gt;program&lt;/td&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95"> *   &lt;td&gt;either this value or the subjectSequenceType value must be set. This can take values</a>
+<span class="sourceLineNo">096</span><a id="line.96"> *       acceptable to AlphabetResolver. These are BLASTN, BLASTP, BLASTX, TBLASTN,</a>
+<span class="sourceLineNo">097</span><a id="line.97"> *       TBLASTX, DNA and PROTEIN. &lt;/td&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99"> *</a>
+<span class="sourceLineNo">100</span><a id="line.100"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">101</span><a id="line.101"> *   &lt;td&gt;databaseId&lt;/td&gt;</a>
+<span class="sourceLineNo">102</span><a id="line.102"> *   &lt;td&gt;Identifier of database searched (in SequenceDBInstallation).&lt;/td&gt;</a>
+<span class="sourceLineNo">103</span><a id="line.103"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">104</span><a id="line.104"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">105</span><a id="line.105"> *   &lt;td&gt;subjectSequenceType&lt;/td&gt;</a>
+<span class="sourceLineNo">106</span><a id="line.106"> *   &lt;td&gt;type of sequence that hit is. Can be DNA or PROTEIN.&lt;/td&gt;</a>
+<span class="sourceLineNo">107</span><a id="line.107"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">108</span><a id="line.108"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">109</span><a id="line.109"> *   &lt;td&gt;subjectId&lt;/td&gt;</a>
+<span class="sourceLineNo">110</span><a id="line.110"> *   &lt;td&gt;id of sequence that is hit&lt;/td&gt;</a>
+<span class="sourceLineNo">111</span><a id="line.111"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">112</span><a id="line.112"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">113</span><a id="line.113"> *   &lt;td&gt;subjectDescription&lt;/td&gt;</a>
+<span class="sourceLineNo">114</span><a id="line.114"> *   &lt;td&gt;description of sequence that is hit&lt;/td&gt;</a>
+<span class="sourceLineNo">115</span><a id="line.115"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">116</span><a id="line.116"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">117</span><a id="line.117"> *   &lt;td&gt;queryStrand&lt;/td&gt;</a>
+<span class="sourceLineNo">118</span><a id="line.118"> *   &lt;td&gt;Strandedness of query in alignment. Takes values of "plus" and "minus"&lt;/td&gt;</a>
+<span class="sourceLineNo">119</span><a id="line.119"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">120</span><a id="line.120"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">121</span><a id="line.121"> *   &lt;td&gt;subjectStrand&lt;/td&gt;</a>
+<span class="sourceLineNo">122</span><a id="line.122"> *   &lt;td&gt;Strandedness of query in alignment. Takes values of "plus" and "minus"&lt;/td&gt;</a>
+<span class="sourceLineNo">123</span><a id="line.123"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">124</span><a id="line.124"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">125</span><a id="line.125"> *   &lt;td&gt;queryFrame&lt;/td&gt;</a>
+<span class="sourceLineNo">126</span><a id="line.126"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">127</span><a id="line.127"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">128</span><a id="line.128"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">129</span><a id="line.129"> *   &lt;td&gt;subjectFrame&lt;/td&gt;</a>
+<span class="sourceLineNo">130</span><a id="line.130"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">131</span><a id="line.131"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">132</span><a id="line.132"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">133</span><a id="line.133"> *   &lt;td&gt;querySequenceStart&lt;/td&gt;</a>
+<span class="sourceLineNo">134</span><a id="line.134"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">135</span><a id="line.135"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">136</span><a id="line.136"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">137</span><a id="line.137"> *   &lt;td&gt;querySequenceEnd&lt;/td&gt;</a>
+<span class="sourceLineNo">138</span><a id="line.138"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">139</span><a id="line.139"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">140</span><a id="line.140"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">141</span><a id="line.141"> *   &lt;td&gt;subjectSequenceStart&lt;/td&gt;</a>
+<span class="sourceLineNo">142</span><a id="line.142"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">143</span><a id="line.143"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">144</span><a id="line.144"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">145</span><a id="line.145"> *   &lt;td&gt;subjectSequenceEnd&lt;/td&gt;</a>
+<span class="sourceLineNo">146</span><a id="line.146"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">147</span><a id="line.147"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">148</span><a id="line.148"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">149</span><a id="line.149"> *   &lt;td&gt;score&lt;/td&gt;</a>
+<span class="sourceLineNo">150</span><a id="line.150"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">151</span><a id="line.151"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">152</span><a id="line.152"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">153</span><a id="line.153"> *   &lt;td&gt;expectValue&lt;/td&gt;</a>
+<span class="sourceLineNo">154</span><a id="line.154"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">155</span><a id="line.155"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">156</span><a id="line.156"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">157</span><a id="line.157"> *   &lt;td&gt;pValue&lt;/td&gt;</a>
+<span class="sourceLineNo">158</span><a id="line.158"> *   &lt;td&gt;self-evident&lt;/td&gt;</a>
+<span class="sourceLineNo">159</span><a id="line.159"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">160</span><a id="line.160"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">161</span><a id="line.161"> *</a>
+<span class="sourceLineNo">162</span><a id="line.162"> * @author Keith James</a>
+<span class="sourceLineNo">163</span><a id="line.163"> * @author Greg Cox</a>
+<span class="sourceLineNo">164</span><a id="line.164"> * @since 1.2</a>
+<span class="sourceLineNo">165</span><a id="line.165"> */</a>
+<span class="sourceLineNo">166</span><a id="line.166">public class BlastLikeSearchBuilder implements SearchBuilder</a>
+<span class="sourceLineNo">167</span><a id="line.167">{</a>
+<span class="sourceLineNo">168</span><a id="line.168">    // Supplier of instances of searched databases</a>
+<span class="sourceLineNo">169</span><a id="line.169">    private SequenceDBInstallation subjectDBs;</a>
+<span class="sourceLineNo">170</span><a id="line.170">    // Holder for all query sequences</a>
+<span class="sourceLineNo">171</span><a id="line.171">    private SequenceDB querySeqHolder;</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">    // The ID of the database searched</a>
+<span class="sourceLineNo">174</span><a id="line.174">    private String databaseID;</a>
+<span class="sourceLineNo">175</span><a id="line.175">    // The ID of the query sequence</a>
+<span class="sourceLineNo">176</span><a id="line.176">    private String queryID;</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">    // Hit and Result annotation</a>
+<span class="sourceLineNo">179</span><a id="line.179">    private Annotation resultAnnotation;</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">    // Data holders for search result properties</a>
+<span class="sourceLineNo">182</span><a id="line.182">    private Map resultPreAnnotation;</a>
+<span class="sourceLineNo">183</span><a id="line.183">    private Map searchParameters;</a>
+<span class="sourceLineNo">184</span><a id="line.184">    private Map hitData;</a>
+<span class="sourceLineNo">185</span><a id="line.185">    private Map subHitData;</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">    private SymbolTokenization tokenParser;</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">    private List hits;</a>
+<span class="sourceLineNo">190</span><a id="line.190">    private List subHits;</a>
+<span class="sourceLineNo">191</span><a id="line.191"></a>
+<span class="sourceLineNo">192</span><a id="line.192">    private SeqSimilaritySearchSubHit [] subs;</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">    // Flag indicating whether there are more results in the stream</a>
+<span class="sourceLineNo">195</span><a id="line.195">    private boolean moreSearchesAvailable = false;</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">    // List to accept all results in the stream</a>
+<span class="sourceLineNo">198</span><a id="line.198">    private List target;</a>
+<span class="sourceLineNo">199</span><a id="line.199"></a>
+<span class="sourceLineNo">200</span><a id="line.200">    /**</a>
+<span class="sourceLineNo">201</span><a id="line.201">     * Creates a new &lt;code&gt;BlastLikeSearchBuilder&lt;/code&gt; which will</a>
+<span class="sourceLineNo">202</span><a id="line.202">     * instantiate results into the &lt;code&gt;List&lt;/code&gt; target.</a>
+<span class="sourceLineNo">203</span><a id="line.203">     *</a>
+<span class="sourceLineNo">204</span><a id="line.204">     * @param target a &lt;code&gt;List&lt;/code&gt;.</a>
+<span class="sourceLineNo">205</span><a id="line.205">     */</a>
+<span class="sourceLineNo">206</span><a id="line.206">    public BlastLikeSearchBuilder(List target)</a>
+<span class="sourceLineNo">207</span><a id="line.207">    {</a>
+<span class="sourceLineNo">208</span><a id="line.208">        this.target = target;</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">        resultPreAnnotation = new HashMap();</a>
+<span class="sourceLineNo">211</span><a id="line.211">        searchParameters    = new HashMap();</a>
+<span class="sourceLineNo">212</span><a id="line.212">        hitData             = new HashMap();</a>
+<span class="sourceLineNo">213</span><a id="line.213">        subHitData          = new HashMap();</a>
+<span class="sourceLineNo">214</span><a id="line.214">    }</a>
+<span class="sourceLineNo">215</span><a id="line.215"></a>
+<span class="sourceLineNo">216</span><a id="line.216">    /**</a>
+<span class="sourceLineNo">217</span><a id="line.217">     * Creates a new &lt;code&gt;BlastLikeSearchBuilder&lt;/code&gt; which will</a>
+<span class="sourceLineNo">218</span><a id="line.218">     * instantiate results into the &lt;code&gt;List&lt;/code&gt; target.</a>
+<span class="sourceLineNo">219</span><a id="line.219">     *</a>
+<span class="sourceLineNo">220</span><a id="line.220">     * @param target a &lt;code&gt;List&lt;/code&gt;.</a>
+<span class="sourceLineNo">221</span><a id="line.221">     * @param querySeqHolder a &lt;code&gt;SequenceDB&lt;/code&gt; of query</a>
+<span class="sourceLineNo">222</span><a id="line.222">     * sequences.</a>
+<span class="sourceLineNo">223</span><a id="line.223">     * @param subjectDBs a &lt;code&gt;SequenceDBInstallation&lt;/code&gt; of</a>
+<span class="sourceLineNo">224</span><a id="line.224">     * databases searched.</a>
+<span class="sourceLineNo">225</span><a id="line.225">     */</a>
+<span class="sourceLineNo">226</span><a id="line.226">    public BlastLikeSearchBuilder(List                   target,</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                  SequenceDB             querySeqHolder,</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                  SequenceDBInstallation subjectDBs)</a>
+<span class="sourceLineNo">229</span><a id="line.229">    {</a>
+<span class="sourceLineNo">230</span><a id="line.230">        this(target);</a>
+<span class="sourceLineNo">231</span><a id="line.231">        this.querySeqHolder = querySeqHolder;</a>
+<span class="sourceLineNo">232</span><a id="line.232">        this.subjectDBs = subjectDBs;</a>
+<span class="sourceLineNo">233</span><a id="line.233">    }</a>
+<span class="sourceLineNo">234</span><a id="line.234"></a>
+<span class="sourceLineNo">235</span><a id="line.235">    public SeqSimilaritySearchResult makeSearchResult()</a>
+<span class="sourceLineNo">236</span><a id="line.236">        throws BioException</a>
+<span class="sourceLineNo">237</span><a id="line.237">    {</a>
+<span class="sourceLineNo">238</span><a id="line.238">        if (querySeqHolder == null)</a>
+<span class="sourceLineNo">239</span><a id="line.239">            throw new BioException("Running BlastLikeSearchBuilder with null query SequenceDB");</a>
+<span class="sourceLineNo">240</span><a id="line.240"></a>
+<span class="sourceLineNo">241</span><a id="line.241">        if (subjectDBs == null)</a>
+<span class="sourceLineNo">242</span><a id="line.242">            throw new BioException("Running BlastLikeSearchBuilder with null subject SequenceDB installation");</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">        Sequence query = querySeqHolder.getSequence(queryID);</a>
+<span class="sourceLineNo">245</span><a id="line.245">        if (query == null)</a>
+<span class="sourceLineNo">246</span><a id="line.246">            throw new BioException("Failed to retrieve query sequence from queryDB using ID '"</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                   + queryID</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                   + "' (sequence was null)");</a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250">        SequenceDB subjectDB = (SequenceDB) subjectDBs.getSequenceDB(databaseID);</a>
+<span class="sourceLineNo">251</span><a id="line.251">        if (subjectDB == null)</a>
+<span class="sourceLineNo">252</span><a id="line.252">            throw new BioException("Failed to retrieve database from installation using ID '"</a>
+<span class="sourceLineNo">253</span><a id="line.253">                                   + databaseID</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                   + "' (database was null)");</a>
+<span class="sourceLineNo">255</span><a id="line.255"></a>
+<span class="sourceLineNo">256</span><a id="line.256">        return new SimpleSeqSimilaritySearchResult(query,</a>
+<span class="sourceLineNo">257</span><a id="line.257">                                                   subjectDB,</a>
+<span class="sourceLineNo">258</span><a id="line.258">                                                   searchParameters,</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                                   hits,</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                                   resultAnnotation);</a>
+<span class="sourceLineNo">261</span><a id="line.261">    }</a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">    /**</a>
+<span class="sourceLineNo">264</span><a id="line.264">     * &lt;code&gt;setQuerySeqHolder&lt;/code&gt; sets the query sequence holder</a>
+<span class="sourceLineNo">265</span><a id="line.265">     * to a specific database.</a>
+<span class="sourceLineNo">266</span><a id="line.266">     *</a>
+<span class="sourceLineNo">267</span><a id="line.267">     * @param querySeqHolder a &lt;code&gt;SequenceDB&lt;/code&gt; containing the</a>
+<span class="sourceLineNo">268</span><a id="line.268">     * query sequence(s).</a>
+<span class="sourceLineNo">269</span><a id="line.269">     */</a>
+<span class="sourceLineNo">270</span><a id="line.270">    public void setQuerySeqHolder(SequenceDB querySeqHolder)</a>
+<span class="sourceLineNo">271</span><a id="line.271">    {</a>
+<span class="sourceLineNo">272</span><a id="line.272">        this.querySeqHolder = querySeqHolder;</a>
+<span class="sourceLineNo">273</span><a id="line.273">    }</a>
+<span class="sourceLineNo">274</span><a id="line.274"></a>
+<span class="sourceLineNo">275</span><a id="line.275">    /**</a>
+<span class="sourceLineNo">276</span><a id="line.276">     * &lt;code&gt;setSubjectDBInstallation&lt;/code&gt; sets the subject database</a>
+<span class="sourceLineNo">277</span><a id="line.277">     * holder to a specific installation.</a>
+<span class="sourceLineNo">278</span><a id="line.278">     *</a>
+<span class="sourceLineNo">279</span><a id="line.279">     * @param subjectDBs a &lt;code&gt;SequenceDBInstallation&lt;/code&gt;</a>
+<span class="sourceLineNo">280</span><a id="line.280">     * containing the subject database(s)</a>
+<span class="sourceLineNo">281</span><a id="line.281">     */</a>
+<span class="sourceLineNo">282</span><a id="line.282">    public void setSubjectDBInstallation(SequenceDBInstallation subjectDBs)</a>
+<span class="sourceLineNo">283</span><a id="line.283">    {</a>
+<span class="sourceLineNo">284</span><a id="line.284">        this.subjectDBs = subjectDBs;</a>
+<span class="sourceLineNo">285</span><a id="line.285">    }</a>
+<span class="sourceLineNo">286</span><a id="line.286"></a>
+<span class="sourceLineNo">287</span><a id="line.287">    public void setQueryID(String queryID)</a>
+<span class="sourceLineNo">288</span><a id="line.288">    {</a>
+<span class="sourceLineNo">289</span><a id="line.289">        this.queryID = queryID;</a>
+<span class="sourceLineNo">290</span><a id="line.290">        addSearchProperty("queryId", queryID);</a>
+<span class="sourceLineNo">291</span><a id="line.291">    }</a>
+<span class="sourceLineNo">292</span><a id="line.292"></a>
+<span class="sourceLineNo">293</span><a id="line.293">    public void setDatabaseID(String databaseID)</a>
+<span class="sourceLineNo">294</span><a id="line.294">    {</a>
+<span class="sourceLineNo">295</span><a id="line.295">        this.databaseID = databaseID;</a>
+<span class="sourceLineNo">296</span><a id="line.296">        addSearchProperty("databaseId", databaseID);</a>
+<span class="sourceLineNo">297</span><a id="line.297">    }</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299">    public boolean getMoreSearches()</a>
+<span class="sourceLineNo">300</span><a id="line.300">    {</a>
+<span class="sourceLineNo">301</span><a id="line.301">        return moreSearchesAvailable;</a>
+<span class="sourceLineNo">302</span><a id="line.302">    }</a>
+<span class="sourceLineNo">303</span><a id="line.303"></a>
+<span class="sourceLineNo">304</span><a id="line.304">    public void setMoreSearches(boolean value)</a>
+<span class="sourceLineNo">305</span><a id="line.305">    {</a>
+<span class="sourceLineNo">306</span><a id="line.306">        moreSearchesAvailable = value;</a>
+<span class="sourceLineNo">307</span><a id="line.307">    }</a>
+<span class="sourceLineNo">308</span><a id="line.308"></a>
+<span class="sourceLineNo">309</span><a id="line.309">    public void startSearch()</a>
+<span class="sourceLineNo">310</span><a id="line.310">    {</a>
+<span class="sourceLineNo">311</span><a id="line.311">        hits = new ArrayList();</a>
+<span class="sourceLineNo">312</span><a id="line.312">    }</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">    public void endSearch()</a>
+<span class="sourceLineNo">315</span><a id="line.315">    {</a>
+<span class="sourceLineNo">316</span><a id="line.316">        try</a>
+<span class="sourceLineNo">317</span><a id="line.317">        {</a>
+<span class="sourceLineNo">318</span><a id="line.318">            resultAnnotation = AnnotationFactory.makeAnnotation(resultPreAnnotation);</a>
+<span class="sourceLineNo">319</span><a id="line.319">            target.add(makeSearchResult());</a>
+<span class="sourceLineNo">320</span><a id="line.320">        }</a>
+<span class="sourceLineNo">321</span><a id="line.321">        catch (BioException be)</a>
+<span class="sourceLineNo">322</span><a id="line.322">        {</a>
+<span class="sourceLineNo">323</span><a id="line.323">            System.err.println("Failed to build SeqSimilaritySearchResult:");</a>
+<span class="sourceLineNo">324</span><a id="line.324">            be.printStackTrace();</a>
+<span class="sourceLineNo">325</span><a id="line.325">        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">    }</a>
+<span class="sourceLineNo">327</span><a id="line.327"></a>
+<span class="sourceLineNo">328</span><a id="line.328">    public void startHeader()</a>
+<span class="sourceLineNo">329</span><a id="line.329">    {</a>
+<span class="sourceLineNo">330</span><a id="line.330">        resultPreAnnotation.clear();</a>
+<span class="sourceLineNo">331</span><a id="line.331">        searchParameters.clear();</a>
+<span class="sourceLineNo">332</span><a id="line.332">    }</a>
+<span class="sourceLineNo">333</span><a id="line.333"></a>
+<span class="sourceLineNo">334</span><a id="line.334">    public void endHeader() { }</a>
+<span class="sourceLineNo">335</span><a id="line.335"></a>
+<span class="sourceLineNo">336</span><a id="line.336">    public void startHit()</a>
+<span class="sourceLineNo">337</span><a id="line.337">    {</a>
+<span class="sourceLineNo">338</span><a id="line.338">        hitData.clear();</a>
+<span class="sourceLineNo">339</span><a id="line.339">        subHits = new ArrayList();</a>
+<span class="sourceLineNo">340</span><a id="line.340">    }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">    public void endHit()</a>
+<span class="sourceLineNo">343</span><a id="line.343">    {</a>
+<span class="sourceLineNo">344</span><a id="line.344">        hits.add(makeHit());</a>
+<span class="sourceLineNo">345</span><a id="line.345">    }</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">    public void startSubHit()</a>
+<span class="sourceLineNo">348</span><a id="line.348">    {</a>
+<span class="sourceLineNo">349</span><a id="line.349">        subHitData.clear();</a>
+<span class="sourceLineNo">350</span><a id="line.350">    }</a>
+<span class="sourceLineNo">351</span><a id="line.351"></a>
+<span class="sourceLineNo">352</span><a id="line.352">    public void endSubHit()</a>
+<span class="sourceLineNo">353</span><a id="line.353">    {</a>
+<span class="sourceLineNo">354</span><a id="line.354">        try</a>
+<span class="sourceLineNo">355</span><a id="line.355">        {</a>
+<span class="sourceLineNo">356</span><a id="line.356">            subHits.add(makeSubHit());</a>
+<span class="sourceLineNo">357</span><a id="line.357">        }</a>
+<span class="sourceLineNo">358</span><a id="line.358">        catch (BioException be)</a>
+<span class="sourceLineNo">359</span><a id="line.359">        {</a>
+<span class="sourceLineNo">360</span><a id="line.360">            be.printStackTrace();</a>
+<span class="sourceLineNo">361</span><a id="line.361">        }</a>
+<span class="sourceLineNo">362</span><a id="line.362">    }</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">    public void addSearchProperty(Object key, Object value)</a>
+<span class="sourceLineNo">365</span><a id="line.365">    {</a>
+<span class="sourceLineNo">366</span><a id="line.366">        resultPreAnnotation.put(key, value);</a>
+<span class="sourceLineNo">367</span><a id="line.367">    }</a>
+<span class="sourceLineNo">368</span><a id="line.368"></a>
+<span class="sourceLineNo">369</span><a id="line.369">    public void addHitProperty(Object key, Object value)</a>
+<span class="sourceLineNo">370</span><a id="line.370">    {</a>
+<span class="sourceLineNo">371</span><a id="line.371">        hitData.put(key, value);</a>
+<span class="sourceLineNo">372</span><a id="line.372">    }</a>
+<span class="sourceLineNo">373</span><a id="line.373"></a>
+<span class="sourceLineNo">374</span><a id="line.374">    public void addSubHitProperty(Object key, Object value)</a>
+<span class="sourceLineNo">375</span><a id="line.375">    {</a>
+<span class="sourceLineNo">376</span><a id="line.376">        subHitData.put(key, value);</a>
+<span class="sourceLineNo">377</span><a id="line.377">    }</a>
+<span class="sourceLineNo">378</span><a id="line.378"></a>
+<span class="sourceLineNo">379</span><a id="line.379">    /**</a>
+<span class="sourceLineNo">380</span><a id="line.380">     * &lt;code&gt;makeHit&lt;/code&gt; creates a new hit. The hit's strand data</a>
+<span class="sourceLineNo">381</span><a id="line.381">     * is the same as that of the highest-scoring sub-hit. The hit's</a>
+<span class="sourceLineNo">382</span><a id="line.382">     * start/end data are the same as the extent of the sub-hits on</a>
+<span class="sourceLineNo">383</span><a id="line.383">     * that strand.</a>
+<span class="sourceLineNo">384</span><a id="line.384">     *</a>
+<span class="sourceLineNo">385</span><a id="line.385">     * @return a &lt;code&gt;SeqSimilaritySearchHit&lt;/code&gt;.</a>
+<span class="sourceLineNo">386</span><a id="line.386">     */</a>
+<span class="sourceLineNo">387</span><a id="line.387">    private SeqSimilaritySearchHit makeHit()</a>
+<span class="sourceLineNo">388</span><a id="line.388">    {</a>
+<span class="sourceLineNo">389</span><a id="line.389">        double sc = Double.NaN;</a>
+<span class="sourceLineNo">390</span><a id="line.390">        double ev = Double.NaN;</a>
+<span class="sourceLineNo">391</span><a id="line.391">        double pv = Double.NaN;</a>
+<span class="sourceLineNo">392</span><a id="line.392"></a>
+<span class="sourceLineNo">393</span><a id="line.393">        subs = (SeqSimilaritySearchSubHit []) subHits</a>
+<span class="sourceLineNo">394</span><a id="line.394">            .toArray(new SeqSimilaritySearchSubHit [subHits.size() - 1]);</a>
+<span class="sourceLineNo">395</span><a id="line.395"></a>
+<span class="sourceLineNo">396</span><a id="line.396">        // Sort to get highest score</a>
+<span class="sourceLineNo">397</span><a id="line.397">        Arrays.sort(subs, SeqSimilaritySearchSubHit.byScore);</a>
+<span class="sourceLineNo">398</span><a id="line.398">        sc = subs[subs.length - 1].getScore();</a>
+<span class="sourceLineNo">399</span><a id="line.399">        ev = subs[subs.length - 1].getEValue();</a>
+<span class="sourceLineNo">400</span><a id="line.400">        pv = subs[subs.length - 1].getPValue();</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">        // Check for any mixed or null strands</a>
+<span class="sourceLineNo">403</span><a id="line.403">        boolean    mixQueryStrand = false;</a>
+<span class="sourceLineNo">404</span><a id="line.404">        boolean  mixSubjectStrand = false;</a>
+<span class="sourceLineNo">405</span><a id="line.405">        boolean   nullQueryStrand = false;</a>
+<span class="sourceLineNo">406</span><a id="line.406">        boolean nullSubjectStrand = false;</a>
+<span class="sourceLineNo">407</span><a id="line.407"></a>
+<span class="sourceLineNo">408</span><a id="line.408">        // Start with index 0 value (arbitrarily)</a>
+<span class="sourceLineNo">409</span><a id="line.409">        Strand qStrand = subs[0].getQueryStrand();</a>
+<span class="sourceLineNo">410</span><a id="line.410">        Strand sStrand = subs[0].getSubjectStrand();</a>
+<span class="sourceLineNo">411</span><a id="line.411"></a>
+<span class="sourceLineNo">412</span><a id="line.412">        int qStart = subs[0].getQueryStart();</a>
+<span class="sourceLineNo">413</span><a id="line.413">        int qEnd   = subs[0].getQueryEnd();</a>
+<span class="sourceLineNo">414</span><a id="line.414">        int sStart = subs[0].getSubjectStart();</a>
+<span class="sourceLineNo">415</span><a id="line.415">        int sEnd   = subs[0].getSubjectEnd();</a>
+<span class="sourceLineNo">416</span><a id="line.416"></a>
+<span class="sourceLineNo">417</span><a id="line.417">        if (qStrand == null)</a>
+<span class="sourceLineNo">418</span><a id="line.418">            nullQueryStrand = true;</a>
+<span class="sourceLineNo">419</span><a id="line.419">        if (sStrand == null)</a>
+<span class="sourceLineNo">420</span><a id="line.420">            nullSubjectStrand = true;</a>
+<span class="sourceLineNo">421</span><a id="line.421"></a>
+<span class="sourceLineNo">422</span><a id="line.422">        // Compare all other values</a>
+<span class="sourceLineNo">423</span><a id="line.423">        for (int i = subs.length; --i &gt; 0;)</a>
+<span class="sourceLineNo">424</span><a id="line.424">        {</a>
+<span class="sourceLineNo">425</span><a id="line.425">            Strand qS = subs[i].getQueryStrand();</a>
+<span class="sourceLineNo">426</span><a id="line.426">            Strand sS = subs[i].getSubjectStrand();</a>
+<span class="sourceLineNo">427</span><a id="line.427"></a>
+<span class="sourceLineNo">428</span><a id="line.428">            if (qS == null)</a>
+<span class="sourceLineNo">429</span><a id="line.429">                nullQueryStrand = true;</a>
+<span class="sourceLineNo">430</span><a id="line.430">            if (sS == null)</a>
+<span class="sourceLineNo">431</span><a id="line.431">                nullSubjectStrand = true;</a>
+<span class="sourceLineNo">432</span><a id="line.432"></a>
+<span class="sourceLineNo">433</span><a id="line.433">            if (qS != qStrand)</a>
+<span class="sourceLineNo">434</span><a id="line.434">                mixQueryStrand = true;</a>
+<span class="sourceLineNo">435</span><a id="line.435">            if (sS != sStrand)</a>
+<span class="sourceLineNo">436</span><a id="line.436">                mixSubjectStrand = true;</a>
+<span class="sourceLineNo">437</span><a id="line.437"></a>
+<span class="sourceLineNo">438</span><a id="line.438">            qStart = Math.min(qStart, subs[i].getQueryStart());</a>
+<span class="sourceLineNo">439</span><a id="line.439">            qEnd   = Math.max(qEnd,   subs[i].getQueryEnd());</a>
+<span class="sourceLineNo">440</span><a id="line.440"></a>
+<span class="sourceLineNo">441</span><a id="line.441">            sStart = Math.min(sStart, subs[i].getSubjectStart());</a>
+<span class="sourceLineNo">442</span><a id="line.442">            sEnd   = Math.max(sEnd,   subs[i].getSubjectEnd());</a>
+<span class="sourceLineNo">443</span><a id="line.443">        }</a>
+<span class="sourceLineNo">444</span><a id="line.444"></a>
+<span class="sourceLineNo">445</span><a id="line.445">        // Note any mixed strand hits as unknown strand</a>
+<span class="sourceLineNo">446</span><a id="line.446">        if (mixQueryStrand)</a>
+<span class="sourceLineNo">447</span><a id="line.447">            qStrand = StrandedFeature.UNKNOWN;</a>
+<span class="sourceLineNo">448</span><a id="line.448">        if (mixSubjectStrand)</a>
+<span class="sourceLineNo">449</span><a id="line.449">            sStrand = StrandedFeature.UNKNOWN;</a>
+<span class="sourceLineNo">450</span><a id="line.450"></a>
+<span class="sourceLineNo">451</span><a id="line.451">        // Any null strands from protein sequences</a>
+<span class="sourceLineNo">452</span><a id="line.452">        if (nullQueryStrand)</a>
+<span class="sourceLineNo">453</span><a id="line.453">            qStrand = null;</a>
+<span class="sourceLineNo">454</span><a id="line.454">        if (nullSubjectStrand)</a>
+<span class="sourceLineNo">455</span><a id="line.455">            sStrand = null;</a>
+<span class="sourceLineNo">456</span><a id="line.456"></a>
+<span class="sourceLineNo">457</span><a id="line.457">        String subjectID = (String) hitData.get("subjectId");</a>
+<span class="sourceLineNo">458</span><a id="line.458"></a>
+<span class="sourceLineNo">459</span><a id="line.459">        return new SimpleSeqSimilaritySearchHit(sc, ev, pv,</a>
+<span class="sourceLineNo">460</span><a id="line.460">                                                qStart, qEnd, qStrand,</a>
+<span class="sourceLineNo">461</span><a id="line.461">                                                sStart, sEnd, sStrand,</a>
+<span class="sourceLineNo">462</span><a id="line.462">                                                subjectID,</a>
+<span class="sourceLineNo">463</span><a id="line.463">                                                AnnotationFactory.makeAnnotation(hitData),</a>
+<span class="sourceLineNo">464</span><a id="line.464">                                                subHits);</a>
+<span class="sourceLineNo">465</span><a id="line.465">    }</a>
+<span class="sourceLineNo">466</span><a id="line.466"></a>
+<span class="sourceLineNo">467</span><a id="line.467">    /**</a>
+<span class="sourceLineNo">468</span><a id="line.468">     * &lt;code&gt;makeSubHit&lt;/code&gt; creates a new sub-hit.</a>
+<span class="sourceLineNo">469</span><a id="line.469">     *</a>
+<span class="sourceLineNo">470</span><a id="line.470">     * @return a &lt;code&gt;SeqSimilaritySearchSubHit&lt;/code&gt;.</a>
+<span class="sourceLineNo">471</span><a id="line.471">     *</a>
+<span class="sourceLineNo">472</span><a id="line.472">     * @exception BioException if an error occurs.</a>
+<span class="sourceLineNo">473</span><a id="line.473">     */</a>
+<span class="sourceLineNo">474</span><a id="line.474">    private SeqSimilaritySearchSubHit makeSubHit() throws BioException</a>
+<span class="sourceLineNo">475</span><a id="line.475">    {</a>
+<span class="sourceLineNo">476</span><a id="line.476">        // Try to get a valid TokenParser</a>
+<span class="sourceLineNo">477</span><a id="line.477">        if (tokenParser == null)</a>
+<span class="sourceLineNo">478</span><a id="line.478">        {</a>
+<span class="sourceLineNo">479</span><a id="line.479">            String identifier;</a>
+<span class="sourceLineNo">480</span><a id="line.480"></a>
+<span class="sourceLineNo">481</span><a id="line.481">            // Try explicit sequence type first</a>
+<span class="sourceLineNo">482</span><a id="line.482">            if (subHitData.containsKey("subjectSequenceType"))</a>
+<span class="sourceLineNo">483</span><a id="line.483">                identifier = (String) subHitData.get("subjectSequenceType");</a>
+<span class="sourceLineNo">484</span><a id="line.484">            // Otherwise try to resolve from the program name (only</a>
+<span class="sourceLineNo">485</span><a id="line.485">            // works for Blast)</a>
+<span class="sourceLineNo">486</span><a id="line.486">            else if (resultPreAnnotation.containsKey("program"))</a>
+<span class="sourceLineNo">487</span><a id="line.487">                identifier = (String) resultPreAnnotation.get("program");</a>
+<span class="sourceLineNo">488</span><a id="line.488">            else</a>
+<span class="sourceLineNo">489</span><a id="line.489">                throw new BioException("Failed to determine sequence type");</a>
+<span class="sourceLineNo">490</span><a id="line.490"></a>
+<span class="sourceLineNo">491</span><a id="line.491">            FiniteAlphabet alpha = AlphabetResolver.resolveAlphabet(identifier);</a>
+<span class="sourceLineNo">492</span><a id="line.492">            tokenParser = alpha.getTokenization("token");</a>
+<span class="sourceLineNo">493</span><a id="line.493">        }</a>
+<span class="sourceLineNo">494</span><a id="line.494"></a>
+<span class="sourceLineNo">495</span><a id="line.495">        // BLASTP output has the strands set null (protein sequences)</a>
+<span class="sourceLineNo">496</span><a id="line.496">        Strand qStrand = null;</a>
+<span class="sourceLineNo">497</span><a id="line.497">        Strand sStrand = null;</a>
+<span class="sourceLineNo">498</span><a id="line.498"></a>
+<span class="sourceLineNo">499</span><a id="line.499">        // Override where an explicit strand is given (FASTA DNA,</a>
+<span class="sourceLineNo">500</span><a id="line.500">        // BLASTN)</a>
+<span class="sourceLineNo">501</span><a id="line.501">        if (subHitData.containsKey("queryStrand"))</a>
+<span class="sourceLineNo">502</span><a id="line.502">            if (subHitData.get("queryStrand").equals("plus"))</a>
+<span class="sourceLineNo">503</span><a id="line.503">                qStrand = StrandedFeature.POSITIVE;</a>
+<span class="sourceLineNo">504</span><a id="line.504">            else</a>
+<span class="sourceLineNo">505</span><a id="line.505">                qStrand = StrandedFeature.NEGATIVE;</a>
+<span class="sourceLineNo">506</span><a id="line.506"></a>
+<span class="sourceLineNo">507</span><a id="line.507">        if (subHitData.containsKey("subjectStrand"))</a>
+<span class="sourceLineNo">508</span><a id="line.508">            if (subHitData.get("subjectStrand").equals("plus"))</a>
+<span class="sourceLineNo">509</span><a id="line.509">                sStrand = StrandedFeature.POSITIVE;</a>
+<span class="sourceLineNo">510</span><a id="line.510">            else</a>
+<span class="sourceLineNo">511</span><a id="line.511">                sStrand = StrandedFeature.NEGATIVE;</a>
+<span class="sourceLineNo">512</span><a id="line.512"></a>
+<span class="sourceLineNo">513</span><a id="line.513">        // Override where a frame is given as this contains strand</a>
+<span class="sourceLineNo">514</span><a id="line.514">        // information (BLASTX for query, TBLASTN for hit, TBLASTX for</a>
+<span class="sourceLineNo">515</span><a id="line.515">        // both)</a>
+<span class="sourceLineNo">516</span><a id="line.516">        if (subHitData.containsKey("queryFrame"))</a>
+<span class="sourceLineNo">517</span><a id="line.517">            if (((String) subHitData.get("queryFrame")).startsWith("plus"))</a>
+<span class="sourceLineNo">518</span><a id="line.518">                qStrand = StrandedFeature.POSITIVE;</a>
+<span class="sourceLineNo">519</span><a id="line.519">            else</a>
+<span class="sourceLineNo">520</span><a id="line.520">                qStrand = StrandedFeature.NEGATIVE;</a>
+<span class="sourceLineNo">521</span><a id="line.521"></a>
+<span class="sourceLineNo">522</span><a id="line.522">        if (subHitData.containsKey("subjectFrame"))</a>
+<span class="sourceLineNo">523</span><a id="line.523">            if (((String) subHitData.get("subjectFrame")).startsWith("plus"))</a>
+<span class="sourceLineNo">524</span><a id="line.524">                sStrand = StrandedFeature.POSITIVE;</a>
+<span class="sourceLineNo">525</span><a id="line.525">            else</a>
+<span class="sourceLineNo">526</span><a id="line.526">                sStrand = StrandedFeature.NEGATIVE;</a>
+<span class="sourceLineNo">527</span><a id="line.527"></a>
+<span class="sourceLineNo">528</span><a id="line.528">        // Get start/end</a>
+<span class="sourceLineNo">529</span><a id="line.529">        int qStart = Integer.parseInt((String) subHitData.get("querySequenceStart"));</a>
+<span class="sourceLineNo">530</span><a id="line.530">        int   qEnd = Integer.parseInt((String) subHitData.get("querySequenceEnd"));</a>
+<span class="sourceLineNo">531</span><a id="line.531">        int sStart = Integer.parseInt((String) subHitData.get("subjectSequenceStart"));</a>
+<span class="sourceLineNo">532</span><a id="line.532">        int   sEnd = Integer.parseInt((String) subHitData.get("subjectSequenceEnd"));</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">        // The start/end coordinates from BioJava XML don't follow the</a>
+<span class="sourceLineNo">535</span><a id="line.535">        // BioJava paradigm of start &lt; end, with orientation given by</a>
+<span class="sourceLineNo">536</span><a id="line.536">        // the strand property. Rather, they present start/end as</a>
+<span class="sourceLineNo">537</span><a id="line.537">        // displayed in BLAST output, with the coordinates being</a>
+<span class="sourceLineNo">538</span><a id="line.538">        // inverted on the reverse strand. We account for this here.</a>
+<span class="sourceLineNo">539</span><a id="line.539">        if (qStrand == StrandedFeature.NEGATIVE)</a>
+<span class="sourceLineNo">540</span><a id="line.540">        {</a>
+<span class="sourceLineNo">541</span><a id="line.541">            int swap = qStart;</a>
+<span class="sourceLineNo">542</span><a id="line.542">            qStart = qEnd;</a>
+<span class="sourceLineNo">543</span><a id="line.543">            qEnd   = swap;</a>
+<span class="sourceLineNo">544</span><a id="line.544">        }</a>
+<span class="sourceLineNo">545</span><a id="line.545"></a>
+<span class="sourceLineNo">546</span><a id="line.546">        if (sStrand == StrandedFeature.NEGATIVE)</a>
+<span class="sourceLineNo">547</span><a id="line.547">        {</a>
+<span class="sourceLineNo">548</span><a id="line.548">            int swap = sStart;</a>
+<span class="sourceLineNo">549</span><a id="line.549">            sStart = sEnd;</a>
+<span class="sourceLineNo">550</span><a id="line.550">            sEnd   = swap;</a>
+<span class="sourceLineNo">551</span><a id="line.551">        }</a>
+<span class="sourceLineNo">552</span><a id="line.552"></a>
+<span class="sourceLineNo">553</span><a id="line.553">        // Get scores</a>
+<span class="sourceLineNo">554</span><a id="line.554">        double sc = Double.NaN;</a>
+<span class="sourceLineNo">555</span><a id="line.555">        double ev = Double.NaN;</a>
+<span class="sourceLineNo">556</span><a id="line.556">        double pv = Double.NaN;</a>
+<span class="sourceLineNo">557</span><a id="line.557"></a>
+<span class="sourceLineNo">558</span><a id="line.558">        if (subHitData.containsKey("score"))</a>
+<span class="sourceLineNo">559</span><a id="line.559">            sc = Double.parseDouble((String) subHitData.get("score"));</a>
+<span class="sourceLineNo">560</span><a id="line.560"></a>
+<span class="sourceLineNo">561</span><a id="line.561">        if (subHitData.containsKey("expectValue"))</a>
+<span class="sourceLineNo">562</span><a id="line.562">        {</a>
+<span class="sourceLineNo">563</span><a id="line.563">            String val = (String) subHitData.get("expectValue");</a>
+<span class="sourceLineNo">564</span><a id="line.564">            // Blast sometimes uses invalid formatting such as 'e-156'</a>
+<span class="sourceLineNo">565</span><a id="line.565">            // rather than '1e-156'</a>
+<span class="sourceLineNo">566</span><a id="line.566">            if (val.startsWith("e"))</a>
+<span class="sourceLineNo">567</span><a id="line.567">                ev = Double.parseDouble("1" + val);</a>
+<span class="sourceLineNo">568</span><a id="line.568">            else</a>
+<span class="sourceLineNo">569</span><a id="line.569">                ev = Double.parseDouble(val);</a>
+<span class="sourceLineNo">570</span><a id="line.570">        }</a>
+<span class="sourceLineNo">571</span><a id="line.571"></a>
+<span class="sourceLineNo">572</span><a id="line.572">        if (subHitData.containsKey("pValue"))</a>
+<span class="sourceLineNo">573</span><a id="line.573">            pv = Double.parseDouble((String) subHitData.get("pValue"));</a>
+<span class="sourceLineNo">574</span><a id="line.574"></a>
+<span class="sourceLineNo">575</span><a id="line.575">        Map labelMap = new SmallMap();</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577">        // Note that the following is removing the raw sequences</a>
+<span class="sourceLineNo">578</span><a id="line.578">        StringBuffer tokenBuffer = new StringBuffer(1024);</a>
+<span class="sourceLineNo">579</span><a id="line.579">        tokenBuffer.append((String) subHitData.remove("querySequence"));</a>
+<span class="sourceLineNo">580</span><a id="line.580">        labelMap.put(SeqSimilaritySearchSubHit.QUERY_LABEL,</a>
+<span class="sourceLineNo">581</span><a id="line.581">                     new SimpleSymbolList(tokenParser, tokenBuffer.substring(0)));</a>
+<span class="sourceLineNo">582</span><a id="line.582"></a>
+<span class="sourceLineNo">583</span><a id="line.583">        tokenBuffer = new StringBuffer(1024);</a>
+<span class="sourceLineNo">584</span><a id="line.584">        tokenBuffer.append((String) subHitData.remove("subjectSequence"));</a>
+<span class="sourceLineNo">585</span><a id="line.585">        labelMap.put(hitData.get("subjectId"),</a>
+<span class="sourceLineNo">586</span><a id="line.586">                     new SimpleSymbolList(tokenParser, tokenBuffer.substring(0)));</a>
+<span class="sourceLineNo">587</span><a id="line.587"></a>
+<span class="sourceLineNo">588</span><a id="line.588">        return new SimpleSeqSimilaritySearchSubHit(sc, ev, pv,</a>
+<span class="sourceLineNo">589</span><a id="line.589">                                                   qStart, qEnd, qStrand,</a>
+<span class="sourceLineNo">590</span><a id="line.590">                                                   sStart, sEnd, sStrand,</a>
+<span class="sourceLineNo">591</span><a id="line.591">                                                   new SimpleAlignment(labelMap),</a>
+<span class="sourceLineNo">592</span><a id="line.592">                                                   AnnotationFactory.makeAnnotation(subHitData));</a>
+<span class="sourceLineNo">593</span><a id="line.593">    }</a>
+<span class="sourceLineNo">594</span><a id="line.594">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

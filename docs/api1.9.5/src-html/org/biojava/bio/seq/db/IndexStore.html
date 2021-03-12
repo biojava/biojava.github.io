@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.seq.db;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.Set;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.seq.io.SequenceBuilderFactory;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.bio.seq.io.SequenceFormat;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">/**</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * This defines the objects that IndexedSequenceDB uses to store all of the</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * database state, such as name, format, sequence builder and the actual file</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * offsets.</a>
+<span class="sourceLineNo">035</span><a id="line.35"> *</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * You should only ever have to instantiate an implementation of this. Don't</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * call any of the inerface methods directly. They are intended for</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * IndexedSequenceDB, not you.</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * In general, these objects should be transactional. Calls to store should add</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * the index to temporary storage. When commit is invoked, these indices should</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * all be added to the permanent storage. When rollback is invoked, these</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * indexes should be discarded. If commit fails for any reason, it should leave</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * the permanent storage in the pre-commit status.</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">047</span><a id="line.47"> */</a>
+<span class="sourceLineNo">048</span><a id="line.48">public interface IndexStore {</a>
+<span class="sourceLineNo">049</span><a id="line.49">  /**</a>
+<span class="sourceLineNo">050</span><a id="line.50">   * Add the Index to the store.</a>
+<span class="sourceLineNo">051</span><a id="line.51">   * &lt;p&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52">   * This method should be transactional. If the store fails, the IndexStore</a>
+<span class="sourceLineNo">053</span><a id="line.53">   * should be left in its original state.</a>
+<span class="sourceLineNo">054</span><a id="line.54">   * &lt;p&gt;</a>
+<span class="sourceLineNo">055</span><a id="line.55">   * If the file of the Index is not known yet, it is the</a>
+<span class="sourceLineNo">056</span><a id="line.56">   * responsibility of the IndexStore to add it to the set returned by</a>
+<span class="sourceLineNo">057</span><a id="line.57">   * getFiles.</a>
+<span class="sourceLineNo">058</span><a id="line.58">   *</a>
+<span class="sourceLineNo">059</span><a id="line.59">   * @param indx the Index to add</a>
+<span class="sourceLineNo">060</span><a id="line.60">   * @throws IllegalIDException if the index has an invalid ID field</a>
+<span class="sourceLineNo">061</span><a id="line.61">   * @throws BioException if the store failed</a>
+<span class="sourceLineNo">062</span><a id="line.62">   */</a>
+<span class="sourceLineNo">063</span><a id="line.63">  void store(Index indx) throws IllegalIDException, BioException;</a>
+<span class="sourceLineNo">064</span><a id="line.64">  </a>
+<span class="sourceLineNo">065</span><a id="line.65">  /**</a>
+<span class="sourceLineNo">066</span><a id="line.66">   * Commit the stored indices to permanent storage.</a>
+<span class="sourceLineNo">067</span><a id="line.67">   *</a>
+<span class="sourceLineNo">068</span><a id="line.68">   * @throws BioException if for any reason the commit fails</a>
+<span class="sourceLineNo">069</span><a id="line.69">   */</a>
+<span class="sourceLineNo">070</span><a id="line.70">  void commit() throws BioException;</a>
+<span class="sourceLineNo">071</span><a id="line.71">  </a>
+<span class="sourceLineNo">072</span><a id="line.72">  /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">   * Discard all uncommited changes.</a>
+<span class="sourceLineNo">074</span><a id="line.74">   */</a>
+<span class="sourceLineNo">075</span><a id="line.75">  void rollback();</a>
+<span class="sourceLineNo">076</span><a id="line.76">  </a>
+<span class="sourceLineNo">077</span><a id="line.77">  /**</a>
+<span class="sourceLineNo">078</span><a id="line.78">   * Fetch an Index based upon an ID.</a>
+<span class="sourceLineNo">079</span><a id="line.79">   *</a>
+<span class="sourceLineNo">080</span><a id="line.80">   * @param id  The ID of the sequence Index to retrieve</a>
+<span class="sourceLineNo">081</span><a id="line.81">   * @throws IllegalIDException if the ID couldn't be found</a>
+<span class="sourceLineNo">082</span><a id="line.82">   * @throws BioException if the fetch fails in the underlying storage mechanism</a>
+<span class="sourceLineNo">083</span><a id="line.83">   */</a>
+<span class="sourceLineNo">084</span><a id="line.84">  Index fetch(String id) throws IllegalIDException, BioException;</a>
+<span class="sourceLineNo">085</span><a id="line.85">  </a>
+<span class="sourceLineNo">086</span><a id="line.86">  /**</a>
+<span class="sourceLineNo">087</span><a id="line.87">   * Retrieve the name of this store. This will be reflected as the name of the</a>
+<span class="sourceLineNo">088</span><a id="line.88">   * IndexedSequenceDB.</a>
+<span class="sourceLineNo">089</span><a id="line.89">   *</a>
+<span class="sourceLineNo">090</span><a id="line.90">   * @return the String name of the index</a>
+<span class="sourceLineNo">091</span><a id="line.91">   */</a>
+<span class="sourceLineNo">092</span><a id="line.92">  String getName();</a>
+<span class="sourceLineNo">093</span><a id="line.93">  </a>
+<span class="sourceLineNo">094</span><a id="line.94">  /**</a>
+<span class="sourceLineNo">095</span><a id="line.95">   * Retrieve the set of all current IDs.</a>
+<span class="sourceLineNo">096</span><a id="line.96">   * &lt;p&gt;</a>
+<span class="sourceLineNo">097</span><a id="line.97">   * This set should either be immutable, or modifiable totally</a>
+<span class="sourceLineNo">098</span><a id="line.98">   * separately from the IndexStore.</a>
+<span class="sourceLineNo">099</span><a id="line.99">   *</a>
+<span class="sourceLineNo">100</span><a id="line.100">   * @return a Set of all legal IDs</a>
+<span class="sourceLineNo">101</span><a id="line.101">   */</a>
+<span class="sourceLineNo">102</span><a id="line.102">  Set getIDs();</a>
+<span class="sourceLineNo">103</span><a id="line.103">  </a>
+<span class="sourceLineNo">104</span><a id="line.104">  /**</a>
+<span class="sourceLineNo">105</span><a id="line.105">   * Retrieve the Set of files that are currently indexed.</a>
+<span class="sourceLineNo">106</span><a id="line.106">   */</a>
+<span class="sourceLineNo">107</span><a id="line.107">  Set getFiles();</a>
+<span class="sourceLineNo">108</span><a id="line.108">  </a>
+<span class="sourceLineNo">109</span><a id="line.109">  /**</a>
+<span class="sourceLineNo">110</span><a id="line.110">   * Retrieve the format of the index file.</a>
+<span class="sourceLineNo">111</span><a id="line.111">   * &lt;p&gt;</a>
+<span class="sourceLineNo">112</span><a id="line.112">   * This set should either be immutable, or modifiable totally</a>
+<span class="sourceLineNo">113</span><a id="line.113">   * separately from the IndexStore.</a>
+<span class="sourceLineNo">114</span><a id="line.114">   *</a>
+<span class="sourceLineNo">115</span><a id="line.115">   * @return a Set of all indexed files</a>
+<span class="sourceLineNo">116</span><a id="line.116">   */</a>
+<span class="sourceLineNo">117</span><a id="line.117">  SequenceFormat getFormat();</a>
+<span class="sourceLineNo">118</span><a id="line.118">  </a>
+<span class="sourceLineNo">119</span><a id="line.119">  /**</a>
+<span class="sourceLineNo">120</span><a id="line.120">   * Retrieve the SequenceBuilderFactory used to build Sequence instances.</a>
+<span class="sourceLineNo">121</span><a id="line.121">   *</a>
+<span class="sourceLineNo">122</span><a id="line.122">   * @return the associated SequenceBuilderFactory</a>
+<span class="sourceLineNo">123</span><a id="line.123">   */</a>
+<span class="sourceLineNo">124</span><a id="line.124">  SequenceBuilderFactory getSBFactory();</a>
+<span class="sourceLineNo">125</span><a id="line.125">  </a>
+<span class="sourceLineNo">126</span><a id="line.126">  /**</a>
+<span class="sourceLineNo">127</span><a id="line.127">   * Retrieve the symbol parser used to turn the sequence characters</a>
+<span class="sourceLineNo">128</span><a id="line.128">   * into Symobl objects.</a>
+<span class="sourceLineNo">129</span><a id="line.129">   *</a>
+<span class="sourceLineNo">130</span><a id="line.130">   * @return the associated SymbolParser</a>
+<span class="sourceLineNo">131</span><a id="line.131">   */</a>
+<span class="sourceLineNo">132</span><a id="line.132">  SymbolTokenization getSymbolParser();</a>
+<span class="sourceLineNo">133</span><a id="line.133">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

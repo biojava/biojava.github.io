@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/**</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *  BioJava development code This code may be freely distributed and modified</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *  under the terms of the GNU Lesser General Public Licence. This should be</a>
+<span class="sourceLineNo">004</span><a id="line.4"> *  distributed with the code. If you do not have a copy, see:</a>
+<span class="sourceLineNo">005</span><a id="line.5"> *  http://www.gnu.org/copyleft/lesser.html Copyright for this code is held</a>
+<span class="sourceLineNo">006</span><a id="line.6"> *  jointly by the individual authors. These should be listed in</a>
+<span class="sourceLineNo">007</span><a id="line.7"> *</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *@author    doc comments. For more information on the BioJava project and its</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      aims, or to join the biojava-l mailing list, visit the home page at:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">011</span><a id="line.11"> */</a>
+<span class="sourceLineNo">012</span><a id="line.12"></a>
+<span class="sourceLineNo">013</span><a id="line.13">package org.biojava.bio.seq.io.game12;</a>
+<span class="sourceLineNo">014</span><a id="line.14"></a>
+<span class="sourceLineNo">015</span><a id="line.15">import org.biojava.bio.SimpleAnnotation;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import org.biojava.bio.seq.StrandedFeature;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import org.biojava.bio.seq.io.ParseException;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import org.biojava.bio.seq.io.game.ElementRecognizer;</a>
+<span class="sourceLineNo">019</span><a id="line.19">import org.biojava.bio.symbol.Location;</a>
+<span class="sourceLineNo">020</span><a id="line.20">import org.biojava.bio.symbol.LocationTools;</a>
+<span class="sourceLineNo">021</span><a id="line.21">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">022</span><a id="line.22">import org.biojava.utils.stax.StAXContentHandler;</a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.utils.stax.StringElementHandlerBase;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.xml.sax.Attributes;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.xml.sax.SAXException;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">/**</a>
+<span class="sourceLineNo">028</span><a id="line.28"> *  Handles the GAME &amp;lt;feature_set&amp;gt; element</a>
+<span class="sourceLineNo">029</span><a id="line.29"> *</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * this element is used to represent transcripts.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author     David Huen</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @since      1.2</a>
+<span class="sourceLineNo">034</span><a id="line.34"> */</a>
+<span class="sourceLineNo">035</span><a id="line.35">public class GAMEFeatureSetHandler</a>
+<span class="sourceLineNo">036</span><a id="line.36">         extends StAXFeatureHandler {</a>
+<span class="sourceLineNo">037</span><a id="line.37">    // this creates a bundle of data on a specific</a>
+<span class="sourceLineNo">038</span><a id="line.38">    // aspect of an annotation, e.g. a transcript.</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">    // database columns</a>
+<span class="sourceLineNo">041</span><a id="line.41">//    private String id;</a>
+<span class="sourceLineNo">042</span><a id="line.42">//    private String produces_seq;</a>
+<span class="sourceLineNo">043</span><a id="line.43">    private String featureSetType;</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">    StrandedFeature.Template template;</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">    Location transcript;</a>
+<span class="sourceLineNo">048</span><a id="line.48">    Location translateOffset;</a>
+<span class="sourceLineNo">049</span><a id="line.49">    StrandedFeature.Strand transcriptStrand;</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">    // subclass GAMEFeatureSpanHandler to retrieve data</a>
+<span class="sourceLineNo">052</span><a id="line.52">    private class FeatureSpanHandler extends GAMEFeatureSpanHandler</a>
+<span class="sourceLineNo">053</span><a id="line.53">    {</a>
+<span class="sourceLineNo">054</span><a id="line.54">        private FeatureSpanHandler(StAXFeatureHandler staxenv)</a>
+<span class="sourceLineNo">055</span><a id="line.55">        {</a>
+<span class="sourceLineNo">056</span><a id="line.56">            super(staxenv);</a>
+<span class="sourceLineNo">057</span><a id="line.57">//            System.out.println("entering FeatureSpanHandler");</a>
+<span class="sourceLineNo">058</span><a id="line.58">        }</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        public void endElementHandler(</a>
+<span class="sourceLineNo">061</span><a id="line.61">                String nsURI,</a>
+<span class="sourceLineNo">062</span><a id="line.62">                String localName,</a>
+<span class="sourceLineNo">063</span><a id="line.63">                String qName,</a>
+<span class="sourceLineNo">064</span><a id="line.64">                StAXContentHandler contentHandler)</a>
+<span class="sourceLineNo">065</span><a id="line.65">            throws SAXException</a>
+<span class="sourceLineNo">066</span><a id="line.66">        {</a>
+<span class="sourceLineNo">067</span><a id="line.67">            // validate</a>
+<span class="sourceLineNo">068</span><a id="line.68">            super.endElementHandler(nsURI, localName, qName, contentHandler);</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">            // decide what to do on basis of type</a>
+<span class="sourceLineNo">071</span><a id="line.71">//            System.out.println("SpanHandler end seeing " + featureSpanType);</a>
+<span class="sourceLineNo">072</span><a id="line.72">            if (featureSpanType.equals("exon")) {</a>
+<span class="sourceLineNo">073</span><a id="line.73">                // got an exon</a>
+<span class="sourceLineNo">074</span><a id="line.74">                if (transcript == null) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">                    // store transcript data</a>
+<span class="sourceLineNo">076</span><a id="line.76">                    transcript = featureSpanLoc;</a>
+<span class="sourceLineNo">077</span><a id="line.77">                    transcriptStrand = featureSpanStrand;</a>
+<span class="sourceLineNo">078</span><a id="line.78">                }</a>
+<span class="sourceLineNo">079</span><a id="line.79">                else {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                    // validate this exon, is it on same strand?</a>
+<span class="sourceLineNo">081</span><a id="line.81">                    if (transcriptStrand != featureSpanStrand) {</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        System.err.println("exons on differing strands!");</a>
+<span class="sourceLineNo">083</span><a id="line.83">                    }</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">                    // update the transcript</a>
+<span class="sourceLineNo">086</span><a id="line.86">//                    System.out.println("setting exon in transcript " + featureSpanLoc);</a>
+<span class="sourceLineNo">087</span><a id="line.87">                    transcript = LocationTools.union(transcript, featureSpanLoc);</a>
+<span class="sourceLineNo">088</span><a id="line.88">                }</a>
+<span class="sourceLineNo">089</span><a id="line.89">            }</a>
+<span class="sourceLineNo">090</span><a id="line.90">            else if (featureSpanType.equals("translate offset")) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">                // stash the location away</a>
+<span class="sourceLineNo">092</span><a id="line.92">                if (translateOffset != null)</a>
+<span class="sourceLineNo">093</span><a id="line.93">                    System.err.println("translate offset multiply defined.");</a>
+<span class="sourceLineNo">094</span><a id="line.94">                else {</a>
+<span class="sourceLineNo">095</span><a id="line.95">                    if (transcriptStrand == null) </a>
+<span class="sourceLineNo">096</span><a id="line.96">                        transcriptStrand = featureSpanStrand;</a>
+<span class="sourceLineNo">097</span><a id="line.97">                    else if (transcriptStrand != featureSpanStrand)</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        System.err.println("exons on differing strands!");</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">                    translateOffset = featureSpanLoc;</a>
+<span class="sourceLineNo">101</span><a id="line.101">                }</a>
+<span class="sourceLineNo">102</span><a id="line.102">            }</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104">    }</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">    // set up factory method</a>
+<span class="sourceLineNo">107</span><a id="line.107">    /**</a>
+<span class="sourceLineNo">108</span><a id="line.108">     *  Description of the Field</a>
+<span class="sourceLineNo">109</span><a id="line.109">     */</a>
+<span class="sourceLineNo">110</span><a id="line.110">    public final static StAXHandlerFactory GAME_FEATURE_SET_HANDLER_FACTORY</a>
+<span class="sourceLineNo">111</span><a id="line.111">             =</a>
+<span class="sourceLineNo">112</span><a id="line.112">        new StAXHandlerFactory() {</a>
+<span class="sourceLineNo">113</span><a id="line.113">            public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">114</span><a id="line.114">                return new GAMEFeatureSetHandler(staxenv);</a>
+<span class="sourceLineNo">115</span><a id="line.115">            }</a>
+<span class="sourceLineNo">116</span><a id="line.116">        };</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">    GAMEFeatureSetHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">        // setup environment</a>
+<span class="sourceLineNo">121</span><a id="line.121">        super(staxenv);</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">        // setup handlers</a>
+<span class="sourceLineNo">124</span><a id="line.124">        // &lt;name&gt;</a>
+<span class="sourceLineNo">125</span><a id="line.125">        super.addHandler(new ElementRecognizer.ByLocalName("name"),</a>
+<span class="sourceLineNo">126</span><a id="line.126">            new StAXHandlerFactory() {</a>
+<span class="sourceLineNo">127</span><a id="line.127">                public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">128</span><a id="line.128">                    return new NameHandler();</a>
+<span class="sourceLineNo">129</span><a id="line.129">                }</a>
+<span class="sourceLineNo">130</span><a id="line.130">            }</a>
+<span class="sourceLineNo">131</span><a id="line.131">                );</a>
+<span class="sourceLineNo">132</span><a id="line.132">        // &lt;type&gt; local handler type</a>
+<span class="sourceLineNo">133</span><a id="line.133">        super.addHandler(new ElementRecognizer.ByLocalName("type"),</a>
+<span class="sourceLineNo">134</span><a id="line.134">            new StAXHandlerFactory() {</a>
+<span class="sourceLineNo">135</span><a id="line.135">                public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                    return new TypeHandler();</a>
+<span class="sourceLineNo">137</span><a id="line.137">                }</a>
+<span class="sourceLineNo">138</span><a id="line.138">            }</a>
+<span class="sourceLineNo">139</span><a id="line.139">                );</a>
+<span class="sourceLineNo">140</span><a id="line.140">        // &lt;author&gt; local handler type</a>
+<span class="sourceLineNo">141</span><a id="line.141">        super.addHandler(new ElementRecognizer.ByLocalName("author"),</a>
+<span class="sourceLineNo">142</span><a id="line.142">            new StAXHandlerFactory() {</a>
+<span class="sourceLineNo">143</span><a id="line.143">                public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                    return new AuthorHandler();</a>
+<span class="sourceLineNo">145</span><a id="line.145">                }</a>
+<span class="sourceLineNo">146</span><a id="line.146">            }</a>
+<span class="sourceLineNo">147</span><a id="line.147">                );</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">        // &lt;feature_span&gt;</a>
+<span class="sourceLineNo">150</span><a id="line.150">//        super.addHandler(new ElementRecognizer.ByLocalName("feature_span"),</a>
+<span class="sourceLineNo">151</span><a id="line.151">//                GAMEFeatureSpanHandler.GAME_FEATURE_SPAN_HANDLER_FACTORY);</a>
+<span class="sourceLineNo">152</span><a id="line.152">        super.addHandler(new ElementRecognizer.ByLocalName("feature_span"),</a>
+<span class="sourceLineNo">153</span><a id="line.153">            new StAXHandlerFactory() {</a>
+<span class="sourceLineNo">154</span><a id="line.154">                public StAXContentHandler getHandler(StAXFeatureHandler staxenv) {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                    return new FeatureSpanHandler(staxenv);</a>
+<span class="sourceLineNo">156</span><a id="line.156">                }</a>
+<span class="sourceLineNo">157</span><a id="line.157">            }</a>
+<span class="sourceLineNo">158</span><a id="line.158">        );</a>
+<span class="sourceLineNo">159</span><a id="line.159">        // &lt;seq&gt;</a>
+<span class="sourceLineNo">160</span><a id="line.160">//        super.addHandler(new ElementRecognizer.ByLocalName("seq"),</a>
+<span class="sourceLineNo">161</span><a id="line.161">//                GAMESeqHandler.GAME_SEQ_HANDLER_FACTORY);</a>
+<span class="sourceLineNo">162</span><a id="line.162">        // &lt;property&gt;</a>
+<span class="sourceLineNo">163</span><a id="line.163">        super.addHandler(new ElementRecognizer.ByLocalName("property"),</a>
+<span class="sourceLineNo">164</span><a id="line.164">                GAMEPropertyHandler.GAME_PROPERTY_HANDLER_FACTORY);</a>
+<span class="sourceLineNo">165</span><a id="line.165">    }</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">    private class NameHandler extends StringElementHandlerBase {</a>
+<span class="sourceLineNo">168</span><a id="line.168">        /**</a>
+<span class="sourceLineNo">169</span><a id="line.169">         *  Sets the stringValue attribute of the NameHandler object</a>
+<span class="sourceLineNo">170</span><a id="line.170">         *</a>
+<span class="sourceLineNo">171</span><a id="line.171">         *@param  s  The new stringValue value</a>
+<span class="sourceLineNo">172</span><a id="line.172">         */</a>
+<span class="sourceLineNo">173</span><a id="line.173">        protected void setStringValue(String s) {</a>
+<span class="sourceLineNo">174</span><a id="line.174">        }</a>
+<span class="sourceLineNo">175</span><a id="line.175">    }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">    private class TypeHandler extends StringElementHandlerBase {</a>
+<span class="sourceLineNo">178</span><a id="line.178">        /**</a>
+<span class="sourceLineNo">179</span><a id="line.179">         *  Sets the stringValue attribute of the TypeHandler object</a>
+<span class="sourceLineNo">180</span><a id="line.180">         *</a>
+<span class="sourceLineNo">181</span><a id="line.181">         *@param  s  The new stringValue value</a>
+<span class="sourceLineNo">182</span><a id="line.182">         */</a>
+<span class="sourceLineNo">183</span><a id="line.183">        protected void setStringValue(String s) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">            featureSetType = s.trim();</a>
+<span class="sourceLineNo">185</span><a id="line.185">        }</a>
+<span class="sourceLineNo">186</span><a id="line.186">    }</a>
+<span class="sourceLineNo">187</span><a id="line.187"></a>
+<span class="sourceLineNo">188</span><a id="line.188">    private class AuthorHandler extends StringElementHandlerBase {</a>
+<span class="sourceLineNo">189</span><a id="line.189">        /**</a>
+<span class="sourceLineNo">190</span><a id="line.190">         *  Sets the stringValue attribute of the TypeHandler object</a>
+<span class="sourceLineNo">191</span><a id="line.191">         *</a>
+<span class="sourceLineNo">192</span><a id="line.192">         *@param  s  The new stringValue value</a>
+<span class="sourceLineNo">193</span><a id="line.193">         */</a>
+<span class="sourceLineNo">194</span><a id="line.194">        protected void setStringValue(String s) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196">    }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">    public void startElementHandler(</a>
+<span class="sourceLineNo">199</span><a id="line.199">            String nsURI,</a>
+<span class="sourceLineNo">200</span><a id="line.200">            String localName,</a>
+<span class="sourceLineNo">201</span><a id="line.201">            String qName,</a>
+<span class="sourceLineNo">202</span><a id="line.202">            Attributes attrs) </a>
+<span class="sourceLineNo">203</span><a id="line.203">        throws SAXException</a>
+<span class="sourceLineNo">204</span><a id="line.204">    {</a>
+<span class="sourceLineNo">205</span><a id="line.205">        // acquire attributes here</a>
+<span class="sourceLineNo">206</span><a id="line.206">        String id = attrs.getValue("id");</a>
+<span class="sourceLineNo">207</span><a id="line.207">        String produces_seq = attrs.getValue("produces_seq");</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">        // create template</a>
+<span class="sourceLineNo">210</span><a id="line.210">        // this element is expected to encode a transcript</a>
+<span class="sourceLineNo">211</span><a id="line.211">        template = new StrandedFeature.Template();</a>
+<span class="sourceLineNo">212</span><a id="line.212">        template.annotation = new SimpleAnnotation();</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">        // fill in annotation bundle</a>
+<span class="sourceLineNo">215</span><a id="line.215">        try {</a>
+<span class="sourceLineNo">216</span><a id="line.216">            try {</a>
+<span class="sourceLineNo">217</span><a id="line.217">                if (id != null) template.annotation.setProperty("id", id);</a>
+<span class="sourceLineNo">218</span><a id="line.218">                if (produces_seq != null) template.annotation.setProperty("produces_seq", produces_seq);</a>
+<span class="sourceLineNo">219</span><a id="line.219">            }</a>
+<span class="sourceLineNo">220</span><a id="line.220">            catch (ChangeVetoException cve) {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                cve.printStackTrace();</a>
+<span class="sourceLineNo">222</span><a id="line.222">                throw new SAXException("unexpected ChangeVetoException when setting id!");</a>
+<span class="sourceLineNo">223</span><a id="line.223">            }</a>
+<span class="sourceLineNo">224</span><a id="line.224"></a>
+<span class="sourceLineNo">225</span><a id="line.225">            listener.startFeature(template);</a>
+<span class="sourceLineNo">226</span><a id="line.226">        }</a>
+<span class="sourceLineNo">227</span><a id="line.227">        catch (ParseException pe) {</a>
+<span class="sourceLineNo">228</span><a id="line.228">            pe.printStackTrace();</a>
+<span class="sourceLineNo">229</span><a id="line.229">            throw new SAXException("error in GAMEFeatureSetHandler.");</a>
+<span class="sourceLineNo">230</span><a id="line.230">        }</a>
+<span class="sourceLineNo">231</span><a id="line.231">    }</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">    public void endElementHandler(</a>
+<span class="sourceLineNo">235</span><a id="line.235">            String nsURI,</a>
+<span class="sourceLineNo">236</span><a id="line.236">            String localName,</a>
+<span class="sourceLineNo">237</span><a id="line.237">            String qName,</a>
+<span class="sourceLineNo">238</span><a id="line.238">            StAXContentHandler contentHandler) </a>
+<span class="sourceLineNo">239</span><a id="line.239">        throws SAXException</a>
+<span class="sourceLineNo">240</span><a id="line.240">    {</a>
+<span class="sourceLineNo">241</span><a id="line.241">        // issue warning if it is not a transcript</a>
+<span class="sourceLineNo">242</span><a id="line.242">        if (!featureSetType.equals("transcript")) {</a>
+<span class="sourceLineNo">243</span><a id="line.243">             System.err.println("&lt;feature_set&gt; of type " + featureSetType + " encountered when transcript expected");</a>
+<span class="sourceLineNo">244</span><a id="line.244">        }</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">        // fill in template as best can</a>
+<span class="sourceLineNo">247</span><a id="line.247">        template.type = featureSetType;</a>
+<span class="sourceLineNo">248</span><a id="line.248">        template.source = "";</a>
+<span class="sourceLineNo">249</span><a id="line.249">        template.location = transcript;</a>
+<span class="sourceLineNo">250</span><a id="line.250">        template.strand = transcriptStrand;</a>
+<span class="sourceLineNo">251</span><a id="line.251"></a>
+<span class="sourceLineNo">252</span><a id="line.252">        // indicate end of sequence</a>
+<span class="sourceLineNo">253</span><a id="line.253">        try {</a>
+<span class="sourceLineNo">254</span><a id="line.254"></a>
+<span class="sourceLineNo">255</span><a id="line.255">            // set the translate offset if available</a>
+<span class="sourceLineNo">256</span><a id="line.256">            try {</a>
+<span class="sourceLineNo">257</span><a id="line.257">                if (translateOffset != null) template.annotation.setProperty("translate_offset", translateOffset);</a>
+<span class="sourceLineNo">258</span><a id="line.258">            }</a>
+<span class="sourceLineNo">259</span><a id="line.259">            catch (ChangeVetoException cve) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                cve.printStackTrace();</a>
+<span class="sourceLineNo">261</span><a id="line.261">                throw new SAXException("unexpected ChangeVetoException when setting id!");</a>
+<span class="sourceLineNo">262</span><a id="line.262">            }</a>
+<span class="sourceLineNo">263</span><a id="line.263"></a>
+<span class="sourceLineNo">264</span><a id="line.264">            listener.endFeature();</a>
+<span class="sourceLineNo">265</span><a id="line.265">        }</a>
+<span class="sourceLineNo">266</span><a id="line.266">        catch (ParseException pe) {</a>
+<span class="sourceLineNo">267</span><a id="line.267">            pe.printStackTrace();</a>
+<span class="sourceLineNo">268</span><a id="line.268">            throw new SAXException("error in GAMEFeatureSetHandler.");</a>
+<span class="sourceLineNo">269</span><a id="line.269">        }</a>
+<span class="sourceLineNo">270</span><a id="line.270">    }</a>
+<span class="sourceLineNo">271</span><a id="line.271">}</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * To change this template, choose Tools | Templates</a>
+<span class="sourceLineNo">003</span><a id="line.3"> * and open the template in the editor.</a>
+<span class="sourceLineNo">004</span><a id="line.4"> */</a>
+<span class="sourceLineNo">005</span><a id="line.5"></a>
+<span class="sourceLineNo">006</span><a id="line.6">package org.biojavax.bio.seq.io;</a>
+<span class="sourceLineNo">007</span><a id="line.7"></a>
+<span class="sourceLineNo">008</span><a id="line.8">/**</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * This class is used by &lt;code&gt;FastaFormat&lt;/code&gt; to determine which fields are in the </a>
+<span class="sourceLineNo">010</span><a id="line.10"> * fasta header. By default they all are except for the sequence name. This is for</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * compliance with fasta files that come from Genbank where the name is derived</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * from the accession number so need not be repeated.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * The class can be used to customise</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * what appears. Eg if you only want the accession set everything else false.</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * Note that if fields in the &lt;code&gt;RichSequence&lt;/code&gt; being parsed by the </a>
+<span class="sourceLineNo">016</span><a id="line.16"> * &lt;code&gt;FastaFormat&lt;/code&gt; object then they may not be in the header even if</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * they are specified in this class. </a>
+<span class="sourceLineNo">018</span><a id="line.18"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * @since 1.6</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">public class FastaHeader {</a>
+<span class="sourceLineNo">022</span><a id="line.22">    private boolean showIdentifier = true;</a>
+<span class="sourceLineNo">023</span><a id="line.23">    private boolean showNamespace = true;</a>
+<span class="sourceLineNo">024</span><a id="line.24">    private boolean showAccession = true;</a>
+<span class="sourceLineNo">025</span><a id="line.25">    private boolean showVersion = true;</a>
+<span class="sourceLineNo">026</span><a id="line.26">    private boolean showName = false;</a>
+<span class="sourceLineNo">027</span><a id="line.27">    private boolean showDescription = true;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">    public boolean isShowIdentifier() {</a>
+<span class="sourceLineNo">030</span><a id="line.30">        return showIdentifier;</a>
+<span class="sourceLineNo">031</span><a id="line.31">    }</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">    public void setShowIdentifier(boolean showIdentifier) {</a>
+<span class="sourceLineNo">034</span><a id="line.34">        this.showIdentifier = showIdentifier;</a>
+<span class="sourceLineNo">035</span><a id="line.35">    }</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">    public boolean isShowNamespace() {</a>
+<span class="sourceLineNo">038</span><a id="line.38">        return showNamespace;</a>
+<span class="sourceLineNo">039</span><a id="line.39">    }</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">    public void setShowNamespace(boolean showNamespace) {</a>
+<span class="sourceLineNo">042</span><a id="line.42">        this.showNamespace = showNamespace;</a>
+<span class="sourceLineNo">043</span><a id="line.43">    }</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">    public boolean isShowAccession() {</a>
+<span class="sourceLineNo">046</span><a id="line.46">        return showAccession;</a>
+<span class="sourceLineNo">047</span><a id="line.47">    }</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">    public void setShowAccession(boolean showAccession) {</a>
+<span class="sourceLineNo">050</span><a id="line.50">        this.showAccession = showAccession;</a>
+<span class="sourceLineNo">051</span><a id="line.51">    }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">    public boolean isShowVersion() {</a>
+<span class="sourceLineNo">054</span><a id="line.54">        return showVersion;</a>
+<span class="sourceLineNo">055</span><a id="line.55">    }</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">    /**</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * Determines if the version number of a sequence should be displayed. If</a>
+<span class="sourceLineNo">059</span><a id="line.59">     * there is no accession this may not make much sense.</a>
+<span class="sourceLineNo">060</span><a id="line.60">     * @param showVersion</a>
+<span class="sourceLineNo">061</span><a id="line.61">     */</a>
+<span class="sourceLineNo">062</span><a id="line.62">    public void setShowVersion(boolean showVersion) {</a>
+<span class="sourceLineNo">063</span><a id="line.63">        this.showVersion = showVersion;</a>
+<span class="sourceLineNo">064</span><a id="line.64">    }</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">    public boolean isShowName() {</a>
+<span class="sourceLineNo">067</span><a id="line.67">        return showName;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    }</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">    public void setShowName(boolean showName) {</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.showName = showName;</a>
+<span class="sourceLineNo">072</span><a id="line.72">    }</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">    public boolean isShowDescription() {</a>
+<span class="sourceLineNo">075</span><a id="line.75">        return showDescription;</a>
+<span class="sourceLineNo">076</span><a id="line.76">    }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">    public void setShowDescription(boolean showDescription) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">        this.showDescription = showDescription;</a>
+<span class="sourceLineNo">080</span><a id="line.80">    }</a>
+<span class="sourceLineNo">081</span><a id="line.81">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

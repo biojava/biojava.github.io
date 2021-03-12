@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojavax.bio.seq.io;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.BufferedInputStream;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.File;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.FileReader;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.IOException;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.PrintStream;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.Map;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.regex.Matcher;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.seq.io.ParseException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.seq.io.SeqIOListener;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.symbol.SimpleSymbolList;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojavax.Namespace;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojavax.RichObjectFactory;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojavax.SimpleNamespace;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojavax.bio.seq.RichSequence;</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">/**</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * Format object representing FASTA files. These files are almost pure</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * sequence data.</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * @author Thomas Down</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * @author Greg Cox</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * @author Lukas Kall</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * @author Richard Holland</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * @author Carl Masak</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * @since 1.5</a>
+<span class="sourceLineNo">061</span><a id="line.61"> */</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">public class FastaFormat extends RichSequenceFormat.HeaderlessFormat {</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">        // Register this format with the format auto-guesser.</a>
+<span class="sourceLineNo">066</span><a id="line.66">        static {</a>
+<span class="sourceLineNo">067</span><a id="line.67">                RichSequence.IOTools.registerFormat(FastaFormat.class);</a>
+<span class="sourceLineNo">068</span><a id="line.68">        }</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">        /**</a>
+<span class="sourceLineNo">071</span><a id="line.71">         * The name of this format</a>
+<span class="sourceLineNo">072</span><a id="line.72">         */</a>
+<span class="sourceLineNo">073</span><a id="line.73">        public static final String FASTA_FORMAT = "FASTA";</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        // header line</a>
+<span class="sourceLineNo">076</span><a id="line.76">        protected static final Pattern hp = Pattern.compile("&gt;\\s*(\\S+)(\\s+(.*))?");</a>
+<span class="sourceLineNo">077</span><a id="line.77">        // description chunk</a>
+<span class="sourceLineNo">078</span><a id="line.78">        protected static final Pattern dp = Pattern.compile( "^(gi\\|(\\d+)\\|)?(\\w+)\\|(\\w+?)(\\.(\\d+))?\\|(\\w+)?$");</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">        protected static final Pattern readableFiles = Pattern.compile(".*(fa|fas)$");</a>
+<span class="sourceLineNo">081</span><a id="line.81">        protected static final Pattern aminoAcids = Pattern.compile("[FLIPQE]", Pattern.CASE_INSENSITIVE);</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        private FastaHeader header = new FastaHeader();</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">        /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * {@inheritDoc}</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * A file is in FASTA format if the name ends with fa or fas, or the file starts with "&gt;".</a>
+<span class="sourceLineNo">088</span><a id="line.88">         */</a>
+<span class="sourceLineNo">089</span><a id="line.89">        @Override</a>
+<span class="sourceLineNo">090</span><a id="line.90">        public boolean canRead(File file) throws IOException {</a>
+<span class="sourceLineNo">091</span><a id="line.91">                if (readableFiles.matcher(file.getName()).matches()) return true;</a>
+<span class="sourceLineNo">092</span><a id="line.92">                BufferedReader br = new BufferedReader(new FileReader(file));</a>
+<span class="sourceLineNo">093</span><a id="line.93">                String firstLine = br.readLine();</a>
+<span class="sourceLineNo">094</span><a id="line.94">                boolean readable = firstLine!=null &amp;&amp; firstLine.startsWith("&gt;");</a>
+<span class="sourceLineNo">095</span><a id="line.95">                br.close();</a>
+<span class="sourceLineNo">096</span><a id="line.96">                return readable;</a>
+<span class="sourceLineNo">097</span><a id="line.97">        }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">        /**</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * {@inheritDoc}</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * Returns an protein parser if the first line of sequence contains any of F/L/I/P/Q/E, </a>
+<span class="sourceLineNo">102</span><a id="line.102">         * otherwise returns a DNA tokenizer.</a>
+<span class="sourceLineNo">103</span><a id="line.103">         */</a>
+<span class="sourceLineNo">104</span><a id="line.104">        @Override</a>
+<span class="sourceLineNo">105</span><a id="line.105">        public SymbolTokenization guessSymbolTokenization(File file) throws IOException {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                BufferedReader br = new BufferedReader(new FileReader(file));</a>
+<span class="sourceLineNo">107</span><a id="line.107">                br.readLine(); // discard first line</a>
+<span class="sourceLineNo">108</span><a id="line.108">                boolean aa = aminoAcids.matcher(br.readLine()).find();</a>
+<span class="sourceLineNo">109</span><a id="line.109">                br.close();</a>
+<span class="sourceLineNo">110</span><a id="line.110">                if (aa) return RichSequence.IOTools.getProteinParser();</a>
+<span class="sourceLineNo">111</span><a id="line.111">                else return RichSequence.IOTools.getDNAParser();</a>
+<span class="sourceLineNo">112</span><a id="line.112">        }</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">        /**</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * {@inheritDoc}</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * A stream is in FASTA format if the stream starts with "&gt;".</a>
+<span class="sourceLineNo">117</span><a id="line.117">         */</a>
+<span class="sourceLineNo">118</span><a id="line.118">        public boolean canRead(BufferedInputStream stream) throws IOException {</a>
+<span class="sourceLineNo">119</span><a id="line.119">                stream.mark(2000); // some streams may not support this</a>
+<span class="sourceLineNo">120</span><a id="line.120">                BufferedReader br = new BufferedReader(new InputStreamReader(stream));</a>
+<span class="sourceLineNo">121</span><a id="line.121">                String firstLine = br.readLine();</a>
+<span class="sourceLineNo">122</span><a id="line.122">                boolean readable = firstLine!=null &amp;&amp; firstLine.startsWith("&gt;");</a>
+<span class="sourceLineNo">123</span><a id="line.123">                // don't close the reader as it'll close the stream too.</a>
+<span class="sourceLineNo">124</span><a id="line.124">                // br.close();</a>
+<span class="sourceLineNo">125</span><a id="line.125">                stream.reset();</a>
+<span class="sourceLineNo">126</span><a id="line.126">                return readable;</a>
+<span class="sourceLineNo">127</span><a id="line.127">        }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">        /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * {@inheritDoc}</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * Returns an protein parser if the first line of sequence contains any of F/L/I/P/Q/E, </a>
+<span class="sourceLineNo">132</span><a id="line.132">         * otherwise returns a DNA tokenizer.</a>
+<span class="sourceLineNo">133</span><a id="line.133">         */</a>
+<span class="sourceLineNo">134</span><a id="line.134">        public SymbolTokenization guessSymbolTokenization(BufferedInputStream stream) throws IOException {</a>
+<span class="sourceLineNo">135</span><a id="line.135">                stream.mark(2000); // some streams may not support this</a>
+<span class="sourceLineNo">136</span><a id="line.136">                BufferedReader br = new BufferedReader(new InputStreamReader(stream));</a>
+<span class="sourceLineNo">137</span><a id="line.137">                br.readLine(); // discard first line</a>
+<span class="sourceLineNo">138</span><a id="line.138">                boolean aa = aminoAcids.matcher(br.readLine()).find();</a>
+<span class="sourceLineNo">139</span><a id="line.139">                // don't close the reader as it'll close the stream too.</a>
+<span class="sourceLineNo">140</span><a id="line.140">                // br.close();</a>
+<span class="sourceLineNo">141</span><a id="line.141">                stream.reset();</a>
+<span class="sourceLineNo">142</span><a id="line.142">                if (aa) return RichSequence.IOTools.getProteinParser();</a>
+<span class="sourceLineNo">143</span><a id="line.143">                else return RichSequence.IOTools.getDNAParser();</a>
+<span class="sourceLineNo">144</span><a id="line.144">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146">        /**</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * {@inheritDoc}</a>
+<span class="sourceLineNo">148</span><a id="line.148">         */</a>
+<span class="sourceLineNo">149</span><a id="line.149">        public boolean readSequence(</a>
+<span class="sourceLineNo">150</span><a id="line.150">                        BufferedReader reader,</a>
+<span class="sourceLineNo">151</span><a id="line.151">                        SymbolTokenization symParser,</a>
+<span class="sourceLineNo">152</span><a id="line.152">                        SeqIOListener listener</a>
+<span class="sourceLineNo">153</span><a id="line.153">        )       throws</a>
+<span class="sourceLineNo">154</span><a id="line.154">        IllegalSymbolException,</a>
+<span class="sourceLineNo">155</span><a id="line.155">        IOException,</a>
+<span class="sourceLineNo">156</span><a id="line.156">        ParseException {</a>
+<span class="sourceLineNo">157</span><a id="line.157">                if (!(listener instanceof RichSeqIOListener)) throw new IllegalArgumentException("Only accepting RichSeqIOListeners today");</a>
+<span class="sourceLineNo">158</span><a id="line.158">                return this.readRichSequence(reader,symParser,(RichSeqIOListener)listener,null);</a>
+<span class="sourceLineNo">159</span><a id="line.159">        }</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">        /**</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * {@inheritDoc}</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * If namespace is null, then the namespace of the sequence in the fasta is used.</a>
+<span class="sourceLineNo">164</span><a id="line.164">         * If the namespace is null and so is the namespace of the sequence in the fasta,</a>
+<span class="sourceLineNo">165</span><a id="line.165">         * then the default namespace is used.</a>
+<span class="sourceLineNo">166</span><a id="line.166">         */</a>
+<span class="sourceLineNo">167</span><a id="line.167">        public boolean readRichSequence(</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        BufferedReader reader,</a>
+<span class="sourceLineNo">169</span><a id="line.169">                        SymbolTokenization symParser,</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        RichSeqIOListener rsiol,</a>
+<span class="sourceLineNo">171</span><a id="line.171">                        Namespace ns</a>
+<span class="sourceLineNo">172</span><a id="line.172">        )       throws</a>
+<span class="sourceLineNo">173</span><a id="line.173">        IllegalSymbolException,</a>
+<span class="sourceLineNo">174</span><a id="line.174">        IOException,</a>
+<span class="sourceLineNo">175</span><a id="line.175">        ParseException {</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">                String line = reader.readLine();</a>
+<span class="sourceLineNo">178</span><a id="line.178">                if (line == null) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">                        throw new IOException("Premature stream end");</a>
+<span class="sourceLineNo">180</span><a id="line.180">                }</a>
+<span class="sourceLineNo">181</span><a id="line.181">                while(line.length() == 0) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                        line = reader.readLine();</a>
+<span class="sourceLineNo">183</span><a id="line.183">                        if (line == null) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                                throw new IOException("Premature stream end");</a>
+<span class="sourceLineNo">185</span><a id="line.185">                        }</a>
+<span class="sourceLineNo">186</span><a id="line.186">                }</a>
+<span class="sourceLineNo">187</span><a id="line.187">                if (!line.startsWith("&gt;")) {</a>
+<span class="sourceLineNo">188</span><a id="line.188">                        throw new IOException("Stream does not appear to contain FASTA formatted data: " + line);</a>
+<span class="sourceLineNo">189</span><a id="line.189">                }</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                rsiol.startSequence();</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">                processHeader(line,rsiol,ns);</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">                StringBuffer seq = new StringBuffer();</a>
+<span class="sourceLineNo">196</span><a id="line.196">                boolean hasMoreSeq = true;</a>
+<span class="sourceLineNo">197</span><a id="line.197">                while (hasMoreSeq) {</a>
+<span class="sourceLineNo">198</span><a id="line.198">                        reader.mark(500);</a>
+<span class="sourceLineNo">199</span><a id="line.199">                        line = reader.readLine();</a>
+<span class="sourceLineNo">200</span><a id="line.200">                        if (line!=null) {</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                line = line.trim();</a>
+<span class="sourceLineNo">202</span><a id="line.202">                                if (line.length() &gt; 0 &amp;&amp; line.charAt(0)=='&gt;') {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                        reader.reset();</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                        hasMoreSeq = false;</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                } else {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                        seq.append(line);</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                }</a>
+<span class="sourceLineNo">208</span><a id="line.208">                        } else {</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                hasMoreSeq = false;</a>
+<span class="sourceLineNo">210</span><a id="line.210">                        }</a>
+<span class="sourceLineNo">211</span><a id="line.211">                }</a>
+<span class="sourceLineNo">212</span><a id="line.212">                if (!this.getElideSymbols()) {</a>
+<span class="sourceLineNo">213</span><a id="line.213">                        try {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                                SymbolList sl = new SimpleSymbolList(symParser,</a>
+<span class="sourceLineNo">215</span><a id="line.215">                                                seq.toString().replaceAll("\\s+","").replaceAll("[\\.|~]","-"));</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                rsiol.addSymbols(symParser.getAlphabet(),</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                                (Symbol[])(sl.toList().toArray(new Symbol[0])),</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                                0, sl.length());</a>
+<span class="sourceLineNo">219</span><a id="line.219">                        } catch (Exception e) {</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                // do not know name and gi any longer, replace them with empty string.</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                // why does the rsiol only have setter methods, but not getter???</a>
+<span class="sourceLineNo">222</span><a id="line.222">                                String message = ParseException.newMessage(this.getClass(), "", "", "problem parsing symbols", seq.toString());</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                throw new ParseException(e, message);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                        }</a>
+<span class="sourceLineNo">225</span><a id="line.225">                }</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">                rsiol.endSequence();</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">                return line!=null;</a>
+<span class="sourceLineNo">230</span><a id="line.230">        }</a>
+<span class="sourceLineNo">231</span><a id="line.231"></a>
+<span class="sourceLineNo">232</span><a id="line.232">        /** Parse the Header information from the Fasta Description line</a>
+<span class="sourceLineNo">233</span><a id="line.233">         * </a>
+<span class="sourceLineNo">234</span><a id="line.234">         * @param line</a>
+<span class="sourceLineNo">235</span><a id="line.235">         * @param rsiol</a>
+<span class="sourceLineNo">236</span><a id="line.236">         * @param ns</a>
+<span class="sourceLineNo">237</span><a id="line.237">         * @throws IOException</a>
+<span class="sourceLineNo">238</span><a id="line.238">         * @throws ParseException</a>
+<span class="sourceLineNo">239</span><a id="line.239">         */</a>
+<span class="sourceLineNo">240</span><a id="line.240">        public void processHeader(String line,RichSeqIOListener rsiol,Namespace ns) </a>
+<span class="sourceLineNo">241</span><a id="line.241">        throws IOException, ParseException {</a>
+<span class="sourceLineNo">242</span><a id="line.242">                Matcher m = hp.matcher(line);</a>
+<span class="sourceLineNo">243</span><a id="line.243">                if (!m.matches()) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                        throw new IOException("Stream does not appear to contain FASTA formatted data: " + line);</a>
+<span class="sourceLineNo">245</span><a id="line.245">                }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                String name = m.group(1);</a>
+<span class="sourceLineNo">248</span><a id="line.248">                String desc = m.group(3);</a>
+<span class="sourceLineNo">249</span><a id="line.249">                String gi = null;</a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">                m = dp.matcher(name);</a>
+<span class="sourceLineNo">252</span><a id="line.252">                if (m.matches()) {</a>
+<span class="sourceLineNo">253</span><a id="line.253">                        gi = m.group(2);</a>
+<span class="sourceLineNo">254</span><a id="line.254">                        String namespace = m.group(3);</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        String accession = m.group(4);</a>
+<span class="sourceLineNo">256</span><a id="line.256">                        String verString = m.group(6);</a>
+<span class="sourceLineNo">257</span><a id="line.257">                        int version = verString==null?0:Integer.parseInt(verString);</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        name = m.group(7);</a>
+<span class="sourceLineNo">259</span><a id="line.259">                        if (name==null) name=accession;</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">                        rsiol.setAccession(accession);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                        rsiol.setVersion(version);</a>
+<span class="sourceLineNo">263</span><a id="line.263">                        if (gi!=null) rsiol.setIdentifier(gi);</a>
+<span class="sourceLineNo">264</span><a id="line.264">                        if (ns==null) rsiol.setNamespace((Namespace)RichObjectFactory.getObject(SimpleNamespace.class,new Object[]{namespace}));</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        else rsiol.setNamespace(ns);</a>
+<span class="sourceLineNo">266</span><a id="line.266">                } else {</a>
+<span class="sourceLineNo">267</span><a id="line.267">                        rsiol.setAccession(name);</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        rsiol.setNamespace((ns==null?RichObjectFactory.getDefaultNamespace():ns));</a>
+<span class="sourceLineNo">269</span><a id="line.269">                }</a>
+<span class="sourceLineNo">270</span><a id="line.270">                rsiol.setName(name);</a>
+<span class="sourceLineNo">271</span><a id="line.271">                if (!this.getElideComments()) rsiol.setDescription(desc);</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273">        }</a>
+<span class="sourceLineNo">274</span><a id="line.274"></a>
+<span class="sourceLineNo">275</span><a id="line.275">        /**</a>
+<span class="sourceLineNo">276</span><a id="line.276">         * {@inheritDoc}</a>
+<span class="sourceLineNo">277</span><a id="line.277">         */</a>
+<span class="sourceLineNo">278</span><a id="line.278">        public void     writeSequence(Sequence seq, PrintStream os) throws IOException {</a>
+<span class="sourceLineNo">279</span><a id="line.279">                if (this.getPrintStream()==null) this.setPrintStream(os);</a>
+<span class="sourceLineNo">280</span><a id="line.280">                this.writeSequence(seq, RichObjectFactory.getDefaultNamespace());</a>
+<span class="sourceLineNo">281</span><a id="line.281">        }</a>
+<span class="sourceLineNo">282</span><a id="line.282"></a>
+<span class="sourceLineNo">283</span><a id="line.283">        /**</a>
+<span class="sourceLineNo">284</span><a id="line.284">         * {@inheritDoc}</a>
+<span class="sourceLineNo">285</span><a id="line.285">         */</a>
+<span class="sourceLineNo">286</span><a id="line.286">        public void writeSequence(Sequence seq, String format, PrintStream os) throws IOException {</a>
+<span class="sourceLineNo">287</span><a id="line.287">                if (this.getPrintStream()==null) this.setPrintStream(os);</a>
+<span class="sourceLineNo">288</span><a id="line.288">                if (!format.equals(this.getDefaultFormat())) throw new IllegalArgumentException("Unknown format: "+format);</a>
+<span class="sourceLineNo">289</span><a id="line.289">                this.writeSequence(seq, RichObjectFactory.getDefaultNamespace());</a>
+<span class="sourceLineNo">290</span><a id="line.290">        }</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292"></a>
+<span class="sourceLineNo">293</span><a id="line.293">        /**</a>
+<span class="sourceLineNo">294</span><a id="line.294">         * {@inheritDoc}</a>
+<span class="sourceLineNo">295</span><a id="line.295">         * If namespace is null, then the sequence's own namespace is used.</a>
+<span class="sourceLineNo">296</span><a id="line.296">         */</a>
+<span class="sourceLineNo">297</span><a id="line.297">        public void writeSequence(Sequence seq, Namespace ns) throws IOException {</a>
+<span class="sourceLineNo">298</span><a id="line.298">                RichSequence rs;</a>
+<span class="sourceLineNo">299</span><a id="line.299">                try {</a>
+<span class="sourceLineNo">300</span><a id="line.300">                        if (seq instanceof RichSequence) rs = (RichSequence)seq;</a>
+<span class="sourceLineNo">301</span><a id="line.301">                        else rs = RichSequence.Tools.enrich(seq);</a>
+<span class="sourceLineNo">302</span><a id="line.302">                } catch (ChangeVetoException e) {</a>
+<span class="sourceLineNo">303</span><a id="line.303">                        IOException e2 = new IOException("Unable to enrich sequence");</a>
+<span class="sourceLineNo">304</span><a id="line.304">                        e2.initCause(e);</a>
+<span class="sourceLineNo">305</span><a id="line.305">                        throw e2;</a>
+<span class="sourceLineNo">306</span><a id="line.306">                }</a>
+<span class="sourceLineNo">307</span><a id="line.307"></a>
+<span class="sourceLineNo">308</span><a id="line.308">                StringBuilder sb = new StringBuilder();</a>
+<span class="sourceLineNo">309</span><a id="line.309">                sb.append("&gt;");</a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">                String identifier = rs.getIdentifier();</a>
+<span class="sourceLineNo">312</span><a id="line.312">                if (header.isShowIdentifier() &amp;&amp; identifier!=null &amp;&amp; !"".equals(identifier)) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                        sb.append("gi|");</a>
+<span class="sourceLineNo">314</span><a id="line.314">                        sb.append(identifier);</a>
+<span class="sourceLineNo">315</span><a id="line.315">                        sb.append("|");</a>
+<span class="sourceLineNo">316</span><a id="line.316">                }</a>
+<span class="sourceLineNo">317</span><a id="line.317">                if(header.isShowNamespace()){</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        sb.append((ns==null?rs.getNamespace().getName():ns.getName()));</a>
+<span class="sourceLineNo">319</span><a id="line.319">                        sb.append("|");</a>
+<span class="sourceLineNo">320</span><a id="line.320">                }</a>
+<span class="sourceLineNo">321</span><a id="line.321">                if(header.isShowAccession()){</a>
+<span class="sourceLineNo">322</span><a id="line.322">                        sb.append(rs.getAccession());</a>
+<span class="sourceLineNo">323</span><a id="line.323">                        if(header.isShowVersion()){</a>
+<span class="sourceLineNo">324</span><a id="line.324">                                sb.append(".");</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">                }</a>
+<span class="sourceLineNo">327</span><a id="line.327">                if(header.isShowVersion()){</a>
+<span class="sourceLineNo">328</span><a id="line.328">                        sb.append(rs.getVersion());</a>
+<span class="sourceLineNo">329</span><a id="line.329">                        sb.append("|");</a>
+<span class="sourceLineNo">330</span><a id="line.330">                }</a>
+<span class="sourceLineNo">331</span><a id="line.331">                if(header.isShowName()){</a>
+<span class="sourceLineNo">332</span><a id="line.332">                        sb.append(rs.getName());</a>
+<span class="sourceLineNo">333</span><a id="line.333">                        sb.append(" ");</a>
+<span class="sourceLineNo">334</span><a id="line.334">                }else{</a>
+<span class="sourceLineNo">335</span><a id="line.335">                        sb.append(" "); //in case the show the description there needs to be space</a>
+<span class="sourceLineNo">336</span><a id="line.336">                }</a>
+<span class="sourceLineNo">337</span><a id="line.337">                if(header.isShowDescription()){</a>
+<span class="sourceLineNo">338</span><a id="line.338">                        String desc = rs.getDescription();</a>
+<span class="sourceLineNo">339</span><a id="line.339">                        if (desc!=null &amp;&amp; !"".equals(desc)) sb.append(desc.replaceAll("\\n"," "));</a>
+<span class="sourceLineNo">340</span><a id="line.340">                }</a>
+<span class="sourceLineNo">341</span><a id="line.341">                if(sb.charAt(sb.length() -1) == '|'){</a>
+<span class="sourceLineNo">342</span><a id="line.342">                        sb.deleteCharAt(sb.length() -1);</a>
+<span class="sourceLineNo">343</span><a id="line.343">                }</a>
+<span class="sourceLineNo">344</span><a id="line.344">                this.getPrintStream().print(sb.toString());</a>
+<span class="sourceLineNo">345</span><a id="line.345">                this.getPrintStream().println();</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">                int length = rs.length();</a>
+<span class="sourceLineNo">348</span><a id="line.348"></a>
+<span class="sourceLineNo">349</span><a id="line.349">                for (int pos = 1; pos &lt;= length; pos += this.getLineWidth()) {</a>
+<span class="sourceLineNo">350</span><a id="line.350">                        int end = Math.min(pos + this.getLineWidth() - 1, length);</a>
+<span class="sourceLineNo">351</span><a id="line.351">                        this.getPrintStream().println(rs.subStr(pos, end));</a>
+<span class="sourceLineNo">352</span><a id="line.352">                }</a>
+<span class="sourceLineNo">353</span><a id="line.353">        }</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355">        /**</a>
+<span class="sourceLineNo">356</span><a id="line.356">         * {@inheritDoc}</a>
+<span class="sourceLineNo">357</span><a id="line.357">         */</a>
+<span class="sourceLineNo">358</span><a id="line.358">        public String getDefaultFormat() {</a>
+<span class="sourceLineNo">359</span><a id="line.359">                return FASTA_FORMAT;</a>
+<span class="sourceLineNo">360</span><a id="line.360">        }</a>
+<span class="sourceLineNo">361</span><a id="line.361"></a>
+<span class="sourceLineNo">362</span><a id="line.362">        public FastaHeader getHeader() {</a>
+<span class="sourceLineNo">363</span><a id="line.363">                return header;</a>
+<span class="sourceLineNo">364</span><a id="line.364">        }</a>
+<span class="sourceLineNo">365</span><a id="line.365"></a>
+<span class="sourceLineNo">366</span><a id="line.366">        public void setHeader(FastaHeader header) {</a>
+<span class="sourceLineNo">367</span><a id="line.367">                this.header = header;</a>
+<span class="sourceLineNo">368</span><a id="line.368">        }</a>
+<span class="sourceLineNo">369</span><a id="line.369">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.ontology;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.util.Set;</a>
+<span class="sourceLineNo">004</span><a id="line.4"></a>
+<span class="sourceLineNo">005</span><a id="line.5">/**</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * This is an interface for optimizing ontology operators.</a>
+<span class="sourceLineNo">007</span><a id="line.7"> *</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * &lt;p&gt;</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * Some ontology implementations will be able to compute some derived properties</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * very quickly because of how they store their data. This is likely to out-</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * perform generic implementations of algorithms using the Ontology interface</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * to get the same result. Ontology instances provide an instance of</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * OntologyOps, publishing optimizations of some common operations. The reasoner</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * may then choose to call OntologyOps methods on the Ontology instance rather</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * than using its fall-back implementations.</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * @since 1.4</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">public interface OntologyOps {</a>
+<span class="sourceLineNo">022</span><a id="line.22">  /**</a>
+<span class="sourceLineNo">023</span><a id="line.23">   * Get the set of all remote terms.</a>
+<span class="sourceLineNo">024</span><a id="line.24">   *</a>
+<span class="sourceLineNo">025</span><a id="line.25">   * &lt;p&gt;</a>
+<span class="sourceLineNo">026</span><a id="line.26">   * We do not currently specify whether this set is mutable or not, and if it</a>
+<span class="sourceLineNo">027</span><a id="line.27">   * will reflect modifications to the optimised ontolgies.</a>
+<span class="sourceLineNo">028</span><a id="line.28">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">029</span><a id="line.29">   *</a>
+<span class="sourceLineNo">030</span><a id="line.30">   * @return a Set containing all remote terms in the ontology</a>
+<span class="sourceLineNo">031</span><a id="line.31">   */</a>
+<span class="sourceLineNo">032</span><a id="line.32">  public Set getRemoteTerms();</a>
+<span class="sourceLineNo">033</span><a id="line.33">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

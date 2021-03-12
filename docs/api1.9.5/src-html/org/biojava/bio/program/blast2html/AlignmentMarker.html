@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.bio.program.blast2html;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">/**</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * &lt;p&gt;</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * Class to do simple HTML colouring of sequence alignments.</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">028</span><a id="line.28"> *</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * &lt;p&gt;</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * For any particular alignment position, the colouring depends only on the two</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * characters at that position. The decision is made in two stages:-</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * &lt;ol&gt;</a>
+<span class="sourceLineNo">033</span><a id="line.33"> *   &lt;li&gt;Whether to colour or not in the &lt;CODE&gt;ColourCommand.isColoured()&lt;/CODE&gt;</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *    method&lt;/li&gt;</a>
+<span class="sourceLineNo">035</span><a id="line.35"> *   &lt;li&gt;what the colours are in the &lt;CODE&gt;AlignmentStyler.getStyle()&lt;/CODE&gt;</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *    method&lt;/li&gt;</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * &lt;/ol&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;p&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * This allows simple choices to highlight the mismatches, the identities or</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * simply colour up everything.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * &lt;p&gt;</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * The current implemention of step 2. is a simple colour lookup.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * &lt;p&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * Limitations:</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * &lt;p&gt;</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * As the FONT styles need to be defined before being used in the HTML,</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * it means the all colours to be used have to calculated up front.</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57"> *</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * &lt;p&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * The position in the alignment is not passed in so position dependent</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * colouring ( say against a HMM profile ) would be involve either</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * changing the interfaces or implementing them such that they knew the</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * required information via another route.</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64"> *</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * &lt;p&gt;&lt;pre&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * Primary author -</a>
+<span class="sourceLineNo">067</span><a id="line.67"> *                 Colin Hardman      (CAT)</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * Other authors  -</a>
+<span class="sourceLineNo">069</span><a id="line.69"> *                 Tim Dilks          (CAT)</a>
+<span class="sourceLineNo">070</span><a id="line.70"> *                 Simon Brocklehurst (CAT)</a>
+<span class="sourceLineNo">071</span><a id="line.71"> *                 Stuart Johnston    (CAT)</a>
+<span class="sourceLineNo">072</span><a id="line.72"> *                 Lawerence Bower    (CAT)</a>
+<span class="sourceLineNo">073</span><a id="line.73"> *                 Derek Crockford    (CAT)</a>
+<span class="sourceLineNo">074</span><a id="line.74"> *                 Neil Benn          (CAT)</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * Copyright 2001 Cambridge Antibody Technology Group plc.</a>
+<span class="sourceLineNo">077</span><a id="line.77"> * &lt;/pre&gt;&lt;/p&gt;</a>
+<span class="sourceLineNo">078</span><a id="line.78"> *</a>
+<span class="sourceLineNo">079</span><a id="line.79"> * &lt;p&gt;</a>
+<span class="sourceLineNo">080</span><a id="line.80"> * This code released to the biojava project, May 2001</a>
+<span class="sourceLineNo">081</span><a id="line.81"> * under the LGPL license.</a>
+<span class="sourceLineNo">082</span><a id="line.82"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83"> *</a>
+<span class="sourceLineNo">084</span><a id="line.84"> * @author Cambridge Antibody Technology Group plc</a>
+<span class="sourceLineNo">085</span><a id="line.85"> * @author Greg Cox</a>
+<span class="sourceLineNo">086</span><a id="line.86"> * @version 1.0</a>
+<span class="sourceLineNo">087</span><a id="line.87"> */</a>
+<span class="sourceLineNo">088</span><a id="line.88">public class AlignmentMarker {</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">    /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * Resuable StringBuffers for the markup of the alignments</a>
+<span class="sourceLineNo">092</span><a id="line.92">     */</a>
+<span class="sourceLineNo">093</span><a id="line.93">    private StringBuffer[] markedUp  = new StringBuffer[ 3 ];</a>
+<span class="sourceLineNo">094</span><a id="line.94">    {</a>
+<span class="sourceLineNo">095</span><a id="line.95">        markedUp[0] = new StringBuffer( 150 );</a>
+<span class="sourceLineNo">096</span><a id="line.96">        markedUp[1] = new StringBuffer( 150 );</a>
+<span class="sourceLineNo">097</span><a id="line.97">        markedUp[2] = new StringBuffer( 150 );</a>
+<span class="sourceLineNo">098</span><a id="line.98">    }</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">    /**</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * Holds the current style for query, hit and consensus</a>
+<span class="sourceLineNo">103</span><a id="line.103">     */</a>
+<span class="sourceLineNo">104</span><a id="line.104">    private String[] oCurrentStyle = new String[3];</a>
+<span class="sourceLineNo">105</span><a id="line.105">    {</a>
+<span class="sourceLineNo">106</span><a id="line.106">        oCurrentStyle[0] = null;</a>
+<span class="sourceLineNo">107</span><a id="line.107">        oCurrentStyle[1] = null;</a>
+<span class="sourceLineNo">108</span><a id="line.108">        oCurrentStyle[2] = null;</a>
+<span class="sourceLineNo">109</span><a id="line.109">    }</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">    /**</a>
+<span class="sourceLineNo">113</span><a id="line.113">     * Holds the NewStyles for query, hit and consensus</a>
+<span class="sourceLineNo">114</span><a id="line.114">     */</a>
+<span class="sourceLineNo">115</span><a id="line.115">    private String[]  oNewStyle = new String[ 3 ];</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">    /**</a>
+<span class="sourceLineNo">118</span><a id="line.118">     * Single method interface for deciding whether to colour</a>
+<span class="sourceLineNo">119</span><a id="line.119">     * a particular alignment pair.</a>
+<span class="sourceLineNo">120</span><a id="line.120">     */</a>
+<span class="sourceLineNo">121</span><a id="line.121">    private ColourCommand oColourCommand;</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">    /**</a>
+<span class="sourceLineNo">124</span><a id="line.124">     * Class that determines the style for each char</a>
+<span class="sourceLineNo">125</span><a id="line.125">     */</a>
+<span class="sourceLineNo">126</span><a id="line.126">    private AlignmentStyler oStyler;</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">    /**</a>
+<span class="sourceLineNo">129</span><a id="line.129">     * Creates a new &lt;code&gt;AlignmentMarker&lt;/code&gt; instance.</a>
+<span class="sourceLineNo">130</span><a id="line.130">     *</a>
+<span class="sourceLineNo">131</span><a id="line.131">     * @param poColourCommand - controls whether a particular alignment pair</a>
+<span class="sourceLineNo">132</span><a id="line.132">     *                          should be coloured</a>
+<span class="sourceLineNo">133</span><a id="line.133">     * @param poStyler - specifies all possible styles and where each style</a>
+<span class="sourceLineNo">134</span><a id="line.134">     *                   is used</a>
+<span class="sourceLineNo">135</span><a id="line.135">     */</a>
+<span class="sourceLineNo">136</span><a id="line.136">    public AlignmentMarker( ColourCommand poColourCommand,</a>
+<span class="sourceLineNo">137</span><a id="line.137">                            AlignmentStyler  poStyler ) {</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">        oColourCommand = poColourCommand;</a>
+<span class="sourceLineNo">140</span><a id="line.140">        oStyler  = poStyler;</a>
+<span class="sourceLineNo">141</span><a id="line.141">    }</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">    /**</a>
+<span class="sourceLineNo">145</span><a id="line.145">     * &lt;p&gt;</a>
+<span class="sourceLineNo">146</span><a id="line.146">     * Delegate to the AlignmentStyler</a>
+<span class="sourceLineNo">147</span><a id="line.147">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">148</span><a id="line.148">     *</a>
+<span class="sourceLineNo">149</span><a id="line.149">     * &lt;p&gt;</a>
+<span class="sourceLineNo">150</span><a id="line.150">     * Returns a fragment of HTML that defines the FONT</a>
+<span class="sourceLineNo">151</span><a id="line.151">     * styles to be used in the alignment markup.</a>
+<span class="sourceLineNo">152</span><a id="line.152">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">153</span><a id="line.153">     *</a>
+<span class="sourceLineNo">154</span><a id="line.154">     * &lt;p&gt;</a>
+<span class="sourceLineNo">155</span><a id="line.155">     * For example:</a>
+<span class="sourceLineNo">156</span><a id="line.156">     * &lt;PRE&gt;</a>
+<span class="sourceLineNo">157</span><a id="line.157">     * FONT.C2-S{background-color:#FFFC50;color:#000000}</a>
+<span class="sourceLineNo">158</span><a id="line.158">     * FONT.C4-S{background-color:#FC50FF;color:#000000}</a>
+<span class="sourceLineNo">159</span><a id="line.159">     * FONT.C3-S{background-color:#FF7272;color:#000000}</a>
+<span class="sourceLineNo">160</span><a id="line.160">     * FONT.C0-S{background-color:#50FF78;color:#000000}</a>
+<span class="sourceLineNo">161</span><a id="line.161">     * FONT.C1-S{background-color:#FFCA50;color:#000000}</a>
+<span class="sourceLineNo">162</span><a id="line.162">     * FONT.C5-S{background-color:#A5A5FF;color:#000000}</a>
+<span class="sourceLineNo">163</span><a id="line.163">     * &lt;/PRE&gt;</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">165</span><a id="line.165">     *</a>
+<span class="sourceLineNo">166</span><a id="line.166">     * @return String - the HTML</a>
+<span class="sourceLineNo">167</span><a id="line.167">     */</a>
+<span class="sourceLineNo">168</span><a id="line.168">    String getAlignmentStyles() {</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">         return oStyler.getAlignmentStyles();</a>
+<span class="sourceLineNo">171</span><a id="line.171">     }</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">    /**</a>
+<span class="sourceLineNo">174</span><a id="line.174">     * Takes three sequences ( of the same length ) as strings and</a>
+<span class="sourceLineNo">175</span><a id="line.175">     * returns three strings with colour markup in HTML.</a>
+<span class="sourceLineNo">176</span><a id="line.176">     *</a>
+<span class="sourceLineNo">177</span><a id="line.177">     * @param poAlignment - three strings representing a pairwise alignment</a>
+<span class="sourceLineNo">178</span><a id="line.178">     *                      query, hit, consensus</a>
+<span class="sourceLineNo">179</span><a id="line.179">     */</a>
+<span class="sourceLineNo">180</span><a id="line.180">    void alignment2HTML( String[] poAlignment ) {</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">        if ( poAlignment == null || poAlignment.length != 3</a>
+<span class="sourceLineNo">183</span><a id="line.183">             || poAlignment[0].length() != poAlignment[1].length()</a>
+<span class="sourceLineNo">184</span><a id="line.184">             || poAlignment[0].length() != poAlignment[2].length() ) {</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">            System.err.println( "--&gt;" + poAlignment[0] + "&lt;--" );</a>
+<span class="sourceLineNo">187</span><a id="line.187">            System.err.println( "--&gt;" + poAlignment[1] + "&lt;--" );</a>
+<span class="sourceLineNo">188</span><a id="line.188">            System.err.println( "--&gt;" + poAlignment[2] + "&lt;--" );</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">            throw new IllegalArgumentException</a>
+<span class="sourceLineNo">191</span><a id="line.191">                ( "Only accept array of three strings, all of same length" );</a>
+<span class="sourceLineNo">192</span><a id="line.192">        }</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">        if ( oStyler == null ) { // then no styles</a>
+<span class="sourceLineNo">195</span><a id="line.195">            return;</a>
+<span class="sourceLineNo">196</span><a id="line.196">        }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        // Initialise</a>
+<span class="sourceLineNo">199</span><a id="line.199"></a>
+<span class="sourceLineNo">200</span><a id="line.200">        markedUp[0].setLength(0);</a>
+<span class="sourceLineNo">201</span><a id="line.201">        markedUp[1].setLength(0);</a>
+<span class="sourceLineNo">202</span><a id="line.202">        markedUp[2].setLength(0);</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">        oCurrentStyle[0] = null;</a>
+<span class="sourceLineNo">205</span><a id="line.205">        oCurrentStyle[1] = null;</a>
+<span class="sourceLineNo">206</span><a id="line.206">        oCurrentStyle[2] = null;</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">        // For each position</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">        for( int i= 0, n = poAlignment[0].length(); i &lt; n ; i++) {</a>
+<span class="sourceLineNo">211</span><a id="line.211"></a>
+<span class="sourceLineNo">212</span><a id="line.212">            String oFirst  = String.valueOf( poAlignment[0].charAt( i ) );</a>
+<span class="sourceLineNo">213</span><a id="line.213">            String oSecond = String.valueOf( poAlignment[1].charAt( i ) );</a>
+<span class="sourceLineNo">214</span><a id="line.214"></a>
+<span class="sourceLineNo">215</span><a id="line.215">            // Decide whether to apply colours.</a>
+<span class="sourceLineNo">216</span><a id="line.216">            if ( oColourCommand.isColoured( oFirst, oSecond ) ) {</a>
+<span class="sourceLineNo">217</span><a id="line.217">                oStyler.getStyle( oFirst, oSecond,</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                  oNewStyle );</a>
+<span class="sourceLineNo">219</span><a id="line.219"></a>
+<span class="sourceLineNo">220</span><a id="line.220">            } else {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                // put in a loop if want to change the number</a>
+<span class="sourceLineNo">222</span><a id="line.222">                oNewStyle[0] = null;</a>
+<span class="sourceLineNo">223</span><a id="line.223">                oNewStyle[1] = null;</a>
+<span class="sourceLineNo">224</span><a id="line.224">                oNewStyle[2] = null;</a>
+<span class="sourceLineNo">225</span><a id="line.225">            }</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">            this.applyStyles( oCurrentStyle, oNewStyle, markedUp );</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">            markedUp[0].append( oFirst );</a>
+<span class="sourceLineNo">230</span><a id="line.230">            markedUp[1].append( oSecond );</a>
+<span class="sourceLineNo">231</span><a id="line.231">            markedUp[2].append( poAlignment[2].charAt( i ) );</a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233">            System.arraycopy( oNewStyle, 0, oCurrentStyle,</a>
+<span class="sourceLineNo">234</span><a id="line.234">                              0, oNewStyle.length );</a>
+<span class="sourceLineNo">235</span><a id="line.235"></a>
+<span class="sourceLineNo">236</span><a id="line.236">        } // for each char in sequence</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">        this.flushStyles( oCurrentStyle, markedUp );</a>
+<span class="sourceLineNo">239</span><a id="line.239"></a>
+<span class="sourceLineNo">240</span><a id="line.240">        poAlignment[0] = markedUp[0].substring(0);</a>
+<span class="sourceLineNo">241</span><a id="line.241">        poAlignment[1] = markedUp[1].substring(0);</a>
+<span class="sourceLineNo">242</span><a id="line.242">        poAlignment[2] = markedUp[2].substring(0);</a>
+<span class="sourceLineNo">243</span><a id="line.243">    }</a>
+<span class="sourceLineNo">244</span><a id="line.244"></a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">    /**</a>
+<span class="sourceLineNo">247</span><a id="line.247">     * Simple utility function to call applyStyle on seq1, markup &amp;</a>
+<span class="sourceLineNo">248</span><a id="line.248">     * seq2.</a>
+<span class="sourceLineNo">249</span><a id="line.249">     *</a>
+<span class="sourceLineNo">250</span><a id="line.250">     * @param poCurrentStyle a &lt;code&gt;String[]&lt;/code&gt;</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * @param poNewStyle a &lt;code&gt;String[]&lt;/code&gt;</a>
+<span class="sourceLineNo">252</span><a id="line.252">     * @param poMarkedUp a &lt;code&gt;StringBuffer[]&lt;/code&gt;</a>
+<span class="sourceLineNo">253</span><a id="line.253">     */</a>
+<span class="sourceLineNo">254</span><a id="line.254">    private void applyStyles( String[] poCurrentStyle,</a>
+<span class="sourceLineNo">255</span><a id="line.255">                              String[] poNewStyle,</a>
+<span class="sourceLineNo">256</span><a id="line.256">                              StringBuffer[] poMarkedUp ) {</a>
+<span class="sourceLineNo">257</span><a id="line.257"></a>
+<span class="sourceLineNo">258</span><a id="line.258">        for ( int i=0, n = poCurrentStyle.length; i &lt; n ; i++ ) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">            this.applyStyle( poCurrentStyle[i], poNewStyle[i], poMarkedUp[i] );</a>
+<span class="sourceLineNo">260</span><a id="line.260">        }</a>
+<span class="sourceLineNo">261</span><a id="line.261">    }</a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">    /**</a>
+<span class="sourceLineNo">264</span><a id="line.264">     * &lt;p&gt;</a>
+<span class="sourceLineNo">265</span><a id="line.265">     * Apply the new style to the output.</a>
+<span class="sourceLineNo">266</span><a id="line.266">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">267</span><a id="line.267">     *</a>
+<span class="sourceLineNo">268</span><a id="line.268">     * &lt;p&gt;</a>
+<span class="sourceLineNo">269</span><a id="line.269">     * Takes care of runs of the same style and</a>
+<span class="sourceLineNo">270</span><a id="line.270">     * changing styles.</a>
+<span class="sourceLineNo">271</span><a id="line.271">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">272</span><a id="line.272">     *</a>
+<span class="sourceLineNo">273</span><a id="line.273">     * @param poCurrentStyle  &lt;code&gt;String&lt;/code&gt; - the current style</a>
+<span class="sourceLineNo">274</span><a id="line.274">     * @param poNewStyle      &lt;code&gt;String&lt;/code&gt; - the new style</a>
+<span class="sourceLineNo">275</span><a id="line.275">     * @param poOutput        &lt;code&gt;StringBuffer&lt;/code&gt; - the styled output</a>
+<span class="sourceLineNo">276</span><a id="line.276">     */</a>
+<span class="sourceLineNo">277</span><a id="line.277">    private void applyStyle( String poCurrentStyle,</a>
+<span class="sourceLineNo">278</span><a id="line.278">                             String poNewStyle,</a>
+<span class="sourceLineNo">279</span><a id="line.279">                             StringBuffer poOutput ) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">        //</a>
+<span class="sourceLineNo">281</span><a id="line.281">        // If new style is null we just need to close the old style</a>
+<span class="sourceLineNo">282</span><a id="line.282">        // if it was different.</a>
+<span class="sourceLineNo">283</span><a id="line.283">        //</a>
+<span class="sourceLineNo">284</span><a id="line.284">        //   else if the new style is different from the old</a>
+<span class="sourceLineNo">285</span><a id="line.285">        //     start a new style.</a>
+<span class="sourceLineNo">286</span><a id="line.286">        //</a>
+<span class="sourceLineNo">287</span><a id="line.287">        if ( poNewStyle == null ) {</a>
+<span class="sourceLineNo">288</span><a id="line.288"></a>
+<span class="sourceLineNo">289</span><a id="line.289">            if ( poCurrentStyle != null ) {</a>
+<span class="sourceLineNo">290</span><a id="line.290">                poOutput.append( "&lt;/FONT&gt;" );</a>
+<span class="sourceLineNo">291</span><a id="line.291">            }</a>
+<span class="sourceLineNo">292</span><a id="line.292">        } else if ( !poNewStyle.equals( poCurrentStyle ) ) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">            if ( poCurrentStyle != null ) {</a>
+<span class="sourceLineNo">294</span><a id="line.294">                poOutput.append( "&lt;/FONT&gt;" );</a>
+<span class="sourceLineNo">295</span><a id="line.295">            }</a>
+<span class="sourceLineNo">296</span><a id="line.296">            // start a new one</a>
+<span class="sourceLineNo">297</span><a id="line.297">            poOutput.append("&lt;FONT CLASS=" + poNewStyle + "&gt;");</a>
+<span class="sourceLineNo">298</span><a id="line.298">        }</a>
+<span class="sourceLineNo">299</span><a id="line.299">    }</a>
+<span class="sourceLineNo">300</span><a id="line.300"></a>
+<span class="sourceLineNo">301</span><a id="line.301">    /**</a>
+<span class="sourceLineNo">302</span><a id="line.302">     * If the last style is not null then close it.</a>
+<span class="sourceLineNo">303</span><a id="line.303">     *</a>
+<span class="sourceLineNo">304</span><a id="line.304">     */</a>
+<span class="sourceLineNo">305</span><a id="line.305">    private void flushStyles( String[] poCurrentStyle,</a>
+<span class="sourceLineNo">306</span><a id="line.306">                              StringBuffer[] poMarkedUp ) {</a>
+<span class="sourceLineNo">307</span><a id="line.307"></a>
+<span class="sourceLineNo">308</span><a id="line.308">        for ( int i=0, n = poCurrentStyle.length; i &lt; n ; i++ ) {</a>
+<span class="sourceLineNo">309</span><a id="line.309">            if ( poCurrentStyle[i] != null ) { //then close</a>
+<span class="sourceLineNo">310</span><a id="line.310">                poMarkedUp[i].append( "&lt;/FONT&gt;" );</a>
+<span class="sourceLineNo">311</span><a id="line.311">            }</a>
+<span class="sourceLineNo">312</span><a id="line.312">        }</a>
+<span class="sourceLineNo">313</span><a id="line.313">    }</a>
+<span class="sourceLineNo">314</span><a id="line.314">}</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

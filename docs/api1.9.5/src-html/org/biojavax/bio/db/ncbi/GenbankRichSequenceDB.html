@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojavax.bio.db.ncbi;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.DataInputStream;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.IOException;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.InputStream;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.OutputStream;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.io.OutputStreamWriter;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.PrintWriter;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.net.MalformedURLException;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.net.Socket;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.net.URL;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.Iterator;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.Set;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.seq.db.FetchURL;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.seq.db.IllegalIDException;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojavax.Namespace;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojavax.RichObjectFactory;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojavax.bio.db.AbstractRichSequenceDB;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojavax.bio.db.HashRichSequenceDB;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojavax.bio.db.RichSequenceDB;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojavax.bio.db.RichSequenceDBLite;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojavax.bio.seq.RichSequence;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojavax.bio.seq.RichSequenceIterator;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojavax.bio.seq.io.RichSequenceBuilderFactory;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">/**</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * This class contains functions accessing DNA sequences in Genbank format.</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * It adds methods to return RichSequences instead of plain Sequences.</a>
+<span class="sourceLineNo">057</span><a id="line.57"> *</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * @author Lei Lai</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * @author Laurent Jourdren</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * @author Shuvankar Mukherjee</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * @author Richard Holland</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * @since 1.5</a>
+<span class="sourceLineNo">065</span><a id="line.65"> */</a>
+<span class="sourceLineNo">066</span><a id="line.66">public class GenbankRichSequenceDB extends AbstractRichSequenceDB implements RichSequenceDBLite {</a>
+<span class="sourceLineNo">067</span><a id="line.67">    </a>
+<span class="sourceLineNo">068</span><a id="line.68">    protected static final String urlBatchSequences = "https://www.ncbi.nlm.nih.gov:80/entrez/eutils/efetch.fcgi";</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">    private String email = "anonymous@biojava.org";</a>
+<span class="sourceLineNo">071</span><a id="line.71">    private String tool = "biojavax";</a>
+<span class="sourceLineNo">072</span><a id="line.72">    </a>
+<span class="sourceLineNo">073</span><a id="line.73">    /**</a>
+<span class="sourceLineNo">074</span><a id="line.74">     * The default constructor delegates to the parent class. The constructor refers</a>
+<span class="sourceLineNo">075</span><a id="line.75">     * to RichObjectFactory.getDefaultNamespace() so make sure your factory is initialised</a>
+<span class="sourceLineNo">076</span><a id="line.76">     * before calling this constructor.</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * Sets the default factory to THRESHOLD.</a>
+<span class="sourceLineNo">078</span><a id="line.78">     */</a>
+<span class="sourceLineNo">079</span><a id="line.79">    public GenbankRichSequenceDB() {</a>
+<span class="sourceLineNo">080</span><a id="line.80">        super();</a>
+<span class="sourceLineNo">081</span><a id="line.81">        this.setFactory(RichSequenceBuilderFactory.THRESHOLD); // threshold factory is efficient</a>
+<span class="sourceLineNo">082</span><a id="line.82">        this.setNamespace(RichObjectFactory.getDefaultNamespace()); // default namespace</a>
+<span class="sourceLineNo">083</span><a id="line.83">    }</a>
+<span class="sourceLineNo">084</span><a id="line.84">    </a>
+<span class="sourceLineNo">085</span><a id="line.85">    /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * Get the URL object for locating sequence object using eutils.</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * The default value of the return format of the sequence object is text.</a>
+<span class="sourceLineNo">088</span><a id="line.88">     **/</a>
+<span class="sourceLineNo">089</span><a id="line.89">    protected URL getAddress(String id) throws MalformedURLException {</a>
+<span class="sourceLineNo">090</span><a id="line.90">        FetchURL seqURL = new FetchURL("Genbank", "text");</a>
+<span class="sourceLineNo">091</span><a id="line.91">        String baseurl = seqURL.getbaseURL();</a>
+<span class="sourceLineNo">092</span><a id="line.92">        String db = seqURL.getDB();</a>
+<span class="sourceLineNo">093</span><a id="line.93">        String type = seqURL.getRetrievalType();</a>
+<span class="sourceLineNo">094</span><a id="line.94">        String mode = seqURL.getRetrievalMode();</a>
+<span class="sourceLineNo">095</span><a id="line.95">        String url = baseurl+db+"&amp;id="+id+"&amp;rettype="+type+"&amp;retmode="+mode+"&amp;tool="+getTool()+"&amp;email="+getEmail();</a>
+<span class="sourceLineNo">096</span><a id="line.96">        return new URL(url);</a>
+<span class="sourceLineNo">097</span><a id="line.97">    }</a>
+<span class="sourceLineNo">098</span><a id="line.98">    </a>
+<span class="sourceLineNo">099</span><a id="line.99">    /**</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * Create the Http Post Request to fetch (in batch mode) a list of sequence</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * with Genbank.</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * @param url URL of the request</a>
+<span class="sourceLineNo">103</span><a id="line.103">     * @param list List of sequence identifier</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * @return The Post request.</a>
+<span class="sourceLineNo">105</span><a id="line.105">     */</a>
+<span class="sourceLineNo">106</span><a id="line.106">    protected String makeBatchRequest(URL url, Set list) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">        StringBuffer params = new StringBuffer();</a>
+<span class="sourceLineNo">108</span><a id="line.108">        params.append("db=nucleotide&amp;rettype=gb&amp;id=");</a>
+<span class="sourceLineNo">109</span><a id="line.109">        </a>
+<span class="sourceLineNo">110</span><a id="line.110">        for (Iterator i = list.iterator(); i.hasNext();) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">            String idSequence = (String)i.next();</a>
+<span class="sourceLineNo">112</span><a id="line.112">            params.append(idSequence);</a>
+<span class="sourceLineNo">113</span><a id="line.113">            if(i.hasNext()) params.append(",");</a>
+<span class="sourceLineNo">114</span><a id="line.114">        }</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">        params.append("&amp;email="+getEmail()+"&amp;tool="+getTool());</a>
+<span class="sourceLineNo">117</span><a id="line.117">        </a>
+<span class="sourceLineNo">118</span><a id="line.118">        StringBuffer header = new StringBuffer();</a>
+<span class="sourceLineNo">119</span><a id="line.119">        header.append("POST ");</a>
+<span class="sourceLineNo">120</span><a id="line.120">        header.append(url.getPath());</a>
+<span class="sourceLineNo">121</span><a id="line.121">        header.append(</a>
+<span class="sourceLineNo">122</span><a id="line.122">                " HTTP/1.0\r\n"</a>
+<span class="sourceLineNo">123</span><a id="line.123">                + "Connection: close\r\n"</a>
+<span class="sourceLineNo">124</span><a id="line.124">                + "Accept: text/html, text/plain\r\n"</a>
+<span class="sourceLineNo">125</span><a id="line.125">                + "Host: ");</a>
+<span class="sourceLineNo">126</span><a id="line.126">        header.append(url.getHost());</a>
+<span class="sourceLineNo">127</span><a id="line.127">        header.append(</a>
+<span class="sourceLineNo">128</span><a id="line.128">                "\r\n"</a>
+<span class="sourceLineNo">129</span><a id="line.129">                + "User-Agent: Biojava/GenbankSequenceDB\r\n"</a>
+<span class="sourceLineNo">130</span><a id="line.130">                + "Content-Type: application/x-www-form-urlencoded\r\n"</a>
+<span class="sourceLineNo">131</span><a id="line.131">                + "Content-Length: ");</a>
+<span class="sourceLineNo">132</span><a id="line.132">        header.append(params.length());</a>
+<span class="sourceLineNo">133</span><a id="line.133">        header.append("\r\n\r\n");</a>
+<span class="sourceLineNo">134</span><a id="line.134">        </a>
+<span class="sourceLineNo">135</span><a id="line.135">        StringBuffer request = new StringBuffer();</a>
+<span class="sourceLineNo">136</span><a id="line.136">        request.append(header);</a>
+<span class="sourceLineNo">137</span><a id="line.137">        request.append(params);</a>
+<span class="sourceLineNo">138</span><a id="line.138">        </a>
+<span class="sourceLineNo">139</span><a id="line.139">        return request.toString();</a>
+<span class="sourceLineNo">140</span><a id="line.140">    }</a>
+<span class="sourceLineNo">141</span><a id="line.141">    </a>
+<span class="sourceLineNo">142</span><a id="line.142">    /**</a>
+<span class="sourceLineNo">143</span><a id="line.143">     * Given the appropriate Genbank ID, return the matching RichSequence object.</a>
+<span class="sourceLineNo">144</span><a id="line.144">     * @param id the Genbank ID to retrieve.</a>
+<span class="sourceLineNo">145</span><a id="line.145">     * @return the matching RichSequence object, or null if not found.</a>
+<span class="sourceLineNo">146</span><a id="line.146">     * @throws Exception if the sequence could not be retrieved for reasons other</a>
+<span class="sourceLineNo">147</span><a id="line.147">     * than the identifier not being found.</a>
+<span class="sourceLineNo">148</span><a id="line.148">     */</a>
+<span class="sourceLineNo">149</span><a id="line.149">    public RichSequence getRichSequence(String id) throws BioException, IllegalIDException {</a>
+<span class="sourceLineNo">150</span><a id="line.150">        try {</a>
+<span class="sourceLineNo">151</span><a id="line.151">            URL queryURL = getAddress(id); //get URL based on ID</a>
+<span class="sourceLineNo">152</span><a id="line.152">            </a>
+<span class="sourceLineNo">153</span><a id="line.153">            SymbolTokenization rParser = DNATools.getDNA().getTokenization("token"); //get SymbolTokenization</a>
+<span class="sourceLineNo">154</span><a id="line.154">            RichSequenceBuilderFactory seqFactory = this.getFactory();</a>
+<span class="sourceLineNo">155</span><a id="line.155">            Namespace ns = this.getNamespace();</a>
+<span class="sourceLineNo">156</span><a id="line.156">            </a>
+<span class="sourceLineNo">157</span><a id="line.157">            DataInputStream in = new DataInputStream(queryURL.openStream());</a>
+<span class="sourceLineNo">158</span><a id="line.158">            BufferedReader reader = new BufferedReader(new InputStreamReader(in));</a>
+<span class="sourceLineNo">159</span><a id="line.159">            RichSequenceIterator seqI = RichSequence.IOTools.readGenbank(reader, rParser, seqFactory, ns);</a>
+<span class="sourceLineNo">160</span><a id="line.160">            </a>
+<span class="sourceLineNo">161</span><a id="line.161">            return seqI.nextRichSequence();</a>
+<span class="sourceLineNo">162</span><a id="line.162">        } catch (MalformedURLException e) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">            throw new BioException("Failed to create Genbank URL",e);</a>
+<span class="sourceLineNo">164</span><a id="line.164">        } catch (BioException e) {</a>
+<span class="sourceLineNo">165</span><a id="line.165">            throw new BioException("Failed to read Genbank sequence",e);</a>
+<span class="sourceLineNo">166</span><a id="line.166">        } catch (IOException e) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">            throw new BioException("IO failure whilst reading from Genbank",e);</a>
+<span class="sourceLineNo">168</span><a id="line.168">        }</a>
+<span class="sourceLineNo">169</span><a id="line.169">    }    </a>
+<span class="sourceLineNo">170</span><a id="line.170">    </a>
+<span class="sourceLineNo">171</span><a id="line.171">    /**     </a>
+<span class="sourceLineNo">172</span><a id="line.172">     * Given the appropriate Genbank ID, return the matching RichSequence object. Additionally</a>
+<span class="sourceLineNo">173</span><a id="line.173">     * define a new Namespace for the received RichSequence object.</a>
+<span class="sourceLineNo">174</span><a id="line.174">     * @param id the Genbank ID to retrieve.</a>
+<span class="sourceLineNo">175</span><a id="line.175">     * @param nsp the Namespace to define.</a>
+<span class="sourceLineNo">176</span><a id="line.176">     * @return the matching RichSequence object, or null if not found.</a>
+<span class="sourceLineNo">177</span><a id="line.177">     * @throws Exception if the sequence could not be retrieved for reasons other</a>
+<span class="sourceLineNo">178</span><a id="line.178">     * than the identifier not being found.</a>
+<span class="sourceLineNo">179</span><a id="line.179">     */</a>
+<span class="sourceLineNo">180</span><a id="line.180">    public RichSequence getRichSequence(String id, Namespace nsp) throws BioException, IllegalIDException {</a>
+<span class="sourceLineNo">181</span><a id="line.181">        try {</a>
+<span class="sourceLineNo">182</span><a id="line.182">            URL queryURL = getAddress(id); //get URL based on ID</a>
+<span class="sourceLineNo">183</span><a id="line.183">            </a>
+<span class="sourceLineNo">184</span><a id="line.184">            SymbolTokenization rParser = DNATools.getDNA().getTokenization("token"); //get SymbolTokenization</a>
+<span class="sourceLineNo">185</span><a id="line.185">            RichSequenceBuilderFactory seqFactory = this.getFactory();</a>
+<span class="sourceLineNo">186</span><a id="line.186">            </a>
+<span class="sourceLineNo">187</span><a id="line.187">            DataInputStream in = new DataInputStream(queryURL.openStream());</a>
+<span class="sourceLineNo">188</span><a id="line.188">            BufferedReader reader = new BufferedReader(new InputStreamReader(in));</a>
+<span class="sourceLineNo">189</span><a id="line.189">            RichSequenceIterator seqI = RichSequence.IOTools.readGenbank(reader, rParser, seqFactory, nsp);</a>
+<span class="sourceLineNo">190</span><a id="line.190">            </a>
+<span class="sourceLineNo">191</span><a id="line.191">            return seqI.nextRichSequence();</a>
+<span class="sourceLineNo">192</span><a id="line.192">        } catch (MalformedURLException e) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">            throw new BioException("Failed to create Genbank URL",e);</a>
+<span class="sourceLineNo">194</span><a id="line.194">        } catch (BioException e) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">            throw new BioException("Failed to read Genbank sequence",e);</a>
+<span class="sourceLineNo">196</span><a id="line.196">        } catch (IOException e) {</a>
+<span class="sourceLineNo">197</span><a id="line.197">            throw new BioException("IO failure whilst reading from Genbank",e);</a>
+<span class="sourceLineNo">198</span><a id="line.198">        }</a>
+<span class="sourceLineNo">199</span><a id="line.199">    }</a>
+<span class="sourceLineNo">200</span><a id="line.200">    </a>
+<span class="sourceLineNo">201</span><a id="line.201">    </a>
+<span class="sourceLineNo">202</span><a id="line.202">    /**</a>
+<span class="sourceLineNo">203</span><a id="line.203">     * Retrieve rich sequences from a Genbank</a>
+<span class="sourceLineNo">204</span><a id="line.204">     *</a>
+<span class="sourceLineNo">205</span><a id="line.205">     * @param list List of NCBI sequence number (GI), accession, accession.version,</a>
+<span class="sourceLineNo">206</span><a id="line.206">     * fasta or seqid.</a>
+<span class="sourceLineNo">207</span><a id="line.207">     * @return The rich database object (HashSequenceDB) with downloaded rich sequences.</a>
+<span class="sourceLineNo">208</span><a id="line.208">     * You will need to cast the sequences you get from this database object into</a>
+<span class="sourceLineNo">209</span><a id="line.209">     * RichSequence objects if you want to access their full features.</a>
+<span class="sourceLineNo">210</span><a id="line.210">     */</a>
+<span class="sourceLineNo">211</span><a id="line.211">    public RichSequenceDB getRichSequences(Set list) throws BioException, IllegalIDException {</a>
+<span class="sourceLineNo">212</span><a id="line.212">        </a>
+<span class="sourceLineNo">213</span><a id="line.213">        return getRichSequences(list, null);</a>
+<span class="sourceLineNo">214</span><a id="line.214">    }</a>
+<span class="sourceLineNo">215</span><a id="line.215">    </a>
+<span class="sourceLineNo">216</span><a id="line.216">    /**</a>
+<span class="sourceLineNo">217</span><a id="line.217">     * Retrieve rich sequences from a Genbank</a>
+<span class="sourceLineNo">218</span><a id="line.218">     *</a>
+<span class="sourceLineNo">219</span><a id="line.219">     * @param list List of NCBI sequence number (GI), accession, accession.version,</a>
+<span class="sourceLineNo">220</span><a id="line.220">     * fasta or seqid.</a>
+<span class="sourceLineNo">221</span><a id="line.221">     * @param database Where to store rich sequences. If database is null, use an</a>
+<span class="sourceLineNo">222</span><a id="line.222">     * HashSequenceDB Object.</a>
+<span class="sourceLineNo">223</span><a id="line.223">     * @return The database object with downloaded rich sequences.</a>
+<span class="sourceLineNo">224</span><a id="line.224">     * You will need to cast the sequences you get from this database object into</a>
+<span class="sourceLineNo">225</span><a id="line.225">     * RichSequence objects if you want to access their full features.</a>
+<span class="sourceLineNo">226</span><a id="line.226">     */</a>
+<span class="sourceLineNo">227</span><a id="line.227">    public RichSequenceDB getRichSequences(Set list, RichSequenceDB database) throws BioException, IllegalIDException {</a>
+<span class="sourceLineNo">228</span><a id="line.228">        try {</a>
+<span class="sourceLineNo">229</span><a id="line.229">            if (database == null) database = new HashRichSequenceDB();</a>
+<span class="sourceLineNo">230</span><a id="line.230">            </a>
+<span class="sourceLineNo">231</span><a id="line.231">            URL url = new URL(urlBatchSequences);</a>
+<span class="sourceLineNo">232</span><a id="line.232">            int port = url.getPort();</a>
+<span class="sourceLineNo">233</span><a id="line.233">            String hostname = url.getHost();</a>
+<span class="sourceLineNo">234</span><a id="line.234">            </a>
+<span class="sourceLineNo">235</span><a id="line.235">            //Open the connection and the streams</a>
+<span class="sourceLineNo">236</span><a id="line.236">            Socket s = new Socket(hostname, port);</a>
+<span class="sourceLineNo">237</span><a id="line.237">            </a>
+<span class="sourceLineNo">238</span><a id="line.238">            InputStream sin = s.getInputStream();</a>
+<span class="sourceLineNo">239</span><a id="line.239">            BufferedReader fromServer = new BufferedReader(new InputStreamReader(sin));</a>
+<span class="sourceLineNo">240</span><a id="line.240">            OutputStream sout = s.getOutputStream();</a>
+<span class="sourceLineNo">241</span><a id="line.241">            PrintWriter toServer = new PrintWriter(new OutputStreamWriter(sout));</a>
+<span class="sourceLineNo">242</span><a id="line.242">            </a>
+<span class="sourceLineNo">243</span><a id="line.243">            // Put the Post request to the server</a>
+<span class="sourceLineNo">244</span><a id="line.244">            toServer.print(makeBatchRequest(url, list));</a>
+<span class="sourceLineNo">245</span><a id="line.245">            toServer.flush();</a>
+<span class="sourceLineNo">246</span><a id="line.246">            </a>
+<span class="sourceLineNo">247</span><a id="line.247">            // Delete response headers</a>
+<span class="sourceLineNo">248</span><a id="line.248">            boolean finEntete = false;</a>
+<span class="sourceLineNo">249</span><a id="line.249">            for (String l = null; ((l = fromServer.readLine()) != null) &amp;&amp; (!finEntete);) {</a>
+<span class="sourceLineNo">250</span><a id="line.250">                if (l.equals("")) finEntete = true;</a>
+<span class="sourceLineNo">251</span><a id="line.251">            }</a>
+<span class="sourceLineNo">252</span><a id="line.252">            </a>
+<span class="sourceLineNo">253</span><a id="line.253">            SymbolTokenization rParser = DNATools.getDNA().getTokenization("token"); //get SymbolTokenization</a>
+<span class="sourceLineNo">254</span><a id="line.254">            RichSequenceBuilderFactory seqFactory = this.getFactory();</a>
+<span class="sourceLineNo">255</span><a id="line.255">            Namespace ns = this.getNamespace();</a>
+<span class="sourceLineNo">256</span><a id="line.256">            </a>
+<span class="sourceLineNo">257</span><a id="line.257">            RichSequenceIterator seqI = RichSequence.IOTools.readGenbank(fromServer, rParser, seqFactory, ns);</a>
+<span class="sourceLineNo">258</span><a id="line.258">            </a>
+<span class="sourceLineNo">259</span><a id="line.259">            while (seqI.hasNext()) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                try {</a>
+<span class="sourceLineNo">261</span><a id="line.261">                    database.addSequence(seqI.nextRichSequence());</a>
+<span class="sourceLineNo">262</span><a id="line.262">                } catch (ChangeVetoException ce) {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                    throw new BioException("Unexpectedly couldn't add to the supplied RichSequenceDB", ce);</a>
+<span class="sourceLineNo">264</span><a id="line.264">                }</a>
+<span class="sourceLineNo">265</span><a id="line.265">            }</a>
+<span class="sourceLineNo">266</span><a id="line.266">            </a>
+<span class="sourceLineNo">267</span><a id="line.267">            return database;</a>
+<span class="sourceLineNo">268</span><a id="line.268">        } catch (MalformedURLException e) {</a>
+<span class="sourceLineNo">269</span><a id="line.269">            throw new BioException("Failed to create Genbank URL",e);</a>
+<span class="sourceLineNo">270</span><a id="line.270">        } catch (BioException e) {</a>
+<span class="sourceLineNo">271</span><a id="line.271">            throw new BioException("Failed to read Genbank sequence",e);</a>
+<span class="sourceLineNo">272</span><a id="line.272">        } catch (IOException e) {</a>
+<span class="sourceLineNo">273</span><a id="line.273">            throw new BioException("IO failure whilst reading from Genbank",e);</a>
+<span class="sourceLineNo">274</span><a id="line.274">        }</a>
+<span class="sourceLineNo">275</span><a id="line.275">    }</a>
+<span class="sourceLineNo">276</span><a id="line.276">    </a>
+<span class="sourceLineNo">277</span><a id="line.277">    public String getName() {</a>
+<span class="sourceLineNo">278</span><a id="line.278">        return "Genbank";</a>
+<span class="sourceLineNo">279</span><a id="line.279">    }</a>
+<span class="sourceLineNo">280</span><a id="line.280">    </a>
+<span class="sourceLineNo">281</span><a id="line.281">    public Set ids() {</a>
+<span class="sourceLineNo">282</span><a id="line.282">        throw new RuntimeException("Complete set of Genbank ids is unavailable.");</a>
+<span class="sourceLineNo">283</span><a id="line.283">    }</a>
+<span class="sourceLineNo">284</span><a id="line.284">    </a>
+<span class="sourceLineNo">285</span><a id="line.285">    /**</a>
+<span class="sourceLineNo">286</span><a id="line.286">     * Holds value of property factory.</a>
+<span class="sourceLineNo">287</span><a id="line.287">     */</a>
+<span class="sourceLineNo">288</span><a id="line.288">    private RichSequenceBuilderFactory factory;</a>
+<span class="sourceLineNo">289</span><a id="line.289">    </a>
+<span class="sourceLineNo">290</span><a id="line.290">    /**</a>
+<span class="sourceLineNo">291</span><a id="line.291">     * Getter for property factory.</a>
+<span class="sourceLineNo">292</span><a id="line.292">     * @return Value of property factory.</a>
+<span class="sourceLineNo">293</span><a id="line.293">     */</a>
+<span class="sourceLineNo">294</span><a id="line.294">    public RichSequenceBuilderFactory getFactory() {</a>
+<span class="sourceLineNo">295</span><a id="line.295">        </a>
+<span class="sourceLineNo">296</span><a id="line.296">        return this.factory;</a>
+<span class="sourceLineNo">297</span><a id="line.297">    }</a>
+<span class="sourceLineNo">298</span><a id="line.298">    </a>
+<span class="sourceLineNo">299</span><a id="line.299">    /**</a>
+<span class="sourceLineNo">300</span><a id="line.300">     * Setter for property factory.</a>
+<span class="sourceLineNo">301</span><a id="line.301">     * @param factory New value of property factory.</a>
+<span class="sourceLineNo">302</span><a id="line.302">     */</a>
+<span class="sourceLineNo">303</span><a id="line.303">    public void setFactory(RichSequenceBuilderFactory factory) {</a>
+<span class="sourceLineNo">304</span><a id="line.304">        </a>
+<span class="sourceLineNo">305</span><a id="line.305">        this.factory = factory;</a>
+<span class="sourceLineNo">306</span><a id="line.306">    }</a>
+<span class="sourceLineNo">307</span><a id="line.307">    </a>
+<span class="sourceLineNo">308</span><a id="line.308">    /**</a>
+<span class="sourceLineNo">309</span><a id="line.309">     * Holds value of property namespace.</a>
+<span class="sourceLineNo">310</span><a id="line.310">     */</a>
+<span class="sourceLineNo">311</span><a id="line.311">    private Namespace namespace;</a>
+<span class="sourceLineNo">312</span><a id="line.312">    </a>
+<span class="sourceLineNo">313</span><a id="line.313">    /**</a>
+<span class="sourceLineNo">314</span><a id="line.314">     * Getter for property namespace.</a>
+<span class="sourceLineNo">315</span><a id="line.315">     * @return Value of property namespace.</a>
+<span class="sourceLineNo">316</span><a id="line.316">     */</a>
+<span class="sourceLineNo">317</span><a id="line.317">    public Namespace getNamespace() {</a>
+<span class="sourceLineNo">318</span><a id="line.318">        </a>
+<span class="sourceLineNo">319</span><a id="line.319">        return this.namespace;</a>
+<span class="sourceLineNo">320</span><a id="line.320">    }</a>
+<span class="sourceLineNo">321</span><a id="line.321">    </a>
+<span class="sourceLineNo">322</span><a id="line.322">    /**</a>
+<span class="sourceLineNo">323</span><a id="line.323">     * Setter for property namespace.</a>
+<span class="sourceLineNo">324</span><a id="line.324">     * @param namespace New value of property namespace.</a>
+<span class="sourceLineNo">325</span><a id="line.325">     */</a>
+<span class="sourceLineNo">326</span><a id="line.326">    public void setNamespace(Namespace namespace) {</a>
+<span class="sourceLineNo">327</span><a id="line.327">        </a>
+<span class="sourceLineNo">328</span><a id="line.328">        this.namespace = namespace;</a>
+<span class="sourceLineNo">329</span><a id="line.329">    }</a>
+<span class="sourceLineNo">330</span><a id="line.330"></a>
+<span class="sourceLineNo">331</span><a id="line.331">    /** </a>
+<span class="sourceLineNo">332</span><a id="line.332">     * Set the tool identifier for Entrez. Defaults to 'biojavax'.</a>
+<span class="sourceLineNo">333</span><a id="line.333">     * @param tool the new identifier.</a>
+<span class="sourceLineNo">334</span><a id="line.334">     */</a>
+<span class="sourceLineNo">335</span><a id="line.335">    public void setTool(String tool) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">        this.tool = tool;</a>
+<span class="sourceLineNo">337</span><a id="line.337">    }</a>
+<span class="sourceLineNo">338</span><a id="line.338"></a>
+<span class="sourceLineNo">339</span><a id="line.339">    /** </a>
+<span class="sourceLineNo">340</span><a id="line.340">     * Get the tool identifier for Entrez. Defaults to 'biojavax'.</a>
+<span class="sourceLineNo">341</span><a id="line.341">     * @return the identifier.</a>
+<span class="sourceLineNo">342</span><a id="line.342">     */</a>
+<span class="sourceLineNo">343</span><a id="line.343">    public String getTool() {</a>
+<span class="sourceLineNo">344</span><a id="line.344">        return this.tool;</a>
+<span class="sourceLineNo">345</span><a id="line.345">    }</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">    /** </a>
+<span class="sourceLineNo">348</span><a id="line.348">     * Set the email for Entrez. Defaults to 'anonymous@biojava.org'.</a>
+<span class="sourceLineNo">349</span><a id="line.349">     * @param email the new email.</a>
+<span class="sourceLineNo">350</span><a id="line.350">     */</a>
+<span class="sourceLineNo">351</span><a id="line.351">    public void setEmail(String email) {</a>
+<span class="sourceLineNo">352</span><a id="line.352">        this.email = email;</a>
+<span class="sourceLineNo">353</span><a id="line.353">    }</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355">    /** </a>
+<span class="sourceLineNo">356</span><a id="line.356">     * Get the email for Entrez. Defaults to 'anonymous@biojava.org'.</a>
+<span class="sourceLineNo">357</span><a id="line.357">     * @return the email.</a>
+<span class="sourceLineNo">358</span><a id="line.358">     */</a>
+<span class="sourceLineNo">359</span><a id="line.359">    public String getEmail() {</a>
+<span class="sourceLineNo">360</span><a id="line.360">        return this.email;</a>
+<span class="sourceLineNo">361</span><a id="line.361">    }</a>
+<span class="sourceLineNo">362</span><a id="line.362">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

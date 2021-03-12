@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.search;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.Serializable;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.utils.TriState;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.utils.walker.WalkerFactory;</a>
+<span class="sourceLineNo">028</span><a id="line.28">/**</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * A SearchContentHandler class that implements filtering</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * in chains of SearchContentHandler instances.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * &lt;p&gt;</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * The SearchContentHandler organise Blast-like searches</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * as a hierarchy of search/hit/subhit.  Each search</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * is conducted with a single query sequence.  Hits</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * of the query sequence are reported against different</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * target sequences.  The hit is further subdivided into</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * one of more subhits which represent the positions</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * within the target sequence that alignments of the query</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * sequence were achieved against the query sequence</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * (e.g. HSPs).</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * &lt;p&gt;</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * This implementation depends on the a well ordered use</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * of the SearchContentHandler interface.  In particular,</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * it requires that search/hit/subhit properties are</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * reported immediately following the associated </a>
+<span class="sourceLineNo">046</span><a id="line.46"> * startSearch/startHit/startSubHit call.  For example,</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * search properties should not be reported following</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * the corresponding startHit() call.</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * &lt;p&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * &lt;u&gt;Semantics of this interface&lt;/u&gt;&lt;br&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * BlastLikeSearchFilters test different levels of the</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * SearchContentHandler property hierarchy and each</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * filter should be seen as being applied when a full</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * set of events from that level is received.  So the</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * ByHitProperty filter is applied when endHit() is</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * called and determines whether all events received</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * between startHit() and endHit() are to be passed on</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * or discarded.</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * &lt;p&gt;</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * &lt;u&gt;Some keys used by SearchContentHandlers&lt;/u&gt;&lt;br&gt;</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * &lt;u&gt;SearchProperties&lt;/u&gt;&lt;br&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * &lt;td&gt;KEY_QUERY_ID&lt;/td&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * &lt;td&gt;String. Value from setQueryID&lt;/td&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * &lt;td&gt;queryDescription&lt;/td&gt;</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * &lt;td&gt;String. FASTA description line&lt;/td&gt;</a>
+<span class="sourceLineNo">070</span><a id="line.70"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">071</span><a id="line.71"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">072</span><a id="line.72"> * &lt;td&gt;program&lt;/td&gt;</a>
+<span class="sourceLineNo">073</span><a id="line.73"> * &lt;td&gt;String. variant of BLAST used&lt;/td&gt;</a>
+<span class="sourceLineNo">074</span><a id="line.74"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">075</span><a id="line.75"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * &lt;td&gt;version&lt;/td&gt;</a>
+<span class="sourceLineNo">077</span><a id="line.77"> * &lt;td&gt;software version&lt;/td&gt;</a>
+<span class="sourceLineNo">078</span><a id="line.78"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">079</span><a id="line.79"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">080</span><a id="line.80"> * &lt;p&gt;</a>
+<span class="sourceLineNo">081</span><a id="line.81"> * &lt;u&gt;HitProperties&lt;/u&gt;&lt;br&gt;</a>
+<span class="sourceLineNo">082</span><a id="line.82"> * &lt;table border="1" &gt; </a>
+<span class="sourceLineNo">083</span><a id="line.83">* &lt;tr&gt;</a>
+<span class="sourceLineNo">084</span><a id="line.84"> * &lt;td&gt;subjectId&lt;/td&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85"> * &lt;td&gt;String.  Identity of subject (target) sequence.&lt;/td&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">087</span><a id="line.87"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88"> * &lt;td&gt;subjectSequenceLength&lt;/td&gt;</a>
+<span class="sourceLineNo">089</span><a id="line.89"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">090</span><a id="line.90"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">091</span><a id="line.91"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">092</span><a id="line.92"> * &lt;td&gt;subjectDescription&lt;/td&gt;</a>
+<span class="sourceLineNo">093</span><a id="line.93"> * &lt;td&gt;String.&lt;/td&gt;</a>
+<span class="sourceLineNo">094</span><a id="line.94"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96"> * &lt;td&gt;&lt;/td&gt;</a>
+<span class="sourceLineNo">097</span><a id="line.97"> * &lt;td&gt;&lt;/td&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">100</span><a id="line.100"> * &lt;p&gt;</a>
+<span class="sourceLineNo">101</span><a id="line.101"> * &lt;u&gt;SubHitProperties&lt;/u&gt;&lt;br&gt;</a>
+<span class="sourceLineNo">102</span><a id="line.102"> * &lt;table border="1" &gt;</a>
+<span class="sourceLineNo">103</span><a id="line.103"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">104</span><a id="line.104"> * &lt;td&gt;bitScore&lt;/td&gt;</a>
+<span class="sourceLineNo">105</span><a id="line.105"> * &lt;td&gt;String representation of real value&lt;/td&gt;</a>
+<span class="sourceLineNo">106</span><a id="line.106"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">107</span><a id="line.107"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">108</span><a id="line.108"> * &lt;td&gt;queryStrand&lt;/td&gt;</a>
+<span class="sourceLineNo">109</span><a id="line.109"> * &lt;td&gt;plus/minus&lt;/td&gt;</a>
+<span class="sourceLineNo">110</span><a id="line.110"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">111</span><a id="line.111"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">112</span><a id="line.112"> * &lt;td&gt;percentageIdentity&lt;/td&gt;</a>
+<span class="sourceLineNo">113</span><a id="line.113"> * &lt;td&gt;String representation of real value&lt;/td&gt;</a>
+<span class="sourceLineNo">114</span><a id="line.114"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">115</span><a id="line.115"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">116</span><a id="line.116"> * &lt;td&gt;querySequenceEnd&lt;/td&gt;</a>
+<span class="sourceLineNo">117</span><a id="line.117"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">118</span><a id="line.118"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">119</span><a id="line.119"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">120</span><a id="line.120"> * &lt;td&gt;expectValue&lt;/td&gt;</a>
+<span class="sourceLineNo">121</span><a id="line.121"> * &lt;td&gt;String representation of real value&lt;/td&gt;</a>
+<span class="sourceLineNo">122</span><a id="line.122"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">123</span><a id="line.123"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">124</span><a id="line.124"> * &lt;td&gt;subjectStrand&lt;/td&gt;</a>
+<span class="sourceLineNo">125</span><a id="line.125"> * &lt;td&gt;plus/minus&lt;/td&gt;</a>
+<span class="sourceLineNo">126</span><a id="line.126"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">127</span><a id="line.127"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">128</span><a id="line.128"> * &lt;td&gt;subjectSequenceEnd&lt;/td&gt;</a>
+<span class="sourceLineNo">129</span><a id="line.129"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">130</span><a id="line.130"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">131</span><a id="line.131"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">132</span><a id="line.132"> * &lt;td&gt;numberOfPositives&lt;/td&gt;</a>
+<span class="sourceLineNo">133</span><a id="line.133"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">134</span><a id="line.134"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">135</span><a id="line.135"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">136</span><a id="line.136"> * &lt;td&gt;score&lt;/td&gt;</a>
+<span class="sourceLineNo">137</span><a id="line.137"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">138</span><a id="line.138"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">139</span><a id="line.139"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">140</span><a id="line.140"> * &lt;td&gt;subjectSequence&lt;/td&gt;</a>
+<span class="sourceLineNo">141</span><a id="line.141"> * &lt;td&gt;String representation of sequence&lt;/td&gt;</a>
+<span class="sourceLineNo">142</span><a id="line.142"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">143</span><a id="line.143"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">144</span><a id="line.144"> * &lt;td&gt;alignmentSize&lt;/td&gt;</a>
+<span class="sourceLineNo">145</span><a id="line.145"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">146</span><a id="line.146"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">147</span><a id="line.147"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">148</span><a id="line.148"> * &lt;td&gt;querySequenceStart&lt;/td&gt;</a>
+<span class="sourceLineNo">149</span><a id="line.149"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">150</span><a id="line.150"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">151</span><a id="line.151"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">152</span><a id="line.152"> * &lt;td&gt;subjectSequenceStart&lt;/td&gt;</a>
+<span class="sourceLineNo">153</span><a id="line.153"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">154</span><a id="line.154"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">155</span><a id="line.155"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">156</span><a id="line.156"> * &lt;td&gt;numberOfIdentities&lt;/td&gt;</a>
+<span class="sourceLineNo">157</span><a id="line.157"> * &lt;td&gt;String representation of integer value&lt;/td&gt;</a>
+<span class="sourceLineNo">158</span><a id="line.158"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">159</span><a id="line.159"> * &lt;tr&gt;</a>
+<span class="sourceLineNo">160</span><a id="line.160"> * &lt;td&gt;querySequence&lt;/td&gt;</a>
+<span class="sourceLineNo">161</span><a id="line.161"> * &lt;td&gt;String representation of sequence&lt;/td&gt;</a>
+<span class="sourceLineNo">162</span><a id="line.162"> * &lt;/tr&gt;</a>
+<span class="sourceLineNo">163</span><a id="line.163"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">164</span><a id="line.164"> *</a>
+<span class="sourceLineNo">165</span><a id="line.165"> *</a>
+<span class="sourceLineNo">166</span><a id="line.166"> * @author David Huen</a>
+<span class="sourceLineNo">167</span><a id="line.167"> */</a>
+<span class="sourceLineNo">168</span><a id="line.168">public interface BlastLikeSearchFilter</a>
+<span class="sourceLineNo">169</span><a id="line.169">    extends Serializable</a>
+<span class="sourceLineNo">170</span><a id="line.170">{</a>
+<span class="sourceLineNo">171</span><a id="line.171">    public interface Node</a>
+<span class="sourceLineNo">172</span><a id="line.172">    {</a>
+<span class="sourceLineNo">173</span><a id="line.173">        public Object getSearchProperty(Object key);</a>
+<span class="sourceLineNo">174</span><a id="line.174">        public Object getHitProperty(Object key);</a>
+<span class="sourceLineNo">175</span><a id="line.175">        public Object getSubHitProperty(Object key);</a>
+<span class="sourceLineNo">176</span><a id="line.176">    }</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">    public static final String KEY_QUERY_ID = "___QUERY_ID___";</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">    /**</a>
+<span class="sourceLineNo">181</span><a id="line.181">     * returns a TriState indicating the current outcome</a>
+<span class="sourceLineNo">182</span><a id="line.182">     * of evaluating this filter.  This is usually the</a>
+<span class="sourceLineNo">183</span><a id="line.183">     * outcome saved when evaluate(FilteringContentHandler fch) was called.</a>
+<span class="sourceLineNo">184</span><a id="line.184">     */</a>
+<span class="sourceLineNo">185</span><a id="line.185">    public TriState accept();</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">    /**</a>
+<span class="sourceLineNo">188</span><a id="line.188">     * computes the outcome of this filter on the </a>
+<span class="sourceLineNo">189</span><a id="line.189">     * specified node and stores it.  &lt;b&gt;This method</a>
+<span class="sourceLineNo">190</span><a id="line.190">     * is only exposed to permit it to be included</a>
+<span class="sourceLineNo">191</span><a id="line.191">     * in an interface.  Users should not use it.&lt;/b&gt;</a>
+<span class="sourceLineNo">192</span><a id="line.192">     */</a>
+<span class="sourceLineNo">193</span><a id="line.193">    public void evaluate(Node fch);</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">    /**</a>
+<span class="sourceLineNo">196</span><a id="line.196">     * resets the internal state of this filter including</a>
+<span class="sourceLineNo">197</span><a id="line.197">     * any cached evaluations. &lt;b&gt;This method</a>
+<span class="sourceLineNo">198</span><a id="line.198">     * is only exposed to permit it to be included</a>
+<span class="sourceLineNo">199</span><a id="line.199">     * in an interface.  Users should not use it.&lt;/b&gt;</a>
+<span class="sourceLineNo">200</span><a id="line.200">     */</a>
+<span class="sourceLineNo">201</span><a id="line.201">    public void reset();</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">    public abstract static class AbstractBlastLikeSearchFilter</a>
+<span class="sourceLineNo">204</span><a id="line.204">        implements BlastLikeSearchFilter</a>
+<span class="sourceLineNo">205</span><a id="line.205">    {</a>
+<span class="sourceLineNo">206</span><a id="line.206">        protected TriState cachedOutcome = TriState.INDETERMINATE;</a>
+<span class="sourceLineNo">207</span><a id="line.207">        public TriState accept() { return cachedOutcome; }</a>
+<span class="sourceLineNo">208</span><a id="line.208">        abstract public void evaluate(Node fch);</a>
+<span class="sourceLineNo">209</span><a id="line.209">        public void reset() { cachedOutcome = TriState.INDETERMINATE; }</a>
+<span class="sourceLineNo">210</span><a id="line.210"></a>
+<span class="sourceLineNo">211</span><a id="line.211">        private AbstractBlastLikeSearchFilter() {}</a>
+<span class="sourceLineNo">212</span><a id="line.212">    }</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">    public static final class And</a>
+<span class="sourceLineNo">215</span><a id="line.215">    {</a>
+<span class="sourceLineNo">216</span><a id="line.216">    static { WalkerFactory.getInstance().addTypeWithParent(And.class); }</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">        private AbstractBlastLikeSearchFilter filter0;</a>
+<span class="sourceLineNo">219</span><a id="line.219">        private AbstractBlastLikeSearchFilter filter1;</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">        public And(</a>
+<span class="sourceLineNo">222</span><a id="line.222">            AbstractBlastLikeSearchFilter filter0,</a>
+<span class="sourceLineNo">223</span><a id="line.223">            AbstractBlastLikeSearchFilter filter1)</a>
+<span class="sourceLineNo">224</span><a id="line.224">        {</a>
+<span class="sourceLineNo">225</span><a id="line.225">            this.filter0 = filter0;</a>
+<span class="sourceLineNo">226</span><a id="line.226">            this.filter1 = filter1;</a>
+<span class="sourceLineNo">227</span><a id="line.227">        }</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">        public TriState accept()</a>
+<span class="sourceLineNo">230</span><a id="line.230">        {</a>
+<span class="sourceLineNo">231</span><a id="line.231">            TriState outcome0 = filter0.accept();</a>
+<span class="sourceLineNo">232</span><a id="line.232">            TriState outcome1 = filter1.accept();</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">            if ((outcome0 == TriState.FALSE) || (outcome1 == TriState.FALSE))</a>
+<span class="sourceLineNo">235</span><a id="line.235">                return TriState.FALSE;</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">            // neither can be false now</a>
+<span class="sourceLineNo">238</span><a id="line.238">            if ((outcome0 == TriState.INDETERMINATE) || (outcome1 == TriState.INDETERMINATE))</a>
+<span class="sourceLineNo">239</span><a id="line.239">                return TriState.INDETERMINATE;</a>
+<span class="sourceLineNo">240</span><a id="line.240"></a>
+<span class="sourceLineNo">241</span><a id="line.241">            // neither is false nor indeterminate so it must be true!</a>
+<span class="sourceLineNo">242</span><a id="line.242">            return TriState.TRUE;</a>
+<span class="sourceLineNo">243</span><a id="line.243">        }</a>
+<span class="sourceLineNo">244</span><a id="line.244">    }</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">    public static final class Or</a>
+<span class="sourceLineNo">247</span><a id="line.247">    {</a>
+<span class="sourceLineNo">248</span><a id="line.248">    static { WalkerFactory.getInstance().addTypeWithParent(Or.class); }</a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250">        private AbstractBlastLikeSearchFilter filter0;</a>
+<span class="sourceLineNo">251</span><a id="line.251">        private AbstractBlastLikeSearchFilter filter1;</a>
+<span class="sourceLineNo">252</span><a id="line.252"></a>
+<span class="sourceLineNo">253</span><a id="line.253">        public Or(</a>
+<span class="sourceLineNo">254</span><a id="line.254">            AbstractBlastLikeSearchFilter filter0,</a>
+<span class="sourceLineNo">255</span><a id="line.255">            AbstractBlastLikeSearchFilter filter1)</a>
+<span class="sourceLineNo">256</span><a id="line.256">        {</a>
+<span class="sourceLineNo">257</span><a id="line.257">            this.filter0 = filter0;</a>
+<span class="sourceLineNo">258</span><a id="line.258">            this.filter1 = filter1;</a>
+<span class="sourceLineNo">259</span><a id="line.259">        }</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">        public TriState accept()</a>
+<span class="sourceLineNo">262</span><a id="line.262">        {</a>
+<span class="sourceLineNo">263</span><a id="line.263">            TriState outcome0 = filter0.accept();</a>
+<span class="sourceLineNo">264</span><a id="line.264">            TriState outcome1 = filter1.accept();</a>
+<span class="sourceLineNo">265</span><a id="line.265"></a>
+<span class="sourceLineNo">266</span><a id="line.266">            if ((outcome0 == TriState.TRUE) || (outcome1 == TriState.TRUE))</a>
+<span class="sourceLineNo">267</span><a id="line.267">                return TriState.TRUE;</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269">            // neither can be false now</a>
+<span class="sourceLineNo">270</span><a id="line.270">            if ((outcome0 == TriState.INDETERMINATE) || (outcome1 == TriState.INDETERMINATE))</a>
+<span class="sourceLineNo">271</span><a id="line.271">                return TriState.INDETERMINATE;</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273">            // neither is true nor indeterminate so it must be false!</a>
+<span class="sourceLineNo">274</span><a id="line.274">            return TriState.FALSE;</a>
+<span class="sourceLineNo">275</span><a id="line.275">        }</a>
+<span class="sourceLineNo">276</span><a id="line.276">    }</a>
+<span class="sourceLineNo">277</span><a id="line.277"></a>
+<span class="sourceLineNo">278</span><a id="line.278">    public static final class Not</a>
+<span class="sourceLineNo">279</span><a id="line.279">        extends AbstractBlastLikeSearchFilter</a>
+<span class="sourceLineNo">280</span><a id="line.280">    {</a>
+<span class="sourceLineNo">281</span><a id="line.281">    static { WalkerFactory.getInstance().addTypeWithParent(Not.class); }</a>
+<span class="sourceLineNo">282</span><a id="line.282"></a>
+<span class="sourceLineNo">283</span><a id="line.283">        private AbstractBlastLikeSearchFilter filter;</a>
+<span class="sourceLineNo">284</span><a id="line.284"></a>
+<span class="sourceLineNo">285</span><a id="line.285">        public Not(AbstractBlastLikeSearchFilter filter)</a>
+<span class="sourceLineNo">286</span><a id="line.286">        {</a>
+<span class="sourceLineNo">287</span><a id="line.287">            this.filter = filter;</a>
+<span class="sourceLineNo">288</span><a id="line.288">        }</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">        public TriState accept()</a>
+<span class="sourceLineNo">291</span><a id="line.291">        {</a>
+<span class="sourceLineNo">292</span><a id="line.292">            TriState outcome = filter.accept();</a>
+<span class="sourceLineNo">293</span><a id="line.293"></a>
+<span class="sourceLineNo">294</span><a id="line.294">            if (outcome == TriState.INDETERMINATE)</a>
+<span class="sourceLineNo">295</span><a id="line.295">                return TriState.INDETERMINATE;</a>
+<span class="sourceLineNo">296</span><a id="line.296"></a>
+<span class="sourceLineNo">297</span><a id="line.297">            if (outcome == TriState.TRUE)</a>
+<span class="sourceLineNo">298</span><a id="line.298">                return TriState.FALSE;</a>
+<span class="sourceLineNo">299</span><a id="line.299">            else</a>
+<span class="sourceLineNo">300</span><a id="line.300">                return TriState.TRUE;</a>
+<span class="sourceLineNo">301</span><a id="line.301">        }</a>
+<span class="sourceLineNo">302</span><a id="line.302"></a>
+<span class="sourceLineNo">303</span><a id="line.303">        public void evaluate(Node fch) {}</a>
+<span class="sourceLineNo">304</span><a id="line.304">    }</a>
+<span class="sourceLineNo">305</span><a id="line.305"></a>
+<span class="sourceLineNo">306</span><a id="line.306">    /**</a>
+<span class="sourceLineNo">307</span><a id="line.307">     * Applies test to the value specified by the key in search properties.</a>
+<span class="sourceLineNo">308</span><a id="line.308">     */</a>
+<span class="sourceLineNo">309</span><a id="line.309">    public static final class BySearchProperty</a>
+<span class="sourceLineNo">310</span><a id="line.310">        extends AbstractBlastLikeSearchFilter</a>
+<span class="sourceLineNo">311</span><a id="line.311">    {</a>
+<span class="sourceLineNo">312</span><a id="line.312">        private Object key;</a>
+<span class="sourceLineNo">313</span><a id="line.313">        private FilterTest test;</a>
+<span class="sourceLineNo">314</span><a id="line.314">        public BySearchProperty(String key, FilterTest test)</a>
+<span class="sourceLineNo">315</span><a id="line.315">        {</a>
+<span class="sourceLineNo">316</span><a id="line.316">            this.key = key;</a>
+<span class="sourceLineNo">317</span><a id="line.317">            this.test = test;</a>
+<span class="sourceLineNo">318</span><a id="line.318">        }</a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">        public void evaluate(Node fch)</a>
+<span class="sourceLineNo">321</span><a id="line.321">        {</a>
+<span class="sourceLineNo">322</span><a id="line.322">            Object propertyValue = fch.getSearchProperty(key);</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">            cachedOutcome = ((propertyValue != null) &amp;&amp; test.accept(propertyValue)) ? TriState.TRUE : TriState.FALSE;</a>
+<span class="sourceLineNo">325</span><a id="line.325">        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">    }</a>
+<span class="sourceLineNo">327</span><a id="line.327"></a>
+<span class="sourceLineNo">328</span><a id="line.328">    /**</a>
+<span class="sourceLineNo">329</span><a id="line.329">     * Applies test to the value specified by the key in hit properties.</a>
+<span class="sourceLineNo">330</span><a id="line.330">     */</a>
+<span class="sourceLineNo">331</span><a id="line.331">    public static final class ByHitProperty</a>
+<span class="sourceLineNo">332</span><a id="line.332">        extends AbstractBlastLikeSearchFilter</a>
+<span class="sourceLineNo">333</span><a id="line.333">    {</a>
+<span class="sourceLineNo">334</span><a id="line.334">        private Object key;</a>
+<span class="sourceLineNo">335</span><a id="line.335">        private FilterTest test;</a>
+<span class="sourceLineNo">336</span><a id="line.336">        public ByHitProperty(String key, FilterTest test)</a>
+<span class="sourceLineNo">337</span><a id="line.337">        {</a>
+<span class="sourceLineNo">338</span><a id="line.338">            this.key = key;</a>
+<span class="sourceLineNo">339</span><a id="line.339">            this.test = test;</a>
+<span class="sourceLineNo">340</span><a id="line.340">        }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">        public void evaluate(Node fch)</a>
+<span class="sourceLineNo">343</span><a id="line.343">        {</a>
+<span class="sourceLineNo">344</span><a id="line.344">            Object propertyValue = fch.getHitProperty(key);</a>
+<span class="sourceLineNo">345</span><a id="line.345"></a>
+<span class="sourceLineNo">346</span><a id="line.346">            cachedOutcome = ((propertyValue != null) &amp;&amp; test.accept(propertyValue)) ? TriState.TRUE : TriState.FALSE;</a>
+<span class="sourceLineNo">347</span><a id="line.347">        }</a>
+<span class="sourceLineNo">348</span><a id="line.348">    }</a>
+<span class="sourceLineNo">349</span><a id="line.349"></a>
+<span class="sourceLineNo">350</span><a id="line.350">    /**</a>
+<span class="sourceLineNo">351</span><a id="line.351">     * Applies test to the value specified by the key in subhit properties.</a>
+<span class="sourceLineNo">352</span><a id="line.352">     */</a>
+<span class="sourceLineNo">353</span><a id="line.353">    public static final class BySubHitProperty</a>
+<span class="sourceLineNo">354</span><a id="line.354">        extends AbstractBlastLikeSearchFilter</a>
+<span class="sourceLineNo">355</span><a id="line.355">    {</a>
+<span class="sourceLineNo">356</span><a id="line.356">        private Object key;</a>
+<span class="sourceLineNo">357</span><a id="line.357">        private FilterTest test;</a>
+<span class="sourceLineNo">358</span><a id="line.358">        public BySubHitProperty(String key, FilterTest test)</a>
+<span class="sourceLineNo">359</span><a id="line.359">        {</a>
+<span class="sourceLineNo">360</span><a id="line.360">            this.key = key;</a>
+<span class="sourceLineNo">361</span><a id="line.361">            this.test = test;</a>
+<span class="sourceLineNo">362</span><a id="line.362">        }</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">        public void evaluate(Node fch)</a>
+<span class="sourceLineNo">365</span><a id="line.365">        {</a>
+<span class="sourceLineNo">366</span><a id="line.366">            Object propertyValue = fch.getSubHitProperty(key);</a>
+<span class="sourceLineNo">367</span><a id="line.367">            //cachedOutcome = ((propertyValue == null)</a>
+<span class="sourceLineNo">368</span><a id="line.368">            //    ? TriState.INDETERMINATE </a>
+<span class="sourceLineNo">369</span><a id="line.369">            //    : (test.accept(propertyValue)) ? TriState.TRUE : TriState.FALSE);</a>
+<span class="sourceLineNo">370</span><a id="line.370">            cachedOutcome = ((propertyValue != null) &amp;&amp; test.accept(propertyValue)) ? TriState.TRUE : TriState.FALSE;</a>
+<span class="sourceLineNo">371</span><a id="line.371">        }</a>
+<span class="sourceLineNo">372</span><a id="line.372">    }</a>
+<span class="sourceLineNo">373</span><a id="line.373">}</a>
+<span class="sourceLineNo">374</span><a id="line.374"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

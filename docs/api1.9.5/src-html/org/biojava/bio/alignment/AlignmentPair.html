@@ -1,0 +1,630 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.bio.alignment;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.util.Formatter;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.HashMap;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Map;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.bio.seq.GappedSequence;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.seq.impl.SimpleGappedSequence;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">/**</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * This class stores the result of an alignment procedure that creates a</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * pairwise alignment of two sequences. Currently, these sequences must have the</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * identical length (this may be changed in the future). A format routine</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * produces a BLAST-like output for the sequences but all necessary information</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * to visualize the alignment are contained in this class.</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * </a>
+<span class="sourceLineNo">041</span><a id="line.41"> * @author Andreas Dr&amp;auml;ger</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * </a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public class AlignmentPair extends SimpleAlignment {</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">         * Generated serial version identifier</a>
+<span class="sourceLineNo">048</span><a id="line.48">         */</a>
+<span class="sourceLineNo">049</span><a id="line.49">        private static final long serialVersionUID = -8834131912021612261L;</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">        /**</a>
+<span class="sourceLineNo">052</span><a id="line.52">         * </a>
+<span class="sourceLineNo">053</span><a id="line.53">         * @param query</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * @param subject</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @param algorithm</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * @return</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * @throws Exception</a>
+<span class="sourceLineNo">058</span><a id="line.58">         */</a>
+<span class="sourceLineNo">059</span><a id="line.59">        public static AlignmentPair align(Sequence query, Sequence subject,</a>
+<span class="sourceLineNo">060</span><a id="line.60">                        AlignmentAlgorithm algorithm) throws Exception {</a>
+<span class="sourceLineNo">061</span><a id="line.61">                AlignmentPair pair = algorithm.pairwiseAlignment(query, subject);</a>
+<span class="sourceLineNo">062</span><a id="line.62">                return pair;</a>
+<span class="sourceLineNo">063</span><a id="line.63">        }</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">        /**</a>
+<span class="sourceLineNo">066</span><a id="line.66">         * Creates the Map required by the super class.</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * </a>
+<span class="sourceLineNo">068</span><a id="line.68">         * @param s1</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * @param s2</a>
+<span class="sourceLineNo">070</span><a id="line.70">         * @return</a>
+<span class="sourceLineNo">071</span><a id="line.71">         */</a>
+<span class="sourceLineNo">072</span><a id="line.72">        private static Map&lt;String, SymbolList&gt; createHashMap(Sequence s1,</a>
+<span class="sourceLineNo">073</span><a id="line.73">                        Sequence s2) {</a>
+<span class="sourceLineNo">074</span><a id="line.74">                Map&lt;String, SymbolList&gt; m = new HashMap&lt;String, SymbolList&gt;();</a>
+<span class="sourceLineNo">075</span><a id="line.75">                m.put(s1.getName(), s1);</a>
+<span class="sourceLineNo">076</span><a id="line.76">                m.put(s2.getName(), s2);</a>
+<span class="sourceLineNo">077</span><a id="line.77">                return m;</a>
+<span class="sourceLineNo">078</span><a id="line.78">        }</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">        /**</a>
+<span class="sourceLineNo">081</span><a id="line.81">         * Number of identical elements in both sequences</a>
+<span class="sourceLineNo">082</span><a id="line.82">         */</a>
+<span class="sourceLineNo">083</span><a id="line.83">        private int identicals;</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">        /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * Start position in the query</a>
+<span class="sourceLineNo">087</span><a id="line.87">         */</a>
+<span class="sourceLineNo">088</span><a id="line.88">        private int queryStart;</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">        /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">         * @return the queryStart</a>
+<span class="sourceLineNo">092</span><a id="line.92">         */</a>
+<span class="sourceLineNo">093</span><a id="line.93">        public int getQueryStart() {</a>
+<span class="sourceLineNo">094</span><a id="line.94">                return queryStart;</a>
+<span class="sourceLineNo">095</span><a id="line.95">        }</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">        /**</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @param queryStart</a>
+<span class="sourceLineNo">099</span><a id="line.99">         *            the queryStart to set</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * @throws BioException</a>
+<span class="sourceLineNo">101</span><a id="line.101">         */</a>
+<span class="sourceLineNo">102</span><a id="line.102">        void setQueryStart(int queryStart) throws BioException {</a>
+<span class="sourceLineNo">103</span><a id="line.103">                this.queryStart = queryStart;</a>
+<span class="sourceLineNo">104</span><a id="line.104">                init();</a>
+<span class="sourceLineNo">105</span><a id="line.105">        }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">        /**</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * End position in the query</a>
+<span class="sourceLineNo">109</span><a id="line.109">         */</a>
+<span class="sourceLineNo">110</span><a id="line.110">        private int queryEnd;</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">        /**</a>
+<span class="sourceLineNo">113</span><a id="line.113">         * @return the queryEnd</a>
+<span class="sourceLineNo">114</span><a id="line.114">         */</a>
+<span class="sourceLineNo">115</span><a id="line.115">        public int getQueryEnd() {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                return queryEnd;</a>
+<span class="sourceLineNo">117</span><a id="line.117">        }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">        /**</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * @param queryEnd</a>
+<span class="sourceLineNo">121</span><a id="line.121">         *            the queryEnd to set</a>
+<span class="sourceLineNo">122</span><a id="line.122">         * @throws BioException</a>
+<span class="sourceLineNo">123</span><a id="line.123">         */</a>
+<span class="sourceLineNo">124</span><a id="line.124">        void setQueryEnd(int queryEnd) throws BioException {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                this.queryEnd = queryEnd;</a>
+<span class="sourceLineNo">126</span><a id="line.126">                init();</a>
+<span class="sourceLineNo">127</span><a id="line.127">        }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">        /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * Number of gaps in query</a>
+<span class="sourceLineNo">131</span><a id="line.131">         */</a>
+<span class="sourceLineNo">132</span><a id="line.132">        private int nGapsQ;</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">        /**</a>
+<span class="sourceLineNo">135</span><a id="line.135">         * Number of gaps in subject</a>
+<span class="sourceLineNo">136</span><a id="line.136">         */</a>
+<span class="sourceLineNo">137</span><a id="line.137">        private int nGapsS;</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">        /**</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * Length of the query sequence</a>
+<span class="sourceLineNo">141</span><a id="line.141">         */</a>
+<span class="sourceLineNo">142</span><a id="line.142">        private final Sequence query;</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">        /**</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * Start position in the subject</a>
+<span class="sourceLineNo">146</span><a id="line.146">         */</a>
+<span class="sourceLineNo">147</span><a id="line.147">        private int subjectStart;</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">        /**</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * @return the subjectStart</a>
+<span class="sourceLineNo">151</span><a id="line.151">         */</a>
+<span class="sourceLineNo">152</span><a id="line.152">        public int getSubjectStart() {</a>
+<span class="sourceLineNo">153</span><a id="line.153">                return subjectStart;</a>
+<span class="sourceLineNo">154</span><a id="line.154">        }</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        /**</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * @param subjectStart</a>
+<span class="sourceLineNo">158</span><a id="line.158">         *            the subjectStart to set</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * @throws BioException</a>
+<span class="sourceLineNo">160</span><a id="line.160">         */</a>
+<span class="sourceLineNo">161</span><a id="line.161">        void setSubjectStart(int subjectStart) throws BioException {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                this.subjectStart = subjectStart;</a>
+<span class="sourceLineNo">163</span><a id="line.163">                init();</a>
+<span class="sourceLineNo">164</span><a id="line.164">        }</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">        /**</a>
+<span class="sourceLineNo">167</span><a id="line.167">         * End position in the subject</a>
+<span class="sourceLineNo">168</span><a id="line.168">         */</a>
+<span class="sourceLineNo">169</span><a id="line.169">        private int subjectEnd;</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">        /**</a>
+<span class="sourceLineNo">172</span><a id="line.172">         * @return the subjectEnd</a>
+<span class="sourceLineNo">173</span><a id="line.173">         */</a>
+<span class="sourceLineNo">174</span><a id="line.174">        public int getSubjectEnd() {</a>
+<span class="sourceLineNo">175</span><a id="line.175">                return subjectEnd;</a>
+<span class="sourceLineNo">176</span><a id="line.176">        }</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">        /**</a>
+<span class="sourceLineNo">179</span><a id="line.179">         * @param subjectEnd</a>
+<span class="sourceLineNo">180</span><a id="line.180">         *            the subjectEnd to set</a>
+<span class="sourceLineNo">181</span><a id="line.181">         * @throws BioException</a>
+<span class="sourceLineNo">182</span><a id="line.182">         */</a>
+<span class="sourceLineNo">183</span><a id="line.183">        void setSubjectEnd(int subjectEnd) throws BioException {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                this.subjectEnd = subjectEnd;</a>
+<span class="sourceLineNo">185</span><a id="line.185">                init();</a>
+<span class="sourceLineNo">186</span><a id="line.186">        }</a>
+<span class="sourceLineNo">187</span><a id="line.187"></a>
+<span class="sourceLineNo">188</span><a id="line.188">        /**</a>
+<span class="sourceLineNo">189</span><a id="line.189">         * Number of similar symbols</a>
+<span class="sourceLineNo">190</span><a id="line.190">         */</a>
+<span class="sourceLineNo">191</span><a id="line.191">        private int similars;</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">        /**</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * The subject sequence.</a>
+<span class="sourceLineNo">195</span><a id="line.195">         */</a>
+<span class="sourceLineNo">196</span><a id="line.196">        private final Sequence subject;</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        /**</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * Reference to the underlying substitution matrix of this alignment.</a>
+<span class="sourceLineNo">200</span><a id="line.200">         */</a>
+<span class="sourceLineNo">201</span><a id="line.201">        private final SubstitutionMatrix subMatrix;</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">        /**</a>
+<span class="sourceLineNo">204</span><a id="line.204">         * Time consumption to create this alignment.</a>
+<span class="sourceLineNo">205</span><a id="line.205">         */</a>
+<span class="sourceLineNo">206</span><a id="line.206">        private long time;</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">        /**</a>
+<span class="sourceLineNo">209</span><a id="line.209">         * </a>
+<span class="sourceLineNo">210</span><a id="line.210">         * @param queryStart</a>
+<span class="sourceLineNo">211</span><a id="line.211">         *            the start position in the query, where the alignment starts.</a>
+<span class="sourceLineNo">212</span><a id="line.212">         *            For example zero for normal Needleman-Wunsch-Alignments.</a>
+<span class="sourceLineNo">213</span><a id="line.213">         * @param queryEnd</a>
+<span class="sourceLineNo">214</span><a id="line.214">         *            the end position, that means the sequence coordinate, which is</a>
+<span class="sourceLineNo">215</span><a id="line.215">         *            the last symbol of the query sequence. Counting starts at</a>
+<span class="sourceLineNo">216</span><a id="line.216">         *            zero!</a>
+<span class="sourceLineNo">217</span><a id="line.217">         * @param queryLength</a>
+<span class="sourceLineNo">218</span><a id="line.218">         *            The length of the query sequence without gaps.</a>
+<span class="sourceLineNo">219</span><a id="line.219">         * @param subjectStart</a>
+<span class="sourceLineNo">220</span><a id="line.220">         *            These are all the same for the target. Have a look at these</a>
+<span class="sourceLineNo">221</span><a id="line.221">         *            above.</a>
+<span class="sourceLineNo">222</span><a id="line.222">         * @param subjectEnd</a>
+<span class="sourceLineNo">223</span><a id="line.223">         * @param subMatrix</a>
+<span class="sourceLineNo">224</span><a id="line.224">         *            the subsitution Matrix used for calculating the alignment</a>
+<span class="sourceLineNo">225</span><a id="line.225">         * @throws IllegalArgumentException</a>
+<span class="sourceLineNo">226</span><a id="line.226">         * @throws BioException</a>
+<span class="sourceLineNo">227</span><a id="line.227">         */</a>
+<span class="sourceLineNo">228</span><a id="line.228">        public AlignmentPair(Sequence query, Sequence subject, int queryStart,</a>
+<span class="sourceLineNo">229</span><a id="line.229">                        int queryEnd, int subjectStart, int subjectEnd,</a>
+<span class="sourceLineNo">230</span><a id="line.230">                        SubstitutionMatrix subMatrix) throws IllegalArgumentException,</a>
+<span class="sourceLineNo">231</span><a id="line.231">                        BioException {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                super(createHashMap(query, subject));</a>
+<span class="sourceLineNo">233</span><a id="line.233">                this.subMatrix = subMatrix;</a>
+<span class="sourceLineNo">234</span><a id="line.234">                this.query = query;</a>
+<span class="sourceLineNo">235</span><a id="line.235">                this.subject = subject;</a>
+<span class="sourceLineNo">236</span><a id="line.236">                this.queryStart = queryStart;</a>
+<span class="sourceLineNo">237</span><a id="line.237">                this.queryEnd = queryEnd;</a>
+<span class="sourceLineNo">238</span><a id="line.238">                this.subjectStart = subjectStart;</a>
+<span class="sourceLineNo">239</span><a id="line.239">                this.subjectEnd = subjectEnd;</a>
+<span class="sourceLineNo">240</span><a id="line.240">                init();</a>
+<span class="sourceLineNo">241</span><a id="line.241">        }</a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243">        /**</a>
+<span class="sourceLineNo">244</span><a id="line.244">         * </a>
+<span class="sourceLineNo">245</span><a id="line.245">         * @param query</a>
+<span class="sourceLineNo">246</span><a id="line.246">         * @param subject</a>
+<span class="sourceLineNo">247</span><a id="line.247">         * @param subMatrix</a>
+<span class="sourceLineNo">248</span><a id="line.248">         * @throws IllegalArgumentException</a>
+<span class="sourceLineNo">249</span><a id="line.249">         * @throws BioException</a>
+<span class="sourceLineNo">250</span><a id="line.250">         */</a>
+<span class="sourceLineNo">251</span><a id="line.251">        public AlignmentPair(Sequence query, Sequence subject,</a>
+<span class="sourceLineNo">252</span><a id="line.252">                        SubstitutionMatrix subMatrix) throws IllegalArgumentException,</a>
+<span class="sourceLineNo">253</span><a id="line.253">                        BioException {</a>
+<span class="sourceLineNo">254</span><a id="line.254">                this(query, subject, 1, query.length(), 1, subject.length(), subMatrix);</a>
+<span class="sourceLineNo">255</span><a id="line.255">        }</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">        /**</a>
+<span class="sourceLineNo">258</span><a id="line.258">         * </a>
+<span class="sourceLineNo">259</span><a id="line.259">         * @throws BioException</a>
+<span class="sourceLineNo">260</span><a id="line.260">         */</a>
+<span class="sourceLineNo">261</span><a id="line.261">        private void init() throws BioException {</a>
+<span class="sourceLineNo">262</span><a id="line.262">                similars = 0;</a>
+<span class="sourceLineNo">263</span><a id="line.263">                identicals = 0;</a>
+<span class="sourceLineNo">264</span><a id="line.264">                nGapsQ = 0;</a>
+<span class="sourceLineNo">265</span><a id="line.265">                nGapsS = 0;</a>
+<span class="sourceLineNo">266</span><a id="line.266">                for (int i = 0; i &lt; Math.min(queryEnd - queryStart, subjectEnd</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                - subjectStart); i++) {</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        Symbol a = query.symbolAt(i + queryStart);</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        Symbol b = subject.symbolAt(i + subjectStart);</a>
+<span class="sourceLineNo">270</span><a id="line.270">                        boolean gap = false;</a>
+<span class="sourceLineNo">271</span><a id="line.271">                        if (a.equals(b)) {</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                identicals++;</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        }</a>
+<span class="sourceLineNo">274</span><a id="line.274"></a>
+<span class="sourceLineNo">275</span><a id="line.275">                        // get score for this pair. if it is positive, they are similar...</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        if (a.equals(query.getAlphabet().getGapSymbol())) {</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                nGapsQ++;</a>
+<span class="sourceLineNo">278</span><a id="line.278">                                gap = true;</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        }</a>
+<span class="sourceLineNo">280</span><a id="line.280">                        if (b.equals(subject.getAlphabet().getGapSymbol())) {</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                nGapsS++;</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                gap = true;</a>
+<span class="sourceLineNo">283</span><a id="line.283">                        }</a>
+<span class="sourceLineNo">284</span><a id="line.284">                        if (!gap &amp;&amp; subMatrix != null &amp;&amp; subMatrix.getValueAt(a, b) &gt; 0) {</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                similars++;</a>
+<span class="sourceLineNo">286</span><a id="line.286">                        }</a>
+<span class="sourceLineNo">287</span><a id="line.287">                }</a>
+<span class="sourceLineNo">288</span><a id="line.288">        }</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">        /**</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * @return the time</a>
+<span class="sourceLineNo">292</span><a id="line.292">         */</a>
+<span class="sourceLineNo">293</span><a id="line.293">        public long getComputationTime() {</a>
+<span class="sourceLineNo">294</span><a id="line.294">                return time;</a>
+<span class="sourceLineNo">295</span><a id="line.295">        }</a>
+<span class="sourceLineNo">296</span><a id="line.296"></a>
+<span class="sourceLineNo">297</span><a id="line.297">        /**</a>
+<span class="sourceLineNo">298</span><a id="line.298">         * @return the ngapsq</a>
+<span class="sourceLineNo">299</span><a id="line.299">         */</a>
+<span class="sourceLineNo">300</span><a id="line.300">        public int getNumGapsInQuery() {</a>
+<span class="sourceLineNo">301</span><a id="line.301">                return nGapsQ;</a>
+<span class="sourceLineNo">302</span><a id="line.302">        }</a>
+<span class="sourceLineNo">303</span><a id="line.303"></a>
+<span class="sourceLineNo">304</span><a id="line.304">        /**</a>
+<span class="sourceLineNo">305</span><a id="line.305">         * @return the ngapst</a>
+<span class="sourceLineNo">306</span><a id="line.306">         */</a>
+<span class="sourceLineNo">307</span><a id="line.307">        public int getNumGapsInSubject() {</a>
+<span class="sourceLineNo">308</span><a id="line.308">                return nGapsS;</a>
+<span class="sourceLineNo">309</span><a id="line.309">        }</a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">        /**</a>
+<span class="sourceLineNo">312</span><a id="line.312">         * @return the identicals</a>
+<span class="sourceLineNo">313</span><a id="line.313">         */</a>
+<span class="sourceLineNo">314</span><a id="line.314">        public int getNumIdenticals() {</a>
+<span class="sourceLineNo">315</span><a id="line.315">                return identicals;</a>
+<span class="sourceLineNo">316</span><a id="line.316">        }</a>
+<span class="sourceLineNo">317</span><a id="line.317"></a>
+<span class="sourceLineNo">318</span><a id="line.318">        /**</a>
+<span class="sourceLineNo">319</span><a id="line.319">         * @return the similars</a>
+<span class="sourceLineNo">320</span><a id="line.320">         */</a>
+<span class="sourceLineNo">321</span><a id="line.321">        public int getNumSimilars() {</a>
+<span class="sourceLineNo">322</span><a id="line.322">                return similars;</a>
+<span class="sourceLineNo">323</span><a id="line.323">        }</a>
+<span class="sourceLineNo">324</span><a id="line.324"></a>
+<span class="sourceLineNo">325</span><a id="line.325">        /**</a>
+<span class="sourceLineNo">326</span><a id="line.326">         * </a>
+<span class="sourceLineNo">327</span><a id="line.327">         * @return</a>
+<span class="sourceLineNo">328</span><a id="line.328">         */</a>
+<span class="sourceLineNo">329</span><a id="line.329">        public float getPercentIdentityQuery() {</a>
+<span class="sourceLineNo">330</span><a id="line.330">                return identicals / (float) (query.length() - nGapsQ) * 100;</a>
+<span class="sourceLineNo">331</span><a id="line.331">        }</a>
+<span class="sourceLineNo">332</span><a id="line.332"></a>
+<span class="sourceLineNo">333</span><a id="line.333">        /**</a>
+<span class="sourceLineNo">334</span><a id="line.334">         * </a>
+<span class="sourceLineNo">335</span><a id="line.335">         * @return</a>
+<span class="sourceLineNo">336</span><a id="line.336">         */</a>
+<span class="sourceLineNo">337</span><a id="line.337">        public float getPercentIdentitySubject() {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                return identicals / (float) (subject.length() - nGapsS) * 100;</a>
+<span class="sourceLineNo">339</span><a id="line.339">        }</a>
+<span class="sourceLineNo">340</span><a id="line.340"></a>
+<span class="sourceLineNo">341</span><a id="line.341">        /**</a>
+<span class="sourceLineNo">342</span><a id="line.342">         * </a>
+<span class="sourceLineNo">343</span><a id="line.343">         * @return</a>
+<span class="sourceLineNo">344</span><a id="line.344">         */</a>
+<span class="sourceLineNo">345</span><a id="line.345">        public float getPercentSimilarityQuery() {</a>
+<span class="sourceLineNo">346</span><a id="line.346">                return similars / (float) query.length() * 100;</a>
+<span class="sourceLineNo">347</span><a id="line.347">        }</a>
+<span class="sourceLineNo">348</span><a id="line.348"></a>
+<span class="sourceLineNo">349</span><a id="line.349">        /**</a>
+<span class="sourceLineNo">350</span><a id="line.350">         * </a>
+<span class="sourceLineNo">351</span><a id="line.351">         * @return</a>
+<span class="sourceLineNo">352</span><a id="line.352">         */</a>
+<span class="sourceLineNo">353</span><a id="line.353">        public float getPercentSimilaritySubject() {</a>
+<span class="sourceLineNo">354</span><a id="line.354">                return similars / (float) subject.length() * 100;</a>
+<span class="sourceLineNo">355</span><a id="line.355">        }</a>
+<span class="sourceLineNo">356</span><a id="line.356"></a>
+<span class="sourceLineNo">357</span><a id="line.357">        /**</a>
+<span class="sourceLineNo">358</span><a id="line.358">         * </a>
+<span class="sourceLineNo">359</span><a id="line.359">         * @return</a>
+<span class="sourceLineNo">360</span><a id="line.360">         */</a>
+<span class="sourceLineNo">361</span><a id="line.361">        public int getQueryLength() {</a>
+<span class="sourceLineNo">362</span><a id="line.362">                return query.length();</a>
+<span class="sourceLineNo">363</span><a id="line.363">        }</a>
+<span class="sourceLineNo">364</span><a id="line.364"></a>
+<span class="sourceLineNo">365</span><a id="line.365">        /**</a>
+<span class="sourceLineNo">366</span><a id="line.366">         * </a>
+<span class="sourceLineNo">367</span><a id="line.367">         * @return</a>
+<span class="sourceLineNo">368</span><a id="line.368">         */</a>
+<span class="sourceLineNo">369</span><a id="line.369">        public int getSubjectLength() {</a>
+<span class="sourceLineNo">370</span><a id="line.370">                return subject.length();</a>
+<span class="sourceLineNo">371</span><a id="line.371">        }</a>
+<span class="sourceLineNo">372</span><a id="line.372"></a>
+<span class="sourceLineNo">373</span><a id="line.373">        /**</a>
+<span class="sourceLineNo">374</span><a id="line.374">         * @return the subMatrix</a>
+<span class="sourceLineNo">375</span><a id="line.375">         */</a>
+<span class="sourceLineNo">376</span><a id="line.376">        public SubstitutionMatrix getSubstitutionMatrix() {</a>
+<span class="sourceLineNo">377</span><a id="line.377">                return subMatrix;</a>
+<span class="sourceLineNo">378</span><a id="line.378">        }</a>
+<span class="sourceLineNo">379</span><a id="line.379"></a>
+<span class="sourceLineNo">380</span><a id="line.380">        /**</a>
+<span class="sourceLineNo">381</span><a id="line.381">         * @param time</a>
+<span class="sourceLineNo">382</span><a id="line.382">         *            The time in milliseconds, which was needed to generate the</a>
+<span class="sourceLineNo">383</span><a id="line.383">         *            alignment.</a>
+<span class="sourceLineNo">384</span><a id="line.384">         */</a>
+<span class="sourceLineNo">385</span><a id="line.385">        void setComputationTime(long time) {</a>
+<span class="sourceLineNo">386</span><a id="line.386">                this.time = time;</a>
+<span class="sourceLineNo">387</span><a id="line.387">        }</a>
+<span class="sourceLineNo">388</span><a id="line.388"></a>
+<span class="sourceLineNo">389</span><a id="line.389">        /**</a>
+<span class="sourceLineNo">390</span><a id="line.390">         * </a>
+<span class="sourceLineNo">391</span><a id="line.391">         * @return</a>
+<span class="sourceLineNo">392</span><a id="line.392">         * @throws BioException</a>
+<span class="sourceLineNo">393</span><a id="line.393">         */</a>
+<span class="sourceLineNo">394</span><a id="line.394">        public String formatOutput() throws BioException {</a>
+<span class="sourceLineNo">395</span><a id="line.395">                return formatOutput(60);</a>
+<span class="sourceLineNo">396</span><a id="line.396">        }</a>
+<span class="sourceLineNo">397</span><a id="line.397"></a>
+<span class="sourceLineNo">398</span><a id="line.398">        /**</a>
+<span class="sourceLineNo">399</span><a id="line.399">         * This method provides a BLAST-like formated alignment from the given</a>
+<span class="sourceLineNo">400</span><a id="line.400">         * &lt;code&gt;String&lt;/code&gt;s, in which the sequence coordinates and the</a>
+<span class="sourceLineNo">401</span><a id="line.401">         * information "Query" or "Sbjct", respectively is added to each line. Each</a>
+<span class="sourceLineNo">402</span><a id="line.402">         * line contains &lt;code&gt;width&lt;/code&gt; sequence characters including the gap</a>
+<span class="sourceLineNo">403</span><a id="line.403">         * symbols plus the meta information. There is one white line between two</a>
+<span class="sourceLineNo">404</span><a id="line.404">         * pairs of sequences.</a>
+<span class="sourceLineNo">405</span><a id="line.405">         * </a>
+<span class="sourceLineNo">406</span><a id="line.406">         * @param width</a>
+<span class="sourceLineNo">407</span><a id="line.407">         *            the number of symbols to be displayed per line.</a>
+<span class="sourceLineNo">408</span><a id="line.408">         * @return formated String.</a>
+<span class="sourceLineNo">409</span><a id="line.409">         * @throws BioException</a>
+<span class="sourceLineNo">410</span><a id="line.410">         */</a>
+<span class="sourceLineNo">411</span><a id="line.411">        public String formatOutput(int width) throws BioException {</a>
+<span class="sourceLineNo">412</span><a id="line.412">                int i, j;</a>
+<span class="sourceLineNo">413</span><a id="line.413">                /*</a>
+<span class="sourceLineNo">414</span><a id="line.414">                 * Highlights equal symbols within the alignment, String match/missmatch</a>
+<span class="sourceLineNo">415</span><a id="line.415">                 * representation</a>
+<span class="sourceLineNo">416</span><a id="line.416">                 */</a>
+<span class="sourceLineNo">417</span><a id="line.417">                StringBuilder path = new StringBuilder();</a>
+<span class="sourceLineNo">418</span><a id="line.418">                for (i = 0; i &lt; Math.min(queryEnd - queryStart, subjectEnd</a>
+<span class="sourceLineNo">419</span><a id="line.419">                                - subjectStart) + 1; i++) {</a>
+<span class="sourceLineNo">420</span><a id="line.420">                        Symbol a = query.symbolAt(i + queryStart);</a>
+<span class="sourceLineNo">421</span><a id="line.421">                        Symbol b = subject.symbolAt(i + subjectStart);</a>
+<span class="sourceLineNo">422</span><a id="line.422">                        if (!a.equals(query.getAlphabet().getGapSymbol())</a>
+<span class="sourceLineNo">423</span><a id="line.423">                                        &amp;&amp; !b.equals(subject.getAlphabet().getGapSymbol())</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                        &amp;&amp; ((subMatrix.getValueAt(a, b) &gt;= 0) || a.equals(b))) {</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                path.append('|');</a>
+<span class="sourceLineNo">426</span><a id="line.426">                        } else {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                path.append(' ');</a>
+<span class="sourceLineNo">428</span><a id="line.428">                        }</a>
+<span class="sourceLineNo">429</span><a id="line.429">                }</a>
+<span class="sourceLineNo">430</span><a id="line.430"></a>
+<span class="sourceLineNo">431</span><a id="line.431">                int maxLength = path.length();</a>
+<span class="sourceLineNo">432</span><a id="line.432">                /*</a>
+<span class="sourceLineNo">433</span><a id="line.433">                 * Math.max(queryEnd - queryStart, subjectEnd - subjectStart) + 1;</a>
+<span class="sourceLineNo">434</span><a id="line.434">                 */</a>
+<span class="sourceLineNo">435</span><a id="line.435">                Formatter output = new Formatter();</a>
+<span class="sourceLineNo">436</span><a id="line.436">                output.format("%n Time (ms):  %s%n", time);</a>
+<span class="sourceLineNo">437</span><a id="line.437">                output.format(" Length:     %d%n", maxLength);</a>
+<span class="sourceLineNo">438</span><a id="line.438">                output.format("  Score:     %d%n", getScore());</a>
+<span class="sourceLineNo">439</span><a id="line.439">                output.format("  Query:     %s, Length: %d%n", query.getName(), query</a>
+<span class="sourceLineNo">440</span><a id="line.440">                                .length()</a>
+<span class="sourceLineNo">441</span><a id="line.441">                                - nGapsQ);</a>
+<span class="sourceLineNo">442</span><a id="line.442">                output.format("  Sbjct:     %s, Length: %d%n", subject.getName(),</a>
+<span class="sourceLineNo">443</span><a id="line.443">                                subject.length() - nGapsS);</a>
+<span class="sourceLineNo">444</span><a id="line.444">                output.format(</a>
+<span class="sourceLineNo">445</span><a id="line.445">                                " Identities: %d/%d, i.e., %d %% (query) and %d %% (sbjct)%n",</a>
+<span class="sourceLineNo">446</span><a id="line.446">                                identicals, maxLength, Math.round(getPercentIdentityQuery()),</a>
+<span class="sourceLineNo">447</span><a id="line.447">                                Math.round(getPercentIdentitySubject()));</a>
+<span class="sourceLineNo">448</span><a id="line.448">                output.format(</a>
+<span class="sourceLineNo">449</span><a id="line.449">                                " Similars:   %d/%d, i.e., %d %% (query) and %d %% (sbjct)%n",</a>
+<span class="sourceLineNo">450</span><a id="line.450">                                similars, maxLength, Math.round(getPercentSimilarityQuery()),</a>
+<span class="sourceLineNo">451</span><a id="line.451">                                Math.round(getPercentSimilaritySubject()));</a>
+<span class="sourceLineNo">452</span><a id="line.452">                output.format(</a>
+<span class="sourceLineNo">453</span><a id="line.453">                                " No. gaps:   %d (%d %%) in query and %d (%d %%) in sbjct%n",</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                nGapsQ, Math.round(getPercentGapsQuery()), nGapsS, Math</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                                .round(getPercentGapsTarget()));</a>
+<span class="sourceLineNo">456</span><a id="line.456"></a>
+<span class="sourceLineNo">457</span><a id="line.457">                int queryLPos = queryStart, queryRPos, pathLPos = 0, pathRPos;</a>
+<span class="sourceLineNo">458</span><a id="line.458">                int subjectLPos = subjectStart, subjectRPos;</a>
+<span class="sourceLineNo">459</span><a id="line.459">                int ql = queryLPos - 1, qr = queryLPos - 1, qgaps;</a>
+<span class="sourceLineNo">460</span><a id="line.460">                int sl = subjectLPos - 1, sr = subjectLPos - 1, sgaps;</a>
+<span class="sourceLineNo">461</span><a id="line.461"></a>
+<span class="sourceLineNo">462</span><a id="line.462">                int widthLeft = String.valueOf(Math.max(queryStart, queryEnd)).length();</a>
+<span class="sourceLineNo">463</span><a id="line.463">                int widthRight = String.valueOf(Math.max(queryEnd, subjectEnd))</a>
+<span class="sourceLineNo">464</span><a id="line.464">                                .length() + 1;</a>
+<span class="sourceLineNo">465</span><a id="line.465"></a>
+<span class="sourceLineNo">466</span><a id="line.466">                // Take width of the meta information into account.</a>
+<span class="sourceLineNo">467</span><a id="line.467">                width = Math.max(width - widthLeft - widthRight - 12, 2);</a>
+<span class="sourceLineNo">468</span><a id="line.468"></a>
+<span class="sourceLineNo">469</span><a id="line.469">                for (i = 1; i &lt;= Math.ceil((double) maxLength / width); i++) {</a>
+<span class="sourceLineNo">470</span><a id="line.470"></a>
+<span class="sourceLineNo">471</span><a id="line.471">                        // Query</a>
+<span class="sourceLineNo">472</span><a id="line.472">                        queryRPos = Math.min(queryStart + i * width - 1, Math.min(queryEnd,</a>
+<span class="sourceLineNo">473</span><a id="line.473">                                        subjectEnd - subjectStart + queryStart));</a>
+<span class="sourceLineNo">474</span><a id="line.474">                        qgaps = 0;</a>
+<span class="sourceLineNo">475</span><a id="line.475">                        for (j = queryLPos; j &lt;= queryRPos; j++) {</a>
+<span class="sourceLineNo">476</span><a id="line.476">                                if (!query.symbolAt(j).equals(</a>
+<span class="sourceLineNo">477</span><a id="line.477">                                                query.getAlphabet().getGapSymbol())) {</a>
+<span class="sourceLineNo">478</span><a id="line.478">                                        qr++;</a>
+<span class="sourceLineNo">479</span><a id="line.479">                                } else {</a>
+<span class="sourceLineNo">480</span><a id="line.480">                                        qgaps++;</a>
+<span class="sourceLineNo">481</span><a id="line.481">                                }</a>
+<span class="sourceLineNo">482</span><a id="line.482">                        }</a>
+<span class="sourceLineNo">483</span><a id="line.483">                        if (qgaps &lt;= queryRPos - queryLPos) {</a>
+<span class="sourceLineNo">484</span><a id="line.484">                                ql++;</a>
+<span class="sourceLineNo">485</span><a id="line.485">                        }</a>
+<span class="sourceLineNo">486</span><a id="line.486">                        output.format("%nQuery:   %" + widthLeft + "d ", ql);</a>
+<span class="sourceLineNo">487</span><a id="line.487">                        output.format("%s ", query.subStr(queryLPos, queryRPos));</a>
+<span class="sourceLineNo">488</span><a id="line.488">                        output.format("%-" + widthRight + "d%n", qr);</a>
+<span class="sourceLineNo">489</span><a id="line.489">                        queryLPos = queryRPos + 1;</a>
+<span class="sourceLineNo">490</span><a id="line.490">                        ql = qr;</a>
+<span class="sourceLineNo">491</span><a id="line.491"></a>
+<span class="sourceLineNo">492</span><a id="line.492">                        // Path</a>
+<span class="sourceLineNo">493</span><a id="line.493">                        pathRPos = Math.min(i * width, path.length());</a>
+<span class="sourceLineNo">494</span><a id="line.494">                        output.format("%-" + (widthLeft + 10) + "c%s", Character</a>
+<span class="sourceLineNo">495</span><a id="line.495">                                        .valueOf(' '), path.substring(pathLPos, pathRPos));</a>
+<span class="sourceLineNo">496</span><a id="line.496">                        pathLPos = pathRPos;</a>
+<span class="sourceLineNo">497</span><a id="line.497"></a>
+<span class="sourceLineNo">498</span><a id="line.498">                        // Sbjct</a>
+<span class="sourceLineNo">499</span><a id="line.499">                        subjectRPos = Math.min(subjectStart + i * width - 1, Math.min(</a>
+<span class="sourceLineNo">500</span><a id="line.500">                                        queryEnd - queryStart + subjectStart, subjectEnd));</a>
+<span class="sourceLineNo">501</span><a id="line.501">                        sgaps = 0;</a>
+<span class="sourceLineNo">502</span><a id="line.502">                        for (j = subjectLPos; j &lt;= subjectRPos; j++) {</a>
+<span class="sourceLineNo">503</span><a id="line.503">                                if (!subject.symbolAt(j).equals(</a>
+<span class="sourceLineNo">504</span><a id="line.504">                                                subject.getAlphabet().getGapSymbol())) {</a>
+<span class="sourceLineNo">505</span><a id="line.505">                                        sr++;</a>
+<span class="sourceLineNo">506</span><a id="line.506">                                } else {</a>
+<span class="sourceLineNo">507</span><a id="line.507">                                        sgaps++;</a>
+<span class="sourceLineNo">508</span><a id="line.508">                                }</a>
+<span class="sourceLineNo">509</span><a id="line.509">                        }</a>
+<span class="sourceLineNo">510</span><a id="line.510">                        if (sgaps &lt;= subjectRPos - subjectLPos) {</a>
+<span class="sourceLineNo">511</span><a id="line.511">                                sl++;</a>
+<span class="sourceLineNo">512</span><a id="line.512">                        }</a>
+<span class="sourceLineNo">513</span><a id="line.513">                        output.format("%nSbjct:   %" + widthLeft + "d ", sl);</a>
+<span class="sourceLineNo">514</span><a id="line.514">                        output.format("%s ", subject.subStr(subjectLPos, subjectRPos));</a>
+<span class="sourceLineNo">515</span><a id="line.515">                        output.format("%-" + widthRight + "d%n", sr);</a>
+<span class="sourceLineNo">516</span><a id="line.516">                        subjectLPos = subjectRPos + 1;</a>
+<span class="sourceLineNo">517</span><a id="line.517">                        sl = sr;</a>
+<span class="sourceLineNo">518</span><a id="line.518">                }</a>
+<span class="sourceLineNo">519</span><a id="line.519">                return output.toString();</a>
+<span class="sourceLineNo">520</span><a id="line.520">        }</a>
+<span class="sourceLineNo">521</span><a id="line.521"></a>
+<span class="sourceLineNo">522</span><a id="line.522">        /**</a>
+<span class="sourceLineNo">523</span><a id="line.523">         * </a>
+<span class="sourceLineNo">524</span><a id="line.524">         * @return</a>
+<span class="sourceLineNo">525</span><a id="line.525">         */</a>
+<span class="sourceLineNo">526</span><a id="line.526">        public float getPercentGapsTarget() {</a>
+<span class="sourceLineNo">527</span><a id="line.527">                return nGapsS / (float) subject.length() * 100;</a>
+<span class="sourceLineNo">528</span><a id="line.528">        }</a>
+<span class="sourceLineNo">529</span><a id="line.529"></a>
+<span class="sourceLineNo">530</span><a id="line.530">        /**</a>
+<span class="sourceLineNo">531</span><a id="line.531">         * </a>
+<span class="sourceLineNo">532</span><a id="line.532">         * @return</a>
+<span class="sourceLineNo">533</span><a id="line.533">         */</a>
+<span class="sourceLineNo">534</span><a id="line.534">        public float getPercentGapsQuery() {</a>
+<span class="sourceLineNo">535</span><a id="line.535">                return nGapsQ / (float) query.length() * 100;</a>
+<span class="sourceLineNo">536</span><a id="line.536">        }</a>
+<span class="sourceLineNo">537</span><a id="line.537"></a>
+<span class="sourceLineNo">538</span><a id="line.538"></a>
+<span class="sourceLineNo">539</span><a id="line.539">    /**</a>
+<span class="sourceLineNo">540</span><a id="line.540">     * Return the query sequence as a gapped sequence.</a>
+<span class="sourceLineNo">541</span><a id="line.541">     *</a>
+<span class="sourceLineNo">542</span><a id="line.542">     * @return the query sequence as a gapped sequence</a>
+<span class="sourceLineNo">543</span><a id="line.543">     */</a>
+<span class="sourceLineNo">544</span><a id="line.544">    public GappedSequence getQuery() {</a>
+<span class="sourceLineNo">545</span><a id="line.545">        return (query instanceof GappedSequence) ? (GappedSequence) query : new SimpleGappedSequence(query);</a>
+<span class="sourceLineNo">546</span><a id="line.546">    }</a>
+<span class="sourceLineNo">547</span><a id="line.547"></a>
+<span class="sourceLineNo">548</span><a id="line.548">    /**</a>
+<span class="sourceLineNo">549</span><a id="line.549">     * Return the subject sequence as a gapped sequence.</a>
+<span class="sourceLineNo">550</span><a id="line.550">     *</a>
+<span class="sourceLineNo">551</span><a id="line.551">     * @return the subject sequence as a gapped sequence</a>
+<span class="sourceLineNo">552</span><a id="line.552">     */</a>
+<span class="sourceLineNo">553</span><a id="line.553">    public GappedSequence getSubject() {</a>
+<span class="sourceLineNo">554</span><a id="line.554">        return (subject instanceof GappedSequence) ? (GappedSequence) subject : new SimpleGappedSequence(subject);</a>
+<span class="sourceLineNo">555</span><a id="line.555">    }</a>
+<span class="sourceLineNo">556</span><a id="line.556">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

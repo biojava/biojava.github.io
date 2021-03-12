@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.molbio;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.ArrayList;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Collection;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.HashSet;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.List;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.concurrent.ExecutionException;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.logging.Level;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.logging.Logger;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.bio.seq.SequenceAnnotator;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.bio.seq.impl.ViewSequence;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.utils.ThreadPool;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.concurrent.Callable;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.concurrent.ExecutorService;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.concurrent.Future;</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">/**</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * &lt;p&gt;&lt;code&gt;RestrictionMapper&lt;/code&gt; is a class for annotating</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * &lt;code&gt;Sequence&lt;/code&gt;s with &lt;code&gt;Feature&lt;/code&gt;s which represent</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * restriction sites. Calling &lt;code&gt;annotate(Sequence sequence)&lt;/code&gt;</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * will annotate the &lt;code&gt;Sequence&lt;/code&gt; with the sites of any</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s which have been added to the</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;code&gt;RestrictionMapper&lt;/code&gt;. The returned &lt;code&gt;Sequence&lt;/code&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * is a &lt;code&gt;ViewSequence&lt;/code&gt; wrapping the original.&lt;/p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * &lt;p&gt;The &lt;code&gt;Feature&lt;/code&gt;s created are</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * &lt;code&gt;RestrictionSite&lt;/code&gt;s which have a flyweight</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * &lt;code&gt;Annotation&lt;/code&gt; containing a single &lt;code&gt;String&lt;/code&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * property "dbxref" whose value is "REBASE:" plus name of the enzyme</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * (e.g. EcoRI).&lt;/p&gt;</a>
+<span class="sourceLineNo">054</span><a id="line.54"> *</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * &lt;p&gt;The mapper will by default map only those sites which have both</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * their recognition sites and their cut sites within the</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * &lt;code&gt;Sequence&lt;/code&gt;. This behaviour may be changed to map all</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * sites which have their recognition sites within the</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * &lt;code&gt;Sequence&lt;/code&gt; using the &lt;code&gt;setMapAll(boolean</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * on)&lt;/code&gt; method.&lt;/p&gt;</a>
+<span class="sourceLineNo">061</span><a id="line.61"> *</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * &lt;p&gt;The current implementation requires that</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s to be searched must first be</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * registered with the &lt;code&gt;RestrictionEnzymeManager&lt;/code&gt;.&lt;/p&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65"> *</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * @author Keith James</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * @since 1.3</a>
+<span class="sourceLineNo">068</span><a id="line.68"> */</a>
+<span class="sourceLineNo">069</span><a id="line.69">public class RestrictionMapper implements SequenceAnnotator</a>
+<span class="sourceLineNo">070</span><a id="line.70">{</a>
+<span class="sourceLineNo">071</span><a id="line.71">    /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">     * &lt;code&gt;SITE_FEATURE_SOURCE&lt;/code&gt; the source &lt;code&gt;String&lt;/code&gt;</a>
+<span class="sourceLineNo">073</span><a id="line.73">     * used by &lt;code&gt;RestrictionMapper&lt;/code&gt; when creating</a>
+<span class="sourceLineNo">074</span><a id="line.74">     * restriction site &lt;code&gt;Feature&lt;/code&gt;s. This is the</a>
+<span class="sourceLineNo">075</span><a id="line.75">     * &lt;code&gt;String&lt;/code&gt; which is returned when a</a>
+<span class="sourceLineNo">076</span><a id="line.76">     * &lt;code&gt;Feature&lt;/code&gt;'s &lt;code&gt;getSource()&lt;/code&gt; method is</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * called.</a>
+<span class="sourceLineNo">078</span><a id="line.78">     */</a>
+<span class="sourceLineNo">079</span><a id="line.79">    public static final String SITE_FEATURE_SOURCE = "regex";</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">    /**</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * &lt;code&gt;SITE_FEATURE_TYPE&lt;/code&gt; the type &lt;code&gt;String&lt;/code&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * used by &lt;code&gt;RestrictionMapper&lt;/code&gt; when creating</a>
+<span class="sourceLineNo">084</span><a id="line.84">     * restriction site &lt;code&gt;Feature&lt;/code&gt;s. This is the</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * &lt;code&gt;String&lt;/code&gt; which is returned when a</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;code&gt;Feature&lt;/code&gt;'s &lt;code&gt;getType()&lt;/code&gt; method is called.</a>
+<span class="sourceLineNo">087</span><a id="line.87">     */</a>
+<span class="sourceLineNo">088</span><a id="line.88">    public static final String SITE_FEATURE_TYPE = "misc_binding";</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">    private List restrictionEnzymes;</a>
+<span class="sourceLineNo">091</span><a id="line.91">    private boolean mapAll;</a>
+<span class="sourceLineNo">092</span><a id="line.92">    private ThreadPool threadPool;</a>
+<span class="sourceLineNo">093</span><a id="line.93">    private ExecutorService tserv;</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">    /**</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * &lt;p&gt;Creates a new &lt;code&gt;RestrictionMapper&lt;/code&gt; which will use</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * the specified &lt;code&gt;ThreadPool&lt;/code&gt;. Do not share one pool</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * between a number of &lt;code&gt;RestrictionMapper&lt;/code&gt;s because</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * &lt;code&gt;annotate(Sequence sequence)&lt;/code&gt; waits for all threads</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * in the pool to finish work before returning and this will lead</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * to a race condition between mappers. One mapper could end up</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * waiting for another mapper's threads before returning.&lt;/p&gt;</a>
+<span class="sourceLineNo">103</span><a id="line.103">     *</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * @param threadPool a &lt;code&gt;ThreadPool&lt;/code&gt;.</a>
+<span class="sourceLineNo">105</span><a id="line.105">     */</a>
+<span class="sourceLineNo">106</span><a id="line.106">    public RestrictionMapper(ThreadPool threadPool) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">        this();</a>
+<span class="sourceLineNo">108</span><a id="line.108">        this.threadPool = threadPool;</a>
+<span class="sourceLineNo">109</span><a id="line.109">    } </a>
+<span class="sourceLineNo">110</span><a id="line.110">    </a>
+<span class="sourceLineNo">111</span><a id="line.111">    /**</a>
+<span class="sourceLineNo">112</span><a id="line.112">     * &lt;p&gt;Creates a new &lt;code&gt;RestrictionMapper&lt;/code&gt; which will use</a>
+<span class="sourceLineNo">113</span><a id="line.113">     * the specified &lt;code&gt;ExecutorService&lt;/code&gt;.</a>
+<span class="sourceLineNo">114</span><a id="line.114">     *</a>
+<span class="sourceLineNo">115</span><a id="line.115">     * @param xser a &lt;code&gt;ExecutorService&lt;/code&gt;, e.g. ExecutorService.newCachedThreadPool() </a>
+<span class="sourceLineNo">116</span><a id="line.116">     * @since 1.8.1</a>
+<span class="sourceLineNo">117</span><a id="line.117">     * @author George Waldon</a>
+<span class="sourceLineNo">118</span><a id="line.118">     */</a>
+<span class="sourceLineNo">119</span><a id="line.119">    public RestrictionMapper(ExecutorService xser) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">        this();</a>
+<span class="sourceLineNo">121</span><a id="line.121">        tserv = xser;</a>
+<span class="sourceLineNo">122</span><a id="line.122">    }</a>
+<span class="sourceLineNo">123</span><a id="line.123">    </a>
+<span class="sourceLineNo">124</span><a id="line.124">    private RestrictionMapper() {</a>
+<span class="sourceLineNo">125</span><a id="line.125">        restrictionEnzymes = new ArrayList();</a>
+<span class="sourceLineNo">126</span><a id="line.126">        mapAll = false;</a>
+<span class="sourceLineNo">127</span><a id="line.127">    }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">    /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * &lt;code&gt;annotate&lt;/code&gt; adds &lt;code&gt;Feature&lt;/code&gt;s which</a>
+<span class="sourceLineNo">131</span><a id="line.131">     * represent restriction sites.</a>
+<span class="sourceLineNo">132</span><a id="line.132">     *</a>
+<span class="sourceLineNo">133</span><a id="line.133">     * @param sequence a &lt;code&gt;Sequence&lt;/code&gt;.</a>
+<span class="sourceLineNo">134</span><a id="line.134">     *</a>
+<span class="sourceLineNo">135</span><a id="line.135">     * @return a &lt;code&gt;Sequence&lt;/code&gt; view with restriction sites</a>
+<span class="sourceLineNo">136</span><a id="line.136">     * marked.</a>
+<span class="sourceLineNo">137</span><a id="line.137">     */</a>
+<span class="sourceLineNo">138</span><a id="line.138">    public Sequence annotate(Sequence sequence)</a>
+<span class="sourceLineNo">139</span><a id="line.139">    {</a>
+<span class="sourceLineNo">140</span><a id="line.140">        Sequence mapped = new ViewSequence(sequence);</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">        if (tserv == null) {</a>
+<span class="sourceLineNo">143</span><a id="line.143">            for (int i = 0; i &lt; restrictionEnzymes.size(); i++) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                RestrictionEnzyme enzyme =</a>
+<span class="sourceLineNo">145</span><a id="line.145">                        (RestrictionEnzyme) restrictionEnzymes.get(i);</a>
+<span class="sourceLineNo">146</span><a id="line.146">                threadPool.addRequest(new RestrictionSiteFinder(enzyme,</a>
+<span class="sourceLineNo">147</span><a id="line.147">                        mapAll,</a>
+<span class="sourceLineNo">148</span><a id="line.148">                        mapped));</a>
+<span class="sourceLineNo">149</span><a id="line.149">            }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">            // Threads will finish work and become idle</a>
+<span class="sourceLineNo">152</span><a id="line.152">            threadPool.waitForThreads();</a>
+<span class="sourceLineNo">153</span><a id="line.153">        } else {</a>
+<span class="sourceLineNo">154</span><a id="line.154">            Collection&lt;CallableSiteFinder&gt; taskPool = new HashSet&lt;CallableSiteFinder&gt;();</a>
+<span class="sourceLineNo">155</span><a id="line.155">            for (int i = 0; i &lt; restrictionEnzymes.size(); i++) {</a>
+<span class="sourceLineNo">156</span><a id="line.156">                RestrictionEnzyme enzyme =</a>
+<span class="sourceLineNo">157</span><a id="line.157">                        (RestrictionEnzyme) restrictionEnzymes.get(i);</a>
+<span class="sourceLineNo">158</span><a id="line.158">                taskPool.add(new CallableSiteFinder(new RestrictionSiteFinder(enzyme,</a>
+<span class="sourceLineNo">159</span><a id="line.159">                        mapAll,</a>
+<span class="sourceLineNo">160</span><a id="line.160">                        mapped)));</a>
+<span class="sourceLineNo">161</span><a id="line.161">            }</a>
+<span class="sourceLineNo">162</span><a id="line.162">            List&lt;Future&lt;RestrictionEnzyme&gt;&gt; lFut;</a>
+<span class="sourceLineNo">163</span><a id="line.163">            try {</a>
+<span class="sourceLineNo">164</span><a id="line.164">                lFut = tserv.invokeAll(taskPool);</a>
+<span class="sourceLineNo">165</span><a id="line.165">                for (Future&lt;RestrictionEnzyme&gt; finder : lFut) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                    RestrictionEnzyme re = null;</a>
+<span class="sourceLineNo">167</span><a id="line.167">                    try {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        re = finder.get();</a>
+<span class="sourceLineNo">169</span><a id="line.169">                    } catch (ExecutionException ex) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        Logger.getLogger(RestrictionMapper.class.getName()).log(Level.SEVERE, </a>
+<span class="sourceLineNo">171</span><a id="line.171">                                "An error occurred during the mapping with the enzyme: " </a>
+<span class="sourceLineNo">172</span><a id="line.172">                                + re!=null? re.toString():"unknown" </a>
+<span class="sourceLineNo">173</span><a id="line.173">                                + " of the sequence: "</a>
+<span class="sourceLineNo">174</span><a id="line.174">                                + sequence.getName(), ex);</a>
+<span class="sourceLineNo">175</span><a id="line.175">                    }</a>
+<span class="sourceLineNo">176</span><a id="line.176">                }</a>
+<span class="sourceLineNo">177</span><a id="line.177">            } catch (InterruptedException ex) {</a>
+<span class="sourceLineNo">178</span><a id="line.178">                Logger.getLogger(RestrictionMapper.class.getName()).log(</a>
+<span class="sourceLineNo">179</span><a id="line.179">                        Level.SEVERE, </a>
+<span class="sourceLineNo">180</span><a id="line.180">                        "Restriction mapping interrupted for sequence: "+sequence.getName(), </a>
+<span class="sourceLineNo">181</span><a id="line.181">                        ex);</a>
+<span class="sourceLineNo">182</span><a id="line.182">            }</a>
+<span class="sourceLineNo">183</span><a id="line.183">        }</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">        return mapped;</a>
+<span class="sourceLineNo">186</span><a id="line.186">    }</a>
+<span class="sourceLineNo">187</span><a id="line.187"></a>
+<span class="sourceLineNo">188</span><a id="line.188">    /**</a>
+<span class="sourceLineNo">189</span><a id="line.189">     * &lt;code&gt;getMapAll&lt;/code&gt; returns whether all sites should be</a>
+<span class="sourceLineNo">190</span><a id="line.190">     * marked, including those which have recognition sites within the</a>
+<span class="sourceLineNo">191</span><a id="line.191">     * sequence, but cut outside it. The default is false, indicating</a>
+<span class="sourceLineNo">192</span><a id="line.192">     * only sites which can actually be cut are mapped.</a>
+<span class="sourceLineNo">193</span><a id="line.193">     *</a>
+<span class="sourceLineNo">194</span><a id="line.194">     * @return a &lt;code&gt;boolean&lt;/code&gt;.</a>
+<span class="sourceLineNo">195</span><a id="line.195">     */</a>
+<span class="sourceLineNo">196</span><a id="line.196">    public boolean getMapAll()</a>
+<span class="sourceLineNo">197</span><a id="line.197">    {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        return mapAll;</a>
+<span class="sourceLineNo">199</span><a id="line.199">    }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">    /**</a>
+<span class="sourceLineNo">202</span><a id="line.202">     * &lt;code&gt;setMapAll&lt;/code&gt; sets whether all sites should be marked,</a>
+<span class="sourceLineNo">203</span><a id="line.203">     * including those which have recognition sites within the</a>
+<span class="sourceLineNo">204</span><a id="line.204">     * sequence, but cut outside it. The default is false, indicating</a>
+<span class="sourceLineNo">205</span><a id="line.205">     * only sites which can actually be cut are mapped.</a>
+<span class="sourceLineNo">206</span><a id="line.206">     *</a>
+<span class="sourceLineNo">207</span><a id="line.207">     * @param on a &lt;code&gt;boolean&lt;/code&gt;.</a>
+<span class="sourceLineNo">208</span><a id="line.208">     */</a>
+<span class="sourceLineNo">209</span><a id="line.209">    public void setMapAll(boolean on)</a>
+<span class="sourceLineNo">210</span><a id="line.210">    {</a>
+<span class="sourceLineNo">211</span><a id="line.211">        mapAll = on;</a>
+<span class="sourceLineNo">212</span><a id="line.212">    }</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">    /**</a>
+<span class="sourceLineNo">215</span><a id="line.215">     * &lt;code&gt;addEnzyme&lt;/code&gt; adds an enzyme to be searched for in the</a>
+<span class="sourceLineNo">216</span><a id="line.216">     * &lt;code&gt;Sequence&lt;/code&gt;.</a>
+<span class="sourceLineNo">217</span><a id="line.217">     *</a>
+<span class="sourceLineNo">218</span><a id="line.218">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">219</span><a id="line.219">     */</a>
+<span class="sourceLineNo">220</span><a id="line.220">    public void addEnzyme(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">221</span><a id="line.221">    {</a>
+<span class="sourceLineNo">222</span><a id="line.222">        if (restrictionEnzymes.contains(enzyme))</a>
+<span class="sourceLineNo">223</span><a id="line.223">            throw new IllegalArgumentException("RestrictionMapper is already mapping '"</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                               + enzyme</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                               + "'");</a>
+<span class="sourceLineNo">226</span><a id="line.226">        restrictionEnzymes.add(enzyme);</a>
+<span class="sourceLineNo">227</span><a id="line.227">    }</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">    /**</a>
+<span class="sourceLineNo">230</span><a id="line.230">     * &lt;code&gt;removeEnzyme&lt;/code&gt; removes an enzyme from those to be</a>
+<span class="sourceLineNo">231</span><a id="line.231">     * searched for in the &lt;code&gt;Sequence&lt;/code&gt;.</a>
+<span class="sourceLineNo">232</span><a id="line.232">     *</a>
+<span class="sourceLineNo">233</span><a id="line.233">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">234</span><a id="line.234">     */</a>
+<span class="sourceLineNo">235</span><a id="line.235">    public void removeEnzyme(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">236</span><a id="line.236">    {</a>
+<span class="sourceLineNo">237</span><a id="line.237">        if (! restrictionEnzymes.contains(enzyme))</a>
+<span class="sourceLineNo">238</span><a id="line.238">            throw new IllegalArgumentException("RestrictionMapper is not mapping '"</a>
+<span class="sourceLineNo">239</span><a id="line.239">                                               + enzyme</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                               + "'");</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242">        restrictionEnzymes.remove(enzyme);</a>
+<span class="sourceLineNo">243</span><a id="line.243">    }</a>
+<span class="sourceLineNo">244</span><a id="line.244"></a>
+<span class="sourceLineNo">245</span><a id="line.245">    /**</a>
+<span class="sourceLineNo">246</span><a id="line.246">     * &lt;code&gt;clearEnzymes&lt;/code&gt; removes all enzymes from those to be</a>
+<span class="sourceLineNo">247</span><a id="line.247">     * searched for in the &lt;code&gt;Sequence&lt;/code&gt;.</a>
+<span class="sourceLineNo">248</span><a id="line.248">     */</a>
+<span class="sourceLineNo">249</span><a id="line.249">    public void clearEnzymes()</a>
+<span class="sourceLineNo">250</span><a id="line.250">    {</a>
+<span class="sourceLineNo">251</span><a id="line.251">        restrictionEnzymes.clear();</a>
+<span class="sourceLineNo">252</span><a id="line.252">    }</a>
+<span class="sourceLineNo">253</span><a id="line.253">    </a>
+<span class="sourceLineNo">254</span><a id="line.254">    private class CallableSiteFinder implements Callable&lt;RestrictionEnzyme&gt; {</a>
+<span class="sourceLineNo">255</span><a id="line.255">        </a>
+<span class="sourceLineNo">256</span><a id="line.256">        RestrictionSiteFinder finder;</a>
+<span class="sourceLineNo">257</span><a id="line.257">        </a>
+<span class="sourceLineNo">258</span><a id="line.258">        CallableSiteFinder(RestrictionSiteFinder finder) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">            this.finder = finder;</a>
+<span class="sourceLineNo">260</span><a id="line.260">        }</a>
+<span class="sourceLineNo">261</span><a id="line.261">        </a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">        public RestrictionEnzyme call() throws Exception {</a>
+<span class="sourceLineNo">264</span><a id="line.264">            finder.run();</a>
+<span class="sourceLineNo">265</span><a id="line.265">            return finder.getEnzyme();</a>
+<span class="sourceLineNo">266</span><a id="line.266">        }</a>
+<span class="sourceLineNo">267</span><a id="line.267">        </a>
+<span class="sourceLineNo">268</span><a id="line.268">    }</a>
+<span class="sourceLineNo">269</span><a id="line.269">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

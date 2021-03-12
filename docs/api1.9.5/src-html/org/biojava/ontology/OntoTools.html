@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.ontology;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">005</span><a id="line.5"></a>
+<span class="sourceLineNo">006</span><a id="line.6">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import org.biojava.ontology.io.TabDelimParser;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import org.biojava.utils.ClassTools;</a>
+<span class="sourceLineNo">009</span><a id="line.9"></a>
+<span class="sourceLineNo">010</span><a id="line.10">/**</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Tools for manipulating ontologies.</a>
+<span class="sourceLineNo">012</span><a id="line.12"> *</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">014</span><a id="line.14"> */</a>
+<span class="sourceLineNo">015</span><a id="line.15">public final class OntoTools {</a>
+<span class="sourceLineNo">016</span><a id="line.16">  private static final Ontology CORE_ONTOLOGY;</a>
+<span class="sourceLineNo">017</span><a id="line.17">  private static final OntologyFactory DEFAULT_FACTORY;</a>
+<span class="sourceLineNo">018</span><a id="line.18">  private static final IntegerOntology CORE_INTEGER;</a>
+<span class="sourceLineNo">019</span><a id="line.19">  //private static final Ontology CORE_STRING;</a>
+<span class="sourceLineNo">020</span><a id="line.20"></a>
+<span class="sourceLineNo">021</span><a id="line.21">  // public static final Term TYPE;</a>
+<span class="sourceLineNo">022</span><a id="line.22">  public static final Term RELATION;</a>
+<span class="sourceLineNo">023</span><a id="line.23">  public static final Term ANY;</a>
+<span class="sourceLineNo">024</span><a id="line.24">  public static final Term NONE;</a>
+<span class="sourceLineNo">025</span><a id="line.25">  public static final Term IS_A;</a>
+<span class="sourceLineNo">026</span><a id="line.26">  public static final Term PART_OF;</a>
+<span class="sourceLineNo">027</span><a id="line.27">  // public static final Term SUB_TYPE_OF;</a>
+<span class="sourceLineNo">028</span><a id="line.28">  // public static final Term INSTANCE_OF;</a>
+<span class="sourceLineNo">029</span><a id="line.29">  // public static final Term DOMAIN;</a>
+<span class="sourceLineNo">030</span><a id="line.30">  // public static final Term CO_DOMAIN;</a>
+<span class="sourceLineNo">031</span><a id="line.31">  // public static final Term HAS_DOMAIN;</a>
+<span class="sourceLineNo">032</span><a id="line.32">  // public static final Term HAS_CO_DOMAIN;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">  // public static final Term BOOLEAN;</a>
+<span class="sourceLineNo">035</span><a id="line.35">  // public static final Term TRUE;</a>
+<span class="sourceLineNo">036</span><a id="line.36">  // public static final Term FALSE;</a>
+<span class="sourceLineNo">037</span><a id="line.37">  // public static final Term PREDICATE;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">  // public static final Term AND;</a>
+<span class="sourceLineNo">040</span><a id="line.40">  // public static final Term OR;</a>
+<span class="sourceLineNo">041</span><a id="line.41">  // public static final Term XOR;</a>
+<span class="sourceLineNo">042</span><a id="line.42">  // public static final Term EQUAL;</a>
+<span class="sourceLineNo">043</span><a id="line.43">  // public static final Term NOT_EQUAL;</a>
+<span class="sourceLineNo">044</span><a id="line.44">  // public static final Term IMPLIES;</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">  public static final Term REFLEXIVE;</a>
+<span class="sourceLineNo">047</span><a id="line.47">  public static final Term SYMMETRIC;</a>
+<span class="sourceLineNo">048</span><a id="line.48">  public static final Term TRANSITIVE;</a>
+<span class="sourceLineNo">049</span><a id="line.49">  public static final Term EQUIVALENCE;</a>
+<span class="sourceLineNo">050</span><a id="line.50">  public static final Term PARTIAL_ORDER;</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">  static {</a>
+<span class="sourceLineNo">053</span><a id="line.53">    DEFAULT_FACTORY = new OntologyFactory() {</a>
+<span class="sourceLineNo">054</span><a id="line.54">      public Ontology createOntology(String name, String desc)</a>
+<span class="sourceLineNo">055</span><a id="line.55">      throws OntologyException {</a>
+<span class="sourceLineNo">056</span><a id="line.56">        return new Ontology.Impl(name, desc);</a>
+<span class="sourceLineNo">057</span><a id="line.57">      }</a>
+<span class="sourceLineNo">058</span><a id="line.58">    };</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">    try {</a>
+<span class="sourceLineNo">061</span><a id="line.61">      BufferedReader reader = new BufferedReader(</a>
+<span class="sourceLineNo">062</span><a id="line.62">        new InputStreamReader(</a>
+<span class="sourceLineNo">063</span><a id="line.63">          ClassTools.getClassLoader(OntoTools.class).getResourceAsStream(</a>
+<span class="sourceLineNo">064</span><a id="line.64">            "org/biojava/ontology/core.onto"</a>
+<span class="sourceLineNo">065</span><a id="line.65">          )</a>
+<span class="sourceLineNo">066</span><a id="line.66">        )</a>
+<span class="sourceLineNo">067</span><a id="line.67">      );</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">      CORE_INTEGER = new IntegerOntology();</a>
+<span class="sourceLineNo">070</span><a id="line.70">      CORE_ONTOLOGY = new TabDelimParser().parse(</a>
+<span class="sourceLineNo">071</span><a id="line.71">              reader,</a>
+<span class="sourceLineNo">072</span><a id="line.72">              DEFAULT_FACTORY</a>
+<span class="sourceLineNo">073</span><a id="line.73">      );</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">      // TYPE = CORE_ONTOLOGY.getTerm("type");</a>
+<span class="sourceLineNo">076</span><a id="line.76">      RELATION = CORE_ONTOLOGY.getTerm("relation");</a>
+<span class="sourceLineNo">077</span><a id="line.77">      ANY = CORE_ONTOLOGY.getTerm("any");</a>
+<span class="sourceLineNo">078</span><a id="line.78">      NONE = CORE_ONTOLOGY.getTerm("none");</a>
+<span class="sourceLineNo">079</span><a id="line.79">      IS_A = CORE_ONTOLOGY.getTerm("is-a");</a>
+<span class="sourceLineNo">080</span><a id="line.80">      PART_OF = CORE_ONTOLOGY.getTerm("part-of");</a>
+<span class="sourceLineNo">081</span><a id="line.81">      </a>
+<span class="sourceLineNo">082</span><a id="line.82">      // SUB_TYPE_OF = CORE_ONTOLOGY.getTerm("sub_type_of");</a>
+<span class="sourceLineNo">083</span><a id="line.83">      // INSTANCE_OF = CORE_ONTOLOGY.getTerm("instance_of");</a>
+<span class="sourceLineNo">084</span><a id="line.84">      // DOMAIN = CORE_ONTOLOGY.getTerm("domain");</a>
+<span class="sourceLineNo">085</span><a id="line.85">      // CO_DOMAIN = CORE_ONTOLOGY.getTerm("co_domain");</a>
+<span class="sourceLineNo">086</span><a id="line.86">      // HAS_DOMAIN = CORE_ONTOLOGY.getTerm("has_domain");</a>
+<span class="sourceLineNo">087</span><a id="line.87">      // HAS_CO_DOMAIN = CORE_ONTOLOGY.getTerm("has_co_domain");</a>
+<span class="sourceLineNo">088</span><a id="line.88"></a>
+<span class="sourceLineNo">089</span><a id="line.89">      // BOOLEAN = CORE_ONTOLOGY.getTerm("boolean");</a>
+<span class="sourceLineNo">090</span><a id="line.90">      // TRUE = CORE_ONTOLOGY.getTerm("true");</a>
+<span class="sourceLineNo">091</span><a id="line.91">      // FALSE = CORE_ONTOLOGY.getTerm("false");</a>
+<span class="sourceLineNo">092</span><a id="line.92">      // PREDICATE = CORE_ONTOLOGY.getTerm("predicate");</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">      // AND = CORE_ONTOLOGY.getTerm("and");</a>
+<span class="sourceLineNo">095</span><a id="line.95">      // OR = CORE_ONTOLOGY.getTerm("or");</a>
+<span class="sourceLineNo">096</span><a id="line.96">      // XOR = CORE_ONTOLOGY.getTerm("xor");</a>
+<span class="sourceLineNo">097</span><a id="line.97">      // EQUAL = CORE_ONTOLOGY.getTerm("equal");</a>
+<span class="sourceLineNo">098</span><a id="line.98">      // NOT_EQUAL = CORE_ONTOLOGY.getTerm("not_equal");</a>
+<span class="sourceLineNo">099</span><a id="line.99">      // IMPLIES = CORE_ONTOLOGY.getTerm("implies");</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">      REFLEXIVE = CORE_ONTOLOGY.getTerm("reflexive");</a>
+<span class="sourceLineNo">102</span><a id="line.102">      EQUIVALENCE = CORE_ONTOLOGY.getTerm("equivalence");</a>
+<span class="sourceLineNo">103</span><a id="line.103">      SYMMETRIC = CORE_ONTOLOGY.getTerm("symmetric");</a>
+<span class="sourceLineNo">104</span><a id="line.104">      TRANSITIVE = CORE_ONTOLOGY.getTerm("transitive");</a>
+<span class="sourceLineNo">105</span><a id="line.105">      PARTIAL_ORDER = CORE_ONTOLOGY.getTerm("partial-order");</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">    } catch (Exception e) {</a>
+<span class="sourceLineNo">108</span><a id="line.108">      throw new BioError("Could not initialize OntoTools", e);</a>
+<span class="sourceLineNo">109</span><a id="line.109">    }</a>
+<span class="sourceLineNo">110</span><a id="line.110">  }</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">  private OntoTools() {}</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">  /**</a>
+<span class="sourceLineNo">116</span><a id="line.116">   * Get the Ontology that defines our core "central dogma".</a>
+<span class="sourceLineNo">117</span><a id="line.117">   *</a>
+<span class="sourceLineNo">118</span><a id="line.118">   * &lt;p&gt;This contains definitions that we have to have, such as &lt;code&gt;any&lt;/code&gt;,</a>
+<span class="sourceLineNo">119</span><a id="line.119">   * &lt;code&gt;predicate&lt;/code&gt;, &lt;code&gt;is-a&lt;/code&gt; and &lt;code&gt;transient&lt;/code&gt;. These</a>
+<span class="sourceLineNo">120</span><a id="line.120">   * are our axioms, upon which the default interpreters build.&lt;/p&gt;</a>
+<span class="sourceLineNo">121</span><a id="line.121">   *</a>
+<span class="sourceLineNo">122</span><a id="line.122">   * @return the "core" Ontology</a>
+<span class="sourceLineNo">123</span><a id="line.123">   */</a>
+<span class="sourceLineNo">124</span><a id="line.124">  public static Ontology getCoreOntology() {</a>
+<span class="sourceLineNo">125</span><a id="line.125">    return CORE_ONTOLOGY;</a>
+<span class="sourceLineNo">126</span><a id="line.126">  }</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">  /**</a>
+<span class="sourceLineNo">129</span><a id="line.129">   * Get the Ontology that defines integers.</a>
+<span class="sourceLineNo">130</span><a id="line.130">   *</a>
+<span class="sourceLineNo">131</span><a id="line.131">   * &lt;p&gt;This contains a term for each and every integer. I haven't decided yet</a>
+<span class="sourceLineNo">132</span><a id="line.132">   * if it contains terms for arithmatic.&lt;/p&gt;</a>
+<span class="sourceLineNo">133</span><a id="line.133">   *</a>
+<span class="sourceLineNo">134</span><a id="line.134">   * @return the integer Ontology</a>
+<span class="sourceLineNo">135</span><a id="line.135">   */</a>
+<span class="sourceLineNo">136</span><a id="line.136">  public static IntegerOntology getIntegerOntology() {</a>
+<span class="sourceLineNo">137</span><a id="line.137">    return CORE_INTEGER;</a>
+<span class="sourceLineNo">138</span><a id="line.138">  }</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">  public static OntologyFactory getDefaultFactory() {</a>
+<span class="sourceLineNo">141</span><a id="line.141">    return DEFAULT_FACTORY;</a>
+<span class="sourceLineNo">142</span><a id="line.142">  }</a>
+<span class="sourceLineNo">143</span><a id="line.143">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

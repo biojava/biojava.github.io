@@ -1,0 +1,783 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.molbio;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.InputStream;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.ArrayList;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Collections;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.HashMap;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.HashSet;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.Iterator;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.List;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.Map;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.ResourceBundle;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.Set;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.SmallAnnotation;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.program.tagvalue.ChangeTable;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.program.tagvalue.LineSplitParser;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.bio.program.tagvalue.Parser;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.bio.program.tagvalue.RegexSplitter;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.bio.program.tagvalue.TagDropper;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.program.tagvalue.TagValueContext;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.program.tagvalue.TagValueListener;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.bio.program.tagvalue.TagValueParser;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.bio.program.tagvalue.ValueChanger;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import org.biojava.utils.ChangeListener;</a>
+<span class="sourceLineNo">055</span><a id="line.55">import org.biojava.utils.ChangeType;</a>
+<span class="sourceLineNo">056</span><a id="line.56">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">057</span><a id="line.57">import org.biojava.utils.ParserException;</a>
+<span class="sourceLineNo">058</span><a id="line.58">import org.biojava.utils.SmallSet;</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">/**</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * &lt;p&gt;&lt;code&gt;RestrictionEnzymeManager&lt;/code&gt; manages collections of</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * static &lt;code&gt;RestrictionEnzyme&lt;/code&gt; instances. A properties file</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * should be placed in the CLASSPATH containing a key</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * "rebase.data.file" and a corresponding value of a REBASE file</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * (standard REBASE format #31 conventionally named withrefm.### where</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * ### is the version number). This file will be loaded by the</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * &lt;code&gt;RestrictionEnzymeManager&lt;/code&gt; &lt;code&gt;ClassLoader&lt;/code&gt;. The</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * properties are loaded as a &lt;code&gt;ResourceBundle&lt;/code&gt;, so the file</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * should be named "RestrictionEnzymeManager.properties".&lt;/p&gt;</a>
+<span class="sourceLineNo">070</span><a id="line.70"> * &lt;p&gt;Since 1.5, a format #31 REBASE file can be loaded at anytime</a>
+<span class="sourceLineNo">071</span><a id="line.71"> * using the method &lt;code&gt;loadEnzymeFile&lt;/code&gt; and optionally filtered</a>
+<span class="sourceLineNo">072</span><a id="line.72"> * for commercially available enzymes.&lt;/p&gt;</a>
+<span class="sourceLineNo">073</span><a id="line.73"> *  </a>
+<span class="sourceLineNo">074</span><a id="line.74"> * @author Keith James</a>
+<span class="sourceLineNo">075</span><a id="line.75"> * @author George Waldon</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * @since 1.3</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78"> */</a>
+<span class="sourceLineNo">079</span><a id="line.79">public final class RestrictionEnzymeManager</a>
+<span class="sourceLineNo">080</span><a id="line.80">{</a>
+<span class="sourceLineNo">081</span><a id="line.81">     /**</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * &lt;code&gt;REBASE_DATA_KEY&lt;/code&gt; the ResourceBundle key which</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * specifies the location of the REBASE flat file.</a>
+<span class="sourceLineNo">084</span><a id="line.84">     */</a>
+<span class="sourceLineNo">085</span><a id="line.85">    public static final String REBASE_DATA_KEY = "rebase.data.file";</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">    /**</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * &lt;code&gt;REBASE_TAG_NAME&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">089</span><a id="line.89">     * enzyme name.</a>
+<span class="sourceLineNo">090</span><a id="line.90">     */</a>
+<span class="sourceLineNo">091</span><a id="line.91">    public static final String REBASE_TAG_NAME = "&lt;1&gt;";</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">    /**</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * &lt;code&gt;REBASE_TAG_ISZR&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">095</span><a id="line.95">     * enzyme isoschizomers.</a>
+<span class="sourceLineNo">096</span><a id="line.96">     */</a>
+<span class="sourceLineNo">097</span><a id="line.97">    public static final String REBASE_TAG_ISZR = "&lt;2&gt;";</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">    /**</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * &lt;code&gt;REBASE_TAG_SITE&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * enzyme site.</a>
+<span class="sourceLineNo">102</span><a id="line.102">     */</a>
+<span class="sourceLineNo">103</span><a id="line.103">    public static final String REBASE_TAG_SITE = "&lt;3&gt;";</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">    /**</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * &lt;code&gt;REBASE_TAG_METH&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">107</span><a id="line.107">     * methylation site.</a>
+<span class="sourceLineNo">108</span><a id="line.108">     */</a>
+<span class="sourceLineNo">109</span><a id="line.109">    public static final String REBASE_TAG_METH = "&lt;4&gt;";</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">    /**</a>
+<span class="sourceLineNo">112</span><a id="line.112">     * &lt;code&gt;REBASE_TAG_ORGN&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">113</span><a id="line.113">     * organism.</a>
+<span class="sourceLineNo">114</span><a id="line.114">     */</a>
+<span class="sourceLineNo">115</span><a id="line.115">    public static final String REBASE_TAG_ORGN = "&lt;5&gt;";</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">    /**</a>
+<span class="sourceLineNo">118</span><a id="line.118">     * &lt;code&gt;REBASE_TAG_SRCE&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">119</span><a id="line.119">     * source.</a>
+<span class="sourceLineNo">120</span><a id="line.120">     */</a>
+<span class="sourceLineNo">121</span><a id="line.121">    public static final String REBASE_TAG_SRCE = "&lt;6&gt;";</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">    /**</a>
+<span class="sourceLineNo">124</span><a id="line.124">     * &lt;code&gt;REBASE_TAG_COMM&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">125</span><a id="line.125">     * commercial suppliers.</a>
+<span class="sourceLineNo">126</span><a id="line.126">     */</a>
+<span class="sourceLineNo">127</span><a id="line.127">    public static final String REBASE_TAG_COMM = "&lt;7&gt;";</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">    /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * &lt;code&gt;REBASE_TAG_REFS&lt;/code&gt; the REBASE tag containing the</a>
+<span class="sourceLineNo">131</span><a id="line.131">     * references.</a>
+<span class="sourceLineNo">132</span><a id="line.132">     */</a>
+<span class="sourceLineNo">133</span><a id="line.133">    public static final String REBASE_TAG_REFS = "&lt;8&gt;";</a>
+<span class="sourceLineNo">134</span><a id="line.134">    </a>
+<span class="sourceLineNo">135</span><a id="line.135">    </a>
+<span class="sourceLineNo">136</span><a id="line.136">    private static boolean loadCommercialOnly = false;</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">    private static ResourceBundle bundle =</a>
+<span class="sourceLineNo">139</span><a id="line.139">        ResourceBundle.getBundle(RestrictionEnzymeManager.class.getName());</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">    static</a>
+<span class="sourceLineNo">142</span><a id="line.142">    {</a>
+<span class="sourceLineNo">143</span><a id="line.143">        String rebaseDataFileName = bundle.getString(REBASE_DATA_KEY);</a>
+<span class="sourceLineNo">144</span><a id="line.144">        InputStream is = RestrictionEnzymeManager.class.getResourceAsStream(rebaseDataFileName);</a>
+<span class="sourceLineNo">145</span><a id="line.145">        loadData(is);</a>
+<span class="sourceLineNo">146</span><a id="line.146">    }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">    private static Map nameToSite;</a>
+<span class="sourceLineNo">149</span><a id="line.149">    private static Map nameToEnzyme;</a>
+<span class="sourceLineNo">150</span><a id="line.150">    private static Map nameToIsoschizomers;</a>
+<span class="sourceLineNo">151</span><a id="line.151">    private static Map sizeToCutters;</a>
+<span class="sourceLineNo">152</span><a id="line.152">    private static Map enzymeToPattern;</a>
+<span class="sourceLineNo">153</span><a id="line.153">    private static Map enzymeToAnnotation;</a>
+<span class="sourceLineNo">154</span><a id="line.154">    private static Map enzymeToSuppliers;</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">    /**</a>
+<span class="sourceLineNo">157</span><a id="line.157">     * &lt;code&gt;RestrictionEnzymeManager&lt;/code&gt; is a static utility</a>
+<span class="sourceLineNo">158</span><a id="line.158">     * method class and no instances should be created.</a>
+<span class="sourceLineNo">159</span><a id="line.159">     */</a>
+<span class="sourceLineNo">160</span><a id="line.160">    private RestrictionEnzymeManager() { }</a>
+<span class="sourceLineNo">161</span><a id="line.161">    </a>
+<span class="sourceLineNo">162</span><a id="line.162">    /**</a>
+<span class="sourceLineNo">163</span><a id="line.163">     * &lt;code&gt;loadEnzymeFile&lt;/code&gt; loads a new REBASE file (or any file using</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * REBASE format #31).</a>
+<span class="sourceLineNo">165</span><a id="line.165">     *</a>
+<span class="sourceLineNo">166</span><a id="line.166">     * @param is an InputStream over the file to load.</a>
+<span class="sourceLineNo">167</span><a id="line.167">     * @param commercialOnly indicates whether or not only commercially available </a>
+<span class="sourceLineNo">168</span><a id="line.168">     * enzymes are loaded.</a>
+<span class="sourceLineNo">169</span><a id="line.169">     *</a>
+<span class="sourceLineNo">170</span><a id="line.170">     * @since 1.5</a>
+<span class="sourceLineNo">171</span><a id="line.171">     */</a>
+<span class="sourceLineNo">172</span><a id="line.172">    public static synchronized void loadEnzymeFile(InputStream is, boolean commercialOnly) {</a>
+<span class="sourceLineNo">173</span><a id="line.173">        loadCommercialOnly = commercialOnly;</a>
+<span class="sourceLineNo">174</span><a id="line.174">        loadData(is);</a>
+<span class="sourceLineNo">175</span><a id="line.175">    }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">    /**</a>
+<span class="sourceLineNo">178</span><a id="line.178">     * &lt;code&gt;getAllEnzymes&lt;/code&gt; returns an unmodifable set of all</a>
+<span class="sourceLineNo">179</span><a id="line.179">     * available enzymes.</a>
+<span class="sourceLineNo">180</span><a id="line.180">     *</a>
+<span class="sourceLineNo">181</span><a id="line.181">     * @return a &lt;code&gt;Set&lt;/code&gt; of &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s.</a>
+<span class="sourceLineNo">182</span><a id="line.182">     */</a>
+<span class="sourceLineNo">183</span><a id="line.183">    public static Set getAllEnzymes()</a>
+<span class="sourceLineNo">184</span><a id="line.184">    {</a>
+<span class="sourceLineNo">185</span><a id="line.185">        return Collections.unmodifiableSet(enzymeToPattern.keySet());</a>
+<span class="sourceLineNo">186</span><a id="line.186">    }</a>
+<span class="sourceLineNo">187</span><a id="line.187"></a>
+<span class="sourceLineNo">188</span><a id="line.188">    /**</a>
+<span class="sourceLineNo">189</span><a id="line.189">     * &lt;code&gt;getEnzyme&lt;/code&gt; returns an enzyme by name.</a>
+<span class="sourceLineNo">190</span><a id="line.190">     *</a>
+<span class="sourceLineNo">191</span><a id="line.191">     * @param name a &lt;code&gt;String&lt;/code&gt; such as EcoRI, case</a>
+<span class="sourceLineNo">192</span><a id="line.192">     * sensitive.</a>
+<span class="sourceLineNo">193</span><a id="line.193">     *</a>
+<span class="sourceLineNo">194</span><a id="line.194">     * @return a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">195</span><a id="line.195">     */</a>
+<span class="sourceLineNo">196</span><a id="line.196">    public static RestrictionEnzyme getEnzyme(String name)</a>
+<span class="sourceLineNo">197</span><a id="line.197">    {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        if (! nameToEnzyme.containsKey(name))</a>
+<span class="sourceLineNo">199</span><a id="line.199">            throw new IllegalArgumentException("Unknown RestrictionEnzyme name '"</a>
+<span class="sourceLineNo">200</span><a id="line.200">                                               + name</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                               + "'");</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">        return (RestrictionEnzyme) nameToEnzyme.get(name);</a>
+<span class="sourceLineNo">204</span><a id="line.204">    }</a>
+<span class="sourceLineNo">205</span><a id="line.205"></a>
+<span class="sourceLineNo">206</span><a id="line.206">    /**</a>
+<span class="sourceLineNo">207</span><a id="line.207">     * &lt;code&gt;getIsoschizomers&lt;/code&gt; returns an unmodifable set of the</a>
+<span class="sourceLineNo">208</span><a id="line.208">     * isoschizomers of this enzyme.</a>
+<span class="sourceLineNo">209</span><a id="line.209">     *</a>
+<span class="sourceLineNo">210</span><a id="line.210">     * @param name a &lt;code&gt;String&lt;/code&gt; such as EcoRI, case</a>
+<span class="sourceLineNo">211</span><a id="line.211">     * sensitive.</a>
+<span class="sourceLineNo">212</span><a id="line.212">     *</a>
+<span class="sourceLineNo">213</span><a id="line.213">     * @return a &lt;code&gt;Set&lt;/code&gt; of &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s.</a>
+<span class="sourceLineNo">214</span><a id="line.214">     */</a>
+<span class="sourceLineNo">215</span><a id="line.215">    public static Set getIsoschizomers(String name)</a>
+<span class="sourceLineNo">216</span><a id="line.216">    {</a>
+<span class="sourceLineNo">217</span><a id="line.217">        if (! nameToIsoschizomers.containsKey(name))</a>
+<span class="sourceLineNo">218</span><a id="line.218">            throw new IllegalArgumentException("Unknown RestrictionEnzyme name '"</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                               + name</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                               + "'");</a>
+<span class="sourceLineNo">221</span><a id="line.221">        Set result = (Set) nameToIsoschizomers.get(name);</a>
+<span class="sourceLineNo">222</span><a id="line.222">        if(result.contains(null))</a>
+<span class="sourceLineNo">223</span><a id="line.223">            return Collections.EMPTY_SET;</a>
+<span class="sourceLineNo">224</span><a id="line.224">        return Collections.unmodifiableSet(result);</a>
+<span class="sourceLineNo">225</span><a id="line.225">    }</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">    /**</a>
+<span class="sourceLineNo">228</span><a id="line.228">     * &lt;code&gt;getRecognitionSequence&lt;/code&gt; returns a string that describes</a>
+<span class="sourceLineNo">229</span><a id="line.229">     * the recognition site of this enzyme. It corresponds to the field &lt;3&gt;</a>
+<span class="sourceLineNo">230</span><a id="line.230">     * of the REBASE file.</a>
+<span class="sourceLineNo">231</span><a id="line.231">     *</a>
+<span class="sourceLineNo">232</span><a id="line.232">     * @param name a &lt;code&gt;String&lt;/code&gt; such as EcoRI, case</a>
+<span class="sourceLineNo">233</span><a id="line.233">     * sensitive.</a>
+<span class="sourceLineNo">234</span><a id="line.234">     * @return a &lt;code&gt;String&lt;/code&gt; describing the recognition sequence, </a>
+<span class="sourceLineNo">235</span><a id="line.235">     * e.g. "G^AATTC" for EcoRI.</a>
+<span class="sourceLineNo">236</span><a id="line.236">     * @since 1.5</a>
+<span class="sourceLineNo">237</span><a id="line.237">     */</a>
+<span class="sourceLineNo">238</span><a id="line.238">    public static String getRecognitionSequence(String name)</a>
+<span class="sourceLineNo">239</span><a id="line.239">    {</a>
+<span class="sourceLineNo">240</span><a id="line.240">        if (! nameToSite.containsKey(name))</a>
+<span class="sourceLineNo">241</span><a id="line.241">            throw new IllegalArgumentException("Unknown RestrictionEnzyme name '"</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                               + name</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                               + "'");</a>
+<span class="sourceLineNo">244</span><a id="line.244">        return (String) nameToSite.get(name);</a>
+<span class="sourceLineNo">245</span><a id="line.245">    }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">    /**</a>
+<span class="sourceLineNo">248</span><a id="line.248">     * &lt;code&gt;getNCutters&lt;/code&gt; returns an unmodifable set of all</a>
+<span class="sourceLineNo">249</span><a id="line.249">     * enzymes with a cut site of size n.</a>
+<span class="sourceLineNo">250</span><a id="line.250">     *</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * @param n an &lt;code&gt;int&lt;/code&gt; cut site size.</a>
+<span class="sourceLineNo">252</span><a id="line.252">     *</a>
+<span class="sourceLineNo">253</span><a id="line.253">     * @return a &lt;code&gt;Set&lt;/code&gt; of &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s.</a>
+<span class="sourceLineNo">254</span><a id="line.254">     */</a>
+<span class="sourceLineNo">255</span><a id="line.255">    public static Set getNCutters(int n)</a>
+<span class="sourceLineNo">256</span><a id="line.256">    {</a>
+<span class="sourceLineNo">257</span><a id="line.257">        Integer size = new Integer(n);</a>
+<span class="sourceLineNo">258</span><a id="line.258">        if (! sizeToCutters.containsKey(size))</a>
+<span class="sourceLineNo">259</span><a id="line.259">            return Collections.EMPTY_SET;</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">        return Collections.unmodifiableSet((Set) sizeToCutters.get(size));</a>
+<span class="sourceLineNo">262</span><a id="line.262">    }</a>
+<span class="sourceLineNo">263</span><a id="line.263"></a>
+<span class="sourceLineNo">264</span><a id="line.264">    /**</a>
+<span class="sourceLineNo">265</span><a id="line.265">     * &lt;code&gt;getPatterns&lt;/code&gt; returns two &lt;code&gt;Pattern&lt;/code&gt;</a>
+<span class="sourceLineNo">266</span><a id="line.266">     * objects for an enzyme, one matches the forward strand and one</a>
+<span class="sourceLineNo">267</span><a id="line.267">     * the reverse. This enables searching of both strands of a</a>
+<span class="sourceLineNo">268</span><a id="line.268">     * sequence without reverse-complementing it. As</a>
+<span class="sourceLineNo">269</span><a id="line.269">     * &lt;code&gt;Pattern&lt;/code&gt; objects are thread-safe these may be used</a>
+<span class="sourceLineNo">270</span><a id="line.270">     * for all searches.</a>
+<span class="sourceLineNo">271</span><a id="line.271">     *</a>
+<span class="sourceLineNo">272</span><a id="line.272">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">273</span><a id="line.273">     *</a>
+<span class="sourceLineNo">274</span><a id="line.274">     * @return a &lt;code&gt;Pattern []&lt;/code&gt; array with the forward strand</a>
+<span class="sourceLineNo">275</span><a id="line.275">     * &lt;code&gt;Pattern&lt;/code&gt; at index 0 and the reverse at index 1.</a>
+<span class="sourceLineNo">276</span><a id="line.276">     */</a>
+<span class="sourceLineNo">277</span><a id="line.277">    public static Pattern [] getPatterns(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">278</span><a id="line.278">    {</a>
+<span class="sourceLineNo">279</span><a id="line.279">        if (! enzymeToPattern.containsKey(enzyme))</a>
+<span class="sourceLineNo">280</span><a id="line.280">            throw new IllegalArgumentException("RestrictionEnzyme '"</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                               + enzyme.getName()</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                               + "' is not registered. No precompiled Pattern is available");</a>
+<span class="sourceLineNo">283</span><a id="line.283"></a>
+<span class="sourceLineNo">284</span><a id="line.284">        return (Pattern []) enzymeToPattern.get(enzyme);</a>
+<span class="sourceLineNo">285</span><a id="line.285">    }</a>
+<span class="sourceLineNo">286</span><a id="line.286"></a>
+<span class="sourceLineNo">287</span><a id="line.287">    /**</a>
+<span class="sourceLineNo">288</span><a id="line.288">     * &lt;code&gt;getAnnotation&lt;/code&gt; returns an immutable, static</a>
+<span class="sourceLineNo">289</span><a id="line.289">     * annotation describing the enzyme. This is suitable for adding</a>
+<span class="sourceLineNo">290</span><a id="line.290">     * to &lt;code&gt;Feature&lt;/code&gt;s which represent restriction sites. The</a>
+<span class="sourceLineNo">291</span><a id="line.291">     * annotation produced currently contains one key "dbxref" in line</a>
+<span class="sourceLineNo">292</span><a id="line.292">     * with the GenBank/EMBL qualifier for the "misc_binding" feature</a>
+<span class="sourceLineNo">293</span><a id="line.293">     * key. The key has a corresponding value "REBASE:&amp;lt;enzyme</a>
+<span class="sourceLineNo">294</span><a id="line.294">     * name&amp;gt;".</a>
+<span class="sourceLineNo">295</span><a id="line.295">     *</a>
+<span class="sourceLineNo">296</span><a id="line.296">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">297</span><a id="line.297">     *</a>
+<span class="sourceLineNo">298</span><a id="line.298">     * @return an &lt;code&gt;Annotation&lt;/code&gt;.</a>
+<span class="sourceLineNo">299</span><a id="line.299">     */</a>
+<span class="sourceLineNo">300</span><a id="line.300">    public static Annotation getAnnotation(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">301</span><a id="line.301">    {</a>
+<span class="sourceLineNo">302</span><a id="line.302">        if (! enzymeToAnnotation.containsKey(enzyme))</a>
+<span class="sourceLineNo">303</span><a id="line.303">            throw new IllegalArgumentException("RestrictionEnzyme '"</a>
+<span class="sourceLineNo">304</span><a id="line.304">                                               + enzyme.getName()</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                               + "' is not registered. No Annotation is available");</a>
+<span class="sourceLineNo">306</span><a id="line.306"></a>
+<span class="sourceLineNo">307</span><a id="line.307">        return (Annotation) enzymeToAnnotation.get(enzyme);</a>
+<span class="sourceLineNo">308</span><a id="line.308">    }</a>
+<span class="sourceLineNo">309</span><a id="line.309"></a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">    /**</a>
+<span class="sourceLineNo">312</span><a id="line.312">     * &lt;code&gt;getSuppliers&lt;/code&gt; returns a string describing the suppliers</a>
+<span class="sourceLineNo">313</span><a id="line.313">     * of this enzyme according to REBASE encoding for commercial sources </a>
+<span class="sourceLineNo">314</span><a id="line.314">     * or an empty String if the enzyme is not commecially available.</a>
+<span class="sourceLineNo">315</span><a id="line.315">     *</a>
+<span class="sourceLineNo">316</span><a id="line.316">     * &lt;P&gt;REBASE #31 version 604 code: &lt;/P&gt;</a>
+<span class="sourceLineNo">317</span><a id="line.317">     * &lt;P&gt;A GE Healthcare (8/05) &lt;BR&gt;</a>
+<span class="sourceLineNo">318</span><a id="line.318">     * B Invitrogen Corporation(8/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">319</span><a id="line.319">     * C Minotech Biotechnology (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">320</span><a id="line.320">     * E Stratagene (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">321</span><a id="line.321">     * F Fermentas International Inc. (2/06)&lt;BR&gt;</a>
+<span class="sourceLineNo">322</span><a id="line.322">     * G Qbiogene (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">323</span><a id="line.323">     * H American Allied Biochemical, Inc. (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">324</span><a id="line.324">     * I SibEnzyme Ltd. (2/06)&lt;BR&gt;</a>
+<span class="sourceLineNo">325</span><a id="line.325">     * J Nippon Gene Co., Ltd. (8/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">326</span><a id="line.326">     * K Takara Bio Inc. (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">327</span><a id="line.327">     * M Roche Applied Science (8/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">328</span><a id="line.328">     * N New England Biolabs (2/06)&lt;BR&gt;</a>
+<span class="sourceLineNo">329</span><a id="line.329">     * O Toyobo Biochemicals (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">330</span><a id="line.330">     * Q Molecular Biology Resources (8/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">331</span><a id="line.331">     * R Promega Corporation (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">332</span><a id="line.332">     * S Sigma Chemical Corporation (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">333</span><a id="line.333">     * U Bangalore Genei (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">334</span><a id="line.334">     * V Vivantis Technologies (1/06)&lt;BR&gt;</a>
+<span class="sourceLineNo">335</span><a id="line.335">     * X EURx Ltd. (9/05)&lt;BR&gt;</a>
+<span class="sourceLineNo">336</span><a id="line.336">     * Y CinnaGen Inc. (9/05)</a>
+<span class="sourceLineNo">337</span><a id="line.337">     * &lt;/P&gt;</a>
+<span class="sourceLineNo">338</span><a id="line.338">     *</a>
+<span class="sourceLineNo">339</span><a id="line.339">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">340</span><a id="line.340">     *</a>
+<span class="sourceLineNo">341</span><a id="line.341">     * @return a &lt;code&gt;String&lt;/code&gt;.</a>
+<span class="sourceLineNo">342</span><a id="line.342">     * @since 1.5</a>
+<span class="sourceLineNo">343</span><a id="line.343">     */</a>
+<span class="sourceLineNo">344</span><a id="line.344">    public static String getSuppliers(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">345</span><a id="line.345">    {</a>
+<span class="sourceLineNo">346</span><a id="line.346">        if (! enzymeToSuppliers.containsKey(enzyme))</a>
+<span class="sourceLineNo">347</span><a id="line.347">            return "";</a>
+<span class="sourceLineNo">348</span><a id="line.348">        return (String) enzymeToSuppliers.get(enzyme);</a>
+<span class="sourceLineNo">349</span><a id="line.349">    }</a>
+<span class="sourceLineNo">350</span><a id="line.350"></a>
+<span class="sourceLineNo">351</span><a id="line.351">    /**</a>
+<span class="sourceLineNo">352</span><a id="line.352">     * &lt;code&gt;register&lt;/code&gt; regisiters a new</a>
+<span class="sourceLineNo">353</span><a id="line.353">     * &lt;code&gt;RestrictionEnzyme&lt;/code&gt; with the manager. It does not</a>
+<span class="sourceLineNo">354</span><a id="line.354">     * check that the isoschizomers are known to the manager. If there</a>
+<span class="sourceLineNo">355</span><a id="line.355">     * are custom isoschizomers in the &lt;code&gt;Set&lt;/code&gt;, they should</a>
+<span class="sourceLineNo">356</span><a id="line.356">     * be also be registered.</a>
+<span class="sourceLineNo">357</span><a id="line.357">     *</a>
+<span class="sourceLineNo">358</span><a id="line.358">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt; to register.</a>
+<span class="sourceLineNo">359</span><a id="line.359">     *</a>
+<span class="sourceLineNo">360</span><a id="line.360">     * @param isoschizomers a &lt;code&gt;Set&lt;/code&gt; of</a>
+<span class="sourceLineNo">361</span><a id="line.361">     * &lt;code&gt;RestrictionEnzyme&lt;/code&gt;s which are isoschizomers.</a>
+<span class="sourceLineNo">362</span><a id="line.362">     */</a>
+<span class="sourceLineNo">363</span><a id="line.363">    public synchronized static void register(RestrictionEnzyme enzyme,</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                             Set               isoschizomers)</a>
+<span class="sourceLineNo">365</span><a id="line.365">    {</a>
+<span class="sourceLineNo">366</span><a id="line.366">        for (Iterator ii = isoschizomers.iterator(); ii.hasNext();)</a>
+<span class="sourceLineNo">367</span><a id="line.367">        {</a>
+<span class="sourceLineNo">368</span><a id="line.368">            Object o = ii.next();</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">            if (! (o instanceof RestrictionEnzyme))</a>
+<span class="sourceLineNo">371</span><a id="line.371">            {</a>
+<span class="sourceLineNo">372</span><a id="line.372">                throw new IllegalArgumentException("Isoschizomers set may contain only RestrictionEnzymes. Found '"</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                                   + o</a>
+<span class="sourceLineNo">374</span><a id="line.374">                                                   + "'");</a>
+<span class="sourceLineNo">375</span><a id="line.375">            }</a>
+<span class="sourceLineNo">376</span><a id="line.376">        }</a>
+<span class="sourceLineNo">377</span><a id="line.377"></a>
+<span class="sourceLineNo">378</span><a id="line.378">        registerEnzyme(enzyme);</a>
+<span class="sourceLineNo">379</span><a id="line.379"></a>
+<span class="sourceLineNo">380</span><a id="line.380">        String name = enzyme.getName();</a>
+<span class="sourceLineNo">381</span><a id="line.381">        nameToIsoschizomers.put(name, isoschizomers);</a>
+<span class="sourceLineNo">382</span><a id="line.382">    }</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">    /**</a>
+<span class="sourceLineNo">385</span><a id="line.385">     * &lt;code&gt;registerEnzyme&lt;/code&gt; registers an enzyme, but does not</a>
+<span class="sourceLineNo">386</span><a id="line.386">     * populate its isoschizomers. This is because registering the</a>
+<span class="sourceLineNo">387</span><a id="line.387">     * contents of a REBASE file and registering a custom enzyme</a>
+<span class="sourceLineNo">388</span><a id="line.388">     * handle addition of isoschizomers differently, but both use this</a>
+<span class="sourceLineNo">389</span><a id="line.389">     * method for all other registration functions.</a>
+<span class="sourceLineNo">390</span><a id="line.390">     *</a>
+<span class="sourceLineNo">391</span><a id="line.391">     * @param enzyme a &lt;code&gt;RestrictionEnzyme&lt;/code&gt;.</a>
+<span class="sourceLineNo">392</span><a id="line.392">     */</a>
+<span class="sourceLineNo">393</span><a id="line.393">    private static void registerEnzyme(RestrictionEnzyme enzyme)</a>
+<span class="sourceLineNo">394</span><a id="line.394">    {</a>
+<span class="sourceLineNo">395</span><a id="line.395">        String name = enzyme.getName();</a>
+<span class="sourceLineNo">396</span><a id="line.396">        nameToEnzyme.put(name, enzyme);</a>
+<span class="sourceLineNo">397</span><a id="line.397"></a>
+<span class="sourceLineNo">398</span><a id="line.398">        Integer sizeKey = new Integer(enzyme.getRecognitionSite().length());</a>
+<span class="sourceLineNo">399</span><a id="line.399">        if (sizeToCutters.containsKey(sizeKey))</a>
+<span class="sourceLineNo">400</span><a id="line.400">        {</a>
+<span class="sourceLineNo">401</span><a id="line.401">            Set s = (Set) sizeToCutters.get(sizeKey);</a>
+<span class="sourceLineNo">402</span><a id="line.402">            s.add(enzyme);</a>
+<span class="sourceLineNo">403</span><a id="line.403">        }</a>
+<span class="sourceLineNo">404</span><a id="line.404">        else</a>
+<span class="sourceLineNo">405</span><a id="line.405">        {</a>
+<span class="sourceLineNo">406</span><a id="line.406">            Set s = new HashSet();</a>
+<span class="sourceLineNo">407</span><a id="line.407">            s.add(enzyme);</a>
+<span class="sourceLineNo">408</span><a id="line.408">            sizeToCutters.put(sizeKey, s);</a>
+<span class="sourceLineNo">409</span><a id="line.409">        }</a>
+<span class="sourceLineNo">410</span><a id="line.410"></a>
+<span class="sourceLineNo">411</span><a id="line.411">        Pattern forward = Pattern.compile(enzyme.getForwardRegex());</a>
+<span class="sourceLineNo">412</span><a id="line.412">        Pattern reverse = Pattern.compile(enzyme.getReverseRegex());</a>
+<span class="sourceLineNo">413</span><a id="line.413">        enzymeToPattern.put(enzyme, new Pattern [] { forward, reverse });</a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415">        Annotation annotation = new SmallAnnotation();</a>
+<span class="sourceLineNo">416</span><a id="line.416">        try</a>
+<span class="sourceLineNo">417</span><a id="line.417">        {</a>
+<span class="sourceLineNo">418</span><a id="line.418">            annotation.setProperty("dbxref", "REBASE:" + name);</a>
+<span class="sourceLineNo">419</span><a id="line.419">        }</a>
+<span class="sourceLineNo">420</span><a id="line.420">        catch (ChangeVetoException cve)</a>
+<span class="sourceLineNo">421</span><a id="line.421">        {</a>
+<span class="sourceLineNo">422</span><a id="line.422">            throw new BioError("Assertion Failure: failed to modify Annotation", cve);</a>
+<span class="sourceLineNo">423</span><a id="line.423">        }</a>
+<span class="sourceLineNo">424</span><a id="line.424"></a>
+<span class="sourceLineNo">425</span><a id="line.425">        annotation.addChangeListener(ChangeListener.ALWAYS_VETO,ChangeType.UNKNOWN);</a>
+<span class="sourceLineNo">426</span><a id="line.426">        enzymeToAnnotation.put(enzyme, annotation);</a>
+<span class="sourceLineNo">427</span><a id="line.427">    }</a>
+<span class="sourceLineNo">428</span><a id="line.428"></a>
+<span class="sourceLineNo">429</span><a id="line.429">    private static void loadData(InputStream is) {</a>
+<span class="sourceLineNo">430</span><a id="line.430">        nameToSite          = new HashMap();</a>
+<span class="sourceLineNo">431</span><a id="line.431">        nameToEnzyme        = new HashMap();</a>
+<span class="sourceLineNo">432</span><a id="line.432">        nameToIsoschizomers = new HashMap();</a>
+<span class="sourceLineNo">433</span><a id="line.433">        sizeToCutters       = new HashMap();</a>
+<span class="sourceLineNo">434</span><a id="line.434">        enzymeToPattern     = new HashMap();</a>
+<span class="sourceLineNo">435</span><a id="line.435">        enzymeToAnnotation  = new HashMap();</a>
+<span class="sourceLineNo">436</span><a id="line.436">        enzymeToSuppliers   = new HashMap();</a>
+<span class="sourceLineNo">437</span><a id="line.437">        try {</a>
+<span class="sourceLineNo">438</span><a id="line.438">            BufferedReader br = new BufferedReader(new InputStreamReader(is));</a>
+<span class="sourceLineNo">439</span><a id="line.439"></a>
+<span class="sourceLineNo">440</span><a id="line.440">            // Basic linesplit parser</a>
+<span class="sourceLineNo">441</span><a id="line.441">            LineSplitParser lsParser = new LineSplitParser();</a>
+<span class="sourceLineNo">442</span><a id="line.442">            lsParser.setEndOfRecord(TagValueParser.EMPTY_LINE_EOR);</a>
+<span class="sourceLineNo">443</span><a id="line.443">            lsParser.setSplitOffset(3);</a>
+<span class="sourceLineNo">444</span><a id="line.444">            lsParser.setContinueOnEmptyTag(true);</a>
+<span class="sourceLineNo">445</span><a id="line.445">            lsParser.setMergeSameTag(true);</a>
+<span class="sourceLineNo">446</span><a id="line.446"></a>
+<span class="sourceLineNo">447</span><a id="line.447">            // The end of the chain</a>
+<span class="sourceLineNo">448</span><a id="line.448">            RebaseEnzymeBuilder builder = new RebaseEnzymeBuilder();</a>
+<span class="sourceLineNo">449</span><a id="line.449"></a>
+<span class="sourceLineNo">450</span><a id="line.450">            // Create isoschizomer value splitter</a>
+<span class="sourceLineNo">451</span><a id="line.451">            RegexSplitter iso =</a>
+<span class="sourceLineNo">452</span><a id="line.452">                new RegexSplitter(Pattern.compile("([^,]+)"), 1);</a>
+<span class="sourceLineNo">453</span><a id="line.453">            // Create site value splitter</a>
+<span class="sourceLineNo">454</span><a id="line.454">            RegexSplitter site =</a>
+<span class="sourceLineNo">455</span><a id="line.455">                new RegexSplitter(Pattern.compile("(\\(-?\\d+/-?\\d+\\)|[A-Za-z^]+)"), 1);</a>
+<span class="sourceLineNo">456</span><a id="line.456"></a>
+<span class="sourceLineNo">457</span><a id="line.457">            ChangeTable table = new ChangeTable();</a>
+<span class="sourceLineNo">458</span><a id="line.458">            table.setSplitter(REBASE_TAG_ISZR, iso);</a>
+<span class="sourceLineNo">459</span><a id="line.459">            table.setSplitter(REBASE_TAG_SITE, site);</a>
+<span class="sourceLineNo">460</span><a id="line.460">            ValueChanger changer = new ValueChanger(builder, table);</a>
+<span class="sourceLineNo">461</span><a id="line.461"></a>
+<span class="sourceLineNo">462</span><a id="line.462">            // Filter tags</a>
+<span class="sourceLineNo">463</span><a id="line.463">            TagDropper rebaseTags = new TagDropper(changer);</a>
+<span class="sourceLineNo">464</span><a id="line.464">            // Retain the enzyme name</a>
+<span class="sourceLineNo">465</span><a id="line.465">            rebaseTags.addTag(REBASE_TAG_NAME);</a>
+<span class="sourceLineNo">466</span><a id="line.466">            // Retain isoschizomers</a>
+<span class="sourceLineNo">467</span><a id="line.467">            rebaseTags.addTag(REBASE_TAG_ISZR);</a>
+<span class="sourceLineNo">468</span><a id="line.468">            // Retain recognition sequence</a>
+<span class="sourceLineNo">469</span><a id="line.469">            rebaseTags.addTag(REBASE_TAG_SITE);</a>
+<span class="sourceLineNo">470</span><a id="line.470">            // Retain commercial supplier</a>
+<span class="sourceLineNo">471</span><a id="line.471">            rebaseTags.addTag(REBASE_TAG_COMM);</a>
+<span class="sourceLineNo">472</span><a id="line.472"></a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474"></a>
+<span class="sourceLineNo">475</span><a id="line.475">            Parser parser = new Parser();</a>
+<span class="sourceLineNo">476</span><a id="line.476">            while (parser.read(br, lsParser, rebaseTags))</a>
+<span class="sourceLineNo">477</span><a id="line.477">            {</a>
+<span class="sourceLineNo">478</span><a id="line.478">                continue;</a>
+<span class="sourceLineNo">479</span><a id="line.479">            }</a>
+<span class="sourceLineNo">480</span><a id="line.480"></a>
+<span class="sourceLineNo">481</span><a id="line.481">            // Replace isoschizomer names with RestrictionEnzymes</a>
+<span class="sourceLineNo">482</span><a id="line.482">            Map tempMap = new HashMap();</a>
+<span class="sourceLineNo">483</span><a id="line.483">            Set tempSet = null;</a>
+<span class="sourceLineNo">484</span><a id="line.484">            for (Iterator ni = nameToIsoschizomers.keySet().iterator(); ni.hasNext();)</a>
+<span class="sourceLineNo">485</span><a id="line.485">            {</a>
+<span class="sourceLineNo">486</span><a id="line.486">                Object name = ni.next();</a>
+<span class="sourceLineNo">487</span><a id="line.487">                Set isoschizomers = (Set) nameToIsoschizomers.get(name);</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">                if (isoschizomers.size() == 0)</a>
+<span class="sourceLineNo">490</span><a id="line.490">                    tempSet = Collections.EMPTY_SET;</a>
+<span class="sourceLineNo">491</span><a id="line.491">                else</a>
+<span class="sourceLineNo">492</span><a id="line.492">                    tempSet = (Set) isoschizomers.getClass().newInstance();</a>
+<span class="sourceLineNo">493</span><a id="line.493"></a>
+<span class="sourceLineNo">494</span><a id="line.494">                tempMap.put(name, tempSet);</a>
+<span class="sourceLineNo">495</span><a id="line.495"></a>
+<span class="sourceLineNo">496</span><a id="line.496">                for (Iterator ii = isoschizomers.iterator(); ii.hasNext();) {</a>
+<span class="sourceLineNo">497</span><a id="line.497">                    String isoName = (String) ii.next();</a>
+<span class="sourceLineNo">498</span><a id="line.498">                    Object re = nameToEnzyme.get(isoName);</a>
+<span class="sourceLineNo">499</span><a id="line.499">                    //bug fix suggested by George Waldon</a>
+<span class="sourceLineNo">500</span><a id="line.500">                    if(re!=null)</a>
+<span class="sourceLineNo">501</span><a id="line.501">                        tempSet.add(re);</a>
+<span class="sourceLineNo">502</span><a id="line.502">                }</a>
+<span class="sourceLineNo">503</span><a id="line.503">            }</a>
+<span class="sourceLineNo">504</span><a id="line.504"></a>
+<span class="sourceLineNo">505</span><a id="line.505">            nameToIsoschizomers = tempMap;</a>
+<span class="sourceLineNo">506</span><a id="line.506">        }</a>
+<span class="sourceLineNo">507</span><a id="line.507">        catch (Exception e)</a>
+<span class="sourceLineNo">508</span><a id="line.508">        {</a>
+<span class="sourceLineNo">509</span><a id="line.509">            throw new BioError("Failed to read REBASE data file",e);</a>
+<span class="sourceLineNo">510</span><a id="line.510">        }</a>
+<span class="sourceLineNo">511</span><a id="line.511">    }</a>
+<span class="sourceLineNo">512</span><a id="line.512"></a>
+<span class="sourceLineNo">513</span><a id="line.513">    /**</a>
+<span class="sourceLineNo">514</span><a id="line.514">     * &lt;code&gt;RebaseEnzymeBuilder&lt;/code&gt; creates enzyme instances and</a>
+<span class="sourceLineNo">515</span><a id="line.515">     * populates the maps.</a>
+<span class="sourceLineNo">516</span><a id="line.516">     */</a>
+<span class="sourceLineNo">517</span><a id="line.517">    private static class RebaseEnzymeBuilder implements TagValueListener</a>
+<span class="sourceLineNo">518</span><a id="line.518">    {</a>
+<span class="sourceLineNo">519</span><a id="line.519">        private String recseq;</a>
+<span class="sourceLineNo">520</span><a id="line.520">        private String name;</a>
+<span class="sourceLineNo">521</span><a id="line.521">        private Set isoschizomers;</a>
+<span class="sourceLineNo">522</span><a id="line.522">        private List isoBuffer;</a>
+<span class="sourceLineNo">523</span><a id="line.523">        private SymbolList site;</a>
+<span class="sourceLineNo">524</span><a id="line.524">        private int [] usCutPositions;</a>
+<span class="sourceLineNo">525</span><a id="line.525">        private int [] dsCutPositions;</a>
+<span class="sourceLineNo">526</span><a id="line.526">        private boolean isCommerciallyAvailable;</a>
+<span class="sourceLineNo">527</span><a id="line.527"></a>
+<span class="sourceLineNo">528</span><a id="line.528">        private String tagState;</a>
+<span class="sourceLineNo">529</span><a id="line.529">        private String suppliers;</a>
+<span class="sourceLineNo">530</span><a id="line.530">        private boolean unknownSite;</a>
+<span class="sourceLineNo">531</span><a id="line.531"></a>
+<span class="sourceLineNo">532</span><a id="line.532">        RebaseEnzymeBuilder() { }</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">        public void startRecord() throws ParserException</a>
+<span class="sourceLineNo">535</span><a id="line.535">        {</a>
+<span class="sourceLineNo">536</span><a id="line.536">            isoBuffer = new ArrayList(30);</a>
+<span class="sourceLineNo">537</span><a id="line.537">            recseq         = "";</a>
+<span class="sourceLineNo">538</span><a id="line.538">            site           = null;</a>
+<span class="sourceLineNo">539</span><a id="line.539">            dsCutPositions = null;</a>
+<span class="sourceLineNo">540</span><a id="line.540">            usCutPositions = null;</a>
+<span class="sourceLineNo">541</span><a id="line.541">            unknownSite = false;</a>
+<span class="sourceLineNo">542</span><a id="line.542">            isCommerciallyAvailable = false;</a>
+<span class="sourceLineNo">543</span><a id="line.543">        }</a>
+<span class="sourceLineNo">544</span><a id="line.544"></a>
+<span class="sourceLineNo">545</span><a id="line.545">        public void endRecord() throws ParserException</a>
+<span class="sourceLineNo">546</span><a id="line.546">        {</a>
+<span class="sourceLineNo">547</span><a id="line.547">            if (! getRecordState())</a>
+<span class="sourceLineNo">548</span><a id="line.548">                return;</a>
+<span class="sourceLineNo">549</span><a id="line.549">            if (unknownSite || site == null)</a>
+<span class="sourceLineNo">550</span><a id="line.550">                return;</a>
+<span class="sourceLineNo">551</span><a id="line.551"></a>
+<span class="sourceLineNo">552</span><a id="line.552">            int isoCount = isoBuffer.size();</a>
+<span class="sourceLineNo">553</span><a id="line.553">            if (isoCount &lt; 30)</a>
+<span class="sourceLineNo">554</span><a id="line.554">            {</a>
+<span class="sourceLineNo">555</span><a id="line.555">                isoschizomers = new SmallSet(isoCount);</a>
+<span class="sourceLineNo">556</span><a id="line.556">                for (int i = 0; i &lt; isoCount; i++)</a>
+<span class="sourceLineNo">557</span><a id="line.557">                    isoschizomers.add(isoBuffer.get(i));</a>
+<span class="sourceLineNo">558</span><a id="line.558">            }</a>
+<span class="sourceLineNo">559</span><a id="line.559">            else</a>
+<span class="sourceLineNo">560</span><a id="line.560">            {</a>
+<span class="sourceLineNo">561</span><a id="line.561">                isoschizomers = new HashSet(isoBuffer);</a>
+<span class="sourceLineNo">562</span><a id="line.562">            }</a>
+<span class="sourceLineNo">563</span><a id="line.563"></a>
+<span class="sourceLineNo">564</span><a id="line.564">            if(!loadCommercialOnly || isCommerciallyAvailable) {</a>
+<span class="sourceLineNo">565</span><a id="line.565">                RestrictionEnzyme re = createEnzyme();</a>
+<span class="sourceLineNo">566</span><a id="line.566">                registerEnzyme(re);</a>
+<span class="sourceLineNo">567</span><a id="line.567">                nameToIsoschizomers.put(name, isoschizomers);</a>
+<span class="sourceLineNo">568</span><a id="line.568">                enzymeToSuppliers.put(re,suppliers);</a>
+<span class="sourceLineNo">569</span><a id="line.569">                nameToSite.put(name,recseq);</a>
+<span class="sourceLineNo">570</span><a id="line.570">            }</a>
+<span class="sourceLineNo">571</span><a id="line.571">        }</a>
+<span class="sourceLineNo">572</span><a id="line.572"></a>
+<span class="sourceLineNo">573</span><a id="line.573">        public void startTag(Object tag) throws ParserException</a>
+<span class="sourceLineNo">574</span><a id="line.574">        {</a>
+<span class="sourceLineNo">575</span><a id="line.575">            tagState = (String) tag;</a>
+<span class="sourceLineNo">576</span><a id="line.576">        }</a>
+<span class="sourceLineNo">577</span><a id="line.577"></a>
+<span class="sourceLineNo">578</span><a id="line.578">        public void endTag() throws ParserException { }</a>
+<span class="sourceLineNo">579</span><a id="line.579"></a>
+<span class="sourceLineNo">580</span><a id="line.580">        public void value(TagValueContext context, Object value)</a>
+<span class="sourceLineNo">581</span><a id="line.581">            throws ParserException</a>
+<span class="sourceLineNo">582</span><a id="line.582">        {</a>
+<span class="sourceLineNo">583</span><a id="line.583">            if (tagState.equals(REBASE_TAG_NAME))</a>
+<span class="sourceLineNo">584</span><a id="line.584">                name = (String) value;</a>
+<span class="sourceLineNo">585</span><a id="line.585">            else if (tagState.equals(REBASE_TAG_ISZR))</a>
+<span class="sourceLineNo">586</span><a id="line.586">                isoBuffer.add(value);</a>
+<span class="sourceLineNo">587</span><a id="line.587">            else if (tagState.equals(REBASE_TAG_SITE)) {</a>
+<span class="sourceLineNo">588</span><a id="line.588">                recseq += (String) value;</a>
+<span class="sourceLineNo">589</span><a id="line.589">                processSite(value);</a>
+<span class="sourceLineNo">590</span><a id="line.590">            } else if (tagState.equals(REBASE_TAG_COMM))</a>
+<span class="sourceLineNo">591</span><a id="line.591">                processSuppliers(value);</a>
+<span class="sourceLineNo">592</span><a id="line.592">            else</a>
+<span class="sourceLineNo">593</span><a id="line.593">                throw new ParserException("Unable to handle value for tag '"</a>
+<span class="sourceLineNo">594</span><a id="line.594">                                          + tagState</a>
+<span class="sourceLineNo">595</span><a id="line.595">                                          + "'");</a>
+<span class="sourceLineNo">596</span><a id="line.596">        }</a>
+<span class="sourceLineNo">597</span><a id="line.597"></a>
+<span class="sourceLineNo">598</span><a id="line.598">        boolean getRecordState()</a>
+<span class="sourceLineNo">599</span><a id="line.599">        {</a>
+<span class="sourceLineNo">600</span><a id="line.600">            return tagState != null;</a>
+<span class="sourceLineNo">601</span><a id="line.601">        }</a>
+<span class="sourceLineNo">602</span><a id="line.602"></a>
+<span class="sourceLineNo">603</span><a id="line.603">        RestrictionEnzyme createEnzyme()</a>
+<span class="sourceLineNo">604</span><a id="line.604">        {</a>
+<span class="sourceLineNo">605</span><a id="line.605">            RestrictionEnzyme enzyme = null;</a>
+<span class="sourceLineNo">606</span><a id="line.606"></a>
+<span class="sourceLineNo">607</span><a id="line.607">            try</a>
+<span class="sourceLineNo">608</span><a id="line.608">            {</a>
+<span class="sourceLineNo">609</span><a id="line.609">                if (usCutPositions != null)</a>
+<span class="sourceLineNo">610</span><a id="line.610">                {</a>
+<span class="sourceLineNo">611</span><a id="line.611">                    enzyme = new RestrictionEnzyme(name, site,</a>
+<span class="sourceLineNo">612</span><a id="line.612">                                                   usCutPositions[0],</a>
+<span class="sourceLineNo">613</span><a id="line.613">                                                   usCutPositions[1],</a>
+<span class="sourceLineNo">614</span><a id="line.614">                                                   dsCutPositions[0],</a>
+<span class="sourceLineNo">615</span><a id="line.615">                                                   dsCutPositions[1]);</a>
+<span class="sourceLineNo">616</span><a id="line.616">                }</a>
+<span class="sourceLineNo">617</span><a id="line.617">                else</a>
+<span class="sourceLineNo">618</span><a id="line.618">                {</a>
+<span class="sourceLineNo">619</span><a id="line.619">                    enzyme = new RestrictionEnzyme(name, site,</a>
+<span class="sourceLineNo">620</span><a id="line.620">                                                   dsCutPositions[0],</a>
+<span class="sourceLineNo">621</span><a id="line.621">                                                   dsCutPositions[1]);</a>
+<span class="sourceLineNo">622</span><a id="line.622">                }</a>
+<span class="sourceLineNo">623</span><a id="line.623">            }</a>
+<span class="sourceLineNo">624</span><a id="line.624">            catch (IllegalAlphabetException iae)</a>
+<span class="sourceLineNo">625</span><a id="line.625">            {</a>
+<span class="sourceLineNo">626</span><a id="line.626">                throw new BioError("New DNA SymbolList no longer consists on DNA Alphabet",iae);</a>
+<span class="sourceLineNo">627</span><a id="line.627">            }</a>
+<span class="sourceLineNo">628</span><a id="line.628"></a>
+<span class="sourceLineNo">629</span><a id="line.629">            return enzyme;</a>
+<span class="sourceLineNo">630</span><a id="line.630">        }</a>
+<span class="sourceLineNo">631</span><a id="line.631"></a>
+<span class="sourceLineNo">632</span><a id="line.632">        private void processSuppliers(Object value) throws ParserException {</a>
+<span class="sourceLineNo">633</span><a id="line.633">            suppliers = (String) value;</a>
+<span class="sourceLineNo">634</span><a id="line.634">            if(suppliers.length()!=0)</a>
+<span class="sourceLineNo">635</span><a id="line.635">                isCommerciallyAvailable = true;</a>
+<span class="sourceLineNo">636</span><a id="line.636">        }</a>
+<span class="sourceLineNo">637</span><a id="line.637"></a>
+<span class="sourceLineNo">638</span><a id="line.638">        private void processSite(Object value) throws ParserException</a>
+<span class="sourceLineNo">639</span><a id="line.639">        {</a>
+<span class="sourceLineNo">640</span><a id="line.640">            StringBuffer sb = new StringBuffer((String) value);</a>
+<span class="sourceLineNo">641</span><a id="line.641">            int div, forIdx, revIdx;</a>
+<span class="sourceLineNo">642</span><a id="line.642"></a>
+<span class="sourceLineNo">643</span><a id="line.643">            // REBASE marks enzymes whose site is not known with '?'</a>
+<span class="sourceLineNo">644</span><a id="line.644">            if (sb.charAt(0) == '?')</a>
+<span class="sourceLineNo">645</span><a id="line.645">            {</a>
+<span class="sourceLineNo">646</span><a id="line.646">                unknownSite = true;</a>
+<span class="sourceLineNo">647</span><a id="line.647">                return;</a>
+<span class="sourceLineNo">648</span><a id="line.648">            }</a>
+<span class="sourceLineNo">649</span><a id="line.649"></a>
+<span class="sourceLineNo">650</span><a id="line.650">            if (sb.charAt(0) == '(')</a>
+<span class="sourceLineNo">651</span><a id="line.651">            {</a>
+<span class="sourceLineNo">652</span><a id="line.652">                // Index separator</a>
+<span class="sourceLineNo">653</span><a id="line.653">                div = sb.indexOf("/");</a>
+<span class="sourceLineNo">654</span><a id="line.654"></a>
+<span class="sourceLineNo">655</span><a id="line.655">                try</a>
+<span class="sourceLineNo">656</span><a id="line.656">                {</a>
+<span class="sourceLineNo">657</span><a id="line.657">                    forIdx = Integer.parseInt(sb.substring(1, div));</a>
+<span class="sourceLineNo">658</span><a id="line.658">                    revIdx = Integer.parseInt(sb.substring(div + 1,</a>
+<span class="sourceLineNo">659</span><a id="line.659">                                                           sb.length() - 1));</a>
+<span class="sourceLineNo">660</span><a id="line.660">                }</a>
+<span class="sourceLineNo">661</span><a id="line.661">                catch (NumberFormatException nfe)</a>
+<span class="sourceLineNo">662</span><a id="line.662">                {</a>
+<span class="sourceLineNo">663</span><a id="line.663">                    throw new ParserException("Failed to parse cut site index",nfe);</a>
+<span class="sourceLineNo">664</span><a id="line.664">                }</a>
+<span class="sourceLineNo">665</span><a id="line.665"></a>
+<span class="sourceLineNo">666</span><a id="line.666">                // Indices before the site indicate a double cutter</a>
+<span class="sourceLineNo">667</span><a id="line.667">                if (site == null)</a>
+<span class="sourceLineNo">668</span><a id="line.668">                {</a>
+<span class="sourceLineNo">669</span><a id="line.669">                    usCutPositions = new int [2];</a>
+<span class="sourceLineNo">670</span><a id="line.670">                    usCutPositions[0] = -forIdx;</a>
+<span class="sourceLineNo">671</span><a id="line.671">                    usCutPositions[1] = -revIdx;</a>
+<span class="sourceLineNo">672</span><a id="line.672">                }</a>
+<span class="sourceLineNo">673</span><a id="line.673">                else</a>
+<span class="sourceLineNo">674</span><a id="line.674">                {</a>
+<span class="sourceLineNo">675</span><a id="line.675">                    dsCutPositions = new int [2];</a>
+<span class="sourceLineNo">676</span><a id="line.676">                    dsCutPositions[0] = forIdx + site.length();</a>
+<span class="sourceLineNo">677</span><a id="line.677">                    dsCutPositions[1] = revIdx + site.length();</a>
+<span class="sourceLineNo">678</span><a id="line.678">                }</a>
+<span class="sourceLineNo">679</span><a id="line.679">            }</a>
+<span class="sourceLineNo">680</span><a id="line.680">            else</a>
+<span class="sourceLineNo">681</span><a id="line.681">            {</a>
+<span class="sourceLineNo">682</span><a id="line.682">                // Explicit cut site marker</a>
+<span class="sourceLineNo">683</span><a id="line.683">                int cut = sb.indexOf("^");</a>
+<span class="sourceLineNo">684</span><a id="line.684">                dsCutPositions = new int [2];</a>
+<span class="sourceLineNo">685</span><a id="line.685"></a>
+<span class="sourceLineNo">686</span><a id="line.686">                try</a>
+<span class="sourceLineNo">687</span><a id="line.687">                {</a>
+<span class="sourceLineNo">688</span><a id="line.688">                    if (cut == -1)</a>
+<span class="sourceLineNo">689</span><a id="line.689">                    {</a>
+<span class="sourceLineNo">690</span><a id="line.690">                        site = DNATools.createDNA(sb.substring(0));</a>
+<span class="sourceLineNo">691</span><a id="line.691">                        dsCutPositions[0] = 1;</a>
+<span class="sourceLineNo">692</span><a id="line.692">                        dsCutPositions[1] = 1;</a>
+<span class="sourceLineNo">693</span><a id="line.693">                    }</a>
+<span class="sourceLineNo">694</span><a id="line.694">                    else</a>
+<span class="sourceLineNo">695</span><a id="line.695">                    {</a>
+<span class="sourceLineNo">696</span><a id="line.696">                        sb.deleteCharAt(cut);</a>
+<span class="sourceLineNo">697</span><a id="line.697">                        site = DNATools.createDNA(sb.substring(0));</a>
+<span class="sourceLineNo">698</span><a id="line.698">                        dsCutPositions[0] = cut;</a>
+<span class="sourceLineNo">699</span><a id="line.699">                        dsCutPositions[1] = site.length() - cut;</a>
+<span class="sourceLineNo">700</span><a id="line.700">                    }</a>
+<span class="sourceLineNo">701</span><a id="line.701">                }</a>
+<span class="sourceLineNo">702</span><a id="line.702">                catch (IllegalSymbolException iae)</a>
+<span class="sourceLineNo">703</span><a id="line.703">                {</a>
+<span class="sourceLineNo">704</span><a id="line.704">                    throw new ParserException("Illegal DNA symbol in recognition site",iae);</a>
+<span class="sourceLineNo">705</span><a id="line.705">                }</a>
+<span class="sourceLineNo">706</span><a id="line.706">            }</a>
+<span class="sourceLineNo">707</span><a id="line.707">        }</a>
+<span class="sourceLineNo">708</span><a id="line.708">    }</a>
+<span class="sourceLineNo">709</span><a id="line.709">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.bio.annodb;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.util.Iterator;</a>
+<span class="sourceLineNo">004</span><a id="line.4"></a>
+<span class="sourceLineNo">005</span><a id="line.5">import org.biojava.bio.AnnotationType;</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">/**</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * &lt;p&gt;A database of Annotation instances.&lt;/p&gt;</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * &lt;p&gt;It is often a pain to provide explicit API for a particular file format,</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * but it is still necisary to present it as some collection of structured</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * objects. Annotation, together with AnnotationType are capable of representing</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * structured data and the tag-value parser API is uniquely suited to creating</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * these from structured text files. AnnotationDB is provided as a way to wrap</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * up a whole collection of Annotation instances so that they can be queried and</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * handled as a unit.&lt;/p&gt;</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * @since 1.3</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">public interface AnnotationDB {</a>
+<span class="sourceLineNo">022</span><a id="line.22">  /**</a>
+<span class="sourceLineNo">023</span><a id="line.23">   * An AnnotationDB that is always empty.</a>
+<span class="sourceLineNo">024</span><a id="line.24">   */</a>
+<span class="sourceLineNo">025</span><a id="line.25">  public static AnnotationDB EMPTY = new EmptyAnnotationDB();</a>
+<span class="sourceLineNo">026</span><a id="line.26">  </a>
+<span class="sourceLineNo">027</span><a id="line.27">  /**</a>
+<span class="sourceLineNo">028</span><a id="line.28">   * &lt;p&gt;The name of this AnnotationDB.&lt;/p&gt;</a>
+<span class="sourceLineNo">029</span><a id="line.29">   *</a>
+<span class="sourceLineNo">030</span><a id="line.30">   * @return the name of this AnnotationDB</a>
+<span class="sourceLineNo">031</span><a id="line.31">   */</a>
+<span class="sourceLineNo">032</span><a id="line.32">  public String getName();</a>
+<span class="sourceLineNo">033</span><a id="line.33">  </a>
+<span class="sourceLineNo">034</span><a id="line.34">  /**</a>
+<span class="sourceLineNo">035</span><a id="line.35">   * &lt;p&gt;</a>
+<span class="sourceLineNo">036</span><a id="line.36">   * Get an AnnotationType that accepts all Annotation instances in this DB.</a>
+<span class="sourceLineNo">037</span><a id="line.37">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38">   *</a>
+<span class="sourceLineNo">039</span><a id="line.39">   * &lt;p&gt;</a>
+<span class="sourceLineNo">040</span><a id="line.40">   * The schema should accept all Annotations in the DB. However, it may hit</a>
+<span class="sourceLineNo">041</span><a id="line.41">   * other Annotations. So, AnnotationType.ALL is always a valid schema.</a>
+<span class="sourceLineNo">042</span><a id="line.42">   * Obviously, the more retrictive it is, the more usefull it becomes for</a>
+<span class="sourceLineNo">043</span><a id="line.43">   * introspection.</a>
+<span class="sourceLineNo">044</span><a id="line.44">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">045</span><a id="line.45">   *</a>
+<span class="sourceLineNo">046</span><a id="line.46">   * @return  the schema AnnotationType</a>
+<span class="sourceLineNo">047</span><a id="line.47">   */</a>
+<span class="sourceLineNo">048</span><a id="line.48">  public AnnotationType getSchema();</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">  /**</a>
+<span class="sourceLineNo">051</span><a id="line.51">   * Loop over each Annotation in this db.</a>
+<span class="sourceLineNo">052</span><a id="line.52">   *</a>
+<span class="sourceLineNo">053</span><a id="line.53">   * @return an Iterator over each item in the DB</a>
+<span class="sourceLineNo">054</span><a id="line.54">   */</a>
+<span class="sourceLineNo">055</span><a id="line.55">  public Iterator iterator();</a>
+<span class="sourceLineNo">056</span><a id="line.56">  </a>
+<span class="sourceLineNo">057</span><a id="line.57">  /**</a>
+<span class="sourceLineNo">058</span><a id="line.58">   * The number of Annotation instances in the DB.</a>
+<span class="sourceLineNo">059</span><a id="line.59">   *</a>
+<span class="sourceLineNo">060</span><a id="line.60">   * @return the size of this DB</a>
+<span class="sourceLineNo">061</span><a id="line.61">   */</a>
+<span class="sourceLineNo">062</span><a id="line.62">  public int size();</a>
+<span class="sourceLineNo">063</span><a id="line.63">  </a>
+<span class="sourceLineNo">064</span><a id="line.64">  /**</a>
+<span class="sourceLineNo">065</span><a id="line.65">   * Find all Annotation instances in this DB that are of a particular type.</a>
+<span class="sourceLineNo">066</span><a id="line.66">   *</a>
+<span class="sourceLineNo">067</span><a id="line.67">   * @param at  the AnnotationType to match</a>
+<span class="sourceLineNo">068</span><a id="line.68">   * @return an AnnotationDB with all matching Annotation instances</a>
+<span class="sourceLineNo">069</span><a id="line.69">   */</a>
+<span class="sourceLineNo">070</span><a id="line.70">  public AnnotationDB filter(AnnotationType at);</a>
+<span class="sourceLineNo">071</span><a id="line.71">  </a>
+<span class="sourceLineNo">072</span><a id="line.72">  /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">   * Find all Annotation instances in this DB and any Annotations that are child</a>
+<span class="sourceLineNo">074</span><a id="line.74">   * properties of these that match an AnnotationType.</a>
+<span class="sourceLineNo">075</span><a id="line.75">   *</a>
+<span class="sourceLineNo">076</span><a id="line.76">   * @param at  the AnnotationType to search with</a>
+<span class="sourceLineNo">077</span><a id="line.77">   * @return an AnnotationDB with all matching Annotation instances,</a>
+<span class="sourceLineNo">078</span><a id="line.78">   *         irregardless of how deep in the hieracy they are</a>
+<span class="sourceLineNo">079</span><a id="line.79">   */</a>
+<span class="sourceLineNo">080</span><a id="line.80">  public AnnotationDB search(AnnotationType at);</a>
+<span class="sourceLineNo">081</span><a id="line.81">}</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

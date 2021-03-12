@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.seq.io;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.bio.seq.Feature;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.bio.symbol.Alphabet;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * Base-class for listeners that pass filtered events onto another listener.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @since 1.1</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * @see org.biojavax.bio.seq.io.RichSeqIOAdapter</a>
+<span class="sourceLineNo">035</span><a id="line.35"> */</a>
+<span class="sourceLineNo">036</span><a id="line.36">public class SeqIOFilter implements SeqIOListener {</a>
+<span class="sourceLineNo">037</span><a id="line.37">  /**</a>
+<span class="sourceLineNo">038</span><a id="line.38">   * Delegate that will recieve all of the forwarded event.</a>
+<span class="sourceLineNo">039</span><a id="line.39">   */</a>
+<span class="sourceLineNo">040</span><a id="line.40">  private SeqIOListener delegate;</a>
+<span class="sourceLineNo">041</span><a id="line.41">  </a>
+<span class="sourceLineNo">042</span><a id="line.42">  /**</a>
+<span class="sourceLineNo">043</span><a id="line.43">   * Create a new SeqIOFilter that will forward events on to another listener.</a>
+<span class="sourceLineNo">044</span><a id="line.44">   *</a>
+<span class="sourceLineNo">045</span><a id="line.45">   * @param delegate  the SeqIOListener to wrap</a>
+<span class="sourceLineNo">046</span><a id="line.46">   */</a>
+<span class="sourceLineNo">047</span><a id="line.47">  public SeqIOFilter(SeqIOListener delegate) {</a>
+<span class="sourceLineNo">048</span><a id="line.48">    this.delegate = delegate;</a>
+<span class="sourceLineNo">049</span><a id="line.49">  }</a>
+<span class="sourceLineNo">050</span><a id="line.50">  </a>
+<span class="sourceLineNo">051</span><a id="line.51">  /**</a>
+<span class="sourceLineNo">052</span><a id="line.52">   * Retrieve the delegate that is wrapped.</a>
+<span class="sourceLineNo">053</span><a id="line.53">   *</a>
+<span class="sourceLineNo">054</span><a id="line.54">   * @return the SeqIOListener delegate</a>
+<span class="sourceLineNo">055</span><a id="line.55">   */</a>
+<span class="sourceLineNo">056</span><a id="line.56">  public SeqIOListener getDelegate() {</a>
+<span class="sourceLineNo">057</span><a id="line.57">    return delegate;</a>
+<span class="sourceLineNo">058</span><a id="line.58">  }</a>
+<span class="sourceLineNo">059</span><a id="line.59">  </a>
+<span class="sourceLineNo">060</span><a id="line.60">  public void startSequence() throws ParseException {</a>
+<span class="sourceLineNo">061</span><a id="line.61">    delegate.startSequence();</a>
+<span class="sourceLineNo">062</span><a id="line.62">  }</a>
+<span class="sourceLineNo">063</span><a id="line.63">  </a>
+<span class="sourceLineNo">064</span><a id="line.64">  public void endSequence() throws ParseException {</a>
+<span class="sourceLineNo">065</span><a id="line.65">    delegate.endSequence();</a>
+<span class="sourceLineNo">066</span><a id="line.66">  }</a>
+<span class="sourceLineNo">067</span><a id="line.67">  </a>
+<span class="sourceLineNo">068</span><a id="line.68">  public void setName(String name) throws ParseException {</a>
+<span class="sourceLineNo">069</span><a id="line.69">    delegate.setName(name);</a>
+<span class="sourceLineNo">070</span><a id="line.70">  }</a>
+<span class="sourceLineNo">071</span><a id="line.71">  </a>
+<span class="sourceLineNo">072</span><a id="line.72">  public void setURI(String uri) throws ParseException {</a>
+<span class="sourceLineNo">073</span><a id="line.73">    delegate.setURI(uri);</a>
+<span class="sourceLineNo">074</span><a id="line.74">  }</a>
+<span class="sourceLineNo">075</span><a id="line.75">  </a>
+<span class="sourceLineNo">076</span><a id="line.76">  public void addSymbols(Alphabet alpha, Symbol[] syms, int start, int length)</a>
+<span class="sourceLineNo">077</span><a id="line.77">  throws IllegalAlphabetException {</a>
+<span class="sourceLineNo">078</span><a id="line.78">    delegate.addSymbols(alpha, syms, start, length);</a>
+<span class="sourceLineNo">079</span><a id="line.79">  }</a>
+<span class="sourceLineNo">080</span><a id="line.80">  </a>
+<span class="sourceLineNo">081</span><a id="line.81">  public void addSequenceProperty(Object key, Object value) throws ParseException {</a>
+<span class="sourceLineNo">082</span><a id="line.82">    delegate.addSequenceProperty(key, value);</a>
+<span class="sourceLineNo">083</span><a id="line.83">  }</a>
+<span class="sourceLineNo">084</span><a id="line.84">  </a>
+<span class="sourceLineNo">085</span><a id="line.85">  public void startFeature(Feature.Template templ) throws ParseException {</a>
+<span class="sourceLineNo">086</span><a id="line.86">    delegate.startFeature(templ);</a>
+<span class="sourceLineNo">087</span><a id="line.87">  }</a>
+<span class="sourceLineNo">088</span><a id="line.88">  </a>
+<span class="sourceLineNo">089</span><a id="line.89">  public void endFeature() throws ParseException {</a>
+<span class="sourceLineNo">090</span><a id="line.90">    delegate.endFeature();</a>
+<span class="sourceLineNo">091</span><a id="line.91">  }</a>
+<span class="sourceLineNo">092</span><a id="line.92">  </a>
+<span class="sourceLineNo">093</span><a id="line.93">  public void addFeatureProperty(Object key, Object value) throws ParseException {</a>
+<span class="sourceLineNo">094</span><a id="line.94">    delegate.addFeatureProperty(key, value);</a>
+<span class="sourceLineNo">095</span><a id="line.95">  }</a>
+<span class="sourceLineNo">096</span><a id="line.96">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

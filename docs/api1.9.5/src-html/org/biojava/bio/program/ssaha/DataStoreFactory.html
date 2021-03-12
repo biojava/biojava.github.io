@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.bio.program.ssaha;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.io.File;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import java.io.IOException;</a>
+<span class="sourceLineNo">005</span><a id="line.5"></a>
+<span class="sourceLineNo">006</span><a id="line.6">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import org.biojava.bio.seq.db.SequenceDB;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import org.biojava.bio.symbol.Packing;</a>
+<span class="sourceLineNo">010</span><a id="line.10"></a>
+<span class="sourceLineNo">011</span><a id="line.11">/**</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * &lt;p&gt;</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * Builder for a data store.</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">015</span><a id="line.15"> *</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">017</span><a id="line.17"> */</a>
+<span class="sourceLineNo">018</span><a id="line.18">public interface DataStoreFactory {</a>
+<span class="sourceLineNo">019</span><a id="line.19">  /**</a>
+<span class="sourceLineNo">020</span><a id="line.20">   * Get a pre-built data store associated with a file.</a>
+<span class="sourceLineNo">021</span><a id="line.21">   *</a>
+<span class="sourceLineNo">022</span><a id="line.22">   * @param storeFile  the File to map in as a data store</a>
+<span class="sourceLineNo">023</span><a id="line.23">   * @return the DataStore made by mapping the file</a>
+<span class="sourceLineNo">024</span><a id="line.24">   *</a>
+<span class="sourceLineNo">025</span><a id="line.25">   * @throws IOException if the file could not be mapped</a>
+<span class="sourceLineNo">026</span><a id="line.26">   */</a>
+<span class="sourceLineNo">027</span><a id="line.27">  public DataStore getDataStore(File storeFile)</a>
+<span class="sourceLineNo">028</span><a id="line.28">  throws IOException;</a>
+<span class="sourceLineNo">029</span><a id="line.29">  </a>
+<span class="sourceLineNo">030</span><a id="line.30">  /**</a>
+<span class="sourceLineNo">031</span><a id="line.31">   * Build a new DataStore.</a>
+<span class="sourceLineNo">032</span><a id="line.32">   *</a>
+<span class="sourceLineNo">033</span><a id="line.33">   * @param storeFile  the file to store the data store</a>
+<span class="sourceLineNo">034</span><a id="line.34">   * @param seqDB  the SequenceDB to store in the data store</a>
+<span class="sourceLineNo">035</span><a id="line.35">   * @param packing  the Packing used to bit-encode the sequences</a>
+<span class="sourceLineNo">036</span><a id="line.36">   * @param wordLength the number of symbols per word</a>
+<span class="sourceLineNo">037</span><a id="line.37">   * @param threshold  the number of times a word must appear to be ignored</a>
+<span class="sourceLineNo">038</span><a id="line.38">   *</a>
+<span class="sourceLineNo">039</span><a id="line.39">   * @throws IllegalAlphabetException if the packing does not agree with</a>
+<span class="sourceLineNo">040</span><a id="line.40">   *         the sequences</a>
+<span class="sourceLineNo">041</span><a id="line.41">   * @throws BioException if there is a problem building the data store</a>
+<span class="sourceLineNo">042</span><a id="line.42">   */</a>
+<span class="sourceLineNo">043</span><a id="line.43">  public DataStore buildDataStore(</a>
+<span class="sourceLineNo">044</span><a id="line.44">    File storeFile,</a>
+<span class="sourceLineNo">045</span><a id="line.45">    SequenceDB seqDB,</a>
+<span class="sourceLineNo">046</span><a id="line.46">    Packing packing,</a>
+<span class="sourceLineNo">047</span><a id="line.47">    int wordLength,</a>
+<span class="sourceLineNo">048</span><a id="line.48">    int threshold</a>
+<span class="sourceLineNo">049</span><a id="line.49">  ) throws</a>
+<span class="sourceLineNo">050</span><a id="line.50">    IllegalAlphabetException,</a>
+<span class="sourceLineNo">051</span><a id="line.51">    IOException,</a>
+<span class="sourceLineNo">052</span><a id="line.52">    BioException;</a>
+<span class="sourceLineNo">053</span><a id="line.53">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

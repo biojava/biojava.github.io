@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.bio.symbol;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.bio.Annotatable;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">/**</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * A single symbol.</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * &lt;p&gt;</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * This is the atomic unit of a SymbolList, or a sequence. It allows</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * for fine-grain fly-weighting, so that there can be one instance</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * of each symbol that is referenced multiple times.</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * &lt;p&gt;</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * Symbols from finite alphabets are identifiable using the == operator.</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * Symbols from infinite alphabets may have some specific API to test for</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * equality, but should realy over-ride the equals() method.</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * &lt;p&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * Some symbols represent a single token in the sequence. For example, there is</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * a Symbol instance for adenine in DNA, and another one for cytosine.</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * Symbols can potentialy represent sets of Symbols. For example, n represents</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * any DNA Symbol, and X any protein Symbol. Gap represents the knowledge that</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * there is no Symbol. In addition, some symbols represent ordered lists of</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * other Symbols. For example, the codon agt can be represented by a single</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * Symbol from the Alphabet DNAxDNAxDNA. Symbols can represent ambiguity over</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * these complex symbols. For example, you could construct a Symbol instance</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * that represents the codons atn. This matches the codons {ata, att, atg, atc}.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * It is also possible to build a Symbol instance that represents all stop</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * codons {taa, tag, tga}, which can not be represented in terms of a</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * single ambiguous n'tuple.</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * &lt;p&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * There are three Symbol interfaces. Symbol is the most generic. It has the</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * methods getToken and getName so that the Symbol can be textually represented.</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * In addition, it defines getMatches that returns an Alphabet over all the</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * AtomicSymbol instances that match the Symbol (N would return an Alphabet</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * containing {A, G, C, T}, and Gap would return {}).</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * &lt;p&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * BasisSymbol instances can always be represented by an n'tuple of BasisSymbol</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * instances. It adds the method getSymbols so that you can retrieve this list.</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * For example, the tuple [ant] is a BasisSymbol, as it is uniquely specified</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * with those three BasisSymbol instances a, n and t. n is a BasisSymbol</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * instance as it is uniquely represented by itself.</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * &lt;p&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * AtomicSymbol instances specialize BasisSymbol by guaranteeing that getMatches</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * returns a set containing only that instance. That is, they are indivisable.</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * The DNA nucleotides are instances of AtomicSymbol, as are individual codons.</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * The stop codon {tag} will have a getMatches method that returns {tag},</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * a getBases method that also returns {tag} and a getSymbols method that returns</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * the List [t, a, g]. {tna} is a BasisSymbol but not an AtomicSymbol as it</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * matches four AtomicSymbol instances {taa, tga, tca, tta}. It follows that</a>
+<span class="sourceLineNo">070</span><a id="line.70"> * each symbol in getSymbols for an AtomicSymbol instance will also be</a>
+<span class="sourceLineNo">071</span><a id="line.71"> * AtomicSymbol instances.</a>
+<span class="sourceLineNo">072</span><a id="line.72"> *</a>
+<span class="sourceLineNo">073</span><a id="line.73"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">074</span><a id="line.74"> */</a>
+<span class="sourceLineNo">075</span><a id="line.75">public interface Symbol extends Annotatable {</a>
+<span class="sourceLineNo">076</span><a id="line.76">  /**</a>
+<span class="sourceLineNo">077</span><a id="line.77">   * The long name for the symbol.</a>
+<span class="sourceLineNo">078</span><a id="line.78">   *</a>
+<span class="sourceLineNo">079</span><a id="line.79">   * @return  the long name</a>
+<span class="sourceLineNo">080</span><a id="line.80">   */</a>
+<span class="sourceLineNo">081</span><a id="line.81">  String getName();</a>
+<span class="sourceLineNo">082</span><a id="line.82">  </a>
+<span class="sourceLineNo">083</span><a id="line.83">  /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">   * The alphabet containing the symbols matched by this ambiguity symbol.</a>
+<span class="sourceLineNo">085</span><a id="line.85">   * &lt;p&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">   * This alphabet contains all of, and only, the symbols matched by this</a>
+<span class="sourceLineNo">087</span><a id="line.87">   * symbol. For example, the symbol representing the DNA</a>
+<span class="sourceLineNo">088</span><a id="line.88">   * ambiguity code for W would contain the symbol for A and T from the DNA</a>
+<span class="sourceLineNo">089</span><a id="line.89">   * alphabet.</a>
+<span class="sourceLineNo">090</span><a id="line.90">   *</a>
+<span class="sourceLineNo">091</span><a id="line.91">   * @return  the Alphabet of symbols matched by this</a>
+<span class="sourceLineNo">092</span><a id="line.92">   *          symbol</a>
+<span class="sourceLineNo">093</span><a id="line.93">   */</a>
+<span class="sourceLineNo">094</span><a id="line.94">  Alphabet getMatches();</a>
+<span class="sourceLineNo">095</span><a id="line.95">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

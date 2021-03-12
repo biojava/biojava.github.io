@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.gui.sequence;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.awt.Graphics2D;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.awt.event.MouseEvent;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Iterator;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.List;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.seq.StrandedFeature;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.symbol.RangeLocation;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">// The graphics model in Java</a>
+<span class="sourceLineNo">035</span><a id="line.35">// drawing space -&gt; applet space -&gt; device space</a>
+<span class="sourceLineNo">036</span><a id="line.36">// All operations are cumulative, including translates</a>
+<span class="sourceLineNo">037</span><a id="line.37">// translates will move drawing rightward/downward for any supplied value</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * Compute sites of stop codons.  It uses a child renderer to</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * do actual drawing.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * @author David Huen</a>
+<span class="sourceLineNo">044</span><a id="line.44"> */ </a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">public class StopRenderer implements SequenceRenderer {</a>
+<span class="sourceLineNo">048</span><a id="line.48">    private double scaleThreshold = 0.005;</a>
+<span class="sourceLineNo">049</span><a id="line.49">    private SixFrameRenderer pane;</a>
+<span class="sourceLineNo">050</span><a id="line.50">    private int moduloFrame;</a>
+<span class="sourceLineNo">051</span><a id="line.51">    private StrandedFeature.Strand strand;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">    public StopRenderer(</a>
+<span class="sourceLineNo">054</span><a id="line.54">             SixFrameRenderer pane,</a>
+<span class="sourceLineNo">055</span><a id="line.55">             int moduloFrame, </a>
+<span class="sourceLineNo">056</span><a id="line.56">             StrandedFeature.Strand strand) {</a>
+<span class="sourceLineNo">057</span><a id="line.57">    this.pane = pane;</a>
+<span class="sourceLineNo">058</span><a id="line.58">    this.moduloFrame = moduloFrame;</a>
+<span class="sourceLineNo">059</span><a id="line.59">    this.strand = strand;</a>
+<span class="sourceLineNo">060</span><a id="line.60">    }</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">    public double getDepth(SequenceRenderContext src) {</a>
+<span class="sourceLineNo">063</span><a id="line.63">      // an arbitrary limit is set here to prevent excessive sequence</a>
+<span class="sourceLineNo">064</span><a id="line.64">      // download.</a>
+<span class="sourceLineNo">065</span><a id="line.65">      if (src.getScale() &lt; scaleThreshold) return 0;</a>
+<span class="sourceLineNo">066</span><a id="line.66">        else return pane.getDepth(src);</a>
+<span class="sourceLineNo">067</span><a id="line.67">    }</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">    public double getMinimumLeader(SequenceRenderContext src) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">      return 0.0;</a>
+<span class="sourceLineNo">071</span><a id="line.71">    }</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">    public double getMinimumTrailer(SequenceRenderContext src) {</a>
+<span class="sourceLineNo">074</span><a id="line.74">      return 0.0;</a>
+<span class="sourceLineNo">075</span><a id="line.75">    }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">    private boolean isStop(SymbolList seq,</a>
+<span class="sourceLineNo">078</span><a id="line.78">      int base,</a>
+<span class="sourceLineNo">079</span><a id="line.79">      StrandedFeature.Strand strand) {</a>
+<span class="sourceLineNo">080</span><a id="line.80">      // tests whether there is a stop at given location.</a>
+<span class="sourceLineNo">081</span><a id="line.81">      // the triplet is either base, +1, +2 or -1, -2</a>
+<span class="sourceLineNo">082</span><a id="line.82">      // depending on the strand searched</a>
+<span class="sourceLineNo">083</span><a id="line.83">      if (strand == StrandedFeature.POSITIVE) {</a>
+<span class="sourceLineNo">084</span><a id="line.84">        // check that search does not exceed bounds</a>
+<span class="sourceLineNo">085</span><a id="line.85">        if (base + 2 &gt; seq.length()) return false;</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        // search top strand</a>
+<span class="sourceLineNo">088</span><a id="line.88">        // first base must be t</a>
+<span class="sourceLineNo">089</span><a id="line.89">        if (seq.symbolAt(base) != DNATools.t()) return false;</a>
+<span class="sourceLineNo">090</span><a id="line.90"></a>
+<span class="sourceLineNo">091</span><a id="line.91">        // second base cannot be c or t</a>
+<span class="sourceLineNo">092</span><a id="line.92">        if (seq.symbolAt(base+1) == DNATools.c()) return false;</a>
+<span class="sourceLineNo">093</span><a id="line.93">        if (seq.symbolAt(base+1) == DNATools.t()) return false;</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">        // if second base is g, the third must be a</a>
+<span class="sourceLineNo">096</span><a id="line.96">        if (seq.symbolAt(base+1) == DNATools.g()) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">          if (seq.symbolAt(base+2) != DNATools.a()) return false;</a>
+<span class="sourceLineNo">098</span><a id="line.98">        }</a>
+<span class="sourceLineNo">099</span><a id="line.99">        else {</a>
+<span class="sourceLineNo">100</span><a id="line.100">          // second base is a: third must be a or g.</a>
+<span class="sourceLineNo">101</span><a id="line.101">          if (seq.symbolAt(base+2) == DNATools.c()) return false;</a>
+<span class="sourceLineNo">102</span><a id="line.102">          if (seq.symbolAt(base+2) == DNATools.t()) return false;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        // oh well, must be a stop, innit?</a>
+<span class="sourceLineNo">106</span><a id="line.106">        return true;</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">      } else {</a>
+<span class="sourceLineNo">109</span><a id="line.109">        // check bounds</a>
+<span class="sourceLineNo">110</span><a id="line.110">        if (base - 2 &lt; 1) return false;</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">        // search bottom strand</a>
+<span class="sourceLineNo">113</span><a id="line.113">        // first base must be t</a>
+<span class="sourceLineNo">114</span><a id="line.114">        if (seq.symbolAt(base) != DNATools.a()) return false;</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">        // second base cannot be c or t on reverse strand</a>
+<span class="sourceLineNo">117</span><a id="line.117">        if (seq.symbolAt(base-1) == DNATools.a()) return false;</a>
+<span class="sourceLineNo">118</span><a id="line.118">        if (seq.symbolAt(base-1) == DNATools.g()) return false;</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">        // if second base is g, the third must be a</a>
+<span class="sourceLineNo">121</span><a id="line.121">        if (seq.symbolAt(base-1) == DNATools.c()) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">          if (seq.symbolAt(base-2) != DNATools.t()) return false;</a>
+<span class="sourceLineNo">123</span><a id="line.123">        }</a>
+<span class="sourceLineNo">124</span><a id="line.124">        else {</a>
+<span class="sourceLineNo">125</span><a id="line.125">          // second base is a: third must be a or g.</a>
+<span class="sourceLineNo">126</span><a id="line.126">          if (seq.symbolAt(base-2) == DNATools.a()) return false;</a>
+<span class="sourceLineNo">127</span><a id="line.127">          if (seq.symbolAt(base-2) == DNATools.g()) return false;</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        // ach! a stop!</a>
+<span class="sourceLineNo">131</span><a id="line.131">        return true;</a>
+<span class="sourceLineNo">132</span><a id="line.132">      }</a>
+<span class="sourceLineNo">133</span><a id="line.133">    }</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">    private void renderOneFrame(</a>
+<span class="sourceLineNo">136</span><a id="line.136">      Graphics2D g,</a>
+<span class="sourceLineNo">137</span><a id="line.137">      SequenceRenderContext src,</a>
+<span class="sourceLineNo">138</span><a id="line.138">      RangeLocation range,</a>
+<span class="sourceLineNo">139</span><a id="line.139">      boolean onceOnly) {</a>
+<span class="sourceLineNo">140</span><a id="line.140">      // method to draw by checking succeeding triplets for</a>
+<span class="sourceLineNo">141</span><a id="line.141">      // stop codons.</a>
+<span class="sourceLineNo">142</span><a id="line.142">      // write it for horizontal rendering first.</a>
+<span class="sourceLineNo">143</span><a id="line.143">      SymbolList seq = src.getSymbols();</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">      // get extent of sequence to render</a>
+<span class="sourceLineNo">146</span><a id="line.146">      // hope it agrees with clip region!</a>
+<span class="sourceLineNo">147</span><a id="line.147">      int minS = range.getMin();</a>
+<span class="sourceLineNo">148</span><a id="line.148">      int maxS = range.getMax();</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">      // we start at the first triplet whose first base is within</a>
+<span class="sourceLineNo">151</span><a id="line.151">      // the range.</a>
+<span class="sourceLineNo">152</span><a id="line.152">      if (minS%3 &gt; moduloFrame) {</a>
+<span class="sourceLineNo">153</span><a id="line.153">        // first triplet of my frame is in next mod-zero triplet</a>
+<span class="sourceLineNo">154</span><a id="line.154">        minS = (minS/3 + 1) * 3 + moduloFrame;</a>
+<span class="sourceLineNo">155</span><a id="line.155">      }</a>
+<span class="sourceLineNo">156</span><a id="line.156">      else if (minS%3 != moduloFrame) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">        // first triplet is in current mod-zero triplet</a>
+<span class="sourceLineNo">158</span><a id="line.158">        minS = (minS/3) * 3 + moduloFrame;</a>
+<span class="sourceLineNo">159</span><a id="line.159">      }</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">      // now we search every triplet from minS upward seeking stops.</a>
+<span class="sourceLineNo">162</span><a id="line.162">      for (int base = minS; base &lt;= maxS; base += 3) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">        // check for stop</a>
+<span class="sourceLineNo">164</span><a id="line.164">        if (!isStop(seq, base, strand)) continue;</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">        // we have a stop, render a line</a>
+<span class="sourceLineNo">167</span><a id="line.167">        pane.drawLine(g, src, base, strand);</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">        // do I call it quits now?</a>
+<span class="sourceLineNo">170</span><a id="line.170">        if (onceOnly) return;</a>
+<span class="sourceLineNo">171</span><a id="line.171">      }</a>
+<span class="sourceLineNo">172</span><a id="line.172">    }</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">    public void paint(</a>
+<span class="sourceLineNo">175</span><a id="line.175">      Graphics2D g,</a>
+<span class="sourceLineNo">176</span><a id="line.176">      SequenceRenderContext src</a>
+<span class="sourceLineNo">177</span><a id="line.177">    ) {</a>
+<span class="sourceLineNo">178</span><a id="line.178">      double scale = src.getScale();</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">      // this is a completely arbitrary limit to stop my viewer</a>
+<span class="sourceLineNo">181</span><a id="line.181">      // from attempting to trigger the download of HUGE amounts </a>
+<span class="sourceLineNo">182</span><a id="line.182">      // of sequence.</a>
+<span class="sourceLineNo">183</span><a id="line.183">      if (scale &lt; scaleThreshold) return;</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">      // could we get more than one stop per pixel at the current</a>
+<span class="sourceLineNo">186</span><a id="line.186">      // scale?      </a>
+<span class="sourceLineNo">187</span><a id="line.187">      if (scale &lt; 0.05) {</a>
+<span class="sourceLineNo">188</span><a id="line.188">        // yes, we can. Iterate thru' graphics space.</a>
+<span class="sourceLineNo">189</span><a id="line.189">        Iterator extentsI = pane.sequenceExtentOfPixels(src).iterator();</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">        // check each extent for stops</a>
+<span class="sourceLineNo">192</span><a id="line.192">        while (extentsI.hasNext()) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">          RangeLocation range = (RangeLocation) extentsI.next();</a>
+<span class="sourceLineNo">194</span><a id="line.194">          renderOneFrame(g, src, range, true);</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196">      }</a>
+<span class="sourceLineNo">197</span><a id="line.197">      else {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        // no we can't. Iterate thru' sequence.</a>
+<span class="sourceLineNo">199</span><a id="line.199">        renderOneFrame(g, src, src.getRange(), false);</a>
+<span class="sourceLineNo">200</span><a id="line.200">      }</a>
+<span class="sourceLineNo">201</span><a id="line.201">    }</a>
+<span class="sourceLineNo">202</span><a id="line.202">  </a>
+<span class="sourceLineNo">203</span><a id="line.203">  public SequenceViewerEvent processMouseEvent(</a>
+<span class="sourceLineNo">204</span><a id="line.204">    SequenceRenderContext src,</a>
+<span class="sourceLineNo">205</span><a id="line.205">    MouseEvent me,</a>
+<span class="sourceLineNo">206</span><a id="line.206">    List path</a>
+<span class="sourceLineNo">207</span><a id="line.207">  ) {</a>
+<span class="sourceLineNo">208</span><a id="line.208">    path.add(this);</a>
+<span class="sourceLineNo">209</span><a id="line.209">    int sPos = src.graphicsToSequence(me.getPoint());</a>
+<span class="sourceLineNo">210</span><a id="line.210">    return new SequenceViewerEvent(this, null, sPos, me, path);</a>
+<span class="sourceLineNo">211</span><a id="line.211">  }</a>
+<span class="sourceLineNo">212</span><a id="line.212">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
