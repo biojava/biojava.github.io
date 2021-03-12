@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.AbstractMap;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.AbstractSet;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Iterator;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Map;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Set;</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.program.tagvalue.ChangeTable;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.utils.ParserException;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">/**</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * &lt;code&gt;AnnotationChanger&lt;/code&gt; remaps the values of an</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * &lt;code&gt;Annotation&lt;/code&gt; to new values specified by a</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * &lt;code&gt;ValueChanger&lt;/code&gt;. This will modify the values</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * associated with properties, but not the property names.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * </a>
+<span class="sourceLineNo">039</span><a id="line.39"> * For writing light-weigth adaptors to project one type of</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * Annotation to another using a ChangeTable.</a>
+<span class="sourceLineNo">041</span><a id="line.41"> *</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * @since 1.3</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> */</a>
+<span class="sourceLineNo">046</span><a id="line.46">public class AnnotationChanger extends AbstractAnnotation</a>
+<span class="sourceLineNo">047</span><a id="line.47">{</a>
+<span class="sourceLineNo">048</span><a id="line.48">    private final Annotation wrapped;</a>
+<span class="sourceLineNo">049</span><a id="line.49">    private final ChangeTable changer;</a>
+<span class="sourceLineNo">050</span><a id="line.50">    private final Map properties;</a>
+<span class="sourceLineNo">051</span><a id="line.51">  </a>
+<span class="sourceLineNo">052</span><a id="line.52">    /**</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * Creates a new &lt;code&gt;AnnotationChanger&lt;/code&gt; using the</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * specified &lt;code&gt;ValueChanger&lt;/code&gt; to remap its values.</a>
+<span class="sourceLineNo">055</span><a id="line.55">     *</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * @param wrapped an &lt;code&gt;Annotation&lt;/code&gt;.</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * @param changer a &lt;code&gt;ValueChanger&lt;/code&gt;.</a>
+<span class="sourceLineNo">058</span><a id="line.58">     */</a>
+<span class="sourceLineNo">059</span><a id="line.59">    public AnnotationChanger(Annotation wrapped, ChangeTable changer) {</a>
+<span class="sourceLineNo">060</span><a id="line.60">        this.wrapped = wrapped;</a>
+<span class="sourceLineNo">061</span><a id="line.61">        this.changer = changer;</a>
+<span class="sourceLineNo">062</span><a id="line.62">        this.properties = new MappedHash();</a>
+<span class="sourceLineNo">063</span><a id="line.63">    }</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">    /**</a>
+<span class="sourceLineNo">066</span><a id="line.66">     * &lt;code&gt;getWrapped&lt;/code&gt; returns the &lt;code&gt;Annotation&lt;/code&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67">     * being remapped.</a>
+<span class="sourceLineNo">068</span><a id="line.68">     *</a>
+<span class="sourceLineNo">069</span><a id="line.69">     * @return an &lt;code&gt;Annotation&lt;/code&gt;.</a>
+<span class="sourceLineNo">070</span><a id="line.70">     */</a>
+<span class="sourceLineNo">071</span><a id="line.71">    public Annotation getWrapped() {</a>
+<span class="sourceLineNo">072</span><a id="line.72">        return wrapped;</a>
+<span class="sourceLineNo">073</span><a id="line.73">    }</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">    /**</a>
+<span class="sourceLineNo">076</span><a id="line.76">     * &lt;code&gt;getMapper&lt;/code&gt; returns the &lt;code&gt;ValueChanger&lt;/code&gt; being</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * used to remap the &lt;code&gt;Annotation&lt;/code&gt;.</a>
+<span class="sourceLineNo">078</span><a id="line.78">     *</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * @return a &lt;code&gt;ValueChanger&lt;/code&gt;.</a>
+<span class="sourceLineNo">080</span><a id="line.80">     */</a>
+<span class="sourceLineNo">081</span><a id="line.81">    public ChangeTable getChanger() {</a>
+<span class="sourceLineNo">082</span><a id="line.82">        return changer;</a>
+<span class="sourceLineNo">083</span><a id="line.83">    }</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">    /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;code&gt;getProperties&lt;/code&gt; returns the mapped contents of the</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * underlying &lt;code&gt;Annotation&lt;/code&gt; as a &lt;code&gt;Map&lt;/code&gt;.</a>
+<span class="sourceLineNo">088</span><a id="line.88">     *</a>
+<span class="sourceLineNo">089</span><a id="line.89">     * @return a &lt;code&gt;Map&lt;/code&gt;.</a>
+<span class="sourceLineNo">090</span><a id="line.90">     */</a>
+<span class="sourceLineNo">091</span><a id="line.91">    public Map getProperties() {</a>
+<span class="sourceLineNo">092</span><a id="line.92">        return properties;</a>
+<span class="sourceLineNo">093</span><a id="line.93">    }</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">    /**</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * &lt;code&gt;propertiesAllocated&lt;/code&gt; is a convenience method to see</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * if we have allocated the properties &lt;code&gt;Map&lt;/code&gt;.</a>
+<span class="sourceLineNo">098</span><a id="line.98">     *</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * @return a &lt;code&gt;boolean&lt;/code&gt; true if the properties have been</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * allocated, false otherwise.</a>
+<span class="sourceLineNo">101</span><a id="line.101">     */</a>
+<span class="sourceLineNo">102</span><a id="line.102">    public boolean propertiesAllocated() {</a>
+<span class="sourceLineNo">103</span><a id="line.103">        return true;</a>
+<span class="sourceLineNo">104</span><a id="line.104">    }</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">    private class MappedHash extends AbstractMap {</a>
+<span class="sourceLineNo">107</span><a id="line.107">        public int size() {</a>
+<span class="sourceLineNo">108</span><a id="line.108">            return wrapped.asMap().size();</a>
+<span class="sourceLineNo">109</span><a id="line.109">        }</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">        public Set entrySet() {</a>
+<span class="sourceLineNo">112</span><a id="line.112">            return new WrappedSet(wrapped.asMap().entrySet());</a>
+<span class="sourceLineNo">113</span><a id="line.113">        }</a>
+<span class="sourceLineNo">114</span><a id="line.114">    }</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">    private class WrappedSet extends AbstractSet {</a>
+<span class="sourceLineNo">117</span><a id="line.117">        private Set entrySet;</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">        public WrappedSet(Set entrySet) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">            this.entrySet = entrySet;</a>
+<span class="sourceLineNo">121</span><a id="line.121">        }</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">        public int size() {</a>
+<span class="sourceLineNo">124</span><a id="line.124">            return entrySet.size();</a>
+<span class="sourceLineNo">125</span><a id="line.125">        }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">        public Iterator iterator() {</a>
+<span class="sourceLineNo">128</span><a id="line.128">            return new Iterator() {</a>
+<span class="sourceLineNo">129</span><a id="line.129">                    Iterator i = entrySet.iterator();</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">                    public boolean hasNext() {</a>
+<span class="sourceLineNo">132</span><a id="line.132">                        return i.hasNext();</a>
+<span class="sourceLineNo">133</span><a id="line.133">                    }</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">                    public Object next() {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                        final Map.Entry entry = (Map.Entry) i.next();</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">                        return new Map.Entry() {</a>
+<span class="sourceLineNo">139</span><a id="line.139">                                public Object getKey() {</a>
+<span class="sourceLineNo">140</span><a id="line.140">                                    return entry.getKey();</a>
+<span class="sourceLineNo">141</span><a id="line.141">                                }</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">                                public Object getValue() {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                                  try {</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                    return changer.change(getKey(), entry.getValue());</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                  } catch (ParserException pe) {</a>
+<span class="sourceLineNo">147</span><a id="line.147">                                    throw new BioError(pe);</a>
+<span class="sourceLineNo">148</span><a id="line.148">                                  }</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                                public Object setValue(Object value) {</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                    return entry.setValue(value);</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                }</a>
+<span class="sourceLineNo">154</span><a id="line.154">                            };</a>
+<span class="sourceLineNo">155</span><a id="line.155">                    }</a>
+<span class="sourceLineNo">156</span><a id="line.156">        </a>
+<span class="sourceLineNo">157</span><a id="line.157">                    public void remove() {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                        i.remove();</a>
+<span class="sourceLineNo">159</span><a id="line.159">                    }</a>
+<span class="sourceLineNo">160</span><a id="line.160">                };</a>
+<span class="sourceLineNo">161</span><a id="line.161">        }</a>
+<span class="sourceLineNo">162</span><a id="line.162">    }</a>
+<span class="sourceLineNo">163</span><a id="line.163">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

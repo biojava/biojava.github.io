@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.seq.io;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.bio.SimpleAnnotation;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.bio.seq.Feature;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.seq.StrandedFeature;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * Simple parser for feature tables. This is shared between the EMBL</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * and GENBANK format readers.</a>
+<span class="sourceLineNo">032</span><a id="line.32"> *</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @author Thomas Down</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * @author Greg Cox</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * @author Keith James</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * @deprecated Use org.biojavax.bio.seq.io framework instead</a>
+<span class="sourceLineNo">038</span><a id="line.38"> */</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">/*</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * Greg Cox: Changed private fields and methods to protected so that</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *           SwissProtFeatureTableParser could subclass and snag the</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *           implementation.</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * Thomas Down: Post 1.1, finally got round to refactoring this to be</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *              a `nice' player in the newio world.  Needless to say,</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *              this simplified things quite a bit.</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * Keith James: Added support for reading fuzzy i.e. (123.567)</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *              locations in addition to unbounded i.e. &lt;123..567</a>
+<span class="sourceLineNo">051</span><a id="line.51"> *              locations.</a>
+<span class="sourceLineNo">052</span><a id="line.52"> */</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">public class FeatureTableParser {</a>
+<span class="sourceLineNo">055</span><a id="line.55">    private final static int   WITHOUT = 0;</a>
+<span class="sourceLineNo">056</span><a id="line.56">    private final static int    WITHIN = 1;</a>
+<span class="sourceLineNo">057</span><a id="line.57">    private final static int  LOCATION = 2;</a>
+<span class="sourceLineNo">058</span><a id="line.58">    private final static int ATTRIBUTE = 3;</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">    private int featureStatus = WITHOUT;</a>
+<span class="sourceLineNo">061</span><a id="line.61">    private StringBuffer featureBuf;</a>
+<span class="sourceLineNo">062</span><a id="line.62">    private Feature.Template featureTemplate;</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">    private String                 featureSource;</a>
+<span class="sourceLineNo">065</span><a id="line.65">    private SeqIOListener          listener;</a>
+<span class="sourceLineNo">066</span><a id="line.66">    private EmblLikeLocationParser locParser;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    private String                 seqID;</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">    FeatureTableParser(SeqIOListener listener, String source) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">        this.listener      = listener;</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.featureSource = source;</a>
+<span class="sourceLineNo">072</span><a id="line.72">        //this.seqID = seqID;</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">        featureBuf = new StringBuffer();</a>
+<span class="sourceLineNo">075</span><a id="line.75">        locParser  = new EmblLikeLocationParser(seqID);</a>
+<span class="sourceLineNo">076</span><a id="line.76">    }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">    public void setSeqID(String seqID) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">      this.seqID = seqID;</a>
+<span class="sourceLineNo">080</span><a id="line.80">    }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">    //</a>
+<span class="sourceLineNo">083</span><a id="line.83">    // Interface which the processors use to call us</a>
+<span class="sourceLineNo">084</span><a id="line.84">    //</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">    public void startFeature(String type) throws BioException {</a>
+<span class="sourceLineNo">087</span><a id="line.87">        featureStatus = LOCATION;</a>
+<span class="sourceLineNo">088</span><a id="line.88">        featureBuf.setLength(0);</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">        if (this.featureSource.equals("RefSeq:Protein")) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">            featureTemplate= new Feature.Template();</a>
+<span class="sourceLineNo">092</span><a id="line.92">        }</a>
+<span class="sourceLineNo">093</span><a id="line.93">        else {</a>
+<span class="sourceLineNo">094</span><a id="line.94">            featureTemplate = new StrandedFeature.Template();</a>
+<span class="sourceLineNo">095</span><a id="line.95">        }</a>
+<span class="sourceLineNo">096</span><a id="line.96">        featureTemplate.type = type;</a>
+<span class="sourceLineNo">097</span><a id="line.97">        featureTemplate.source = featureSource;</a>
+<span class="sourceLineNo">098</span><a id="line.98">        featureTemplate.annotation = new SimpleAnnotation();</a>
+<span class="sourceLineNo">099</span><a id="line.99">    }</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">    public void featureData(String line) throws BioException {</a>
+<span class="sourceLineNo">102</span><a id="line.102">        switch (featureStatus) {</a>
+<span class="sourceLineNo">103</span><a id="line.103">            case LOCATION:</a>
+<span class="sourceLineNo">104</span><a id="line.104">                featureBuf.append(line);</a>
+<span class="sourceLineNo">105</span><a id="line.105">                if (countChar(featureBuf, '(') == countChar(featureBuf, ')')) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                    featureTemplate = locParser.parseLocation(featureBuf.substring(0), featureTemplate);</a>
+<span class="sourceLineNo">107</span><a id="line.107">                    listener.startFeature(featureTemplate);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                    featureStatus = WITHIN;</a>
+<span class="sourceLineNo">109</span><a id="line.109">                }</a>
+<span class="sourceLineNo">110</span><a id="line.110">                break;</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">            case WITHIN:</a>
+<span class="sourceLineNo">113</span><a id="line.113">                if (line.charAt(0) == '/') {</a>
+<span class="sourceLineNo">114</span><a id="line.114">                    // System.out.println("got '/', quotes = " + countChar(line, '"'));</a>
+<span class="sourceLineNo">115</span><a id="line.115">                    // attribute either is unquoted and on one line or</a>
+<span class="sourceLineNo">116</span><a id="line.116">                    // is quoted, and must start &amp; end with a quote</a>
+<span class="sourceLineNo">117</span><a id="line.117">                    //</a>
+<span class="sourceLineNo">118</span><a id="line.118">                    // we assume that no attributes have embedded quotes</a>
+<span class="sourceLineNo">119</span><a id="line.119">                    int eq = line.indexOf("=");</a>
+<span class="sourceLineNo">120</span><a id="line.120">                    if (line.charAt(eq + 1) != '"' ||</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        line.charAt(line.length() - 1) == '"'</a>
+<span class="sourceLineNo">122</span><a id="line.122">                    ) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        processAttribute(line);</a>
+<span class="sourceLineNo">124</span><a id="line.124">                    } else {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                        featureBuf.setLength(0);</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        featureBuf.append(line);</a>
+<span class="sourceLineNo">127</span><a id="line.127">                        featureStatus = ATTRIBUTE;</a>
+<span class="sourceLineNo">128</span><a id="line.128">                    }</a>
+<span class="sourceLineNo">129</span><a id="line.129">                } else {</a>
+<span class="sourceLineNo">130</span><a id="line.130">                    throw new BioException("Invalid line in feature body: " + line);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                }</a>
+<span class="sourceLineNo">132</span><a id="line.132">                break;</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">            case ATTRIBUTE:</a>
+<span class="sourceLineNo">135</span><a id="line.135">                // If the attribute contains whitespace it probably</a>
+<span class="sourceLineNo">136</span><a id="line.136">                // consists of whitespace-delimited words. Therefore a</a>
+<span class="sourceLineNo">137</span><a id="line.137">                // space should be inserted at EOL otherwise words will</a>
+<span class="sourceLineNo">138</span><a id="line.138">                // get fused (unless there is a space already there)</a>
+<span class="sourceLineNo">139</span><a id="line.139">                if (((featureBuf.toString().indexOf(" ") &gt;= 0) ||</a>
+<span class="sourceLineNo">140</span><a id="line.140">                     (line.toString().indexOf(" ") &gt;= 0)) &amp;&amp;</a>
+<span class="sourceLineNo">141</span><a id="line.141">                    featureBuf.toString().charAt(featureBuf.length()-1) != ' '){</a>
+<span class="sourceLineNo">142</span><a id="line.142">                    featureBuf.append(" ");</a>
+<span class="sourceLineNo">143</span><a id="line.143">                }</a>
+<span class="sourceLineNo">144</span><a id="line.144">                featureBuf.append(line);</a>
+<span class="sourceLineNo">145</span><a id="line.145">                </a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">                int eq = featureBuf.toString().indexOf("=");</a>
+<span class="sourceLineNo">148</span><a id="line.148">                if (featureBuf.charAt(eq + 1) != '"' ||</a>
+<span class="sourceLineNo">149</span><a id="line.149">                    featureBuf.charAt(featureBuf.length() - 1) == '"'</a>
+<span class="sourceLineNo">150</span><a id="line.150">                ) {</a>
+<span class="sourceLineNo">151</span><a id="line.151">                    processAttribute(featureBuf.substring(0));</a>
+<span class="sourceLineNo">152</span><a id="line.152">                    featureStatus = WITHIN;</a>
+<span class="sourceLineNo">153</span><a id="line.153">                }</a>
+<span class="sourceLineNo">154</span><a id="line.154">                break;</a>
+<span class="sourceLineNo">155</span><a id="line.155">        }</a>
+<span class="sourceLineNo">156</span><a id="line.156">    }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">    public void endFeature()</a>
+<span class="sourceLineNo">159</span><a id="line.159">        throws BioException {</a>
+<span class="sourceLineNo">160</span><a id="line.160">        listener.endFeature();</a>
+<span class="sourceLineNo">161</span><a id="line.161">        featureStatus = WITHOUT;</a>
+<span class="sourceLineNo">162</span><a id="line.162">    }</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164">    public boolean inFeature() {</a>
+<span class="sourceLineNo">165</span><a id="line.165">        return (featureStatus != WITHOUT);</a>
+<span class="sourceLineNo">166</span><a id="line.166">    }</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">    /**</a>
+<span class="sourceLineNo">169</span><a id="line.169">     * Process the a string corresponding to a feature-table</a>
+<span class="sourceLineNo">170</span><a id="line.170">     * attribute, and fire it off to our listener.</a>
+<span class="sourceLineNo">171</span><a id="line.171">     */</a>
+<span class="sourceLineNo">172</span><a id="line.172">    private void processAttribute(String attr) throws BioException {</a>
+<span class="sourceLineNo">173</span><a id="line.173">        // System.err.println(attr);</a>
+<span class="sourceLineNo">174</span><a id="line.174">        int eqPos = attr.indexOf('=');</a>
+<span class="sourceLineNo">175</span><a id="line.175">        if (eqPos == -1) {</a>
+<span class="sourceLineNo">176</span><a id="line.176">            listener.addFeatureProperty(attr.substring(1), Boolean.TRUE);</a>
+<span class="sourceLineNo">177</span><a id="line.177">        } else {</a>
+<span class="sourceLineNo">178</span><a id="line.178">            String tag = attr.substring(1, eqPos);</a>
+<span class="sourceLineNo">179</span><a id="line.179">            eqPos++;</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">            if (attr.charAt(eqPos) == '"')</a>
+<span class="sourceLineNo">182</span><a id="line.182">                ++eqPos;</a>
+<span class="sourceLineNo">183</span><a id="line.183">            int max = attr.length();</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">            if (attr.charAt(max - 1) == '"')</a>
+<span class="sourceLineNo">186</span><a id="line.186">                --max;</a>
+<span class="sourceLineNo">187</span><a id="line.187">            String val = attr.substring(eqPos, max);</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">            if (val.indexOf('"') &gt;= 0) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">                StringBuffer sb = new StringBuffer();</a>
+<span class="sourceLineNo">191</span><a id="line.191">                boolean escape = false;</a>
+<span class="sourceLineNo">192</span><a id="line.192">                for (int i = 0; i &lt; val.length(); ++i) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">                    char c = val.charAt(i);</a>
+<span class="sourceLineNo">194</span><a id="line.194">                    if (c == '"') {</a>
+<span class="sourceLineNo">195</span><a id="line.195">                        if (escape)</a>
+<span class="sourceLineNo">196</span><a id="line.196">                            sb.append(c);</a>
+<span class="sourceLineNo">197</span><a id="line.197">                        escape = !escape;</a>
+<span class="sourceLineNo">198</span><a id="line.198">                    } else {</a>
+<span class="sourceLineNo">199</span><a id="line.199">                        sb.append(c);</a>
+<span class="sourceLineNo">200</span><a id="line.200">                        escape = false;</a>
+<span class="sourceLineNo">201</span><a id="line.201">                    }</a>
+<span class="sourceLineNo">202</span><a id="line.202">                }</a>
+<span class="sourceLineNo">203</span><a id="line.203">                val = sb.substring(0);</a>
+<span class="sourceLineNo">204</span><a id="line.204">            }</a>
+<span class="sourceLineNo">205</span><a id="line.205">            listener.addFeatureProperty(tag, val);</a>
+<span class="sourceLineNo">206</span><a id="line.206">        }</a>
+<span class="sourceLineNo">207</span><a id="line.207">    }</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">    private int countChar(StringBuffer s, char c) {</a>
+<span class="sourceLineNo">210</span><a id="line.210">        int cnt = 0;</a>
+<span class="sourceLineNo">211</span><a id="line.211">        int length = s.length();</a>
+<span class="sourceLineNo">212</span><a id="line.212">        for (int i = 0; i &lt; length; ++i)</a>
+<span class="sourceLineNo">213</span><a id="line.213">            if (s.charAt(i) == c)</a>
+<span class="sourceLineNo">214</span><a id="line.214">                ++cnt;</a>
+<span class="sourceLineNo">215</span><a id="line.215">        return cnt;</a>
+<span class="sourceLineNo">216</span><a id="line.216">    }</a>
+<span class="sourceLineNo">217</span><a id="line.217">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                  BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * </a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Jan 18, 2008</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * </a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.ontology.obo;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.IOException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.text.SimpleDateFormat;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.ArrayList;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.HashMap;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.Iterator;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.List;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.Locale;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.Map;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.Properties;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.Set;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.StringTokenizer;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.Vector;</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.seq.io.ParseException;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.ontology.Synonym;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">/** A class to parse the content of an OBO file. It delegates handling of the </a>
+<span class="sourceLineNo">045</span><a id="line.45"> * content to the OBOFileEventListener implementation.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * </a>
+<span class="sourceLineNo">047</span><a id="line.47"> * This file contains parts of the OBO-Edit file OBOParseEngine, (particularly the encoding and decoding part)</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * </a>
+<span class="sourceLineNo">049</span><a id="line.49"> * http://geneontology.cvs.sourceforge.net/geneontology/go-dev/java/oboedit/sources/org/geneontology/oboedit/dataadapter/OBOParseEngine.java?revision=1.10&amp;view=markup</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * Thanks to the OboEdit developers for giving permission to release this in BioJava.</a>
+<span class="sourceLineNo">051</span><a id="line.51"> *  </a>
+<span class="sourceLineNo">052</span><a id="line.52"> * </a>
+<span class="sourceLineNo">053</span><a id="line.53"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * @author John Day Richter</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * @since 1.6</a>
+<span class="sourceLineNo">056</span><a id="line.56"> */</a>
+<span class="sourceLineNo">057</span><a id="line.57">public class OboFileParser {</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        List&lt;OboFileEventListener&gt; listeners;</a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">        protected String line;</a>
+<span class="sourceLineNo">062</span><a id="line.62">        protected int linenum = 0;</a>
+<span class="sourceLineNo">063</span><a id="line.63">        protected int totalSize = 0;</a>
+<span class="sourceLineNo">064</span><a id="line.64">        protected int bytesRead = 0;</a>
+<span class="sourceLineNo">065</span><a id="line.65">        protected StringBuffer tempBuffer = new StringBuffer();</a>
+<span class="sourceLineNo">066</span><a id="line.66">        protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy HH:mm", Locale.US);</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        protected static final Map&lt;Character, Character&gt; escapeChars =</a>
+<span class="sourceLineNo">070</span><a id="line.70">                new HashMap&lt;Character, Character&gt;();</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">        protected static final Map&lt;Character, Character&gt; unescapeChars = </a>
+<span class="sourceLineNo">073</span><a id="line.73">                new HashMap&lt;Character, Character&gt;();</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        static {</a>
+<span class="sourceLineNo">076</span><a id="line.76">                escapeChars.put(new Character('n'), new Character('\n'));</a>
+<span class="sourceLineNo">077</span><a id="line.77">                escapeChars.put(new Character('W'), new Character(' '));</a>
+<span class="sourceLineNo">078</span><a id="line.78">                escapeChars.put(new Character('t'), new Character('\t'));</a>
+<span class="sourceLineNo">079</span><a id="line.79">                escapeChars.put(new Character(':'), new Character(':'));                        </a>
+<span class="sourceLineNo">080</span><a id="line.80">                escapeChars.put(new Character(','), new Character(','));</a>
+<span class="sourceLineNo">081</span><a id="line.81">                escapeChars.put(new Character('"'), new Character('"'));</a>
+<span class="sourceLineNo">082</span><a id="line.82">                escapeChars.put(new Character('\''), new Character('\''));              </a>
+<span class="sourceLineNo">083</span><a id="line.83">                escapeChars.put(new Character('\\'), new Character('\\'));</a>
+<span class="sourceLineNo">084</span><a id="line.84">                escapeChars.put(new Character('{'), new Character('{'));</a>
+<span class="sourceLineNo">085</span><a id="line.85">                escapeChars.put(new Character('}'), new Character('}'));</a>
+<span class="sourceLineNo">086</span><a id="line.86">                escapeChars.put(new Character('('), new Character('('));</a>
+<span class="sourceLineNo">087</span><a id="line.87">                escapeChars.put(new Character(')'), new Character(')'));</a>
+<span class="sourceLineNo">088</span><a id="line.88">                escapeChars.put(new Character('['), new Character('['));</a>
+<span class="sourceLineNo">089</span><a id="line.89">                escapeChars.put(new Character(']'), new Character(']'));</a>
+<span class="sourceLineNo">090</span><a id="line.90">                escapeChars.put(new Character('!'), new Character('!'));</a>
+<span class="sourceLineNo">091</span><a id="line.91">                Iterator &lt;Character&gt; it = escapeChars.keySet().iterator();</a>
+<span class="sourceLineNo">092</span><a id="line.92">                while (it.hasNext()) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                        Character key = it.next();</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        Character value = escapeChars.get(key);</a>
+<span class="sourceLineNo">095</span><a id="line.95">                        unescapeChars.put(value, key);</a>
+<span class="sourceLineNo">096</span><a id="line.96">                }</a>
+<span class="sourceLineNo">097</span><a id="line.97">        }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">        public static class SOPair {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                public String str = null;</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">                public int index = -1;</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">                public int endIndex = -1;</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">                public SOPair(String str, int index) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">                        this(str, index, -1);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                }</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">                public SOPair(String str, int index, int endIndex) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                        this.str = str;</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        this.index = index;</a>
+<span class="sourceLineNo">113</span><a id="line.113">                        this.endIndex = endIndex;</a>
+<span class="sourceLineNo">114</span><a id="line.114">                }</a>
+<span class="sourceLineNo">115</span><a id="line.115">                </a>
+<span class="sourceLineNo">116</span><a id="line.116">                </a>
+<span class="sourceLineNo">117</span><a id="line.117">        }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">        public OboFileParser(){</a>
+<span class="sourceLineNo">123</span><a id="line.123">                listeners = new ArrayList&lt;OboFileEventListener&gt;();</a>
+<span class="sourceLineNo">124</span><a id="line.124">        }</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">        public void addOboFileEventListener(OboFileEventListener listener){</a>
+<span class="sourceLineNo">129</span><a id="line.129">                listeners.add(listener);</a>
+<span class="sourceLineNo">130</span><a id="line.130">        }</a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">        public List&lt;OboFileEventListener&gt; getOboFileEventListener(){</a>
+<span class="sourceLineNo">133</span><a id="line.133">                return listeners;</a>
+<span class="sourceLineNo">134</span><a id="line.134">        }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">        /** parse an ontology file</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * </a>
+<span class="sourceLineNo">138</span><a id="line.138">         * @param oboFile</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * @throws IOException</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @throws ParseException </a>
+<span class="sourceLineNo">141</span><a id="line.141">         */</a>
+<span class="sourceLineNo">142</span><a id="line.142">        public void parseOBO(BufferedReader oboFile) throws IOException,ParseException{</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">                String line;</a>
+<span class="sourceLineNo">145</span><a id="line.145">                String currentStanza;</a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">                while ((line = oboFile.readLine()) != null) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                        if (line.length() == 0)</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                continue;</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                        if ( line.charAt(0) == '[') {</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                if (line.charAt(line.length() - 1) != ']')</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                        throw new ParseException("Unclosed stanza: \"" + line + "\"" );</a>
+<span class="sourceLineNo">154</span><a id="line.154">                                String stanzaname = line.substring(1, line.length() - 1);</a>
+<span class="sourceLineNo">155</span><a id="line.155">                                if (stanzaname.length() &lt; 1)</a>
+<span class="sourceLineNo">156</span><a id="line.156">                                        throw new ParseException("Empty stanza: \"" +line+"\"");</a>
+<span class="sourceLineNo">157</span><a id="line.157">                                currentStanza = stanzaname;                             </a>
+<span class="sourceLineNo">158</span><a id="line.158"></a>
+<span class="sourceLineNo">159</span><a id="line.159">                                //System.out.println("stanza: " + currentStanza);</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                triggerNewStanza(currentStanza);</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                        } else {</a>
+<span class="sourceLineNo">163</span><a id="line.163">                                // a content line</a>
+<span class="sourceLineNo">164</span><a id="line.164">                                SOPair pair;</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                                pair = unescape(line, ':', 0, true);</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                                //sSystem.out.println(pair);</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                String name = pair.str;</a>
+<span class="sourceLineNo">170</span><a id="line.170">                                int lineEnd = findUnescaped(line, '!', 0, line.length(), true);</a>
+<span class="sourceLineNo">171</span><a id="line.171">                                if (lineEnd == -1)</a>
+<span class="sourceLineNo">172</span><a id="line.172">                                        lineEnd = line.length();</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                                // find nested values</a>
+<span class="sourceLineNo">175</span><a id="line.175">                                NestedValue nv = null;</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">                                int trailingStartIndex = -1;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                                int trailingEndIndex = -1;</a>
+<span class="sourceLineNo">179</span><a id="line.179">                                for (int i = lineEnd - 1; i &gt;= 0; i--) {</a>
+<span class="sourceLineNo">180</span><a id="line.180">                                        if (Character.isWhitespace(line.charAt(i))) {</a>
+<span class="sourceLineNo">181</span><a id="line.181">                                                // keep going until we see non-whitespace</a>
+<span class="sourceLineNo">182</span><a id="line.182">                                        } else if (line.charAt(i) == '}') {</a>
+<span class="sourceLineNo">183</span><a id="line.183">                                                // if the first thing we see is a closing brace,</a>
+<span class="sourceLineNo">184</span><a id="line.184">                                                // we have a trailing modifier</a>
+<span class="sourceLineNo">185</span><a id="line.185">                                                if (i &gt;= 1 &amp;&amp; line.charAt(i - 1) == '\\')</a>
+<span class="sourceLineNo">186</span><a id="line.186">                                                        continue;</a>
+<span class="sourceLineNo">187</span><a id="line.187">                                                trailingEndIndex = i;</a>
+<span class="sourceLineNo">188</span><a id="line.188">                                                break;</a>
+<span class="sourceLineNo">189</span><a id="line.189">                                        } else</a>
+<span class="sourceLineNo">190</span><a id="line.190">                                                break;</a>
+<span class="sourceLineNo">191</span><a id="line.191">                                }</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">                                if (trailingEndIndex != -1) {</a>
+<span class="sourceLineNo">194</span><a id="line.194">                                        for (int i = trailingEndIndex - 1; i &gt;= 0; i--) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">                                                if (line.charAt(i) == '{') {</a>
+<span class="sourceLineNo">196</span><a id="line.196">                                                        if (i &gt;= 1 &amp;&amp; line.charAt(i - 1) == '\\')</a>
+<span class="sourceLineNo">197</span><a id="line.197">                                                                continue;</a>
+<span class="sourceLineNo">198</span><a id="line.198">                                                        trailingStartIndex = i + 1;</a>
+<span class="sourceLineNo">199</span><a id="line.199">                                                }</a>
+<span class="sourceLineNo">200</span><a id="line.200">                                        }</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                }</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">                                int valueStopIndex;</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                if (trailingStartIndex == -1 &amp;&amp; trailingEndIndex != -1)</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                        throw new ParseException("Unterminated trailing modifier. " + line);</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                else if (trailingStartIndex != -1) {</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                        valueStopIndex = trailingStartIndex - 1;</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        String trailing = line.substring(trailingStartIndex,</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                                        trailingEndIndex).trim();</a>
+<span class="sourceLineNo">210</span><a id="line.210">                                        nv = new NestedValue();</a>
+<span class="sourceLineNo">211</span><a id="line.211">                                        getNestedValue(nv, trailing, 0);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                                } else</a>
+<span class="sourceLineNo">213</span><a id="line.213">                                        valueStopIndex = lineEnd;</a>
+<span class="sourceLineNo">214</span><a id="line.214"></a>
+<span class="sourceLineNo">215</span><a id="line.215">                                String value = line.substring(pair.index + 1, valueStopIndex).trim();</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                /*</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                 * if (nv != null) System.err.println("nv = "+nv+", value =</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                 * |"+value+"|");</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                 */</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                if (value.length() == 0)</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                        throw new ParseException("Tag found with no value "+ line);</a>
+<span class="sourceLineNo">222</span><a id="line.222"></a>
+<span class="sourceLineNo">223</span><a id="line.223">                                if ( isSynonym(name)){</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                        Synonym synonym = parseSynonym(name,value);</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                        triggerNewSynonym(synonym);</a>
+<span class="sourceLineNo">226</span><a id="line.226">                                } else {</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                        //System.out.println("new key:" + name + " " + value);</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                        triggerNewKey(name,value);</a>
+<span class="sourceLineNo">229</span><a id="line.229">                                }</a>
+<span class="sourceLineNo">230</span><a id="line.230">                                //System.out.println("parsed key: " + name +" value: " + value + " nv: " + nv);</a>
+<span class="sourceLineNo">231</span><a id="line.231"></a>
+<span class="sourceLineNo">232</span><a id="line.232"></a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">                        }</a>
+<span class="sourceLineNo">235</span><a id="line.235">                }</a>
+<span class="sourceLineNo">236</span><a id="line.236">        }</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">        private boolean isSynonym(String key){</a>
+<span class="sourceLineNo">239</span><a id="line.239">                if ( key.equals(OboFileHandler.SYNONYM) || key.equals(OboFileHandler.EXACT_SYNONYM))</a>
+<span class="sourceLineNo">240</span><a id="line.240">                        return true;</a>
+<span class="sourceLineNo">241</span><a id="line.241">                return false;</a>
+<span class="sourceLineNo">242</span><a id="line.242">        }</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">        /** parse the Synonym String from the Term.</a>
+<span class="sourceLineNo">245</span><a id="line.245">         * value can be: </a>
+<span class="sourceLineNo">246</span><a id="line.246">         * &lt;pre&gt;"ca_bind" RELATED [uniprot:curation]&lt;/pre&gt;</a>
+<span class="sourceLineNo">247</span><a id="line.247">         * @param value</a>
+<span class="sourceLineNo">248</span><a id="line.248">         * @return the synonym text</a>
+<span class="sourceLineNo">249</span><a id="line.249">         */</a>
+<span class="sourceLineNo">250</span><a id="line.250">        private Synonym parseSynonym(String key, String value) throws ParseException{</a>
+<span class="sourceLineNo">251</span><a id="line.251"></a>
+<span class="sourceLineNo">252</span><a id="line.252">                //System.out.println("PARSE SYNONYM " + key +  " " + value);</a>
+<span class="sourceLineNo">253</span><a id="line.253">                int startIndex = findUnescaped(value, '"', 0, value.length());</a>
+<span class="sourceLineNo">254</span><a id="line.254">                if (startIndex == -1)</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        throw new ParseException("Expected \"" +  line + " " + linenum);</a>
+<span class="sourceLineNo">256</span><a id="line.256">                SOPair p = unescape(value, '"', startIndex + 1, value.length(),</a>
+<span class="sourceLineNo">257</span><a id="line.257">                                true);</a>
+<span class="sourceLineNo">258</span><a id="line.258">                int defIndex = findUnescaped(value, '[', p.index, value.length());</a>
+<span class="sourceLineNo">259</span><a id="line.259">                if (defIndex == -1) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                        throw new ParseException("Badly formatted synonym. " </a>
+<span class="sourceLineNo">261</span><a id="line.261">                                        + "No dbxref list found." + line + " " + linenum );</a>
+<span class="sourceLineNo">262</span><a id="line.262">                }</a>
+<span class="sourceLineNo">263</span><a id="line.263">                String leftovers = value.substring(p.index + 1, defIndex).trim();</a>
+<span class="sourceLineNo">264</span><a id="line.264">                StringTokenizer tokenizer = new StringTokenizer(leftovers, " \t");</a>
+<span class="sourceLineNo">265</span><a id="line.265">                int scope = Synonym.RELATED_SYNONYM;</a>
+<span class="sourceLineNo">266</span><a id="line.266">                </a>
+<span class="sourceLineNo">267</span><a id="line.267">                if ( key.equals(OboFileHandler.EXACT_SYNONYM))</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        scope = Synonym.EXACT_SYNONYM;</a>
+<span class="sourceLineNo">269</span><a id="line.269">                else if ( key.equals(OboFileHandler.BROAD_SYNONYM))</a>
+<span class="sourceLineNo">270</span><a id="line.270">                        scope = Synonym.BROAD_SYNONYM;</a>
+<span class="sourceLineNo">271</span><a id="line.271">                else if ( key.equals(OboFileHandler.NARROW_SYNONYM))                    </a>
+<span class="sourceLineNo">272</span><a id="line.272">                        scope = Synonym.NARROW_SYNONYM;</a>
+<span class="sourceLineNo">273</span><a id="line.273">                </a>
+<span class="sourceLineNo">274</span><a id="line.274">                </a>
+<span class="sourceLineNo">275</span><a id="line.275">                String catID = null;</a>
+<span class="sourceLineNo">276</span><a id="line.276">                for (int i = 0; tokenizer.hasMoreTokens(); i++) {</a>
+<span class="sourceLineNo">277</span><a id="line.277">                        String token = tokenizer.nextToken();</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        //System.out.println("TOKEN:" +token);</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        if (i == 0) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                if (token.equals("RELATED"))</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                        scope = Synonym.RELATED_SYNONYM;</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                else if (token.equals("UNSPECIFIED"))</a>
+<span class="sourceLineNo">283</span><a id="line.283">                                        scope = Synonym.RELATED_SYNONYM;</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                else if (token.equals("EXACT"))</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                        scope = Synonym.EXACT_SYNONYM;</a>
+<span class="sourceLineNo">286</span><a id="line.286">                                else if (token.equals("BROAD"))</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                        scope = Synonym.BROAD_SYNONYM;</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                else if (token.equals("NARROW"))</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                        scope = Synonym.NARROW_SYNONYM;</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                else</a>
+<span class="sourceLineNo">291</span><a id="line.291">                                        throw new ParseException("Found unexpected scope "</a>
+<span class="sourceLineNo">292</span><a id="line.292">                                                        + "identifier " + token + line);</a>
+<span class="sourceLineNo">293</span><a id="line.293">                        } else if (i == 1) {</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                catID = token;</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        } else</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                throw new ParseException("Expected dbxref list,"</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                                + " instead found " + token +   line );</a>
+<span class="sourceLineNo">298</span><a id="line.298">                }</a>
+<span class="sourceLineNo">299</span><a id="line.299"></a>
+<span class="sourceLineNo">300</span><a id="line.300">                Synonym synonym = new Synonym();</a>
+<span class="sourceLineNo">301</span><a id="line.301">                synonym.setScope(scope);</a>
+<span class="sourceLineNo">302</span><a id="line.302">                synonym.setCategory(catID);</a>
+<span class="sourceLineNo">303</span><a id="line.303">                synonym.setName(p.str);</a>
+<span class="sourceLineNo">304</span><a id="line.304">                //System.out.println("SYNONYM: " + p.str +" " + synonym.getCategory() + " " + synonym.getScope());</a>
+<span class="sourceLineNo">305</span><a id="line.305"></a>
+<span class="sourceLineNo">306</span><a id="line.306">                Map&lt;String,Object&gt;[] refs = getDbxrefList(value,defIndex + 1, value.length());</a>
+<span class="sourceLineNo">307</span><a id="line.307">                </a>
+<span class="sourceLineNo">308</span><a id="line.308">                // set the refs in the synonym</a>
+<span class="sourceLineNo">309</span><a id="line.309">                for (Map&lt;String, Object&gt; ref : refs){</a>
+<span class="sourceLineNo">310</span><a id="line.310">                        String xref = (String) ref.get("xref");</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        String desc = (String) ref.get("desc");</a>
+<span class="sourceLineNo">312</span><a id="line.312">                        //System.out.println(xref + " " + desc);</a>
+<span class="sourceLineNo">313</span><a id="line.313">                        NestedValue nv = (NestedValue) ref.get("nv");</a>
+<span class="sourceLineNo">314</span><a id="line.314">                        //TODO: add implementation for this...</a>
+<span class="sourceLineNo">315</span><a id="line.315">                }</a>
+<span class="sourceLineNo">316</span><a id="line.316">                </a>
+<span class="sourceLineNo">317</span><a id="line.317"></a>
+<span class="sourceLineNo">318</span><a id="line.318">                return synonym;</a>
+<span class="sourceLineNo">319</span><a id="line.319">        }</a>
+<span class="sourceLineNo">320</span><a id="line.320"></a>
+<span class="sourceLineNo">321</span><a id="line.321">        protected Map&lt;String,Object&gt;[] getDbxrefList(String line, int startoffset, int endoffset) throws ParseException {</a>
+<span class="sourceLineNo">322</span><a id="line.322">                Vector&lt;Map&lt;String,Object&gt;&gt; temp = new Vector&lt;Map&lt;String,Object&gt;&gt;();</a>
+<span class="sourceLineNo">323</span><a id="line.323">                boolean stop = false;</a>
+<span class="sourceLineNo">324</span><a id="line.324">                while (!stop) {</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        int braceIndex = findUnescaped(line, '{', startoffset, endoffset);</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        int endIndex = findUnescaped(line, ',', startoffset, endoffset,</a>
+<span class="sourceLineNo">327</span><a id="line.327">                                        true);</a>
+<span class="sourceLineNo">328</span><a id="line.328">                        boolean trailing = false;</a>
+<span class="sourceLineNo">329</span><a id="line.329">                        if (endIndex == -1) {</a>
+<span class="sourceLineNo">330</span><a id="line.330">                                endIndex = findUnescaped(line, ']', startoffset, endoffset,</a>
+<span class="sourceLineNo">331</span><a id="line.331">                                                true);</a>
+<span class="sourceLineNo">332</span><a id="line.332">                                if (endIndex == -1) {</a>
+<span class="sourceLineNo">333</span><a id="line.333">                                        throw new ParseException("Unterminated xref list " + line);</a>
+<span class="sourceLineNo">334</span><a id="line.334">                                }</a>
+<span class="sourceLineNo">335</span><a id="line.335">                                stop = true;</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        }</a>
+<span class="sourceLineNo">337</span><a id="line.337">                        if (braceIndex != -1 &amp;&amp; braceIndex &lt; endIndex) {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                                endIndex = braceIndex;</a>
+<span class="sourceLineNo">339</span><a id="line.339">                                trailing = true;</a>
+<span class="sourceLineNo">340</span><a id="line.340">                        }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">                        Map&lt;String, Object&gt; pair = parseXref(line, </a>
+<span class="sourceLineNo">343</span><a id="line.343">                                        startoffset,</a>
+<span class="sourceLineNo">344</span><a id="line.344">                                        endIndex);</a>
+<span class="sourceLineNo">345</span><a id="line.345">                        if (pair == null) {</a>
+<span class="sourceLineNo">346</span><a id="line.346">                                startoffset++;</a>
+<span class="sourceLineNo">347</span><a id="line.347">                                continue;</a>
+<span class="sourceLineNo">348</span><a id="line.348">                        }</a>
+<span class="sourceLineNo">349</span><a id="line.349">                        NestedValue nv = null;</a>
+<span class="sourceLineNo">350</span><a id="line.350">                        if (trailing) {</a>
+<span class="sourceLineNo">351</span><a id="line.351">                                nv = new NestedValue();</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                endIndex = getNestedValue(nv, line, endIndex + 1);</a>
+<span class="sourceLineNo">353</span><a id="line.353">                                if (endIndex == -1) {</a>
+<span class="sourceLineNo">354</span><a id="line.354">                                        throw new ParseException("Badly formatted "</a>
+<span class="sourceLineNo">355</span><a id="line.355">                                                        + "trailing properties " + line);</a>
+<span class="sourceLineNo">356</span><a id="line.356">                                }</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                pair.put("nv",nv);</a>
+<span class="sourceLineNo">358</span><a id="line.358">                        }</a>
+<span class="sourceLineNo">359</span><a id="line.359"></a>
+<span class="sourceLineNo">360</span><a id="line.360">                        temp.add(pair);</a>
+<span class="sourceLineNo">361</span><a id="line.361">                        startoffset = endIndex + 1;</a>
+<span class="sourceLineNo">362</span><a id="line.362">                }</a>
+<span class="sourceLineNo">363</span><a id="line.363">                Map&lt;String,Object&gt;[] out = new HashMap[temp.size()];</a>
+<span class="sourceLineNo">364</span><a id="line.364">                for (int i = 0; i &lt; temp.size(); i++) {</a>
+<span class="sourceLineNo">365</span><a id="line.365">                        Map&lt;String, Object&gt; pair =  temp.get(i);</a>
+<span class="sourceLineNo">366</span><a id="line.366">                        out[i] = pair;</a>
+<span class="sourceLineNo">367</span><a id="line.367">                }</a>
+<span class="sourceLineNo">368</span><a id="line.368">                return out;</a>
+<span class="sourceLineNo">369</span><a id="line.369">        }</a>
+<span class="sourceLineNo">370</span><a id="line.370"></a>
+<span class="sourceLineNo">371</span><a id="line.371">        protected Map&lt;String,Object&gt; parseXref(String line, </a>
+<span class="sourceLineNo">372</span><a id="line.372">                        int startoffset, int endoffset) throws ParseException {</a>
+<span class="sourceLineNo">373</span><a id="line.373">                String xref_str = null;</a>
+<span class="sourceLineNo">374</span><a id="line.374">                String desc_str = null;</a>
+<span class="sourceLineNo">375</span><a id="line.375"></a>
+<span class="sourceLineNo">376</span><a id="line.376">                SOPair xref = unescape(line, '"', startoffset, endoffset, false);</a>
+<span class="sourceLineNo">377</span><a id="line.377">                xref_str = xref.str.trim();</a>
+<span class="sourceLineNo">378</span><a id="line.378">                if (xref_str.length() == 0)</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        return null;</a>
+<span class="sourceLineNo">380</span><a id="line.380"></a>
+<span class="sourceLineNo">381</span><a id="line.381">                if (xref.index != -1) {</a>
+<span class="sourceLineNo">382</span><a id="line.382">                        SOPair desc = unescape(line, '"', xref.index + 1, endoffset, true);</a>
+<span class="sourceLineNo">383</span><a id="line.383">                        desc_str = desc.str.trim();</a>
+<span class="sourceLineNo">384</span><a id="line.384">                }</a>
+<span class="sourceLineNo">385</span><a id="line.385"></a>
+<span class="sourceLineNo">386</span><a id="line.386"></a>
+<span class="sourceLineNo">387</span><a id="line.387">                Map&lt;String, Object&gt; m = new HashMap&lt;String, Object&gt;();</a>
+<span class="sourceLineNo">388</span><a id="line.388">                m.put("xref",xref_str);</a>
+<span class="sourceLineNo">389</span><a id="line.389">                m.put("desc",desc_str);</a>
+<span class="sourceLineNo">390</span><a id="line.390">                return m;</a>
+<span class="sourceLineNo">391</span><a id="line.391">        }</a>
+<span class="sourceLineNo">392</span><a id="line.392"></a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394"></a>
+<span class="sourceLineNo">395</span><a id="line.395">        private void triggerNewStanza(String stanza){</a>
+<span class="sourceLineNo">396</span><a id="line.396">                Iterator&lt;OboFileEventListener&gt; iter = listeners.iterator();</a>
+<span class="sourceLineNo">397</span><a id="line.397">                while (iter.hasNext()){</a>
+<span class="sourceLineNo">398</span><a id="line.398">                        OboFileEventListener li = iter.next();</a>
+<span class="sourceLineNo">399</span><a id="line.399">                        li.newStanza(stanza);</a>
+<span class="sourceLineNo">400</span><a id="line.400">                }               </a>
+<span class="sourceLineNo">401</span><a id="line.401">        }</a>
+<span class="sourceLineNo">402</span><a id="line.402"></a>
+<span class="sourceLineNo">403</span><a id="line.403">        private void triggerNewKey(String key, String value){</a>
+<span class="sourceLineNo">404</span><a id="line.404">                Iterator&lt;OboFileEventListener&gt; iter = listeners.iterator();</a>
+<span class="sourceLineNo">405</span><a id="line.405">                while (iter.hasNext()){</a>
+<span class="sourceLineNo">406</span><a id="line.406">                        OboFileEventListener li = iter.next();</a>
+<span class="sourceLineNo">407</span><a id="line.407">                        li.newKey(key, value);</a>
+<span class="sourceLineNo">408</span><a id="line.408">                }</a>
+<span class="sourceLineNo">409</span><a id="line.409">        }</a>
+<span class="sourceLineNo">410</span><a id="line.410"></a>
+<span class="sourceLineNo">411</span><a id="line.411">        private void triggerNewSynonym(Synonym synonym){</a>
+<span class="sourceLineNo">412</span><a id="line.412">                Iterator&lt;OboFileEventListener&gt; iter = listeners.iterator();</a>
+<span class="sourceLineNo">413</span><a id="line.413">                while (iter.hasNext()){</a>
+<span class="sourceLineNo">414</span><a id="line.414">                        OboFileEventListener li = iter.next();</a>
+<span class="sourceLineNo">415</span><a id="line.415">                        li.newSynonym(synonym);</a>
+<span class="sourceLineNo">416</span><a id="line.416">                }</a>
+<span class="sourceLineNo">417</span><a id="line.417">        }</a>
+<span class="sourceLineNo">418</span><a id="line.418"></a>
+<span class="sourceLineNo">419</span><a id="line.419">        public static String escape(String str, boolean escapespaces) {</a>
+<span class="sourceLineNo">420</span><a id="line.420">                StringBuffer out = new StringBuffer();</a>
+<span class="sourceLineNo">421</span><a id="line.421">                for (int i = 0; i &lt; str.length(); i++) {</a>
+<span class="sourceLineNo">422</span><a id="line.422">                        char c = str.charAt(i);</a>
+<span class="sourceLineNo">423</span><a id="line.423">                        Object o = unescapeChars.get(new Character(c));</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        if (o == null)</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                out.append(c);</a>
+<span class="sourceLineNo">426</span><a id="line.426">                        else {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                if (escapespaces || (!escapespaces &amp;&amp; c != ' ' &amp;&amp; c != '\t')) {</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                        out.append("\\" + o);</a>
+<span class="sourceLineNo">429</span><a id="line.429">                                } else</a>
+<span class="sourceLineNo">430</span><a id="line.430">                                        out.append(c);</a>
+<span class="sourceLineNo">431</span><a id="line.431">                        }</a>
+<span class="sourceLineNo">432</span><a id="line.432">                }</a>
+<span class="sourceLineNo">433</span><a id="line.433">                return out.toString();</a>
+<span class="sourceLineNo">434</span><a id="line.434">        }</a>
+<span class="sourceLineNo">435</span><a id="line.435"></a>
+<span class="sourceLineNo">436</span><a id="line.436">        public String unescape(String str) throws ParseException {</a>
+<span class="sourceLineNo">437</span><a id="line.437">                return unescape(str, '\0', 0, str.length(), false).str;</a>
+<span class="sourceLineNo">438</span><a id="line.438">        }</a>
+<span class="sourceLineNo">439</span><a id="line.439"></a>
+<span class="sourceLineNo">440</span><a id="line.440">        public SOPair unescape(String str, char toChar, int startindex,</a>
+<span class="sourceLineNo">441</span><a id="line.441">                        boolean mustFindChar) throws ParseException {</a>
+<span class="sourceLineNo">442</span><a id="line.442">                return unescape(str, toChar, startindex, str.length(), mustFindChar);</a>
+<span class="sourceLineNo">443</span><a id="line.443">        }</a>
+<span class="sourceLineNo">444</span><a id="line.444"></a>
+<span class="sourceLineNo">445</span><a id="line.445">        public SOPair unescape(String str, char toChar, int startindex,</a>
+<span class="sourceLineNo">446</span><a id="line.446">                        int endindex, boolean mustFindChar) throws ParseException {</a>
+<span class="sourceLineNo">447</span><a id="line.447">                StringBuffer out = new StringBuffer();</a>
+<span class="sourceLineNo">448</span><a id="line.448">                int endValue = -1;</a>
+<span class="sourceLineNo">449</span><a id="line.449">                for (int i = startindex; i &lt; endindex; i++) {</a>
+<span class="sourceLineNo">450</span><a id="line.450">                        char c = str.charAt(i);</a>
+<span class="sourceLineNo">451</span><a id="line.451">                        if (c == '\\') {</a>
+<span class="sourceLineNo">452</span><a id="line.452">                                i++;</a>
+<span class="sourceLineNo">453</span><a id="line.453">                                c = str.charAt(i);</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                Character mapchar = escapeChars</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                .get(new Character(c));</a>
+<span class="sourceLineNo">456</span><a id="line.456">                                if (mapchar == null)</a>
+<span class="sourceLineNo">457</span><a id="line.457">                                        throw new ParseException("Unrecognized escape"</a>
+<span class="sourceLineNo">458</span><a id="line.458">                                                        + " character " + c + " found.");</a>
+<span class="sourceLineNo">459</span><a id="line.459">                                out.append(mapchar);</a>
+<span class="sourceLineNo">460</span><a id="line.460">                        } else if (c == toChar) {</a>
+<span class="sourceLineNo">461</span><a id="line.461">                                endValue = i;</a>
+<span class="sourceLineNo">462</span><a id="line.462">                                break;</a>
+<span class="sourceLineNo">463</span><a id="line.463">                        } else {</a>
+<span class="sourceLineNo">464</span><a id="line.464">                                out.append(c);</a>
+<span class="sourceLineNo">465</span><a id="line.465">                        }</a>
+<span class="sourceLineNo">466</span><a id="line.466">                }</a>
+<span class="sourceLineNo">467</span><a id="line.467">                if (endValue == -1 &amp;&amp; mustFindChar) {</a>
+<span class="sourceLineNo">468</span><a id="line.468">                        throw new ParseException("Expected " + toChar + "." + str);</a>
+<span class="sourceLineNo">469</span><a id="line.469">                }</a>
+<span class="sourceLineNo">470</span><a id="line.470">                return new SOPair(out.toString(), endValue);</a>
+<span class="sourceLineNo">471</span><a id="line.471">        }</a>
+<span class="sourceLineNo">472</span><a id="line.472"></a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474">        public static int findUnescaped(String str, char toChar) {</a>
+<span class="sourceLineNo">475</span><a id="line.475">                return findUnescaped(str, toChar, 0, str.length());</a>
+<span class="sourceLineNo">476</span><a id="line.476">        }</a>
+<span class="sourceLineNo">477</span><a id="line.477"></a>
+<span class="sourceLineNo">478</span><a id="line.478">        public static int findUnescaped(String str, char toChar, int startIndex,</a>
+<span class="sourceLineNo">479</span><a id="line.479">                        int endIndex) {</a>
+<span class="sourceLineNo">480</span><a id="line.480">                return findUnescaped(str, toChar, startIndex, endIndex, false);</a>
+<span class="sourceLineNo">481</span><a id="line.481">        }</a>
+<span class="sourceLineNo">482</span><a id="line.482"></a>
+<span class="sourceLineNo">483</span><a id="line.483">        public static int findUnescaped(String str, char toChar, int startindex,</a>
+<span class="sourceLineNo">484</span><a id="line.484">                        int endindex, boolean honorQuotes) {</a>
+<span class="sourceLineNo">485</span><a id="line.485">                boolean inQuotes = false;</a>
+<span class="sourceLineNo">486</span><a id="line.486">                char quoteChar = '\0';</a>
+<span class="sourceLineNo">487</span><a id="line.487">                for (int i = startindex; i &lt; endindex; i++) {</a>
+<span class="sourceLineNo">488</span><a id="line.488">                        char c = str.charAt(i);</a>
+<span class="sourceLineNo">489</span><a id="line.489">                        if (c == '\\') {</a>
+<span class="sourceLineNo">490</span><a id="line.490">                                i++;</a>
+<span class="sourceLineNo">491</span><a id="line.491">                                continue;</a>
+<span class="sourceLineNo">492</span><a id="line.492">                        } else if (inQuotes) {</a>
+<span class="sourceLineNo">493</span><a id="line.493">                                if (c == quoteChar) </a>
+<span class="sourceLineNo">494</span><a id="line.494">                                        inQuotes = false;</a>
+<span class="sourceLineNo">495</span><a id="line.495">                                continue;</a>
+<span class="sourceLineNo">496</span><a id="line.496">                                </a>
+<span class="sourceLineNo">497</span><a id="line.497">                        } else if (c == toChar) {</a>
+<span class="sourceLineNo">498</span><a id="line.498">                                return i;</a>
+<span class="sourceLineNo">499</span><a id="line.499">                        } else if (honorQuotes &amp;&amp; isQuote(c)) {</a>
+<span class="sourceLineNo">500</span><a id="line.500">                                inQuotes = true;</a>
+<span class="sourceLineNo">501</span><a id="line.501">                                quoteChar = c;</a>
+<span class="sourceLineNo">502</span><a id="line.502">                        }</a>
+<span class="sourceLineNo">503</span><a id="line.503">                }</a>
+<span class="sourceLineNo">504</span><a id="line.504">                return -1;</a>
+<span class="sourceLineNo">505</span><a id="line.505">        }</a>
+<span class="sourceLineNo">506</span><a id="line.506"></a>
+<span class="sourceLineNo">507</span><a id="line.507">        public static boolean isEscapeStarter(char c) {</a>
+<span class="sourceLineNo">508</span><a id="line.508">                return c == '\\';</a>
+<span class="sourceLineNo">509</span><a id="line.509">        }</a>
+<span class="sourceLineNo">510</span><a id="line.510"></a>
+<span class="sourceLineNo">511</span><a id="line.511">        public static boolean isQuote(char c) {</a>
+<span class="sourceLineNo">512</span><a id="line.512">                return c == '"';</a>
+<span class="sourceLineNo">513</span><a id="line.513">        }</a>
+<span class="sourceLineNo">514</span><a id="line.514"></a>
+<span class="sourceLineNo">515</span><a id="line.515">        protected StringBuffer getTempBuffer() {</a>
+<span class="sourceLineNo">516</span><a id="line.516">                tempBuffer.delete(0, tempBuffer.length());</a>
+<span class="sourceLineNo">517</span><a id="line.517">                return tempBuffer;</a>
+<span class="sourceLineNo">518</span><a id="line.518">        }</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">        protected SOPair readQuotedString(String value, int startIndex,</a>
+<span class="sourceLineNo">521</span><a id="line.521">                        int stopIndex, char terminatingChar, boolean requireQuotes,</a>
+<span class="sourceLineNo">522</span><a id="line.522">                        boolean legalEndOfLine) throws ParseException {</a>
+<span class="sourceLineNo">523</span><a id="line.523"></a>
+<span class="sourceLineNo">524</span><a id="line.524">                char quoteChar = '\0';</a>
+<span class="sourceLineNo">525</span><a id="line.525">                StringBuffer out = getTempBuffer();</a>
+<span class="sourceLineNo">526</span><a id="line.526">                int i = startIndex;</a>
+<span class="sourceLineNo">527</span><a id="line.527">                boolean useQuotes = false;</a>
+<span class="sourceLineNo">528</span><a id="line.528"></a>
+<span class="sourceLineNo">529</span><a id="line.529">                for (; i &lt; stopIndex; i++) {</a>
+<span class="sourceLineNo">530</span><a id="line.530">                        // burn through any leading whitespace</a>
+<span class="sourceLineNo">531</span><a id="line.531">                        if (Character.isWhitespace(value.charAt(i))) </a>
+<span class="sourceLineNo">532</span><a id="line.532">                                continue;</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">                        // if the first non-whitespace character is not a quote,</a>
+<span class="sourceLineNo">535</span><a id="line.535">                        // proceed in non-quoted mode                           </a>
+<span class="sourceLineNo">536</span><a id="line.536">                        else if (!isQuote(value.charAt(i))) {</a>
+<span class="sourceLineNo">537</span><a id="line.537">                                if (requireQuotes)</a>
+<span class="sourceLineNo">538</span><a id="line.538">                                        throw new ParseException(</a>
+<span class="sourceLineNo">539</span><a id="line.539">                                                        "Expected start of quoted string. " + </a>
+<span class="sourceLineNo">540</span><a id="line.540">                                                        line + " " +  value+ " at linenr " + linenum);</a>
+<span class="sourceLineNo">541</span><a id="line.541">                                useQuotes = false;</a>
+<span class="sourceLineNo">542</span><a id="line.542">                                break;</a>
+<span class="sourceLineNo">543</span><a id="line.543">                        } else {</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                useQuotes = true;</a>
+<span class="sourceLineNo">545</span><a id="line.545">                                quoteChar = value.charAt(i);</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                i++;</a>
+<span class="sourceLineNo">547</span><a id="line.547">                                break;</a>
+<span class="sourceLineNo">548</span><a id="line.548">                        }</a>
+<span class="sourceLineNo">549</span><a id="line.549">                }</a>
+<span class="sourceLineNo">550</span><a id="line.550"></a>
+<span class="sourceLineNo">551</span><a id="line.551">                // look for a closing quote or final delimiter</a>
+<span class="sourceLineNo">552</span><a id="line.552">                for (; i &lt; stopIndex; i++) {</a>
+<span class="sourceLineNo">553</span><a id="line.553">                        if (isEscapeStarter(value.charAt(i))) {</a>
+<span class="sourceLineNo">554</span><a id="line.554">                                i++;</a>
+<span class="sourceLineNo">555</span><a id="line.555">                                if (i &gt;= value.length())</a>
+<span class="sourceLineNo">556</span><a id="line.556">                                        throw new ParseException("Incomplete escape sequence. " + line);</a>
+<span class="sourceLineNo">557</span><a id="line.557">                                out.append(value.charAt(i));</a>
+<span class="sourceLineNo">558</span><a id="line.558">                        } else if ((useQuotes &amp;&amp; value.charAt(i) == quoteChar)</a>
+<span class="sourceLineNo">559</span><a id="line.559">                                        || (!useQuotes &amp;&amp; value.charAt(i) == terminatingChar)) {</a>
+<span class="sourceLineNo">560</span><a id="line.560">                                if (!useQuotes)</a>
+<span class="sourceLineNo">561</span><a id="line.561">                                        return new SOPair(out.toString().trim(), startIndex, i - 1);</a>
+<span class="sourceLineNo">562</span><a id="line.562">                                else</a>
+<span class="sourceLineNo">563</span><a id="line.563">                                        return new SOPair(out.toString(), startIndex, i);</a>
+<span class="sourceLineNo">564</span><a id="line.564">                        } else {</a>
+<span class="sourceLineNo">565</span><a id="line.565">                                out.append(value.charAt(i));</a>
+<span class="sourceLineNo">566</span><a id="line.566">                        }</a>
+<span class="sourceLineNo">567</span><a id="line.567">                }</a>
+<span class="sourceLineNo">568</span><a id="line.568">                if (!useQuotes &amp;&amp; legalEndOfLine)</a>
+<span class="sourceLineNo">569</span><a id="line.569">                        return new SOPair(out.toString().trim(), startIndex, i);</a>
+<span class="sourceLineNo">570</span><a id="line.570">                else</a>
+<span class="sourceLineNo">571</span><a id="line.571">                        throw new ParseException("Unterminated quoted string. " +line);</a>
+<span class="sourceLineNo">572</span><a id="line.572">        }</a>
+<span class="sourceLineNo">573</span><a id="line.573"></a>
+<span class="sourceLineNo">574</span><a id="line.574">        protected int getNestedValue(NestedValue nv, String str, int startIndex)</a>
+<span class="sourceLineNo">575</span><a id="line.575">        throws ParseException {</a>
+<span class="sourceLineNo">576</span><a id="line.576">                while (startIndex &lt; str.length()) {</a>
+<span class="sourceLineNo">577</span><a id="line.577">                        int equalsIndex = findUnescaped(str, '=', startIndex, str.length());</a>
+<span class="sourceLineNo">578</span><a id="line.578">                        if (equalsIndex == -1)</a>
+<span class="sourceLineNo">579</span><a id="line.579">                                throw new ParseException("Expected = in trailing modifier " +line);</a>
+<span class="sourceLineNo">580</span><a id="line.580">                        String name = str.substring(startIndex, equalsIndex).trim();</a>
+<span class="sourceLineNo">581</span><a id="line.581">                        SOPair value = readQuotedString(str, equalsIndex + 1, str.length(),</a>
+<span class="sourceLineNo">582</span><a id="line.582">                                        ',', false, true);</a>
+<span class="sourceLineNo">583</span><a id="line.583"></a>
+<span class="sourceLineNo">584</span><a id="line.584">                        Properties pv = new Properties();</a>
+<span class="sourceLineNo">585</span><a id="line.585">                        pv.setProperty(unescape(name),value.str);</a>
+<span class="sourceLineNo">586</span><a id="line.586"></a>
+<span class="sourceLineNo">587</span><a id="line.587"></a>
+<span class="sourceLineNo">588</span><a id="line.588">                        nv.addPropertyValue(pv);</a>
+<span class="sourceLineNo">589</span><a id="line.589">                        startIndex = value.endIndex + 1;</a>
+<span class="sourceLineNo">590</span><a id="line.590">                        for (; startIndex &lt; str.length(); startIndex++) {</a>
+<span class="sourceLineNo">591</span><a id="line.591">                                if (Character.isWhitespace(str.charAt(startIndex)))</a>
+<span class="sourceLineNo">592</span><a id="line.592">                                        continue;</a>
+<span class="sourceLineNo">593</span><a id="line.593">                                else if (str.charAt(startIndex) == ',') {</a>
+<span class="sourceLineNo">594</span><a id="line.594">                                        startIndex++;</a>
+<span class="sourceLineNo">595</span><a id="line.595">                                        break;</a>
+<span class="sourceLineNo">596</span><a id="line.596">                                } else {</a>
+<span class="sourceLineNo">597</span><a id="line.597">                                        System.err.println("found character |"</a>
+<span class="sourceLineNo">598</span><a id="line.598">                                                        + str.charAt(startIndex) + "|");</a>
+<span class="sourceLineNo">599</span><a id="line.599">                                        throw new ParseException("Expected comma in trailing modifier. " + </a>
+<span class="sourceLineNo">600</span><a id="line.600">                                                        line + " linenr: " + linenum);</a>
+<span class="sourceLineNo">601</span><a id="line.601">                                }</a>
+<span class="sourceLineNo">602</span><a id="line.602">                        }</a>
+<span class="sourceLineNo">603</span><a id="line.603">                }</a>
+<span class="sourceLineNo">604</span><a id="line.604">                return str.length();</a>
+<span class="sourceLineNo">605</span><a id="line.605">        }</a>
+<span class="sourceLineNo">606</span><a id="line.606"></a>
+<span class="sourceLineNo">607</span><a id="line.607">}</a>
+<span class="sourceLineNo">608</span><a id="line.608"></a>
+<span class="sourceLineNo">609</span><a id="line.609">class NestedValue {</a>
+<span class="sourceLineNo">610</span><a id="line.610"></a>
+<span class="sourceLineNo">611</span><a id="line.611">        /**</a>
+<span class="sourceLineNo">612</span><a id="line.612">         *</a>
+<span class="sourceLineNo">613</span><a id="line.613">         */</a>
+<span class="sourceLineNo">614</span><a id="line.614">        private static final long serialVersionUID = -7529450225162773796L;</a>
+<span class="sourceLineNo">615</span><a id="line.615">        protected Properties propertyValues = new Properties();</a>
+<span class="sourceLineNo">616</span><a id="line.616">        protected String name;</a>
+<span class="sourceLineNo">617</span><a id="line.617">        protected String suggestedComment;</a>
+<span class="sourceLineNo">618</span><a id="line.618"></a>
+<span class="sourceLineNo">619</span><a id="line.619">        public NestedValue() {</a>
+<span class="sourceLineNo">620</span><a id="line.620">        }</a>
+<span class="sourceLineNo">621</span><a id="line.621"></a>
+<span class="sourceLineNo">622</span><a id="line.622">        public String toString(){</a>
+<span class="sourceLineNo">623</span><a id="line.623">                String txt = "NestedValue: " ;</a>
+<span class="sourceLineNo">624</span><a id="line.624">                Set&lt;Object&gt; keys = propertyValues.keySet();</a>
+<span class="sourceLineNo">625</span><a id="line.625">                Iterator&lt;Object&gt; iter = keys.iterator();</a>
+<span class="sourceLineNo">626</span><a id="line.626">                while (iter.hasNext()){</a>
+<span class="sourceLineNo">627</span><a id="line.627">                        String key = iter.next().toString();</a>
+<span class="sourceLineNo">628</span><a id="line.628">                        String value = propertyValues.get(key).toString();</a>
+<span class="sourceLineNo">629</span><a id="line.629">                        txt += " [" + key + ":" + value + "]";</a>
+<span class="sourceLineNo">630</span><a id="line.630">                }</a>
+<span class="sourceLineNo">631</span><a id="line.631"></a>
+<span class="sourceLineNo">632</span><a id="line.632"></a>
+<span class="sourceLineNo">633</span><a id="line.633">                return txt;</a>
+<span class="sourceLineNo">634</span><a id="line.634">        }</a>
+<span class="sourceLineNo">635</span><a id="line.635"></a>
+<span class="sourceLineNo">636</span><a id="line.636">        public String getName() {</a>
+<span class="sourceLineNo">637</span><a id="line.637">                return name;</a>
+<span class="sourceLineNo">638</span><a id="line.638">        }</a>
+<span class="sourceLineNo">639</span><a id="line.639"></a>
+<span class="sourceLineNo">640</span><a id="line.640">        public Properties getPropertyValues() {</a>
+<span class="sourceLineNo">641</span><a id="line.641">                return propertyValues;</a>
+<span class="sourceLineNo">642</span><a id="line.642">        }</a>
+<span class="sourceLineNo">643</span><a id="line.643"></a>
+<span class="sourceLineNo">644</span><a id="line.644">        public void addPropertyValue(Properties pv) {</a>
+<span class="sourceLineNo">645</span><a id="line.645">                Set&lt;Object&gt; keys = pv.keySet();</a>
+<span class="sourceLineNo">646</span><a id="line.646">                Iterator&lt;Object&gt; iter = keys.iterator();</a>
+<span class="sourceLineNo">647</span><a id="line.647">                while (iter.hasNext()){</a>
+<span class="sourceLineNo">648</span><a id="line.648">                        String key = iter.next().toString();</a>
+<span class="sourceLineNo">649</span><a id="line.649">                        String value = pv.get(key).toString();</a>
+<span class="sourceLineNo">650</span><a id="line.650">                        propertyValues.setProperty(key, value);         </a>
+<span class="sourceLineNo">651</span><a id="line.651">                }</a>
+<span class="sourceLineNo">652</span><a id="line.652"></a>
+<span class="sourceLineNo">653</span><a id="line.653">        }</a>
+<span class="sourceLineNo">654</span><a id="line.654"></a>
+<span class="sourceLineNo">655</span><a id="line.655">        @Override</a>
+<span class="sourceLineNo">656</span><a id="line.656">        public Object clone() {</a>
+<span class="sourceLineNo">657</span><a id="line.657">                try {</a>
+<span class="sourceLineNo">658</span><a id="line.658">                        return super.clone();</a>
+<span class="sourceLineNo">659</span><a id="line.659">                } catch (CloneNotSupportedException ex) {</a>
+<span class="sourceLineNo">660</span><a id="line.660">                        // this will never happen</a>
+<span class="sourceLineNo">661</span><a id="line.661">                        return null;</a>
+<span class="sourceLineNo">662</span><a id="line.662">                }</a>
+<span class="sourceLineNo">663</span><a id="line.663">        }</a>
+<span class="sourceLineNo">664</span><a id="line.664"></a>
+<span class="sourceLineNo">665</span><a id="line.665">        public String getSuggestedComment() {</a>
+<span class="sourceLineNo">666</span><a id="line.666">                return suggestedComment;</a>
+<span class="sourceLineNo">667</span><a id="line.667">        }</a>
+<span class="sourceLineNo">668</span><a id="line.668"></a>
+<span class="sourceLineNo">669</span><a id="line.669">        public void setSuggestedComment(String suggestedComment) {</a>
+<span class="sourceLineNo">670</span><a id="line.670">                this.suggestedComment = suggestedComment;</a>
+<span class="sourceLineNo">671</span><a id="line.671">        }</a>
+<span class="sourceLineNo">672</span><a id="line.672">}</a>
+<span class="sourceLineNo">673</span><a id="line.673"></a>
+<span class="sourceLineNo">674</span><a id="line.674"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

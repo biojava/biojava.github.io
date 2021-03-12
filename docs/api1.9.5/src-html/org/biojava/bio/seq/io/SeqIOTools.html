@@ -1,0 +1,1322 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.seq.io;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.File;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.FileNotFoundException;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.FileReader;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.IOException;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.io.InputStream;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.OutputStream;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.io.PrintStream;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.regex.PatternSyntaxException;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.alignment.Alignment;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.seq.NucleotideTools;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.seq.ProteinTools;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.seq.RNATools;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.bio.seq.SequenceIterator;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.bio.seq.db.HashSequenceDB;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.bio.seq.db.IDMaker;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.seq.db.SequenceDB;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.symbol.Alphabet;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.bio.symbol.FiniteAlphabet;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.utils.AssertionFailure;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">/**</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * A set of convenience methods for handling common file formats.</a>
+<span class="sourceLineNo">055</span><a id="line.55"> *</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * @author Thomas Down</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * @author Nimesh Singh</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * @author Keith James</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * @since 1.1</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * @deprecated use org.biojavax.bio.seq.RichSequence.IOTools</a>
+<span class="sourceLineNo">063</span><a id="line.63"> */</a>
+<span class="sourceLineNo">064</span><a id="line.64">public final class SeqIOTools  {</a>
+<span class="sourceLineNo">065</span><a id="line.65">    private static SequenceBuilderFactory _emblBuilderFactory;</a>
+<span class="sourceLineNo">066</span><a id="line.66">    private static SequenceBuilderFactory _genbankBuilderFactory;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    private static SequenceBuilderFactory _genpeptBuilderFactory;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    private static SequenceBuilderFactory _swissprotBuilderFactory;</a>
+<span class="sourceLineNo">069</span><a id="line.69">    private static SequenceBuilderFactory _fastaBuilderFactory;</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">    /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">     * This can't be instantiated.</a>
+<span class="sourceLineNo">073</span><a id="line.73">     */</a>
+<span class="sourceLineNo">074</span><a id="line.74">    private SeqIOTools() {</a>
+<span class="sourceLineNo">075</span><a id="line.75">    }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">    /**</a>
+<span class="sourceLineNo">078</span><a id="line.78">     * Get a default SequenceBuilderFactory for handling EMBL</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * files.</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * @return a &lt;CODE&gt;SmartSequenceBuilder.FACTORY&lt;/CODE&gt;</a>
+<span class="sourceLineNo">081</span><a id="line.81">     */</a>
+<span class="sourceLineNo">082</span><a id="line.82">    public static SequenceBuilderFactory getEmblBuilderFactory() {</a>
+<span class="sourceLineNo">083</span><a id="line.83">        if (_emblBuilderFactory == null) {</a>
+<span class="sourceLineNo">084</span><a id="line.84">            _emblBuilderFactory =</a>
+<span class="sourceLineNo">085</span><a id="line.85">                new EmblProcessor.Factory(SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">086</span><a id="line.86">        }</a>
+<span class="sourceLineNo">087</span><a id="line.87">        return _emblBuilderFactory;</a>
+<span class="sourceLineNo">088</span><a id="line.88">    }</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">    /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * Iterate over the sequences in an EMBL-format stream.</a>
+<span class="sourceLineNo">092</span><a id="line.92">     * @param br A reader for the EMBL source or file</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">095</span><a id="line.95">     */</a>
+<span class="sourceLineNo">096</span><a id="line.96">    public static SequenceIterator readEmbl(BufferedReader br) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">        return new StreamReader(br,</a>
+<span class="sourceLineNo">098</span><a id="line.98">                                new EmblLikeFormat(),</a>
+<span class="sourceLineNo">099</span><a id="line.99">                                getDNAParser(),</a>
+<span class="sourceLineNo">100</span><a id="line.100">                                getEmblBuilderFactory());</a>
+<span class="sourceLineNo">101</span><a id="line.101">    }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">    /**</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * Iterate over the sequences in an EMBL-format stream, but for RNA.</a>
+<span class="sourceLineNo">105</span><a id="line.105">     * @param br A reader for the EMBL source or file</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">107</span><a id="line.107">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">108</span><a id="line.108">     */</a>
+<span class="sourceLineNo">109</span><a id="line.109">    public static SequenceIterator readEmblRNA(BufferedReader br) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">        return new StreamReader(br,</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                new EmblLikeFormat(),</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                getRNAParser(),</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                getEmblBuilderFactory());</a>
+<span class="sourceLineNo">114</span><a id="line.114">    }</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">    /**</a>
+<span class="sourceLineNo">117</span><a id="line.117">     * Iterate over the sequences in an EMBL-format stream.</a>
+<span class="sourceLineNo">118</span><a id="line.118">     * @param br A reader for the EMBL source or file</a>
+<span class="sourceLineNo">119</span><a id="line.119">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">120</span><a id="line.120">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">121</span><a id="line.121">     */</a>
+<span class="sourceLineNo">122</span><a id="line.122">    public static SequenceIterator readEmblNucleotide(BufferedReader br) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">        return new StreamReader(br,</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                new EmblLikeFormat(),</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                getNucleotideParser(),</a>
+<span class="sourceLineNo">126</span><a id="line.126">                                getEmblBuilderFactory());</a>
+<span class="sourceLineNo">127</span><a id="line.127">    }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">    /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * Get a default SequenceBuilderFactory for handling GenBank</a>
+<span class="sourceLineNo">131</span><a id="line.131">     * files.</a>
+<span class="sourceLineNo">132</span><a id="line.132">     * @return a &lt;code&gt;SmartSequenceBuilder.FACTORY&lt;/code&gt;</a>
+<span class="sourceLineNo">133</span><a id="line.133">     */</a>
+<span class="sourceLineNo">134</span><a id="line.134">    public static SequenceBuilderFactory getGenbankBuilderFactory() {</a>
+<span class="sourceLineNo">135</span><a id="line.135">        if (_genbankBuilderFactory == null) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">            _genbankBuilderFactory =</a>
+<span class="sourceLineNo">137</span><a id="line.137">                new GenbankProcessor.Factory(SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">138</span><a id="line.138">        }</a>
+<span class="sourceLineNo">139</span><a id="line.139">        return _genbankBuilderFactory;</a>
+<span class="sourceLineNo">140</span><a id="line.140">    }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">    /**</a>
+<span class="sourceLineNo">143</span><a id="line.143">     * Iterate over the sequences in an Genbank-format stream.</a>
+<span class="sourceLineNo">144</span><a id="line.144">     * @param br A reader for the Genbank source or file</a>
+<span class="sourceLineNo">145</span><a id="line.145">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">146</span><a id="line.146">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">147</span><a id="line.147">     */</a>
+<span class="sourceLineNo">148</span><a id="line.148">    public static SequenceIterator readGenbank(BufferedReader br) {</a>
+<span class="sourceLineNo">149</span><a id="line.149">        return new StreamReader(br,</a>
+<span class="sourceLineNo">150</span><a id="line.150">                                new GenbankFormat(),</a>
+<span class="sourceLineNo">151</span><a id="line.151">                                getDNAParser(),</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                getGenbankBuilderFactory());</a>
+<span class="sourceLineNo">153</span><a id="line.153">    }</a>
+<span class="sourceLineNo">154</span><a id="line.154">    </a>
+<span class="sourceLineNo">155</span><a id="line.155">    /**</a>
+<span class="sourceLineNo">156</span><a id="line.156">     * Iterate over the sequences in an GenbankXML-format stream.</a>
+<span class="sourceLineNo">157</span><a id="line.157">     * @param br A reader for the GenbanXML source or file</a>
+<span class="sourceLineNo">158</span><a id="line.158">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">159</span><a id="line.159">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">160</span><a id="line.160">     */    </a>
+<span class="sourceLineNo">161</span><a id="line.161">    public static SequenceIterator readGenbankXml( BufferedReader br )</a>
+<span class="sourceLineNo">162</span><a id="line.162">    {</a>
+<span class="sourceLineNo">163</span><a id="line.163">        return new StreamReader( br,</a>
+<span class="sourceLineNo">164</span><a id="line.164">                                 new GenbankXmlFormat(),</a>
+<span class="sourceLineNo">165</span><a id="line.165">                                 getDNAParser(),</a>
+<span class="sourceLineNo">166</span><a id="line.166">                                 getGenbankBuilderFactory() );</a>
+<span class="sourceLineNo">167</span><a id="line.167">    }</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">    /**</a>
+<span class="sourceLineNo">170</span><a id="line.170">    * Get a default SequenceBuilderFactory for handling Genpept</a>
+<span class="sourceLineNo">171</span><a id="line.171">    * files.</a>
+<span class="sourceLineNo">172</span><a id="line.172">    * @return a &lt;code&gt;SmartSequenceBuilder.FACTORY&lt;/code&gt;</a>
+<span class="sourceLineNo">173</span><a id="line.173">    */</a>
+<span class="sourceLineNo">174</span><a id="line.174">    public static SequenceBuilderFactory getGenpeptBuilderFactory() {</a>
+<span class="sourceLineNo">175</span><a id="line.175">        if (_genpeptBuilderFactory == null) {</a>
+<span class="sourceLineNo">176</span><a id="line.176">            _genpeptBuilderFactory =</a>
+<span class="sourceLineNo">177</span><a id="line.177">                new GenbankProcessor.Factory(SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">178</span><a id="line.178">        }</a>
+<span class="sourceLineNo">179</span><a id="line.179">        return _genpeptBuilderFactory;</a>
+<span class="sourceLineNo">180</span><a id="line.180">    }</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">    /**</a>
+<span class="sourceLineNo">183</span><a id="line.183">    * Iterate over the sequences in an Genpept-format stream.</a>
+<span class="sourceLineNo">184</span><a id="line.184">    * @param br A reader for the Genpept source or file</a>
+<span class="sourceLineNo">185</span><a id="line.185">    * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">186</span><a id="line.186">    * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">187</span><a id="line.187">    */</a>
+<span class="sourceLineNo">188</span><a id="line.188">    public static SequenceIterator readGenpept(BufferedReader br) {</a>
+<span class="sourceLineNo">189</span><a id="line.189">        return new StreamReader(br,</a>
+<span class="sourceLineNo">190</span><a id="line.190">                                new GenbankFormat(),</a>
+<span class="sourceLineNo">191</span><a id="line.191">                                getProteinParser(),</a>
+<span class="sourceLineNo">192</span><a id="line.192">                                getGenpeptBuilderFactory());</a>
+<span class="sourceLineNo">193</span><a id="line.193">    }</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">    /**</a>
+<span class="sourceLineNo">196</span><a id="line.196">     * Get a default SequenceBuilderFactory for handling Swissprot</a>
+<span class="sourceLineNo">197</span><a id="line.197">     * files.</a>
+<span class="sourceLineNo">198</span><a id="line.198">     * @return a &lt;code&gt;SmartSequenceBuilder.FACTORY&lt;/code&gt;</a>
+<span class="sourceLineNo">199</span><a id="line.199">     */</a>
+<span class="sourceLineNo">200</span><a id="line.200">    public static SequenceBuilderFactory getSwissprotBuilderFactory() {</a>
+<span class="sourceLineNo">201</span><a id="line.201">        if (_swissprotBuilderFactory == null) {</a>
+<span class="sourceLineNo">202</span><a id="line.202">            _swissprotBuilderFactory =</a>
+<span class="sourceLineNo">203</span><a id="line.203">                new SwissprotProcessor.Factory(SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">204</span><a id="line.204">        }</a>
+<span class="sourceLineNo">205</span><a id="line.205">        return _swissprotBuilderFactory;</a>
+<span class="sourceLineNo">206</span><a id="line.206">    }</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">    /**</a>
+<span class="sourceLineNo">209</span><a id="line.209">     * Iterate over the sequences in an Swissprot-format stream.</a>
+<span class="sourceLineNo">210</span><a id="line.210">    * @param br A reader for the Swissprot source or file</a>
+<span class="sourceLineNo">211</span><a id="line.211">    * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">212</span><a id="line.212">    * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file     </a>
+<span class="sourceLineNo">213</span><a id="line.213">     */</a>
+<span class="sourceLineNo">214</span><a id="line.214">    public static SequenceIterator readSwissprot(BufferedReader br) {</a>
+<span class="sourceLineNo">215</span><a id="line.215">        return new StreamReader(br,</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                new EmblLikeFormat(),</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                getProteinParser(),</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                getSwissprotBuilderFactory());</a>
+<span class="sourceLineNo">219</span><a id="line.219">    }</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">    /**</a>
+<span class="sourceLineNo">222</span><a id="line.222">     * Get a default SequenceBuilderFactory for handling FASTA</a>
+<span class="sourceLineNo">223</span><a id="line.223">     * files.</a>
+<span class="sourceLineNo">224</span><a id="line.224">     * @return a &lt;code&gt;SmartSequenceBuilder.FACTORY&lt;/code&gt;</a>
+<span class="sourceLineNo">225</span><a id="line.225">     */</a>
+<span class="sourceLineNo">226</span><a id="line.226">    public static SequenceBuilderFactory getFastaBuilderFactory() {</a>
+<span class="sourceLineNo">227</span><a id="line.227">        if (_fastaBuilderFactory == null) {</a>
+<span class="sourceLineNo">228</span><a id="line.228">            _fastaBuilderFactory = new FastaDescriptionLineParser.Factory(</a>
+<span class="sourceLineNo">229</span><a id="line.229">                        SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">230</span><a id="line.230">        }</a>
+<span class="sourceLineNo">231</span><a id="line.231">        return _fastaBuilderFactory;</a>
+<span class="sourceLineNo">232</span><a id="line.232">    }</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">    /**</a>
+<span class="sourceLineNo">235</span><a id="line.235">     * Read a fasta file.</a>
+<span class="sourceLineNo">236</span><a id="line.236">     *</a>
+<span class="sourceLineNo">237</span><a id="line.237">     * @param br    the BufferedReader to read data from</a>
+<span class="sourceLineNo">238</span><a id="line.238">     * @param sTok  a SymbolTokenization that understands the sequences</a>
+<span class="sourceLineNo">239</span><a id="line.239">     * @return      a SequenceIterator over each sequence in the fasta file</a>
+<span class="sourceLineNo">240</span><a id="line.240">     */</a>
+<span class="sourceLineNo">241</span><a id="line.241">    public static SequenceIterator readFasta(</a>
+<span class="sourceLineNo">242</span><a id="line.242">            BufferedReader br, SymbolTokenization sTok)</a>
+<span class="sourceLineNo">243</span><a id="line.243">    {</a>
+<span class="sourceLineNo">244</span><a id="line.244">      return new StreamReader(br,</a>
+<span class="sourceLineNo">245</span><a id="line.245">                              new FastaFormat(),</a>
+<span class="sourceLineNo">246</span><a id="line.246">                              sTok,</a>
+<span class="sourceLineNo">247</span><a id="line.247">                              getFastaBuilderFactory());</a>
+<span class="sourceLineNo">248</span><a id="line.248">    }</a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250">    /**</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * Read a fasta file using a custom type of SymbolList. For example,</a>
+<span class="sourceLineNo">252</span><a id="line.252">     * use SmartSequenceBuilder.FACTORY to emulate readFasta(BufferedReader,</a>
+<span class="sourceLineNo">253</span><a id="line.253">     * SymbolTokenization) and SmartSequenceBuilder.BIT_PACKED to force all</a>
+<span class="sourceLineNo">254</span><a id="line.254">     * symbols to be encoded using bit-packing.</a>
+<span class="sourceLineNo">255</span><a id="line.255">     * @param br the BufferedReader to read data from</a>
+<span class="sourceLineNo">256</span><a id="line.256">     * @param sTok a SymbolTokenization that understands the sequences</a>
+<span class="sourceLineNo">257</span><a id="line.257">     * @param seqFactory a factory used to build a SymbolList</a>
+<span class="sourceLineNo">258</span><a id="line.258">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">259</span><a id="line.259">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">260</span><a id="line.260">     */</a>
+<span class="sourceLineNo">261</span><a id="line.261">    public static SequenceIterator readFasta(</a>
+<span class="sourceLineNo">262</span><a id="line.262">            BufferedReader br,</a>
+<span class="sourceLineNo">263</span><a id="line.263">            SymbolTokenization sTok,</a>
+<span class="sourceLineNo">264</span><a id="line.264">            SequenceBuilderFactory seqFactory)</a>
+<span class="sourceLineNo">265</span><a id="line.265">    {</a>
+<span class="sourceLineNo">266</span><a id="line.266">      return new StreamReader(</a>
+<span class="sourceLineNo">267</span><a id="line.267">              br,</a>
+<span class="sourceLineNo">268</span><a id="line.268">              new FastaFormat(),</a>
+<span class="sourceLineNo">269</span><a id="line.269">              sTok,</a>
+<span class="sourceLineNo">270</span><a id="line.270">              new FastaDescriptionLineParser.Factory(seqFactory));</a>
+<span class="sourceLineNo">271</span><a id="line.271">    }</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273">    /**</a>
+<span class="sourceLineNo">274</span><a id="line.274">     * Iterate over the sequences in an FASTA-format stream of DNA sequences.</a>
+<span class="sourceLineNo">275</span><a id="line.275">     * @param br the BufferedReader to read data from</a>
+<span class="sourceLineNo">276</span><a id="line.276">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">277</span><a id="line.277">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">278</span><a id="line.278">     */</a>
+<span class="sourceLineNo">279</span><a id="line.279">    public static SequenceIterator readFastaDNA(BufferedReader br) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">        return new StreamReader(br,</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                new FastaFormat(),</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                getDNAParser(),</a>
+<span class="sourceLineNo">283</span><a id="line.283">                                getFastaBuilderFactory());</a>
+<span class="sourceLineNo">284</span><a id="line.284">    }</a>
+<span class="sourceLineNo">285</span><a id="line.285"></a>
+<span class="sourceLineNo">286</span><a id="line.286">    /**</a>
+<span class="sourceLineNo">287</span><a id="line.287">     * Iterate over the sequences in an FASTA-format stream of RNA sequences.</a>
+<span class="sourceLineNo">288</span><a id="line.288">     * @param br the BufferedReader to read data from</a>
+<span class="sourceLineNo">289</span><a id="line.289">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">290</span><a id="line.290">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">291</span><a id="line.291">     */</a>
+<span class="sourceLineNo">292</span><a id="line.292">    public static SequenceIterator readFastaRNA(BufferedReader br) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">        return new StreamReader(br,</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                new FastaFormat(),</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                getRNAParser(),</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                getFastaBuilderFactory());</a>
+<span class="sourceLineNo">297</span><a id="line.297">    }</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299">    /**</a>
+<span class="sourceLineNo">300</span><a id="line.300">     * Iterate over the sequences in an FASTA-format stream of Protein sequences.</a>
+<span class="sourceLineNo">301</span><a id="line.301">     * @param br the BufferedReader to read data from</a>
+<span class="sourceLineNo">302</span><a id="line.302">     * @return a &lt;CODE&gt;SequenceIterator&lt;/CODE&gt; that iterates over each</a>
+<span class="sourceLineNo">303</span><a id="line.303">     * &lt;CODE&gt;Sequence&lt;/CODE&gt; in the file</a>
+<span class="sourceLineNo">304</span><a id="line.304">     */</a>
+<span class="sourceLineNo">305</span><a id="line.305">    public static SequenceIterator readFastaProtein(BufferedReader br) {</a>
+<span class="sourceLineNo">306</span><a id="line.306">        return new StreamReader(br,</a>
+<span class="sourceLineNo">307</span><a id="line.307">                                new FastaFormat(),</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                getProteinParser(),</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                getFastaBuilderFactory());</a>
+<span class="sourceLineNo">310</span><a id="line.310">    }</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312">    /**</a>
+<span class="sourceLineNo">313</span><a id="line.313">     * Create a sequence database from a fasta file provided as an</a>
+<span class="sourceLineNo">314</span><a id="line.314">     * input stream.  Note this somewhat duplicates functionality in</a>
+<span class="sourceLineNo">315</span><a id="line.315">     * the readFastaDNA and readFastaProtein methods but uses a stream</a>
+<span class="sourceLineNo">316</span><a id="line.316">     * rather than a reader and returns a SequenceDB rather than a</a>
+<span class="sourceLineNo">317</span><a id="line.317">     * SequenceIterator. If the returned DB is likely to be large then</a>
+<span class="sourceLineNo">318</span><a id="line.318">     * the above mentioned methods should be used.</a>
+<span class="sourceLineNo">319</span><a id="line.319">     * @return a &lt;code&gt;SequenceDB&lt;/code&gt; containing all the &lt;code&gt;Sequences&lt;/code&gt;</a>
+<span class="sourceLineNo">320</span><a id="line.320">     * in the file.</a>
+<span class="sourceLineNo">321</span><a id="line.321">     * @since 1.2</a>
+<span class="sourceLineNo">322</span><a id="line.322">     * @param seqFile The file containg the fasta formatted sequences</a>
+<span class="sourceLineNo">323</span><a id="line.323">     * @param alpha The &lt;code&gt;Alphabet&lt;/code&gt; of the sequence, ie DNA, RNA etc</a>
+<span class="sourceLineNo">324</span><a id="line.324">     * @throws BioException if problems occur during reading of the</a>
+<span class="sourceLineNo">325</span><a id="line.325">     * stream.</a>
+<span class="sourceLineNo">326</span><a id="line.326">     */</a>
+<span class="sourceLineNo">327</span><a id="line.327">    public static SequenceDB readFasta(InputStream seqFile, Alphabet alpha)</a>
+<span class="sourceLineNo">328</span><a id="line.328">        throws BioException {</a>
+<span class="sourceLineNo">329</span><a id="line.329">        HashSequenceDB db = new HashSequenceDB(IDMaker.byName);</a>
+<span class="sourceLineNo">330</span><a id="line.330">        SequenceBuilderFactory sbFact =</a>
+<span class="sourceLineNo">331</span><a id="line.331">            new FastaDescriptionLineParser.Factory(SmartSequenceBuilder.FACTORY);</a>
+<span class="sourceLineNo">332</span><a id="line.332">        FastaFormat fFormat = new FastaFormat();</a>
+<span class="sourceLineNo">333</span><a id="line.333">        for (SequenceIterator seqI = new StreamReader(seqFile,</a>
+<span class="sourceLineNo">334</span><a id="line.334">                                                      fFormat,</a>
+<span class="sourceLineNo">335</span><a id="line.335">                                                      alpha.getTokenization("token"),</a>
+<span class="sourceLineNo">336</span><a id="line.336">                                                      sbFact);seqI.hasNext();) {</a>
+<span class="sourceLineNo">337</span><a id="line.337">            Sequence seq = seqI.nextSequence();</a>
+<span class="sourceLineNo">338</span><a id="line.338">            try {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                db.addSequence(seq);</a>
+<span class="sourceLineNo">340</span><a id="line.340">            } catch (ChangeVetoException cve) {</a>
+<span class="sourceLineNo">341</span><a id="line.341">                throw new AssertionFailure(</a>
+<span class="sourceLineNo">342</span><a id="line.342">                  "Could not successfully add sequence "</a>
+<span class="sourceLineNo">343</span><a id="line.343">                  + seq.getName()</a>
+<span class="sourceLineNo">344</span><a id="line.344">                  + " to sequence database",</a>
+<span class="sourceLineNo">345</span><a id="line.345">                  cve);</a>
+<span class="sourceLineNo">346</span><a id="line.346">            }</a>
+<span class="sourceLineNo">347</span><a id="line.347">        }</a>
+<span class="sourceLineNo">348</span><a id="line.348">        return db;</a>
+<span class="sourceLineNo">349</span><a id="line.349">    }</a>
+<span class="sourceLineNo">350</span><a id="line.350"></a>
+<span class="sourceLineNo">351</span><a id="line.351">    /**</a>
+<span class="sourceLineNo">352</span><a id="line.352">     * Write a sequenceDB to an output stream in fasta format.</a>
+<span class="sourceLineNo">353</span><a id="line.353">     * @since 1.2</a>
+<span class="sourceLineNo">354</span><a id="line.354">     * @param os the stream to write the fasta formatted data to.</a>
+<span class="sourceLineNo">355</span><a id="line.355">     * @param db the database of &lt;code&gt;Sequence&lt;/code&gt;s to write</a>
+<span class="sourceLineNo">356</span><a id="line.356">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">357</span><a id="line.357">     */</a>
+<span class="sourceLineNo">358</span><a id="line.358">    public static void writeFasta(OutputStream os, SequenceDB db)</a>
+<span class="sourceLineNo">359</span><a id="line.359">        throws IOException {</a>
+<span class="sourceLineNo">360</span><a id="line.360">        StreamWriter sw = new StreamWriter(os,new FastaFormat());</a>
+<span class="sourceLineNo">361</span><a id="line.361">        sw.writeStream(db.sequenceIterator());</a>
+<span class="sourceLineNo">362</span><a id="line.362">    }</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">    /**</a>
+<span class="sourceLineNo">365</span><a id="line.365">     * Writes sequences from a SequenceIterator to an OutputStream in</a>
+<span class="sourceLineNo">366</span><a id="line.366">     * Fasta Format.  This makes for a useful format filter where a</a>
+<span class="sourceLineNo">367</span><a id="line.367">     * StreamReader can be sent to the StreamWriter after formatting.</a>
+<span class="sourceLineNo">368</span><a id="line.368">     * </a>
+<span class="sourceLineNo">369</span><a id="line.369">     * @since 1.2</a>
+<span class="sourceLineNo">370</span><a id="line.370">     * @param os The stream to write fasta formatted data to</a>
+<span class="sourceLineNo">371</span><a id="line.371">     * @param in The source of input &lt;code&gt;Sequences&lt;/code&gt;</a>
+<span class="sourceLineNo">372</span><a id="line.372">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">373</span><a id="line.373">     */</a>
+<span class="sourceLineNo">374</span><a id="line.374">    public static void writeFasta(OutputStream os, SequenceIterator in)</a>
+<span class="sourceLineNo">375</span><a id="line.375">        throws IOException {</a>
+<span class="sourceLineNo">376</span><a id="line.376">        StreamWriter sw = new StreamWriter(os,new FastaFormat());</a>
+<span class="sourceLineNo">377</span><a id="line.377">        sw.writeStream(in);</a>
+<span class="sourceLineNo">378</span><a id="line.378">    }</a>
+<span class="sourceLineNo">379</span><a id="line.379"></a>
+<span class="sourceLineNo">380</span><a id="line.380">    /**</a>
+<span class="sourceLineNo">381</span><a id="line.381">     * Writes a single Sequence to an OutputStream in Fasta format.</a>
+<span class="sourceLineNo">382</span><a id="line.382">     *</a>
+<span class="sourceLineNo">383</span><a id="line.383">     * @param os  the OutputStream.</a>
+<span class="sourceLineNo">384</span><a id="line.384">     * @param seq  the Sequence.</a>
+<span class="sourceLineNo">385</span><a id="line.385">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">386</span><a id="line.386">     */</a>
+<span class="sourceLineNo">387</span><a id="line.387">    public static void writeFasta(OutputStream os, Sequence seq)</a>
+<span class="sourceLineNo">388</span><a id="line.388">        throws IOException {</a>
+<span class="sourceLineNo">389</span><a id="line.389">        writeFasta(os, new SingleSeqIterator(seq));</a>
+<span class="sourceLineNo">390</span><a id="line.390">    }</a>
+<span class="sourceLineNo">391</span><a id="line.391"></a>
+<span class="sourceLineNo">392</span><a id="line.392">    /**</a>
+<span class="sourceLineNo">393</span><a id="line.393">     * Writes a stream of Sequences to an OutputStream in EMBL format.</a>
+<span class="sourceLineNo">394</span><a id="line.394">     *</a>
+<span class="sourceLineNo">395</span><a id="line.395">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">396</span><a id="line.396">     * @param in a SequenceIterator.</a>
+<span class="sourceLineNo">397</span><a id="line.397">     * @exception IOException if there was an error while writing.</a>
+<span class="sourceLineNo">398</span><a id="line.398">     */</a>
+<span class="sourceLineNo">399</span><a id="line.399">    public static void writeEmbl(OutputStream os, SequenceIterator in)</a>
+<span class="sourceLineNo">400</span><a id="line.400">        throws IOException {</a>
+<span class="sourceLineNo">401</span><a id="line.401">        StreamWriter sw = new StreamWriter(os, new EmblLikeFormat());</a>
+<span class="sourceLineNo">402</span><a id="line.402">        sw.writeStream(in);</a>
+<span class="sourceLineNo">403</span><a id="line.403">    }</a>
+<span class="sourceLineNo">404</span><a id="line.404"></a>
+<span class="sourceLineNo">405</span><a id="line.405">    /**</a>
+<span class="sourceLineNo">406</span><a id="line.406">     * Writes a single Sequence to an OutputStream in EMBL format.</a>
+<span class="sourceLineNo">407</span><a id="line.407">     *</a>
+<span class="sourceLineNo">408</span><a id="line.408">     * @param os  the OutputStream.</a>
+<span class="sourceLineNo">409</span><a id="line.409">     * @param seq  the Sequence.</a>
+<span class="sourceLineNo">410</span><a id="line.410">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">411</span><a id="line.411">     */</a>
+<span class="sourceLineNo">412</span><a id="line.412">    public static void writeEmbl(OutputStream os, Sequence seq) throws IOException {</a>
+<span class="sourceLineNo">413</span><a id="line.413">        writeEmbl(os, new SingleSeqIterator(seq));</a>
+<span class="sourceLineNo">414</span><a id="line.414">    }</a>
+<span class="sourceLineNo">415</span><a id="line.415"></a>
+<span class="sourceLineNo">416</span><a id="line.416">    /**</a>
+<span class="sourceLineNo">417</span><a id="line.417">     * Writes a stream of Sequences to an OutputStream in SwissProt</a>
+<span class="sourceLineNo">418</span><a id="line.418">     * format.</a>
+<span class="sourceLineNo">419</span><a id="line.419">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">420</span><a id="line.420">     * @param in a SequenceIterator.</a>
+<span class="sourceLineNo">421</span><a id="line.421">     * @throws org.biojava.bio.BioException if the &lt;CODE&gt;Sequence&lt;/CODE&gt; cannot be converted to SwissProt</a>
+<span class="sourceLineNo">422</span><a id="line.422">     * format</a>
+<span class="sourceLineNo">423</span><a id="line.423">     * @exception IOException if there was an error while writing.</a>
+<span class="sourceLineNo">424</span><a id="line.424">     */</a>
+<span class="sourceLineNo">425</span><a id="line.425">    public static void writeSwissprot(OutputStream os, SequenceIterator in)</a>
+<span class="sourceLineNo">426</span><a id="line.426">        throws IOException, BioException {</a>
+<span class="sourceLineNo">427</span><a id="line.427">        SequenceFormat former = new EmblLikeFormat();</a>
+<span class="sourceLineNo">428</span><a id="line.428">        PrintStream ps = new PrintStream(os);</a>
+<span class="sourceLineNo">429</span><a id="line.429">        while (in.hasNext()) {</a>
+<span class="sourceLineNo">430</span><a id="line.430">            former.writeSequence(in.nextSequence(), ps);</a>
+<span class="sourceLineNo">431</span><a id="line.431">        }</a>
+<span class="sourceLineNo">432</span><a id="line.432">    }</a>
+<span class="sourceLineNo">433</span><a id="line.433"></a>
+<span class="sourceLineNo">434</span><a id="line.434">    /**</a>
+<span class="sourceLineNo">435</span><a id="line.435">     * Writes a single Sequence to an OutputStream in SwissProt format.</a>
+<span class="sourceLineNo">436</span><a id="line.436">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">437</span><a id="line.437">     * @param seq the Sequence.</a>
+<span class="sourceLineNo">438</span><a id="line.438">     * @throws org.biojava.bio.BioException if the &lt;CODE&gt;Sequence&lt;/CODE&gt; cannot be written to SwissProt format</a>
+<span class="sourceLineNo">439</span><a id="line.439">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">440</span><a id="line.440">     */</a>
+<span class="sourceLineNo">441</span><a id="line.441">    public static void writeSwissprot(OutputStream os, Sequence seq)</a>
+<span class="sourceLineNo">442</span><a id="line.442">        throws IOException, BioException {</a>
+<span class="sourceLineNo">443</span><a id="line.443">        writeSwissprot(os, new SingleSeqIterator(seq));</a>
+<span class="sourceLineNo">444</span><a id="line.444">    }</a>
+<span class="sourceLineNo">445</span><a id="line.445"></a>
+<span class="sourceLineNo">446</span><a id="line.446">    /**</a>
+<span class="sourceLineNo">447</span><a id="line.447">     * Writes a stream of Sequences to an OutputStream in Genpept</a>
+<span class="sourceLineNo">448</span><a id="line.448">     * format.</a>
+<span class="sourceLineNo">449</span><a id="line.449">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">450</span><a id="line.450">     * @param in a SequenceIterator.</a>
+<span class="sourceLineNo">451</span><a id="line.451">     * @throws org.biojava.bio.BioException if the &lt;CODE&gt;Sequence&lt;/CODE&gt; cannot be written to Genpept format</a>
+<span class="sourceLineNo">452</span><a id="line.452">     * @exception IOException if there was an error while writing.</a>
+<span class="sourceLineNo">453</span><a id="line.453">     */</a>
+<span class="sourceLineNo">454</span><a id="line.454">    public static void writeGenpept(OutputStream os, SequenceIterator in)</a>
+<span class="sourceLineNo">455</span><a id="line.455">        throws IOException, BioException {</a>
+<span class="sourceLineNo">456</span><a id="line.456">        SequenceFormat former = new GenpeptFormat();</a>
+<span class="sourceLineNo">457</span><a id="line.457">        PrintStream ps = new PrintStream(os);</a>
+<span class="sourceLineNo">458</span><a id="line.458">        while (in.hasNext()) {</a>
+<span class="sourceLineNo">459</span><a id="line.459">            former.writeSequence(in.nextSequence(), ps);</a>
+<span class="sourceLineNo">460</span><a id="line.460">        }</a>
+<span class="sourceLineNo">461</span><a id="line.461">    }</a>
+<span class="sourceLineNo">462</span><a id="line.462"></a>
+<span class="sourceLineNo">463</span><a id="line.463">    /**</a>
+<span class="sourceLineNo">464</span><a id="line.464">     * Writes a single Sequence to an OutputStream in Genpept format.</a>
+<span class="sourceLineNo">465</span><a id="line.465">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">466</span><a id="line.466">     * @param seq the Sequence.</a>
+<span class="sourceLineNo">467</span><a id="line.467">     * @throws org.biojava.bio.BioException if the &lt;CODE&gt;Sequence&lt;/CODE&gt; cannot be written to Genpept format</a>
+<span class="sourceLineNo">468</span><a id="line.468">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">469</span><a id="line.469">     */</a>
+<span class="sourceLineNo">470</span><a id="line.470">    public static void writeGenpept(OutputStream os, Sequence seq)</a>
+<span class="sourceLineNo">471</span><a id="line.471">    throws IOException, BioException {</a>
+<span class="sourceLineNo">472</span><a id="line.472">      writeGenpept(os, new SingleSeqIterator(seq));</a>
+<span class="sourceLineNo">473</span><a id="line.473">    }</a>
+<span class="sourceLineNo">474</span><a id="line.474"></a>
+<span class="sourceLineNo">475</span><a id="line.475">    /**</a>
+<span class="sourceLineNo">476</span><a id="line.476">     * Writes a stream of Sequences to an OutputStream in Genbank</a>
+<span class="sourceLineNo">477</span><a id="line.477">     * format.</a>
+<span class="sourceLineNo">478</span><a id="line.478">     *</a>
+<span class="sourceLineNo">479</span><a id="line.479">     * @param os the OutputStream.</a>
+<span class="sourceLineNo">480</span><a id="line.480">     * @param in a SequenceIterator.</a>
+<span class="sourceLineNo">481</span><a id="line.481">     * @exception IOException if there was an error while writing.</a>
+<span class="sourceLineNo">482</span><a id="line.482">     */</a>
+<span class="sourceLineNo">483</span><a id="line.483">    public static void writeGenbank(OutputStream os, SequenceIterator in)</a>
+<span class="sourceLineNo">484</span><a id="line.484">        throws IOException {</a>
+<span class="sourceLineNo">485</span><a id="line.485">        StreamWriter sw = new StreamWriter(os, new GenbankFormat());</a>
+<span class="sourceLineNo">486</span><a id="line.486">        sw.writeStream(in);</a>
+<span class="sourceLineNo">487</span><a id="line.487">    }</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">    /**</a>
+<span class="sourceLineNo">490</span><a id="line.490">     * Writes a single Sequence to an OutputStream in Genbank format.</a>
+<span class="sourceLineNo">491</span><a id="line.491">     *</a>
+<span class="sourceLineNo">492</span><a id="line.492">     * @param os  the OutputStream.</a>
+<span class="sourceLineNo">493</span><a id="line.493">     * @param seq  the Sequence.</a>
+<span class="sourceLineNo">494</span><a id="line.494">     * @throws IOException if there was an error while writing.</a>
+<span class="sourceLineNo">495</span><a id="line.495">     */</a>
+<span class="sourceLineNo">496</span><a id="line.496">    public static void writeGenbank(OutputStream os, Sequence seq)</a>
+<span class="sourceLineNo">497</span><a id="line.497">        throws IOException {</a>
+<span class="sourceLineNo">498</span><a id="line.498">        writeGenbank(os, new SingleSeqIterator(seq));</a>
+<span class="sourceLineNo">499</span><a id="line.499">    }</a>
+<span class="sourceLineNo">500</span><a id="line.500"></a>
+<span class="sourceLineNo">501</span><a id="line.501">   /**</a>
+<span class="sourceLineNo">502</span><a id="line.502">     * &lt;code&gt;identifyFormat&lt;/code&gt; performs a case-insensitive mapping</a>
+<span class="sourceLineNo">503</span><a id="line.503">     * of a pair of common sequence format name (such as 'embl',</a>
+<span class="sourceLineNo">504</span><a id="line.504">     * 'genbank' or 'fasta') and alphabet name (such as 'dna', 'rna',</a>
+<span class="sourceLineNo">505</span><a id="line.505">     * 'protein', 'aa') to an integer. The value returned will be one</a>
+<span class="sourceLineNo">506</span><a id="line.506">     * of the public static final fields in</a>
+<span class="sourceLineNo">507</span><a id="line.507">     * &lt;code&gt;SeqIOConstants&lt;/code&gt;, or a bitwise-or combination of</a>
+<span class="sourceLineNo">508</span><a id="line.508">     * them. The method will reject known illegal combinations of</a>
+<span class="sourceLineNo">509</span><a id="line.509">     * format and alphabet (such as swissprot + dna) by throwing an</a>
+<span class="sourceLineNo">510</span><a id="line.510">     * &lt;code&gt;IllegalArgumentException&lt;/code&gt;. It will return the</a>
+<span class="sourceLineNo">511</span><a id="line.511">     * &lt;code&gt;SeqIOConstants.UNKNOWN&lt;/code&gt; value when either format or</a>
+<span class="sourceLineNo">512</span><a id="line.512">     * alphabet are unknown.</a>
+<span class="sourceLineNo">513</span><a id="line.513">     *</a>
+<span class="sourceLineNo">514</span><a id="line.514">     * @param formatName a &lt;code&gt;String&lt;/code&gt;.</a>
+<span class="sourceLineNo">515</span><a id="line.515">     * @param alphabetName a &lt;code&gt;String&lt;/code&gt;.</a>
+<span class="sourceLineNo">516</span><a id="line.516">     *</a>
+<span class="sourceLineNo">517</span><a id="line.517">     * @return an &lt;code&gt;int&lt;/code&gt;.</a>
+<span class="sourceLineNo">518</span><a id="line.518">     */</a>
+<span class="sourceLineNo">519</span><a id="line.519">    public static int identifyFormat(String formatName, String alphabetName) {</a>
+<span class="sourceLineNo">520</span><a id="line.520">        int format, alpha;</a>
+<span class="sourceLineNo">521</span><a id="line.521">        if (formatName.equalsIgnoreCase("raw")) {</a>
+<span class="sourceLineNo">522</span><a id="line.522">            format = SeqIOConstants.RAW;</a>
+<span class="sourceLineNo">523</span><a id="line.523">        }</a>
+<span class="sourceLineNo">524</span><a id="line.524">        else if (formatName.equalsIgnoreCase("fasta")) {</a>
+<span class="sourceLineNo">525</span><a id="line.525">            format = SeqIOConstants.FASTA;</a>
+<span class="sourceLineNo">526</span><a id="line.526">        }</a>
+<span class="sourceLineNo">527</span><a id="line.527">        else if (formatName.equalsIgnoreCase("nbrf")) {</a>
+<span class="sourceLineNo">528</span><a id="line.528">            format = SeqIOConstants.NBRF;</a>
+<span class="sourceLineNo">529</span><a id="line.529">        }</a>
+<span class="sourceLineNo">530</span><a id="line.530">        else if (formatName.equalsIgnoreCase("ig")) {</a>
+<span class="sourceLineNo">531</span><a id="line.531">            format = SeqIOConstants.IG;</a>
+<span class="sourceLineNo">532</span><a id="line.532">        }</a>
+<span class="sourceLineNo">533</span><a id="line.533">        else if (formatName.equalsIgnoreCase("embl")) {</a>
+<span class="sourceLineNo">534</span><a id="line.534">            format = SeqIOConstants.EMBL;</a>
+<span class="sourceLineNo">535</span><a id="line.535">        }</a>
+<span class="sourceLineNo">536</span><a id="line.536">        else if (formatName.equalsIgnoreCase("swissprot") ||</a>
+<span class="sourceLineNo">537</span><a id="line.537">                 formatName.equalsIgnoreCase("swiss")) {</a>
+<span class="sourceLineNo">538</span><a id="line.538">            if (alphabetName.equalsIgnoreCase("aa") ||</a>
+<span class="sourceLineNo">539</span><a id="line.539">                alphabetName.equalsIgnoreCase("protein")) {</a>
+<span class="sourceLineNo">540</span><a id="line.540">                return SeqIOConstants.SWISSPROT;</a>
+<span class="sourceLineNo">541</span><a id="line.541">            } else {</a>
+<span class="sourceLineNo">542</span><a id="line.542">                throw new IllegalArgumentException("Illegal format and alphabet "</a>
+<span class="sourceLineNo">543</span><a id="line.543">                                                   + "combination "</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                                   + formatName</a>
+<span class="sourceLineNo">545</span><a id="line.545">                                                   + " + "</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                                   + alphabetName);</a>
+<span class="sourceLineNo">547</span><a id="line.547">            }</a>
+<span class="sourceLineNo">548</span><a id="line.548">        } else if (formatName.equalsIgnoreCase("genbank")) {</a>
+<span class="sourceLineNo">549</span><a id="line.549">            format = SeqIOConstants.GENBANK;</a>
+<span class="sourceLineNo">550</span><a id="line.550">        } else if (formatName.equalsIgnoreCase("genpept")) {</a>
+<span class="sourceLineNo">551</span><a id="line.551">            if (alphabetName.equalsIgnoreCase("aa") ||</a>
+<span class="sourceLineNo">552</span><a id="line.552">                alphabetName.equalsIgnoreCase("protein")) {</a>
+<span class="sourceLineNo">553</span><a id="line.553">                return SeqIOConstants.GENPEPT;</a>
+<span class="sourceLineNo">554</span><a id="line.554">            } else {</a>
+<span class="sourceLineNo">555</span><a id="line.555">                throw new IllegalArgumentException("Illegal format and alphabet "</a>
+<span class="sourceLineNo">556</span><a id="line.556">                                                   + "combination "</a>
+<span class="sourceLineNo">557</span><a id="line.557">                                                   + formatName</a>
+<span class="sourceLineNo">558</span><a id="line.558">                                                   + " + "</a>
+<span class="sourceLineNo">559</span><a id="line.559">                                                   + alphabetName);</a>
+<span class="sourceLineNo">560</span><a id="line.560">            }</a>
+<span class="sourceLineNo">561</span><a id="line.561">        } else if (formatName.equalsIgnoreCase("refseq")) {</a>
+<span class="sourceLineNo">562</span><a id="line.562">            format = SeqIOConstants.REFSEQ;</a>
+<span class="sourceLineNo">563</span><a id="line.563">        } else if (formatName.equalsIgnoreCase("gcg")) {</a>
+<span class="sourceLineNo">564</span><a id="line.564">            format = SeqIOConstants.GCG;</a>
+<span class="sourceLineNo">565</span><a id="line.565">        } else if (formatName.equalsIgnoreCase("gff")) {</a>
+<span class="sourceLineNo">566</span><a id="line.566">            format = SeqIOConstants.GFF;</a>
+<span class="sourceLineNo">567</span><a id="line.567">        }</a>
+<span class="sourceLineNo">568</span><a id="line.568">        else if (formatName.equalsIgnoreCase("pdb")) {</a>
+<span class="sourceLineNo">569</span><a id="line.569">            if (alphabetName.equalsIgnoreCase("aa") ||</a>
+<span class="sourceLineNo">570</span><a id="line.570">                alphabetName.equalsIgnoreCase("protein")) {</a>
+<span class="sourceLineNo">571</span><a id="line.571">                return SeqIOConstants.PDB;</a>
+<span class="sourceLineNo">572</span><a id="line.572">            } else {</a>
+<span class="sourceLineNo">573</span><a id="line.573">                throw new IllegalArgumentException("Illegal format and alphabet "</a>
+<span class="sourceLineNo">574</span><a id="line.574">                                                   + "combination "</a>
+<span class="sourceLineNo">575</span><a id="line.575">                                                   + formatName</a>
+<span class="sourceLineNo">576</span><a id="line.576">                                                   + " + "</a>
+<span class="sourceLineNo">577</span><a id="line.577">                                                   + alphabetName);</a>
+<span class="sourceLineNo">578</span><a id="line.578">            }</a>
+<span class="sourceLineNo">579</span><a id="line.579">        } else if (formatName.equalsIgnoreCase("phred")) {</a>
+<span class="sourceLineNo">580</span><a id="line.580">            if (alphabetName.equalsIgnoreCase("dna")) {</a>
+<span class="sourceLineNo">581</span><a id="line.581">                return SeqIOConstants.PHRED;</a>
+<span class="sourceLineNo">582</span><a id="line.582">            } else {</a>
+<span class="sourceLineNo">583</span><a id="line.583">                throw new IllegalArgumentException("Illegal format and alphabet "</a>
+<span class="sourceLineNo">584</span><a id="line.584">                                                   + "combination "</a>
+<span class="sourceLineNo">585</span><a id="line.585">                                                   + formatName</a>
+<span class="sourceLineNo">586</span><a id="line.586">                                                   + " + "</a>
+<span class="sourceLineNo">587</span><a id="line.587">                                                   + alphabetName);</a>
+<span class="sourceLineNo">588</span><a id="line.588">            }</a>
+<span class="sourceLineNo">589</span><a id="line.589">        } else if (formatName.equalsIgnoreCase("clustal")) {</a>
+<span class="sourceLineNo">590</span><a id="line.590">            format = AlignIOConstants.CLUSTAL;</a>
+<span class="sourceLineNo">591</span><a id="line.591">        } else if (formatName.equalsIgnoreCase("msf")) {</a>
+<span class="sourceLineNo">592</span><a id="line.592">            format = AlignIOConstants.MSF;</a>
+<span class="sourceLineNo">593</span><a id="line.593">        }</a>
+<span class="sourceLineNo">594</span><a id="line.594">        else {</a>
+<span class="sourceLineNo">595</span><a id="line.595">            return SeqIOConstants.UNKNOWN;</a>
+<span class="sourceLineNo">596</span><a id="line.596">        }</a>
+<span class="sourceLineNo">597</span><a id="line.597"></a>
+<span class="sourceLineNo">598</span><a id="line.598">        if (alphabetName.equalsIgnoreCase("dna")) {</a>
+<span class="sourceLineNo">599</span><a id="line.599">            alpha = SeqIOConstants.DNA;</a>
+<span class="sourceLineNo">600</span><a id="line.600">        } else if (alphabetName.equalsIgnoreCase("rna")) {</a>
+<span class="sourceLineNo">601</span><a id="line.601">            alpha = SeqIOConstants.RNA;</a>
+<span class="sourceLineNo">602</span><a id="line.602">        } else if (alphabetName.equalsIgnoreCase("aa") ||</a>
+<span class="sourceLineNo">603</span><a id="line.603">                 alphabetName.equalsIgnoreCase("protein")) {</a>
+<span class="sourceLineNo">604</span><a id="line.604">            alpha = SeqIOConstants.AA;</a>
+<span class="sourceLineNo">605</span><a id="line.605">        } else {</a>
+<span class="sourceLineNo">606</span><a id="line.606">            return SeqIOConstants.UNKNOWN;</a>
+<span class="sourceLineNo">607</span><a id="line.607">        }</a>
+<span class="sourceLineNo">608</span><a id="line.608"></a>
+<span class="sourceLineNo">609</span><a id="line.609">        return (format | alpha);</a>
+<span class="sourceLineNo">610</span><a id="line.610">    }</a>
+<span class="sourceLineNo">611</span><a id="line.611"></a>
+<span class="sourceLineNo">612</span><a id="line.612">    /**</a>
+<span class="sourceLineNo">613</span><a id="line.613">     * &lt;code&gt;getSequenceFormat&lt;/code&gt; accepts a value which represents</a>
+<span class="sourceLineNo">614</span><a id="line.614">     * a sequence format and returns the relevant</a>
+<span class="sourceLineNo">615</span><a id="line.615">     * &lt;code&gt;SequenceFormat&lt;/code&gt; object.</a>
+<span class="sourceLineNo">616</span><a id="line.616">     *</a>
+<span class="sourceLineNo">617</span><a id="line.617">     * @param identifier an &lt;code&gt;int&lt;/code&gt; which represents a binary</a>
+<span class="sourceLineNo">618</span><a id="line.618">     * value with bits set according to the scheme described in</a>
+<span class="sourceLineNo">619</span><a id="line.619">     * &lt;code&gt;SeqIOConstants&lt;/code&gt;.</a>
+<span class="sourceLineNo">620</span><a id="line.620">     *</a>
+<span class="sourceLineNo">621</span><a id="line.621">     * @return a &lt;code&gt;SequenceFormat&lt;/code&gt;.</a>
+<span class="sourceLineNo">622</span><a id="line.622">     *</a>
+<span class="sourceLineNo">623</span><a id="line.623">     * @exception BioException if an error occurs.</a>
+<span class="sourceLineNo">624</span><a id="line.624">     */</a>
+<span class="sourceLineNo">625</span><a id="line.625">    public static SequenceFormat getSequenceFormat(int identifier)</a>
+<span class="sourceLineNo">626</span><a id="line.626">        throws BioException {</a>
+<span class="sourceLineNo">627</span><a id="line.627"></a>
+<span class="sourceLineNo">628</span><a id="line.628">        // Mask the sequence format bytes</a>
+<span class="sourceLineNo">629</span><a id="line.629">        int alphaType = identifier &amp; (~ 0xffff);</a>
+<span class="sourceLineNo">630</span><a id="line.630">        if (alphaType == 0)</a>
+<span class="sourceLineNo">631</span><a id="line.631">            throw new IllegalArgumentException("No alphabet was set in the identifier");</a>
+<span class="sourceLineNo">632</span><a id="line.632"></a>
+<span class="sourceLineNo">633</span><a id="line.633">        // Mask alphabet bytes</a>
+<span class="sourceLineNo">634</span><a id="line.634">        int formatType = identifier &amp; (~ 0xffff0000);</a>
+<span class="sourceLineNo">635</span><a id="line.635">        if (formatType == 0)</a>
+<span class="sourceLineNo">636</span><a id="line.636">            throw new IllegalArgumentException("No format was set in the identifier");</a>
+<span class="sourceLineNo">637</span><a id="line.637"></a>
+<span class="sourceLineNo">638</span><a id="line.638">        switch (identifier) {</a>
+<span class="sourceLineNo">639</span><a id="line.639">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">640</span><a id="line.640">            case SeqIOConstants.FASTA_RNA:</a>
+<span class="sourceLineNo">641</span><a id="line.641">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">642</span><a id="line.642">                return new FastaFormat();</a>
+<span class="sourceLineNo">643</span><a id="line.643">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">644</span><a id="line.644">            case SeqIOConstants.EMBL_RNA:</a>
+<span class="sourceLineNo">645</span><a id="line.645">                return new EmblLikeFormat();</a>
+<span class="sourceLineNo">646</span><a id="line.646">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">647</span><a id="line.647">            case SeqIOConstants.GENBANK_RNA:</a>
+<span class="sourceLineNo">648</span><a id="line.648">                return new GenbankFormat();</a>
+<span class="sourceLineNo">649</span><a id="line.649">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">650</span><a id="line.650">                return new EmblLikeFormat();</a>
+<span class="sourceLineNo">651</span><a id="line.651">            default:</a>
+<span class="sourceLineNo">652</span><a id="line.652">                throw new BioException("No SequenceFormat available for "</a>
+<span class="sourceLineNo">653</span><a id="line.653">                                       + "format/alphabet identifier '"</a>
+<span class="sourceLineNo">654</span><a id="line.654">                                       + identifier</a>
+<span class="sourceLineNo">655</span><a id="line.655">                                       + "'");</a>
+<span class="sourceLineNo">656</span><a id="line.656">        }</a>
+<span class="sourceLineNo">657</span><a id="line.657">    }</a>
+<span class="sourceLineNo">658</span><a id="line.658"></a>
+<span class="sourceLineNo">659</span><a id="line.659">    /**</a>
+<span class="sourceLineNo">660</span><a id="line.660">     * &lt;code&gt;getBuilderFactory&lt;/code&gt; accepts a value which represents</a>
+<span class="sourceLineNo">661</span><a id="line.661">     * a sequence format and returns the relevant</a>
+<span class="sourceLineNo">662</span><a id="line.662">     * &lt;code&gt;SequenceBuilderFactory&lt;/code&gt; object.</a>
+<span class="sourceLineNo">663</span><a id="line.663">     *</a>
+<span class="sourceLineNo">664</span><a id="line.664">     * @param identifier an &lt;code&gt;int&lt;/code&gt; which represents a binary</a>
+<span class="sourceLineNo">665</span><a id="line.665">     * value with bits set according to the scheme described in</a>
+<span class="sourceLineNo">666</span><a id="line.666">     * &lt;code&gt;SeqIOConstants&lt;/code&gt;.</a>
+<span class="sourceLineNo">667</span><a id="line.667">     *</a>
+<span class="sourceLineNo">668</span><a id="line.668">     * @return a &lt;code&gt;SequenceBuilderFactory&lt;/code&gt;.</a>
+<span class="sourceLineNo">669</span><a id="line.669">     *</a>
+<span class="sourceLineNo">670</span><a id="line.670">     * @exception BioException if an error occurs.</a>
+<span class="sourceLineNo">671</span><a id="line.671">     */</a>
+<span class="sourceLineNo">672</span><a id="line.672">    public static SequenceBuilderFactory getBuilderFactory(int identifier)</a>
+<span class="sourceLineNo">673</span><a id="line.673">        throws BioException {</a>
+<span class="sourceLineNo">674</span><a id="line.674"></a>
+<span class="sourceLineNo">675</span><a id="line.675">        // Mask the sequence format bytes</a>
+<span class="sourceLineNo">676</span><a id="line.676">        int alphaType = identifier &amp; (~ 0xffff);</a>
+<span class="sourceLineNo">677</span><a id="line.677">        if (alphaType == 0)</a>
+<span class="sourceLineNo">678</span><a id="line.678">            throw new IllegalArgumentException("No alphabet was set in the identifier");</a>
+<span class="sourceLineNo">679</span><a id="line.679"></a>
+<span class="sourceLineNo">680</span><a id="line.680">        // Mask alphabet bytes</a>
+<span class="sourceLineNo">681</span><a id="line.681">        int formatType = identifier &amp; (~ 0xffff0000);</a>
+<span class="sourceLineNo">682</span><a id="line.682">        if (formatType == 0)</a>
+<span class="sourceLineNo">683</span><a id="line.683">            throw new IllegalArgumentException("No format was set in the identifier");</a>
+<span class="sourceLineNo">684</span><a id="line.684"></a>
+<span class="sourceLineNo">685</span><a id="line.685">        switch (identifier) {</a>
+<span class="sourceLineNo">686</span><a id="line.686">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">687</span><a id="line.687">            case SeqIOConstants.FASTA_RNA:</a>
+<span class="sourceLineNo">688</span><a id="line.688">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">689</span><a id="line.689">                return getFastaBuilderFactory();</a>
+<span class="sourceLineNo">690</span><a id="line.690">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">691</span><a id="line.691">                    return getEmblBuilderFactory();</a>
+<span class="sourceLineNo">692</span><a id="line.692">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">693</span><a id="line.693">                return getGenbankBuilderFactory();</a>
+<span class="sourceLineNo">694</span><a id="line.694">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">695</span><a id="line.695">                return getSwissprotBuilderFactory();</a>
+<span class="sourceLineNo">696</span><a id="line.696">            case SeqIOConstants.GENPEPT:</a>
+<span class="sourceLineNo">697</span><a id="line.697">                return getGenpeptBuilderFactory();</a>
+<span class="sourceLineNo">698</span><a id="line.698">            default:</a>
+<span class="sourceLineNo">699</span><a id="line.699">                throw new BioException("No SequenceBuilderFactory available for "</a>
+<span class="sourceLineNo">700</span><a id="line.700">                                       + "format/alphabet identifier '"</a>
+<span class="sourceLineNo">701</span><a id="line.701">                                       + identifier</a>
+<span class="sourceLineNo">702</span><a id="line.702">                                       + "'");</a>
+<span class="sourceLineNo">703</span><a id="line.703">        }</a>
+<span class="sourceLineNo">704</span><a id="line.704">    }</a>
+<span class="sourceLineNo">705</span><a id="line.705"></a>
+<span class="sourceLineNo">706</span><a id="line.706">    /**</a>
+<span class="sourceLineNo">707</span><a id="line.707">     * &lt;code&gt;getAlphabet&lt;/code&gt; accepts a value which represents a</a>
+<span class="sourceLineNo">708</span><a id="line.708">     * sequence format and returns the relevant</a>
+<span class="sourceLineNo">709</span><a id="line.709">     * &lt;code&gt;FiniteAlphabet&lt;/code&gt; object.</a>
+<span class="sourceLineNo">710</span><a id="line.710">     *</a>
+<span class="sourceLineNo">711</span><a id="line.711">     * @param identifier an &lt;code&gt;int&lt;/code&gt; which represents a binary</a>
+<span class="sourceLineNo">712</span><a id="line.712">     * value with bits set according to the scheme described in</a>
+<span class="sourceLineNo">713</span><a id="line.713">     * &lt;code&gt;SeqIOConstants&lt;/code&gt;.</a>
+<span class="sourceLineNo">714</span><a id="line.714">     *</a>
+<span class="sourceLineNo">715</span><a id="line.715">     * @return a &lt;code&gt;FiniteAlphabet&lt;/code&gt;.</a>
+<span class="sourceLineNo">716</span><a id="line.716">     *</a>
+<span class="sourceLineNo">717</span><a id="line.717">     * @exception BioException if an error occurs.</a>
+<span class="sourceLineNo">718</span><a id="line.718">     */</a>
+<span class="sourceLineNo">719</span><a id="line.719">    public static FiniteAlphabet getAlphabet(int identifier)</a>
+<span class="sourceLineNo">720</span><a id="line.720">        throws BioException {</a>
+<span class="sourceLineNo">721</span><a id="line.721"></a>
+<span class="sourceLineNo">722</span><a id="line.722">        // Mask the sequence format bytes</a>
+<span class="sourceLineNo">723</span><a id="line.723">        int alphaType = identifier &amp; (~ 0xffff);</a>
+<span class="sourceLineNo">724</span><a id="line.724">        if (alphaType == 0)</a>
+<span class="sourceLineNo">725</span><a id="line.725">            throw new IllegalArgumentException("No alphabet was set in the identifier");</a>
+<span class="sourceLineNo">726</span><a id="line.726"></a>
+<span class="sourceLineNo">727</span><a id="line.727">        switch (alphaType) {</a>
+<span class="sourceLineNo">728</span><a id="line.728">            case SeqIOConstants.DNA:</a>
+<span class="sourceLineNo">729</span><a id="line.729">                return DNATools.getDNA();</a>
+<span class="sourceLineNo">730</span><a id="line.730">            case SeqIOConstants.RNA:</a>
+<span class="sourceLineNo">731</span><a id="line.731">                return RNATools.getRNA();</a>
+<span class="sourceLineNo">732</span><a id="line.732">            case SeqIOConstants.AA:</a>
+<span class="sourceLineNo">733</span><a id="line.733">                return ProteinTools.getTAlphabet();</a>
+<span class="sourceLineNo">734</span><a id="line.734">            default:</a>
+<span class="sourceLineNo">735</span><a id="line.735">                throw new BioException("No FiniteAlphabet available for "</a>
+<span class="sourceLineNo">736</span><a id="line.736">                                       + "alphabet identifier '"</a>
+<span class="sourceLineNo">737</span><a id="line.737">                                       + identifier</a>
+<span class="sourceLineNo">738</span><a id="line.738">                                       + "'");</a>
+<span class="sourceLineNo">739</span><a id="line.739">        }</a>
+<span class="sourceLineNo">740</span><a id="line.740">    }</a>
+<span class="sourceLineNo">741</span><a id="line.741"></a>
+<span class="sourceLineNo">742</span><a id="line.742">    //</a>
+<span class="sourceLineNo">743</span><a id="line.743">    // The following methods provide an alternate interface for</a>
+<span class="sourceLineNo">744</span><a id="line.744">    // reading and writing sequences and alignments. (Nimesh Singh).</a>
+<span class="sourceLineNo">745</span><a id="line.745">    //</a>
+<span class="sourceLineNo">746</span><a id="line.746">    //</a>
+<span class="sourceLineNo">747</span><a id="line.747"></a>
+<span class="sourceLineNo">748</span><a id="line.748">    /**</a>
+<span class="sourceLineNo">749</span><a id="line.749">     * Attempts to guess the filetype of a file given the name.  For</a>
+<span class="sourceLineNo">750</span><a id="line.750">     * use with the functions below that take an int fileType as a</a>
+<span class="sourceLineNo">751</span><a id="line.751">     * parameter. EMBL and Genbank files are assumed to contain DNA</a>
+<span class="sourceLineNo">752</span><a id="line.752">     * sequence.</a>
+<span class="sourceLineNo">753</span><a id="line.753">     * @deprecated because there is no standard file naming convention</a>
+<span class="sourceLineNo">754</span><a id="line.754">     * and guessing by file name is inherantly error prone and bad.</a>
+<span class="sourceLineNo">755</span><a id="line.755">     * @param seqFile the &lt;CODE&gt;File&lt;/CODE&gt; to read from.</a>
+<span class="sourceLineNo">756</span><a id="line.756">     * @throws java.io.IOException if &lt;CODE&gt;seqFile&lt;/CODE&gt; cannot be read</a>
+<span class="sourceLineNo">757</span><a id="line.757">     * @throws java.io.FileNotFoundException if &lt;CODE&gt;seqFile&lt;/CODE&gt; cannot be found</a>
+<span class="sourceLineNo">758</span><a id="line.758">     * @return a value that describes the file type.</a>
+<span class="sourceLineNo">759</span><a id="line.759">     */</a>
+<span class="sourceLineNo">760</span><a id="line.760">    public static int guessFileType(File seqFile)</a>
+<span class="sourceLineNo">761</span><a id="line.761">        throws IOException, FileNotFoundException {</a>
+<span class="sourceLineNo">762</span><a id="line.762">        //First tries by matching an extension</a>
+<span class="sourceLineNo">763</span><a id="line.763">        String fileName = seqFile.getName();</a>
+<span class="sourceLineNo">764</span><a id="line.764">        try {</a>
+<span class="sourceLineNo">765</span><a id="line.765">            if (Pattern.matches(".*\\u002eem.*", fileName)) {</a>
+<span class="sourceLineNo">766</span><a id="line.766">                return SeqIOConstants.EMBL_DNA;</a>
+<span class="sourceLineNo">767</span><a id="line.767">            }</a>
+<span class="sourceLineNo">768</span><a id="line.768">            else if (Pattern.matches(".*\\u002edat.*", fileName)) {</a>
+<span class="sourceLineNo">769</span><a id="line.769">                return SeqIOConstants.EMBL_DNA;</a>
+<span class="sourceLineNo">770</span><a id="line.770">            }</a>
+<span class="sourceLineNo">771</span><a id="line.771">            else if (Pattern.matches(".*\\u002egb.*", fileName)) {</a>
+<span class="sourceLineNo">772</span><a id="line.772">                return SeqIOConstants.GENBANK_DNA;</a>
+<span class="sourceLineNo">773</span><a id="line.773">            }</a>
+<span class="sourceLineNo">774</span><a id="line.774">            else if (Pattern.matches(".*\\u002esp.*", fileName)) {</a>
+<span class="sourceLineNo">775</span><a id="line.775">                return SeqIOConstants.SWISSPROT;</a>
+<span class="sourceLineNo">776</span><a id="line.776">            }</a>
+<span class="sourceLineNo">777</span><a id="line.777">            else if (Pattern.matches(".*\\u002egp.*", fileName)) {</a>
+<span class="sourceLineNo">778</span><a id="line.778">                return SeqIOConstants.GENPEPT;</a>
+<span class="sourceLineNo">779</span><a id="line.779">            }</a>
+<span class="sourceLineNo">780</span><a id="line.780">            else if (Pattern.matches(".*\\u002efa.*", fileName)) {</a>
+<span class="sourceLineNo">781</span><a id="line.781">                return guessFastaType(seqFile);</a>
+<span class="sourceLineNo">782</span><a id="line.782">            }</a>
+<span class="sourceLineNo">783</span><a id="line.783">            else if (Pattern.matches(".*\\u002emsf.*", fileName)) {</a>
+<span class="sourceLineNo">784</span><a id="line.784">                return guessMsfType(seqFile);</a>
+<span class="sourceLineNo">785</span><a id="line.785">            }</a>
+<span class="sourceLineNo">786</span><a id="line.786">        } catch (PatternSyntaxException e) {</a>
+<span class="sourceLineNo">787</span><a id="line.787">            throw new BioError("Internal error in SeqIOTools", e);</a>
+<span class="sourceLineNo">788</span><a id="line.788">        }</a>
+<span class="sourceLineNo">789</span><a id="line.789"></a>
+<span class="sourceLineNo">790</span><a id="line.790">        //Reads the file to guess based on content</a>
+<span class="sourceLineNo">791</span><a id="line.791">        BufferedReader br = new BufferedReader(new FileReader(seqFile));</a>
+<span class="sourceLineNo">792</span><a id="line.792">        String line1 = br.readLine();</a>
+<span class="sourceLineNo">793</span><a id="line.793">        br.close();</a>
+<span class="sourceLineNo">794</span><a id="line.794"></a>
+<span class="sourceLineNo">795</span><a id="line.795">        if (line1.startsWith("&gt;")) {</a>
+<span class="sourceLineNo">796</span><a id="line.796">            return guessFastaType(seqFile);</a>
+<span class="sourceLineNo">797</span><a id="line.797">        }</a>
+<span class="sourceLineNo">798</span><a id="line.798">        else if (line1.startsWith("PileUp")) {</a>
+<span class="sourceLineNo">799</span><a id="line.799">            return guessMsfType(seqFile);</a>
+<span class="sourceLineNo">800</span><a id="line.800">        }</a>
+<span class="sourceLineNo">801</span><a id="line.801">        else if (line1.startsWith("!!AA_MULTIPLE_ALIGNMENT")) {</a>
+<span class="sourceLineNo">802</span><a id="line.802">            return AlignIOConstants.MSF_AA;</a>
+<span class="sourceLineNo">803</span><a id="line.803">        }</a>
+<span class="sourceLineNo">804</span><a id="line.804">        else if (line1.startsWith("!!NA_MULTIPLE_ALIGNMENT")) {</a>
+<span class="sourceLineNo">805</span><a id="line.805">            return AlignIOConstants.MSF_DNA;</a>
+<span class="sourceLineNo">806</span><a id="line.806">        }</a>
+<span class="sourceLineNo">807</span><a id="line.807">        else if (line1.startsWith("ID")) {</a>
+<span class="sourceLineNo">808</span><a id="line.808">            for (int i = 0; i &lt; line1.length(); i++) {</a>
+<span class="sourceLineNo">809</span><a id="line.809">                if (Character.toUpperCase(line1.charAt(i)) == 'P' &amp;&amp;</a>
+<span class="sourceLineNo">810</span><a id="line.810">                    Character.toUpperCase(line1.charAt(i+1)) == 'R' &amp;&amp;</a>
+<span class="sourceLineNo">811</span><a id="line.811">                    Character.toUpperCase(line1.charAt(i+2)) == 'T') {</a>
+<span class="sourceLineNo">812</span><a id="line.812">                    return SeqIOConstants.SWISSPROT;</a>
+<span class="sourceLineNo">813</span><a id="line.813">                }</a>
+<span class="sourceLineNo">814</span><a id="line.814">            }</a>
+<span class="sourceLineNo">815</span><a id="line.815">            return SeqIOConstants.EMBL_DNA;</a>
+<span class="sourceLineNo">816</span><a id="line.816">        }</a>
+<span class="sourceLineNo">817</span><a id="line.817">        else if (line1.toUpperCase().startsWith("LOCUS")) {</a>
+<span class="sourceLineNo">818</span><a id="line.818">            for (int i = 0; i &lt; line1.length(); i++) {</a>
+<span class="sourceLineNo">819</span><a id="line.819">                if (Character.toUpperCase(line1.charAt(i)) == 'A' &amp;&amp;</a>
+<span class="sourceLineNo">820</span><a id="line.820">                    Character.toUpperCase(line1.charAt(i+1)) == 'A') {</a>
+<span class="sourceLineNo">821</span><a id="line.821">                    return SeqIOConstants.GENPEPT;</a>
+<span class="sourceLineNo">822</span><a id="line.822">                }</a>
+<span class="sourceLineNo">823</span><a id="line.823">            }</a>
+<span class="sourceLineNo">824</span><a id="line.824">            return SeqIOConstants.GENBANK_DNA;</a>
+<span class="sourceLineNo">825</span><a id="line.825">        }</a>
+<span class="sourceLineNo">826</span><a id="line.826">        else if (line1.length() &gt;= 45 &amp;&amp;</a>
+<span class="sourceLineNo">827</span><a id="line.827">                 line1.substring(19, 45).equalsIgnoreCase("GENETIC SEQUENCE DATA BANK")) {</a>
+<span class="sourceLineNo">828</span><a id="line.828">            return guessGenType(fileName);</a>
+<span class="sourceLineNo">829</span><a id="line.829">        }</a>
+<span class="sourceLineNo">830</span><a id="line.830">        else {</a>
+<span class="sourceLineNo">831</span><a id="line.831">            return SeqIOConstants.UNKNOWN;</a>
+<span class="sourceLineNo">832</span><a id="line.832">        }</a>
+<span class="sourceLineNo">833</span><a id="line.833">    }</a>
+<span class="sourceLineNo">834</span><a id="line.834"></a>
+<span class="sourceLineNo">835</span><a id="line.835">    /**</a>
+<span class="sourceLineNo">836</span><a id="line.836">     * Attempts to retrieve the most appropriate</a>
+<span class="sourceLineNo">837</span><a id="line.837">     * &lt;code&gt;SequenceBuilder&lt;/code&gt; object for some combination of</a>
+<span class="sourceLineNo">838</span><a id="line.838">     * &lt;code&gt;Alphabet&lt;/code&gt; and &lt;code&gt;SequenceFormat&lt;/code&gt;</a>
+<span class="sourceLineNo">839</span><a id="line.839">     *</a>
+<span class="sourceLineNo">840</span><a id="line.840">     * @param format currently supports &lt;code&gt;FastaFormat&lt;/code&gt;,</a>
+<span class="sourceLineNo">841</span><a id="line.841">     * &lt;code&gt;GenbankFormat&lt;/code&gt;, &lt;code&gt;EmblLikeFormat&lt;/code&gt;</a>
+<span class="sourceLineNo">842</span><a id="line.842">     * @param alpha currently only supports the DNA and Protein</a>
+<span class="sourceLineNo">843</span><a id="line.843">     * alphabets</a>
+<span class="sourceLineNo">844</span><a id="line.844">     *</a>
+<span class="sourceLineNo">845</span><a id="line.845">     * @return the &lt;code&gt;SequenceBuilderFactory&lt;/code&gt;</a>
+<span class="sourceLineNo">846</span><a id="line.846">     *</a>
+<span class="sourceLineNo">847</span><a id="line.847">     * @throws BioException if the combination of alpha and format is</a>
+<span class="sourceLineNo">848</span><a id="line.848">     * unrecognized.</a>
+<span class="sourceLineNo">849</span><a id="line.849">     *</a>
+<span class="sourceLineNo">850</span><a id="line.850">     * @deprecated as this essentially duplicates the operation</a>
+<span class="sourceLineNo">851</span><a id="line.851">     * available in the method &lt;code&gt;identifyBuilderFactory&lt;/code&gt;.</a>
+<span class="sourceLineNo">852</span><a id="line.852">     */</a>
+<span class="sourceLineNo">853</span><a id="line.853">    public static SequenceBuilderFactory formatToFactory(SequenceFormat format,</a>
+<span class="sourceLineNo">854</span><a id="line.854">                                                         Alphabet alpha)</a>
+<span class="sourceLineNo">855</span><a id="line.855">        throws BioException {</a>
+<span class="sourceLineNo">856</span><a id="line.856"></a>
+<span class="sourceLineNo">857</span><a id="line.857">        if ((format instanceof FastaFormat) &amp;&amp;</a>
+<span class="sourceLineNo">858</span><a id="line.858">           (alpha == DNATools.getDNA() ||</a>
+<span class="sourceLineNo">859</span><a id="line.859">            alpha == ProteinTools.getAlphabet())) {</a>
+<span class="sourceLineNo">860</span><a id="line.860"></a>
+<span class="sourceLineNo">861</span><a id="line.861">            return getFastaBuilderFactory();</a>
+<span class="sourceLineNo">862</span><a id="line.862">        }</a>
+<span class="sourceLineNo">863</span><a id="line.863">        else if (format instanceof GenbankFormat &amp;&amp;</a>
+<span class="sourceLineNo">864</span><a id="line.864">                alpha == DNATools.getDNA()) {</a>
+<span class="sourceLineNo">865</span><a id="line.865"></a>
+<span class="sourceLineNo">866</span><a id="line.866">            return getGenbankBuilderFactory();</a>
+<span class="sourceLineNo">867</span><a id="line.867">        }</a>
+<span class="sourceLineNo">868</span><a id="line.868">        else if (format instanceof GenbankFormat &amp;&amp;</a>
+<span class="sourceLineNo">869</span><a id="line.869">                 alpha == ProteinTools.getAlphabet()) {</a>
+<span class="sourceLineNo">870</span><a id="line.870">            return getGenpeptBuilderFactory();</a>
+<span class="sourceLineNo">871</span><a id="line.871">        }</a>
+<span class="sourceLineNo">872</span><a id="line.872">        else if (format instanceof EmblLikeFormat &amp;&amp;</a>
+<span class="sourceLineNo">873</span><a id="line.873">                 alpha == DNATools.getDNA()){</a>
+<span class="sourceLineNo">874</span><a id="line.874">            return getEmblBuilderFactory();</a>
+<span class="sourceLineNo">875</span><a id="line.875">        }</a>
+<span class="sourceLineNo">876</span><a id="line.876">        else if (format instanceof EmblLikeFormat &amp;&amp;</a>
+<span class="sourceLineNo">877</span><a id="line.877">                 alpha == ProteinTools.getAlphabet()) {</a>
+<span class="sourceLineNo">878</span><a id="line.878">            return getSwissprotBuilderFactory();</a>
+<span class="sourceLineNo">879</span><a id="line.879">        }</a>
+<span class="sourceLineNo">880</span><a id="line.880">        else {</a>
+<span class="sourceLineNo">881</span><a id="line.881">            throw new BioException("Unknown combination of"</a>
+<span class="sourceLineNo">882</span><a id="line.882">                                   + " Alphabet and Format");</a>
+<span class="sourceLineNo">883</span><a id="line.883">      }</a>
+<span class="sourceLineNo">884</span><a id="line.884">    }</a>
+<span class="sourceLineNo">885</span><a id="line.885"></a>
+<span class="sourceLineNo">886</span><a id="line.886">    /**</a>
+<span class="sourceLineNo">887</span><a id="line.887">     * Reads a file with the specified format and alphabet</a>
+<span class="sourceLineNo">888</span><a id="line.888">     * @param formatName the name of the format eg genbank or</a>
+<span class="sourceLineNo">889</span><a id="line.889">     * swissprot (case insensitive)</a>
+<span class="sourceLineNo">890</span><a id="line.890">     * @param alphabetName the name of the alphabet eg dna or rna or</a>
+<span class="sourceLineNo">891</span><a id="line.891">     * protein (case insensitive)</a>
+<span class="sourceLineNo">892</span><a id="line.892">     * @param br a BufferedReader for the input</a>
+<span class="sourceLineNo">893</span><a id="line.893">     * @return either an Alignment object or a SequenceIterator</a>
+<span class="sourceLineNo">894</span><a id="line.894">     * (depending on the format read)</a>
+<span class="sourceLineNo">895</span><a id="line.895">     * @throws BioException if an error occurs while reading or a</a>
+<span class="sourceLineNo">896</span><a id="line.896">     * unrecognized format, alphabet combination is used (eg swissprot</a>
+<span class="sourceLineNo">897</span><a id="line.897">     * and DNA).</a>
+<span class="sourceLineNo">898</span><a id="line.898">     *</a>
+<span class="sourceLineNo">899</span><a id="line.899">     * @since 1.3</a>
+<span class="sourceLineNo">900</span><a id="line.900">     */</a>
+<span class="sourceLineNo">901</span><a id="line.901">    public static Object fileToBiojava(String formatName,</a>
+<span class="sourceLineNo">902</span><a id="line.902">                                       String alphabetName,</a>
+<span class="sourceLineNo">903</span><a id="line.903">                                       BufferedReader br)</a>
+<span class="sourceLineNo">904</span><a id="line.904">        throws BioException {</a>
+<span class="sourceLineNo">905</span><a id="line.905"></a>
+<span class="sourceLineNo">906</span><a id="line.906">        int fileType = identifyFormat(formatName, alphabetName);</a>
+<span class="sourceLineNo">907</span><a id="line.907"></a>
+<span class="sourceLineNo">908</span><a id="line.908">        return fileToBiojava(fileType, br);</a>
+<span class="sourceLineNo">909</span><a id="line.909">    }</a>
+<span class="sourceLineNo">910</span><a id="line.910"></a>
+<span class="sourceLineNo">911</span><a id="line.911">    /**</a>
+<span class="sourceLineNo">912</span><a id="line.912">     * Reads a file and returns the corresponding Biojava object. You</a>
+<span class="sourceLineNo">913</span><a id="line.913">     * need to cast it as an Alignment or a SequenceIterator as</a>
+<span class="sourceLineNo">914</span><a id="line.914">     * appropriate.</a>
+<span class="sourceLineNo">915</span><a id="line.915">     * @param fileType a value that describes the file type</a>
+<span class="sourceLineNo">916</span><a id="line.916">     * @param br the reader for the input</a>
+<span class="sourceLineNo">917</span><a id="line.917">     * @throws org.biojava.bio.BioException if the file cannot be parsed</a>
+<span class="sourceLineNo">918</span><a id="line.918">     * @return either a &lt;code&gt;SequenceIterator&lt;/code&gt; if the file type is a </a>
+<span class="sourceLineNo">919</span><a id="line.919">     * sequence file, or a &lt;code&gt;Alignment&lt;/code&gt; if the file is a sequence</a>
+<span class="sourceLineNo">920</span><a id="line.920">     * alignment.</a>
+<span class="sourceLineNo">921</span><a id="line.921">     */</a>
+<span class="sourceLineNo">922</span><a id="line.922">    public static Object fileToBiojava(int fileType, BufferedReader br)</a>
+<span class="sourceLineNo">923</span><a id="line.923">        throws BioException {</a>
+<span class="sourceLineNo">924</span><a id="line.924"></a>
+<span class="sourceLineNo">925</span><a id="line.925">        // Mask the sequence format bytes</a>
+<span class="sourceLineNo">926</span><a id="line.926">        int alphaType = fileType &amp; (~ 0xffff);</a>
+<span class="sourceLineNo">927</span><a id="line.927">        if (alphaType == 0)</a>
+<span class="sourceLineNo">928</span><a id="line.928">            throw new IllegalArgumentException("No alphabet was set in the identifier");</a>
+<span class="sourceLineNo">929</span><a id="line.929"></a>
+<span class="sourceLineNo">930</span><a id="line.930">        // Mask alphabet bytes</a>
+<span class="sourceLineNo">931</span><a id="line.931">        int formatType = fileType &amp; (~ 0xffff0000);</a>
+<span class="sourceLineNo">932</span><a id="line.932">        if (formatType == 0)</a>
+<span class="sourceLineNo">933</span><a id="line.933">            throw new IllegalArgumentException("No format was set in the identifier");</a>
+<span class="sourceLineNo">934</span><a id="line.934"></a>
+<span class="sourceLineNo">935</span><a id="line.935">        switch (fileType) {</a>
+<span class="sourceLineNo">936</span><a id="line.936">            case AlignIOConstants.MSF_DNA:</a>
+<span class="sourceLineNo">937</span><a id="line.937">            case AlignIOConstants.MSF_AA:</a>
+<span class="sourceLineNo">938</span><a id="line.938">            case AlignIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">939</span><a id="line.939">            case AlignIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">940</span><a id="line.940">                return fileToAlign(fileType, br);</a>
+<span class="sourceLineNo">941</span><a id="line.941">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">942</span><a id="line.942">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">943</span><a id="line.943">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">944</span><a id="line.944">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">945</span><a id="line.945">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">946</span><a id="line.946">            case SeqIOConstants.GENPEPT:</a>
+<span class="sourceLineNo">947</span><a id="line.947">                return fileToSeq(fileType, br);</a>
+<span class="sourceLineNo">948</span><a id="line.948">            default:</a>
+<span class="sourceLineNo">949</span><a id="line.949">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">950</span><a id="line.950">                                       + fileType</a>
+<span class="sourceLineNo">951</span><a id="line.951">                                       + "'");</a>
+<span class="sourceLineNo">952</span><a id="line.952">        }</a>
+<span class="sourceLineNo">953</span><a id="line.953">    }</a>
+<span class="sourceLineNo">954</span><a id="line.954"></a>
+<span class="sourceLineNo">955</span><a id="line.955">    /**</a>
+<span class="sourceLineNo">956</span><a id="line.956">     * Writes a Biojava &lt;code&gt;SequenceIterator&lt;/code&gt;,</a>
+<span class="sourceLineNo">957</span><a id="line.957">     * &lt;code&gt;SequenceDB&lt;/code&gt;, &lt;code&gt;Sequence&lt;/code&gt; or &lt;code&gt;Aligment&lt;/code&gt;</a>
+<span class="sourceLineNo">958</span><a id="line.958">     * to an &lt;code&gt;OutputStream&lt;/code&gt;</a>
+<span class="sourceLineNo">959</span><a id="line.959">     *</a>
+<span class="sourceLineNo">960</span><a id="line.960">     * @param formatName eg fasta, GenBank (case insensitive)</a>
+<span class="sourceLineNo">961</span><a id="line.961">     * @param alphabetName eg DNA, RNA (case insensititve)</a>
+<span class="sourceLineNo">962</span><a id="line.962">     * @param os where to write to</a>
+<span class="sourceLineNo">963</span><a id="line.963">     * @param biojava the object to write</a>
+<span class="sourceLineNo">964</span><a id="line.964">     * @throws BioException problems getting data from the biojava object.</a>
+<span class="sourceLineNo">965</span><a id="line.965">     * @throws IOException if there are IO problems</a>
+<span class="sourceLineNo">966</span><a id="line.966">     * @throws IllegalSymbolException a Symbol cannot be parsed</a>
+<span class="sourceLineNo">967</span><a id="line.967">     */</a>
+<span class="sourceLineNo">968</span><a id="line.968">    public static void biojavaToFile(String formatName, String alphabetName,</a>
+<span class="sourceLineNo">969</span><a id="line.969">                                     OutputStream os, Object biojava)</a>
+<span class="sourceLineNo">970</span><a id="line.970">    throws BioException, IOException, IllegalSymbolException{</a>
+<span class="sourceLineNo">971</span><a id="line.971">      int fileType = identifyFormat(formatName,alphabetName);</a>
+<span class="sourceLineNo">972</span><a id="line.972">      biojavaToFile(fileType, os, biojava);</a>
+<span class="sourceLineNo">973</span><a id="line.973">    }</a>
+<span class="sourceLineNo">974</span><a id="line.974"></a>
+<span class="sourceLineNo">975</span><a id="line.975">    /**</a>
+<span class="sourceLineNo">976</span><a id="line.976">     * Converts a Biojava object to the given filetype.</a>
+<span class="sourceLineNo">977</span><a id="line.977">     * @param fileType a value that describes the type of sequence file</a>
+<span class="sourceLineNo">978</span><a id="line.978">     * @param os the stream to write the formatted results to</a>
+<span class="sourceLineNo">979</span><a id="line.979">     * @param biojava a &lt;code&gt;SequenceIterator&lt;/code&gt;, &lt;code&gt;SequenceDB&lt;/code&gt;, </a>
+<span class="sourceLineNo">980</span><a id="line.980">     * &lt;code&gt;Sequence&lt;/code&gt;, or &lt;code&gt;Alignment&lt;/code&gt;</a>
+<span class="sourceLineNo">981</span><a id="line.981">     * @throws org.biojava.bio.BioException if &lt;code&gt;biojava&lt;/code&gt; cannot be </a>
+<span class="sourceLineNo">982</span><a id="line.982">     * converted to that format.</a>
+<span class="sourceLineNo">983</span><a id="line.983">     * @throws java.io.IOException if the output cannot be written to </a>
+<span class="sourceLineNo">984</span><a id="line.984">     * &lt;code&gt;os&lt;/code&gt;</a>
+<span class="sourceLineNo">985</span><a id="line.985">     * @throws org.biojava.bio.symbol.IllegalSymbolException if &lt;code&gt;biojava</a>
+<span class="sourceLineNo">986</span><a id="line.986">     * &lt;/code&gt; contains a &lt;code&gt;Symbol&lt;/code&gt; that cannot be understood by the</a>
+<span class="sourceLineNo">987</span><a id="line.987">     * parser.</a>
+<span class="sourceLineNo">988</span><a id="line.988">     */</a>
+<span class="sourceLineNo">989</span><a id="line.989">    public static void biojavaToFile(int fileType, OutputStream os,</a>
+<span class="sourceLineNo">990</span><a id="line.990">                                     Object biojava)</a>
+<span class="sourceLineNo">991</span><a id="line.991">        throws BioException, IOException, IllegalSymbolException {</a>
+<span class="sourceLineNo">992</span><a id="line.992">        switch (fileType) {</a>
+<span class="sourceLineNo">993</span><a id="line.993">            case AlignIOConstants.MSF_DNA:</a>
+<span class="sourceLineNo">994</span><a id="line.994">            case AlignIOConstants.MSF_AA:</a>
+<span class="sourceLineNo">995</span><a id="line.995">            case AlignIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">996</span><a id="line.996">            case AlignIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">997</span><a id="line.997">                alignToFile(fileType, os, (Alignment) biojava);</a>
+<span class="sourceLineNo">998</span><a id="line.998">                break;</a>
+<span class="sourceLineNo">999</span><a id="line.999">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">1004</span><a id="line.1004">            case SeqIOConstants.GENPEPT:</a>
+<span class="sourceLineNo">1005</span><a id="line.1005">                if(biojava instanceof SequenceDB){</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">                  seqToFile(fileType, os, ((SequenceDB)biojava).sequenceIterator());</a>
+<span class="sourceLineNo">1007</span><a id="line.1007">                }else if(biojava instanceof Sequence){</a>
+<span class="sourceLineNo">1008</span><a id="line.1008">                  seqToFile(fileType, os, new SingleSeqIterator((Sequence)biojava));</a>
+<span class="sourceLineNo">1009</span><a id="line.1009">                }else{</a>
+<span class="sourceLineNo">1010</span><a id="line.1010">                  seqToFile(fileType, os, (SequenceIterator) biojava);</a>
+<span class="sourceLineNo">1011</span><a id="line.1011">                }</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">                break;</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">            default:</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">                                       + fileType</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">                                       + "'");</a>
+<span class="sourceLineNo">1017</span><a id="line.1017">        }</a>
+<span class="sourceLineNo">1018</span><a id="line.1018">    }</a>
+<span class="sourceLineNo">1019</span><a id="line.1019"></a>
+<span class="sourceLineNo">1020</span><a id="line.1020">    /**</a>
+<span class="sourceLineNo">1021</span><a id="line.1021">     * Helper function for guessFileName.</a>
+<span class="sourceLineNo">1022</span><a id="line.1022">     */</a>
+<span class="sourceLineNo">1023</span><a id="line.1023">    private static int guessFastaType(File seqFile)</a>
+<span class="sourceLineNo">1024</span><a id="line.1024">        throws IOException, FileNotFoundException {</a>
+<span class="sourceLineNo">1025</span><a id="line.1025">        BufferedReader br = new BufferedReader(new FileReader(seqFile));</a>
+<span class="sourceLineNo">1026</span><a id="line.1026">        String line = br.readLine();</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">        line = br.readLine();</a>
+<span class="sourceLineNo">1028</span><a id="line.1028">        br.close();</a>
+<span class="sourceLineNo">1029</span><a id="line.1029">        for (int i = 0; i &lt; line.length(); i++) {</a>
+<span class="sourceLineNo">1030</span><a id="line.1030">            if (Character.toUpperCase(line.charAt(i)) == 'F' ||</a>
+<span class="sourceLineNo">1031</span><a id="line.1031">                Character.toUpperCase(line.charAt(i)) == 'L' ||</a>
+<span class="sourceLineNo">1032</span><a id="line.1032">                Character.toUpperCase(line.charAt(i)) == 'I' ||</a>
+<span class="sourceLineNo">1033</span><a id="line.1033">                Character.toUpperCase(line.charAt(i)) == 'P' ||</a>
+<span class="sourceLineNo">1034</span><a id="line.1034">                Character.toUpperCase(line.charAt(i)) == 'Q' ||</a>
+<span class="sourceLineNo">1035</span><a id="line.1035">                Character.toUpperCase(line.charAt(i)) == 'E') {</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">                return SeqIOConstants.FASTA_AA;</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">            }</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">        }</a>
+<span class="sourceLineNo">1039</span><a id="line.1039"></a>
+<span class="sourceLineNo">1040</span><a id="line.1040">        return SeqIOConstants.FASTA_DNA;</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">    }</a>
+<span class="sourceLineNo">1042</span><a id="line.1042"></a>
+<span class="sourceLineNo">1043</span><a id="line.1043">    private static SymbolTokenization getDNAParser() {</a>
+<span class="sourceLineNo">1044</span><a id="line.1044">        try {</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">            return DNATools.getDNA().getTokenization("token");</a>
+<span class="sourceLineNo">1046</span><a id="line.1046">        } catch (BioException ex) {</a>
+<span class="sourceLineNo">1047</span><a id="line.1047">            throw new BioError("Assertion failing:"</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">                               + " Couldn't get DNA token parser",ex);</a>
+<span class="sourceLineNo">1049</span><a id="line.1049">        }</a>
+<span class="sourceLineNo">1050</span><a id="line.1050">    }</a>
+<span class="sourceLineNo">1051</span><a id="line.1051"></a>
+<span class="sourceLineNo">1052</span><a id="line.1052">    private static SymbolTokenization getRNAParser() {</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">        try {</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">            return RNATools.getRNA().getTokenization("token");</a>
+<span class="sourceLineNo">1055</span><a id="line.1055">        } catch (BioException ex) {</a>
+<span class="sourceLineNo">1056</span><a id="line.1056">            throw new BioError("Assertion failing:"</a>
+<span class="sourceLineNo">1057</span><a id="line.1057">                               + " Couldn't get RNA token parser",ex);</a>
+<span class="sourceLineNo">1058</span><a id="line.1058">        }</a>
+<span class="sourceLineNo">1059</span><a id="line.1059">    }</a>
+<span class="sourceLineNo">1060</span><a id="line.1060"></a>
+<span class="sourceLineNo">1061</span><a id="line.1061">    private static SymbolTokenization getNucleotideParser() {</a>
+<span class="sourceLineNo">1062</span><a id="line.1062">        try {</a>
+<span class="sourceLineNo">1063</span><a id="line.1063">            return NucleotideTools.getNucleotide().getTokenization("token");</a>
+<span class="sourceLineNo">1064</span><a id="line.1064">        } catch (BioException ex) {</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">            throw new BioError("Assertion failing:"</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">                               + " Couldn't get nucleotide token parser",ex);</a>
+<span class="sourceLineNo">1067</span><a id="line.1067">        }</a>
+<span class="sourceLineNo">1068</span><a id="line.1068">    }</a>
+<span class="sourceLineNo">1069</span><a id="line.1069"></a>
+<span class="sourceLineNo">1070</span><a id="line.1070">    private static SymbolTokenization getProteinParser() {</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">        try {</a>
+<span class="sourceLineNo">1072</span><a id="line.1072">            return ProteinTools.getTAlphabet().getTokenization("token");</a>
+<span class="sourceLineNo">1073</span><a id="line.1073">        } catch (BioException ex) {</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">            throw new BioError("Assertion failing:"</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">                               + " Couldn't get PROTEIN token parser",ex);</a>
+<span class="sourceLineNo">1076</span><a id="line.1076">        }</a>
+<span class="sourceLineNo">1077</span><a id="line.1077">    }</a>
+<span class="sourceLineNo">1078</span><a id="line.1078"></a>
+<span class="sourceLineNo">1079</span><a id="line.1079">    /**</a>
+<span class="sourceLineNo">1080</span><a id="line.1080">     * Helper function for guessFileName.</a>
+<span class="sourceLineNo">1081</span><a id="line.1081">     */</a>
+<span class="sourceLineNo">1082</span><a id="line.1082">    private static int guessMsfType(File seqFile)</a>
+<span class="sourceLineNo">1083</span><a id="line.1083">        throws IOException, FileNotFoundException {</a>
+<span class="sourceLineNo">1084</span><a id="line.1084">        BufferedReader br = new BufferedReader(new FileReader(seqFile));</a>
+<span class="sourceLineNo">1085</span><a id="line.1085">        String line = br.readLine();</a>
+<span class="sourceLineNo">1086</span><a id="line.1086">        if (line.startsWith("!!NA_MULTIPLE_ALIGNMENT")) {</a>
+<span class="sourceLineNo">1087</span><a id="line.1087">            return AlignIOConstants.MSF_DNA;</a>
+<span class="sourceLineNo">1088</span><a id="line.1088">        }</a>
+<span class="sourceLineNo">1089</span><a id="line.1089">        else if (line.startsWith("!!AA_MULTIPLE_ALIGNMENT")) {</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">            return AlignIOConstants.MSF_AA;</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">        }</a>
+<span class="sourceLineNo">1092</span><a id="line.1092">        else {</a>
+<span class="sourceLineNo">1093</span><a id="line.1093">            while (line.indexOf("Type: ") == -1) {</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">                line = br.readLine();</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">            }</a>
+<span class="sourceLineNo">1096</span><a id="line.1096">            br.close();</a>
+<span class="sourceLineNo">1097</span><a id="line.1097">            int typeIndex = line.indexOf("Type: ") + 6;</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">            if (line.substring(typeIndex).startsWith("N")) {</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">                return AlignIOConstants.MSF_DNA;</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">            }</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">            else if (line.substring(typeIndex).startsWith("P")) {</a>
+<span class="sourceLineNo">1102</span><a id="line.1102">                return AlignIOConstants.MSF_AA;</a>
+<span class="sourceLineNo">1103</span><a id="line.1103">            }</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">            else {</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">                return AlignIOConstants.UNKNOWN;</a>
+<span class="sourceLineNo">1106</span><a id="line.1106">            }</a>
+<span class="sourceLineNo">1107</span><a id="line.1107">        }</a>
+<span class="sourceLineNo">1108</span><a id="line.1108">    }</a>
+<span class="sourceLineNo">1109</span><a id="line.1109"></a>
+<span class="sourceLineNo">1110</span><a id="line.1110">    /**</a>
+<span class="sourceLineNo">1111</span><a id="line.1111">     * Helper function for guessFileName.</a>
+<span class="sourceLineNo">1112</span><a id="line.1112">     */</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">    private static int guessGenType(String fileName)</a>
+<span class="sourceLineNo">1114</span><a id="line.1114">        throws IOException, FileNotFoundException {</a>
+<span class="sourceLineNo">1115</span><a id="line.1115">        BufferedReader br = new BufferedReader(new FileReader(fileName));</a>
+<span class="sourceLineNo">1116</span><a id="line.1116">        String line = br.readLine();</a>
+<span class="sourceLineNo">1117</span><a id="line.1117">        while (line.indexOf("LOCUS") == -1) {</a>
+<span class="sourceLineNo">1118</span><a id="line.1118">            line = br.readLine();</a>
+<span class="sourceLineNo">1119</span><a id="line.1119">        }</a>
+<span class="sourceLineNo">1120</span><a id="line.1120">        br.close();</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">        for (int i = 0; i &lt; line.length(); i++) {</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">            if (Character.toUpperCase(line.charAt(i)) == 'A' &amp;&amp;</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">                Character.toUpperCase(line.charAt(i+1)) == 'A') {</a>
+<span class="sourceLineNo">1124</span><a id="line.1124">                    return SeqIOConstants.GENPEPT;</a>
+<span class="sourceLineNo">1125</span><a id="line.1125">            }</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">        }</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">        return SeqIOConstants.GENBANK_DNA;</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">    }</a>
+<span class="sourceLineNo">1129</span><a id="line.1129"></a>
+<span class="sourceLineNo">1130</span><a id="line.1130">    /**</a>
+<span class="sourceLineNo">1131</span><a id="line.1131">     * Converts a file to an Biojava alignment.</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">     */</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">    private static Alignment fileToAlign(int fileType, BufferedReader br)</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">        throws BioException {</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">        switch(fileType) {</a>
+<span class="sourceLineNo">1136</span><a id="line.1136">            case AlignIOConstants.MSF_DNA:</a>
+<span class="sourceLineNo">1137</span><a id="line.1137">            case AlignIOConstants.MSF_AA:</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">                return (new MSFAlignmentFormat()).read(br);</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">            case AlignIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">1140</span><a id="line.1140">            case AlignIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">1141</span><a id="line.1141">                return (new FastaAlignmentFormat()).read(br);</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">            default:</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">                                       + fileType</a>
+<span class="sourceLineNo">1145</span><a id="line.1145">                                       + "'");</a>
+<span class="sourceLineNo">1146</span><a id="line.1146">        }</a>
+<span class="sourceLineNo">1147</span><a id="line.1147">    }</a>
+<span class="sourceLineNo">1148</span><a id="line.1148"></a>
+<span class="sourceLineNo">1149</span><a id="line.1149">    /**</a>
+<span class="sourceLineNo">1150</span><a id="line.1150">     * Converts a file to a Biojava sequence.</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">     */</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">    private static SequenceIterator fileToSeq(int fileType,</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">                                              BufferedReader br)</a>
+<span class="sourceLineNo">1154</span><a id="line.1154">        throws BioException {</a>
+<span class="sourceLineNo">1155</span><a id="line.1155">        switch (fileType) {</a>
+<span class="sourceLineNo">1156</span><a id="line.1156">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">1157</span><a id="line.1157">                return SeqIOTools.readFastaDNA(br);</a>
+<span class="sourceLineNo">1158</span><a id="line.1158">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">1159</span><a id="line.1159">                return SeqIOTools.readFastaProtein(br);</a>
+<span class="sourceLineNo">1160</span><a id="line.1160">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">1161</span><a id="line.1161">                return SeqIOTools.readEmbl(br);</a>
+<span class="sourceLineNo">1162</span><a id="line.1162">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">1163</span><a id="line.1163">                return SeqIOTools.readGenbank(br);</a>
+<span class="sourceLineNo">1164</span><a id="line.1164">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">1165</span><a id="line.1165">                return SeqIOTools.readSwissprot(br);</a>
+<span class="sourceLineNo">1166</span><a id="line.1166">            case SeqIOConstants.GENPEPT:</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">                return SeqIOTools.readGenpept(br);</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">            default:</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">                                       + fileType</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">                                       + "'");</a>
+<span class="sourceLineNo">1172</span><a id="line.1172">        }</a>
+<span class="sourceLineNo">1173</span><a id="line.1173">    }</a>
+<span class="sourceLineNo">1174</span><a id="line.1174"></a>
+<span class="sourceLineNo">1175</span><a id="line.1175">    /**</a>
+<span class="sourceLineNo">1176</span><a id="line.1176">     * Converts a Biojava alignment to the given filetype.</a>
+<span class="sourceLineNo">1177</span><a id="line.1177">     */</a>
+<span class="sourceLineNo">1178</span><a id="line.1178">    private static void alignToFile(int fileType, OutputStream os,</a>
+<span class="sourceLineNo">1179</span><a id="line.1179">                                    Alignment align)</a>
+<span class="sourceLineNo">1180</span><a id="line.1180">        throws BioException, IllegalSymbolException {</a>
+<span class="sourceLineNo">1181</span><a id="line.1181">        switch(fileType) {</a>
+<span class="sourceLineNo">1182</span><a id="line.1182">            case AlignIOConstants.MSF_DNA:</a>
+<span class="sourceLineNo">1183</span><a id="line.1183">                (new MSFAlignmentFormat()).writeDna(os, align);</a>
+<span class="sourceLineNo">1184</span><a id="line.1184">                break;</a>
+<span class="sourceLineNo">1185</span><a id="line.1185">            case AlignIOConstants.MSF_AA:</a>
+<span class="sourceLineNo">1186</span><a id="line.1186">                (new MSFAlignmentFormat()).writeProtein(os, align);</a>
+<span class="sourceLineNo">1187</span><a id="line.1187">                break;</a>
+<span class="sourceLineNo">1188</span><a id="line.1188">            case AlignIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">1189</span><a id="line.1189">                (new FastaAlignmentFormat()).writeDna(os, align);</a>
+<span class="sourceLineNo">1190</span><a id="line.1190">                break;</a>
+<span class="sourceLineNo">1191</span><a id="line.1191">            case AlignIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">1192</span><a id="line.1192">                (new FastaAlignmentFormat()).writeProtein(os, align);</a>
+<span class="sourceLineNo">1193</span><a id="line.1193">                break;</a>
+<span class="sourceLineNo">1194</span><a id="line.1194">            default:</a>
+<span class="sourceLineNo">1195</span><a id="line.1195">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">1196</span><a id="line.1196">                                       + fileType</a>
+<span class="sourceLineNo">1197</span><a id="line.1197">                                       + "'");</a>
+<span class="sourceLineNo">1198</span><a id="line.1198">        }</a>
+<span class="sourceLineNo">1199</span><a id="line.1199">    }</a>
+<span class="sourceLineNo">1200</span><a id="line.1200"></a>
+<span class="sourceLineNo">1201</span><a id="line.1201">    /**</a>
+<span class="sourceLineNo">1202</span><a id="line.1202">     * Converts a Biojava sequence to the given filetype.</a>
+<span class="sourceLineNo">1203</span><a id="line.1203">     */</a>
+<span class="sourceLineNo">1204</span><a id="line.1204">    private static void seqToFile(int fileType, OutputStream os,</a>
+<span class="sourceLineNo">1205</span><a id="line.1205">                                  SequenceIterator seq)</a>
+<span class="sourceLineNo">1206</span><a id="line.1206">        throws IOException, BioException {</a>
+<span class="sourceLineNo">1207</span><a id="line.1207">        switch (fileType) {</a>
+<span class="sourceLineNo">1208</span><a id="line.1208">            case SeqIOConstants.FASTA_DNA:</a>
+<span class="sourceLineNo">1209</span><a id="line.1209">            case SeqIOConstants.FASTA_AA:</a>
+<span class="sourceLineNo">1210</span><a id="line.1210">                SeqIOTools.writeFasta(os, seq);</a>
+<span class="sourceLineNo">1211</span><a id="line.1211">                break;</a>
+<span class="sourceLineNo">1212</span><a id="line.1212">            case SeqIOConstants.EMBL_DNA:</a>
+<span class="sourceLineNo">1213</span><a id="line.1213">                SeqIOTools.writeEmbl(os, seq);</a>
+<span class="sourceLineNo">1214</span><a id="line.1214">                break;</a>
+<span class="sourceLineNo">1215</span><a id="line.1215">            case SeqIOConstants.SWISSPROT:</a>
+<span class="sourceLineNo">1216</span><a id="line.1216">                SeqIOTools.writeSwissprot(os, seq);</a>
+<span class="sourceLineNo">1217</span><a id="line.1217">                break;</a>
+<span class="sourceLineNo">1218</span><a id="line.1218">            case SeqIOConstants.GENBANK_DNA:</a>
+<span class="sourceLineNo">1219</span><a id="line.1219">                SeqIOTools.writeGenbank(os, seq);</a>
+<span class="sourceLineNo">1220</span><a id="line.1220">                break;</a>
+<span class="sourceLineNo">1221</span><a id="line.1221">            case SeqIOConstants.GENPEPT:</a>
+<span class="sourceLineNo">1222</span><a id="line.1222">                SeqIOTools.writeGenpept(os, seq);</a>
+<span class="sourceLineNo">1223</span><a id="line.1223">                break;</a>
+<span class="sourceLineNo">1224</span><a id="line.1224">            default:</a>
+<span class="sourceLineNo">1225</span><a id="line.1225">                throw new BioException("Unknown file type '"</a>
+<span class="sourceLineNo">1226</span><a id="line.1226">                                       + fileType</a>
+<span class="sourceLineNo">1227</span><a id="line.1227">                                       + "'");</a>
+<span class="sourceLineNo">1228</span><a id="line.1228">        }</a>
+<span class="sourceLineNo">1229</span><a id="line.1229">    }</a>
+<span class="sourceLineNo">1230</span><a id="line.1230"></a>
+<span class="sourceLineNo">1231</span><a id="line.1231">    private static final class SingleSeqIterator</a>
+<span class="sourceLineNo">1232</span><a id="line.1232">        implements SequenceIterator {</a>
+<span class="sourceLineNo">1233</span><a id="line.1233">        private Sequence seq;</a>
+<span class="sourceLineNo">1234</span><a id="line.1234">        SingleSeqIterator(Sequence seq) {</a>
+<span class="sourceLineNo">1235</span><a id="line.1235">            this.seq = seq;</a>
+<span class="sourceLineNo">1236</span><a id="line.1236">        }</a>
+<span class="sourceLineNo">1237</span><a id="line.1237"></a>
+<span class="sourceLineNo">1238</span><a id="line.1238">        public boolean hasNext() {</a>
+<span class="sourceLineNo">1239</span><a id="line.1239">            return seq != null;</a>
+<span class="sourceLineNo">1240</span><a id="line.1240">        }</a>
+<span class="sourceLineNo">1241</span><a id="line.1241"></a>
+<span class="sourceLineNo">1242</span><a id="line.1242">        public Sequence nextSequence() {</a>
+<span class="sourceLineNo">1243</span><a id="line.1243">            Sequence seq = this.seq;</a>
+<span class="sourceLineNo">1244</span><a id="line.1244">            this.seq = null;</a>
+<span class="sourceLineNo">1245</span><a id="line.1245">            return seq;</a>
+<span class="sourceLineNo">1246</span><a id="line.1246">        }</a>
+<span class="sourceLineNo">1247</span><a id="line.1247">    }</a>
+<span class="sourceLineNo">1248</span><a id="line.1248">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

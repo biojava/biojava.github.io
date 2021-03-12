@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely disttributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be disttributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.bio.gui;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.awt.Color;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.awt.Font;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.awt.Graphics2D;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.awt.Rectangle;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.awt.Shape;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.awt.font.FontRenderContext;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.awt.font.GlyphVector;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.awt.geom.AffineTransform;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.awt.geom.Rectangle2D;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.beans.PropertyChangeEvent;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.beans.PropertyChangeListener;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.beans.PropertyChangeSupport;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.Comparator;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.Iterator;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.SortedSet;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.util.TreeSet;</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.bio.BioRuntimeException;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.bio.dist.Distribution;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.symbol.FiniteAlphabet;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">/**</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * A logo painter that paints in stacked letters.</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * The total height of the letters is</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * proportional to the total informaton in the state. The height of each letter</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * is proportional to its emission probability. The most likely letter is drawn</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * highest.</a>
+<span class="sourceLineNo">057</span><a id="line.57"> *</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">059</span><a id="line.59"> */</a>
+<span class="sourceLineNo">060</span><a id="line.60">public class TextLogoPainter implements LogoPainter {</a>
+<span class="sourceLineNo">061</span><a id="line.61">  /**</a>
+<span class="sourceLineNo">062</span><a id="line.62">   * A comparator to set up our letters &amp; information scores nicely.</a>
+<span class="sourceLineNo">063</span><a id="line.63">   */</a>
+<span class="sourceLineNo">064</span><a id="line.64">  private static final Comparator COMP = new ResValComparator();</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">  /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">   * Supports the bean property logoFont.</a>
+<span class="sourceLineNo">068</span><a id="line.68">   */</a>
+<span class="sourceLineNo">069</span><a id="line.69">  private PropertyChangeSupport pcs;</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">  /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">   * The property for the logoFont.</a>
+<span class="sourceLineNo">073</span><a id="line.73">   */</a>
+<span class="sourceLineNo">074</span><a id="line.74">  private Font logoFont;</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">  /**</a>
+<span class="sourceLineNo">077</span><a id="line.77">   * Retrieve the current font.</a>
+<span class="sourceLineNo">078</span><a id="line.78">   *</a>
+<span class="sourceLineNo">079</span><a id="line.79">   * @return the current logo font</a>
+<span class="sourceLineNo">080</span><a id="line.80">   */</a>
+<span class="sourceLineNo">081</span><a id="line.81">  public Font getLogoFont() {</a>
+<span class="sourceLineNo">082</span><a id="line.82">    return logoFont;</a>
+<span class="sourceLineNo">083</span><a id="line.83">  }</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">  /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">   * Set the current logo font.</a>
+<span class="sourceLineNo">087</span><a id="line.87">   *</a>
+<span class="sourceLineNo">088</span><a id="line.88">   * @param logoFont the new Font to render the logo letters in</a>
+<span class="sourceLineNo">089</span><a id="line.89">   */</a>
+<span class="sourceLineNo">090</span><a id="line.90">  public void setLogoFont(Font logoFont) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">    firePropertyChange("logoFont", this.logoFont, logoFont);</a>
+<span class="sourceLineNo">092</span><a id="line.92">    this.logoFont = logoFont;</a>
+<span class="sourceLineNo">093</span><a id="line.93">  }</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">  public void addPropertyChangeListener(PropertyChangeListener listener) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">    pcs.addPropertyChangeListener(listener);</a>
+<span class="sourceLineNo">097</span><a id="line.97">  }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">  public void removePropertyChangeListener(PropertyChangeListener listener) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">    pcs.removePropertyChangeListener(listener);</a>
+<span class="sourceLineNo">101</span><a id="line.101">  }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">  public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {</a>
+<span class="sourceLineNo">104</span><a id="line.104">    pcs.addPropertyChangeListener(propertyName, listener);</a>
+<span class="sourceLineNo">105</span><a id="line.105">  }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">  public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {</a>
+<span class="sourceLineNo">108</span><a id="line.108">    pcs.removePropertyChangeListener(propertyName, listener);</a>
+<span class="sourceLineNo">109</span><a id="line.109">  }</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">  public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">    pcs.firePropertyChange(propertyName, oldValue, newValue);</a>
+<span class="sourceLineNo">113</span><a id="line.113">  }</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">  public void firePropertyChange(String propertyName, int oldValue, int newValue) {</a>
+<span class="sourceLineNo">116</span><a id="line.116">    pcs.firePropertyChange(propertyName, oldValue, newValue);</a>
+<span class="sourceLineNo">117</span><a id="line.117">  }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">  public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">    pcs.firePropertyChange(propertyName, oldValue, newValue);</a>
+<span class="sourceLineNo">121</span><a id="line.121">  }</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">  public void firePropertyChange(PropertyChangeEvent evt) {</a>
+<span class="sourceLineNo">124</span><a id="line.124">    pcs.firePropertyChange(evt);</a>
+<span class="sourceLineNo">125</span><a id="line.125">  }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">  public boolean hasListeners(String propertyName) {</a>
+<span class="sourceLineNo">128</span><a id="line.128">    return pcs.hasListeners(propertyName);</a>
+<span class="sourceLineNo">129</span><a id="line.129">  }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">  public void paintLogo(LogoContext ctxt) {</a>
+<span class="sourceLineNo">132</span><a id="line.132">    Graphics2D g2 = ctxt.getGraphics();</a>
+<span class="sourceLineNo">133</span><a id="line.133">    Distribution dist = ctxt.getDistribution();</a>
+<span class="sourceLineNo">134</span><a id="line.134">    SymbolStyle style = ctxt.getStyle();</a>
+<span class="sourceLineNo">135</span><a id="line.135">    SymbolTokenization toke = null;</a>
+<span class="sourceLineNo">136</span><a id="line.136">    try {</a>
+<span class="sourceLineNo">137</span><a id="line.137">        toke = dist.getAlphabet().getTokenization("token");</a>
+<span class="sourceLineNo">138</span><a id="line.138">    } catch (BioException ex) {</a>
+<span class="sourceLineNo">139</span><a id="line.139">        throw new BioRuntimeException(ex);</a>
+<span class="sourceLineNo">140</span><a id="line.140">    }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">    Rectangle bounds = ctxt.getBounds();</a>
+<span class="sourceLineNo">143</span><a id="line.143">    double width = bounds.getWidth();</a>
+<span class="sourceLineNo">144</span><a id="line.144">    double height = bounds.getHeight();</a>
+<span class="sourceLineNo">145</span><a id="line.145">    double base = bounds.getY() + bounds.getHeight();</a>
+<span class="sourceLineNo">146</span><a id="line.146">    </a>
+<span class="sourceLineNo">147</span><a id="line.147">    /* This used to have some built-in scaling support, but I've disabled this because</a>
+<span class="sourceLineNo">148</span><a id="line.148">     * DistributionLogo does scaling too!</a>
+<span class="sourceLineNo">149</span><a id="line.149">     */</a>
+<span class="sourceLineNo">150</span><a id="line.150">    </a>
+<span class="sourceLineNo">151</span><a id="line.151">    // double scale = height * (</a>
+<span class="sourceLineNo">152</span><a id="line.152">    //  DistributionLogo.totalInformation(dist) /</a>
+<span class="sourceLineNo">153</span><a id="line.153">    //  DistributionLogo.totalBits(dist)</a>
+<span class="sourceLineNo">154</span><a id="line.154">    // );</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">    SortedSet info = new TreeSet(COMP);</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">    try {</a>
+<span class="sourceLineNo">159</span><a id="line.159">      for(</a>
+<span class="sourceLineNo">160</span><a id="line.160">        Iterator i = ((FiniteAlphabet) dist.getAlphabet()).iterator();</a>
+<span class="sourceLineNo">161</span><a id="line.161">        i.hasNext();</a>
+<span class="sourceLineNo">162</span><a id="line.162">      ) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">        Symbol s = (Symbol) i.next();</a>
+<span class="sourceLineNo">164</span><a id="line.164">        info.add(new ResVal(s, dist.getWeight(s) * height));</a>
+<span class="sourceLineNo">165</span><a id="line.165">      }</a>
+<span class="sourceLineNo">166</span><a id="line.166">    } catch (IllegalSymbolException ire) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">      throw new BioError("Symbol distsapeared from dist alphabet", ire);</a>
+<span class="sourceLineNo">168</span><a id="line.168">    }</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">    FontRenderContext frc = g2.getFontRenderContext();</a>
+<span class="sourceLineNo">171</span><a id="line.171">    for(Iterator i = info.iterator(); i.hasNext();) {</a>
+<span class="sourceLineNo">172</span><a id="line.172">      ResVal rv = (ResVal) i.next();</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">      String s = null;</a>
+<span class="sourceLineNo">175</span><a id="line.175">      try {</a>
+<span class="sourceLineNo">176</span><a id="line.176">          s = toke.tokenizeSymbol(rv.getToken());</a>
+<span class="sourceLineNo">177</span><a id="line.177">      } catch (IllegalSymbolException ex) {</a>
+<span class="sourceLineNo">178</span><a id="line.178">          throw new BioRuntimeException(ex);</a>
+<span class="sourceLineNo">179</span><a id="line.179">      }</a>
+<span class="sourceLineNo">180</span><a id="line.180">      GlyphVector gv = logoFont.createGlyphVector(frc, s);</a>
+<span class="sourceLineNo">181</span><a id="line.181">      Shape outline = gv.getOutline();</a>
+<span class="sourceLineNo">182</span><a id="line.182">      Rectangle2D oBounds = outline.getBounds2D();</a>
+<span class="sourceLineNo">183</span><a id="line.183"></a>
+<span class="sourceLineNo">184</span><a id="line.184">      AffineTransform at = new AffineTransform();</a>
+<span class="sourceLineNo">185</span><a id="line.185">      at.setToTranslation(0.0, base-rv.getValue());</a>
+<span class="sourceLineNo">186</span><a id="line.186">      at.scale(width / oBounds.getWidth(), rv.getValue() / oBounds.getHeight());</a>
+<span class="sourceLineNo">187</span><a id="line.187">      at.translate(-oBounds.getMinX(), -oBounds.getMinY());</a>
+<span class="sourceLineNo">188</span><a id="line.188">      outline = at.createTransformedShape(outline);</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">      try {</a>
+<span class="sourceLineNo">191</span><a id="line.191">        g2.setPaint(style.fillPaint(rv.getToken()));</a>
+<span class="sourceLineNo">192</span><a id="line.192">      } catch (IllegalSymbolException ire) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">        g2.setPaint(Color.black);</a>
+<span class="sourceLineNo">194</span><a id="line.194">      }</a>
+<span class="sourceLineNo">195</span><a id="line.195">      g2.fill(outline);</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">      try {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        g2.setPaint(style.outlinePaint(rv.getToken()));</a>
+<span class="sourceLineNo">199</span><a id="line.199">      } catch (IllegalSymbolException ire) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">        g2.setPaint(Color.gray);</a>
+<span class="sourceLineNo">201</span><a id="line.201">      }</a>
+<span class="sourceLineNo">202</span><a id="line.202">      g2.draw(outline);</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">      base -= rv.getValue();</a>
+<span class="sourceLineNo">205</span><a id="line.205">    }</a>
+<span class="sourceLineNo">206</span><a id="line.206">  }</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">  public TextLogoPainter() {</a>
+<span class="sourceLineNo">209</span><a id="line.209">    pcs = new PropertyChangeSupport(this);</a>
+<span class="sourceLineNo">210</span><a id="line.210">    logoFont = new Font("Tahoma", Font.PLAIN, 12);</a>
+<span class="sourceLineNo">211</span><a id="line.211">  }</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">  /**</a>
+<span class="sourceLineNo">214</span><a id="line.214">   * A symbol/information tuple.</a>
+<span class="sourceLineNo">215</span><a id="line.215">   */</a>
+<span class="sourceLineNo">216</span><a id="line.216">  private static class ResVal {</a>
+<span class="sourceLineNo">217</span><a id="line.217">    private Symbol symbol;</a>
+<span class="sourceLineNo">218</span><a id="line.218">    private double value;</a>
+<span class="sourceLineNo">219</span><a id="line.219"></a>
+<span class="sourceLineNo">220</span><a id="line.220">    public final Symbol getToken() {</a>
+<span class="sourceLineNo">221</span><a id="line.221">      return symbol;</a>
+<span class="sourceLineNo">222</span><a id="line.222">    }</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">    public final double getValue() {</a>
+<span class="sourceLineNo">225</span><a id="line.225">      return value;</a>
+<span class="sourceLineNo">226</span><a id="line.226">    }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">    public ResVal(Symbol sym, double val) {</a>
+<span class="sourceLineNo">229</span><a id="line.229">      symbol = sym;</a>
+<span class="sourceLineNo">230</span><a id="line.230">      value = val;</a>
+<span class="sourceLineNo">231</span><a id="line.231">    }</a>
+<span class="sourceLineNo">232</span><a id="line.232">  }</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">  /**</a>
+<span class="sourceLineNo">235</span><a id="line.235">   * The comparator for comparing symbol/information tuples.</a>
+<span class="sourceLineNo">236</span><a id="line.236">   */</a>
+<span class="sourceLineNo">237</span><a id="line.237">  private static class ResValComparator implements Comparator {</a>
+<span class="sourceLineNo">238</span><a id="line.238">    public final int compare(Object o1, Object o2) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">      ResVal rv1 = (ResVal) o1;</a>
+<span class="sourceLineNo">240</span><a id="line.240">      ResVal rv2 = (ResVal) o2;</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242">      double diff = rv1.getValue() - rv2.getValue();</a>
+<span class="sourceLineNo">243</span><a id="line.243">      if(diff &lt; 0) return -1;</a>
+<span class="sourceLineNo">244</span><a id="line.244">      if(diff &gt; 0) return +1;</a>
+<span class="sourceLineNo">245</span><a id="line.245">      return rv1.getToken().getName().compareTo(rv2.getToken().getName());</a>
+<span class="sourceLineNo">246</span><a id="line.246">    }</a>
+<span class="sourceLineNo">247</span><a id="line.247">  }</a>
+<span class="sourceLineNo">248</span><a id="line.248">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * RichSequenceHandler.java</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Created on March 7, 2006, 3:12 PM</a>
+<span class="sourceLineNo">005</span><a id="line.5"> */</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">package org.biojavax.bio.seq;</a>
+<span class="sourceLineNo">008</span><a id="line.8"></a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.util.Iterator;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import java.util.List;</a>
+<span class="sourceLineNo">011</span><a id="line.11"></a>
+<span class="sourceLineNo">012</span><a id="line.12">import org.biojava.bio.symbol.Edit;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">017</span><a id="line.17"></a>
+<span class="sourceLineNo">018</span><a id="line.18">/**</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * An interface for classes that know how to handle subsequence operations.</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Implementations may be optimized so that they perform more efficiently in</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * certain conditions. For example a subsequence operation on a huge BioSQL</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * backed &lt;code&gt;RichSequence&lt;/code&gt; could be optimized so that the operation</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * is performed more efficiently than dragging the whole sequence to memory and</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * then doing the operation.</a>
+<span class="sourceLineNo">025</span><a id="line.25"> *</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * Implementations of &lt;code&gt;RichSequence&lt;/code&gt; should generally delegate</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * &lt;code&gt;symbolAt(int index)&lt;/code&gt;, &lt;code&gt;subStr(int start, int end)&lt;/code&gt;,</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * &lt;code&gt;subList(int start, int end)&lt;/code&gt; and subSequence(int start, int end)</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * to some implementation of this interface.</a>
+<span class="sourceLineNo">030</span><a id="line.30"> *</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * @author Mark Schreiber</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author Richard Holland</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @since 1.5</a>
+<span class="sourceLineNo">034</span><a id="line.34"> */</a>
+<span class="sourceLineNo">035</span><a id="line.35">public interface RichSequenceHandler {</a>
+<span class="sourceLineNo">036</span><a id="line.36">    </a>
+<span class="sourceLineNo">037</span><a id="line.37">  /**</a>
+<span class="sourceLineNo">038</span><a id="line.38">   * Apply an edit to the Sequence as specified by the edit object.</a>
+<span class="sourceLineNo">039</span><a id="line.39">   *</a>
+<span class="sourceLineNo">040</span><a id="line.40">   * &lt;h2&gt;Description&lt;/h2&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41">   *</a>
+<span class="sourceLineNo">042</span><a id="line.42">   * &lt;p&gt;</a>
+<span class="sourceLineNo">043</span><a id="line.43">   * All edits can be broken down into a series of operations that change</a>
+<span class="sourceLineNo">044</span><a id="line.44">   * contiguous blocks of the sequence. This represent a one of those operations.</a>
+<span class="sourceLineNo">045</span><a id="line.45">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">046</span><a id="line.46">   *</a>
+<span class="sourceLineNo">047</span><a id="line.47">   * &lt;p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48">   * When applied, this Edit will replace 'length' number of symbols starting a</a>
+<span class="sourceLineNo">049</span><a id="line.49">   * position 'pos' by the SymbolList 'replacement'. This allow to do insertions</a>
+<span class="sourceLineNo">050</span><a id="line.50">   * (length=0), deletions (replacement=SymbolList.EMPTY_LIST) and replacements</a>
+<span class="sourceLineNo">051</span><a id="line.51">   * (length&gt;=1 and replacement.length()&gt;=1).</a>
+<span class="sourceLineNo">052</span><a id="line.52">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">053</span><a id="line.53">   *</a>
+<span class="sourceLineNo">054</span><a id="line.54">   * &lt;p&gt;</a>
+<span class="sourceLineNo">055</span><a id="line.55">   * The pos and pos+length should always be valid positions on the SymbolList</a>
+<span class="sourceLineNo">056</span><a id="line.56">   * to:</a>
+<span class="sourceLineNo">057</span><a id="line.57">   * &lt;ul&gt;</a>
+<span class="sourceLineNo">058</span><a id="line.58">   * &lt;li&gt;be edited (between 0 and symL.length()+1).&lt;/li&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59">   * &lt;li&gt;To append to a sequence, pos=symL.length()+1, pos=0.&lt;/li&gt;</a>
+<span class="sourceLineNo">060</span><a id="line.60">   * &lt;li&gt;To insert something at the beginning of the sequence, set pos=1 and</a>
+<span class="sourceLineNo">061</span><a id="line.61">   * length=0.&lt;/li&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62">   * &lt;/ul&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63">   * &lt;/p&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64">   *</a>
+<span class="sourceLineNo">065</span><a id="line.65">   * &lt;h2&gt;Examples&lt;/h2&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66">   *</a>
+<span class="sourceLineNo">067</span><a id="line.67">   * &lt;code&gt;&lt;pre&gt;</a>
+<span class="sourceLineNo">068</span><a id="line.68">   * RichSequence seq = //code to initialize RichSequence</a>
+<span class="sourceLineNo">069</span><a id="line.69">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">070</span><a id="line.70">   *</a>
+<span class="sourceLineNo">071</span><a id="line.71">   * // delete 5 bases from position 4</a>
+<span class="sourceLineNo">072</span><a id="line.72">   * Edit ed = new Edit(4, 5, SymbolList.EMPTY_LIST);</a>
+<span class="sourceLineNo">073</span><a id="line.73">   * seq.edit(ed);</a>
+<span class="sourceLineNo">074</span><a id="line.74">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">075</span><a id="line.75">   *</a>
+<span class="sourceLineNo">076</span><a id="line.76">   * // delete one base from the start</a>
+<span class="sourceLineNo">077</span><a id="line.77">   * ed = new Edit(1, 1, SymbolList.EMPTY_LIST);</a>
+<span class="sourceLineNo">078</span><a id="line.78">   * seq.edit(ed);</a>
+<span class="sourceLineNo">079</span><a id="line.79">   *</a>
+<span class="sourceLineNo">080</span><a id="line.80">   * // delete one base from the end</a>
+<span class="sourceLineNo">081</span><a id="line.81">   * ed = new Edit(seq.length(), 1, SymbolList.EMPTY_LIST);</a>
+<span class="sourceLineNo">082</span><a id="line.82">   * seq.edit(ed);</a>
+<span class="sourceLineNo">083</span><a id="line.83">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">084</span><a id="line.84">   *</a>
+<span class="sourceLineNo">085</span><a id="line.85">   * // overwrite 2 bases from position 3 with "tt"</a>
+<span class="sourceLineNo">086</span><a id="line.86">   * ed = new Edit(3, 2, DNATools.createDNA("tt"));</a>
+<span class="sourceLineNo">087</span><a id="line.87">   * seq.edit(ed);</a>
+<span class="sourceLineNo">088</span><a id="line.88">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">089</span><a id="line.89">   *</a>
+<span class="sourceLineNo">090</span><a id="line.90">   * // add 6 bases to the start</a>
+<span class="sourceLineNo">091</span><a id="line.91">   * ed = new Edit(1, 0, DNATools.createDNA("aattgg");</a>
+<span class="sourceLineNo">092</span><a id="line.92">   * seq.edit(ed);</a>
+<span class="sourceLineNo">093</span><a id="line.93">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">094</span><a id="line.94">   *</a>
+<span class="sourceLineNo">095</span><a id="line.95">   * // add 4 bases to the end</a>
+<span class="sourceLineNo">096</span><a id="line.96">   * ed = new Edit(seq.length() + 1, 0, DNATools.createDNA("tttt"));</a>
+<span class="sourceLineNo">097</span><a id="line.97">   * seq.edit(ed);</a>
+<span class="sourceLineNo">098</span><a id="line.98">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">099</span><a id="line.99">   *</a>
+<span class="sourceLineNo">100</span><a id="line.100">   * // full edit</a>
+<span class="sourceLineNo">101</span><a id="line.101">   * ed = new Edit(3, 2, DNATools.createDNA("aatagaa");</a>
+<span class="sourceLineNo">102</span><a id="line.102">   * seq.edit(ed);</a>
+<span class="sourceLineNo">103</span><a id="line.103">   * System.out.println(seq.seqString());</a>
+<span class="sourceLineNo">104</span><a id="line.104">   * &lt;/pre&gt;&lt;/code&gt;</a>
+<span class="sourceLineNo">105</span><a id="line.105">   *</a>
+<span class="sourceLineNo">106</span><a id="line.106">   * @param edit the Edit to perform</a>
+<span class="sourceLineNo">107</span><a id="line.107">   * @throws IndexOutOfBoundsException if the edit does not lie within the</a>
+<span class="sourceLineNo">108</span><a id="line.108">   *         SymbolList</a>
+<span class="sourceLineNo">109</span><a id="line.109">   * @throws IllegalAlphabetException if the SymbolList to insert has an</a>
+<span class="sourceLineNo">110</span><a id="line.110">   *         incompatible alphabet</a>
+<span class="sourceLineNo">111</span><a id="line.111">   * @throws ChangeVetoException  if either the SymboList does not support the</a>
+<span class="sourceLineNo">112</span><a id="line.112">   *         edit, or if the change was vetoed</a>
+<span class="sourceLineNo">113</span><a id="line.113">   */</a>
+<span class="sourceLineNo">114</span><a id="line.114">    public void edit(RichSequence seq, Edit edit) throws IndexOutOfBoundsException, IllegalAlphabetException, ChangeVetoException;</a>
+<span class="sourceLineNo">115</span><a id="line.115">    </a>
+<span class="sourceLineNo">116</span><a id="line.116">  /**</a>
+<span class="sourceLineNo">117</span><a id="line.117">   * Return the symbol at index, counting from 1.</a>
+<span class="sourceLineNo">118</span><a id="line.118">   *</a>
+<span class="sourceLineNo">119</span><a id="line.119">   * @param index the offset into this SymbolList</a>
+<span class="sourceLineNo">120</span><a id="line.120">   * @return  the Symbol at that index</a>
+<span class="sourceLineNo">121</span><a id="line.121">   * @throws IndexOutOfBoundsException if index is less than 1, or greater than</a>
+<span class="sourceLineNo">122</span><a id="line.122">   *                                   the length of the symbol list</a>
+<span class="sourceLineNo">123</span><a id="line.123">   */</a>
+<span class="sourceLineNo">124</span><a id="line.124">    public Symbol symbolAt(RichSequence seq, int index) throws IndexOutOfBoundsException;</a>
+<span class="sourceLineNo">125</span><a id="line.125">    </a>
+<span class="sourceLineNo">126</span><a id="line.126">   /**</a>
+<span class="sourceLineNo">127</span><a id="line.127">   * Returns a List of symbols.</a>
+<span class="sourceLineNo">128</span><a id="line.128">   * &lt;p&gt;</a>
+<span class="sourceLineNo">129</span><a id="line.129">   * This should be an immutable list of symbols or a copy.</a>
+<span class="sourceLineNo">130</span><a id="line.130">   *</a>
+<span class="sourceLineNo">131</span><a id="line.131">   * @return  a List of Symbols</a>
+<span class="sourceLineNo">132</span><a id="line.132">   */</a>
+<span class="sourceLineNo">133</span><a id="line.133">    public List&lt;Symbol&gt; toList(RichSequence seq);</a>
+<span class="sourceLineNo">134</span><a id="line.134">    </a>
+<span class="sourceLineNo">135</span><a id="line.135">  /**</a>
+<span class="sourceLineNo">136</span><a id="line.136">   * Return a region of this sequence as a String.</a>
+<span class="sourceLineNo">137</span><a id="line.137">   * &lt;p&gt;</a>
+<span class="sourceLineNo">138</span><a id="line.138">   * This should use the same rules as seqString.</a>
+<span class="sourceLineNo">139</span><a id="line.139">   *</a>
+<span class="sourceLineNo">140</span><a id="line.140">   * @param start  the first symbol to include</a>
+<span class="sourceLineNo">141</span><a id="line.141">   * @param end the last symbol to include</a>
+<span class="sourceLineNo">142</span><a id="line.142">   * @return the string representation</a>
+<span class="sourceLineNo">143</span><a id="line.143">   * @throws IndexOutOfBoundsException if either start or end are not within the</a>
+<span class="sourceLineNo">144</span><a id="line.144">   *         SymbolList</a>
+<span class="sourceLineNo">145</span><a id="line.145">   */</a>
+<span class="sourceLineNo">146</span><a id="line.146">    public String subStr(RichSequence seq, int start, int end) throws IndexOutOfBoundsException;</a>
+<span class="sourceLineNo">147</span><a id="line.147">    </a>
+<span class="sourceLineNo">148</span><a id="line.148">  /**</a>
+<span class="sourceLineNo">149</span><a id="line.149">   * Return a new SymbolList for the symbols start to end inclusive.</a>
+<span class="sourceLineNo">150</span><a id="line.150">   * &lt;p&gt;</a>
+<span class="sourceLineNo">151</span><a id="line.151">   * The resulting SymbolList will count from 1 to (end-start + 1) inclusive, and</a>
+<span class="sourceLineNo">152</span><a id="line.152">   * refer to the symbols start to end of the original sequence.</a>
+<span class="sourceLineNo">153</span><a id="line.153">   *</a>
+<span class="sourceLineNo">154</span><a id="line.154">   * @param start the first symbol of the new SymbolList</a>
+<span class="sourceLineNo">155</span><a id="line.155">   * @param end the last symbol (inclusive) of the new SymbolList</a>
+<span class="sourceLineNo">156</span><a id="line.156">   */</a>
+<span class="sourceLineNo">157</span><a id="line.157">    public SymbolList subList(RichSequence seq, int start, int end) throws IndexOutOfBoundsException;</a>
+<span class="sourceLineNo">158</span><a id="line.158">    </a>
+<span class="sourceLineNo">159</span><a id="line.159">   /**</a>
+<span class="sourceLineNo">160</span><a id="line.160">   * Stringify this Sequences.</a>
+<span class="sourceLineNo">161</span><a id="line.161">   * &lt;p&gt;</a>
+<span class="sourceLineNo">162</span><a id="line.162">   * It is expected that this will use the symbol's token to render each</a>
+<span class="sourceLineNo">163</span><a id="line.163">   * symbol. It should be parsable back into a SymbolList using the default</a>
+<span class="sourceLineNo">164</span><a id="line.164">   * token parser for this alphabet.</a>
+<span class="sourceLineNo">165</span><a id="line.165">   *</a>
+<span class="sourceLineNo">166</span><a id="line.166">   * @return  a string representation of the symbol list</a>
+<span class="sourceLineNo">167</span><a id="line.167">   */</a>
+<span class="sourceLineNo">168</span><a id="line.168">    public String seqString(RichSequence seq);</a>
+<span class="sourceLineNo">169</span><a id="line.169">    </a>
+<span class="sourceLineNo">170</span><a id="line.170">   /**</a>
+<span class="sourceLineNo">171</span><a id="line.171">   * An Iterator over all Symbols in this SymbolList.</a>
+<span class="sourceLineNo">172</span><a id="line.172">   * &lt;p&gt;</a>
+<span class="sourceLineNo">173</span><a id="line.173">   * This is an ordered iterator over the Symbols. It cannot be used</a>
+<span class="sourceLineNo">174</span><a id="line.174">   * to edit the underlying symbols.</a>
+<span class="sourceLineNo">175</span><a id="line.175">   *</a>
+<span class="sourceLineNo">176</span><a id="line.176">   * @return  an iterator</a>
+<span class="sourceLineNo">177</span><a id="line.177">   */</a>
+<span class="sourceLineNo">178</span><a id="line.178">    public Iterator&lt;Symbol&gt; iterator(RichSequence seq);</a>
+<span class="sourceLineNo">179</span><a id="line.179">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

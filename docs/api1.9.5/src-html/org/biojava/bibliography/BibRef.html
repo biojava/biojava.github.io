@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">// BibRef.java</a>
+<span class="sourceLineNo">002</span><a id="line.2">//</a>
+<span class="sourceLineNo">003</span><a id="line.3">//    senger@ebi.ac.uk</a>
+<span class="sourceLineNo">004</span><a id="line.4">//    March 2001</a>
+<span class="sourceLineNo">005</span><a id="line.5">//</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">/*</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *                    BioJava development code</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * see:</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">016</span><a id="line.16"> *</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * at:</a>
+<span class="sourceLineNo">023</span><a id="line.23"> *</a>
+<span class="sourceLineNo">024</span><a id="line.24"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">025</span><a id="line.25"> *</a>
+<span class="sourceLineNo">026</span><a id="line.26"> */</a>
+<span class="sourceLineNo">027</span><a id="line.27">package org.biojava.bibliography;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Hashtable;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">/**</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * &lt;p&gt;</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * This class is a core class of the bibliographic data model - it</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * represents a bibliographic reference, a citation.</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * It is a super-class for all specialized citation types, but it</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * can also be instantiated and represent an additional specialized</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * citation type.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;p&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * The &lt;em&gt;BibRef&lt;/em&gt; class has several explicit attributes, which are</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * reasonably general and which originate from the</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * &lt;a href="http://dublincore.org"&gt;Dublin Core Metadata&lt;/a&gt;, and a</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * hashtable that can hold any number of additional attributes. The same pattern is</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * repeatedly used on several other places of the data model. It achieves</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * extendibility without losing interoperability if the following rules are obeyed:</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * &lt;ul&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *   &lt;li&gt; The implementation must be prepared for cases when the explicitly</a>
+<span class="sourceLineNo">049</span><a id="line.49"> *        defined attributes are empty (containing &lt;tt&gt;null&lt;/tt&gt; value, or,</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *        in case of arrays, an empty list of elements). </a>
+<span class="sourceLineNo">051</span><a id="line.51"> *   &lt;li&gt; The names of additional properties (keys of the hashtable) must be</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *        obtainable and/or checkable using controlled vocabularies</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *        (see interface {@link BibRefSupport} for details).</a>
+<span class="sourceLineNo">054</span><a id="line.54"> *   &lt;li&gt; The values stored in that hashtable should be of "reasonable" types. Any</a>
+<span class="sourceLineNo">055</span><a id="line.55"> *        implementation should understand at least basic Java types (in most cases</a>
+<span class="sourceLineNo">056</span><a id="line.56"> *        the &lt;tt&gt;String&lt;/tt&gt; type is the best choice). The more exotic types</a>
+<span class="sourceLineNo">057</span><a id="line.57"> *        are used, the less interoperability between implementations is likely.</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * &lt;/ul&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">060</span><a id="line.60"> *</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * &lt;p&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * The &lt;em&gt;BibRef&lt;/em&gt; class is a parent class for derived classes representing bibliographic</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * references to specialized bibliographic resources. The following classes are</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * defined explicitly:</a>
+<span class="sourceLineNo">065</span><a id="line.65"> *   {@link BiblioBook},</a>
+<span class="sourceLineNo">066</span><a id="line.66"> *   {@link BiblioArticle},</a>
+<span class="sourceLineNo">067</span><a id="line.67"> *   {@link BiblioBookArticle},</a>
+<span class="sourceLineNo">068</span><a id="line.68"> *   {@link BiblioJournalArticle},</a>
+<span class="sourceLineNo">069</span><a id="line.69"> *   {@link BiblioPatent},</a>
+<span class="sourceLineNo">070</span><a id="line.70"> *   {@link BiblioThesis},</a>
+<span class="sourceLineNo">071</span><a id="line.71"> *   {@link BiblioProceeding},</a>
+<span class="sourceLineNo">072</span><a id="line.72"> *   {@link BiblioTechReport}, and</a>
+<span class="sourceLineNo">073</span><a id="line.73"> *   {@link BiblioWebResource}</a>
+<span class="sourceLineNo">074</span><a id="line.74"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * &lt;p&gt;</a>
+<span class="sourceLineNo">077</span><a id="line.77"> * The active participants of the process of creation and dissemination of the</a>
+<span class="sourceLineNo">078</span><a id="line.78"> * bibliographic resources are defined by the class {@link BiblioProvider} and its</a>
+<span class="sourceLineNo">079</span><a id="line.79"> * sub-classes. The participants can be people, organizations, or even software</a>
+<span class="sourceLineNo">080</span><a id="line.80"> * services (mainly used for new digital resources). The most obvious examples</a>
+<span class="sourceLineNo">081</span><a id="line.81"> * are authors, but it includes also publishers and other contributors.</a>
+<span class="sourceLineNo">082</span><a id="line.82"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83"> *</a>
+<span class="sourceLineNo">084</span><a id="line.84"> * &lt;p&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85"> * And finally, there is a class {@link BiblioJournal} describing journals.</a>
+<span class="sourceLineNo">086</span><a id="line.86"> * The citations referring to the journal articles have a reference to this class. </a>
+<span class="sourceLineNo">087</span><a id="line.87"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88"> *</a>
+<span class="sourceLineNo">089</span><a id="line.89"> * &lt;p&gt;</a>
+<span class="sourceLineNo">090</span><a id="line.90"> * This is an overview of all participating classes and their attributes:</a>
+<span class="sourceLineNo">091</span><a id="line.91"> * &lt;img src="doc-files/bibobjects_java.jpg"&gt;.</a>
+<span class="sourceLineNo">092</span><a id="line.92"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">093</span><a id="line.93"> *</a>
+<span class="sourceLineNo">094</span><a id="line.94"> * @author &lt;A HREF="mailto:senger@ebi.ac.uk"&gt;Martin Senger&lt;/A&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95"> * @version $Id$</a>
+<span class="sourceLineNo">096</span><a id="line.96"> * @since 1.3</a>
+<span class="sourceLineNo">097</span><a id="line.97"> */</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">public class BibRef {</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">    /**</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * Additional attributes of this citation.</a>
+<span class="sourceLineNo">103</span><a id="line.103">     */</a>
+<span class="sourceLineNo">104</span><a id="line.104">    public Hashtable properties = new Hashtable();</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">    /** It is an unambiguous reference to this citation "within the world".</a>
+<span class="sourceLineNo">107</span><a id="line.107">     *  It is a string conforming to an identification system. An example</a>
+<span class="sourceLineNo">108</span><a id="line.108">     *  of such system can be a combination of a well-known repository name</a>
+<span class="sourceLineNo">109</span><a id="line.109">     *  and a unique identifier defined within this repository, such as</a>
+<span class="sourceLineNo">110</span><a id="line.110">     *  &lt;tt&gt;MEDLINE/20000003&lt;/tt&gt;.</a>
+<span class="sourceLineNo">111</span><a id="line.111">     */</a>
+<span class="sourceLineNo">112</span><a id="line.112">    public String identifier;</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">    /**</a>
+<span class="sourceLineNo">115</span><a id="line.115">     * &lt;p&gt;</a>
+<span class="sourceLineNo">116</span><a id="line.116">     * It defines the nature or genre of the cited resource.</a>
+<span class="sourceLineNo">117</span><a id="line.117">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">118</span><a id="line.118">     *</a>
+<span class="sourceLineNo">119</span><a id="line.119">     * &lt;p&gt;</a>
+<span class="sourceLineNo">120</span><a id="line.120">     * A recommended best practice is to use only values from a controlled vocabulary</a>
+<span class="sourceLineNo">121</span><a id="line.121">     * named as defined in {@link BibRefSupport#RESOURCE_TYPES}.</a>
+<span class="sourceLineNo">122</span><a id="line.122">     * Syntactically, and because of making query navigation easier, the value of this</a>
+<span class="sourceLineNo">123</span><a id="line.123">     * attribute should be equal to a constant predefined in {@link BibRefSupport},</a>
+<span class="sourceLineNo">124</span><a id="line.124">     * such as {@link BibRefSupport#TYPE_BOOK} for books, or</a>
+<span class="sourceLineNo">125</span><a id="line.125">     * {@link BibRefSupport#TYPE_JOURNAL_ARTICLE} for journal articles.</a>
+<span class="sourceLineNo">126</span><a id="line.126">     * However, there may be bibliographic resources, which are</a>
+<span class="sourceLineNo">127</span><a id="line.127">     * not defined by specialized sub-classes (for example,  letters, practical guideline,</a>
+<span class="sourceLineNo">128</span><a id="line.128">     * or archives), and therefore they do not have predefined names in</a>
+<span class="sourceLineNo">129</span><a id="line.129">     * {@link BibRefSupport} interface.</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">131</span><a id="line.131">     *</a>
+<span class="sourceLineNo">132</span><a id="line.132">     * &lt;p&gt;</a>
+<span class="sourceLineNo">133</span><a id="line.133">     * &lt;em&gt;Note that for the description of the physical or digital manifestation of the</a>
+<span class="sourceLineNo">134</span><a id="line.134">     * cited resource there is an attribute {@link #format}.&lt;/em&gt;</a>
+<span class="sourceLineNo">135</span><a id="line.135">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">136</span><a id="line.136">     */</a>
+<span class="sourceLineNo">137</span><a id="line.137">    public String type;</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">    /**</a>
+<span class="sourceLineNo">140</span><a id="line.140">     * &lt;p&gt;</a>
+<span class="sourceLineNo">141</span><a id="line.141">     * It is an array of identifiers, all of them pointing to &lt;em&gt;the same cited source&lt;/em&gt;</a>
+<span class="sourceLineNo">142</span><a id="line.142">     * but usually stored in different bibliographic repositories.</a>
+<span class="sourceLineNo">143</span><a id="line.143">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">144</span><a id="line.144">     *</a>
+<span class="sourceLineNo">145</span><a id="line.145">     * &lt;p&gt;</a>
+<span class="sourceLineNo">146</span><a id="line.146">     * &lt;em&gt;Note that this attribute is not for referencing citations to other documents</a>
+<span class="sourceLineNo">147</span><a id="line.147">     * that are related to the cited document.&lt;/em&gt;</a>
+<span class="sourceLineNo">148</span><a id="line.148">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">149</span><a id="line.149">     */</a>
+<span class="sourceLineNo">150</span><a id="line.150">    public String[] crossReferences;</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">    /**</a>
+<span class="sourceLineNo">153</span><a id="line.153">     * A title given to the cited resource (a name by which the resource is formally known).</a>
+<span class="sourceLineNo">154</span><a id="line.154">     */</a>
+<span class="sourceLineNo">155</span><a id="line.155">    public String title;</a>
+<span class="sourceLineNo">156</span><a id="line.156"></a>
+<span class="sourceLineNo">157</span><a id="line.157">    /**</a>
+<span class="sourceLineNo">158</span><a id="line.158">     * It defines the topic of the content of the cited resource.</a>
+<span class="sourceLineNo">159</span><a id="line.159">     */</a>
+<span class="sourceLineNo">160</span><a id="line.160">    public BiblioSubject subject;</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">    /**</a>
+<span class="sourceLineNo">163</span><a id="line.163">     * An account of the content of the cited resource.</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * It is either an abstract, or table of contents, or both.</a>
+<span class="sourceLineNo">165</span><a id="line.165">     * It can be written in a language different from the language of the cited resource.</a>
+<span class="sourceLineNo">166</span><a id="line.166">     */</a>
+<span class="sourceLineNo">167</span><a id="line.167">    public BiblioDescription description;</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">    /**</a>
+<span class="sourceLineNo">170</span><a id="line.170">     * It defines an extent or scope of the content of the cited resource.</a>
+<span class="sourceLineNo">171</span><a id="line.171">     * It can include spatial location (a place name or geographic co-ordinates),</a>
+<span class="sourceLineNo">172</span><a id="line.172">     * temporal period (a period label, date, or date range), or both.</a>
+<span class="sourceLineNo">173</span><a id="line.173">     */</a>
+<span class="sourceLineNo">174</span><a id="line.174">    public BiblioScope coverage;</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">    /**</a>
+<span class="sourceLineNo">177</span><a id="line.177">     * &lt;p&gt;</a>
+<span class="sourceLineNo">178</span><a id="line.178">     * The authors and contributors are responsible for creating the contents of the cited resource.</a>
+<span class="sourceLineNo">179</span><a id="line.179">     * There is no formal definition of how this responsibility is divided between them. However,</a>
+<span class="sourceLineNo">180</span><a id="line.180">     * the authors are usually primary creators while contributors may be illustrators, translators,</a>
+<span class="sourceLineNo">181</span><a id="line.181">     * or other creative providers.</a>
+<span class="sourceLineNo">182</span><a id="line.182">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">183</span><a id="line.183">     *</a>
+<span class="sourceLineNo">184</span><a id="line.184">     * &lt;p&gt;</a>
+<span class="sourceLineNo">185</span><a id="line.185">     * The authors are in an ordered array (to be able to find the first author).</a>
+<span class="sourceLineNo">186</span><a id="line.186">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">187</span><a id="line.187">     */</a>
+<span class="sourceLineNo">188</span><a id="line.188">    public BiblioProvider[] authors;</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">    /**</a>
+<span class="sourceLineNo">191</span><a id="line.191">     * &lt;p&gt;</a>
+<span class="sourceLineNo">192</span><a id="line.192">     * The authors and contributors are responsible for creating the contents of the cited resource.</a>
+<span class="sourceLineNo">193</span><a id="line.193">     * There is no formal definition of how this responsibility is divided between them. However,</a>
+<span class="sourceLineNo">194</span><a id="line.194">     * the authors are usually primary creators while contributors may be illustrators, translators,</a>
+<span class="sourceLineNo">195</span><a id="line.195">     * or other creative providers.</a>
+<span class="sourceLineNo">196</span><a id="line.196">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">197</span><a id="line.197">     *</a>
+<span class="sourceLineNo">198</span><a id="line.198">     * &lt;p&gt;</a>
+<span class="sourceLineNo">199</span><a id="line.199">     * The contributors are in an ordered array (to be able to find the first contributor).</a>
+<span class="sourceLineNo">200</span><a id="line.200">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">201</span><a id="line.201">     */</a>
+<span class="sourceLineNo">202</span><a id="line.202">    public BiblioProvider[] contributors;</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">    /** </a>
+<span class="sourceLineNo">205</span><a id="line.205">     * A publisher is responsible for making the resource available.</a>
+<span class="sourceLineNo">206</span><a id="line.206">     */</a>
+<span class="sourceLineNo">207</span><a id="line.207">    public BiblioProvider publisher;</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">    /**</a>
+<span class="sourceLineNo">210</span><a id="line.210">     * &lt;p&gt;</a>
+<span class="sourceLineNo">211</span><a id="line.211">     * It specifies information about rights over the cited resource.</a>
+<span class="sourceLineNo">212</span><a id="line.212">     * Typically, it contains a rights management statement for the resource, or it refers</a>
+<span class="sourceLineNo">213</span><a id="line.213">     * to a service providing such information. Rights information often encompasses</a>
+<span class="sourceLineNo">214</span><a id="line.214">     * &lt;a href="http://www.itds.treas.gov/ITDS/ITTA/ipr.html"&gt;Intellectual Property Rights&lt;/a&gt;,</a>
+<span class="sourceLineNo">215</span><a id="line.215">     * Copyright, and various Property Rights.</a>
+<span class="sourceLineNo">216</span><a id="line.216">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">217</span><a id="line.217">     *</a>
+<span class="sourceLineNo">218</span><a id="line.218">     * &lt;p&gt;</a>
+<span class="sourceLineNo">219</span><a id="line.219">     * If the attribute is empty, no assumptions can be made about the status of these and</a>
+<span class="sourceLineNo">220</span><a id="line.220">     * other rights with respect to the cited resource.</a>
+<span class="sourceLineNo">221</span><a id="line.221">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">222</span><a id="line.222">     */</a>
+<span class="sourceLineNo">223</span><a id="line.223">    public String rights;</a>
+<span class="sourceLineNo">224</span><a id="line.224"></a>
+<span class="sourceLineNo">225</span><a id="line.225">    /**</a>
+<span class="sourceLineNo">226</span><a id="line.226">     * &lt;p&gt;</a>
+<span class="sourceLineNo">227</span><a id="line.227">     * Defines a date associated with an event in the life cycle of the cited resource</a>
+<span class="sourceLineNo">228</span><a id="line.228">     * when this resource became available. Usually, it is a date of publishing. However,</a>
+<span class="sourceLineNo">229</span><a id="line.229">     * for not yet published resources, it can be a date of creation.</a>
+<span class="sourceLineNo">230</span><a id="line.230">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">231</span><a id="line.231">     *</a>
+<span class="sourceLineNo">232</span><a id="line.232">     * &lt;p&gt;</a>
+<span class="sourceLineNo">233</span><a id="line.233">     * The suggested encoding is as defined in a W3C NOTE  </a>
+<span class="sourceLineNo">234</span><a id="line.234">     * &lt;a href="http://www.w3.org/TR/NOTE-datetime"&gt;Date and Time Formats&lt;/a&gt;.</a>
+<span class="sourceLineNo">235</span><a id="line.235">     * This NOTE defines a profile of &lt;a href="http://www.iso.ch/markete/8601.pdf"&gt;ISO8601 standard&lt;/a&gt;.</a>
+<span class="sourceLineNo">236</span><a id="line.236">     * ISO8601 describes a large number of date/time formats and the NOTE reduces the scope and restricts</a>
+<span class="sourceLineNo">237</span><a id="line.237">     * the supported formats to a small number. The profile offers a number of options from which this</a>
+<span class="sourceLineNo">238</span><a id="line.238">     * attribute should contain/permit only the following ones:</a>
+<span class="sourceLineNo">239</span><a id="line.239">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">240</span><a id="line.240">     *</a>
+<span class="sourceLineNo">241</span><a id="line.241">     * &lt;p&gt;</a>
+<span class="sourceLineNo">242</span><a id="line.242">     * &lt;dl&gt;</a>
+<span class="sourceLineNo">243</span><a id="line.243">     *   &lt;dt&gt; Year</a>
+<span class="sourceLineNo">244</span><a id="line.244">     *   &lt;dd&gt; YYYY (e.g., 2000)</a>
+<span class="sourceLineNo">245</span><a id="line.245">     *   &lt;dt&gt; Year and month</a>
+<span class="sourceLineNo">246</span><a id="line.246">     *   &lt;dd&gt; YYYY-MM (e.g., 2000-12)</a>
+<span class="sourceLineNo">247</span><a id="line.247">     *   &lt;dt&gt; Complete date</a>
+<span class="sourceLineNo">248</span><a id="line.248">     *   &lt;dd&gt; YYYY-MM-DD (e.g., 2000-12-31)</a>
+<span class="sourceLineNo">249</span><a id="line.249">     *   &lt;dt&gt; Complete date plus hours, minutes, and seconds</a>
+<span class="sourceLineNo">250</span><a id="line.250">     *   &lt;dd&gt; YYYY-MM-DDThh:mm:ssZ (e.g., 2000-12-31T23:59:59Z)</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * &lt;/dl&gt;</a>
+<span class="sourceLineNo">252</span><a id="line.252">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">253</span><a id="line.253">     *</a>
+<span class="sourceLineNo">254</span><a id="line.254">     * &lt;p&gt;</a>
+<span class="sourceLineNo">255</span><a id="line.255">     * Exactly the components shown here must be present, with exactly this punctuation.</a>
+<span class="sourceLineNo">256</span><a id="line.256">     * Note that the &lt;b&gt;T&lt;/b&gt; appears literally in the string, to indicate the beginning</a>
+<span class="sourceLineNo">257</span><a id="line.257">     * of the time element, as specified in ISO 8601.</a>
+<span class="sourceLineNo">258</span><a id="line.258">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">259</span><a id="line.259">     *</a>
+<span class="sourceLineNo">260</span><a id="line.260">     * &lt;p&gt;</a>
+<span class="sourceLineNo">261</span><a id="line.261">     * Times are expressed in UTC (Coordinated Universal Time), with a special UTC designator</a>
+<span class="sourceLineNo">262</span><a id="line.262">     * (&lt;em&gt;Z&lt;/em&gt;), again as specified in ISO 8601.</a>
+<span class="sourceLineNo">263</span><a id="line.263">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">264</span><a id="line.264">     *</a>
+<span class="sourceLineNo">265</span><a id="line.265">     * &lt;p&gt;</a>
+<span class="sourceLineNo">266</span><a id="line.266">     * For query purposes, the format with fewer details is considered</a>
+<span class="sourceLineNo">267</span><a id="line.267">     * as having all possible values in place of missing details. Thus, YYYY-MM would mean</a>
+<span class="sourceLineNo">268</span><a id="line.268">     * all dates and times in the given month.</a>
+<span class="sourceLineNo">269</span><a id="line.269">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">270</span><a id="line.270">     */</a>
+<span class="sourceLineNo">271</span><a id="line.271">    public String date;</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273">    /**</a>
+<span class="sourceLineNo">274</span><a id="line.274">     * &lt;p&gt;</a>
+<span class="sourceLineNo">275</span><a id="line.275">     * It defines a language of the intellectual contents of the cited resource.</a>
+<span class="sourceLineNo">276</span><a id="line.276">     * The recommendation is to use values as defined by</a>
+<span class="sourceLineNo">277</span><a id="line.277">     * &lt;a href="http://www.ietf.org/rfc/rfc1766.txt"&gt;RFC1766&lt;/a&gt; which includes a two-letter</a>
+<span class="sourceLineNo">278</span><a id="line.278">     * &lt;em&gt;Language Code&lt;/em&gt; (taken from the ISO639 standard), followed optionally by a two-letter</a>
+<span class="sourceLineNo">279</span><a id="line.279">     * &lt;em&gt;Country Code&lt;/em&gt; (taken from the ISO3166 standard).</a>
+<span class="sourceLineNo">280</span><a id="line.280">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">281</span><a id="line.281">     *</a>
+<span class="sourceLineNo">282</span><a id="line.282">     * &lt;p&gt;</a>
+<span class="sourceLineNo">283</span><a id="line.283">     * For example, &lt;tt&gt;en&lt;/tt&gt;  for English,</a>
+<span class="sourceLineNo">284</span><a id="line.284">     * &lt;tt&gt;fr&lt;/tt&gt; for French, or &lt;tt&gt;en-uk&lt;/tt&gt;  for English used in the United Kingdom.</a>
+<span class="sourceLineNo">285</span><a id="line.285">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">286</span><a id="line.286">     *</a>
+<span class="sourceLineNo">287</span><a id="line.287">     * &lt;p&gt;</a>
+<span class="sourceLineNo">288</span><a id="line.288">     * Another possibility is to use</a>
+<span class="sourceLineNo">289</span><a id="line.289">     * &lt;a href="http://lcweb.loc.gov/marc/languages"&gt;MARC List of Languages&lt;/a&gt;.</a>
+<span class="sourceLineNo">290</span><a id="line.290">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">291</span><a id="line.291">     *</a>
+<span class="sourceLineNo">292</span><a id="line.292">     * &lt;p&gt;</a>
+<span class="sourceLineNo">293</span><a id="line.293">     * In any case, the name of the used controlled vocabulary should be equal to</a>
+<span class="sourceLineNo">294</span><a id="line.294">     * {@link BibRefSupport#LANGUAGES}.</a>
+<span class="sourceLineNo">295</span><a id="line.295">     * &lt;/p&gt;</a>
+<span class="sourceLineNo">296</span><a id="line.296">     */</a>
+<span class="sourceLineNo">297</span><a id="line.297">    public String language;</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299">    /**</a>
+<span class="sourceLineNo">300</span><a id="line.300">     * It describes the physical or digital manifestation of the cited</a>
+<span class="sourceLineNo">301</span><a id="line.301">     * resource.  It can have very different content depending on the</a>
+<span class="sourceLineNo">302</span><a id="line.302">     * citation type. Therefore, it is highly recommended to use a</a>
+<span class="sourceLineNo">303</span><a id="line.303">     * controlled vocabulary to fill this attribute. The name of such</a>
+<span class="sourceLineNo">304</span><a id="line.304">     * vocabulary should be equal to the type of the reosurce type</a>
+<span class="sourceLineNo">305</span><a id="line.305">     * followed by {@link BibRefSupport#ATTR_FORMAT}. For example:</a>
+<span class="sourceLineNo">306</span><a id="line.306">     * {@link BibRefSupport#TYPE_BOOK}/{@link BibRefSupport#ATTR_FORMAT}.</a>
+<span class="sourceLineNo">307</span><a id="line.307">     */</a>
+<span class="sourceLineNo">308</span><a id="line.308">    public String format;</a>
+<span class="sourceLineNo">309</span><a id="line.309"></a>
+<span class="sourceLineNo">310</span><a id="line.310">    /**</a>
+<span class="sourceLineNo">311</span><a id="line.311">     * It defines information related to the citation itself rather than to the cited resource.</a>
+<span class="sourceLineNo">312</span><a id="line.312">     */</a>
+<span class="sourceLineNo">313</span><a id="line.313">    public BiblioEntryStatus entryStatus;</a>
+<span class="sourceLineNo">314</span><a id="line.314"></a>
+<span class="sourceLineNo">315</span><a id="line.315">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

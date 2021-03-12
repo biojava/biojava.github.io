@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.program.indexdb;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.File;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.IOException;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.ArrayList;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Collection;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Collections;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Comparator;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Iterator;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.List;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.Map;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.StringTokenizer;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.utils.CommitFailure;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.utils.SmallMap;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.utils.io.RAF;</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">/**</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * &lt;code&gt;BioStore&lt;/code&gt;s represent directory and file structures</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * which index flat files according to the OBDA specification. The</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * preferred method of constructing new instances is to use</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;code&gt;BioStoreFactory&lt;/code&gt;.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @author Keith James</a>
+<span class="sourceLineNo">050</span><a id="line.50"> */</a>
+<span class="sourceLineNo">051</span><a id="line.51">public class BioStore implements IndexStore {</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">    /**</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * &lt;code&gt;STRING_CASE_SENSITIVE_ORDER&lt;/code&gt; compares two</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * &lt;code&gt;Object&lt;/code&gt;s, which must both be &lt;code&gt;String&lt;/code&gt;s,</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * lexicographically using &lt;code&gt;compareTo&lt;/code&gt;. The comparison</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * is carried out 'a' to 'b'.</a>
+<span class="sourceLineNo">058</span><a id="line.58">     */</a>
+<span class="sourceLineNo">059</span><a id="line.59">    static Comparator STRING_CASE_SENSITIVE_ORDER = new Comparator() {</a>
+<span class="sourceLineNo">060</span><a id="line.60">            public int compare(Object a, Object b) {</a>
+<span class="sourceLineNo">061</span><a id="line.61">                return ((Comparable) a).compareTo(b);</a>
+<span class="sourceLineNo">062</span><a id="line.62">            }</a>
+<span class="sourceLineNo">063</span><a id="line.63">        };</a>
+<span class="sourceLineNo">064</span><a id="line.64">    </a>
+<span class="sourceLineNo">065</span><a id="line.65">    private ConfigFile metaData;</a>
+<span class="sourceLineNo">066</span><a id="line.66">    private File location;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    private String primaryKey;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    private Map idToList;</a>
+<span class="sourceLineNo">069</span><a id="line.69">    private RAF[] fileIDToRAF;</a>
+<span class="sourceLineNo">070</span><a id="line.70">    private SearchableList primaryList;</a>
+<span class="sourceLineNo">071</span><a id="line.71">    private int fileCount;</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">    /**</a>
+<span class="sourceLineNo">074</span><a id="line.74">     * Creates a new &lt;code&gt;BioStore&lt;/code&gt; flatfile index at the</a>
+<span class="sourceLineNo">075</span><a id="line.75">     * specified location with the specified caching behaviour.</a>
+<span class="sourceLineNo">076</span><a id="line.76">     *</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * @param location a &lt;code&gt;File&lt;/code&gt; indicating the index</a>
+<span class="sourceLineNo">078</span><a id="line.78">     * directory.</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * @param cache a &lt;code&gt;boolean&lt;/code&gt; indicating whether the</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * implementation should cache its state.</a>
+<span class="sourceLineNo">081</span><a id="line.81">     *</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * @exception IOException if an error occurs.</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * @exception BioException if an error occurs.</a>
+<span class="sourceLineNo">084</span><a id="line.84">     */</a>
+<span class="sourceLineNo">085</span><a id="line.85">    public BioStore(File location, boolean cache)</a>
+<span class="sourceLineNo">086</span><a id="line.86">        throws IOException, BioException {</a>
+<span class="sourceLineNo">087</span><a id="line.87">        this(location, cache, false);</a>
+<span class="sourceLineNo">088</span><a id="line.88">    }</a>
+<span class="sourceLineNo">089</span><a id="line.89">    </a>
+<span class="sourceLineNo">090</span><a id="line.90">    BioStore(File location, boolean cache, boolean mutable)</a>
+<span class="sourceLineNo">091</span><a id="line.91">        throws IOException, BioException {</a>
+<span class="sourceLineNo">092</span><a id="line.92">        this.location = location;</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">        File configFile = BioStoreFactory.makeConfigFile(location);</a>
+<span class="sourceLineNo">095</span><a id="line.95">        if (!configFile.exists()) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">            throw new BioException("Config file does not exist: "</a>
+<span class="sourceLineNo">097</span><a id="line.97">                                   + configFile);</a>
+<span class="sourceLineNo">098</span><a id="line.98">        }</a>
+<span class="sourceLineNo">099</span><a id="line.99">        metaData = new ConfigFile(BioStoreFactory.makeConfigFile(location));</a>
+<span class="sourceLineNo">100</span><a id="line.100">        idToList = new SmallMap();</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">        primaryKey = (String) metaData.getProperty(BioStoreFactory.PRIMARY_KEY_NAME);</a>
+<span class="sourceLineNo">103</span><a id="line.103">        String keyList = (String) metaData.getProperty(BioStoreFactory.KEYS);</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        File plFile = BioStoreFactory.makePrimaryKeyFile(location, primaryKey);</a>
+<span class="sourceLineNo">106</span><a id="line.106">        if (cache) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">            primaryList = new CacheList(new PrimaryIDList(plFile, this, mutable));</a>
+<span class="sourceLineNo">108</span><a id="line.108">        } else {</a>
+<span class="sourceLineNo">109</span><a id="line.109">            primaryList = new PrimaryIDList(plFile, this, mutable);</a>
+<span class="sourceLineNo">110</span><a id="line.110">        }</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">        StringTokenizer sTok = new StringTokenizer(keyList, "\t");</a>
+<span class="sourceLineNo">113</span><a id="line.113">        while (sTok.hasMoreTokens()) {</a>
+<span class="sourceLineNo">114</span><a id="line.114">            String k = sTok.nextToken();</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">            File file = BioStoreFactory.makeSecondaryFile(location, k);</a>
+<span class="sourceLineNo">117</span><a id="line.117">            if (cache) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">                idToList.put(k, new CacheList(new SecondaryFileAsList(file, mutable)));</a>
+<span class="sourceLineNo">119</span><a id="line.119">            } else {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                idToList.put(k, new SecondaryFileAsList(file, mutable));</a>
+<span class="sourceLineNo">121</span><a id="line.121">            }</a>
+<span class="sourceLineNo">122</span><a id="line.122">        }</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">        readFileIDs();</a>
+<span class="sourceLineNo">125</span><a id="line.125">    }</a>
+<span class="sourceLineNo">126</span><a id="line.126">    </a>
+<span class="sourceLineNo">127</span><a id="line.127">    /**</a>
+<span class="sourceLineNo">128</span><a id="line.128">     * The name of this store or null if the name has not been set.</a>
+<span class="sourceLineNo">129</span><a id="line.129">     */</a>
+<span class="sourceLineNo">130</span><a id="line.130">    public String getName() {</a>
+<span class="sourceLineNo">131</span><a id="line.131">      if (metaData.containsProperty(BioStoreFactory.STORE_NAME)) {</a>
+<span class="sourceLineNo">132</span><a id="line.132">        return (String) metaData.getProperty(BioStoreFactory.STORE_NAME);</a>
+<span class="sourceLineNo">133</span><a id="line.133">      } else {</a>
+<span class="sourceLineNo">134</span><a id="line.134">        return null;</a>
+<span class="sourceLineNo">135</span><a id="line.135">      }</a>
+<span class="sourceLineNo">136</span><a id="line.136">    }</a>
+<span class="sourceLineNo">137</span><a id="line.137">    </a>
+<span class="sourceLineNo">138</span><a id="line.138">    /**</a>
+<span class="sourceLineNo">139</span><a id="line.139">     * &lt;code&gt;getLocation&lt;/code&gt; returns the directory where the index</a>
+<span class="sourceLineNo">140</span><a id="line.140">     * is located.</a>
+<span class="sourceLineNo">141</span><a id="line.141">     *</a>
+<span class="sourceLineNo">142</span><a id="line.142">     * @return a &lt;code&gt;File&lt;/code&gt;.</a>
+<span class="sourceLineNo">143</span><a id="line.143">     */</a>
+<span class="sourceLineNo">144</span><a id="line.144">    public File getLocation() {</a>
+<span class="sourceLineNo">145</span><a id="line.145">      return location;</a>
+<span class="sourceLineNo">146</span><a id="line.146">    }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">    private void readFileIDs()</a>
+<span class="sourceLineNo">149</span><a id="line.149">        throws</a>
+<span class="sourceLineNo">150</span><a id="line.150">            IOException,</a>
+<span class="sourceLineNo">151</span><a id="line.151">            BioException</a>
+<span class="sourceLineNo">152</span><a id="line.152">    {</a>
+<span class="sourceLineNo">153</span><a id="line.153">        fileIDToRAF = new RAF[5];</a>
+<span class="sourceLineNo">154</span><a id="line.154">        fileCount = 0;</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        for (Iterator i = metaData.keys().iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">            String key = (String) i.next();</a>
+<span class="sourceLineNo">158</span><a id="line.158">            if (key.startsWith("fileid_")) {</a>
+<span class="sourceLineNo">159</span><a id="line.159">                int indx = Integer.parseInt(key.substring("fileid_".length()));</a>
+<span class="sourceLineNo">160</span><a id="line.160">                String fileLine = (String) metaData.getProperty(key);</a>
+<span class="sourceLineNo">161</span><a id="line.161">                int tab = fileLine.indexOf("\t");</a>
+<span class="sourceLineNo">162</span><a id="line.162">                File file = new File(fileLine.substring(0, tab));</a>
+<span class="sourceLineNo">163</span><a id="line.163">                RAF raf = new RAF(file, "r");</a>
+<span class="sourceLineNo">164</span><a id="line.164">                long length = Long.parseLong(fileLine.substring(tab+1));</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                if (file.length() != length) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">                    throw new BioException("File changed length: " + file);</a>
+<span class="sourceLineNo">168</span><a id="line.168">                }</a>
+<span class="sourceLineNo">169</span><a id="line.169">                </a>
+<span class="sourceLineNo">170</span><a id="line.170">                if (indx &gt;= fileCount) {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                    // beyond end</a>
+<span class="sourceLineNo">172</span><a id="line.172">                    if (indx &gt;= fileIDToRAF.length) {</a>
+<span class="sourceLineNo">173</span><a id="line.173">                        // beyond array end</a>
+<span class="sourceLineNo">174</span><a id="line.174">                        RAF[] tmpr = new RAF[indx+1];</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        System.arraycopy(fileIDToRAF, 0, tmpr, 0, fileIDToRAF.length);</a>
+<span class="sourceLineNo">176</span><a id="line.176">                        fileIDToRAF = tmpr;</a>
+<span class="sourceLineNo">177</span><a id="line.177">                    }</a>
+<span class="sourceLineNo">178</span><a id="line.178"></a>
+<span class="sourceLineNo">179</span><a id="line.179">                    fileCount = indx;</a>
+<span class="sourceLineNo">180</span><a id="line.180">                }</a>
+<span class="sourceLineNo">181</span><a id="line.181">                fileIDToRAF[indx] = raf;</a>
+<span class="sourceLineNo">182</span><a id="line.182">            }</a>
+<span class="sourceLineNo">183</span><a id="line.183">        }</a>
+<span class="sourceLineNo">184</span><a id="line.184">    }</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">    private void writeFileIDs()</a>
+<span class="sourceLineNo">187</span><a id="line.187">        throws BioException, IOException, ChangeVetoException {</a>
+<span class="sourceLineNo">188</span><a id="line.188">        for (int i = 0; i &lt; fileCount; i++) {</a>
+<span class="sourceLineNo">189</span><a id="line.189">            RAF file = fileIDToRAF[i];</a>
+<span class="sourceLineNo">190</span><a id="line.190">            long length = file.length();</a>
+<span class="sourceLineNo">191</span><a id="line.191">            String prop = "fileid_" + i;</a>
+<span class="sourceLineNo">192</span><a id="line.192">            String val = file.getFile().toString() + "\t" + length;</a>
+<span class="sourceLineNo">193</span><a id="line.193">            metaData.setProperty(prop, val);</a>
+<span class="sourceLineNo">194</span><a id="line.194">        }</a>
+<span class="sourceLineNo">195</span><a id="line.195">    }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">    RAF getFileForID(int fileId) {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        return fileIDToRAF[fileId];</a>
+<span class="sourceLineNo">199</span><a id="line.199">    }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">    int getIDForFile(RAF file)</a>
+<span class="sourceLineNo">202</span><a id="line.202">        throws IOException {</a>
+<span class="sourceLineNo">203</span><a id="line.203">        // scan list</a>
+<span class="sourceLineNo">204</span><a id="line.204">        for (int i = 0; i &lt; fileCount; i++) {</a>
+<span class="sourceLineNo">205</span><a id="line.205">            if (file.equals(fileIDToRAF[i])) {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                return i;</a>
+<span class="sourceLineNo">207</span><a id="line.207">            }</a>
+<span class="sourceLineNo">208</span><a id="line.208">        }</a>
+<span class="sourceLineNo">209</span><a id="line.209"></a>
+<span class="sourceLineNo">210</span><a id="line.210">        // extend fileIDToFile array</a>
+<span class="sourceLineNo">211</span><a id="line.211">        if (fileCount &gt;= fileIDToRAF.length) {</a>
+<span class="sourceLineNo">212</span><a id="line.212">            RAF[] tmpr = new RAF[fileIDToRAF.length + 4]; // 4 is magic number</a>
+<span class="sourceLineNo">213</span><a id="line.213">            System.arraycopy(fileIDToRAF, 0, tmpr, 0, fileCount);</a>
+<span class="sourceLineNo">214</span><a id="line.214">            fileIDToRAF = tmpr;</a>
+<span class="sourceLineNo">215</span><a id="line.215">        }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">        // add the unseen file to the list</a>
+<span class="sourceLineNo">218</span><a id="line.218">        fileIDToRAF[fileCount] = file;</a>
+<span class="sourceLineNo">219</span><a id="line.219">        return fileCount++;</a>
+<span class="sourceLineNo">220</span><a id="line.220">    }</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">    public Annotation getMetaData() {</a>
+<span class="sourceLineNo">223</span><a id="line.223">        return metaData;</a>
+<span class="sourceLineNo">224</span><a id="line.224">    }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">    public Record get(String id) {</a>
+<span class="sourceLineNo">227</span><a id="line.227">        return (Record) primaryList.search(id);</a>
+<span class="sourceLineNo">228</span><a id="line.228">    }</a>
+<span class="sourceLineNo">229</span><a id="line.229"></a>
+<span class="sourceLineNo">230</span><a id="line.230">    public List get(String id, String namespace)</a>
+<span class="sourceLineNo">231</span><a id="line.231">        throws BioException {</a>
+<span class="sourceLineNo">232</span><a id="line.232">        List hits = new ArrayList();</a>
+<span class="sourceLineNo">233</span><a id="line.233">        if (namespace.equals(primaryKey)) {</a>
+<span class="sourceLineNo">234</span><a id="line.234">            hits.add(primaryList.search(id));</a>
+<span class="sourceLineNo">235</span><a id="line.235">        } else {</a>
+<span class="sourceLineNo">236</span><a id="line.236">            SecondaryFileAsList secList = (SecondaryFileAsList) idToList.get(namespace);</a>
+<span class="sourceLineNo">237</span><a id="line.237">            List kpList = secList.searchAll(id);</a>
+<span class="sourceLineNo">238</span><a id="line.238">            for (Iterator i = kpList.iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                KeyPair keyPair = (KeyPair) i.next();</a>
+<span class="sourceLineNo">240</span><a id="line.240">                hits.add(primaryList.search(keyPair.getSecondary()));</a>
+<span class="sourceLineNo">241</span><a id="line.241">            }</a>
+<span class="sourceLineNo">242</span><a id="line.242">        }</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">        return hits;</a>
+<span class="sourceLineNo">245</span><a id="line.245">    }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">    public void writeRecord(RAF file,</a>
+<span class="sourceLineNo">248</span><a id="line.248">                            long offset,</a>
+<span class="sourceLineNo">249</span><a id="line.249">                            int length,</a>
+<span class="sourceLineNo">250</span><a id="line.250">                            String id,</a>
+<span class="sourceLineNo">251</span><a id="line.251">                            Map secIDs) {</a>
+<span class="sourceLineNo">252</span><a id="line.252">        primaryList.add(new Record.Impl(id, file, offset, length));</a>
+<span class="sourceLineNo">253</span><a id="line.253">        if (!secIDs.isEmpty()) {</a>
+<span class="sourceLineNo">254</span><a id="line.254">            for (Iterator mei = secIDs.entrySet().iterator(); mei.hasNext(); ) {</a>
+<span class="sourceLineNo">255</span><a id="line.255">                Map.Entry me = (Map.Entry) mei.next();</a>
+<span class="sourceLineNo">256</span><a id="line.256">                String sid = (String) me.getKey();</a>
+<span class="sourceLineNo">257</span><a id="line.257">                List sfl = (List) idToList.get(sid);</a>
+<span class="sourceLineNo">258</span><a id="line.258">                Collection svals = (Collection) me.getValue();</a>
+<span class="sourceLineNo">259</span><a id="line.259">                for (Iterator i = svals.iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                    String sval = (String) i.next();</a>
+<span class="sourceLineNo">261</span><a id="line.261">                    sfl.add(new KeyPair.Impl(sval, id));</a>
+<span class="sourceLineNo">262</span><a id="line.262">                }</a>
+<span class="sourceLineNo">263</span><a id="line.263">            }</a>
+<span class="sourceLineNo">264</span><a id="line.264">        }</a>
+<span class="sourceLineNo">265</span><a id="line.265">    }</a>
+<span class="sourceLineNo">266</span><a id="line.266"></a>
+<span class="sourceLineNo">267</span><a id="line.267">    /**</a>
+<span class="sourceLineNo">268</span><a id="line.268">     * &lt;code&gt;getRecordList&lt;/code&gt; returns all the &lt;code&gt;Record&lt;/code&gt;s</a>
+<span class="sourceLineNo">269</span><a id="line.269">     * in the index.</a>
+<span class="sourceLineNo">270</span><a id="line.270">     *</a>
+<span class="sourceLineNo">271</span><a id="line.271">     * @return a &lt;code&gt;List&lt;/code&gt; of &lt;code&gt;Record&lt;/code&gt;s.</a>
+<span class="sourceLineNo">272</span><a id="line.272">     */</a>
+<span class="sourceLineNo">273</span><a id="line.273">    public List getRecordList() {</a>
+<span class="sourceLineNo">274</span><a id="line.274">        return primaryList;</a>
+<span class="sourceLineNo">275</span><a id="line.275">    }</a>
+<span class="sourceLineNo">276</span><a id="line.276"></a>
+<span class="sourceLineNo">277</span><a id="line.277">    /**</a>
+<span class="sourceLineNo">278</span><a id="line.278">     * &lt;code&gt;commit&lt;/code&gt; writes an index to disk.</a>
+<span class="sourceLineNo">279</span><a id="line.279">     *</a>
+<span class="sourceLineNo">280</span><a id="line.280">     * @exception CommitFailure if an error occurs.</a>
+<span class="sourceLineNo">281</span><a id="line.281">     */</a>
+<span class="sourceLineNo">282</span><a id="line.282">    public void commit()</a>
+<span class="sourceLineNo">283</span><a id="line.283">        throws CommitFailure {</a>
+<span class="sourceLineNo">284</span><a id="line.284">        Collections.sort(primaryList, primaryList.getComparator());</a>
+<span class="sourceLineNo">285</span><a id="line.285">        primaryList.commit();</a>
+<span class="sourceLineNo">286</span><a id="line.286">        for (Iterator i = idToList.values().iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">287</span><a id="line.287">            SearchableList fal = (SearchableList) i.next();</a>
+<span class="sourceLineNo">288</span><a id="line.288">            Collections.sort(fal, fal.getComparator());</a>
+<span class="sourceLineNo">289</span><a id="line.289">            ((SearchableList) fal).commit();</a>
+<span class="sourceLineNo">290</span><a id="line.290">        }</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">        try {</a>
+<span class="sourceLineNo">293</span><a id="line.293">            writeFileIDs();</a>
+<span class="sourceLineNo">294</span><a id="line.294">        } catch (ChangeVetoException cve) {</a>
+<span class="sourceLineNo">295</span><a id="line.295">            throw new CommitFailure(cve);</a>
+<span class="sourceLineNo">296</span><a id="line.296">        } catch (IOException ioe) {</a>
+<span class="sourceLineNo">297</span><a id="line.297">            throw new CommitFailure(ioe);</a>
+<span class="sourceLineNo">298</span><a id="line.298">        } catch (BioException be) {</a>
+<span class="sourceLineNo">299</span><a id="line.299">          throw new CommitFailure(be);</a>
+<span class="sourceLineNo">300</span><a id="line.300">        }</a>
+<span class="sourceLineNo">301</span><a id="line.301"></a>
+<span class="sourceLineNo">302</span><a id="line.302">        metaData.commit();</a>
+<span class="sourceLineNo">303</span><a id="line.303">    }</a>
+<span class="sourceLineNo">304</span><a id="line.304">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

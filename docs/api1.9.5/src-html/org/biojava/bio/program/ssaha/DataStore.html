@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.bio.program.ssaha;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import org.biojava.bio.symbol.FiniteAlphabet;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">/**</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * A repository that can be searched with a sequence.</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * @author Matthew Pocock</a>
+<span class="sourceLineNo">011</span><a id="line.11"> */</a>
+<span class="sourceLineNo">012</span><a id="line.12">public interface DataStore {</a>
+<span class="sourceLineNo">013</span><a id="line.13">  /**</a>
+<span class="sourceLineNo">014</span><a id="line.14">   * The alphabet of symbol lists that can be searched against this</a>
+<span class="sourceLineNo">015</span><a id="line.15">   * DataStore.</a>
+<span class="sourceLineNo">016</span><a id="line.16">   *</a>
+<span class="sourceLineNo">017</span><a id="line.17">   * @return a FiniteAlphabet search types of SymbolList</a>
+<span class="sourceLineNo">018</span><a id="line.18">   */</a>
+<span class="sourceLineNo">019</span><a id="line.19">  public FiniteAlphabet getAlphabet();</a>
+<span class="sourceLineNo">020</span><a id="line.20">  </a>
+<span class="sourceLineNo">021</span><a id="line.21">  /**</a>
+<span class="sourceLineNo">022</span><a id="line.22">   * Search the DataStore with a symbol list.</a>
+<span class="sourceLineNo">023</span><a id="line.23">   *</a>
+<span class="sourceLineNo">024</span><a id="line.24">   * @param id  the ID to report the symbol list by e.g. 'test' or 'foo1'</a>
+<span class="sourceLineNo">025</span><a id="line.25">   * @param symList  the symbol list to search with</a>
+<span class="sourceLineNo">026</span><a id="line.26">   * @param listener  the listener to inform of hits</a>
+<span class="sourceLineNo">027</span><a id="line.27">   *</a>
+<span class="sourceLineNo">028</span><a id="line.28">   * @throws IllegalAlphabetException if the symbol list is of a type that</a>
+<span class="sourceLineNo">029</span><a id="line.29">   *         is not compatible with this data store</a>
+<span class="sourceLineNo">030</span><a id="line.30">   */</a>
+<span class="sourceLineNo">031</span><a id="line.31">  public void search(String id, SymbolList symList, SearchListener listener)</a>
+<span class="sourceLineNo">032</span><a id="line.32">  throws IllegalAlphabetException, SearchException;</a>
+<span class="sourceLineNo">033</span><a id="line.33">  </a>
+<span class="sourceLineNo">034</span><a id="line.34">  /**</a>
+<span class="sourceLineNo">035</span><a id="line.35">   * Resolve an ID to a sequence name.</a>
+<span class="sourceLineNo">036</span><a id="line.36">   *</a>
+<span class="sourceLineNo">037</span><a id="line.37">   * @param id  the int number of the sequence name to resolve</a>
+<span class="sourceLineNo">038</span><a id="line.38">   * @return the name of that sequence as a String</a>
+<span class="sourceLineNo">039</span><a id="line.39">   * @throws IndexOutOfBoundsException if id is negative or too large</a>
+<span class="sourceLineNo">040</span><a id="line.40">   */</a>
+<span class="sourceLineNo">041</span><a id="line.41">  public String seqNameForID(int id)</a>
+<span class="sourceLineNo">042</span><a id="line.42">  throws IndexOutOfBoundsException, SearchException;</a>
+<span class="sourceLineNo">043</span><a id="line.43">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

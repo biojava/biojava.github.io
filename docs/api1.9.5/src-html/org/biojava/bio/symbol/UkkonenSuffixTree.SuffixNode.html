@@ -1,0 +1,887 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.bio.symbol;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.util.ArrayList;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import java.util.HashMap;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import java.util.HashSet;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import java.util.Iterator;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.util.List;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.util.Map;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.util.Set;</a>
+<span class="sourceLineNo">010</span><a id="line.10"></a>
+<span class="sourceLineNo">011</span><a id="line.11">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">012</span><a id="line.12">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import org.biojava.bio.BioRuntimeException;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import org.biojava.bio.seq.io.CharacterTokenization;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import org.biojava.bio.seq.io.SymbolListCharSequence;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import org.biojava.bio.seq.io.SymbolTokenization;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import org.biojava.utils.AssertionFailure;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import org.biojava.utils.ChangeListener;</a>
+<span class="sourceLineNo">019</span><a id="line.19">import org.biojava.utils.ChangeType;</a>
+<span class="sourceLineNo">020</span><a id="line.20">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">/**</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * &lt;p&gt;</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * A suffix tree is an efficient method for encoding the frequencies</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * of motifs in a sequence.  They are sometimes used to quickly screen</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * for similar sequences.  For instance, all motifs of length up to</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * 2 in the sequence &lt;code&gt;AAGT&lt;/code&gt; could be encoded as:</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * &lt;/p&gt;</a>
+<span class="sourceLineNo">030</span><a id="line.30"> *</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * root(4)</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * |</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * A(2)--------G(1)-----T(1)</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * |           |</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * A(1)--G(1)  T(1)</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38"> *&lt;p&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * It supports addition of elements both as String and SymbolList. They should</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * not be mixed together. The strings are also terminated internally, so it is</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * possible to go and add more than one string to the suffix tree.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *&lt;/p&gt;</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *&lt;p&gt;</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * Some more work need to be done on how data should be generated from this</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * class. If you need something that's not in there, please e-mail the list at</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * biojava-dev@biojava.org and I'll add it in there.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *&lt;\p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * @author Francois Pepin</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @version 1.3</a>
+<span class="sourceLineNo">050</span><a id="line.50"> */</a>
+<span class="sourceLineNo">051</span><a id="line.51">public class UkkonenSuffixTree{</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">  public static final char DEFAULT_TERM_CHAR ='$';</a>
+<span class="sourceLineNo">054</span><a id="line.54">  private char terminationChar;</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">  SuffixNode root;</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">  public static final int TO_A_LEAF = -1;</a>
+<span class="sourceLineNo">059</span><a id="line.59">  private int e;</a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">  private CharSequence sequences;</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">  /** Describes the rule that needs to be applied after walking down a tree. Put as a class variable because it can only return a single object (and I don't want to extend Node any further.</a>
+<span class="sourceLineNo">065</span><a id="line.65">   * rule 1: ended up at a leaf.</a>
+<span class="sourceLineNo">066</span><a id="line.66">   * rule 2: need to extend an internalNode.</a>
+<span class="sourceLineNo">067</span><a id="line.67">   * rule 3: would split an edge.</a>
+<span class="sourceLineNo">068</span><a id="line.68">   * rule 4: ended up in the middle of an edge.</a>
+<span class="sourceLineNo">069</span><a id="line.69">   * rule 5: ended up at an InternalNode</a>
+<span class="sourceLineNo">070</span><a id="line.70">   *</a>
+<span class="sourceLineNo">071</span><a id="line.71">   * Production 5 counts as rule 4 when adding a sequence, but the rules are also used to when searching the tree.</a>
+<span class="sourceLineNo">072</span><a id="line.72">   */</a>
+<span class="sourceLineNo">073</span><a id="line.73">  private int rule;</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">  /** Initializes a new &lt;code&gt;UkkonenSuffixTree&lt;/code&gt; instance.</a>
+<span class="sourceLineNo">077</span><a id="line.77">   */</a>
+<span class="sourceLineNo">078</span><a id="line.78">  public UkkonenSuffixTree(){</a>
+<span class="sourceLineNo">079</span><a id="line.79">    terminationChar = DEFAULT_TERM_CHAR;</a>
+<span class="sourceLineNo">080</span><a id="line.80">    root = new SimpleNode();</a>
+<span class="sourceLineNo">081</span><a id="line.81">    e=0;</a>
+<span class="sourceLineNo">082</span><a id="line.82">    sequences = "";</a>
+<span class="sourceLineNo">083</span><a id="line.83">  }</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">  public UkkonenSuffixTree(String seqs){</a>
+<span class="sourceLineNo">086</span><a id="line.86">    this();</a>
+<span class="sourceLineNo">087</span><a id="line.87">    addSequence(seqs, "unnamed", false);</a>
+<span class="sourceLineNo">088</span><a id="line.88">  }</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">  public UkkonenSuffixTree(FiniteAlphabet alpha){</a>
+<span class="sourceLineNo">091</span><a id="line.91">    this();</a>
+<span class="sourceLineNo">092</span><a id="line.92">  }</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">  public void addSymbolList(SymbolList list, String name, boolean doNotTerminate) throws IllegalSymbolException{</a>
+<span class="sourceLineNo">095</span><a id="line.95">    if (!doNotTerminate)</a>
+<span class="sourceLineNo">096</span><a id="line.96">      list = new TerminatedSymbolList(list);</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">    CharSequence seq =new SymbolListCharSequence(list);</a>
+<span class="sourceLineNo">099</span><a id="line.99">    System.out.println("Adding symbol list " + seq.toString());</a>
+<span class="sourceLineNo">100</span><a id="line.100">    //if (!doNotTerminate)</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">    //if(!doNotTerminate)</a>
+<span class="sourceLineNo">103</span><a id="line.103">    //  seq = seq+terminationChar;</a>
+<span class="sourceLineNo">104</span><a id="line.104">    addPreppedSequence(seq);</a>
+<span class="sourceLineNo">105</span><a id="line.105">  }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">  /**</a>
+<span class="sourceLineNo">110</span><a id="line.110">   * Add a sequence into the tree. If there are more sequences, they should be separated by a terminationChar ($ by default). If none exist, it is assumed that there is only 1 continuous sequence to be added.</a>
+<span class="sourceLineNo">111</span><a id="line.111">   * @param seq the sequence/sequences to be added into the tree.</a>
+<span class="sourceLineNo">112</span><a id="line.112">   * @param doNotTerminate whether we should terminate the sequence if it's non-terminated.</a>
+<span class="sourceLineNo">113</span><a id="line.113">   */</a>
+<span class="sourceLineNo">114</span><a id="line.114">  public void addSequence(String seq, String name, boolean doNotTerminate){</a>
+<span class="sourceLineNo">115</span><a id="line.115">    int i;</a>
+<span class="sourceLineNo">116</span><a id="line.116">    int start, end;</a>
+<span class="sourceLineNo">117</span><a id="line.117">    ArrayList toBeAdded = new ArrayList();</a>
+<span class="sourceLineNo">118</span><a id="line.118">    Iterator iterator;</a>
+<span class="sourceLineNo">119</span><a id="line.119">    String subseq;</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">    if (seq==null||seq.length()==0)</a>
+<span class="sourceLineNo">122</span><a id="line.122">      return;</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">    //terminate the String if it's not terminated.</a>
+<span class="sourceLineNo">125</span><a id="line.125">    if(!doNotTerminate&amp;&amp;seq.charAt(seq.length()-1)!=terminationChar)</a>
+<span class="sourceLineNo">126</span><a id="line.126">      seq = seq+terminationChar;</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">    //count how many termination Chars in in.</a>
+<span class="sourceLineNo">129</span><a id="line.129">    start =0;</a>
+<span class="sourceLineNo">130</span><a id="line.130">    for (i=0;seq.indexOf(terminationChar, i)!=-1;i=seq.indexOf(terminationChar, i)+1){</a>
+<span class="sourceLineNo">131</span><a id="line.131">      start=i;</a>
+<span class="sourceLineNo">132</span><a id="line.132">      end=seq.indexOf(terminationChar, i);</a>
+<span class="sourceLineNo">133</span><a id="line.133">      toBeAdded.add(seq.substring(start,end+1));</a>
+<span class="sourceLineNo">134</span><a id="line.134">    }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">    iterator = toBeAdded.iterator();</a>
+<span class="sourceLineNo">137</span><a id="line.137">    i=0;</a>
+<span class="sourceLineNo">138</span><a id="line.138">    while (iterator.hasNext()){</a>
+<span class="sourceLineNo">139</span><a id="line.139">      subseq=(String)iterator.next();</a>
+<span class="sourceLineNo">140</span><a id="line.140">      addPreppedSequence(subseq);</a>
+<span class="sourceLineNo">141</span><a id="line.141">      i++;</a>
+<span class="sourceLineNo">142</span><a id="line.142">    }</a>
+<span class="sourceLineNo">143</span><a id="line.143">  }</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">  /** Add a single sequence into the tree.</a>
+<span class="sourceLineNo">146</span><a id="line.146">   *</a>
+<span class="sourceLineNo">147</span><a id="line.147">   * @param seq a &lt;code&gt;String&lt;/code&gt; value</a>
+<span class="sourceLineNo">148</span><a id="line.148">   */</a>
+<span class="sourceLineNo">149</span><a id="line.149">  private void addPreppedSequence(CharSequence seq){</a>
+<span class="sourceLineNo">150</span><a id="line.150">    int i, gammaStart;</a>
+<span class="sourceLineNo">151</span><a id="line.151">    int j=0;</a>
+<span class="sourceLineNo">152</span><a id="line.152">    SuffixNode oldNode=null, newNode;</a>
+<span class="sourceLineNo">153</span><a id="line.153">    SuffixNode currentNode;</a>
+<span class="sourceLineNo">154</span><a id="line.154">    boolean canLinkJump = false;</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">    //Puts i at the end of the previous sequences</a>
+<span class="sourceLineNo">157</span><a id="line.157">    i = sequences.length();</a>
+<span class="sourceLineNo">158</span><a id="line.158">    j=i;</a>
+<span class="sourceLineNo">159</span><a id="line.159"></a>
+<span class="sourceLineNo">160</span><a id="line.160">    sequences= sequences.toString()+seq.toString();</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">    currentNode = root;</a>
+<span class="sourceLineNo">163</span><a id="line.163">    //phase i</a>
+<span class="sourceLineNo">164</span><a id="line.164">    for (; i&lt;sequences.length();i++){</a>
+<span class="sourceLineNo">165</span><a id="line.165">      //System.out.println("Phase "+i);</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">      e+=1;</a>
+<span class="sourceLineNo">168</span><a id="line.168">      //extension j;</a>
+<span class="sourceLineNo">169</span><a id="line.169">      for (;j&lt;=i;j++){</a>
+<span class="sourceLineNo">170</span><a id="line.170">        //System.out.println("extension "+j);</a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">        //reset a couple of things...</a>
+<span class="sourceLineNo">173</span><a id="line.173">        newNode = null;</a>
+<span class="sourceLineNo">174</span><a id="line.174"></a>
+<span class="sourceLineNo">175</span><a id="line.175">        //find first node v at or above s[j-1,i] that is root or has a suffixLink</a>
+<span class="sourceLineNo">176</span><a id="line.176">        while (currentNode!=root&amp;&amp;currentNode.suffixLink==null&amp;&amp;canLinkJump)</a>
+<span class="sourceLineNo">177</span><a id="line.177">          currentNode = currentNode.parent;</a>
+<span class="sourceLineNo">178</span><a id="line.178"></a>
+<span class="sourceLineNo">179</span><a id="line.179">        if (root==currentNode){</a>
+<span class="sourceLineNo">180</span><a id="line.180">          currentNode=jumpTo(root,sequences,j,i+1);</a>
+<span class="sourceLineNo">181</span><a id="line.181">        }else{</a>
+<span class="sourceLineNo">182</span><a id="line.182">          if (canLinkJump)</a>
+<span class="sourceLineNo">183</span><a id="line.183">            currentNode = currentNode.suffixLink;</a>
+<span class="sourceLineNo">184</span><a id="line.184">          gammaStart = j+getPathLength(currentNode);</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">          currentNode = jumpTo(currentNode,sequences,gammaStart,i+1);</a>
+<span class="sourceLineNo">187</span><a id="line.187">        }</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">        if (rule==1)</a>
+<span class="sourceLineNo">190</span><a id="line.190">          addPositionToLeaf(j, currentNode);</a>
+<span class="sourceLineNo">191</span><a id="line.191">        if (rule==2)</a>
+<span class="sourceLineNo">192</span><a id="line.192">          doRule2(currentNode,i,j);</a>
+<span class="sourceLineNo">193</span><a id="line.193">        if (rule==3){</a>
+<span class="sourceLineNo">194</span><a id="line.194">          newNode=doRule3(currentNode,i,j);</a>
+<span class="sourceLineNo">195</span><a id="line.195">          currentNode=newNode;</a>
+<span class="sourceLineNo">196</span><a id="line.196">        }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        if (rule==1||rule==4||rule==5)</a>
+<span class="sourceLineNo">199</span><a id="line.199">          currentNode = currentNode.parent;</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        if (oldNode!=null){</a>
+<span class="sourceLineNo">202</span><a id="line.202">          if (currentNode.isTerminal())</a>
+<span class="sourceLineNo">203</span><a id="line.203">            currentNode=currentNode.parent;</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">          oldNode.suffixLink=currentNode;</a>
+<span class="sourceLineNo">206</span><a id="line.206"></a>
+<span class="sourceLineNo">207</span><a id="line.207">        }</a>
+<span class="sourceLineNo">208</span><a id="line.208">        oldNode=newNode;</a>
+<span class="sourceLineNo">209</span><a id="line.209">        newNode=null;</a>
+<span class="sourceLineNo">210</span><a id="line.210"></a>
+<span class="sourceLineNo">211</span><a id="line.211">        if (rule==1||rule==4||rule==5){</a>
+<span class="sourceLineNo">212</span><a id="line.212">          oldNode=null;</a>
+<span class="sourceLineNo">213</span><a id="line.213">          canLinkJump=false;</a>
+<span class="sourceLineNo">214</span><a id="line.214">          break;</a>
+<span class="sourceLineNo">215</span><a id="line.215">        }else</a>
+<span class="sourceLineNo">216</span><a id="line.216">          canLinkJump=true;</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218"></a>
+<span class="sourceLineNo">219</span><a id="line.219">      }//for phase i</a>
+<span class="sourceLineNo">220</span><a id="line.220">    }//for extension j</a>
+<span class="sourceLineNo">221</span><a id="line.221">    finishAddition();</a>
+<span class="sourceLineNo">222</span><a id="line.222">  }</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">  /** This method is used to walk down the tree, from a given node. The</a>
+<span class="sourceLineNo">225</span><a id="line.225">   * &lt;code&gt;rule&lt;/code&gt; variable can be used to check where the walk</a>
+<span class="sourceLineNo">226</span><a id="line.226">   *  stopped. Note that rule 3 means that the string used to walk down the</a>
+<span class="sourceLineNo">227</span><a id="line.227">   *  tree does not match (which is a bit different from the construction</a>
+<span class="sourceLineNo">228</span><a id="line.228">   *  where rule 3 implies that only the last character doesn't match.</a>
+<span class="sourceLineNo">229</span><a id="line.229">   *&lt;p&gt;</a>
+<span class="sourceLineNo">230</span><a id="line.230">   *  The String is encoded as a substring of a given source. This is done to</a>
+<span class="sourceLineNo">231</span><a id="line.231">   *  avoid replicating the string. To send walk down the string</a>
+<span class="sourceLineNo">232</span><a id="line.232">   *  &lt;code&gt;x&lt;/code&gt; from the root, one would call walkTo(root,x,0,x.length()).</a>
+<span class="sourceLineNo">233</span><a id="line.233">   *</a>
+<span class="sourceLineNo">234</span><a id="line.234">   * @param starting the root of the subtree we're walking down form.</a>
+<span class="sourceLineNo">235</span><a id="line.235">   * @param source a superstring that contains the string we're using to</a>
+<span class="sourceLineNo">236</span><a id="line.236">   * walking down. source.subtring(from,to) should give the string we're</a>
+<span class="sourceLineNo">237</span><a id="line.237">   * walking down from.</a>
+<span class="sourceLineNo">238</span><a id="line.238">   * @param from the start position (inclusive) of the target string in the</a>
+<span class="sourceLineNo">239</span><a id="line.239">   * source.</a>
+<span class="sourceLineNo">240</span><a id="line.240">   * @param to the end position (exclusive) of the target string in the node.</a>
+<span class="sourceLineNo">241</span><a id="line.241">   * @return a &lt;code&gt;SuffixNode&lt;/code&gt; that the walk stopped at. If the walk</a>
+<span class="sourceLineNo">242</span><a id="line.242">   * stopped inside an edge. (check the rule variable to see where it stopped).</a>
+<span class="sourceLineNo">243</span><a id="line.243">   */</a>
+<span class="sourceLineNo">244</span><a id="line.244">  public SuffixNode walkTo(SuffixNode starting, String source, int from, int to){</a>
+<span class="sourceLineNo">245</span><a id="line.245">    SuffixNode currentNode;</a>
+<span class="sourceLineNo">246</span><a id="line.246">    SuffixNode arrivedAt;</a>
+<span class="sourceLineNo">247</span><a id="line.247">    CharSequence edgeLabel;</a>
+<span class="sourceLineNo">248</span><a id="line.248"></a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250">    currentNode=starting;</a>
+<span class="sourceLineNo">251</span><a id="line.251">    arrivedAt=starting;</a>
+<span class="sourceLineNo">252</span><a id="line.252">    while (from&lt;to){</a>
+<span class="sourceLineNo">253</span><a id="line.253">      arrivedAt=(SuffixNode)currentNode.children.get(</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                                     new Character(source.charAt(from)));</a>
+<span class="sourceLineNo">255</span><a id="line.255">      if (arrivedAt==null){</a>
+<span class="sourceLineNo">256</span><a id="line.256">        from=to;</a>
+<span class="sourceLineNo">257</span><a id="line.257">        arrivedAt=currentNode;</a>
+<span class="sourceLineNo">258</span><a id="line.258">        rule=2;</a>
+<span class="sourceLineNo">259</span><a id="line.259">        break;</a>
+<span class="sourceLineNo">260</span><a id="line.260">      }</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262">      edgeLabel = getEdgeLabel(arrivedAt);</a>
+<span class="sourceLineNo">263</span><a id="line.263">      if (edgeLabel.length()&gt;=to-from){</a>
+<span class="sourceLineNo">264</span><a id="line.264">        if (edgeLabel.equals(source.substring(from,to))){</a>
+<span class="sourceLineNo">265</span><a id="line.265">          //rule 1 or 5,</a>
+<span class="sourceLineNo">266</span><a id="line.266">          if (arrivedAt.isTerminal())</a>
+<span class="sourceLineNo">267</span><a id="line.267">            rule=1;</a>
+<span class="sourceLineNo">268</span><a id="line.268">          else</a>
+<span class="sourceLineNo">269</span><a id="line.269">            rule=5;</a>
+<span class="sourceLineNo">270</span><a id="line.270">        }</a>
+<span class="sourceLineNo">271</span><a id="line.271">        if (edgeLabel.subSequence(0, to-from).equals(source.substring(from,to)))</a>
+<span class="sourceLineNo">272</span><a id="line.272">          rule=4;</a>
+<span class="sourceLineNo">273</span><a id="line.273">        else</a>
+<span class="sourceLineNo">274</span><a id="line.274">          rule=3;</a>
+<span class="sourceLineNo">275</span><a id="line.275">        from=to;</a>
+<span class="sourceLineNo">276</span><a id="line.276">      } else if (source.subSequence(from,from+edgeLabel.length())</a>
+<span class="sourceLineNo">277</span><a id="line.277">                 .equals(edgeLabel)) {</a>
+<span class="sourceLineNo">278</span><a id="line.278">        from+=edgeLabel.length();</a>
+<span class="sourceLineNo">279</span><a id="line.279">        currentNode=arrivedAt;</a>
+<span class="sourceLineNo">280</span><a id="line.280">      }</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">      else{</a>
+<span class="sourceLineNo">283</span><a id="line.283">        rule=3;</a>
+<span class="sourceLineNo">284</span><a id="line.284">        from=to;</a>
+<span class="sourceLineNo">285</span><a id="line.285">      }</a>
+<span class="sourceLineNo">286</span><a id="line.286">    }</a>
+<span class="sourceLineNo">287</span><a id="line.287"></a>
+<span class="sourceLineNo">288</span><a id="line.288">    return arrivedAt;</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">  }</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292"></a>
+<span class="sourceLineNo">293</span><a id="line.293"></a>
+<span class="sourceLineNo">294</span><a id="line.294"></a>
+<span class="sourceLineNo">295</span><a id="line.295">  /**</a>
+<span class="sourceLineNo">296</span><a id="line.296">   * Just like walkTo, but faster when used during tree construction, as it</a>
+<span class="sourceLineNo">297</span><a id="line.297">   * assumes that a mismatch can only occurs with the last character of the</a>
+<span class="sourceLineNo">298</span><a id="line.298">   * target string.</a>
+<span class="sourceLineNo">299</span><a id="line.299">   *</a>
+<span class="sourceLineNo">300</span><a id="line.300">   * @param starting the root of the subtree we're walking down form.</a>
+<span class="sourceLineNo">301</span><a id="line.301">   * @param source a superstring that contains the string we're using to</a>
+<span class="sourceLineNo">302</span><a id="line.302">   * walking down. source.subtring(from,to) should give the string we're</a>
+<span class="sourceLineNo">303</span><a id="line.303">   * walking down from.</a>
+<span class="sourceLineNo">304</span><a id="line.304">   * @param from the start position (inclusive) of the target string in the</a>
+<span class="sourceLineNo">305</span><a id="line.305">   * source.</a>
+<span class="sourceLineNo">306</span><a id="line.306">   * @param to the end position (exclusive) of the target string in the node.</a>
+<span class="sourceLineNo">307</span><a id="line.307">   * @return a &lt;code&gt;SuffixNode&lt;/code&gt; that the walk stopped at. If the walk</a>
+<span class="sourceLineNo">308</span><a id="line.308">   * stopped inside an edge. (check the rule variable to see where it</a>
+<span class="sourceLineNo">309</span><a id="line.309">   * stopped).</a>
+<span class="sourceLineNo">310</span><a id="line.310">   */</a>
+<span class="sourceLineNo">311</span><a id="line.311">  public SuffixNode jumpTo(SuffixNode starting, CharSequence source, int from, int to){</a>
+<span class="sourceLineNo">312</span><a id="line.312">    SuffixNode currentNode;</a>
+<span class="sourceLineNo">313</span><a id="line.313">    SuffixNode arrivedAt;</a>
+<span class="sourceLineNo">314</span><a id="line.314">    boolean canGoDown = true;</a>
+<span class="sourceLineNo">315</span><a id="line.315">    int edgeLength;</a>
+<span class="sourceLineNo">316</span><a id="line.316">    int original=from;</a>
+<span class="sourceLineNo">317</span><a id="line.317">    SuffixNode originalNode=starting;</a>
+<span class="sourceLineNo">318</span><a id="line.318"></a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">    currentNode=starting;</a>
+<span class="sourceLineNo">321</span><a id="line.321">    arrivedAt=starting;</a>
+<span class="sourceLineNo">322</span><a id="line.322"></a>
+<span class="sourceLineNo">323</span><a id="line.323">    rule=0;</a>
+<span class="sourceLineNo">324</span><a id="line.324"></a>
+<span class="sourceLineNo">325</span><a id="line.325">    if (from==to){</a>
+<span class="sourceLineNo">326</span><a id="line.326">      rule=5;</a>
+<span class="sourceLineNo">327</span><a id="line.327">      return starting;</a>
+<span class="sourceLineNo">328</span><a id="line.328">    }</a>
+<span class="sourceLineNo">329</span><a id="line.329"></a>
+<span class="sourceLineNo">330</span><a id="line.330"></a>
+<span class="sourceLineNo">331</span><a id="line.331">    while (canGoDown){</a>
+<span class="sourceLineNo">332</span><a id="line.332">      //    if (source.substring(from, to).equals("CAGCG"))</a>
+<span class="sourceLineNo">333</span><a id="line.333">      //  System.out.println(to+" here to "+source.substring(from, to)+" "+(i++));</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">      if (currentNode.isTerminal()){</a>
+<span class="sourceLineNo">336</span><a id="line.336">        System.out.println("ARRGH! at "+source.subSequence(original, to)+</a>
+<span class="sourceLineNo">337</span><a id="line.337">                           "("+from+","+original+","+to+</a>
+<span class="sourceLineNo">338</span><a id="line.338">                           ") from "+getLabel(originalNode));</a>
+<span class="sourceLineNo">339</span><a id="line.339">        //Something truly awful happened if this line is ever reached.</a>
+<span class="sourceLineNo">340</span><a id="line.340">        //This bug should be dead, but it it came back from the dead a couple</a>
+<span class="sourceLineNo">341</span><a id="line.341">        //of times already.</a>
+<span class="sourceLineNo">342</span><a id="line.342">      }</a>
+<span class="sourceLineNo">343</span><a id="line.343"></a>
+<span class="sourceLineNo">344</span><a id="line.344">      arrivedAt=(SuffixNode)currentNode.children.get(</a>
+<span class="sourceLineNo">345</span><a id="line.345">                                                     new Character(source.charAt(from)));</a>
+<span class="sourceLineNo">346</span><a id="line.346">      if (arrivedAt==null){</a>
+<span class="sourceLineNo">347</span><a id="line.347">        canGoDown=false;</a>
+<span class="sourceLineNo">348</span><a id="line.348">        arrivedAt=currentNode;</a>
+<span class="sourceLineNo">349</span><a id="line.349">        rule=2;</a>
+<span class="sourceLineNo">350</span><a id="line.350">        break;</a>
+<span class="sourceLineNo">351</span><a id="line.351">      }</a>
+<span class="sourceLineNo">352</span><a id="line.352"></a>
+<span class="sourceLineNo">353</span><a id="line.353">      edgeLength = getEdgeLength(arrivedAt);</a>
+<span class="sourceLineNo">354</span><a id="line.354">      if (edgeLength&gt;=to-from){</a>
+<span class="sourceLineNo">355</span><a id="line.355">        int after = getPathEnd(arrivedAt)-getEdgeLength(arrivedAt)+to-from-1;</a>
+<span class="sourceLineNo">356</span><a id="line.356">        if (sequences.charAt(after)==</a>
+<span class="sourceLineNo">357</span><a id="line.357">            source.charAt(to-1)){</a>
+<span class="sourceLineNo">358</span><a id="line.358">          if (getEdgeLength(arrivedAt)==to-from){</a>
+<span class="sourceLineNo">359</span><a id="line.359">            if (arrivedAt.isTerminal())</a>
+<span class="sourceLineNo">360</span><a id="line.360">              rule=1;</a>
+<span class="sourceLineNo">361</span><a id="line.361">            else</a>
+<span class="sourceLineNo">362</span><a id="line.362">              rule=5;</a>
+<span class="sourceLineNo">363</span><a id="line.363">          }</a>
+<span class="sourceLineNo">364</span><a id="line.364">          else</a>
+<span class="sourceLineNo">365</span><a id="line.365">            rule=4;</a>
+<span class="sourceLineNo">366</span><a id="line.366">        }</a>
+<span class="sourceLineNo">367</span><a id="line.367">        else</a>
+<span class="sourceLineNo">368</span><a id="line.368">          rule=3;</a>
+<span class="sourceLineNo">369</span><a id="line.369">        canGoDown=false;</a>
+<span class="sourceLineNo">370</span><a id="line.370">        break;</a>
+<span class="sourceLineNo">371</span><a id="line.371">      }</a>
+<span class="sourceLineNo">372</span><a id="line.372">      from+=edgeLength;</a>
+<span class="sourceLineNo">373</span><a id="line.373">      currentNode=arrivedAt;</a>
+<span class="sourceLineNo">374</span><a id="line.374"></a>
+<span class="sourceLineNo">375</span><a id="line.375">    }//while canGoDOwn</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">    return arrivedAt;</a>
+<span class="sourceLineNo">378</span><a id="line.378">  }</a>
+<span class="sourceLineNo">379</span><a id="line.379"></a>
+<span class="sourceLineNo">380</span><a id="line.380">  /******************************************************************</a>
+<span class="sourceLineNo">381</span><a id="line.381">   * Tree navigation methods</a>
+<span class="sourceLineNo">382</span><a id="line.382">   ******************************************************************/</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">  protected int getEdgeLength(SuffixNode child){</a>
+<span class="sourceLineNo">385</span><a id="line.385">    int parentLength, childLength;</a>
+<span class="sourceLineNo">386</span><a id="line.386">    SuffixNode parent;</a>
+<span class="sourceLineNo">387</span><a id="line.387">    if (child==root)</a>
+<span class="sourceLineNo">388</span><a id="line.388">      return 0;</a>
+<span class="sourceLineNo">389</span><a id="line.389">    parent=child.parent;</a>
+<span class="sourceLineNo">390</span><a id="line.390">    parentLength = getPathLength(parent);</a>
+<span class="sourceLineNo">391</span><a id="line.391">    childLength = getPathLength(child);</a>
+<span class="sourceLineNo">392</span><a id="line.392">    if (childLength-parentLength&lt;=0){</a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394">      System.out.println("negative length "+(childLength-parentLength));</a>
+<span class="sourceLineNo">395</span><a id="line.395"></a>
+<span class="sourceLineNo">396</span><a id="line.396">      System.out.println(getLabel(child)+","+getLabel(parent));</a>
+<span class="sourceLineNo">397</span><a id="line.397">    }</a>
+<span class="sourceLineNo">398</span><a id="line.398"></a>
+<span class="sourceLineNo">399</span><a id="line.399">    return childLength-parentLength;</a>
+<span class="sourceLineNo">400</span><a id="line.400">  }</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">  protected CharSequence getEdgeLabel(SuffixNode child){</a>
+<span class="sourceLineNo">403</span><a id="line.403">    return sequences.subSequence(</a>
+<span class="sourceLineNo">404</span><a id="line.404">                               child.labelStart+</a>
+<span class="sourceLineNo">405</span><a id="line.405">                               (getPathLength(child)-getEdgeLength(child)),</a>
+<span class="sourceLineNo">406</span><a id="line.406">                               (child.labelEnd==TO_A_LEAF)?</a>
+<span class="sourceLineNo">407</span><a id="line.407">                               e:child.labelEnd);</a>
+<span class="sourceLineNo">408</span><a id="line.408">  }</a>
+<span class="sourceLineNo">409</span><a id="line.409"></a>
+<span class="sourceLineNo">410</span><a id="line.410"></a>
+<span class="sourceLineNo">411</span><a id="line.411">  protected int getPathLength(SuffixNode node){</a>
+<span class="sourceLineNo">412</span><a id="line.412">    return getPathEnd(node)-node.labelStart;</a>
+<span class="sourceLineNo">413</span><a id="line.413">  }</a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415">  protected int getPathEnd(SuffixNode node){</a>
+<span class="sourceLineNo">416</span><a id="line.416">    return node.labelEnd==TO_A_LEAF?e:node.labelEnd;</a>
+<span class="sourceLineNo">417</span><a id="line.417">  }</a>
+<span class="sourceLineNo">418</span><a id="line.418"></a>
+<span class="sourceLineNo">419</span><a id="line.419">  protected CharSequence getLabel(SuffixNode node){</a>
+<span class="sourceLineNo">420</span><a id="line.420">    if (node==root)</a>
+<span class="sourceLineNo">421</span><a id="line.421">      return "root";</a>
+<span class="sourceLineNo">422</span><a id="line.422">    else</a>
+<span class="sourceLineNo">423</span><a id="line.423">      return sequences.subSequence(</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                 node.labelStart,</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                 (node.labelEnd==TO_A_LEAF)?e:node.labelEnd).toString();</a>
+<span class="sourceLineNo">426</span><a id="line.426">  }</a>
+<span class="sourceLineNo">427</span><a id="line.427"></a>
+<span class="sourceLineNo">428</span><a id="line.428"></a>
+<span class="sourceLineNo">429</span><a id="line.429">  protected ArrayList getAllNodes(SuffixNode root, ArrayList list, boolean leavesOnly){</a>
+<span class="sourceLineNo">430</span><a id="line.430">    Iterator iterator;</a>
+<span class="sourceLineNo">431</span><a id="line.431">    if (list==null)</a>
+<span class="sourceLineNo">432</span><a id="line.432">      list= new ArrayList();</a>
+<span class="sourceLineNo">433</span><a id="line.433">    if (!leavesOnly||(leavesOnly&amp;&amp;root.isTerminal()))</a>
+<span class="sourceLineNo">434</span><a id="line.434">      list.add(root);</a>
+<span class="sourceLineNo">435</span><a id="line.435">    if (!root.isTerminal()){</a>
+<span class="sourceLineNo">436</span><a id="line.436">      iterator = root.children.values().iterator();</a>
+<span class="sourceLineNo">437</span><a id="line.437">      while (iterator.hasNext())</a>
+<span class="sourceLineNo">438</span><a id="line.438">        list=getAllNodes((SuffixNode)iterator.next(), list, leavesOnly);</a>
+<span class="sourceLineNo">439</span><a id="line.439">    }</a>
+<span class="sourceLineNo">440</span><a id="line.440"></a>
+<span class="sourceLineNo">441</span><a id="line.441">    return list;</a>
+<span class="sourceLineNo">442</span><a id="line.442">  }</a>
+<span class="sourceLineNo">443</span><a id="line.443"></a>
+<span class="sourceLineNo">444</span><a id="line.444">  public void printTree(){</a>
+<span class="sourceLineNo">445</span><a id="line.445">    ArrayList allNodes = getAllNodes(root, null, false);</a>
+<span class="sourceLineNo">446</span><a id="line.446">    for (int i=0;i&lt;allNodes.size();i++){</a>
+<span class="sourceLineNo">447</span><a id="line.447">      SuffixNode node = (SuffixNode)allNodes.get(i);</a>
+<span class="sourceLineNo">448</span><a id="line.448">      if (node==root)</a>
+<span class="sourceLineNo">449</span><a id="line.449">        System.out.println("root");</a>
+<span class="sourceLineNo">450</span><a id="line.450">      else</a>
+<span class="sourceLineNo">451</span><a id="line.451">        System.out.println("node "+i+" label "+getLabel(node)+" attached to "+getLabel(node.parent));</a>
+<span class="sourceLineNo">452</span><a id="line.452">    }</a>
+<span class="sourceLineNo">453</span><a id="line.453">  }</a>
+<span class="sourceLineNo">454</span><a id="line.454"></a>
+<span class="sourceLineNo">455</span><a id="line.455"></a>
+<span class="sourceLineNo">456</span><a id="line.456">  public SuffixNode getRoot(){return root;}</a>
+<span class="sourceLineNo">457</span><a id="line.457"></a>
+<span class="sourceLineNo">458</span><a id="line.458">  /******************************************************************</a>
+<span class="sourceLineNo">459</span><a id="line.459">   * End Tree Navigation Methods</a>
+<span class="sourceLineNo">460</span><a id="line.460">   ******************************************************************/</a>
+<span class="sourceLineNo">461</span><a id="line.461"></a>
+<span class="sourceLineNo">462</span><a id="line.462"></a>
+<span class="sourceLineNo">463</span><a id="line.463">  /******************************************************************</a>
+<span class="sourceLineNo">464</span><a id="line.464">   * Tree modification methods</a>
+<span class="sourceLineNo">465</span><a id="line.465">   ******************************************************************/</a>
+<span class="sourceLineNo">466</span><a id="line.466">  private void addPositionToLeaf(int pos, SuffixNode leaf){</a>
+<span class="sourceLineNo">467</span><a id="line.467">    int[] moreLabels;</a>
+<span class="sourceLineNo">468</span><a id="line.468">    if (leaf.additionalLabels==null)</a>
+<span class="sourceLineNo">469</span><a id="line.469">      leaf.additionalLabels = new int[]{pos};</a>
+<span class="sourceLineNo">470</span><a id="line.470">    else{</a>
+<span class="sourceLineNo">471</span><a id="line.471">      moreLabels = new int[leaf.additionalLabels.length+1];</a>
+<span class="sourceLineNo">472</span><a id="line.472">      System.arraycopy(leaf.additionalLabels, 0, moreLabels, 0, leaf.additionalLabels.length);</a>
+<span class="sourceLineNo">473</span><a id="line.473">      moreLabels[moreLabels.length-1]=pos;</a>
+<span class="sourceLineNo">474</span><a id="line.474">      leaf.additionalLabels=moreLabels;</a>
+<span class="sourceLineNo">475</span><a id="line.475">    }</a>
+<span class="sourceLineNo">476</span><a id="line.476"></a>
+<span class="sourceLineNo">477</span><a id="line.477">  }</a>
+<span class="sourceLineNo">478</span><a id="line.478"></a>
+<span class="sourceLineNo">479</span><a id="line.479">  private void doRule2(SuffixNode parent, int splittingPos, int suffixStart){</a>
+<span class="sourceLineNo">480</span><a id="line.480">    //int number = getAllNodes(root, null, false).size();</a>
+<span class="sourceLineNo">481</span><a id="line.481">    SuffixNode leaf = new SimpleNode (parent, suffixStart);</a>
+<span class="sourceLineNo">482</span><a id="line.482"></a>
+<span class="sourceLineNo">483</span><a id="line.483">    parent.children.put(new Character(sequences.charAt(splittingPos)), leaf);</a>
+<span class="sourceLineNo">484</span><a id="line.484">    //System.out.println("rule 2: "+sequences.charAt(splittingPos)+" from "+getLabel(parent)+ " to "+getLabel(leaf));</a>
+<span class="sourceLineNo">485</span><a id="line.485"></a>
+<span class="sourceLineNo">486</span><a id="line.486">  }</a>
+<span class="sourceLineNo">487</span><a id="line.487"></a>
+<span class="sourceLineNo">488</span><a id="line.488">  private SuffixNode doRule3(SuffixNode child, int splittingPos, int suffixStart){</a>
+<span class="sourceLineNo">489</span><a id="line.489">    //      return toBeSplit.splitEdge(endOfSubSeq, sequences.charAt(endOfSubSeq),</a>
+<span class="sourceLineNo">490</span><a id="line.490">    //                         toBeSplit.getStart()+endOfSubSeq-rule3Position,</a>
+<span class="sourceLineNo">491</span><a id="line.491">    //                         suffixStart);</a>
+<span class="sourceLineNo">492</span><a id="line.492">    //int number = getAllNodes(root, null, false).size();</a>
+<span class="sourceLineNo">493</span><a id="line.493">    SuffixNode parent = child.parent;</a>
+<span class="sourceLineNo">494</span><a id="line.494">    SuffixNode middle= new SimpleNode(parent,suffixStart,splittingPos);</a>
+<span class="sourceLineNo">495</span><a id="line.495">    Character x=new Character(</a>
+<span class="sourceLineNo">496</span><a id="line.496">                              sequences.charAt(child.labelStart+getPathLength(child)-getEdgeLength(child)));</a>
+<span class="sourceLineNo">497</span><a id="line.497"></a>
+<span class="sourceLineNo">498</span><a id="line.498">    //System.out.println(parent.children.get(x)==child);</a>
+<span class="sourceLineNo">499</span><a id="line.499"></a>
+<span class="sourceLineNo">500</span><a id="line.500">    Character y=new Character(sequences.charAt(</a>
+<span class="sourceLineNo">501</span><a id="line.501">                                               child.labelStart</a>
+<span class="sourceLineNo">502</span><a id="line.502">                                               +getPathLength(child)-getEdgeLength(child)</a>
+<span class="sourceLineNo">503</span><a id="line.503">                                               +getEdgeLength(middle)</a>
+<span class="sourceLineNo">504</span><a id="line.504">                                               ));</a>
+<span class="sourceLineNo">505</span><a id="line.505"></a>
+<span class="sourceLineNo">506</span><a id="line.506">    parent.children.remove(x);</a>
+<span class="sourceLineNo">507</span><a id="line.507">    parent.children.put(x,middle);</a>
+<span class="sourceLineNo">508</span><a id="line.508"></a>
+<span class="sourceLineNo">509</span><a id="line.509">    middle.children.put(y,child);</a>
+<span class="sourceLineNo">510</span><a id="line.510">    child.parent=middle;</a>
+<span class="sourceLineNo">511</span><a id="line.511">    //System.out.println("rule 3: "+sequences.charAt(splittingPos)+" between "+getLabel(parent)+" and "+getLabel(child) + " Addition made:"+(number==getAllNodes(root, null,false).size()-1));</a>
+<span class="sourceLineNo">512</span><a id="line.512">    doRule2(middle,splittingPos,suffixStart);</a>
+<span class="sourceLineNo">513</span><a id="line.513">    return middle;</a>
+<span class="sourceLineNo">514</span><a id="line.514">  }</a>
+<span class="sourceLineNo">515</span><a id="line.515"></a>
+<span class="sourceLineNo">516</span><a id="line.516">  private void finishAddition(){</a>
+<span class="sourceLineNo">517</span><a id="line.517">    SuffixNode leaf;</a>
+<span class="sourceLineNo">518</span><a id="line.518">    ArrayList leaves = getAllNodes(root, null, true);</a>
+<span class="sourceLineNo">519</span><a id="line.519">    for (int i=0;i&lt;leaves.size();i++){</a>
+<span class="sourceLineNo">520</span><a id="line.520">      leaf = (SuffixNode)leaves.get(i);</a>
+<span class="sourceLineNo">521</span><a id="line.521">      if (leaf.labelEnd==TO_A_LEAF)</a>
+<span class="sourceLineNo">522</span><a id="line.522">        leaf.labelEnd=e;</a>
+<span class="sourceLineNo">523</span><a id="line.523">    }</a>
+<span class="sourceLineNo">524</span><a id="line.524"></a>
+<span class="sourceLineNo">525</span><a id="line.525">  }</a>
+<span class="sourceLineNo">526</span><a id="line.526">  /******************************************************************</a>
+<span class="sourceLineNo">527</span><a id="line.527">   * end Tree modification methods</a>
+<span class="sourceLineNo">528</span><a id="line.528">   ******************************************************************/</a>
+<span class="sourceLineNo">529</span><a id="line.529"></a>
+<span class="sourceLineNo">530</span><a id="line.530">  public static abstract class SuffixNode {</a>
+<span class="sourceLineNo">531</span><a id="line.531"></a>
+<span class="sourceLineNo">532</span><a id="line.532">    static final int A_LEAF=-1;</a>
+<span class="sourceLineNo">533</span><a id="line.533">    SuffixNode parent;</a>
+<span class="sourceLineNo">534</span><a id="line.534">    SuffixNode suffixLink;</a>
+<span class="sourceLineNo">535</span><a id="line.535">    int labelStart, labelEnd;</a>
+<span class="sourceLineNo">536</span><a id="line.536">    HashMap children;</a>
+<span class="sourceLineNo">537</span><a id="line.537">    int[] additionalLabels;</a>
+<span class="sourceLineNo">538</span><a id="line.538"></a>
+<span class="sourceLineNo">539</span><a id="line.539">    /**</a>
+<span class="sourceLineNo">540</span><a id="line.540">       * Determine is this node is terminal (has no children).</a>
+<span class="sourceLineNo">541</span><a id="line.541">       *&lt;p&gt;</a>
+<span class="sourceLineNo">542</span><a id="line.542">       * Note that this only happens at the terminated node (if the sequences</a>
+<span class="sourceLineNo">543</span><a id="line.543">       * have been terminated.</a>
+<span class="sourceLineNo">544</span><a id="line.544">       *</a>
+<span class="sourceLineNo">545</span><a id="line.545">       * @return &lt;code&gt;true&lt;/code&gt; if and only if this node has no children.</a>
+<span class="sourceLineNo">546</span><a id="line.546">       */</a>
+<span class="sourceLineNo">547</span><a id="line.547"></a>
+<span class="sourceLineNo">548</span><a id="line.548">    abstract public boolean isTerminal();</a>
+<span class="sourceLineNo">549</span><a id="line.549"></a>
+<span class="sourceLineNo">550</span><a id="line.550">    /**</a>
+<span class="sourceLineNo">551</span><a id="line.551">     * Determine if this node has a child corresponding to a given character</a>
+<span class="sourceLineNo">552</span><a id="line.552">     *</a>
+<span class="sourceLineNo">553</span><a id="line.553">     * @param i the first &lt;code&gt;Character&lt;/code&gt; of the edge coming down this node.</a>
+<span class="sourceLineNo">554</span><a id="line.554">     * @return &lt;code&gt;true&lt;/code&gt; if the node has a child going down from that character,</a>
+<span class="sourceLineNo">555</span><a id="line.555">     * false otherwise</a>
+<span class="sourceLineNo">556</span><a id="line.556">     */</a>
+<span class="sourceLineNo">557</span><a id="line.557">    abstract public boolean hasChild(Character i);</a>
+<span class="sourceLineNo">558</span><a id="line.558"></a>
+<span class="sourceLineNo">559</span><a id="line.559">    /** Gets the child of of a node that is coming down from that particular</a>
+<span class="sourceLineNo">560</span><a id="line.560">     * node. It returns null if no child exists or if no child exists starting</a>
+<span class="sourceLineNo">561</span><a id="line.561">     * on that particular character.</a>
+<span class="sourceLineNo">562</span><a id="line.562">     *</a>
+<span class="sourceLineNo">563</span><a id="line.563">     * @param i the first &lt;code&gt;Character&lt;/code&gt; of the edge coming down this node</a>
+<span class="sourceLineNo">564</span><a id="line.564">     * @return the appropriate child &lt;code&gt;SuffixNode&lt;/code&gt;, or null if it</a>
+<span class="sourceLineNo">565</span><a id="line.565">     * doesn't exists.</a>
+<span class="sourceLineNo">566</span><a id="line.566">     */</a>
+<span class="sourceLineNo">567</span><a id="line.567">    abstract SuffixNode getChild(Character i);</a>
+<span class="sourceLineNo">568</span><a id="line.568">    //abstract void addChild(SuffixTree tree, int i, SuffixNode n);</a>
+<span class="sourceLineNo">569</span><a id="line.569"></a>
+<span class="sourceLineNo">570</span><a id="line.570">    /**</a>
+<span class="sourceLineNo">571</span><a id="line.571">     * Returns the parent of this node, null if it's the root.</a>
+<span class="sourceLineNo">572</span><a id="line.572">     *</a>
+<span class="sourceLineNo">573</span><a id="line.573">     * @return the parent of this node, null if it's the root.</a>
+<span class="sourceLineNo">574</span><a id="line.574">     */</a>
+<span class="sourceLineNo">575</span><a id="line.575">    abstract SuffixNode getParent();</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577">  }</a>
+<span class="sourceLineNo">578</span><a id="line.578"></a>
+<span class="sourceLineNo">579</span><a id="line.579"></a>
+<span class="sourceLineNo">580</span><a id="line.580">  class SimpleNode extends SuffixNode{</a>
+<span class="sourceLineNo">581</span><a id="line.581"></a>
+<span class="sourceLineNo">582</span><a id="line.582">    //static final int A_LEAF=-1;</a>
+<span class="sourceLineNo">583</span><a id="line.583">    //SuffixNode parent;</a>
+<span class="sourceLineNo">584</span><a id="line.584">    //SuffixNode suffixLink;</a>
+<span class="sourceLineNo">585</span><a id="line.585">    //int labelStart, labelEnd;</a>
+<span class="sourceLineNo">586</span><a id="line.586">    //HashMap children;</a>
+<span class="sourceLineNo">587</span><a id="line.587">    //int[] additionalLabels;</a>
+<span class="sourceLineNo">588</span><a id="line.588"></a>
+<span class="sourceLineNo">589</span><a id="line.589">    /** Creates a root</a>
+<span class="sourceLineNo">590</span><a id="line.590">     */</a>
+<span class="sourceLineNo">591</span><a id="line.591">    public SimpleNode(){</a>
+<span class="sourceLineNo">592</span><a id="line.592">      parent=null;</a>
+<span class="sourceLineNo">593</span><a id="line.593">      suffixLink=null;</a>
+<span class="sourceLineNo">594</span><a id="line.594">      labelStart=0;</a>
+<span class="sourceLineNo">595</span><a id="line.595">      labelEnd=0;</a>
+<span class="sourceLineNo">596</span><a id="line.596">      children=new HashMap();</a>
+<span class="sourceLineNo">597</span><a id="line.597">      additionalLabels=null;</a>
+<span class="sourceLineNo">598</span><a id="line.598">    }</a>
+<span class="sourceLineNo">599</span><a id="line.599"></a>
+<span class="sourceLineNo">600</span><a id="line.600">    /** creates a leaf</a>
+<span class="sourceLineNo">601</span><a id="line.601">     * @param parent the parent node</a>
+<span class="sourceLineNo">602</span><a id="line.602">     * @param position the starting value of the suffix</a>
+<span class="sourceLineNo">603</span><a id="line.603">     */</a>
+<span class="sourceLineNo">604</span><a id="line.604">    public SimpleNode(SuffixNode parent, int position){</a>
+<span class="sourceLineNo">605</span><a id="line.605">      this();</a>
+<span class="sourceLineNo">606</span><a id="line.606">      this.parent=parent;</a>
+<span class="sourceLineNo">607</span><a id="line.607">      labelStart=position;</a>
+<span class="sourceLineNo">608</span><a id="line.608">      labelEnd = A_LEAF;</a>
+<span class="sourceLineNo">609</span><a id="line.609">      children=null;</a>
+<span class="sourceLineNo">610</span><a id="line.610">      //checkParent(this);</a>
+<span class="sourceLineNo">611</span><a id="line.611">    }</a>
+<span class="sourceLineNo">612</span><a id="line.612"></a>
+<span class="sourceLineNo">613</span><a id="line.613">    /** creates an internal node</a>
+<span class="sourceLineNo">614</span><a id="line.614">     * @param parent the parent of this node</a>
+<span class="sourceLineNo">615</span><a id="line.615">     * @param labelStart the starting point of the path label</a>
+<span class="sourceLineNo">616</span><a id="line.616">     * @param labelStop the ending point of the path label</a>
+<span class="sourceLineNo">617</span><a id="line.617">     */</a>
+<span class="sourceLineNo">618</span><a id="line.618">    public SimpleNode(SuffixNode parent, int labelStart, int labelStop){</a>
+<span class="sourceLineNo">619</span><a id="line.619">      this();</a>
+<span class="sourceLineNo">620</span><a id="line.620">      this.parent=parent;</a>
+<span class="sourceLineNo">621</span><a id="line.621">      this.labelStart=labelStart;</a>
+<span class="sourceLineNo">622</span><a id="line.622">      this.labelEnd=labelStop;</a>
+<span class="sourceLineNo">623</span><a id="line.623">      //checkParent(this);</a>
+<span class="sourceLineNo">624</span><a id="line.624">    }</a>
+<span class="sourceLineNo">625</span><a id="line.625"></a>
+<span class="sourceLineNo">626</span><a id="line.626"></a>
+<span class="sourceLineNo">627</span><a id="line.627">    public boolean isTerminal(){return children==null;}</a>
+<span class="sourceLineNo">628</span><a id="line.628">    public boolean hasChild(Character x){return getChild(x)!=null;}</a>
+<span class="sourceLineNo">629</span><a id="line.629">    public SuffixNode getChild(Character x){</a>
+<span class="sourceLineNo">630</span><a id="line.630">      return (children==null)?null:(SuffixNode)children.get(x);</a>
+<span class="sourceLineNo">631</span><a id="line.631">    }</a>
+<span class="sourceLineNo">632</span><a id="line.632">    public SuffixNode getParent(){return parent;}</a>
+<span class="sourceLineNo">633</span><a id="line.633">  }</a>
+<span class="sourceLineNo">634</span><a id="line.634"></a>
+<span class="sourceLineNo">635</span><a id="line.635">  public boolean subStringExists(String str)</a>
+<span class="sourceLineNo">636</span><a id="line.636">  {</a>
+<span class="sourceLineNo">637</span><a id="line.637">    walkTo(root, str, 0, str.length());</a>
+<span class="sourceLineNo">638</span><a id="line.638">    return (rule==1||rule==4||rule==5);</a>
+<span class="sourceLineNo">639</span><a id="line.639">  }</a>
+<span class="sourceLineNo">640</span><a id="line.640"></a>
+<span class="sourceLineNo">641</span><a id="line.641">  /**</a>
+<span class="sourceLineNo">642</span><a id="line.642">   * Stupid little wrapper to put a termination symbol at the end. A sublist</a>
+<span class="sourceLineNo">643</span><a id="line.643">   * that doesn't include the termination symbol will have the same alphabet as</a>
+<span class="sourceLineNo">644</span><a id="line.644">   * the original, one that does will have an alphabet that includes the</a>
+<span class="sourceLineNo">645</span><a id="line.645">   * termination symbol.</a>
+<span class="sourceLineNo">646</span><a id="line.646">   *</a>
+<span class="sourceLineNo">647</span><a id="line.647">   * Now includes some ugly hacks by Thomas Down to make ambiguities work</a>
+<span class="sourceLineNo">648</span><a id="line.648">   * nicer.</a>
+<span class="sourceLineNo">649</span><a id="line.649">   *</a>
+<span class="sourceLineNo">650</span><a id="line.650">   */</a>
+<span class="sourceLineNo">651</span><a id="line.651">  private class TerminatedSymbolList implements SymbolList</a>
+<span class="sourceLineNo">652</span><a id="line.652">  {</a>
+<span class="sourceLineNo">653</span><a id="line.653">    private SymbolList unterminated;</a>
+<span class="sourceLineNo">654</span><a id="line.654">    final Symbol TERMINATION_SYMBOL;</a>
+<span class="sourceLineNo">655</span><a id="line.655">    private AbstractAlphabet alpha;</a>
+<span class="sourceLineNo">656</span><a id="line.656">    private Map translationTable = new HashMap();</a>
+<span class="sourceLineNo">657</span><a id="line.657"></a>
+<span class="sourceLineNo">658</span><a id="line.658">    public TerminatedSymbolList(SymbolList unterminated)</a>
+<span class="sourceLineNo">659</span><a id="line.659">    {</a>
+<span class="sourceLineNo">660</span><a id="line.660">      this.unterminated=unterminated;</a>
+<span class="sourceLineNo">661</span><a id="line.661">      TERMINATION_SYMBOL = AlphabetManager.createSymbol("Termination");</a>
+<span class="sourceLineNo">662</span><a id="line.662">      FiniteAlphabet oldAlphabet = (FiniteAlphabet)unterminated.getAlphabet();</a>
+<span class="sourceLineNo">663</span><a id="line.663">      // Set set = AlphabetManager.getAllSymbols(oldAlphabet);</a>
+<span class="sourceLineNo">664</span><a id="line.664">      Set set = new HashSet();</a>
+<span class="sourceLineNo">665</span><a id="line.665">      for (Iterator i = oldAlphabet.iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">666</span><a id="line.666">          set.add(i.next());</a>
+<span class="sourceLineNo">667</span><a id="line.667">      }</a>
+<span class="sourceLineNo">668</span><a id="line.668">      set.add(TERMINATION_SYMBOL);</a>
+<span class="sourceLineNo">669</span><a id="line.669">      alpha = new SimpleAlphabet(set);</a>
+<span class="sourceLineNo">670</span><a id="line.670">      CharacterTokenization tokenizer =new CharacterTokenization(alpha, true);</a>
+<span class="sourceLineNo">671</span><a id="line.671">      tokenizer.bindSymbol(TERMINATION_SYMBOL, DEFAULT_TERM_CHAR);</a>
+<span class="sourceLineNo">672</span><a id="line.672">      SymbolTokenization sToke;</a>
+<span class="sourceLineNo">673</span><a id="line.673">      try{</a>
+<span class="sourceLineNo">674</span><a id="line.674">        sToke = oldAlphabet.getTokenization("token");</a>
+<span class="sourceLineNo">675</span><a id="line.675">      }</a>
+<span class="sourceLineNo">676</span><a id="line.676">      catch (BioException be){</a>
+<span class="sourceLineNo">677</span><a id="line.677">          throw new BioError("Internal error: failed to get SymbolTokenization for SymbolList alphabet", be);</a>
+<span class="sourceLineNo">678</span><a id="line.678">      }</a>
+<span class="sourceLineNo">679</span><a id="line.679">      if (sToke.getTokenType() != SymbolTokenization.CHARACTER)</a>
+<span class="sourceLineNo">680</span><a id="line.680">        throw new IllegalArgumentException("Only FiniteAlphabets using a char token are supported by UkkonenSuffixTree");</a>
+<span class="sourceLineNo">681</span><a id="line.681">      try{</a>
+<span class="sourceLineNo">682</span><a id="line.682">        for (Iterator i= AlphabetManager.getAllSymbols(oldAlphabet).iterator();i.hasNext();){</a>
+<span class="sourceLineNo">683</span><a id="line.683">          Symbol oldSymbol = (Symbol) i.next();</a>
+<span class="sourceLineNo">684</span><a id="line.684">          Symbol newSymbol;</a>
+<span class="sourceLineNo">685</span><a id="line.685">          if (oldSymbol instanceof AtomicSymbol) {</a>
+<span class="sourceLineNo">686</span><a id="line.686">              // The atomic symbols are identical between the two alphabets</a>
+<span class="sourceLineNo">687</span><a id="line.687">              newSymbol = oldSymbol;</a>
+<span class="sourceLineNo">688</span><a id="line.688">          } else {</a>
+<span class="sourceLineNo">689</span><a id="line.689">              // Port ambiguous symbols across</a>
+<span class="sourceLineNo">690</span><a id="line.690">              Set s = new HashSet();</a>
+<span class="sourceLineNo">691</span><a id="line.691">              for (Iterator si = ((FiniteAlphabet) oldSymbol.getMatches()).iterator(); si.hasNext(); ) {</a>
+<span class="sourceLineNo">692</span><a id="line.692">                  s.add(si.next());</a>
+<span class="sourceLineNo">693</span><a id="line.693">              }</a>
+<span class="sourceLineNo">694</span><a id="line.694">              newSymbol = alpha.getAmbiguity(s);</a>
+<span class="sourceLineNo">695</span><a id="line.695">          }</a>
+<span class="sourceLineNo">696</span><a id="line.696">          //takes first char of String, should work because we checked</a>
+<span class="sourceLineNo">697</span><a id="line.697">          //getTokenType above</a>
+<span class="sourceLineNo">698</span><a id="line.698"></a>
+<span class="sourceLineNo">699</span><a id="line.699">          char c = sToke.tokenizeSymbol(oldSymbol).charAt(0);</a>
+<span class="sourceLineNo">700</span><a id="line.700">          // System.err.println("Binding " + c);</a>
+<span class="sourceLineNo">701</span><a id="line.701">          tokenizer.bindSymbol(newSymbol, c);</a>
+<span class="sourceLineNo">702</span><a id="line.702">          translationTable.put(oldSymbol, newSymbol);</a>
+<span class="sourceLineNo">703</span><a id="line.703">        }</a>
+<span class="sourceLineNo">704</span><a id="line.704">        //This is really hacky, ambiguous symbols containing</a>
+<span class="sourceLineNo">705</span><a id="line.705">        //TERMINATION_SYMBOL are impossible at this point, so I just define</a>
+<span class="sourceLineNo">706</span><a id="line.706">        //the Tokenization to treat them as TERMINATION_SYMBOL so that the</a>
+<span class="sourceLineNo">707</span><a id="line.707">        //code that likes to loop through doesn't go titty up.</a>
+<span class="sourceLineNo">708</span><a id="line.708">        for (Iterator i= AlphabetManager.getAllSymbols(alpha).iterator();i.hasNext();){</a>
+<span class="sourceLineNo">709</span><a id="line.709">          Symbol s = (Symbol) i.next();</a>
+<span class="sourceLineNo">710</span><a id="line.710">          Alphabet mathes = s.getMatches();</a>
+<span class="sourceLineNo">711</span><a id="line.711">          if (mathes.contains(TERMINATION_SYMBOL))</a>
+<span class="sourceLineNo">712</span><a id="line.712">              tokenizer.bindSymbol(s,DEFAULT_TERM_CHAR);</a>
+<span class="sourceLineNo">713</span><a id="line.713">        }</a>
+<span class="sourceLineNo">714</span><a id="line.714"></a>
+<span class="sourceLineNo">715</span><a id="line.715">      }catch(IllegalSymbolException ise){</a>
+<span class="sourceLineNo">716</span><a id="line.716">        throw new AssertionFailure("Assertion Failure: This alphabet has been custom made so this doesn't happen",ise);</a>
+<span class="sourceLineNo">717</span><a id="line.717">      }</a>
+<span class="sourceLineNo">718</span><a id="line.718"></a>
+<span class="sourceLineNo">719</span><a id="line.719">      alpha.putTokenization("token", tokenizer);</a>
+<span class="sourceLineNo">720</span><a id="line.720">    }</a>
+<span class="sourceLineNo">721</span><a id="line.721"></a>
+<span class="sourceLineNo">722</span><a id="line.722"></a>
+<span class="sourceLineNo">723</span><a id="line.723">      // Implementation of org.biojava.utils.Changeable</a>
+<span class="sourceLineNo">724</span><a id="line.724"></a>
+<span class="sourceLineNo">725</span><a id="line.725">    public void addChangeListener(ChangeListener changeListener, ChangeType changeType) {</a>
+<span class="sourceLineNo">726</span><a id="line.726">      unterminated.addChangeListener(changeListener,changeType);</a>
+<span class="sourceLineNo">727</span><a id="line.727">    }</a>
+<span class="sourceLineNo">728</span><a id="line.728"></a>
+<span class="sourceLineNo">729</span><a id="line.729">    public void addChangeListener(ChangeListener changeListener) {</a>
+<span class="sourceLineNo">730</span><a id="line.730">      unterminated.addChangeListener(changeListener);</a>
+<span class="sourceLineNo">731</span><a id="line.731">    }</a>
+<span class="sourceLineNo">732</span><a id="line.732"></a>
+<span class="sourceLineNo">733</span><a id="line.733">    public void removeChangeListener(ChangeListener changeListener, ChangeType changeType) {</a>
+<span class="sourceLineNo">734</span><a id="line.734">      unterminated.removeChangeListener(changeListener,changeType);</a>
+<span class="sourceLineNo">735</span><a id="line.735">    }</a>
+<span class="sourceLineNo">736</span><a id="line.736"></a>
+<span class="sourceLineNo">737</span><a id="line.737">    public void removeChangeListener(ChangeListener changeListener) {</a>
+<span class="sourceLineNo">738</span><a id="line.738">      unterminated.removeChangeListener(changeListener);</a>
+<span class="sourceLineNo">739</span><a id="line.739">    }</a>
+<span class="sourceLineNo">740</span><a id="line.740"></a>
+<span class="sourceLineNo">741</span><a id="line.741">    public boolean isUnchanging(ChangeType changeType) {</a>
+<span class="sourceLineNo">742</span><a id="line.742">      return unterminated.isUnchanging(changeType);</a>
+<span class="sourceLineNo">743</span><a id="line.743">    }</a>
+<span class="sourceLineNo">744</span><a id="line.744"></a>
+<span class="sourceLineNo">745</span><a id="line.745">    // Implementation of org.biojava.bio.symbol.SymbolList</a>
+<span class="sourceLineNo">746</span><a id="line.746"></a>
+<span class="sourceLineNo">747</span><a id="line.747">    public int length() {</a>
+<span class="sourceLineNo">748</span><a id="line.748">      return unterminated.length()+1;</a>
+<span class="sourceLineNo">749</span><a id="line.749">    }</a>
+<span class="sourceLineNo">750</span><a id="line.750"></a>
+<span class="sourceLineNo">751</span><a id="line.751">    public Iterator iterator() {</a>
+<span class="sourceLineNo">752</span><a id="line.752">      return unterminated.iterator();</a>
+<span class="sourceLineNo">753</span><a id="line.753">    }</a>
+<span class="sourceLineNo">754</span><a id="line.754"></a>
+<span class="sourceLineNo">755</span><a id="line.755">    public SymbolList subList(int n, int n1) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">756</span><a id="line.756">      List list;</a>
+<span class="sourceLineNo">757</span><a id="line.757">      if (n1!=unterminated.length()+1)</a>
+<span class="sourceLineNo">758</span><a id="line.758">        return unterminated.subList(n,n1);</a>
+<span class="sourceLineNo">759</span><a id="line.759">      else{</a>
+<span class="sourceLineNo">760</span><a id="line.760">        list = unterminated.subList(n,n1-1).toList();</a>
+<span class="sourceLineNo">761</span><a id="line.761">        list.add(TERMINATION_SYMBOL);</a>
+<span class="sourceLineNo">762</span><a id="line.762">        try{</a>
+<span class="sourceLineNo">763</span><a id="line.763">          return new SimpleSymbolList(getAlphabet(),list);</a>
+<span class="sourceLineNo">764</span><a id="line.764">        }</a>
+<span class="sourceLineNo">765</span><a id="line.765">        catch(IllegalSymbolException e){</a>
+<span class="sourceLineNo">766</span><a id="line.766">          throw new AssertionFailure("Assertion Failure: This alphabet was created just so it doesn't do this",e);</a>
+<span class="sourceLineNo">767</span><a id="line.767">        }</a>
+<span class="sourceLineNo">768</span><a id="line.768">      }</a>
+<span class="sourceLineNo">769</span><a id="line.769">    }</a>
+<span class="sourceLineNo">770</span><a id="line.770"></a>
+<span class="sourceLineNo">771</span><a id="line.771">    public Alphabet getAlphabet() {</a>
+<span class="sourceLineNo">772</span><a id="line.772">      return alpha;</a>
+<span class="sourceLineNo">773</span><a id="line.773">    }</a>
+<span class="sourceLineNo">774</span><a id="line.774"></a>
+<span class="sourceLineNo">775</span><a id="line.775">    public Symbol symbolAt(int n) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">776</span><a id="line.776">      if (n!=length())</a>
+<span class="sourceLineNo">777</span><a id="line.777">        return (Symbol) translationTable.get(unterminated.symbolAt(n));</a>
+<span class="sourceLineNo">778</span><a id="line.778">      else</a>
+<span class="sourceLineNo">779</span><a id="line.779">        return TERMINATION_SYMBOL;</a>
+<span class="sourceLineNo">780</span><a id="line.780">    }</a>
+<span class="sourceLineNo">781</span><a id="line.781"></a>
+<span class="sourceLineNo">782</span><a id="line.782">    public List toList() {</a>
+<span class="sourceLineNo">783</span><a id="line.783">      List answer = unterminated.toList();</a>
+<span class="sourceLineNo">784</span><a id="line.784">      answer.add(TERMINATION_SYMBOL);</a>
+<span class="sourceLineNo">785</span><a id="line.785">      return answer;</a>
+<span class="sourceLineNo">786</span><a id="line.786">    }</a>
+<span class="sourceLineNo">787</span><a id="line.787"></a>
+<span class="sourceLineNo">788</span><a id="line.788">    public String seqString() {</a>
+<span class="sourceLineNo">789</span><a id="line.789">      try{</a>
+<span class="sourceLineNo">790</span><a id="line.790">        SymbolTokenization toke = getAlphabet().getTokenization("token");</a>
+<span class="sourceLineNo">791</span><a id="line.791">        return unterminated.seqString()+toke.tokenizeSymbol(TERMINATION_SYMBOL);</a>
+<span class="sourceLineNo">792</span><a id="line.792">      } catch (BioException ex) {</a>
+<span class="sourceLineNo">793</span><a id="line.793">        throw new BioRuntimeException("Couldn't tokenize sequence", ex);</a>
+<span class="sourceLineNo">794</span><a id="line.794">      }</a>
+<span class="sourceLineNo">795</span><a id="line.795">    }</a>
+<span class="sourceLineNo">796</span><a id="line.796"></a>
+<span class="sourceLineNo">797</span><a id="line.797">      public String subStr(int n, int n1) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">798</span><a id="line.798">      return subList(n, n1).seqString();</a>
+<span class="sourceLineNo">799</span><a id="line.799">    }</a>
+<span class="sourceLineNo">800</span><a id="line.800"></a>
+<span class="sourceLineNo">801</span><a id="line.801">    /**</a>
+<span class="sourceLineNo">802</span><a id="line.802">     * Describe &lt;code&gt;edit&lt;/code&gt; method here.</a>
+<span class="sourceLineNo">803</span><a id="line.803">     *</a>
+<span class="sourceLineNo">804</span><a id="line.804">     * @param edit an &lt;code&gt;Edit&lt;/code&gt; value</a>
+<span class="sourceLineNo">805</span><a id="line.805">     * @exception IndexOutOfBoundsException if an error occurs</a>
+<span class="sourceLineNo">806</span><a id="line.806">     * @exception IllegalAlphabetException if an error occurs</a>
+<span class="sourceLineNo">807</span><a id="line.807">     * @exception ChangeVetoException if an error occurs</a>
+<span class="sourceLineNo">808</span><a id="line.808">     */</a>
+<span class="sourceLineNo">809</span><a id="line.809">    public void edit(Edit edit) throws IndexOutOfBoundsException, IllegalAlphabetException, ChangeVetoException {</a>
+<span class="sourceLineNo">810</span><a id="line.810">      throw new ChangeVetoException("TerminatedSymbolList is immutable");</a>
+<span class="sourceLineNo">811</span><a id="line.811">    }</a>
+<span class="sourceLineNo">812</span><a id="line.812">  }</a>
+<span class="sourceLineNo">813</span><a id="line.813">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

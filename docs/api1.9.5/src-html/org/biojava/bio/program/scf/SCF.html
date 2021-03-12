@@ -1,0 +1,846 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.program.scf;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.ByteArrayInputStream;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.DataInputStream;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.File;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.FileInputStream;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.io.IOException;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.InputStream;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.ArrayList;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.Iterator;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.List;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.Map;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.Properties;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.TreeMap;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.chromatogram.AbstractChromatogram;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.chromatogram.Chromatogram;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.bio.chromatogram.UnsupportedChromatogramFormatException;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.symbol.IntegerAlphabet;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.bio.symbol.SymbolListViews;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.utils.SmallMap;</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">/**</a>
+<span class="sourceLineNo">055</span><a id="line.55"> * A {@link org.biojava.bio.chromatogram.Chromatogram} as loaded from an</a>
+<span class="sourceLineNo">056</span><a id="line.56"> * SCF v2 or v3 file.  Also loads and exposes the SCF format's "private data"</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * and "comments" sections.  The quality values from the SCF are stored as</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * additional sequences on the base call alignment. The labels are the</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * &lt;code&gt;PROB_&lt;/code&gt;* constants in this class.</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * The values are {@link org.biojava.bio.symbol.IntegerAlphabet.IntegerSymbol}</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * objects in the range 0 to 255.</a>
+<span class="sourceLineNo">062</span><a id="line.62"> *</a>
+<span class="sourceLineNo">063</span><a id="line.63"> *</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * @author Rhett Sutphin (&lt;a href="http://genome.uiowa.edu/"&gt;UI CBCB&lt;/a&gt;)</a>
+<span class="sourceLineNo">065</span><a id="line.65"> */</a>
+<span class="sourceLineNo">066</span><a id="line.66">public class SCF extends AbstractChromatogram {</a>
+<span class="sourceLineNo">067</span><a id="line.67">    private byte[] privateData;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    private Properties comments;</a>
+<span class="sourceLineNo">069</span><a id="line.69">    </a>
+<span class="sourceLineNo">070</span><a id="line.70">    private static final IntegerAlphabet.SubIntegerAlphabet</a>
+<span class="sourceLineNo">071</span><a id="line.71">            PROBABILITY_ALPHABET =</a>
+<span class="sourceLineNo">072</span><a id="line.72">            IntegerAlphabet.getSubAlphabet(0, 255);</a>
+<span class="sourceLineNo">073</span><a id="line.73">    </a>
+<span class="sourceLineNo">074</span><a id="line.74">    /** Represents the maximum unsigned value</a>
+<span class="sourceLineNo">075</span><a id="line.75">     * of a byte for wrapping purposes */</a>
+<span class="sourceLineNo">076</span><a id="line.76">    public static final int BYTE_MAX_VALUE =</a>
+<span class="sourceLineNo">077</span><a id="line.77">            256;</a>
+<span class="sourceLineNo">078</span><a id="line.78">    </a>
+<span class="sourceLineNo">079</span><a id="line.79">    /** Represents the maximum unsigned value</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * of a short for wrapping purposes */</a>
+<span class="sourceLineNo">081</span><a id="line.81">    public static final int SHORT_MAX_VALUE =</a>
+<span class="sourceLineNo">082</span><a id="line.82">            65536;</a>
+<span class="sourceLineNo">083</span><a id="line.83">    </a>
+<span class="sourceLineNo">084</span><a id="line.84">    /** Base call alignment sequence label for the probability that call</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * should be A. */</a>
+<span class="sourceLineNo">086</span><a id="line.86">    public static final String PROB_NUC_A = "quality-a";</a>
+<span class="sourceLineNo">087</span><a id="line.87">    /** Base call alignment sequence label for the probability that call</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * should be C. */</a>
+<span class="sourceLineNo">089</span><a id="line.89">    public static final String PROB_NUC_C = "quality-c";</a>
+<span class="sourceLineNo">090</span><a id="line.90">    /** Base call alignment sequence label for the probability that call</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * should be G. */</a>
+<span class="sourceLineNo">092</span><a id="line.92">    public static final String PROB_NUC_G = "quality-g";</a>
+<span class="sourceLineNo">093</span><a id="line.93">    /** Base call alignment sequence label for the probability that call</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * should be T. */</a>
+<span class="sourceLineNo">095</span><a id="line.95">    public static final String PROB_NUC_T = "quality-t";</a>
+<span class="sourceLineNo">096</span><a id="line.96">    /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * Base call alignment sequence label for the substitution</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * probability. In versions of the SCF spec before 3.10, this is called</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * spareQual[0].</a>
+<span class="sourceLineNo">100</span><a id="line.100">     */</a>
+<span class="sourceLineNo">101</span><a id="line.101">    public static final Object PROB_SUBSTITUTION =</a>
+<span class="sourceLineNo">102</span><a id="line.102">            "substitution-probability";</a>
+<span class="sourceLineNo">103</span><a id="line.103">    /**</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * Base call alignment sequence label for the overcall probability.</a>
+<span class="sourceLineNo">105</span><a id="line.105">     * In versions of the SCF spec before 3.10, this is called</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * spareQual[1].</a>
+<span class="sourceLineNo">107</span><a id="line.107">     */</a>
+<span class="sourceLineNo">108</span><a id="line.108">    public static final Object PROB_OVERCALL     = "overcall-probability";</a>
+<span class="sourceLineNo">109</span><a id="line.109">    /**</a>
+<span class="sourceLineNo">110</span><a id="line.110">     * Base call alignment sequence label for the undercall probability.</a>
+<span class="sourceLineNo">111</span><a id="line.111">     * In versions of the SCF spec before 3.10, this is called</a>
+<span class="sourceLineNo">112</span><a id="line.112">     * spareQual[2].</a>
+<span class="sourceLineNo">113</span><a id="line.113">     */</a>
+<span class="sourceLineNo">114</span><a id="line.114">    public static final Object PROB_UNDERCALL    =</a>
+<span class="sourceLineNo">115</span><a id="line.115">            "undercall-probability";</a>
+<span class="sourceLineNo">116</span><a id="line.116">    </a>
+<span class="sourceLineNo">117</span><a id="line.117">    /** Creates a new, completely empty SCF. */</a>
+<span class="sourceLineNo">118</span><a id="line.118">    protected SCF() {</a>
+<span class="sourceLineNo">119</span><a id="line.119">        super();</a>
+<span class="sourceLineNo">120</span><a id="line.120">        comments = new Properties();</a>
+<span class="sourceLineNo">121</span><a id="line.121">    }</a>
+<span class="sourceLineNo">122</span><a id="line.122">    </a>
+<span class="sourceLineNo">123</span><a id="line.123">    public static SCF create(File f)</a>
+<span class="sourceLineNo">124</span><a id="line.124">    throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">125</span><a id="line.125">        SCF out = new SCF();</a>
+<span class="sourceLineNo">126</span><a id="line.126">        out.load(f);</a>
+<span class="sourceLineNo">127</span><a id="line.127">        return out;</a>
+<span class="sourceLineNo">128</span><a id="line.128">    }</a>
+<span class="sourceLineNo">129</span><a id="line.129">    </a>
+<span class="sourceLineNo">130</span><a id="line.130">    public static SCF create(InputStream in, long alreadyRead)</a>
+<span class="sourceLineNo">131</span><a id="line.131">    throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">132</span><a id="line.132">        SCF out = new SCF();</a>
+<span class="sourceLineNo">133</span><a id="line.133">        out.load(in, alreadyRead);</a>
+<span class="sourceLineNo">134</span><a id="line.134">        return out;</a>
+<span class="sourceLineNo">135</span><a id="line.135">    }</a>
+<span class="sourceLineNo">136</span><a id="line.136">    </a>
+<span class="sourceLineNo">137</span><a id="line.137">    protected void load(File f) throws IOException,</a>
+<span class="sourceLineNo">138</span><a id="line.138">            UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">139</span><a id="line.139">        FileInputStream fin = new FileInputStream(f);</a>
+<span class="sourceLineNo">140</span><a id="line.140">        try {</a>
+<span class="sourceLineNo">141</span><a id="line.141">                load(fin, 0);</a>
+<span class="sourceLineNo">142</span><a id="line.142">        } finally {</a>
+<span class="sourceLineNo">143</span><a id="line.143">                fin.close();</a>
+<span class="sourceLineNo">144</span><a id="line.144">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145">    }</a>
+<span class="sourceLineNo">146</span><a id="line.146">    </a>
+<span class="sourceLineNo">147</span><a id="line.147">    protected void load(InputStream in, long initOffset)</a>
+<span class="sourceLineNo">148</span><a id="line.148">    throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">149</span><a id="line.149">        SCF.ParserFactory.parse(in, this, initOffset);</a>
+<span class="sourceLineNo">150</span><a id="line.150">    }</a>
+<span class="sourceLineNo">151</span><a id="line.151">    </a>
+<span class="sourceLineNo">152</span><a id="line.152">    /**</a>
+<span class="sourceLineNo">153</span><a id="line.153">     * Returns the comments fields as a {@link Properties} mapping.</a>
+<span class="sourceLineNo">154</span><a id="line.154">     */</a>
+<span class="sourceLineNo">155</span><a id="line.155">    public Properties getComments() { return comments; }</a>
+<span class="sourceLineNo">156</span><a id="line.156">    </a>
+<span class="sourceLineNo">157</span><a id="line.157">    protected AbstractChromatogram reverseComplementInstance() { return</a>
+<span class="sourceLineNo">158</span><a id="line.158">            new SCF(); }</a>
+<span class="sourceLineNo">159</span><a id="line.159">    </a>
+<span class="sourceLineNo">160</span><a id="line.160">    public static IntegerAlphabet.SubIntegerAlphabet</a>
+<span class="sourceLineNo">161</span><a id="line.161">            getProbabilityAlphabet() { return PROBABILITY_ALPHABET; }</a>
+<span class="sourceLineNo">162</span><a id="line.162">    </a>
+<span class="sourceLineNo">163</span><a id="line.163">    /**</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * Overrides {@link</a>
+<span class="sourceLineNo">165</span><a id="line.165">     * AbstractChromatogram#reverseComplementBaseCallList} to</a>
+<span class="sourceLineNo">166</span><a id="line.166">     * support the 7 quality values from the SCF.  These are handled thus:</a>
+<span class="sourceLineNo">167</span><a id="line.167">     * &lt;ul&gt;</a>
+<span class="sourceLineNo">168</span><a id="line.168">     *   &lt;li&gt;&lt;code&gt;PROB_SUBSTITUTION&lt;/code&gt;, &lt;code&gt;PROB_OVERCALL&lt;/code&gt;, and</a>
+<span class="sourceLineNo">169</span><a id="line.169">     *       &lt;code&gt;PROB_UNDERCALL&lt;/code&gt; are just reversed &amp;returned.&lt;/li&gt;</a>
+<span class="sourceLineNo">170</span><a id="line.170">     *   &lt;li&gt;&lt;code&gt;PROB_NUC_&lt;/code&gt;* returns the reverse of the quality</a>
+<span class="sourceLineNo">171</span><a id="line.171">     *       sequence for the complement base.&lt;/li&gt;</a>
+<span class="sourceLineNo">172</span><a id="line.172">     * &lt;/ul&gt;</a>
+<span class="sourceLineNo">173</span><a id="line.173">     */</a>
+<span class="sourceLineNo">174</span><a id="line.174">    protected SymbolList reverseComplementBaseCallList(String label) {</a>
+<span class="sourceLineNo">175</span><a id="line.175">        if (label == PROB_SUBSTITUTION ||</a>
+<span class="sourceLineNo">176</span><a id="line.176">                label == PROB_OVERCALL ||</a>
+<span class="sourceLineNo">177</span><a id="line.177">                label == PROB_UNDERCALL) {</a>
+<span class="sourceLineNo">178</span><a id="line.178">            return</a>
+<span class="sourceLineNo">179</span><a id="line.179">                    SymbolListViews.reverse(this.getBaseCalls().symbolListForLabel(label));</a>
+<span class="sourceLineNo">180</span><a id="line.180">        } else if (label.equals( PROB_NUC_A)) {</a>
+<span class="sourceLineNo">181</span><a id="line.181">            return</a>
+<span class="sourceLineNo">182</span><a id="line.182">                    SymbolListViews.reverse(this.getBaseCalls().symbolListForLabel(PROB_NUC_T));</a>
+<span class="sourceLineNo">183</span><a id="line.183">        } else if (label.equals(PROB_NUC_C)) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">            return</a>
+<span class="sourceLineNo">185</span><a id="line.185">                    SymbolListViews.reverse(this.getBaseCalls().symbolListForLabel(PROB_NUC_G));</a>
+<span class="sourceLineNo">186</span><a id="line.186">        } else if (label.equals(PROB_NUC_G)) {</a>
+<span class="sourceLineNo">187</span><a id="line.187">            return</a>
+<span class="sourceLineNo">188</span><a id="line.188">                    SymbolListViews.reverse(this.getBaseCalls().symbolListForLabel(PROB_NUC_C));</a>
+<span class="sourceLineNo">189</span><a id="line.189">        } else if (label.equals( PROB_NUC_T)) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">            return</a>
+<span class="sourceLineNo">191</span><a id="line.191">                    SymbolListViews.reverse(this.getBaseCalls().symbolListForLabel(PROB_NUC_A));</a>
+<span class="sourceLineNo">192</span><a id="line.192">        } else {</a>
+<span class="sourceLineNo">193</span><a id="line.193">            return super.reverseComplementBaseCallList(label);</a>
+<span class="sourceLineNo">194</span><a id="line.194">        }</a>
+<span class="sourceLineNo">195</span><a id="line.195">    }</a>
+<span class="sourceLineNo">196</span><a id="line.196">    </a>
+<span class="sourceLineNo">197</span><a id="line.197">    /*** INNER CLASSES FOR PARSER ***/</a>
+<span class="sourceLineNo">198</span><a id="line.198">    </a>
+<span class="sourceLineNo">199</span><a id="line.199">    /** Factory class to create the appropriate parser for the given</a>
+<span class="sourceLineNo">200</span><a id="line.200">     * stream.  This decision is based on the version field in the file's header. */</a>
+<span class="sourceLineNo">201</span><a id="line.201">    private static class ParserFactory {</a>
+<span class="sourceLineNo">202</span><a id="line.202">        public static void parse(InputStream in, SCF out, long initOffset)</a>
+<span class="sourceLineNo">203</span><a id="line.203">        throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">204</span><a id="line.204">            DataInputStream din = new DataInputStream(in);</a>
+<span class="sourceLineNo">205</span><a id="line.205">            SCF.Parser parser = createParser(din, out, initOffset);</a>
+<span class="sourceLineNo">206</span><a id="line.206">            parser.parse();</a>
+<span class="sourceLineNo">207</span><a id="line.207">        }</a>
+<span class="sourceLineNo">208</span><a id="line.208">        </a>
+<span class="sourceLineNo">209</span><a id="line.209">        public static SCF.Parser createParser(DataInputStream din, SCF</a>
+<span class="sourceLineNo">210</span><a id="line.210">                out, long initOffset)</a>
+<span class="sourceLineNo">211</span><a id="line.211">                throws UnsupportedChromatogramFormatException, IOException {</a>
+<span class="sourceLineNo">212</span><a id="line.212">            // read the header to find out the version</a>
+<span class="sourceLineNo">213</span><a id="line.213">            long offset = initOffset;</a>
+<span class="sourceLineNo">214</span><a id="line.214">            SCF.Parser.HeaderStruct header =</a>
+<span class="sourceLineNo">215</span><a id="line.215">                    SCF.Parser.HeaderStruct.create(din, initOffset);</a>
+<span class="sourceLineNo">216</span><a id="line.216">            offset = SCF.Parser.HeaderStruct.HEADER_LENGTH;</a>
+<span class="sourceLineNo">217</span><a id="line.217">            out.setBits((int)header.sample_size * 8);</a>
+<span class="sourceLineNo">218</span><a id="line.218">            SCF.Parser parser;</a>
+<span class="sourceLineNo">219</span><a id="line.219">            float version;</a>
+<span class="sourceLineNo">220</span><a id="line.220">            try {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                version = Float.parseFloat(new String(header.version));</a>
+<span class="sourceLineNo">222</span><a id="line.222">            } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">223</span><a id="line.223">                throw new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">224</span><a id="line.224">                        "The SCF's version (" + new String(header.version) +</a>
+<span class="sourceLineNo">225</span><a id="line.225">                        ") is not a number");</a>
+<span class="sourceLineNo">226</span><a id="line.226">            }</a>
+<span class="sourceLineNo">227</span><a id="line.227">            if (version &lt; 3.0f &amp;&amp; version &gt;= 2.0f) {</a>
+<span class="sourceLineNo">228</span><a id="line.228">                parser = new SCF.V2Parser(din, out, header, offset);</a>
+<span class="sourceLineNo">229</span><a id="line.229">            } else if (version &gt;= 3.0f) {</a>
+<span class="sourceLineNo">230</span><a id="line.230">                parser = new SCF.V3Parser(din, out, header, offset);</a>
+<span class="sourceLineNo">231</span><a id="line.231">            } else {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                throw new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">233</span><a id="line.233">                        "Only version 2 and version 3 SCFs are supported (not "</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        + new String(header.version));</a>
+<span class="sourceLineNo">235</span><a id="line.235">            }</a>
+<span class="sourceLineNo">236</span><a id="line.236">            return parser;</a>
+<span class="sourceLineNo">237</span><a id="line.237">        }</a>
+<span class="sourceLineNo">238</span><a id="line.238">    }</a>
+<span class="sourceLineNo">239</span><a id="line.239">    </a>
+<span class="sourceLineNo">240</span><a id="line.240">    static interface BaseCallUncertaintyDecoder {</a>
+<span class="sourceLineNo">241</span><a id="line.241">        /**</a>
+<span class="sourceLineNo">242</span><a id="line.242">         * Returns an appropriate Symbol from the DNA alphabet for</a>
+<span class="sourceLineNo">243</span><a id="line.243">         * an encoded byte.</a>
+<span class="sourceLineNo">244</span><a id="line.244">         */</a>
+<span class="sourceLineNo">245</span><a id="line.245">        public Symbol decode(byte call) throws IllegalSymbolException;</a>
+<span class="sourceLineNo">246</span><a id="line.246">    }</a>
+<span class="sourceLineNo">247</span><a id="line.247">    </a>
+<span class="sourceLineNo">248</span><a id="line.248">    /**</a>
+<span class="sourceLineNo">249</span><a id="line.249">     * A BaseCallUncertaintyDecoder that works for type 0 (default) and</a>
+<span class="sourceLineNo">250</span><a id="line.250">     * type 4 (ABI)</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * code sets.</a>
+<span class="sourceLineNo">252</span><a id="line.252">     */</a>
+<span class="sourceLineNo">253</span><a id="line.253">    static class DefaultUncertaintyDecoder implements</a>
+<span class="sourceLineNo">254</span><a id="line.254">            BaseCallUncertaintyDecoder {</a>
+<span class="sourceLineNo">255</span><a id="line.255">        public DefaultUncertaintyDecoder() { }</a>
+<span class="sourceLineNo">256</span><a id="line.256">        public Symbol decode(byte call) throws IllegalSymbolException {</a>
+<span class="sourceLineNo">257</span><a id="line.257">            char c = (char) call;</a>
+<span class="sourceLineNo">258</span><a id="line.258">            switch (c) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">            case 'a':</a>
+<span class="sourceLineNo">260</span><a id="line.260">            case 'A':</a>
+<span class="sourceLineNo">261</span><a id="line.261">                return DNATools.a();</a>
+<span class="sourceLineNo">262</span><a id="line.262">            case 'c':</a>
+<span class="sourceLineNo">263</span><a id="line.263">            case 'C':</a>
+<span class="sourceLineNo">264</span><a id="line.264">                return DNATools.c();</a>
+<span class="sourceLineNo">265</span><a id="line.265">            case 'g':</a>
+<span class="sourceLineNo">266</span><a id="line.266">            case 'G':</a>
+<span class="sourceLineNo">267</span><a id="line.267">                return DNATools.g();</a>
+<span class="sourceLineNo">268</span><a id="line.268">            case 't':</a>
+<span class="sourceLineNo">269</span><a id="line.269">            case 'T':</a>
+<span class="sourceLineNo">270</span><a id="line.270">                return DNATools.t();</a>
+<span class="sourceLineNo">271</span><a id="line.271">            case 'n':</a>
+<span class="sourceLineNo">272</span><a id="line.272">            case 'N':</a>
+<span class="sourceLineNo">273</span><a id="line.273">                return DNATools.n();</a>
+<span class="sourceLineNo">274</span><a id="line.274">            case 'm':</a>
+<span class="sourceLineNo">275</span><a id="line.275">            case 'M':</a>
+<span class="sourceLineNo">276</span><a id="line.276">                return DNATools.m();</a>
+<span class="sourceLineNo">277</span><a id="line.277">            case 'r':</a>
+<span class="sourceLineNo">278</span><a id="line.278">            case 'R':</a>
+<span class="sourceLineNo">279</span><a id="line.279">                return DNATools.r();</a>
+<span class="sourceLineNo">280</span><a id="line.280">            case 'w':</a>
+<span class="sourceLineNo">281</span><a id="line.281">            case 'W':</a>
+<span class="sourceLineNo">282</span><a id="line.282">                return DNATools.w();</a>
+<span class="sourceLineNo">283</span><a id="line.283">            case 's':</a>
+<span class="sourceLineNo">284</span><a id="line.284">            case 'S':</a>
+<span class="sourceLineNo">285</span><a id="line.285">                return DNATools.s();</a>
+<span class="sourceLineNo">286</span><a id="line.286">            case 'y':</a>
+<span class="sourceLineNo">287</span><a id="line.287">            case 'Y':</a>
+<span class="sourceLineNo">288</span><a id="line.288">                return DNATools.y();</a>
+<span class="sourceLineNo">289</span><a id="line.289">            case 'k':</a>
+<span class="sourceLineNo">290</span><a id="line.290">            case 'K':</a>
+<span class="sourceLineNo">291</span><a id="line.291">                return DNATools.k();</a>
+<span class="sourceLineNo">292</span><a id="line.292">            case 'v':</a>
+<span class="sourceLineNo">293</span><a id="line.293">            case 'V':</a>
+<span class="sourceLineNo">294</span><a id="line.294">                return DNATools.v();</a>
+<span class="sourceLineNo">295</span><a id="line.295">            case 'h':</a>
+<span class="sourceLineNo">296</span><a id="line.296">            case 'H':</a>
+<span class="sourceLineNo">297</span><a id="line.297">                return DNATools.h();</a>
+<span class="sourceLineNo">298</span><a id="line.298">            case 'd':</a>
+<span class="sourceLineNo">299</span><a id="line.299">            case 'D':</a>
+<span class="sourceLineNo">300</span><a id="line.300">                return DNATools.d();</a>
+<span class="sourceLineNo">301</span><a id="line.301">            case 'b':</a>
+<span class="sourceLineNo">302</span><a id="line.302">            case 'B':</a>
+<span class="sourceLineNo">303</span><a id="line.303">                return DNATools.b();</a>
+<span class="sourceLineNo">304</span><a id="line.304">            case '-':</a>
+<span class="sourceLineNo">305</span><a id="line.305">            case '.':</a>
+<span class="sourceLineNo">306</span><a id="line.306">                return DNATools.getDNA().getGapSymbol();</a>
+<span class="sourceLineNo">307</span><a id="line.307">            default:</a>
+<span class="sourceLineNo">308</span><a id="line.308">                throw new IllegalSymbolException("No Symbol for " + c);</a>
+<span class="sourceLineNo">309</span><a id="line.309">            }</a>
+<span class="sourceLineNo">310</span><a id="line.310">        }</a>
+<span class="sourceLineNo">311</span><a id="line.311">    }</a>
+<span class="sourceLineNo">312</span><a id="line.312">    </a>
+<span class="sourceLineNo">313</span><a id="line.313">    abstract static class Parser {</a>
+<span class="sourceLineNo">314</span><a id="line.314">        protected long offset = 0;</a>
+<span class="sourceLineNo">315</span><a id="line.315">        protected DataInputStream din = null;</a>
+<span class="sourceLineNo">316</span><a id="line.316">        protected HeaderStruct header;</a>
+<span class="sourceLineNo">317</span><a id="line.317">        protected BaseCallUncertaintyDecoder decoder;</a>
+<span class="sourceLineNo">318</span><a id="line.318">        protected SCF out = null;</a>
+<span class="sourceLineNo">319</span><a id="line.319">        protected boolean parsed = false;</a>
+<span class="sourceLineNo">320</span><a id="line.320">        </a>
+<span class="sourceLineNo">321</span><a id="line.321">        Parser(DataInputStream din, SCF out,</a>
+<span class="sourceLineNo">322</span><a id="line.322">                SCF.Parser.HeaderStruct header, long initOffset)</a>
+<span class="sourceLineNo">323</span><a id="line.323">                throws UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">324</span><a id="line.324">            if (din == null)</a>
+<span class="sourceLineNo">325</span><a id="line.325">                throw new IllegalArgumentException(</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        "Can't parse a null inputstream");</a>
+<span class="sourceLineNo">327</span><a id="line.327">            this.din = din;</a>
+<span class="sourceLineNo">328</span><a id="line.328">            </a>
+<span class="sourceLineNo">329</span><a id="line.329">            if (out == null)</a>
+<span class="sourceLineNo">330</span><a id="line.330">                this.out = new SCF();</a>
+<span class="sourceLineNo">331</span><a id="line.331">            else</a>
+<span class="sourceLineNo">332</span><a id="line.332">                this.out = out;</a>
+<span class="sourceLineNo">333</span><a id="line.333">            </a>
+<span class="sourceLineNo">334</span><a id="line.334">            if (header.samples &gt; Integer.MAX_VALUE)</a>
+<span class="sourceLineNo">335</span><a id="line.335">                throw new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        "Can't parse an SCF with more than " + Integer.MAX_VALUE + " trace samples");</a>
+<span class="sourceLineNo">337</span><a id="line.337">            </a>
+<span class="sourceLineNo">338</span><a id="line.338">            if (header.bases &gt; Integer.MAX_VALUE)</a>
+<span class="sourceLineNo">339</span><a id="line.339">                throw new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">340</span><a id="line.340">                        "Can't parse an SCF with more than " + Integer.MAX_VALUE + " called bases");</a>
+<span class="sourceLineNo">341</span><a id="line.341">            </a>
+<span class="sourceLineNo">342</span><a id="line.342">            this.header = header;</a>
+<span class="sourceLineNo">343</span><a id="line.343">            this.decoder = createDecoder(header.code_set);</a>
+<span class="sourceLineNo">344</span><a id="line.344">            this.offset = initOffset;</a>
+<span class="sourceLineNo">345</span><a id="line.345">        }</a>
+<span class="sourceLineNo">346</span><a id="line.346">        </a>
+<span class="sourceLineNo">347</span><a id="line.347">        /**</a>
+<span class="sourceLineNo">348</span><a id="line.348">         * Factory method to create an approriate decoder for the code</a>
+<span class="sourceLineNo">349</span><a id="line.349">         * set. Currently, only a direct interpretation of the encoded byte</a>
+<span class="sourceLineNo">350</span><a id="line.350">         * as an ASCII character is supported (see DefaultUncertaintyDecoder).</a>
+<span class="sourceLineNo">351</span><a id="line.351">         * This interpretation will be used for all code sets, but a</a>
+<span class="sourceLineNo">352</span><a id="line.352">         * warning will be printed if the code set is not known to work with this</a>
+<span class="sourceLineNo">353</span><a id="line.353">         * interpretation.</a>
+<span class="sourceLineNo">354</span><a id="line.354">         */</a>
+<span class="sourceLineNo">355</span><a id="line.355">        private static BaseCallUncertaintyDecoder createDecoder(long</a>
+<span class="sourceLineNo">356</span><a id="line.356">                codeSet) {</a>
+<span class="sourceLineNo">357</span><a id="line.357">            if (codeSet != 0 &amp;&amp; codeSet != 2 &amp;&amp; codeSet != 4)</a>
+<span class="sourceLineNo">358</span><a id="line.358">                System.err.println("Warning: the code set (" + codeSet +</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        ") is not specifically supported.  (It may still work, though.)");</a>
+<span class="sourceLineNo">360</span><a id="line.360">            return new DefaultUncertaintyDecoder();</a>
+<span class="sourceLineNo">361</span><a id="line.361">        }</a>
+<span class="sourceLineNo">362</span><a id="line.362">        </a>
+<span class="sourceLineNo">363</span><a id="line.363">        public SCF getParsed() {</a>
+<span class="sourceLineNo">364</span><a id="line.364">            if (parsed) return out;</a>
+<span class="sourceLineNo">365</span><a id="line.365">            else        return null;</a>
+<span class="sourceLineNo">366</span><a id="line.366">        }</a>
+<span class="sourceLineNo">367</span><a id="line.367">        </a>
+<span class="sourceLineNo">368</span><a id="line.368">        public void parse() throws IOException,</a>
+<span class="sourceLineNo">369</span><a id="line.369">                UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">370</span><a id="line.370">            parsed = false;</a>
+<span class="sourceLineNo">371</span><a id="line.371">            // sort the sections of the file by ascending offset</a>
+<span class="sourceLineNo">372</span><a id="line.372">            Integer SAMPLES  = new Integer(0),</a>
+<span class="sourceLineNo">373</span><a id="line.373">                    BASES    = new Integer(1),</a>
+<span class="sourceLineNo">374</span><a id="line.374">                    COMMENTS = new Integer(2),</a>
+<span class="sourceLineNo">375</span><a id="line.375">                    PRIVATE  = new Integer(3);</a>
+<span class="sourceLineNo">376</span><a id="line.376">            TreeMap&lt;Long, Integer&gt; sectionOrder = new TreeMap&lt;Long, Integer&gt;();</a>
+<span class="sourceLineNo">377</span><a id="line.377">            sectionOrder.put(new Long(header.samples_offset),  SAMPLES);</a>
+<span class="sourceLineNo">378</span><a id="line.378">            sectionOrder.put(new Long(header.bases_offset),    BASES);</a>
+<span class="sourceLineNo">379</span><a id="line.379">            if (header.comments_size &gt; 0) {</a>
+<span class="sourceLineNo">380</span><a id="line.380">                sectionOrder.put(new Long(header.comments_offset), COMMENTS);</a>
+<span class="sourceLineNo">381</span><a id="line.381">            }</a>
+<span class="sourceLineNo">382</span><a id="line.382">            if (header.private_size &gt; 0) {</a>
+<span class="sourceLineNo">383</span><a id="line.383">                sectionOrder.put(new Long(header.private_offset), PRIVATE);</a>
+<span class="sourceLineNo">384</span><a id="line.384">            }</a>
+<span class="sourceLineNo">385</span><a id="line.385">            </a>
+<span class="sourceLineNo">386</span><a id="line.386">            for (Iterator&lt;Long&gt; it = sectionOrder.keySet().iterator() ;</a>
+<span class="sourceLineNo">387</span><a id="line.387">            it.hasNext() ;) {</a>
+<span class="sourceLineNo">388</span><a id="line.388">                Integer sect = sectionOrder.get(it.next());</a>
+<span class="sourceLineNo">389</span><a id="line.389">                if      (sect == SAMPLES)  parseSamples();</a>
+<span class="sourceLineNo">390</span><a id="line.390">                else if (sect == BASES)    parseBases();</a>
+<span class="sourceLineNo">391</span><a id="line.391">                else if (sect == COMMENTS) parseComments();</a>
+<span class="sourceLineNo">392</span><a id="line.392">                else if (sect == PRIVATE)  parsePrivate();</a>
+<span class="sourceLineNo">393</span><a id="line.393">            }</a>
+<span class="sourceLineNo">394</span><a id="line.394">            parsed = true;</a>
+<span class="sourceLineNo">395</span><a id="line.395">        }</a>
+<span class="sourceLineNo">396</span><a id="line.396">        </a>
+<span class="sourceLineNo">397</span><a id="line.397">        protected abstract void parseSamples()  throws IOException,</a>
+<span class="sourceLineNo">398</span><a id="line.398">                UnsupportedChromatogramFormatException;</a>
+<span class="sourceLineNo">399</span><a id="line.399">        protected abstract void parseBases()    throws IOException,</a>
+<span class="sourceLineNo">400</span><a id="line.400">                UnsupportedChromatogramFormatException;</a>
+<span class="sourceLineNo">401</span><a id="line.401">        </a>
+<span class="sourceLineNo">402</span><a id="line.402">        protected void parseComments() throws IOException {</a>
+<span class="sourceLineNo">403</span><a id="line.403">            skipTo(header.comments_offset);</a>
+<span class="sourceLineNo">404</span><a id="line.404">            byte[] raw = new byte[(int)header.comments_size - 1];</a>
+<span class="sourceLineNo">405</span><a id="line.405">            int read = din.read(raw, 0, raw.length);</a>
+<span class="sourceLineNo">406</span><a id="line.406">            offset += read;</a>
+<span class="sourceLineNo">407</span><a id="line.407">            BufferedReader r = new BufferedReader(</a>
+<span class="sourceLineNo">408</span><a id="line.408">                    new InputStreamReader(</a>
+<span class="sourceLineNo">409</span><a id="line.409">                    new ByteArrayInputStream(raw),</a>
+<span class="sourceLineNo">410</span><a id="line.410">                    "ISO-8859-1"</a>
+<span class="sourceLineNo">411</span><a id="line.411">                    )</a>
+<span class="sourceLineNo">412</span><a id="line.412">                    );</a>
+<span class="sourceLineNo">413</span><a id="line.413">            String line, key, value;</a>
+<span class="sourceLineNo">414</span><a id="line.414">            int eqIdx = -1;</a>
+<span class="sourceLineNo">415</span><a id="line.415">            while ((line = r.readLine()) != null) {</a>
+<span class="sourceLineNo">416</span><a id="line.416">                eqIdx = line.indexOf('=');</a>
+<span class="sourceLineNo">417</span><a id="line.417">                //added line below to skip any truncated comment fields</a>
+<span class="sourceLineNo">418</span><a id="line.418">                if( eqIdx == -1 ) {</a>
+<span class="sourceLineNo">419</span><a id="line.419">                    continue;</a>
+<span class="sourceLineNo">420</span><a id="line.420">                    </a>
+<span class="sourceLineNo">421</span><a id="line.421">                }</a>
+<span class="sourceLineNo">422</span><a id="line.422">                key = line.substring(0, eqIdx);</a>
+<span class="sourceLineNo">423</span><a id="line.423">                value = line.substring(eqIdx+1);</a>
+<span class="sourceLineNo">424</span><a id="line.424">                out.comments.setProperty(key, value);</a>
+<span class="sourceLineNo">425</span><a id="line.425">            }</a>
+<span class="sourceLineNo">426</span><a id="line.426">        }</a>
+<span class="sourceLineNo">427</span><a id="line.427">        </a>
+<span class="sourceLineNo">428</span><a id="line.428">        protected void parsePrivate() throws IOException {</a>
+<span class="sourceLineNo">429</span><a id="line.429">            skipTo(header.private_offset);</a>
+<span class="sourceLineNo">430</span><a id="line.430">            out.privateData = new byte[(int)header.private_size];</a>
+<span class="sourceLineNo">431</span><a id="line.431">            int privRead = 0;</a>
+<span class="sourceLineNo">432</span><a id="line.432">            int thisRead = 0;</a>
+<span class="sourceLineNo">433</span><a id="line.433">            while (privRead &lt; out.privateData.length &amp;&amp; thisRead &gt;= 0) {</a>
+<span class="sourceLineNo">434</span><a id="line.434">                thisRead = din.read(out.privateData, privRead,</a>
+<span class="sourceLineNo">435</span><a id="line.435">                        out.privateData.length - privRead);</a>
+<span class="sourceLineNo">436</span><a id="line.436">                offset += thisRead;</a>
+<span class="sourceLineNo">437</span><a id="line.437">                privRead += thisRead;</a>
+<span class="sourceLineNo">438</span><a id="line.438">            }</a>
+<span class="sourceLineNo">439</span><a id="line.439">        }</a>
+<span class="sourceLineNo">440</span><a id="line.440">        </a>
+<span class="sourceLineNo">441</span><a id="line.441">        protected final void skipTo(long newOffset) throws IOException {</a>
+<span class="sourceLineNo">442</span><a id="line.442">            if (newOffset &lt; offset)</a>
+<span class="sourceLineNo">443</span><a id="line.443">                throw new IllegalArgumentException("Can't skip backwards: (newOffset==" + newOffset + ") &lt; (offset==" + offset + ")");</a>
+<span class="sourceLineNo">444</span><a id="line.444">            long skip = newOffset - offset;</a>
+<span class="sourceLineNo">445</span><a id="line.445">            while (skip &gt; 0) {</a>
+<span class="sourceLineNo">446</span><a id="line.446">                int actualSkip = din.skipBytes((int)skip);</a>
+<span class="sourceLineNo">447</span><a id="line.447">                offset += actualSkip;</a>
+<span class="sourceLineNo">448</span><a id="line.448">                skip   -= actualSkip;</a>
+<span class="sourceLineNo">449</span><a id="line.449">            }</a>
+<span class="sourceLineNo">450</span><a id="line.450">        }</a>
+<span class="sourceLineNo">451</span><a id="line.451">        </a>
+<span class="sourceLineNo">452</span><a id="line.452">        /**</a>
+<span class="sourceLineNo">453</span><a id="line.453">         * Does the grunt work of creating the base call alignment from</a>
+<span class="sourceLineNo">454</span><a id="line.454">         * the given lists of bases, offsets, and probabilities.</a>
+<span class="sourceLineNo">455</span><a id="line.455">         * Catches and "Can't happens" all exceptions.</a>
+<span class="sourceLineNo">456</span><a id="line.456">         */</a>
+<span class="sourceLineNo">457</span><a id="line.457">        protected final void createAndSetBaseCallAlignment(List dna, List</a>
+<span class="sourceLineNo">458</span><a id="line.458">                offsets, List[] probs) {</a>
+<span class="sourceLineNo">459</span><a id="line.459">            try {</a>
+<span class="sourceLineNo">460</span><a id="line.460">                Map&lt;Object, SymbolList&gt; baseCalls = new SmallMap(9);</a>
+<span class="sourceLineNo">461</span><a id="line.461">                baseCalls.put(Chromatogram.DNA,</a>
+<span class="sourceLineNo">462</span><a id="line.462">                        out.createImmutableSymbolList(DNATools.getDNA(), dna));</a>
+<span class="sourceLineNo">463</span><a id="line.463">                baseCalls.put(Chromatogram.OFFSETS,</a>
+<span class="sourceLineNo">464</span><a id="line.464">                        out.createImmutableSymbolList(IntegerAlphabet.getInstance(), offsets));</a>
+<span class="sourceLineNo">465</span><a id="line.465">                baseCalls.put(PROB_NUC_A,</a>
+<span class="sourceLineNo">466</span><a id="line.466">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[0]));</a>
+<span class="sourceLineNo">467</span><a id="line.467">                baseCalls.put(PROB_NUC_C,</a>
+<span class="sourceLineNo">468</span><a id="line.468">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[1]));</a>
+<span class="sourceLineNo">469</span><a id="line.469">                baseCalls.put(PROB_NUC_G,</a>
+<span class="sourceLineNo">470</span><a id="line.470">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[2]));</a>
+<span class="sourceLineNo">471</span><a id="line.471">                baseCalls.put(PROB_NUC_T,</a>
+<span class="sourceLineNo">472</span><a id="line.472">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[3]));</a>
+<span class="sourceLineNo">473</span><a id="line.473">                baseCalls.put(PROB_SUBSTITUTION,</a>
+<span class="sourceLineNo">474</span><a id="line.474">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[4]));</a>
+<span class="sourceLineNo">475</span><a id="line.475">                baseCalls.put(PROB_OVERCALL,</a>
+<span class="sourceLineNo">476</span><a id="line.476">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[5]));</a>
+<span class="sourceLineNo">477</span><a id="line.477">                baseCalls.put(PROB_UNDERCALL,</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        out.createImmutableSymbolList(getProbabilityAlphabet(), probs[6]));</a>
+<span class="sourceLineNo">479</span><a id="line.479">                out.setBaseCallAlignment(out.createImmutableAlignment(baseCalls));</a>
+<span class="sourceLineNo">480</span><a id="line.480">            } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">481</span><a id="line.481">                throw new BioError(ise,"Can't happen unless the decoder is returning non-DNA symbols");</a>
+<span class="sourceLineNo">482</span><a id="line.482">            } catch (IllegalAlphabetException iae) {</a>
+<span class="sourceLineNo">483</span><a id="line.483">                throw new BioError(iae,"Can't happen");</a>
+<span class="sourceLineNo">484</span><a id="line.484">            }</a>
+<span class="sourceLineNo">485</span><a id="line.485">        }</a>
+<span class="sourceLineNo">486</span><a id="line.486">        </a>
+<span class="sourceLineNo">487</span><a id="line.487">        private static class HeaderStruct {</a>
+<span class="sourceLineNo">488</span><a id="line.488">            public static final int HEADER_LENGTH = 128;</a>
+<span class="sourceLineNo">489</span><a id="line.489">            </a>
+<span class="sourceLineNo">490</span><a id="line.490">            // SCF spec uses unsigned 32-bit ints, so we'll use longs for simplicity</a>
+<span class="sourceLineNo">491</span><a id="line.491">            public long magic_number;</a>
+<span class="sourceLineNo">492</span><a id="line.492">            public long samples;</a>
+<span class="sourceLineNo">493</span><a id="line.493">            public long samples_offset;</a>
+<span class="sourceLineNo">494</span><a id="line.494">            public long bases;</a>
+<span class="sourceLineNo">495</span><a id="line.495">            public long bases_left_clip;</a>
+<span class="sourceLineNo">496</span><a id="line.496">            public long bases_right_clip;</a>
+<span class="sourceLineNo">497</span><a id="line.497">            public long bases_offset;</a>
+<span class="sourceLineNo">498</span><a id="line.498">            public long comments_size;</a>
+<span class="sourceLineNo">499</span><a id="line.499">            public long comments_offset;</a>
+<span class="sourceLineNo">500</span><a id="line.500">            public char[] version;</a>
+<span class="sourceLineNo">501</span><a id="line.501">            public long sample_size;</a>
+<span class="sourceLineNo">502</span><a id="line.502">            public long code_set;</a>
+<span class="sourceLineNo">503</span><a id="line.503">            public long private_size;</a>
+<span class="sourceLineNo">504</span><a id="line.504">            public long private_offset;</a>
+<span class="sourceLineNo">505</span><a id="line.505">            public long[] spare;</a>
+<span class="sourceLineNo">506</span><a id="line.506">            </a>
+<span class="sourceLineNo">507</span><a id="line.507">            private HeaderStruct() {</a>
+<span class="sourceLineNo">508</span><a id="line.508">                version = new char[4];</a>
+<span class="sourceLineNo">509</span><a id="line.509">                spare = new long[18];</a>
+<span class="sourceLineNo">510</span><a id="line.510">            }</a>
+<span class="sourceLineNo">511</span><a id="line.511">            </a>
+<span class="sourceLineNo">512</span><a id="line.512">            public static HeaderStruct create(DataInputStream din, long</a>
+<span class="sourceLineNo">513</span><a id="line.513">                    initOffset) throws IOException {</a>
+<span class="sourceLineNo">514</span><a id="line.514">                HeaderStruct hs = new HeaderStruct();</a>
+<span class="sourceLineNo">515</span><a id="line.515">                if (initOffset &gt; 4) {</a>
+<span class="sourceLineNo">516</span><a id="line.516">                    throw new IllegalStateException("Can't skip more than four bytes and still have enough info to read header");</a>
+<span class="sourceLineNo">517</span><a id="line.517">                } else if (initOffset == 0) {</a>
+<span class="sourceLineNo">518</span><a id="line.518">                    hs.magic_number = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">519</span><a id="line.519">                } else {</a>
+<span class="sourceLineNo">520</span><a id="line.520">                    hs.magic_number = 0;</a>
+<span class="sourceLineNo">521</span><a id="line.521">                    // skip to the four-byte boundary</a>
+<span class="sourceLineNo">522</span><a id="line.522">                    for (int i = 0 ; i &lt; 4 - initOffset ; i++)</a>
+<span class="sourceLineNo">523</span><a id="line.523">                        din.read();</a>
+<span class="sourceLineNo">524</span><a id="line.524">                }</a>
+<span class="sourceLineNo">525</span><a id="line.525">                hs.samples          = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">526</span><a id="line.526">                hs.samples_offset   = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">527</span><a id="line.527">                hs.bases            = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">528</span><a id="line.528">                hs.bases_left_clip  = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">529</span><a id="line.529">                hs.bases_right_clip = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">530</span><a id="line.530">                hs.bases_offset     = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">531</span><a id="line.531">                hs.comments_size    = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">532</span><a id="line.532">                hs.comments_offset  = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">533</span><a id="line.533">                hs.version[0]       = (char) din.readByte();</a>
+<span class="sourceLineNo">534</span><a id="line.534">                hs.version[1]       = (char) din.readByte();</a>
+<span class="sourceLineNo">535</span><a id="line.535">                hs.version[2]       = (char) din.readByte();</a>
+<span class="sourceLineNo">536</span><a id="line.536">                hs.version[3]       = (char) din.readByte();</a>
+<span class="sourceLineNo">537</span><a id="line.537">                hs.sample_size      = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">538</span><a id="line.538">                hs.code_set         = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">539</span><a id="line.539">                hs.private_size     = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">540</span><a id="line.540">                hs.private_offset   = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">541</span><a id="line.541">                for (int i = 0 ; i &lt; hs.spare.length ; i++) {</a>
+<span class="sourceLineNo">542</span><a id="line.542">                    hs.spare[i] = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">543</span><a id="line.543">                }</a>
+<span class="sourceLineNo">544</span><a id="line.544">                return hs;</a>
+<span class="sourceLineNo">545</span><a id="line.545">            }</a>
+<span class="sourceLineNo">546</span><a id="line.546">        }</a>
+<span class="sourceLineNo">547</span><a id="line.547">    }</a>
+<span class="sourceLineNo">548</span><a id="line.548">    </a>
+<span class="sourceLineNo">549</span><a id="line.549">    private static class V3Parser extends Parser {</a>
+<span class="sourceLineNo">550</span><a id="line.550">        V3Parser(DataInputStream din, SCF out,</a>
+<span class="sourceLineNo">551</span><a id="line.551">                SCF.Parser.HeaderStruct header, long initOffset)</a>
+<span class="sourceLineNo">552</span><a id="line.552">                throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">553</span><a id="line.553">            super(din, out, header, initOffset);</a>
+<span class="sourceLineNo">554</span><a id="line.554">        }</a>
+<span class="sourceLineNo">555</span><a id="line.555">        </a>
+<span class="sourceLineNo">556</span><a id="line.556">        protected void parseSamples() throws IOException,</a>
+<span class="sourceLineNo">557</span><a id="line.557">                UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">558</span><a id="line.558">            skipTo(header.samples_offset);</a>
+<span class="sourceLineNo">559</span><a id="line.559">            </a>
+<span class="sourceLineNo">560</span><a id="line.560">            // load values from file</a>
+<span class="sourceLineNo">561</span><a id="line.561">            int count = (int)header.samples;</a>
+<span class="sourceLineNo">562</span><a id="line.562">            int maxValAllowed = 0;</a>
+<span class="sourceLineNo">563</span><a id="line.563">            if(header.sample_size == 1) {</a>
+<span class="sourceLineNo">564</span><a id="line.564">                maxValAllowed = BYTE_MAX_VALUE;</a>
+<span class="sourceLineNo">565</span><a id="line.565">            } else if(header.sample_size == 2) {</a>
+<span class="sourceLineNo">566</span><a id="line.566">                maxValAllowed = SHORT_MAX_VALUE;</a>
+<span class="sourceLineNo">567</span><a id="line.567">            }</a>
+<span class="sourceLineNo">568</span><a id="line.568">            </a>
+<span class="sourceLineNo">569</span><a id="line.569">            int[][] trace = new int[4][count];</a>
+<span class="sourceLineNo">570</span><a id="line.570">            int[] maxVal = new int[] { Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">571</span><a id="line.571">                    Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">572</span><a id="line.572">                    Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">573</span><a id="line.573">                    Integer.MIN_VALUE };</a>
+<span class="sourceLineNo">574</span><a id="line.574">                    for (int n = 0 ; n &lt; 4 ; n++)</a>
+<span class="sourceLineNo">575</span><a id="line.575">                        readSamplesInto(trace[n]);</a>
+<span class="sourceLineNo">576</span><a id="line.576">                    </a>
+<span class="sourceLineNo">577</span><a id="line.577">                    // stored values are delta-delta values; reprocess into actual values</a>
+<span class="sourceLineNo">578</span><a id="line.578">                    // algorithm cribbed from io_lib's delta_samples function in misc_scf.c</a>
+<span class="sourceLineNo">579</span><a id="line.579">                    int[] p_sample1 = new int[] { 0, 0, 0, 0 };</a>
+<span class="sourceLineNo">580</span><a id="line.580">                    int[] p_sample2 = new int[] { 0, 0, 0, 0 };</a>
+<span class="sourceLineNo">581</span><a id="line.581">                    for (int n = 0 ; n &lt; 4 ; n++) {</a>
+<span class="sourceLineNo">582</span><a id="line.582">                        for (int i = 0 ; i &lt; trace[n].length ; i++) {</a>
+<span class="sourceLineNo">583</span><a id="line.583">                            //New version of the code which takes into account what the</a>
+<span class="sourceLineNo">584</span><a id="line.584">                            //underlying value i.e. is it a byte or is it a short</a>
+<span class="sourceLineNo">585</span><a id="line.585">                            //and slightly rejigged for speed and sanity sakes</a>
+<span class="sourceLineNo">586</span><a id="line.586">                            p_sample1[n] += trace[n][i];</a>
+<span class="sourceLineNo">587</span><a id="line.587">                            if(p_sample1[n] &gt;= maxValAllowed) p_sample1[n] = p_sample1[n] -</a>
+<span class="sourceLineNo">588</span><a id="line.588">                                    maxValAllowed;</a>
+<span class="sourceLineNo">589</span><a id="line.589">                            p_sample2[n] = p_sample1[n] + p_sample2[n];</a>
+<span class="sourceLineNo">590</span><a id="line.590">                            if(p_sample2[n] &gt;= maxValAllowed) p_sample2[n] = p_sample2[n] -</a>
+<span class="sourceLineNo">591</span><a id="line.591">                                    maxValAllowed;</a>
+<span class="sourceLineNo">592</span><a id="line.592">                            trace[n][i] = p_sample2[n];</a>
+<span class="sourceLineNo">593</span><a id="line.593">                            </a>
+<span class="sourceLineNo">594</span><a id="line.594">                            maxVal[n] = Math.max(maxVal[n], trace[n][i]);</a>
+<span class="sourceLineNo">595</span><a id="line.595">                        }</a>
+<span class="sourceLineNo">596</span><a id="line.596">                    }</a>
+<span class="sourceLineNo">597</span><a id="line.597">                    // set into output SCF chromat object</a>
+<span class="sourceLineNo">598</span><a id="line.598">                    try {</a>
+<span class="sourceLineNo">599</span><a id="line.599">                        out.setTrace(DNATools.a(), trace[0], maxVal[0]);</a>
+<span class="sourceLineNo">600</span><a id="line.600">                        out.setTrace(DNATools.c(), trace[1], maxVal[1]);</a>
+<span class="sourceLineNo">601</span><a id="line.601">                        out.setTrace(DNATools.g(), trace[2], maxVal[2]);</a>
+<span class="sourceLineNo">602</span><a id="line.602">                        out.setTrace(DNATools.t(), trace[3], maxVal[3]);</a>
+<span class="sourceLineNo">603</span><a id="line.603">                    } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">604</span><a id="line.604">                        throw new BioError(ise,"Can't happen");</a>
+<span class="sourceLineNo">605</span><a id="line.605">                    }</a>
+<span class="sourceLineNo">606</span><a id="line.606">        }</a>
+<span class="sourceLineNo">607</span><a id="line.607">        </a>
+<span class="sourceLineNo">608</span><a id="line.608">        protected void readSamplesInto(int[] samps) throws IOException {</a>
+<span class="sourceLineNo">609</span><a id="line.609">            if (header.sample_size == 1) {</a>
+<span class="sourceLineNo">610</span><a id="line.610">                for (int i = 0 ; i &lt; samps.length ; i++) {</a>
+<span class="sourceLineNo">611</span><a id="line.611">                    samps[i] = din.readUnsignedByte();</a>
+<span class="sourceLineNo">612</span><a id="line.612">                    offset += 1;</a>
+<span class="sourceLineNo">613</span><a id="line.613">                }</a>
+<span class="sourceLineNo">614</span><a id="line.614">            } else if (header.sample_size == 2) {</a>
+<span class="sourceLineNo">615</span><a id="line.615">                for (int i = 0 ; i &lt; samps.length ; i++) {</a>
+<span class="sourceLineNo">616</span><a id="line.616">                    samps[i] = din.readUnsignedShort();</a>
+<span class="sourceLineNo">617</span><a id="line.617">                    offset += 2;</a>
+<span class="sourceLineNo">618</span><a id="line.618">                }</a>
+<span class="sourceLineNo">619</span><a id="line.619">            }</a>
+<span class="sourceLineNo">620</span><a id="line.620">        }</a>
+<span class="sourceLineNo">621</span><a id="line.621">        </a>
+<span class="sourceLineNo">622</span><a id="line.622">        protected void parseBases() throws IOException,</a>
+<span class="sourceLineNo">623</span><a id="line.623">                UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">624</span><a id="line.624">            skipTo(header.bases_offset);</a>
+<span class="sourceLineNo">625</span><a id="line.625">            int count = (int) header.bases;</a>
+<span class="sourceLineNo">626</span><a id="line.626">            </a>
+<span class="sourceLineNo">627</span><a id="line.627">            List&lt;IntegerAlphabet.IntegerSymbol&gt; offsets = new ArrayList&lt;IntegerAlphabet.IntegerSymbol&gt;(count);</a>
+<span class="sourceLineNo">628</span><a id="line.628">            @SuppressWarnings("unchecked")</a>
+<span class="sourceLineNo">629</span><a id="line.629">            List&lt;IntegerAlphabet.IntegerSymbol&gt;[] probs = new ArrayList[7];</a>
+<span class="sourceLineNo">630</span><a id="line.630">            for (int i = 0; i &lt; 7; i++)</a>
+<span class="sourceLineNo">631</span><a id="line.631">                probs[i] = new ArrayList&lt;IntegerAlphabet.IntegerSymbol&gt;(count);</a>
+<span class="sourceLineNo">632</span><a id="line.632">            List&lt;Symbol&gt; dna = new ArrayList&lt;Symbol&gt;(count);</a>
+<span class="sourceLineNo">633</span><a id="line.633">            </a>
+<span class="sourceLineNo">634</span><a id="line.634">            long tmp;</a>
+<span class="sourceLineNo">635</span><a id="line.635">            try {</a>
+<span class="sourceLineNo">636</span><a id="line.636">                for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">637</span><a id="line.637">                    // read the first set of sequential data (the trace peak offsets)</a>
+<span class="sourceLineNo">638</span><a id="line.638">                    tmp = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">639</span><a id="line.639">                    offset += 4;</a>
+<span class="sourceLineNo">640</span><a id="line.640">                    if (tmp &gt; Integer.MAX_VALUE)</a>
+<span class="sourceLineNo">641</span><a id="line.641">                        throw new</a>
+<span class="sourceLineNo">642</span><a id="line.642">                                UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">643</span><a id="line.643">                                "SCF contains a base with peak offset &gt; " + Integer.MAX_VALUE);</a>
+<span class="sourceLineNo">644</span><a id="line.644">                    offsets.add(IntegerAlphabet.getInstance().getSymbol((int) tmp));</a>
+<span class="sourceLineNo">645</span><a id="line.645">                }</a>
+<span class="sourceLineNo">646</span><a id="line.646">                // read sets of probs for A, C, G, T</a>
+<span class="sourceLineNo">647</span><a id="line.647">                for (int j = 0 ; j &lt; 4 ; j++) {</a>
+<span class="sourceLineNo">648</span><a id="line.648">                    for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">649</span><a id="line.649">                        probs[j].add(getProbabilityAlphabet().getSymbol(din.readByte() &amp; 0xFF));</a>
+<span class="sourceLineNo">650</span><a id="line.650">                        offset++;</a>
+<span class="sourceLineNo">651</span><a id="line.651">                    }</a>
+<span class="sourceLineNo">652</span><a id="line.652">                }</a>
+<span class="sourceLineNo">653</span><a id="line.653">                // read bases</a>
+<span class="sourceLineNo">654</span><a id="line.654">                try {</a>
+<span class="sourceLineNo">655</span><a id="line.655">                    for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">656</span><a id="line.656">                        dna.add(decoder.decode(din.readByte()));</a>
+<span class="sourceLineNo">657</span><a id="line.657">                        offset++;</a>
+<span class="sourceLineNo">658</span><a id="line.658">                    }</a>
+<span class="sourceLineNo">659</span><a id="line.659">                } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">660</span><a id="line.660">                        UnsupportedChromatogramFormatException ue = new UnsupportedChromatogramFormatException("Base call decoding failure");</a>
+<span class="sourceLineNo">661</span><a id="line.661">                        ue.initCause(ise);</a>
+<span class="sourceLineNo">662</span><a id="line.662">                        throw ue;</a>
+<span class="sourceLineNo">663</span><a id="line.663">                }</a>
+<span class="sourceLineNo">664</span><a id="line.664">                // read 'spare' probs</a>
+<span class="sourceLineNo">665</span><a id="line.665">                for (int j = 4 ; j &lt; 7 ; j++) {</a>
+<span class="sourceLineNo">666</span><a id="line.666">                    for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">667</span><a id="line.667">                        probs[j].add(getProbabilityAlphabet().getSymbol(din.readByte() &amp; 0xFF));</a>
+<span class="sourceLineNo">668</span><a id="line.668">                        offset++;</a>
+<span class="sourceLineNo">669</span><a id="line.669">                    }</a>
+<span class="sourceLineNo">670</span><a id="line.670">                }</a>
+<span class="sourceLineNo">671</span><a id="line.671">            } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">672</span><a id="line.672">                throw new BioError(ise,"Can't happen unless there's a misdefinition of getProbabilityAlphabet() or IntegerAlphabet");</a>
+<span class="sourceLineNo">673</span><a id="line.673">            }</a>
+<span class="sourceLineNo">674</span><a id="line.674">            // create/set base call list</a>
+<span class="sourceLineNo">675</span><a id="line.675">            createAndSetBaseCallAlignment(dna, offsets, probs);</a>
+<span class="sourceLineNo">676</span><a id="line.676">        }</a>
+<span class="sourceLineNo">677</span><a id="line.677">    } // end SCFv3Parser</a>
+<span class="sourceLineNo">678</span><a id="line.678">    </a>
+<span class="sourceLineNo">679</span><a id="line.679">    private static class V2Parser extends Parser {</a>
+<span class="sourceLineNo">680</span><a id="line.680">        V2Parser(DataInputStream din, SCF out,</a>
+<span class="sourceLineNo">681</span><a id="line.681">                SCF.Parser.HeaderStruct header, long initOffset)</a>
+<span class="sourceLineNo">682</span><a id="line.682">                throws IOException, UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">683</span><a id="line.683">            super(din, out, header, initOffset);</a>
+<span class="sourceLineNo">684</span><a id="line.684">        }</a>
+<span class="sourceLineNo">685</span><a id="line.685">        </a>
+<span class="sourceLineNo">686</span><a id="line.686">        protected void parseSamples() throws IOException {</a>
+<span class="sourceLineNo">687</span><a id="line.687">            int count = (int) header.samples;</a>
+<span class="sourceLineNo">688</span><a id="line.688">            int[][] trace = new int[4][count];</a>
+<span class="sourceLineNo">689</span><a id="line.689">            int[] maxVal = new int[] { Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">690</span><a id="line.690">                    Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">691</span><a id="line.691">                    Integer.MIN_VALUE,</a>
+<span class="sourceLineNo">692</span><a id="line.692">                    Integer.MIN_VALUE };</a>
+<span class="sourceLineNo">693</span><a id="line.693">                    </a>
+<span class="sourceLineNo">694</span><a id="line.694">                    if (header.sample_size == 1) {</a>
+<span class="sourceLineNo">695</span><a id="line.695">                        for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">696</span><a id="line.696">                            for (int n = 0 ; n &lt; 4 ; n++) {</a>
+<span class="sourceLineNo">697</span><a id="line.697">                                trace[n][i] = din.readUnsignedByte();</a>
+<span class="sourceLineNo">698</span><a id="line.698">                                maxVal[n] = Math.max(trace[n][i], maxVal[n]);</a>
+<span class="sourceLineNo">699</span><a id="line.699">                                offset++;</a>
+<span class="sourceLineNo">700</span><a id="line.700">                            }</a>
+<span class="sourceLineNo">701</span><a id="line.701">                        }</a>
+<span class="sourceLineNo">702</span><a id="line.702">                    } else if (header.sample_size == 2) {</a>
+<span class="sourceLineNo">703</span><a id="line.703">                        for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">704</span><a id="line.704">                            for (int n = 0 ; n &lt; 4 ; n++) {</a>
+<span class="sourceLineNo">705</span><a id="line.705">                                trace[n][i] = din.readUnsignedShort();</a>
+<span class="sourceLineNo">706</span><a id="line.706">                                maxVal[n] = Math.max(trace[n][i], maxVal[n]);</a>
+<span class="sourceLineNo">707</span><a id="line.707">                                offset += 2;</a>
+<span class="sourceLineNo">708</span><a id="line.708">                            }</a>
+<span class="sourceLineNo">709</span><a id="line.709">                        }</a>
+<span class="sourceLineNo">710</span><a id="line.710">                    }</a>
+<span class="sourceLineNo">711</span><a id="line.711">                    // set into output SCF chromat object</a>
+<span class="sourceLineNo">712</span><a id="line.712">                    try {</a>
+<span class="sourceLineNo">713</span><a id="line.713">                        out.setTrace(DNATools.a(), trace[0], maxVal[0]);</a>
+<span class="sourceLineNo">714</span><a id="line.714">                        out.setTrace(DNATools.c(), trace[1], maxVal[1]);</a>
+<span class="sourceLineNo">715</span><a id="line.715">                        out.setTrace(DNATools.g(), trace[2], maxVal[2]);</a>
+<span class="sourceLineNo">716</span><a id="line.716">                        out.setTrace(DNATools.t(), trace[3], maxVal[3]);</a>
+<span class="sourceLineNo">717</span><a id="line.717">                    } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">718</span><a id="line.718">                        throw new BioError(ise,"Can't happen");</a>
+<span class="sourceLineNo">719</span><a id="line.719">                    }</a>
+<span class="sourceLineNo">720</span><a id="line.720">        }</a>
+<span class="sourceLineNo">721</span><a id="line.721">        </a>
+<span class="sourceLineNo">722</span><a id="line.722">        protected void parseBases() throws IOException,</a>
+<span class="sourceLineNo">723</span><a id="line.723">                UnsupportedChromatogramFormatException {</a>
+<span class="sourceLineNo">724</span><a id="line.724">            skipTo(header.bases_offset);</a>
+<span class="sourceLineNo">725</span><a id="line.725">            </a>
+<span class="sourceLineNo">726</span><a id="line.726">            int count = (int) header.bases;</a>
+<span class="sourceLineNo">727</span><a id="line.727">            List[] probs = new ArrayList[7];</a>
+<span class="sourceLineNo">728</span><a id="line.728">            for (int i = 0 ; i &lt; probs.length ; i++) probs[i] = new</a>
+<span class="sourceLineNo">729</span><a id="line.729">                    ArrayList(count);</a>
+<span class="sourceLineNo">730</span><a id="line.730">            List dna = new ArrayList(count);</a>
+<span class="sourceLineNo">731</span><a id="line.731">            List offsets = new ArrayList(count);</a>
+<span class="sourceLineNo">732</span><a id="line.732">            long tmp;</a>
+<span class="sourceLineNo">733</span><a id="line.733">            byte[] probTmp = new byte[7];</a>
+<span class="sourceLineNo">734</span><a id="line.734">            for (int i = 0 ; i &lt; count ; i++) {</a>
+<span class="sourceLineNo">735</span><a id="line.735">                // read the peak index</a>
+<span class="sourceLineNo">736</span><a id="line.736">                tmp = 0xFFFFFFFF &amp; din.readInt();</a>
+<span class="sourceLineNo">737</span><a id="line.737">                offset += 4;</a>
+<span class="sourceLineNo">738</span><a id="line.738">                if (tmp &gt; Integer.MAX_VALUE)</a>
+<span class="sourceLineNo">739</span><a id="line.739">                    throw new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">740</span><a id="line.740">                            "SCF contains a base with peak offset &gt; " + Integer.MAX_VALUE);</a>
+<span class="sourceLineNo">741</span><a id="line.741">                offsets.add(IntegerAlphabet.getInstance().getSymbol((int)</a>
+<span class="sourceLineNo">742</span><a id="line.742">                tmp));</a>
+<span class="sourceLineNo">743</span><a id="line.743">                </a>
+<span class="sourceLineNo">744</span><a id="line.744">                // read the per-base probabilities</a>
+<span class="sourceLineNo">745</span><a id="line.745">                din.read(probTmp, 0, 4);</a>
+<span class="sourceLineNo">746</span><a id="line.746">                offset += 4;</a>
+<span class="sourceLineNo">747</span><a id="line.747">                // read the actual base called</a>
+<span class="sourceLineNo">748</span><a id="line.748">                try {</a>
+<span class="sourceLineNo">749</span><a id="line.749">                    dna.add(decoder.decode(din.readByte()));</a>
+<span class="sourceLineNo">750</span><a id="line.750">                    offset += 1;</a>
+<span class="sourceLineNo">751</span><a id="line.751">                } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">752</span><a id="line.752">                        UnsupportedChromatogramFormatException ue = new UnsupportedChromatogramFormatException(</a>
+<span class="sourceLineNo">753</span><a id="line.753">                            "Base call decoding failure");</a>
+<span class="sourceLineNo">754</span><a id="line.754">                        ue.initCause(ise);</a>
+<span class="sourceLineNo">755</span><a id="line.755">                        throw ue;</a>
+<span class="sourceLineNo">756</span><a id="line.756">                }</a>
+<span class="sourceLineNo">757</span><a id="line.757">                // read the spare probability fields</a>
+<span class="sourceLineNo">758</span><a id="line.758">                din.read(probTmp, 4, 3);</a>
+<span class="sourceLineNo">759</span><a id="line.759">                offset += 3;</a>
+<span class="sourceLineNo">760</span><a id="line.760">                try {</a>
+<span class="sourceLineNo">761</span><a id="line.761">                    for (int p = 0 ; p &lt; 7 ; p++)</a>
+<span class="sourceLineNo">762</span><a id="line.762">                        probs[p].add(getProbabilityAlphabet().getSymbol(0xFF &amp; probTmp[p]));</a>
+<span class="sourceLineNo">763</span><a id="line.763">                } catch (IllegalSymbolException ise) {</a>
+<span class="sourceLineNo">764</span><a id="line.764">                    throw new BioError(ise,"Can't happen unless getProbabilityAlphabet() has been misdefined.");</a>
+<span class="sourceLineNo">765</span><a id="line.765">                }</a>
+<span class="sourceLineNo">766</span><a id="line.766">            }</a>
+<span class="sourceLineNo">767</span><a id="line.767">            createAndSetBaseCallAlignment(dna, offsets, probs);</a>
+<span class="sourceLineNo">768</span><a id="line.768">        }</a>
+<span class="sourceLineNo">769</span><a id="line.769">    }</a>
+<span class="sourceLineNo">770</span><a id="line.770">}</a>
+<span class="sourceLineNo">771</span><a id="line.771"></a>
+<span class="sourceLineNo">772</span><a id="line.772"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,1618 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/* -*- c-basic-offset: 4; indent-tabs-mode: nil -*- */</a>
+<span class="sourceLineNo">002</span><a id="line.2">/*</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *                    BioJava development code</a>
+<span class="sourceLineNo">004</span><a id="line.4"> *</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * see:</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">011</span><a id="line.11"> *</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * at:</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">020</span><a id="line.20"> *</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.bio.seq.db.biosql;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.io.File;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.io.FileReader;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.IOException;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.sql.Connection;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.sql.PreparedStatement;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.sql.ResultSet;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.sql.SQLException;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.sql.Statement;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.sql.Types;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.ArrayList;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.Collection;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.HashMap;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.HashSet;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.Iterator;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.util.List;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.util.Map;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import java.util.NoSuchElementException;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import java.util.Set;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import java.util.Stack;</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.bio.BioRuntimeException;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.bio.taxa.CircularReferenceException;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.bio.taxa.EbiFormat;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.bio.taxa.Taxon;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import org.biojava.bio.taxa.TaxonFactory;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import org.biojava.bio.taxa.WeakTaxonFactory;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">/**</a>
+<span class="sourceLineNo">057</span><a id="line.57"> * Methods for retrieving, storing and manipulate Taxa stored in a BioSQL database.</a>
+<span class="sourceLineNo">058</span><a id="line.58"> *</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * @author Len Trigg</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * @author Andreas Dr&amp;auml;ger</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * @deprecated Use hibernate and org.biojavax.bio.db.*</a>
+<span class="sourceLineNo">062</span><a id="line.62"> */</a>
+<span class="sourceLineNo">063</span><a id="line.63">public class TaxonSQL {</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">    /** </a>
+<span class="sourceLineNo">066</span><a id="line.66">     * Attempts to get a Taxon object corresponding to the specified</a>
+<span class="sourceLineNo">067</span><a id="line.67">     * NCBI taxon ID.</a>
+<span class="sourceLineNo">068</span><a id="line.68">     *</a>
+<span class="sourceLineNo">069</span><a id="line.69">     * @param conn the connection to the database</a>
+<span class="sourceLineNo">070</span><a id="line.70">     * @param ncbi_taxon_id the NCBI taxon ID.</a>
+<span class="sourceLineNo">071</span><a id="line.71">     * @return the corresponding Taxon (which may have already been</a>
+<span class="sourceLineNo">072</span><a id="line.72">     * present in memory after an earlier retrieval), or null if the</a>
+<span class="sourceLineNo">073</span><a id="line.73">     * Taxon could not be found in the database.</a>
+<span class="sourceLineNo">074</span><a id="line.74">     */</a>
+<span class="sourceLineNo">075</span><a id="line.75">    public static Taxon getTaxon(Connection conn, int ncbi_taxon_id) </a>
+<span class="sourceLineNo">076</span><a id="line.76">    {</a>
+<span class="sourceLineNo">077</span><a id="line.77">      PreparedStatement ps = null;</a>
+<span class="sourceLineNo">078</span><a id="line.78">      ResultSet rs = null;</a>
+<span class="sourceLineNo">079</span><a id="line.79">      Taxon t = null;</a>
+<span class="sourceLineNo">080</span><a id="line.80">      try {</a>
+<span class="sourceLineNo">081</span><a id="line.81">        ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">082</span><a id="line.82">          "SELECT name " +</a>
+<span class="sourceLineNo">083</span><a id="line.83">          "FROM   taxon_name, taxon " +</a>
+<span class="sourceLineNo">084</span><a id="line.84">          "WHERE  taxon_name.taxon_id = taxon.taxon_id AND" +</a>
+<span class="sourceLineNo">085</span><a id="line.85">          "       taxon_name.name_class LIKE 'scientific%' AND" +</a>
+<span class="sourceLineNo">086</span><a id="line.86">          "       ncbi_taxon_id = ?");</a>
+<span class="sourceLineNo">087</span><a id="line.87">        ps.setInt(1, ncbi_taxon_id);</a>
+<span class="sourceLineNo">088</span><a id="line.88">        rs = ps.executeQuery();</a>
+<span class="sourceLineNo">089</span><a id="line.89">        if (rs.next()) t = getTaxon(conn, rs.getString(1));</a>
+<span class="sourceLineNo">090</span><a id="line.90">      } catch (SQLException exc) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">        throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">092</span><a id="line.92">      } finally {</a>
+<span class="sourceLineNo">093</span><a id="line.93">        attemptClose(rs);</a>
+<span class="sourceLineNo">094</span><a id="line.94">        attemptClose(ps);</a>
+<span class="sourceLineNo">095</span><a id="line.95">      }</a>
+<span class="sourceLineNo">096</span><a id="line.96">      return t; </a>
+<span class="sourceLineNo">097</span><a id="line.97">    }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">    /** </a>
+<span class="sourceLineNo">101</span><a id="line.101">     * Attempts to get a Taxon object corresponding to the specified</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * taxon_id (i.e. the database's internal id for the taxon).</a>
+<span class="sourceLineNo">103</span><a id="line.103">     *</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * @param conn the connection to the database</a>
+<span class="sourceLineNo">105</span><a id="line.105">     * @param taxon_id the database-specific id for the Taxon.</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * @return the corresponding Taxon (which may have already been</a>
+<span class="sourceLineNo">107</span><a id="line.107">     * present in memory after an earlier retrieval).</a>
+<span class="sourceLineNo">108</span><a id="line.108">     */</a>
+<span class="sourceLineNo">109</span><a id="line.109">    public static Taxon getDBTaxon(Connection conn, int taxon_id) throws SQLException, ChangeVetoException </a>
+<span class="sourceLineNo">110</span><a id="line.110">    {</a>
+<span class="sourceLineNo">111</span><a id="line.111">      PreparedStatement statement = null;</a>
+<span class="sourceLineNo">112</span><a id="line.112">      ResultSet rs = null;</a>
+<span class="sourceLineNo">113</span><a id="line.113">      try {</a>
+<span class="sourceLineNo">114</span><a id="line.114">        // Constants for our wee id array</a>
+<span class="sourceLineNo">115</span><a id="line.115">        final int NCBI_ID = 1;</a>
+<span class="sourceLineNo">116</span><a id="line.116">        final int TAXON_ID = 0;</a>
+<span class="sourceLineNo">117</span><a id="line.117">          </a>
+<span class="sourceLineNo">118</span><a id="line.118">        // First, get the taxon ids up to the root.</a>
+<span class="sourceLineNo">119</span><a id="line.119">        statement = conn.prepareStatement(</a>
+<span class="sourceLineNo">120</span><a id="line.120">          "SELECT ncbi_taxon_id, parent_taxon_id "+ </a>
+<span class="sourceLineNo">121</span><a id="line.121">          "FROM   taxon "+ </a>
+<span class="sourceLineNo">122</span><a id="line.122">          "WHERE  taxon_id = ? ");</a>
+<span class="sourceLineNo">123</span><a id="line.123">          </a>
+<span class="sourceLineNo">124</span><a id="line.124">        ArrayList path = new ArrayList();</a>
+<span class="sourceLineNo">125</span><a id="line.125">        while (taxon_id != 0) {</a>
+<span class="sourceLineNo">126</span><a id="line.126">          statement.setInt(1, taxon_id);</a>
+<span class="sourceLineNo">127</span><a id="line.127">          rs = statement.executeQuery();</a>
+<span class="sourceLineNo">128</span><a id="line.128">          if (rs.next()) {</a>
+<span class="sourceLineNo">129</span><a id="line.129">            path.add(new int [] {taxon_id, rs.getInt(1)});</a>
+<span class="sourceLineNo">130</span><a id="line.130">            taxon_id = rs.getInt(2);</a>
+<span class="sourceLineNo">131</span><a id="line.131">            if (rs.wasNull()) </a>
+<span class="sourceLineNo">132</span><a id="line.132">              taxon_id = 0;</a>
+<span class="sourceLineNo">133</span><a id="line.133">          } else </a>
+<span class="sourceLineNo">134</span><a id="line.134">            throw new BioRuntimeException("Error fetching taxonomy structure. No taxon with taxon_id=" + taxon_id);</a>
+<span class="sourceLineNo">135</span><a id="line.135">          rs.close();</a>
+<span class="sourceLineNo">136</span><a id="line.136">        }</a>
+<span class="sourceLineNo">137</span><a id="line.137">        statement.close();</a>
+<span class="sourceLineNo">138</span><a id="line.138">          </a>
+<span class="sourceLineNo">139</span><a id="line.139">        // Traverse from the root down as far has has been created previously...</a>
+<span class="sourceLineNo">140</span><a id="line.140">        TaxonFactory factory = WeakTaxonFactory.GLOBAL;</a>
+<span class="sourceLineNo">141</span><a id="line.141">        Taxon taxon = factory.getRoot();</a>
+<span class="sourceLineNo">142</span><a id="line.142">        int pos = path.size() - 1;</a>
+<span class="sourceLineNo">143</span><a id="line.143">        int []ids = (int[]) path.get(pos--);</a>
+<span class="sourceLineNo">144</span><a id="line.144">        Map names = getTaxonNames(conn, ids[TAXON_ID]);</a>
+<span class="sourceLineNo">145</span><a id="line.145">        taxon.getAnnotation().setProperty(EbiFormat.PROPERTY_NCBI_TAXON, "" + ids[NCBI_ID]);</a>
+<span class="sourceLineNo">146</span><a id="line.146">        taxon.getAnnotation().setProperty(EbiFormat.PROPERTY_TAXON_NAMES, names);</a>
+<span class="sourceLineNo">147</span><a id="line.147">        for (; pos &gt;= 0; pos--) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">          // Who's the next id down the path?</a>
+<span class="sourceLineNo">149</span><a id="line.149">          ids = (int[]) path.get(pos);</a>
+<span class="sourceLineNo">150</span><a id="line.150">          String nextID = "" + ids[NCBI_ID];</a>
+<span class="sourceLineNo">151</span><a id="line.151">          // Now look among the children for the next child.</a>
+<span class="sourceLineNo">152</span><a id="line.152">          Set children = taxon.getChildren();</a>
+<span class="sourceLineNo">153</span><a id="line.153">          for (Iterator it = children.iterator(); it.hasNext(); ) {</a>
+<span class="sourceLineNo">154</span><a id="line.154">            Taxon child = (Taxon) it.next();</a>
+<span class="sourceLineNo">155</span><a id="line.155">            Annotation anno = child.getAnnotation();</a>
+<span class="sourceLineNo">156</span><a id="line.156">            if (anno.containsProperty(EbiFormat.PROPERTY_NCBI_TAXON)) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">              String childID = (String) anno.getProperty(EbiFormat.PROPERTY_NCBI_TAXON);</a>
+<span class="sourceLineNo">158</span><a id="line.158">              if (childID.equals(nextID)) {</a>
+<span class="sourceLineNo">159</span><a id="line.159">                taxon = child;</a>
+<span class="sourceLineNo">160</span><a id="line.160">                continue;</a>
+<span class="sourceLineNo">161</span><a id="line.161">              }</a>
+<span class="sourceLineNo">162</span><a id="line.162">            } else {</a>
+<span class="sourceLineNo">163</span><a id="line.163">              throw new BioRuntimeException("Taxon has not been annotated with NCBI taxon ids.");</a>
+<span class="sourceLineNo">164</span><a id="line.164">            }</a>
+<span class="sourceLineNo">165</span><a id="line.165">          }</a>
+<span class="sourceLineNo">166</span><a id="line.166">          // No child with desired ncbi_id has been found.</a>
+<span class="sourceLineNo">167</span><a id="line.167">          break;</a>
+<span class="sourceLineNo">168</span><a id="line.168">        }</a>
+<span class="sourceLineNo">169</span><a id="line.169">          </a>
+<span class="sourceLineNo">170</span><a id="line.170">        // Now create taxa from here on down.</a>
+<span class="sourceLineNo">171</span><a id="line.171">        try {</a>
+<span class="sourceLineNo">172</span><a id="line.172">          for (; pos &gt;= 0; pos--) </a>
+<span class="sourceLineNo">173</span><a id="line.173">          {</a>
+<span class="sourceLineNo">174</span><a id="line.174">            // Now look for the next child.</a>
+<span class="sourceLineNo">175</span><a id="line.175">            ids = (int[]) path.get(pos);</a>
+<span class="sourceLineNo">176</span><a id="line.176">            String nextID = "" + ids[NCBI_ID];</a>
+<span class="sourceLineNo">177</span><a id="line.177">            names = getTaxonNames(conn, ids[TAXON_ID]);</a>
+<span class="sourceLineNo">178</span><a id="line.178">            String sciName = (String) names.get("scientific name");</a>
+<span class="sourceLineNo">179</span><a id="line.179">            if (sciName == null) </a>
+<span class="sourceLineNo">180</span><a id="line.180">              throw new BioRuntimeException("No scientific name for taxon_id=" + ids[TAXON_ID]);</a>
+<span class="sourceLineNo">181</span><a id="line.181">            String commonName = (String) names.get("common name");</a>
+<span class="sourceLineNo">182</span><a id="line.182">            taxon = factory.addChild(taxon, factory.createTaxon(sciName, commonName));</a>
+<span class="sourceLineNo">183</span><a id="line.183">            taxon.getAnnotation().setProperty(EbiFormat.PROPERTY_NCBI_TAXON, nextID);</a>
+<span class="sourceLineNo">184</span><a id="line.184">            taxon.getAnnotation().setProperty(EbiFormat.PROPERTY_TAXON_NAMES, names);</a>
+<span class="sourceLineNo">185</span><a id="line.185">            taxon = getProperties(conn, taxon);</a>
+<span class="sourceLineNo">186</span><a id="line.186">          }           </a>
+<span class="sourceLineNo">187</span><a id="line.187">        } catch (CircularReferenceException ex) {</a>
+<span class="sourceLineNo">188</span><a id="line.188">          throw new BioRuntimeException("Circular references in taxon table. taxon_id=" + ids[TAXON_ID]);</a>
+<span class="sourceLineNo">189</span><a id="line.189">        }</a>
+<span class="sourceLineNo">190</span><a id="line.190">      </a>
+<span class="sourceLineNo">191</span><a id="line.191">        return getProperties(conn, taxon);</a>
+<span class="sourceLineNo">192</span><a id="line.192">      } finally {</a>
+<span class="sourceLineNo">193</span><a id="line.193">        attemptClose(rs);</a>
+<span class="sourceLineNo">194</span><a id="line.194">        attemptClose(statement);</a>
+<span class="sourceLineNo">195</span><a id="line.195">      }</a>
+<span class="sourceLineNo">196</span><a id="line.196">    }</a>
+<span class="sourceLineNo">197</span><a id="line.197">    </a>
+<span class="sourceLineNo">198</span><a id="line.198"></a>
+<span class="sourceLineNo">199</span><a id="line.199">    /**</a>
+<span class="sourceLineNo">200</span><a id="line.200">     * Look up all the names associated with a taxon_id.</a>
+<span class="sourceLineNo">201</span><a id="line.201">     *</a>
+<span class="sourceLineNo">202</span><a id="line.202">     * @param conn the current &lt;code&gt;Connection&lt;/code&gt;.</a>
+<span class="sourceLineNo">203</span><a id="line.203">     * @param taxon_id the NCBI taxon id for the taxon of interest.</a>
+<span class="sourceLineNo">204</span><a id="line.204">     * @return a &lt;code&gt;Map&lt;/code&gt; from name_class (e.g.: "scientific</a>
+<span class="sourceLineNo">205</span><a id="line.205">     * name") to name.</a>
+<span class="sourceLineNo">206</span><a id="line.206">     */</a>
+<span class="sourceLineNo">207</span><a id="line.207">    private static Map getTaxonNames(Connection conn, int taxon_id) </a>
+<span class="sourceLineNo">208</span><a id="line.208">    {</a>
+<span class="sourceLineNo">209</span><a id="line.209">      PreparedStatement statement = null;</a>
+<span class="sourceLineNo">210</span><a id="line.210">      ResultSet rs = null;</a>
+<span class="sourceLineNo">211</span><a id="line.211">      try {</a>
+<span class="sourceLineNo">212</span><a id="line.212">        statement = conn.prepareStatement(</a>
+<span class="sourceLineNo">213</span><a id="line.213">          "SELECT name_class, name "+</a>
+<span class="sourceLineNo">214</span><a id="line.214">          "FROM   taxon_name "+ </a>
+<span class="sourceLineNo">215</span><a id="line.215">          "WHERE  taxon_id = ? ");</a>
+<span class="sourceLineNo">216</span><a id="line.216">        statement.setInt(1, taxon_id);</a>
+<span class="sourceLineNo">217</span><a id="line.217">        rs = statement.executeQuery();</a>
+<span class="sourceLineNo">218</span><a id="line.218"></a>
+<span class="sourceLineNo">219</span><a id="line.219">        Map names = new HashMap();</a>
+<span class="sourceLineNo">220</span><a id="line.220">        while (rs.next()) {     </a>
+<span class="sourceLineNo">221</span><a id="line.221">          String name_class = rs.getString(1);</a>
+<span class="sourceLineNo">222</span><a id="line.222">          String name = rs.getString(2);</a>
+<span class="sourceLineNo">223</span><a id="line.223">          if ((name_class.equals("scientific name")) ||</a>
+<span class="sourceLineNo">224</span><a id="line.224">              (name_class.equals("common name")))</a>
+<span class="sourceLineNo">225</span><a id="line.225">              names.put(name_class, name);</a>
+<span class="sourceLineNo">226</span><a id="line.226">          else {</a>
+<span class="sourceLineNo">227</span><a id="line.227">            Set s = new HashSet();</a>
+<span class="sourceLineNo">228</span><a id="line.228">            s.add(name);</a>
+<span class="sourceLineNo">229</span><a id="line.229">            if (names.containsKey(name_class))</a>
+<span class="sourceLineNo">230</span><a id="line.230">              s.addAll((Collection) names.get(name_class));</a>
+<span class="sourceLineNo">231</span><a id="line.231">              names.put(name_class, s);</a>
+<span class="sourceLineNo">232</span><a id="line.232">            }</a>
+<span class="sourceLineNo">233</span><a id="line.233">        }</a>
+<span class="sourceLineNo">234</span><a id="line.234"></a>
+<span class="sourceLineNo">235</span><a id="line.235">        return names;</a>
+<span class="sourceLineNo">236</span><a id="line.236">      } catch (SQLException ex) {</a>
+<span class="sourceLineNo">237</span><a id="line.237">        throw new BioRuntimeException("Error fetching taxonomy annotations", ex);</a>
+<span class="sourceLineNo">238</span><a id="line.238">      } finally {</a>
+<span class="sourceLineNo">239</span><a id="line.239">        attemptClose(rs);</a>
+<span class="sourceLineNo">240</span><a id="line.240">        attemptClose(statement);</a>
+<span class="sourceLineNo">241</span><a id="line.241">      }</a>
+<span class="sourceLineNo">242</span><a id="line.242">    }</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244"></a>
+<span class="sourceLineNo">245</span><a id="line.245">    /**</a>
+<span class="sourceLineNo">246</span><a id="line.246">     * Adds a &lt;code&gt;Taxon&lt;/code&gt; (along with its parents) to the</a>
+<span class="sourceLineNo">247</span><a id="line.247">     * database. If it is already present in the database, no action</a>
+<span class="sourceLineNo">248</span><a id="line.248">     * is taken.  Returns the id by which the database refers to the</a>
+<span class="sourceLineNo">249</span><a id="line.249">     * specified &lt;code&gt;Taxon&lt;/code&gt; object.</a>
+<span class="sourceLineNo">250</span><a id="line.250">     *</a>
+<span class="sourceLineNo">251</span><a id="line.251">     * @param taxon a &lt;code&gt;Taxon&lt;/code&gt;. The &lt;code&gt;Taxon&lt;/code&gt; must</a>
+<span class="sourceLineNo">252</span><a id="line.252">     * be annotated with the NCBI taxon id</a>
+<span class="sourceLineNo">253</span><a id="line.253">     * (&lt;code&gt;key=EbiFormat.PROPERTY_ORGANISM&lt;/code&gt;).</a>
+<span class="sourceLineNo">254</span><a id="line.254">     * @param helper for the certain database system which is in use.</a>
+<span class="sourceLineNo">255</span><a id="line.255">     * @return an &lt;code&gt;int&lt;/code&gt; that corresponds to the</a>
+<span class="sourceLineNo">256</span><a id="line.256">     * &lt;code&gt;Taxon&lt;/code&gt; in the database.</a>
+<span class="sourceLineNo">257</span><a id="line.257">     */</a>
+<span class="sourceLineNo">258</span><a id="line.258">    public static int putTaxon(Connection conn, DBHelper helper, Taxon taxon) throws SQLException </a>
+<span class="sourceLineNo">259</span><a id="line.259">    {</a>
+<span class="sourceLineNo">260</span><a id="line.260">      // Find the NCBI taxon id annotation </a>
+<span class="sourceLineNo">261</span><a id="line.261">      Annotation anno = taxon.getAnnotation();</a>
+<span class="sourceLineNo">262</span><a id="line.262">      Object t  = anno.getProperty(EbiFormat.PROPERTY_NCBI_TAXON);</a>
+<span class="sourceLineNo">263</span><a id="line.263">      if (t instanceof List) {</a>
+<span class="sourceLineNo">264</span><a id="line.264">        t = (String) ((List) t).get(0);</a>
+<span class="sourceLineNo">265</span><a id="line.265">      }</a>
+<span class="sourceLineNo">266</span><a id="line.266">      int ncbi_taxon_id = Integer.parseInt((String) t);</a>
+<span class="sourceLineNo">267</span><a id="line.267">      PreparedStatement selectTaxon = conn.prepareStatement(</a>
+<span class="sourceLineNo">268</span><a id="line.268">        "select taxon_id " </a>
+<span class="sourceLineNo">269</span><a id="line.269">        + "from taxon " </a>
+<span class="sourceLineNo">270</span><a id="line.270">        + "where ncbi_taxon_id = ? "</a>
+<span class="sourceLineNo">271</span><a id="line.271">      );</a>
+<span class="sourceLineNo">272</span><a id="line.272">      selectTaxon.setInt(1, ncbi_taxon_id);</a>
+<span class="sourceLineNo">273</span><a id="line.273">      ResultSet trs = selectTaxon.executeQuery();</a>
+<span class="sourceLineNo">274</span><a id="line.274">      int taxon_id;</a>
+<span class="sourceLineNo">275</span><a id="line.275">      if (trs.next()) {</a>
+<span class="sourceLineNo">276</span><a id="line.276">        // entry exists - link to it</a>
+<span class="sourceLineNo">277</span><a id="line.277">        taxon_id = trs.getInt(1);</a>
+<span class="sourceLineNo">278</span><a id="line.278">      } else {</a>
+<span class="sourceLineNo">279</span><a id="line.279">        // Taxon entry does not exist - create it</a>
+<span class="sourceLineNo">280</span><a id="line.280">        Taxon parent = taxon.getParent();</a>
+<span class="sourceLineNo">281</span><a id="line.281">        </a>
+<span class="sourceLineNo">282</span><a id="line.282">        // Mein modifizierter Code:</a>
+<span class="sourceLineNo">283</span><a id="line.283">        String rank, gencode, mitocode, left, right;</a>
+<span class="sourceLineNo">284</span><a id="line.284">        </a>
+<span class="sourceLineNo">285</span><a id="line.285">        rank = gencode = mitocode = left = right = "NULL";</a>
+<span class="sourceLineNo">286</span><a id="line.286">        </a>
+<span class="sourceLineNo">287</span><a id="line.287">        if (taxon.getAnnotation().containsProperty("rank"))</a>
+<span class="sourceLineNo">288</span><a id="line.288">          rank = taxon.getAnnotation().getProperty("rank").toString();</a>
+<span class="sourceLineNo">289</span><a id="line.289">        if (taxon.getAnnotation().containsProperty("genetic code id"))</a>
+<span class="sourceLineNo">290</span><a id="line.290">          gencode = taxon.getAnnotation().getProperty("genetic code id").toString();</a>
+<span class="sourceLineNo">291</span><a id="line.291">        if (taxon.getAnnotation().containsProperty("mitochondrial genetic code id"))</a>
+<span class="sourceLineNo">292</span><a id="line.292">          mitocode = taxon.getAnnotation().getProperty("mitochondrial genetic code id").toString();</a>
+<span class="sourceLineNo">293</span><a id="line.293">        if (taxon.getAnnotation().containsProperty("left value"))</a>
+<span class="sourceLineNo">294</span><a id="line.294">          left = taxon.getAnnotation().getProperty("left value").toString();</a>
+<span class="sourceLineNo">295</span><a id="line.295">        if (taxon.getAnnotation().containsProperty("right value"))</a>
+<span class="sourceLineNo">296</span><a id="line.296">          right = taxon.getAnnotation().getProperty("right value").toString();</a>
+<span class="sourceLineNo">297</span><a id="line.297">            </a>
+<span class="sourceLineNo">298</span><a id="line.298">            </a>
+<span class="sourceLineNo">299</span><a id="line.299">        PreparedStatement createTaxon = null;</a>
+<span class="sourceLineNo">300</span><a id="line.300">        if (parent != null) {</a>
+<span class="sourceLineNo">301</span><a id="line.301">          int parent_taxon_id = putTaxon(conn, helper, parent);</a>
+<span class="sourceLineNo">302</span><a id="line.302">          createTaxon = conn.prepareStatement(</a>
+<span class="sourceLineNo">303</span><a id="line.303">             "insert into taxon " </a>
+<span class="sourceLineNo">304</span><a id="line.304">             + "(ncbi_taxon_id, parent_taxon_id,"</a>
+<span class="sourceLineNo">305</span><a id="line.305">             + " node_rank, genetic_code,"</a>
+<span class="sourceLineNo">306</span><a id="line.306">             + " mito_genetic_code, left_value,"</a>
+<span class="sourceLineNo">307</span><a id="line.307">             + " right_value) " </a>
+<span class="sourceLineNo">308</span><a id="line.308">             + "values (?, ?, ?, ?, ?, ?, ?)"</a>
+<span class="sourceLineNo">309</span><a id="line.309">           );</a>
+<span class="sourceLineNo">310</span><a id="line.310">          //System.out.println(ncbi_taxon_id+"\t"+rank+"\t"+gencode+"\t"+"\t"+mitocode+"\t"+left+"\t"+right);</a>
+<span class="sourceLineNo">311</span><a id="line.311">          createTaxon.setInt(1, ncbi_taxon_id);</a>
+<span class="sourceLineNo">312</span><a id="line.312">          createTaxon.setInt(2, parent_taxon_id);</a>
+<span class="sourceLineNo">313</span><a id="line.313">          if (rank.equals("NULL")) </a>
+<span class="sourceLineNo">314</span><a id="line.314">            createTaxon.setNull(3, Types.VARCHAR);</a>
+<span class="sourceLineNo">315</span><a id="line.315">          else createTaxon.setString(3, rank);</a>
+<span class="sourceLineNo">316</span><a id="line.316">          if (gencode.equals("NULL"))</a>
+<span class="sourceLineNo">317</span><a id="line.317">            createTaxon.setNull(4, Types.TINYINT);</a>
+<span class="sourceLineNo">318</span><a id="line.318">          else createTaxon.setInt(4, new Integer(gencode).intValue());</a>
+<span class="sourceLineNo">319</span><a id="line.319">          if (mitocode.equals("NULL"))</a>
+<span class="sourceLineNo">320</span><a id="line.320">            createTaxon.setNull(5, Types.TINYINT);</a>
+<span class="sourceLineNo">321</span><a id="line.321">          else createTaxon.setInt(5, new Integer(mitocode).intValue());</a>
+<span class="sourceLineNo">322</span><a id="line.322">          if (left.equals("NULL"))</a>
+<span class="sourceLineNo">323</span><a id="line.323">            createTaxon.setNull(6, Types.INTEGER);</a>
+<span class="sourceLineNo">324</span><a id="line.324">          else createTaxon.setInt(6, new Integer(left).intValue());</a>
+<span class="sourceLineNo">325</span><a id="line.325">          if (right.equals("NULL"))</a>
+<span class="sourceLineNo">326</span><a id="line.326">            createTaxon.setNull(7, Types.INTEGER);</a>
+<span class="sourceLineNo">327</span><a id="line.327">          else createTaxon.setInt(7, new Integer(right).intValue());</a>
+<span class="sourceLineNo">328</span><a id="line.328">              </a>
+<span class="sourceLineNo">329</span><a id="line.329">        } else {</a>
+<span class="sourceLineNo">330</span><a id="line.330">          createTaxon = conn.prepareStatement(</a>
+<span class="sourceLineNo">331</span><a id="line.331">            "insert into taxon " </a>
+<span class="sourceLineNo">332</span><a id="line.332">            + "(ncbi_taxon_id, node_rank,"</a>
+<span class="sourceLineNo">333</span><a id="line.333">            + " genetic_code, mito_genetic_code,"</a>
+<span class="sourceLineNo">334</span><a id="line.334">            + " left_value, right_value) " </a>
+<span class="sourceLineNo">335</span><a id="line.335">            + "values (?, ?, ?, ?, ?, ?)"</a>
+<span class="sourceLineNo">336</span><a id="line.336">          );</a>
+<span class="sourceLineNo">337</span><a id="line.337">          createTaxon.setInt(1, ncbi_taxon_id);</a>
+<span class="sourceLineNo">338</span><a id="line.338">          if (rank.equals("NULL")) </a>
+<span class="sourceLineNo">339</span><a id="line.339">            createTaxon.setNull(2, Types.VARCHAR);</a>
+<span class="sourceLineNo">340</span><a id="line.340">          else createTaxon.setString(2, rank);</a>
+<span class="sourceLineNo">341</span><a id="line.341">          if (gencode.equals("NULL"))</a>
+<span class="sourceLineNo">342</span><a id="line.342">            createTaxon.setNull(3, Types.TINYINT);</a>
+<span class="sourceLineNo">343</span><a id="line.343">          else createTaxon.setInt(3, new Integer(gencode).intValue());</a>
+<span class="sourceLineNo">344</span><a id="line.344">          if (mitocode.equals("NULL"))</a>
+<span class="sourceLineNo">345</span><a id="line.345">            createTaxon.setNull(4, Types.TINYINT);</a>
+<span class="sourceLineNo">346</span><a id="line.346">          else createTaxon.setInt(4, new Integer(mitocode).intValue());</a>
+<span class="sourceLineNo">347</span><a id="line.347">          if (left.equals("NULL"))</a>
+<span class="sourceLineNo">348</span><a id="line.348">            createTaxon.setNull(5, Types.INTEGER);</a>
+<span class="sourceLineNo">349</span><a id="line.349">          else createTaxon.setInt(5, new Integer(left).intValue());</a>
+<span class="sourceLineNo">350</span><a id="line.350">          if (right.equals("NULL"))</a>
+<span class="sourceLineNo">351</span><a id="line.351">            createTaxon.setNull(6, Types.INTEGER);</a>
+<span class="sourceLineNo">352</span><a id="line.352">          else createTaxon.setInt(6, new Integer(right).intValue());</a>
+<span class="sourceLineNo">353</span><a id="line.353">        }</a>
+<span class="sourceLineNo">354</span><a id="line.354">        createTaxon.executeUpdate();</a>
+<span class="sourceLineNo">355</span><a id="line.355">        createTaxon.close();</a>
+<span class="sourceLineNo">356</span><a id="line.356">        taxon_id = helper.getInsertID(conn, "taxon", "taxon_id");</a>
+<span class="sourceLineNo">357</span><a id="line.357">        putTaxonNames(conn, (Map) taxon.getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES), taxon_id);</a>
+<span class="sourceLineNo">358</span><a id="line.358">      }</a>
+<span class="sourceLineNo">359</span><a id="line.359">      trs.close();</a>
+<span class="sourceLineNo">360</span><a id="line.360">      selectTaxon.close();</a>
+<span class="sourceLineNo">361</span><a id="line.361">      return taxon_id;</a>
+<span class="sourceLineNo">362</span><a id="line.362">    }</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364"></a>
+<span class="sourceLineNo">365</span><a id="line.365">    /** Attempts to put all the names of a taxon into the database. There's no need</a>
+<span class="sourceLineNo">366</span><a id="line.366">     * to access this method, it's only for internal use.</a>
+<span class="sourceLineNo">367</span><a id="line.367">     * @param conn the connection to the database</a>
+<span class="sourceLineNo">368</span><a id="line.368">     * @param names a map with the &lt;code&gt;name_class&lt;/code&gt; as key and a &lt;code&gt;String&lt;/code&gt;</a>
+<span class="sourceLineNo">369</span><a id="line.369">     *   as value or a &lt;code&gt;Set&lt;/code&gt; of &lt;code&gt;String&lt;/code&gt;s, respectively.</a>
+<span class="sourceLineNo">370</span><a id="line.370">     * @param taxon_id the internal &lt;code&gt;taxon_id&lt;/code&gt; within the database.</a>
+<span class="sourceLineNo">371</span><a id="line.371">     */</a>
+<span class="sourceLineNo">372</span><a id="line.372">    private static void putTaxonNames(Connection conn, Map names, int taxon_id) throws SQLException </a>
+<span class="sourceLineNo">373</span><a id="line.373">    {</a>
+<span class="sourceLineNo">374</span><a id="line.374">      if (names != null) {      </a>
+<span class="sourceLineNo">375</span><a id="line.375">        Iterator it = names.keySet().iterator();</a>
+<span class="sourceLineNo">376</span><a id="line.376">        while (it.hasNext()) {</a>
+<span class="sourceLineNo">377</span><a id="line.377">          String nameClass = (String) it.next();</a>
+<span class="sourceLineNo">378</span><a id="line.378">        </a>
+<span class="sourceLineNo">379</span><a id="line.379">          // changes:</a>
+<span class="sourceLineNo">380</span><a id="line.380">          if (names.get(nameClass) instanceof Set) {</a>
+<span class="sourceLineNo">381</span><a id="line.381">            Set all_names = (Set) names.get(nameClass);</a>
+<span class="sourceLineNo">382</span><a id="line.382">            Iterator i = all_names.iterator();</a>
+<span class="sourceLineNo">383</span><a id="line.383">            while(i.hasNext()) {</a>
+<span class="sourceLineNo">384</span><a id="line.384">              String name = (String) i.next();</a>
+<span class="sourceLineNo">385</span><a id="line.385">              PreparedStatement createTaxon = conn.prepareStatement(</a>
+<span class="sourceLineNo">386</span><a id="line.386">                 "insert into taxon_name " </a>
+<span class="sourceLineNo">387</span><a id="line.387">                 + "(taxon_id, name, name_class) " </a>
+<span class="sourceLineNo">388</span><a id="line.388">                 + "values (?, ?, ?)"</a>
+<span class="sourceLineNo">389</span><a id="line.389">              );</a>
+<span class="sourceLineNo">390</span><a id="line.390">              createTaxon.setInt(1, taxon_id);</a>
+<span class="sourceLineNo">391</span><a id="line.391">              createTaxon.setString(2, name);</a>
+<span class="sourceLineNo">392</span><a id="line.392">              createTaxon.setString(3, nameClass);</a>
+<span class="sourceLineNo">393</span><a id="line.393">              createTaxon.executeUpdate();</a>
+<span class="sourceLineNo">394</span><a id="line.394">              createTaxon.close();</a>
+<span class="sourceLineNo">395</span><a id="line.395">            }   </a>
+<span class="sourceLineNo">396</span><a id="line.396">          } else {</a>
+<span class="sourceLineNo">397</span><a id="line.397">            // normal again</a>
+<span class="sourceLineNo">398</span><a id="line.398">                        </a>
+<span class="sourceLineNo">399</span><a id="line.399">            String name = (String) names.get(nameClass);</a>
+<span class="sourceLineNo">400</span><a id="line.400">            PreparedStatement createTaxon = conn.prepareStatement(</a>
+<span class="sourceLineNo">401</span><a id="line.401">              "insert into taxon_name " </a>
+<span class="sourceLineNo">402</span><a id="line.402">              + "(taxon_id, name, name_class) " </a>
+<span class="sourceLineNo">403</span><a id="line.403">              + "values (?, ?, ?)"</a>
+<span class="sourceLineNo">404</span><a id="line.404">            );</a>
+<span class="sourceLineNo">405</span><a id="line.405">            createTaxon.setInt(1, taxon_id);</a>
+<span class="sourceLineNo">406</span><a id="line.406">            createTaxon.setString(2, name);</a>
+<span class="sourceLineNo">407</span><a id="line.407">            createTaxon.setString(3, nameClass);</a>
+<span class="sourceLineNo">408</span><a id="line.408">            createTaxon.executeUpdate();</a>
+<span class="sourceLineNo">409</span><a id="line.409">            createTaxon.close();</a>
+<span class="sourceLineNo">410</span><a id="line.410">          }</a>
+<span class="sourceLineNo">411</span><a id="line.411">        }</a>
+<span class="sourceLineNo">412</span><a id="line.412">      }</a>
+<span class="sourceLineNo">413</span><a id="line.413">    }</a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415"></a>
+<span class="sourceLineNo">416</span><a id="line.416">    /** Attempt to close the Statement. Continue on if there is a problem during the close. */</a>
+<span class="sourceLineNo">417</span><a id="line.417">    public static void attemptClose(Statement statement) </a>
+<span class="sourceLineNo">418</span><a id="line.418">    {</a>
+<span class="sourceLineNo">419</span><a id="line.419">      if (statement != null) try {</a>
+<span class="sourceLineNo">420</span><a id="line.420">        statement.close();</a>
+<span class="sourceLineNo">421</span><a id="line.421">      } catch (SQLException se) {</a>
+<span class="sourceLineNo">422</span><a id="line.422">        se.printStackTrace();</a>
+<span class="sourceLineNo">423</span><a id="line.423">      }</a>
+<span class="sourceLineNo">424</span><a id="line.424">    }</a>
+<span class="sourceLineNo">425</span><a id="line.425"></a>
+<span class="sourceLineNo">426</span><a id="line.426"></a>
+<span class="sourceLineNo">427</span><a id="line.427">    /** Attempt to close the ResultSet. Continue on if there is a problem during the close. */</a>
+<span class="sourceLineNo">428</span><a id="line.428">    public static void attemptClose(ResultSet resultset) </a>
+<span class="sourceLineNo">429</span><a id="line.429">    {</a>
+<span class="sourceLineNo">430</span><a id="line.430">      if (resultset != null) try {</a>
+<span class="sourceLineNo">431</span><a id="line.431">        resultset.close();</a>
+<span class="sourceLineNo">432</span><a id="line.432">      } catch (SQLException se) {</a>
+<span class="sourceLineNo">433</span><a id="line.433">        se.printStackTrace();</a>
+<span class="sourceLineNo">434</span><a id="line.434">      }</a>
+<span class="sourceLineNo">435</span><a id="line.435">    }</a>
+<span class="sourceLineNo">436</span><a id="line.436">   </a>
+<span class="sourceLineNo">437</span><a id="line.437">    </a>
+<span class="sourceLineNo">438</span><a id="line.438">  /** </a>
+<span class="sourceLineNo">439</span><a id="line.439">   * Attempts to get a Taxon object corresponding to the specified</a>
+<span class="sourceLineNo">440</span><a id="line.440">   * name.</a>
+<span class="sourceLineNo">441</span><a id="line.441">   *</a>
+<span class="sourceLineNo">442</span><a id="line.442">   * @param conn the connection to the database</a>
+<span class="sourceLineNo">443</span><a id="line.443">   * @param name the species scientific name</a>
+<span class="sourceLineNo">444</span><a id="line.444">   * @return the corresponding Taxon (which may have already been</a>
+<span class="sourceLineNo">445</span><a id="line.445">   * present in memory after an earlier retrieval), or null if the</a>
+<span class="sourceLineNo">446</span><a id="line.446">   * Taxon could not be found in the database.</a>
+<span class="sourceLineNo">447</span><a id="line.447">   * @throws BioRuntimeException</a>
+<span class="sourceLineNo">448</span><a id="line.448">   */</a>
+<span class="sourceLineNo">449</span><a id="line.449">  public static Taxon getTaxon(Connection conn, String name) throws BioRuntimeException</a>
+<span class="sourceLineNo">450</span><a id="line.450">  {</a>
+<span class="sourceLineNo">451</span><a id="line.451">    PreparedStatement statement = null;</a>
+<span class="sourceLineNo">452</span><a id="line.452">    ResultSet rs = null;</a>
+<span class="sourceLineNo">453</span><a id="line.453">    try {</a>
+<span class="sourceLineNo">454</span><a id="line.454">      int taxon_id = 0;</a>
+<span class="sourceLineNo">455</span><a id="line.455">      statement = conn.prepareStatement(</a>
+<span class="sourceLineNo">456</span><a id="line.456">        "SELECT taxon.taxon_id " +</a>
+<span class="sourceLineNo">457</span><a id="line.457">        "FROM   taxon, taxon_name " +</a>
+<span class="sourceLineNo">458</span><a id="line.458">        "WHERE  taxon.taxon_id = taxon_name.taxon_id " +</a>
+<span class="sourceLineNo">459</span><a id="line.459">        "  AND  taxon_name.name LIKE ?");</a>
+<span class="sourceLineNo">460</span><a id="line.460">      statement.setString(1, name);</a>
+<span class="sourceLineNo">461</span><a id="line.461">      rs = statement.executeQuery();</a>
+<span class="sourceLineNo">462</span><a id="line.462">      if (rs.next()) {</a>
+<span class="sourceLineNo">463</span><a id="line.463">        taxon_id = rs.getInt(1);</a>
+<span class="sourceLineNo">464</span><a id="line.464">        if (rs.wasNull()) </a>
+<span class="sourceLineNo">465</span><a id="line.465">          taxon_id = 0;</a>
+<span class="sourceLineNo">466</span><a id="line.466">      }</a>
+<span class="sourceLineNo">467</span><a id="line.467">      rs.close();</a>
+<span class="sourceLineNo">468</span><a id="line.468">      statement.close();</a>
+<span class="sourceLineNo">469</span><a id="line.469"></a>
+<span class="sourceLineNo">470</span><a id="line.470">      return (taxon_id != 0) ? getDBTaxon(conn, taxon_id) : null;</a>
+<span class="sourceLineNo">471</span><a id="line.471">    } catch (ChangeVetoException ex) {</a>
+<span class="sourceLineNo">472</span><a id="line.472">      throw new BioRuntimeException("Couldn't manipulate in-memory taxonomy", ex);</a>
+<span class="sourceLineNo">473</span><a id="line.473">    } catch (SQLException ex) {</a>
+<span class="sourceLineNo">474</span><a id="line.474">      throw new BioRuntimeException("Error fetching taxonomy annotations", ex);</a>
+<span class="sourceLineNo">475</span><a id="line.475">    } finally {</a>
+<span class="sourceLineNo">476</span><a id="line.476">      attemptClose(rs);</a>
+<span class="sourceLineNo">477</span><a id="line.477">      attemptClose(statement);</a>
+<span class="sourceLineNo">478</span><a id="line.478">    }</a>
+<span class="sourceLineNo">479</span><a id="line.479">  }</a>
+<span class="sourceLineNo">480</span><a id="line.480"></a>
+<span class="sourceLineNo">481</span><a id="line.481">  </a>
+<span class="sourceLineNo">482</span><a id="line.482">  /** Returns all the &lt;code&gt;scientific name&lt;/code&gt;s, which are currently stored in the</a>
+<span class="sourceLineNo">483</span><a id="line.483">    * database.</a>
+<span class="sourceLineNo">484</span><a id="line.484">    * </a>
+<span class="sourceLineNo">485</span><a id="line.485">    * @param conn connection to the database</a>
+<span class="sourceLineNo">486</span><a id="line.486">    * @return array of lexicographically sorted &lt;code&gt;String&lt;/code&gt;s</a>
+<span class="sourceLineNo">487</span><a id="line.487">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">488</span><a id="line.488">    */</a>
+<span class="sourceLineNo">489</span><a id="line.489">  public static String[] getAllScientificNames(Connection conn) throws BioRuntimeException</a>
+<span class="sourceLineNo">490</span><a id="line.490">  {</a>
+<span class="sourceLineNo">491</span><a id="line.491">    String scientific_names[] = null;</a>
+<span class="sourceLineNo">492</span><a id="line.492">    PreparedStatement statement = null;</a>
+<span class="sourceLineNo">493</span><a id="line.493">    ResultSet rs = null;</a>
+<span class="sourceLineNo">494</span><a id="line.494">    try {</a>
+<span class="sourceLineNo">495</span><a id="line.495">      int taxa_counter = 0, i=0;</a>
+<span class="sourceLineNo">496</span><a id="line.496">      statement = conn.prepareStatement(</a>
+<span class="sourceLineNo">497</span><a id="line.497">        "SELECT COUNT(distinct name) " +</a>
+<span class="sourceLineNo">498</span><a id="line.498">        "FROM   taxon_name " +</a>
+<span class="sourceLineNo">499</span><a id="line.499">        "WHERE  name_class LIKE 'scientific name' ");</a>
+<span class="sourceLineNo">500</span><a id="line.500">      rs = statement.executeQuery();</a>
+<span class="sourceLineNo">501</span><a id="line.501">      if (rs.next())</a>
+<span class="sourceLineNo">502</span><a id="line.502">        taxa_counter = rs.getInt(1);</a>
+<span class="sourceLineNo">503</span><a id="line.503">      scientific_names = new String[taxa_counter];</a>
+<span class="sourceLineNo">504</span><a id="line.504">      statement = conn.prepareStatement(</a>
+<span class="sourceLineNo">505</span><a id="line.505">        "SELECT distinct name " +</a>
+<span class="sourceLineNo">506</span><a id="line.506">        "FROM   taxon_name " +</a>
+<span class="sourceLineNo">507</span><a id="line.507">        "WHERE  name_class LIKE 'scientific name' " +</a>
+<span class="sourceLineNo">508</span><a id="line.508">        "ORDER BY name ASC");</a>
+<span class="sourceLineNo">509</span><a id="line.509">      rs = statement.executeQuery();</a>
+<span class="sourceLineNo">510</span><a id="line.510">      while (rs.next()) {</a>
+<span class="sourceLineNo">511</span><a id="line.511">        scientific_names[i++] = rs.getString(1);</a>
+<span class="sourceLineNo">512</span><a id="line.512">        if (rs.wasNull()) i--;</a>
+<span class="sourceLineNo">513</span><a id="line.513">      }</a>
+<span class="sourceLineNo">514</span><a id="line.514">      rs.close();</a>
+<span class="sourceLineNo">515</span><a id="line.515">      statement.close();</a>
+<span class="sourceLineNo">516</span><a id="line.516"></a>
+<span class="sourceLineNo">517</span><a id="line.517">      return (taxa_counter != 0) ? scientific_names : null;</a>
+<span class="sourceLineNo">518</span><a id="line.518">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">519</span><a id="line.519">      exc.printStackTrace();</a>
+<span class="sourceLineNo">520</span><a id="line.520">    }</a>
+<span class="sourceLineNo">521</span><a id="line.521">    return null;</a>
+<span class="sourceLineNo">522</span><a id="line.522">  }</a>
+<span class="sourceLineNo">523</span><a id="line.523"></a>
+<span class="sourceLineNo">524</span><a id="line.524">  </a>
+<span class="sourceLineNo">525</span><a id="line.525">  /** Returns the annotated properties of a given taxon. Only for internal use,</a>
+<span class="sourceLineNo">526</span><a id="line.526">    * since this is needed to construct a fully annotated &lt;code&gt;Taxon&lt;/code&gt; object,</a>
+<span class="sourceLineNo">527</span><a id="line.527">    * which will be returned by one of the getTaxon... methods.</a>
+<span class="sourceLineNo">528</span><a id="line.528">    * @param conn database connection</a>
+<span class="sourceLineNo">529</span><a id="line.529">    * @param taxon the taxon to be annotated</a>
+<span class="sourceLineNo">530</span><a id="line.530">    * @return a fully annotated taxon.</a>
+<span class="sourceLineNo">531</span><a id="line.531">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">532</span><a id="line.532">    */</a>
+<span class="sourceLineNo">533</span><a id="line.533">  private static Taxon getProperties(Connection conn, Taxon taxon) throws BioRuntimeException</a>
+<span class="sourceLineNo">534</span><a id="line.534">  {</a>
+<span class="sourceLineNo">535</span><a id="line.535">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">536</span><a id="line.536">    ResultSet rs = null;</a>
+<span class="sourceLineNo">537</span><a id="line.537">    </a>
+<span class="sourceLineNo">538</span><a id="line.538">    try {</a>
+<span class="sourceLineNo">539</span><a id="line.539">      String rank = null, gencode = null, mitocode = null, left = null, right = null;</a>
+<span class="sourceLineNo">540</span><a id="line.540">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">541</span><a id="line.541">        "SELECT node_rank, genetic_code, mito_genetic_code, left_value, right_value " +</a>
+<span class="sourceLineNo">542</span><a id="line.542">        "FROM   taxon " +</a>
+<span class="sourceLineNo">543</span><a id="line.543">        "WHERE  taxon_id = ?");</a>
+<span class="sourceLineNo">544</span><a id="line.544">      ps.setInt(1, getTaxonID(conn, getRealScientificName(taxon)));</a>
+<span class="sourceLineNo">545</span><a id="line.545">      rs = ps.executeQuery();</a>
+<span class="sourceLineNo">546</span><a id="line.546">      if (rs.next()) {</a>
+<span class="sourceLineNo">547</span><a id="line.547">        rank = rs.getString(1);</a>
+<span class="sourceLineNo">548</span><a id="line.548">        if (!rs.wasNull()) taxon.getAnnotation().setProperty("rank", rank);</a>
+<span class="sourceLineNo">549</span><a id="line.549">        gencode = rs.getString(2);</a>
+<span class="sourceLineNo">550</span><a id="line.550">        if (!rs.wasNull()) taxon.getAnnotation().setProperty("genetic code id", gencode);</a>
+<span class="sourceLineNo">551</span><a id="line.551">        mitocode = rs.getString(3);</a>
+<span class="sourceLineNo">552</span><a id="line.552">        if (!rs.wasNull()) taxon.getAnnotation().setProperty("mitochondrial genetic code id", mitocode);</a>
+<span class="sourceLineNo">553</span><a id="line.553">        left = String.valueOf(rs.getInt(4));</a>
+<span class="sourceLineNo">554</span><a id="line.554">        if (!rs.wasNull()) taxon.getAnnotation().setProperty("left value", left);</a>
+<span class="sourceLineNo">555</span><a id="line.555">            right = String.valueOf(rs.getInt(5));</a>
+<span class="sourceLineNo">556</span><a id="line.556">        if (!rs.wasNull()) taxon.getAnnotation().setProperty("right value", right);</a>
+<span class="sourceLineNo">557</span><a id="line.557">      }  </a>
+<span class="sourceLineNo">558</span><a id="line.558">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">559</span><a id="line.559">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">560</span><a id="line.560">    } catch (IllegalArgumentException exc) {</a>
+<span class="sourceLineNo">561</span><a id="line.561">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">562</span><a id="line.562">    } catch (ChangeVetoException exc) {</a>
+<span class="sourceLineNo">563</span><a id="line.563">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">564</span><a id="line.564">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">565</span><a id="line.565">      exc.printStackTrace();</a>
+<span class="sourceLineNo">566</span><a id="line.566">    } finally {</a>
+<span class="sourceLineNo">567</span><a id="line.567">      attemptClose(rs);</a>
+<span class="sourceLineNo">568</span><a id="line.568">      attemptClose(ps);</a>
+<span class="sourceLineNo">569</span><a id="line.569">    }</a>
+<span class="sourceLineNo">570</span><a id="line.570">    </a>
+<span class="sourceLineNo">571</span><a id="line.571">    return taxon;</a>
+<span class="sourceLineNo">572</span><a id="line.572">  }</a>
+<span class="sourceLineNo">573</span><a id="line.573">  </a>
+<span class="sourceLineNo">574</span><a id="line.574">  </a>
+<span class="sourceLineNo">575</span><a id="line.575">  /** This returns the true scientific name of a given taxon, if there is one. </a>
+<span class="sourceLineNo">576</span><a id="line.576">    * This is necessary because if a taxon does not have a parent node,</a>
+<span class="sourceLineNo">577</span><a id="line.577">    * a &lt;code&gt;TaxonFactory&lt;/code&gt; gives the scientific name 'ROOT' and the</a>
+<span class="sourceLineNo">578</span><a id="line.578">    * real scientific name (if there is one) is only stored in the taxon's</a>
+<span class="sourceLineNo">579</span><a id="line.579">    * &lt;code&gt;EbiFormat&lt;/code&gt;-annotation. This name 'ROOT' applies only for</a>
+<span class="sourceLineNo">580</span><a id="line.580">    * in memory taxon objects. In the database the real name is stored.</a>
+<span class="sourceLineNo">581</span><a id="line.581">    * </a>
+<span class="sourceLineNo">582</span><a id="line.582">    * @param t the taxon</a>
+<span class="sourceLineNo">583</span><a id="line.583">    * @return Name of the taxon.</a>
+<span class="sourceLineNo">584</span><a id="line.584">    */</a>
+<span class="sourceLineNo">585</span><a id="line.585">  public static String getRealScientificName(Taxon t)</a>
+<span class="sourceLineNo">586</span><a id="line.586">  {</a>
+<span class="sourceLineNo">587</span><a id="line.587">    String tName = "root";</a>
+<span class="sourceLineNo">588</span><a id="line.588">    if (t.getScientificName() != null) tName = t.getScientificName();</a>
+<span class="sourceLineNo">589</span><a id="line.589">    if (tName.toLowerCase().equals("root") &amp;&amp; (t.getAnnotation() != null)) </a>
+<span class="sourceLineNo">590</span><a id="line.590">      if (t.getAnnotation().containsProperty(EbiFormat.PROPERTY_TAXON_NAMES)) </a>
+<span class="sourceLineNo">591</span><a id="line.591">        if (((Map) t.getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES)).containsKey("scientific name"))</a>
+<span class="sourceLineNo">592</span><a id="line.592">          tName = ((Map) t.getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES)).get("scientific name").toString();</a>
+<span class="sourceLineNo">593</span><a id="line.593">    return tName;</a>
+<span class="sourceLineNo">594</span><a id="line.594">  }</a>
+<span class="sourceLineNo">595</span><a id="line.595"></a>
+<span class="sourceLineNo">596</span><a id="line.596">  </a>
+<span class="sourceLineNo">597</span><a id="line.597">  /** Returns a &lt;code&gt;Set&lt;/code&gt; containing all internal &lt;code&gt;taxon_id&lt;/code&gt;s of the database.</a>
+<span class="sourceLineNo">598</span><a id="line.598">    * @param conn database connection</a>
+<span class="sourceLineNo">599</span><a id="line.599">    * @return all &lt;code&gt;taxon_id&lt;/code&gt;s or internal use of the database.</a>
+<span class="sourceLineNo">600</span><a id="line.600">    * @throws SQLException</a>
+<span class="sourceLineNo">601</span><a id="line.601">    */</a>
+<span class="sourceLineNo">602</span><a id="line.602">  private static Set ids(Connection conn) throws SQLException</a>
+<span class="sourceLineNo">603</span><a id="line.603">  {</a>
+<span class="sourceLineNo">604</span><a id="line.604">    Set ids = new HashSet();</a>
+<span class="sourceLineNo">605</span><a id="line.605">    Statement statement = conn.createStatement();</a>
+<span class="sourceLineNo">606</span><a id="line.606">    ResultSet rs = statement.executeQuery("SELECT taxon_id FROM taxon");</a>
+<span class="sourceLineNo">607</span><a id="line.607">    while (rs.next()) </a>
+<span class="sourceLineNo">608</span><a id="line.608">      ids.add(new Integer(rs.getInt(1)));</a>
+<span class="sourceLineNo">609</span><a id="line.609">    attemptClose(rs);</a>
+<span class="sourceLineNo">610</span><a id="line.610">    statement.close();</a>
+<span class="sourceLineNo">611</span><a id="line.611">    </a>
+<span class="sourceLineNo">612</span><a id="line.612">    return ids;</a>
+<span class="sourceLineNo">613</span><a id="line.613">  }</a>
+<span class="sourceLineNo">614</span><a id="line.614"></a>
+<span class="sourceLineNo">615</span><a id="line.615">  </a>
+<span class="sourceLineNo">616</span><a id="line.616">  /** Returns a &lt;code&gt;Set&lt;/code&gt; of all NCBI-Taxon-IDs which are currently stored in</a>
+<span class="sourceLineNo">617</span><a id="line.617">    * the database. So it is easy to proove if a taxon is stored in the database or</a>
+<span class="sourceLineNo">618</span><a id="line.618">    * perform other operations.</a>
+<span class="sourceLineNo">619</span><a id="line.619">    * @param conn database connection</a>
+<span class="sourceLineNo">620</span><a id="line.620">    * @return a &lt;code&gt;Set&lt;/code&gt; containing all NCBI-IDs.</a>
+<span class="sourceLineNo">621</span><a id="line.621">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">622</span><a id="line.622">    */</a>
+<span class="sourceLineNo">623</span><a id="line.623">  public static Set NCBIids(Connection conn) throws BioRuntimeException</a>
+<span class="sourceLineNo">624</span><a id="line.624">  {</a>
+<span class="sourceLineNo">625</span><a id="line.625">    Set ids = new HashSet();</a>
+<span class="sourceLineNo">626</span><a id="line.626">    Statement statement = null;</a>
+<span class="sourceLineNo">627</span><a id="line.627">    ResultSet rs = null;</a>
+<span class="sourceLineNo">628</span><a id="line.628">    try {</a>
+<span class="sourceLineNo">629</span><a id="line.629">      statement = conn.createStatement();</a>
+<span class="sourceLineNo">630</span><a id="line.630">      rs = statement.executeQuery("SELECT ncbi_taxon_id FROM taxon");</a>
+<span class="sourceLineNo">631</span><a id="line.631">      while (rs.next())</a>
+<span class="sourceLineNo">632</span><a id="line.632">        ids.add(new Integer(rs.getInt(1)));</a>
+<span class="sourceLineNo">633</span><a id="line.633">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">634</span><a id="line.634">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">635</span><a id="line.635">    } finally {</a>
+<span class="sourceLineNo">636</span><a id="line.636">      try {</a>
+<span class="sourceLineNo">637</span><a id="line.637">        rs.close();</a>
+<span class="sourceLineNo">638</span><a id="line.638">        statement.close();</a>
+<span class="sourceLineNo">639</span><a id="line.639">      } catch (SQLException exc1) {</a>
+<span class="sourceLineNo">640</span><a id="line.640">        throw new BioRuntimeException(exc1);</a>
+<span class="sourceLineNo">641</span><a id="line.641">      }</a>
+<span class="sourceLineNo">642</span><a id="line.642">    }</a>
+<span class="sourceLineNo">643</span><a id="line.643">    return ids;</a>
+<span class="sourceLineNo">644</span><a id="line.644">  }</a>
+<span class="sourceLineNo">645</span><a id="line.645">   </a>
+<span class="sourceLineNo">646</span><a id="line.646">  </a>
+<span class="sourceLineNo">647</span><a id="line.647">  /** Deletes a taxon specified by one of it's names with all it's different</a>
+<span class="sourceLineNo">648</span><a id="line.648">    * names, annotations and sequences from the database. This cannot be undone.</a>
+<span class="sourceLineNo">649</span><a id="line.649">    * The removed taxon will be returned.</a>
+<span class="sourceLineNo">650</span><a id="line.650">    * </a>
+<span class="sourceLineNo">651</span><a id="line.651">    * @param conn database connection</a>
+<span class="sourceLineNo">652</span><a id="line.652">    * @param helper the helper for the certain database system to be used.</a>
+<span class="sourceLineNo">653</span><a id="line.653">    * @param name one of the taxon's names</a>
+<span class="sourceLineNo">654</span><a id="line.654">    * @return the taxon, which was successfully removed and which is not longer</a>
+<span class="sourceLineNo">655</span><a id="line.655">    *   stored in the database.</a>
+<span class="sourceLineNo">656</span><a id="line.656">    * @throws BioException</a>
+<span class="sourceLineNo">657</span><a id="line.657">    * @throws SQLException</a>
+<span class="sourceLineNo">658</span><a id="line.658">    */</a>
+<span class="sourceLineNo">659</span><a id="line.659">  public static Taxon removeTaxon(Connection conn, DBHelper helper, String name) throws SQLException, BioException</a>
+<span class="sourceLineNo">660</span><a id="line.660">  {    </a>
+<span class="sourceLineNo">661</span><a id="line.661">    //if (name.contains("'"))  name = name.replace("\'", "\\\'");</a>
+<span class="sourceLineNo">662</span><a id="line.662">    //if (name.contains("\"")) name = name.replace("\"", "\\\"");</a>
+<span class="sourceLineNo">663</span><a id="line.663"></a>
+<span class="sourceLineNo">664</span><a id="line.664">    return removeTaxon(conn, helper, getTaxonID(conn, name));</a>
+<span class="sourceLineNo">665</span><a id="line.665">  }</a>
+<span class="sourceLineNo">666</span><a id="line.666"></a>
+<span class="sourceLineNo">667</span><a id="line.667">  </a>
+<span class="sourceLineNo">668</span><a id="line.668">  /** This actually performs the delete operations.</a>
+<span class="sourceLineNo">669</span><a id="line.669">    *  </a>
+<span class="sourceLineNo">670</span><a id="line.670">    * @param conn</a>
+<span class="sourceLineNo">671</span><a id="line.671">    * @param helper</a>
+<span class="sourceLineNo">672</span><a id="line.672">    * @param taxon_id</a>
+<span class="sourceLineNo">673</span><a id="line.673">    * @return taxon</a>
+<span class="sourceLineNo">674</span><a id="line.674">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">675</span><a id="line.675">    */</a>
+<span class="sourceLineNo">676</span><a id="line.676">  private static Taxon removeTaxon(Connection conn, DBHelper helper, int taxon_id) throws BioRuntimeException</a>
+<span class="sourceLineNo">677</span><a id="line.677">  {</a>
+<span class="sourceLineNo">678</span><a id="line.678">    Taxon taxon = getTaxon(conn, taxon_id);</a>
+<span class="sourceLineNo">679</span><a id="line.679">    /*</a>
+<span class="sourceLineNo">680</span><a id="line.680">     * Children which don't have a parent anymore -&gt; they become their own parent.</a>
+<span class="sourceLineNo">681</span><a id="line.681">     */</a>
+<span class="sourceLineNo">682</span><a id="line.682">    try {</a>
+<span class="sourceLineNo">683</span><a id="line.683">      Stack children = getChildrenOf(conn, taxon);</a>
+<span class="sourceLineNo">684</span><a id="line.684">      while (!children.isEmpty()) try {</a>
+<span class="sourceLineNo">685</span><a id="line.685">        Taxon child = (Taxon) children.pop();</a>
+<span class="sourceLineNo">686</span><a id="line.686">        setParent(conn, child, child);</a>
+<span class="sourceLineNo">687</span><a id="line.687">      } catch (BioRuntimeException exc) {</a>
+<span class="sourceLineNo">688</span><a id="line.688">        exc.printStackTrace();</a>
+<span class="sourceLineNo">689</span><a id="line.689">      }</a>
+<span class="sourceLineNo">690</span><a id="line.690">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">691</span><a id="line.691">      exc.printStackTrace();</a>
+<span class="sourceLineNo">692</span><a id="line.692">    }</a>
+<span class="sourceLineNo">693</span><a id="line.693">    try {</a>
+<span class="sourceLineNo">694</span><a id="line.694">      Statement delete = conn.createStatement();</a>
+<span class="sourceLineNo">695</span><a id="line.695">      delete.executeUpdate("DELETE FROM taxon_name WHERE taxon_id = "+taxon_id);</a>
+<span class="sourceLineNo">696</span><a id="line.696">      delete.close();</a>
+<span class="sourceLineNo">697</span><a id="line.697">      delete = (Statement) conn.createStatement();</a>
+<span class="sourceLineNo">698</span><a id="line.698">      delete.executeUpdate("DELETE FROM bioentry WHERE taxon_id = "+taxon_id);</a>
+<span class="sourceLineNo">699</span><a id="line.699">      delete.close();</a>
+<span class="sourceLineNo">700</span><a id="line.700">      delete = (Statement) conn.createStatement();        </a>
+<span class="sourceLineNo">701</span><a id="line.701">      delete.executeUpdate("DELETE FROM taxon WHERE taxon_id = "+taxon_id);</a>
+<span class="sourceLineNo">702</span><a id="line.702">      delete.close();</a>
+<span class="sourceLineNo">703</span><a id="line.703">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">704</span><a id="line.704">      throw new BioRuntimeException("Could not delete successfully", exc);</a>
+<span class="sourceLineNo">705</span><a id="line.705">    }</a>
+<span class="sourceLineNo">706</span><a id="line.706">      </a>
+<span class="sourceLineNo">707</span><a id="line.707">    return taxon;</a>
+<span class="sourceLineNo">708</span><a id="line.708">  }</a>
+<span class="sourceLineNo">709</span><a id="line.709">  </a>
+<span class="sourceLineNo">710</span><a id="line.710">  </a>
+<span class="sourceLineNo">711</span><a id="line.711">  /** Deletes the taxon given by it's NCBI-Taxon-ID from the database and returns the</a>
+<span class="sourceLineNo">712</span><a id="line.712">    * removed taxon.</a>
+<span class="sourceLineNo">713</span><a id="line.713">    * @param conn database connection</a>
+<span class="sourceLineNo">714</span><a id="line.714">    * @param helper the helper for the database</a>
+<span class="sourceLineNo">715</span><a id="line.715">    * @param ncbi_id the ncbi-id</a>
+<span class="sourceLineNo">716</span><a id="line.716">    * @return the taxon wich is not stored in the database anymore.</a>
+<span class="sourceLineNo">717</span><a id="line.717">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">718</span><a id="line.718">    * @throws BioException</a>
+<span class="sourceLineNo">719</span><a id="line.719">    * @throws SQLException</a>
+<span class="sourceLineNo">720</span><a id="line.720">    */</a>
+<span class="sourceLineNo">721</span><a id="line.721">  public static Taxon removeTaxon(Connection conn, int ncbi_id, DBHelper helper) throws BioRuntimeException, SQLException, BioException</a>
+<span class="sourceLineNo">722</span><a id="line.722">  {</a>
+<span class="sourceLineNo">723</span><a id="line.723">    return removeTaxon(conn, helper, getTaxonID(conn, getRealScientificName(getTaxon(conn, ncbi_id))));</a>
+<span class="sourceLineNo">724</span><a id="line.724">  }</a>
+<span class="sourceLineNo">725</span><a id="line.725">  </a>
+<span class="sourceLineNo">726</span><a id="line.726">  </a>
+<span class="sourceLineNo">727</span><a id="line.727">  /** This changes the scientific name of the given taxon and stores the new name persistent</a>
+<span class="sourceLineNo">728</span><a id="line.728">    * in the database.</a>
+<span class="sourceLineNo">729</span><a id="line.729">    * @param conn database connection</a>
+<span class="sourceLineNo">730</span><a id="line.730">    * @param taxon the taxon to be changed</a>
+<span class="sourceLineNo">731</span><a id="line.731">    * @param newName the new scientific name</a>
+<span class="sourceLineNo">732</span><a id="line.732">    * @return the changed taxon with the new scientific name.</a>
+<span class="sourceLineNo">733</span><a id="line.733">    * @throws SQLException</a>
+<span class="sourceLineNo">734</span><a id="line.734">    */</a>
+<span class="sourceLineNo">735</span><a id="line.735">  public static Taxon setScientificName(Connection conn, Taxon taxon, String newName) throws SQLException </a>
+<span class="sourceLineNo">736</span><a id="line.736">  {    </a>
+<span class="sourceLineNo">737</span><a id="line.737">    PreparedStatement updateName = conn.prepareStatement(</a>
+<span class="sourceLineNo">738</span><a id="line.738">      "UPDATE taxon_name SET name = ? " +</a>
+<span class="sourceLineNo">739</span><a id="line.739">      "WHERE  name LIKE ? AND " +</a>
+<span class="sourceLineNo">740</span><a id="line.740">      "       name_class LIKE ?");</a>
+<span class="sourceLineNo">741</span><a id="line.741">    updateName.setString(1, newName);</a>
+<span class="sourceLineNo">742</span><a id="line.742">    updateName.setString(2, taxon.getScientificName());</a>
+<span class="sourceLineNo">743</span><a id="line.743">    updateName.setString(3, "scientific name");</a>
+<span class="sourceLineNo">744</span><a id="line.744">    updateName.execute();</a>
+<span class="sourceLineNo">745</span><a id="line.745">    attemptClose(updateName);</a>
+<span class="sourceLineNo">746</span><a id="line.746"></a>
+<span class="sourceLineNo">747</span><a id="line.747">    return getTaxon(conn, newName);</a>
+<span class="sourceLineNo">748</span><a id="line.748">  }</a>
+<span class="sourceLineNo">749</span><a id="line.749">  </a>
+<span class="sourceLineNo">750</span><a id="line.750">  </a>
+<span class="sourceLineNo">751</span><a id="line.751">  /** With this method the common name of the given taxon can be changed or created,</a>
+<span class="sourceLineNo">752</span><a id="line.752">    * if there was none before. The new common name will be stored persitently.</a>
+<span class="sourceLineNo">753</span><a id="line.753">    * @param conn database connection</a>
+<span class="sourceLineNo">754</span><a id="line.754">    * @param taxon the taxon to be updated</a>
+<span class="sourceLineNo">755</span><a id="line.755">    * @param newName the new common name</a>
+<span class="sourceLineNo">756</span><a id="line.756">    * @return the updated taxon.</a>
+<span class="sourceLineNo">757</span><a id="line.757">    * @throws BioException</a>
+<span class="sourceLineNo">758</span><a id="line.758">    * @throws SQLException</a>
+<span class="sourceLineNo">759</span><a id="line.759">    */</a>
+<span class="sourceLineNo">760</span><a id="line.760">  public static Taxon setCommonName(Connection conn, Taxon taxon, String newName) throws BioException, SQLException </a>
+<span class="sourceLineNo">761</span><a id="line.761">  {</a>
+<span class="sourceLineNo">762</span><a id="line.762">    boolean noCommonName = false;</a>
+<span class="sourceLineNo">763</span><a id="line.763">    String name_class = "common name";</a>
+<span class="sourceLineNo">764</span><a id="line.764">    </a>
+<span class="sourceLineNo">765</span><a id="line.765">    /* A taxon does not necessaryly have to have a common name. Let's have a look,</a>
+<span class="sourceLineNo">766</span><a id="line.766">     * if we need to perform an update or insert operation.</a>
+<span class="sourceLineNo">767</span><a id="line.767">     */</a>
+<span class="sourceLineNo">768</span><a id="line.768">    PreparedStatement question = conn.prepareStatement(</a>
+<span class="sourceLineNo">769</span><a id="line.769">      "SELECT COUNT(name) " +</a>
+<span class="sourceLineNo">770</span><a id="line.770">      "FROM   taxon_name " +</a>
+<span class="sourceLineNo">771</span><a id="line.771">      "WHERE  name_class LIKE ? AND " +</a>
+<span class="sourceLineNo">772</span><a id="line.772">      "       taxon_id = ?");</a>
+<span class="sourceLineNo">773</span><a id="line.773">    question.setString(1, name_class);</a>
+<span class="sourceLineNo">774</span><a id="line.774">    question.setInt(2, getTaxonID(conn, taxon.getScientificName()));</a>
+<span class="sourceLineNo">775</span><a id="line.775">    ResultSet rs = question.executeQuery();</a>
+<span class="sourceLineNo">776</span><a id="line.776">    </a>
+<span class="sourceLineNo">777</span><a id="line.777">    if (rs.next()) {</a>
+<span class="sourceLineNo">778</span><a id="line.778">      if (rs.getInt(1) &gt; 0) {</a>
+<span class="sourceLineNo">779</span><a id="line.779">        attemptClose(rs);</a>
+<span class="sourceLineNo">780</span><a id="line.780">        attemptClose(question);</a>
+<span class="sourceLineNo">781</span><a id="line.781">        PreparedStatement updateName = conn.prepareStatement(</a>
+<span class="sourceLineNo">782</span><a id="line.782">          "UPDATE taxon_name SET name = ? " +</a>
+<span class="sourceLineNo">783</span><a id="line.783">          "WHERE  name LIKE ? AND " +</a>
+<span class="sourceLineNo">784</span><a id="line.784">          "       name_class LIKE ?");</a>
+<span class="sourceLineNo">785</span><a id="line.785">        updateName.setString(1, newName);</a>
+<span class="sourceLineNo">786</span><a id="line.786">        updateName.setString(2, taxon.getScientificName());</a>
+<span class="sourceLineNo">787</span><a id="line.787">        updateName.setString(3, name_class);</a>
+<span class="sourceLineNo">788</span><a id="line.788">        updateName.execute();</a>
+<span class="sourceLineNo">789</span><a id="line.789">        attemptClose(updateName);</a>
+<span class="sourceLineNo">790</span><a id="line.790">      } else noCommonName = true;      </a>
+<span class="sourceLineNo">791</span><a id="line.791">    } </a>
+<span class="sourceLineNo">792</span><a id="line.792">    if (noCommonName) {      </a>
+<span class="sourceLineNo">793</span><a id="line.793">      attemptClose(rs);</a>
+<span class="sourceLineNo">794</span><a id="line.794">      attemptClose(question);</a>
+<span class="sourceLineNo">795</span><a id="line.795">      PreparedStatement insert = conn.prepareStatement(</a>
+<span class="sourceLineNo">796</span><a id="line.796">        "INSERT INTO taxon_name (taxon_id, name, name_class) VALUES (?, ?, ?)");</a>
+<span class="sourceLineNo">797</span><a id="line.797">      try {</a>
+<span class="sourceLineNo">798</span><a id="line.798">        insert.setInt(1, getTaxonID(conn, taxon.getScientificName()));</a>
+<span class="sourceLineNo">799</span><a id="line.799">        insert.setString(2, newName);</a>
+<span class="sourceLineNo">800</span><a id="line.800">        insert.setString(3, name_class);</a>
+<span class="sourceLineNo">801</span><a id="line.801">        insert.execute();</a>
+<span class="sourceLineNo">802</span><a id="line.802">      } catch (BioException exc) {</a>
+<span class="sourceLineNo">803</span><a id="line.803">        throw exc;</a>
+<span class="sourceLineNo">804</span><a id="line.804">      } catch (SQLException exc) {</a>
+<span class="sourceLineNo">805</span><a id="line.805">        throw exc;</a>
+<span class="sourceLineNo">806</span><a id="line.806">      } finally {</a>
+<span class="sourceLineNo">807</span><a id="line.807">        attemptClose(insert); </a>
+<span class="sourceLineNo">808</span><a id="line.808">      }</a>
+<span class="sourceLineNo">809</span><a id="line.809">    }</a>
+<span class="sourceLineNo">810</span><a id="line.810">        </a>
+<span class="sourceLineNo">811</span><a id="line.811">    return getTaxon(conn, taxon.getScientificName());</a>
+<span class="sourceLineNo">812</span><a id="line.812">  }</a>
+<span class="sourceLineNo">813</span><a id="line.813"></a>
+<span class="sourceLineNo">814</span><a id="line.814">    </a>
+<span class="sourceLineNo">815</span><a id="line.815">  /** Returns the internal &lt;code&gt;taxon_id&lt;/code&gt; of the taxon specified by the </a>
+<span class="sourceLineNo">816</span><a id="line.816">    * scientific name. Only for internal use.</a>
+<span class="sourceLineNo">817</span><a id="line.817">    * @param conn database connection</a>
+<span class="sourceLineNo">818</span><a id="line.818">    * @param scientificName the scientific name</a>
+<span class="sourceLineNo">819</span><a id="line.819">    * @return the internal taxon_id of the taxon.</a>
+<span class="sourceLineNo">820</span><a id="line.820">    * @throws SQLException</a>
+<span class="sourceLineNo">821</span><a id="line.821">    * @throws BioException</a>
+<span class="sourceLineNo">822</span><a id="line.822">    */</a>
+<span class="sourceLineNo">823</span><a id="line.823">  private static int getTaxonID(Connection conn, String scientificName) throws SQLException, BioException</a>
+<span class="sourceLineNo">824</span><a id="line.824">  {</a>
+<span class="sourceLineNo">825</span><a id="line.825">    int taxon_id = -1;   </a>
+<span class="sourceLineNo">826</span><a id="line.826">    </a>
+<span class="sourceLineNo">827</span><a id="line.827">    PreparedStatement taxID  = conn.prepareStatement(</a>
+<span class="sourceLineNo">828</span><a id="line.828">      "SELECT taxon_id "        +</a>
+<span class="sourceLineNo">829</span><a id="line.829">      "FROM   taxon_name "      +</a>
+<span class="sourceLineNo">830</span><a id="line.830">      "WHERE  name LIKE ? AND " +</a>
+<span class="sourceLineNo">831</span><a id="line.831">      "       name_class LIKE ?");</a>
+<span class="sourceLineNo">832</span><a id="line.832">    taxID.setString(1, scientificName);</a>
+<span class="sourceLineNo">833</span><a id="line.833">    taxID.setString(2, "scientific name");</a>
+<span class="sourceLineNo">834</span><a id="line.834">    ResultSet rs = taxID.executeQuery();</a>
+<span class="sourceLineNo">835</span><a id="line.835">    if (rs.next()) {</a>
+<span class="sourceLineNo">836</span><a id="line.836">      taxon_id = rs.getInt(1);</a>
+<span class="sourceLineNo">837</span><a id="line.837">      attemptClose(rs);</a>
+<span class="sourceLineNo">838</span><a id="line.838">      attemptClose(taxID);</a>
+<span class="sourceLineNo">839</span><a id="line.839">      return taxon_id;</a>
+<span class="sourceLineNo">840</span><a id="line.840">    }</a>
+<span class="sourceLineNo">841</span><a id="line.841">    attemptClose(rs);</a>
+<span class="sourceLineNo">842</span><a id="line.842">    attemptClose(taxID);</a>
+<span class="sourceLineNo">843</span><a id="line.843">    throw new BioException("The database does not contain a taxon named "+scientificName+".");</a>
+<span class="sourceLineNo">844</span><a id="line.844">  }</a>
+<span class="sourceLineNo">845</span><a id="line.845"></a>
+<span class="sourceLineNo">846</span><a id="line.846">  </a>
+<span class="sourceLineNo">847</span><a id="line.847">  /** Adds a new name of the given &lt;code&gt;nameClass&lt;/code&gt; to the taxon. However, there must</a>
+<span class="sourceLineNo">848</span><a id="line.848">    * be exactly one &lt;code&gt;scientific name&lt;/code&gt; and maximal one &lt;code&gt;common</a>
+<span class="sourceLineNo">849</span><a id="line.849">    * name&lt;/code&gt;. Otherwise an &lt;code&gt;Exception&lt;/code&gt; will be thrown.  </a>
+<span class="sourceLineNo">850</span><a id="line.850">    * </a>
+<span class="sourceLineNo">851</span><a id="line.851">    * @param conn database connection</a>
+<span class="sourceLineNo">852</span><a id="line.852">    * @param taxon the taxon to be updated</a>
+<span class="sourceLineNo">853</span><a id="line.853">    * @param nameClass the name_class of the new name.</a>
+<span class="sourceLineNo">854</span><a id="line.854">    * @param newName the new name.</a>
+<span class="sourceLineNo">855</span><a id="line.855">    * @return the persistently updated taxon.</a>
+<span class="sourceLineNo">856</span><a id="line.856">    * @throws BioException</a>
+<span class="sourceLineNo">857</span><a id="line.857">    * @throws SQLException</a>
+<span class="sourceLineNo">858</span><a id="line.858">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">859</span><a id="line.859">    */</a>
+<span class="sourceLineNo">860</span><a id="line.860">  public static Taxon addName(Connection conn, Taxon taxon, String nameClass, String newName) throws BioException, SQLException, BioRuntimeException</a>
+<span class="sourceLineNo">861</span><a id="line.861">  {</a>
+<span class="sourceLineNo">862</span><a id="line.862">    if (nameClass.equals("scientific name") || nameClass.equals("common name")) </a>
+<span class="sourceLineNo">863</span><a id="line.863">      throw new BioException("There can only be one "+nameClass+".");  </a>
+<span class="sourceLineNo">864</span><a id="line.864">    </a>
+<span class="sourceLineNo">865</span><a id="line.865">    PreparedStatement insert = conn.prepareStatement(</a>
+<span class="sourceLineNo">866</span><a id="line.866">      "INSERT INTO taxon_name (taxon_id, name, name_class) VALUES (?, ?, ?)");</a>
+<span class="sourceLineNo">867</span><a id="line.867">    try {</a>
+<span class="sourceLineNo">868</span><a id="line.868">      insert.setInt(1, getTaxonID(conn, getRealScientificName(taxon)));</a>
+<span class="sourceLineNo">869</span><a id="line.869">      insert.setString(2, newName);</a>
+<span class="sourceLineNo">870</span><a id="line.870">      insert.setString(3, nameClass);</a>
+<span class="sourceLineNo">871</span><a id="line.871">      insert.executeUpdate();</a>
+<span class="sourceLineNo">872</span><a id="line.872">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">873</span><a id="line.873">      throw exc;</a>
+<span class="sourceLineNo">874</span><a id="line.874">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">875</span><a id="line.875">      throw exc;</a>
+<span class="sourceLineNo">876</span><a id="line.876">    } finally {</a>
+<span class="sourceLineNo">877</span><a id="line.877">      attemptClose(insert);</a>
+<span class="sourceLineNo">878</span><a id="line.878">    }</a>
+<span class="sourceLineNo">879</span><a id="line.879">    </a>
+<span class="sourceLineNo">880</span><a id="line.880">    return getTaxon(conn, taxon.getScientificName());</a>
+<span class="sourceLineNo">881</span><a id="line.881">  }</a>
+<span class="sourceLineNo">882</span><a id="line.882">  </a>
+<span class="sourceLineNo">883</span><a id="line.883">  </a>
+<span class="sourceLineNo">884</span><a id="line.884">  /** Deletes the specified name from of the taxon from the database. </a>
+<span class="sourceLineNo">885</span><a id="line.885">    * The &lt;code&gt;scientific name&lt;/code&gt; has to be uniqe, so this cannot be removed by</a>
+<span class="sourceLineNo">886</span><a id="line.886">    * this method.</a>
+<span class="sourceLineNo">887</span><a id="line.887">    * </a>
+<span class="sourceLineNo">888</span><a id="line.888">    * @param conn the database connection</a>
+<span class="sourceLineNo">889</span><a id="line.889">    * @param helper the helper for the used database system</a>
+<span class="sourceLineNo">890</span><a id="line.890">    * @param taxon the taxon to be updated</a>
+<span class="sourceLineNo">891</span><a id="line.891">    * @param nameClass the name_class of the name to be removed</a>
+<span class="sourceLineNo">892</span><a id="line.892">    * @param oldName the old name, which is not needed anymore.</a>
+<span class="sourceLineNo">893</span><a id="line.893">    * @return the updated taxon.</a>
+<span class="sourceLineNo">894</span><a id="line.894">    * @throws BioException</a>
+<span class="sourceLineNo">895</span><a id="line.895">    * @throws SQLException</a>
+<span class="sourceLineNo">896</span><a id="line.896">    */</a>
+<span class="sourceLineNo">897</span><a id="line.897">  public static Taxon removeName(Connection conn, DBHelper helper, Taxon taxon, String nameClass, String oldName) throws BioException, SQLException</a>
+<span class="sourceLineNo">898</span><a id="line.898">  {</a>
+<span class="sourceLineNo">899</span><a id="line.899">    if (nameClass.equals("scientific name")) </a>
+<span class="sourceLineNo">900</span><a id="line.900">      throw new BioException("You can't delete the "+nameClass);</a>
+<span class="sourceLineNo">901</span><a id="line.901">        </a>
+<span class="sourceLineNo">902</span><a id="line.902">    PreparedStatement delete = conn.prepareStatement(</a>
+<span class="sourceLineNo">903</span><a id="line.903">      "DELETE FROM taxon_name " +</a>
+<span class="sourceLineNo">904</span><a id="line.904">      "WHERE  name_class LIKE ? AND " +</a>
+<span class="sourceLineNo">905</span><a id="line.905">      "       name LIKE ?"); </a>
+<span class="sourceLineNo">906</span><a id="line.906">    delete.setString(1, nameClass);</a>
+<span class="sourceLineNo">907</span><a id="line.907">    delete.setString(2, oldName);</a>
+<span class="sourceLineNo">908</span><a id="line.908">    delete.executeUpdate();</a>
+<span class="sourceLineNo">909</span><a id="line.909">    attemptClose(delete);</a>
+<span class="sourceLineNo">910</span><a id="line.910">    </a>
+<span class="sourceLineNo">911</span><a id="line.911">    return getTaxon(conn, taxon.getScientificName());</a>
+<span class="sourceLineNo">912</span><a id="line.912">  }</a>
+<span class="sourceLineNo">913</span><a id="line.913">  </a>
+<span class="sourceLineNo">914</span><a id="line.914">  </a>
+<span class="sourceLineNo">915</span><a id="line.915">  /** Returns all children of the specified taxon.</a>
+<span class="sourceLineNo">916</span><a id="line.916">    * @param conn database connection</a>
+<span class="sourceLineNo">917</span><a id="line.917">    * @param scientificName name of the taxon which children should be searched.</a>
+<span class="sourceLineNo">918</span><a id="line.918">    * @return a &lt;code&gt;Stac&lt;/code&gt;, which contains the children sorted by theire </a>
+<span class="sourceLineNo">919</span><a id="line.919">    *   &lt;code&gt;scientific name&lt;/code&gt;s from top to the bottom.</a>
+<span class="sourceLineNo">920</span><a id="line.920">    * @throws BioException</a>
+<span class="sourceLineNo">921</span><a id="line.921">    * @throws SQLException</a>
+<span class="sourceLineNo">922</span><a id="line.922">    */</a>
+<span class="sourceLineNo">923</span><a id="line.923">  public static Stack getChildrenOf(Connection conn, String scientificName) throws BioException</a>
+<span class="sourceLineNo">924</span><a id="line.924">  {</a>
+<span class="sourceLineNo">925</span><a id="line.925">    Stack children = new Stack();</a>
+<span class="sourceLineNo">926</span><a id="line.926">    PreparedStatement ps = null, ps2 = null;</a>
+<span class="sourceLineNo">927</span><a id="line.927">    ResultSet rs = null, rs2 = null;</a>
+<span class="sourceLineNo">928</span><a id="line.928">    try {</a>
+<span class="sourceLineNo">929</span><a id="line.929">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">930</span><a id="line.930">        "SELECT taxon.taxon_id " +</a>
+<span class="sourceLineNo">931</span><a id="line.931">        "FROM   taxon, taxon_name " +</a>
+<span class="sourceLineNo">932</span><a id="line.932">        "WHERE  taxon_name.taxon_id = taxon.taxon_id     AND" +</a>
+<span class="sourceLineNo">933</span><a id="line.933">        "       taxon_name.name_class LIKE 'scientific%' AND" +</a>
+<span class="sourceLineNo">934</span><a id="line.934">        "       parent_taxon_id = ? " +</a>
+<span class="sourceLineNo">935</span><a id="line.935">        "ORDER BY taxon_name.name DESC");</a>
+<span class="sourceLineNo">936</span><a id="line.936">      //if (scientificName.contains("'"))  scientificName = scientificName.replace("\'", "\\\'");</a>
+<span class="sourceLineNo">937</span><a id="line.937">      //if (scientificName.contains("\"")) scientificName = scientificName.replace("\"", "\\\"");</a>
+<span class="sourceLineNo">938</span><a id="line.938">      ps.setInt(1, getTaxonID(conn, scientificName));</a>
+<span class="sourceLineNo">939</span><a id="line.939">      rs = ps.executeQuery();</a>
+<span class="sourceLineNo">940</span><a id="line.940">      while (rs.next()) {</a>
+<span class="sourceLineNo">941</span><a id="line.941">        ps2 = conn.prepareStatement(</a>
+<span class="sourceLineNo">942</span><a id="line.942">          "SELECT name             " +</a>
+<span class="sourceLineNo">943</span><a id="line.943">          "FROM   taxon_name       " +</a>
+<span class="sourceLineNo">944</span><a id="line.944">          "WHERE  taxon_id = ? AND " +</a>
+<span class="sourceLineNo">945</span><a id="line.945">          "       name_class LIKE 'scientific%'");</a>
+<span class="sourceLineNo">946</span><a id="line.946">        ps2.setInt(1, rs.getInt(1));</a>
+<span class="sourceLineNo">947</span><a id="line.947">        rs2 = ps2.executeQuery();</a>
+<span class="sourceLineNo">948</span><a id="line.948">        if (rs2.next()) { </a>
+<span class="sourceLineNo">949</span><a id="line.949">          children.push(getTaxon(conn, rs2.getString(1)));</a>
+<span class="sourceLineNo">950</span><a id="line.950">          if (rs2.wasNull()) children.pop();</a>
+<span class="sourceLineNo">951</span><a id="line.951">        }</a>
+<span class="sourceLineNo">952</span><a id="line.952">      }</a>
+<span class="sourceLineNo">953</span><a id="line.953">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">954</span><a id="line.954">      throw new BioException(exc);</a>
+<span class="sourceLineNo">955</span><a id="line.955">    } finally {</a>
+<span class="sourceLineNo">956</span><a id="line.956">      attemptClose(ps);</a>
+<span class="sourceLineNo">957</span><a id="line.957">      attemptClose(rs);</a>
+<span class="sourceLineNo">958</span><a id="line.958">      attemptClose(ps2);</a>
+<span class="sourceLineNo">959</span><a id="line.959">      attemptClose(rs2);</a>
+<span class="sourceLineNo">960</span><a id="line.960">    }</a>
+<span class="sourceLineNo">961</span><a id="line.961"></a>
+<span class="sourceLineNo">962</span><a id="line.962">    return children;  </a>
+<span class="sourceLineNo">963</span><a id="line.963">  }</a>
+<span class="sourceLineNo">964</span><a id="line.964"></a>
+<span class="sourceLineNo">965</span><a id="line.965">  </a>
+<span class="sourceLineNo">966</span><a id="line.966">  /** Returns the children as a &lt;code&gt;Stack&lt;/code&gt; of this given taxon.</a>
+<span class="sourceLineNo">967</span><a id="line.967">    * </a>
+<span class="sourceLineNo">968</span><a id="line.968">    * @param conn database connection</a>
+<span class="sourceLineNo">969</span><a id="line.969">    * @param t the parent taxon</a>
+<span class="sourceLineNo">970</span><a id="line.970">    * @return a sorted &lt;code&gt;Stack&lt;/code&gt; of the children, which might be empty,</a>
+<span class="sourceLineNo">971</span><a id="line.971">    *   but not &lt;code&gt;null&lt;/code&gt;.</a>
+<span class="sourceLineNo">972</span><a id="line.972">    * @throws BioException</a>
+<span class="sourceLineNo">973</span><a id="line.973">    */</a>
+<span class="sourceLineNo">974</span><a id="line.974">  public static Stack getChildrenOf(Connection conn, Taxon t) throws BioException</a>
+<span class="sourceLineNo">975</span><a id="line.975">  {</a>
+<span class="sourceLineNo">976</span><a id="line.976">    String tName = t.getScientificName();</a>
+<span class="sourceLineNo">977</span><a id="line.977">    if (tName.toLowerCase().equals("root") &amp;&amp; (t.getAnnotation() != null))</a>
+<span class="sourceLineNo">978</span><a id="line.978">      if (t.getAnnotation().containsProperty(EbiFormat.PROPERTY_TAXON_NAMES)) </a>
+<span class="sourceLineNo">979</span><a id="line.979">        if (((Map) t.getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES)).containsKey("scientific name"))</a>
+<span class="sourceLineNo">980</span><a id="line.980">           tName = ((Map) t.getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES)).get("scientific name").toString();</a>
+<span class="sourceLineNo">981</span><a id="line.981">    </a>
+<span class="sourceLineNo">982</span><a id="line.982">    return getChildrenOf(conn, tName);</a>
+<span class="sourceLineNo">983</span><a id="line.983">  }</a>
+<span class="sourceLineNo">984</span><a id="line.984"></a>
+<span class="sourceLineNo">985</span><a id="line.985">  </a>
+<span class="sourceLineNo">986</span><a id="line.986">  /** Updates a taxon and sets it's rank to the specified &lt;code&gt;String&lt;/code&gt;.</a>
+<span class="sourceLineNo">987</span><a id="line.987">    * @param conn database connection.</a>
+<span class="sourceLineNo">988</span><a id="line.988">    * @param tdb taxon to be updated</a>
+<span class="sourceLineNo">989</span><a id="line.989">    * @param rank the new rank (like 'kingdom', 'genus' or what ever)</a>
+<span class="sourceLineNo">990</span><a id="line.990">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">991</span><a id="line.991">    */</a>
+<span class="sourceLineNo">992</span><a id="line.992">  public static void setRank(Connection conn, Taxon tdb, String rank) throws BioRuntimeException</a>
+<span class="sourceLineNo">993</span><a id="line.993">  {</a>
+<span class="sourceLineNo">994</span><a id="line.994">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">995</span><a id="line.995">    try {</a>
+<span class="sourceLineNo">996</span><a id="line.996">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">997</span><a id="line.997">        "UPDATE taxon SET node_rank = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">998</span><a id="line.998">      ps.setString(1, rank);</a>
+<span class="sourceLineNo">999</span><a id="line.999">      ps.setInt(2, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1004</span><a id="line.1004">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1005</span><a id="line.1005">    } finally {</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">      attemptClose(ps);</a>
+<span class="sourceLineNo">1007</span><a id="line.1007">    }</a>
+<span class="sourceLineNo">1008</span><a id="line.1008">  }</a>
+<span class="sourceLineNo">1009</span><a id="line.1009"></a>
+<span class="sourceLineNo">1010</span><a id="line.1010">  </a>
+<span class="sourceLineNo">1011</span><a id="line.1011">  /** Removes the rank persistently from the taxon in the database.</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">    * @param conn</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">    * @param helper</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">    * @param tdb</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">    */</a>
+<span class="sourceLineNo">1017</span><a id="line.1017">  public static void removeRank(Connection conn, DBHelper helper, Taxon tdb) throws BioRuntimeException</a>
+<span class="sourceLineNo">1018</span><a id="line.1018">  {</a>
+<span class="sourceLineNo">1019</span><a id="line.1019">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1020</span><a id="line.1020">    try {</a>
+<span class="sourceLineNo">1021</span><a id="line.1021">      ps = conn.prepareStatement("UPDATE taxon SET node_rank = NULL WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1022</span><a id="line.1022">      ps.setInt(1, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1023</span><a id="line.1023">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1024</span><a id="line.1024">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1025</span><a id="line.1025">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1026</span><a id="line.1026">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1028</span><a id="line.1028">    } finally {</a>
+<span class="sourceLineNo">1029</span><a id="line.1029">      attemptClose(ps);</a>
+<span class="sourceLineNo">1030</span><a id="line.1030">    }</a>
+<span class="sourceLineNo">1031</span><a id="line.1031">  }</a>
+<span class="sourceLineNo">1032</span><a id="line.1032"></a>
+<span class="sourceLineNo">1033</span><a id="line.1033">  </a>
+<span class="sourceLineNo">1034</span><a id="line.1034">  /** Updates the taxon in the database and sets its genetic code id to the specified value.</a>
+<span class="sourceLineNo">1035</span><a id="line.1035">    * @param conn</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">    * @param tdb</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">    * @param id</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1039</span><a id="line.1039">    */</a>
+<span class="sourceLineNo">1040</span><a id="line.1040">  public static void setGeneticCodeID(Connection conn, Taxon tdb, int id) throws BioRuntimeException</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">  {</a>
+<span class="sourceLineNo">1042</span><a id="line.1042">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1043</span><a id="line.1043">    try {</a>
+<span class="sourceLineNo">1044</span><a id="line.1044">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">        "UPDATE taxon SET genetic_code = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1046</span><a id="line.1046">      ps.setInt(1, id);</a>
+<span class="sourceLineNo">1047</span><a id="line.1047">      ps.setInt(2, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1049</span><a id="line.1049">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1050</span><a id="line.1050">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1051</span><a id="line.1051">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1052</span><a id="line.1052">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">    } finally {</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">      attemptClose(ps);</a>
+<span class="sourceLineNo">1055</span><a id="line.1055">    }</a>
+<span class="sourceLineNo">1056</span><a id="line.1056">  }</a>
+<span class="sourceLineNo">1057</span><a id="line.1057"></a>
+<span class="sourceLineNo">1058</span><a id="line.1058">  </a>
+<span class="sourceLineNo">1059</span><a id="line.1059">  /** Deletes the genetic code annotation from the taxon in the database.</a>
+<span class="sourceLineNo">1060</span><a id="line.1060">    * @param conn</a>
+<span class="sourceLineNo">1061</span><a id="line.1061">    * @param helper</a>
+<span class="sourceLineNo">1062</span><a id="line.1062">    * @param tdb</a>
+<span class="sourceLineNo">1063</span><a id="line.1063">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1064</span><a id="line.1064">    */</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">  public static void removeGeneticCodeID(Connection conn, DBHelper helper, Taxon tdb) throws BioRuntimeException</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">  {</a>
+<span class="sourceLineNo">1067</span><a id="line.1067">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1068</span><a id="line.1068">    try {</a>
+<span class="sourceLineNo">1069</span><a id="line.1069">      ps = conn.prepareStatement("UPDATE taxon SET genetic_code = NULL WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1070</span><a id="line.1070">      ps.setInt(1, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1072</span><a id="line.1072">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1073</span><a id="line.1073">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1076</span><a id="line.1076">    } finally {</a>
+<span class="sourceLineNo">1077</span><a id="line.1077">      attemptClose(ps);</a>
+<span class="sourceLineNo">1078</span><a id="line.1078">    }</a>
+<span class="sourceLineNo">1079</span><a id="line.1079">  }</a>
+<span class="sourceLineNo">1080</span><a id="line.1080"></a>
+<span class="sourceLineNo">1081</span><a id="line.1081">  </a>
+<span class="sourceLineNo">1082</span><a id="line.1082">  /** Updates the given taxon and sets it's so called mitochondrial genetic code id to</a>
+<span class="sourceLineNo">1083</span><a id="line.1083">    * the specified value.</a>
+<span class="sourceLineNo">1084</span><a id="line.1084">    * @param conn</a>
+<span class="sourceLineNo">1085</span><a id="line.1085">    * @param tdb</a>
+<span class="sourceLineNo">1086</span><a id="line.1086">    * @param id</a>
+<span class="sourceLineNo">1087</span><a id="line.1087">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1088</span><a id="line.1088">    */</a>
+<span class="sourceLineNo">1089</span><a id="line.1089">  public static void setMitochondrialGeneticCodeID(Connection conn, Taxon tdb, int id) throws BioRuntimeException</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">  {</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1092</span><a id="line.1092">    try {</a>
+<span class="sourceLineNo">1093</span><a id="line.1093">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">        "UPDATE taxon SET mito_genetic_code = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">      ps.setInt(1, id);</a>
+<span class="sourceLineNo">1096</span><a id="line.1096">      ps.setInt(2, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1097</span><a id="line.1097">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1102</span><a id="line.1102">    } finally {</a>
+<span class="sourceLineNo">1103</span><a id="line.1103">      attemptClose(ps);</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">    }</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">  }</a>
+<span class="sourceLineNo">1106</span><a id="line.1106"></a>
+<span class="sourceLineNo">1107</span><a id="line.1107">  </a>
+<span class="sourceLineNo">1108</span><a id="line.1108">  /** Deletes the so called mitochondrial genetic code annotation from the given taxon.</a>
+<span class="sourceLineNo">1109</span><a id="line.1109">    * @param conn</a>
+<span class="sourceLineNo">1110</span><a id="line.1110">    * @param helper</a>
+<span class="sourceLineNo">1111</span><a id="line.1111">    * @param tdb</a>
+<span class="sourceLineNo">1112</span><a id="line.1112">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">    */</a>
+<span class="sourceLineNo">1114</span><a id="line.1114">  public static void removeMitochondrialGeneticCodeID(Connection conn, DBHelper helper, Taxon tdb) throws BioRuntimeException</a>
+<span class="sourceLineNo">1115</span><a id="line.1115">  {</a>
+<span class="sourceLineNo">1116</span><a id="line.1116">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1117</span><a id="line.1117">    try {</a>
+<span class="sourceLineNo">1118</span><a id="line.1118">      ps = conn.prepareStatement("UPDATE taxon SET mito_genetic_code = NULL WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1119</span><a id="line.1119">      ps.setInt(1, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1120</span><a id="line.1120">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1124</span><a id="line.1124">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1125</span><a id="line.1125">    } finally {</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">      attemptClose(ps);</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">    }</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">  }</a>
+<span class="sourceLineNo">1129</span><a id="line.1129"></a>
+<span class="sourceLineNo">1130</span><a id="line.1130">  </a>
+<span class="sourceLineNo">1131</span><a id="line.1131">  /** Updates the taxon and sets the left value to the specified value.</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">    * @param conn</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">    * @param tdb</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">    * @param left</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1136</span><a id="line.1136">    */</a>
+<span class="sourceLineNo">1137</span><a id="line.1137">  public static void setLeftValue(Connection conn, Taxon tdb, int left) throws BioRuntimeException</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">  {</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1140</span><a id="line.1140">    try {</a>
+<span class="sourceLineNo">1141</span><a id="line.1141">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">        "UPDATE taxon SET left_value = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">      ps.setInt(1, left);</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">      ps.setInt(2, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1145</span><a id="line.1145">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1146</span><a id="line.1146">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1147</span><a id="line.1147">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1148</span><a id="line.1148">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1149</span><a id="line.1149">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1150</span><a id="line.1150">    } finally {</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">      attemptClose(ps);</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">    }</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">  }</a>
+<span class="sourceLineNo">1154</span><a id="line.1154"></a>
+<span class="sourceLineNo">1155</span><a id="line.1155">  </a>
+<span class="sourceLineNo">1156</span><a id="line.1156">  /** Deletes the left value from the specified taxon in the database.</a>
+<span class="sourceLineNo">1157</span><a id="line.1157">    * @param conn</a>
+<span class="sourceLineNo">1158</span><a id="line.1158">    * @param helper</a>
+<span class="sourceLineNo">1159</span><a id="line.1159">    * @param tdb</a>
+<span class="sourceLineNo">1160</span><a id="line.1160">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1161</span><a id="line.1161">    */</a>
+<span class="sourceLineNo">1162</span><a id="line.1162">  public static void removeLeftValue(Connection conn, DBHelper helper, Taxon tdb) throws BioRuntimeException</a>
+<span class="sourceLineNo">1163</span><a id="line.1163">  {</a>
+<span class="sourceLineNo">1164</span><a id="line.1164">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1165</span><a id="line.1165">    try {</a>
+<span class="sourceLineNo">1166</span><a id="line.1166">      ps = conn.prepareStatement("UPDATE taxon SEQ left_value = NULL WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">      ps.setInt(1, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1172</span><a id="line.1172">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1173</span><a id="line.1173">    } finally {</a>
+<span class="sourceLineNo">1174</span><a id="line.1174">      attemptClose(ps);</a>
+<span class="sourceLineNo">1175</span><a id="line.1175">    }</a>
+<span class="sourceLineNo">1176</span><a id="line.1176">  }</a>
+<span class="sourceLineNo">1177</span><a id="line.1177"></a>
+<span class="sourceLineNo">1178</span><a id="line.1178">  </a>
+<span class="sourceLineNo">1179</span><a id="line.1179">  /** Updates the taxon in the database and sets the right value to the specified value.</a>
+<span class="sourceLineNo">1180</span><a id="line.1180">    * @param conn</a>
+<span class="sourceLineNo">1181</span><a id="line.1181">    * @param tdb</a>
+<span class="sourceLineNo">1182</span><a id="line.1182">    * @param right</a>
+<span class="sourceLineNo">1183</span><a id="line.1183">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1184</span><a id="line.1184">    */</a>
+<span class="sourceLineNo">1185</span><a id="line.1185">  public static void setRightValue(Connection conn, Taxon tdb, int right) throws BioRuntimeException</a>
+<span class="sourceLineNo">1186</span><a id="line.1186">  {</a>
+<span class="sourceLineNo">1187</span><a id="line.1187">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1188</span><a id="line.1188">    try {</a>
+<span class="sourceLineNo">1189</span><a id="line.1189">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1190</span><a id="line.1190">        "UPDATE taxon SET right_value = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1191</span><a id="line.1191">      ps.setInt(1, right);</a>
+<span class="sourceLineNo">1192</span><a id="line.1192">      ps.setInt(2, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1193</span><a id="line.1193">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1194</span><a id="line.1194">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1195</span><a id="line.1195">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1196</span><a id="line.1196">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1197</span><a id="line.1197">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1198</span><a id="line.1198">    } finally {</a>
+<span class="sourceLineNo">1199</span><a id="line.1199">      attemptClose(ps);</a>
+<span class="sourceLineNo">1200</span><a id="line.1200">    }</a>
+<span class="sourceLineNo">1201</span><a id="line.1201">  }</a>
+<span class="sourceLineNo">1202</span><a id="line.1202"></a>
+<span class="sourceLineNo">1203</span><a id="line.1203">  </a>
+<span class="sourceLineNo">1204</span><a id="line.1204">  /** Deletes the right value from the specified taxon in the database.</a>
+<span class="sourceLineNo">1205</span><a id="line.1205">    * @param conn</a>
+<span class="sourceLineNo">1206</span><a id="line.1206">    * @param helper</a>
+<span class="sourceLineNo">1207</span><a id="line.1207">    * @param tdb</a>
+<span class="sourceLineNo">1208</span><a id="line.1208">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1209</span><a id="line.1209">    */</a>
+<span class="sourceLineNo">1210</span><a id="line.1210">  public static void removeRightValue(Connection conn, DBHelper helper, Taxon tdb) throws BioRuntimeException</a>
+<span class="sourceLineNo">1211</span><a id="line.1211">  {</a>
+<span class="sourceLineNo">1212</span><a id="line.1212">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1213</span><a id="line.1213">    try {</a>
+<span class="sourceLineNo">1214</span><a id="line.1214">      ps = conn.prepareStatement("UPDATE taxon SEQ right_value = NULL WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1215</span><a id="line.1215">      ps.setInt(1, getTaxonID(conn, getRealScientificName(tdb)));</a>
+<span class="sourceLineNo">1216</span><a id="line.1216">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1217</span><a id="line.1217">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1218</span><a id="line.1218">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1219</span><a id="line.1219">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1220</span><a id="line.1220">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1221</span><a id="line.1221">    } finally {</a>
+<span class="sourceLineNo">1222</span><a id="line.1222">      attemptClose(ps);</a>
+<span class="sourceLineNo">1223</span><a id="line.1223">    }</a>
+<span class="sourceLineNo">1224</span><a id="line.1224">  }</a>
+<span class="sourceLineNo">1225</span><a id="line.1225"></a>
+<span class="sourceLineNo">1226</span><a id="line.1226">  </a>
+<span class="sourceLineNo">1227</span><a id="line.1227">  /** This updates the taxonomic tree in the database and sets the parent of the given </a>
+<span class="sourceLineNo">1228</span><a id="line.1228">    * child taxon to the parent taxon.</a>
+<span class="sourceLineNo">1229</span><a id="line.1229">    * @param conn</a>
+<span class="sourceLineNo">1230</span><a id="line.1230">    * @param child</a>
+<span class="sourceLineNo">1231</span><a id="line.1231">    * @param parent</a>
+<span class="sourceLineNo">1232</span><a id="line.1232">    * @throws BioRuntimeException</a>
+<span class="sourceLineNo">1233</span><a id="line.1233">    */</a>
+<span class="sourceLineNo">1234</span><a id="line.1234">  public static void setParent(Connection conn, Taxon child, Taxon parent) throws BioRuntimeException</a>
+<span class="sourceLineNo">1235</span><a id="line.1235">  {</a>
+<span class="sourceLineNo">1236</span><a id="line.1236">    PreparedStatement ps = null;</a>
+<span class="sourceLineNo">1237</span><a id="line.1237">    try {</a>
+<span class="sourceLineNo">1238</span><a id="line.1238">      ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1239</span><a id="line.1239">        "UPDATE taxon SET parent_taxon_id = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1240</span><a id="line.1240">      ps.setInt(1, getTaxonID(conn, getRealScientificName(parent)));</a>
+<span class="sourceLineNo">1241</span><a id="line.1241">      ps.setInt(2, getTaxonID(conn, getRealScientificName(child)));</a>
+<span class="sourceLineNo">1242</span><a id="line.1242">      ps.executeUpdate();</a>
+<span class="sourceLineNo">1243</span><a id="line.1243">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1244</span><a id="line.1244">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1245</span><a id="line.1245">    } catch (BioException exc) {</a>
+<span class="sourceLineNo">1246</span><a id="line.1246">      throw new BioRuntimeException(exc);</a>
+<span class="sourceLineNo">1247</span><a id="line.1247">    } finally {</a>
+<span class="sourceLineNo">1248</span><a id="line.1248">      attemptClose(ps);</a>
+<span class="sourceLineNo">1249</span><a id="line.1249">    }</a>
+<span class="sourceLineNo">1250</span><a id="line.1250">  }</a>
+<span class="sourceLineNo">1251</span><a id="line.1251">  </a>
+<span class="sourceLineNo">1252</span><a id="line.1252">  </a>
+<span class="sourceLineNo">1253</span><a id="line.1253">  </a>
+<span class="sourceLineNo">1254</span><a id="line.1254">  /** This method tries to perform a complete update according to the given </a>
+<span class="sourceLineNo">1255</span><a id="line.1255">    * &lt;code&gt;TaxonFactory&lt;/code&gt;, which already contains the newes taxa and the files</a>
+<span class="sourceLineNo">1256</span><a id="line.1256">    * available at the NCBI-FTP-Site.</a>
+<span class="sourceLineNo">1257</span><a id="line.1257">    * @param conn database connection</a>
+<span class="sourceLineNo">1258</span><a id="line.1258">    * @param helper helper for the database system to be used</a>
+<span class="sourceLineNo">1259</span><a id="line.1259">    * @param factory the TaxonFactory containing all the new taxa</a>
+<span class="sourceLineNo">1260</span><a id="line.1260">    * @param delnodes file containing the ncbi taxon ids which don't exist anymore</a>
+<span class="sourceLineNo">1261</span><a id="line.1261">    * @param merged file containing the ncbi taxon ids which were merged.</a>
+<span class="sourceLineNo">1262</span><a id="line.1262">    * @throws IOException</a>
+<span class="sourceLineNo">1263</span><a id="line.1263">    */</a>
+<span class="sourceLineNo">1264</span><a id="line.1264">  public static void automaticUpdate(Connection conn, DBHelper helper, TaxonFactory factory, File delnodes, File merged) throws IOException</a>
+<span class="sourceLineNo">1265</span><a id="line.1265">  {</a>
+<span class="sourceLineNo">1266</span><a id="line.1266">   /*</a>
+<span class="sourceLineNo">1267</span><a id="line.1267">    * Delnodes.</a>
+<span class="sourceLineNo">1268</span><a id="line.1268">    */</a>
+<span class="sourceLineNo">1269</span><a id="line.1269">    BufferedReader br = new BufferedReader(new FileReader(delnodes));</a>
+<span class="sourceLineNo">1270</span><a id="line.1270">    Set ids = NCBIids(conn);</a>
+<span class="sourceLineNo">1271</span><a id="line.1271">    while (br.ready()) {</a>
+<span class="sourceLineNo">1272</span><a id="line.1272">      String line = br.readLine().split("\t")[0];</a>
+<span class="sourceLineNo">1273</span><a id="line.1273">      if (ids.contains(line)) {</a>
+<span class="sourceLineNo">1274</span><a id="line.1274">        try {</a>
+<span class="sourceLineNo">1275</span><a id="line.1275">          removeTaxon(conn, Integer.parseInt(line), helper);</a>
+<span class="sourceLineNo">1276</span><a id="line.1276">          ids.remove(line);</a>
+<span class="sourceLineNo">1277</span><a id="line.1277">        } catch (NumberFormatException exc1) {</a>
+<span class="sourceLineNo">1278</span><a id="line.1278">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1279</span><a id="line.1279">        } catch (BioRuntimeException exc1) {</a>
+<span class="sourceLineNo">1280</span><a id="line.1280">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1281</span><a id="line.1281">        } catch (BioException exc1) {</a>
+<span class="sourceLineNo">1282</span><a id="line.1282">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1283</span><a id="line.1283">        } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1284</span><a id="line.1284">          exc.printStackTrace();</a>
+<span class="sourceLineNo">1285</span><a id="line.1285">        }</a>
+<span class="sourceLineNo">1286</span><a id="line.1286">      } </a>
+<span class="sourceLineNo">1287</span><a id="line.1287">    }</a>
+<span class="sourceLineNo">1288</span><a id="line.1288">               </a>
+<span class="sourceLineNo">1289</span><a id="line.1289">    </a>
+<span class="sourceLineNo">1290</span><a id="line.1290">    /*</a>
+<span class="sourceLineNo">1291</span><a id="line.1291">     * TaxonFactory.</a>
+<span class="sourceLineNo">1292</span><a id="line.1292">     */</a>
+<span class="sourceLineNo">1293</span><a id="line.1293">    /*</a>
+<span class="sourceLineNo">1294</span><a id="line.1294">     * Mergenodes.</a>
+<span class="sourceLineNo">1295</span><a id="line.1295">     */</a>
+<span class="sourceLineNo">1296</span><a id="line.1296">    br = new BufferedReader(new FileReader(merged));</a>
+<span class="sourceLineNo">1297</span><a id="line.1297">    while (br.ready()) {</a>
+<span class="sourceLineNo">1298</span><a id="line.1298">      String[] line = br.readLine().split("\t");</a>
+<span class="sourceLineNo">1299</span><a id="line.1299">      if (ids.contains(line[0])) {</a>
+<span class="sourceLineNo">1300</span><a id="line.1300">        // line[0] merged with [2].</a>
+<span class="sourceLineNo">1301</span><a id="line.1301">        //System.out.println(line[0]+"\t"+line[2]);</a>
+<span class="sourceLineNo">1302</span><a id="line.1302">        /*</a>
+<span class="sourceLineNo">1303</span><a id="line.1303">         * Change children</a>
+<span class="sourceLineNo">1304</span><a id="line.1304">         */</a>
+<span class="sourceLineNo">1305</span><a id="line.1305">        // Only possible if the new parent exists in the database</a>
+<span class="sourceLineNo">1306</span><a id="line.1306">        if (ids.contains(line[2])) try {</a>
+<span class="sourceLineNo">1307</span><a id="line.1307">          Taxon parent = getTaxon(conn, Integer.parseInt(line[2]));</a>
+<span class="sourceLineNo">1308</span><a id="line.1308">          Stack children = getChildrenOf(conn, getTaxon(conn, Integer.parseInt(line[0])));</a>
+<span class="sourceLineNo">1309</span><a id="line.1309">          while (!children.isEmpty()) {</a>
+<span class="sourceLineNo">1310</span><a id="line.1310">            setParent(conn, (Taxon) children.pop(), parent); </a>
+<span class="sourceLineNo">1311</span><a id="line.1311">          }</a>
+<span class="sourceLineNo">1312</span><a id="line.1312">         /*</a>
+<span class="sourceLineNo">1313</span><a id="line.1313">          * Sequences to the new node.</a>
+<span class="sourceLineNo">1314</span><a id="line.1314">          */</a>
+<span class="sourceLineNo">1315</span><a id="line.1315">          PreparedStatement ps = conn.prepareStatement(</a>
+<span class="sourceLineNo">1316</span><a id="line.1316">            "UPDATE bioentry SET taxon_id = ? WHERE taxon_id = ?");</a>
+<span class="sourceLineNo">1317</span><a id="line.1317">          ps.setInt(1, getTaxonID(conn, getRealScientificName(parent)));</a>
+<span class="sourceLineNo">1318</span><a id="line.1318">          ps.setInt(2, getTaxonID(conn, getRealScientificName(getTaxon(conn, Integer.parseInt(line[0])))));</a>
+<span class="sourceLineNo">1319</span><a id="line.1319">          ps.executeUpdate();</a>
+<span class="sourceLineNo">1320</span><a id="line.1320">          ps.close();</a>
+<span class="sourceLineNo">1321</span><a id="line.1321">        } catch (NumberFormatException exc1) {</a>
+<span class="sourceLineNo">1322</span><a id="line.1322">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1323</span><a id="line.1323">        } catch (BioRuntimeException exc1) {</a>
+<span class="sourceLineNo">1324</span><a id="line.1324">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1325</span><a id="line.1325">        } catch (BioException exc1) {</a>
+<span class="sourceLineNo">1326</span><a id="line.1326">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1327</span><a id="line.1327">        } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1328</span><a id="line.1328">          exc.printStackTrace();</a>
+<span class="sourceLineNo">1329</span><a id="line.1329">        }</a>
+<span class="sourceLineNo">1330</span><a id="line.1330">        /*</a>
+<span class="sourceLineNo">1331</span><a id="line.1331">         * Delete</a>
+<span class="sourceLineNo">1332</span><a id="line.1332">         */</a>
+<span class="sourceLineNo">1333</span><a id="line.1333">        try {</a>
+<span class="sourceLineNo">1334</span><a id="line.1334">          removeTaxon(conn, Integer.parseInt(line[0]), helper);</a>
+<span class="sourceLineNo">1335</span><a id="line.1335">        } catch (NumberFormatException exc2) {</a>
+<span class="sourceLineNo">1336</span><a id="line.1336">          exc2.printStackTrace();</a>
+<span class="sourceLineNo">1337</span><a id="line.1337">        } catch (BioRuntimeException exc2) {</a>
+<span class="sourceLineNo">1338</span><a id="line.1338">          exc2.printStackTrace();</a>
+<span class="sourceLineNo">1339</span><a id="line.1339">        } catch (BioException exc2) {</a>
+<span class="sourceLineNo">1340</span><a id="line.1340">          exc2.printStackTrace();</a>
+<span class="sourceLineNo">1341</span><a id="line.1341">        } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1342</span><a id="line.1342">          exc.printStackTrace();</a>
+<span class="sourceLineNo">1343</span><a id="line.1343">        }</a>
+<span class="sourceLineNo">1344</span><a id="line.1344">        </a>
+<span class="sourceLineNo">1345</span><a id="line.1345">      }</a>
+<span class="sourceLineNo">1346</span><a id="line.1346">    }</a>
+<span class="sourceLineNo">1347</span><a id="line.1347">    </a>
+<span class="sourceLineNo">1348</span><a id="line.1348">    </a>
+<span class="sourceLineNo">1349</span><a id="line.1349">    try {</a>
+<span class="sourceLineNo">1350</span><a id="line.1350">      /*</a>
+<span class="sourceLineNo">1351</span><a id="line.1351">       * TaxonFactory.</a>
+<span class="sourceLineNo">1352</span><a id="line.1352">       */</a>
+<span class="sourceLineNo">1353</span><a id="line.1353">      for (Iterator i=ids(conn).iterator(); i.hasNext(); ) {</a>
+<span class="sourceLineNo">1354</span><a id="line.1354">        Taxon tDB = getTaxon(conn, ((Integer) i.next()).intValue());</a>
+<span class="sourceLineNo">1355</span><a id="line.1355">        Taxon tFA = factory.search(getRealScientificName(tDB));</a>
+<span class="sourceLineNo">1356</span><a id="line.1356">        boolean change = false;</a>
+<span class="sourceLineNo">1357</span><a id="line.1357">        // This cannot work because the TaxonFactory doesn't provide this information.</a>
+<span class="sourceLineNo">1358</span><a id="line.1358">        if ((tFA == null) &amp;&amp; (tDB.getAnnotation().containsProperty(EbiFormat.PROPERTY_NCBI_TAXON))) </a>
+<span class="sourceLineNo">1359</span><a id="line.1359">          tFA = factory.search(tDB.getAnnotation().getProperty(EbiFormat.PROPERTY_NCBI_TAXON));</a>
+<span class="sourceLineNo">1360</span><a id="line.1360">        if (tFA == null) continue;        </a>
+<span class="sourceLineNo">1361</span><a id="line.1361">        </a>
+<span class="sourceLineNo">1362</span><a id="line.1362">        // scientific name</a>
+<span class="sourceLineNo">1363</span><a id="line.1363">        if (tFA.getScientificName() != null) {</a>
+<span class="sourceLineNo">1364</span><a id="line.1364">          if (!tFA.getScientificName().equals(getRealScientificName(tDB))) try {</a>
+<span class="sourceLineNo">1365</span><a id="line.1365">            setScientificName(conn, tDB, tFA.getScientificName());</a>
+<span class="sourceLineNo">1366</span><a id="line.1366">          } catch (SQLException exc2) {</a>
+<span class="sourceLineNo">1367</span><a id="line.1367">            exc2.printStackTrace();</a>
+<span class="sourceLineNo">1368</span><a id="line.1368">          }</a>
+<span class="sourceLineNo">1369</span><a id="line.1369">        }</a>
+<span class="sourceLineNo">1370</span><a id="line.1370">        </a>
+<span class="sourceLineNo">1371</span><a id="line.1371">        // common name</a>
+<span class="sourceLineNo">1372</span><a id="line.1372">        if (tFA.getCommonName() != null) {</a>
+<span class="sourceLineNo">1373</span><a id="line.1373">          if (tDB.getCommonName() == null) change = true;</a>
+<span class="sourceLineNo">1374</span><a id="line.1374">          else if (!tDB.getCommonName().equals(tFA.getCommonName())) change = true;</a>
+<span class="sourceLineNo">1375</span><a id="line.1375">          if (change) try {</a>
+<span class="sourceLineNo">1376</span><a id="line.1376">            setCommonName(conn, tDB, tFA.getCommonName());</a>
+<span class="sourceLineNo">1377</span><a id="line.1377">          } catch (BioException exc1) {</a>
+<span class="sourceLineNo">1378</span><a id="line.1378">            exc1.printStackTrace();</a>
+<span class="sourceLineNo">1379</span><a id="line.1379">          } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1380</span><a id="line.1380">            exc.printStackTrace();</a>
+<span class="sourceLineNo">1381</span><a id="line.1381">          } finally { change = false; }</a>
+<span class="sourceLineNo">1382</span><a id="line.1382">        } else if (tDB.getCommonName() != null) try {</a>
+<span class="sourceLineNo">1383</span><a id="line.1383">          removeName(conn, helper, tDB, "common name", tDB.getCommonName());</a>
+<span class="sourceLineNo">1384</span><a id="line.1384">        } catch (BioException exc1) {</a>
+<span class="sourceLineNo">1385</span><a id="line.1385">          exc1.printStackTrace();</a>
+<span class="sourceLineNo">1386</span><a id="line.1386">        } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1387</span><a id="line.1387">          exc.printStackTrace();</a>
+<span class="sourceLineNo">1388</span><a id="line.1388">        }</a>
+<span class="sourceLineNo">1389</span><a id="line.1389">        </a>
+<span class="sourceLineNo">1390</span><a id="line.1390">        // annotation</a>
+<span class="sourceLineNo">1391</span><a id="line.1391">        Annotation annoFA = tFA.getAnnotation();</a>
+<span class="sourceLineNo">1392</span><a id="line.1392">        Annotation annoDB = tDB.getAnnotation();</a>
+<span class="sourceLineNo">1393</span><a id="line.1393">        // rank</a>
+<span class="sourceLineNo">1394</span><a id="line.1394">        if (annoFA.containsProperty("rank")) {</a>
+<span class="sourceLineNo">1395</span><a id="line.1395">          if (!annoDB.containsProperty("rank")) change = true;</a>
+<span class="sourceLineNo">1396</span><a id="line.1396">          else if (!annoDB.getProperty("rank").equals(annoFA.getProperty("rank"))) change = true;</a>
+<span class="sourceLineNo">1397</span><a id="line.1397">          if (change) setRank(conn, tDB, annoFA.getProperty("rank").toString());</a>
+<span class="sourceLineNo">1398</span><a id="line.1398">          change = false;</a>
+<span class="sourceLineNo">1399</span><a id="line.1399">        } else if (annoDB.containsProperty("rank")) </a>
+<span class="sourceLineNo">1400</span><a id="line.1400">          removeRank(conn, helper, tDB);</a>
+<span class="sourceLineNo">1401</span><a id="line.1401">        // genetic code id</a>
+<span class="sourceLineNo">1402</span><a id="line.1402">        if (annoFA.containsProperty("genetic code id")) {</a>
+<span class="sourceLineNo">1403</span><a id="line.1403">          if (!annoDB.containsProperty("genetic code id")) change = true;</a>
+<span class="sourceLineNo">1404</span><a id="line.1404">          else if (!annoDB.getProperty("genetic code id").equals(annoFA)) change = true;</a>
+<span class="sourceLineNo">1405</span><a id="line.1405">          if (change) setGeneticCodeID(conn, tDB, Integer.parseInt(annoFA.getProperty("genetic code id").toString()));</a>
+<span class="sourceLineNo">1406</span><a id="line.1406">          change = false;</a>
+<span class="sourceLineNo">1407</span><a id="line.1407">        } else if (annoDB.containsProperty("genetic code id"))</a>
+<span class="sourceLineNo">1408</span><a id="line.1408">          removeGeneticCodeID(conn, helper, tDB);</a>
+<span class="sourceLineNo">1409</span><a id="line.1409">        // mitochondrial genetic code id</a>
+<span class="sourceLineNo">1410</span><a id="line.1410">        if (annoFA.containsProperty("mitochondrial genetic code id")) {</a>
+<span class="sourceLineNo">1411</span><a id="line.1411">          if (!annoDB.containsProperty("mitochondrial genetic code id")) change = true;</a>
+<span class="sourceLineNo">1412</span><a id="line.1412">          else if (!annoDB.getProperty("mitochondrial genetic code id").equals(annoFA.getProperty("mitochondrial genetic code id"))) change = true;</a>
+<span class="sourceLineNo">1413</span><a id="line.1413">          if (change) setMitochondrialGeneticCodeID(conn, tDB, Integer.parseInt(annoFA.getProperty("mitochondrial genetic code id").toString()));</a>
+<span class="sourceLineNo">1414</span><a id="line.1414">          change = false;</a>
+<span class="sourceLineNo">1415</span><a id="line.1415">        } else if (annoDB.containsProperty("mitochondrial genetic code id"))</a>
+<span class="sourceLineNo">1416</span><a id="line.1416">          removeMitochondrialGeneticCodeID(conn, helper, tDB);</a>
+<span class="sourceLineNo">1417</span><a id="line.1417">        // left value</a>
+<span class="sourceLineNo">1418</span><a id="line.1418">        if (annoFA.containsProperty("left value")) {</a>
+<span class="sourceLineNo">1419</span><a id="line.1419">          if (!annoDB.containsProperty("left value")) change = true;</a>
+<span class="sourceLineNo">1420</span><a id="line.1420">          else if (!annoDB.getProperty("left value").equals(annoFA.getProperty("left value"))) change = true;</a>
+<span class="sourceLineNo">1421</span><a id="line.1421">          if (change) setLeftValue(conn, tDB, Integer.parseInt(annoFA.getProperty("left value").toString()));</a>
+<span class="sourceLineNo">1422</span><a id="line.1422">          change = false;</a>
+<span class="sourceLineNo">1423</span><a id="line.1423">        } else if (annoDB.containsProperty("left value"))</a>
+<span class="sourceLineNo">1424</span><a id="line.1424">          removeLeftValue(conn, helper, tDB);</a>
+<span class="sourceLineNo">1425</span><a id="line.1425">        // right value</a>
+<span class="sourceLineNo">1426</span><a id="line.1426">        if (annoFA.containsProperty("right value")) {</a>
+<span class="sourceLineNo">1427</span><a id="line.1427">          if (!annoDB.containsProperty("right value")) change = true;</a>
+<span class="sourceLineNo">1428</span><a id="line.1428">          else if (!annoDB.getProperty("right value").equals(annoFA.getProperty("right value"))) change = true;</a>
+<span class="sourceLineNo">1429</span><a id="line.1429">          if (change) setRightValue(conn, tDB, Integer.parseInt(annoFA.getProperty("right value").toString()));</a>
+<span class="sourceLineNo">1430</span><a id="line.1430">          change = false;</a>
+<span class="sourceLineNo">1431</span><a id="line.1431">        } else if (annoDB.containsProperty("right value"))</a>
+<span class="sourceLineNo">1432</span><a id="line.1432">          removeRightValue(conn, helper, tDB);</a>
+<span class="sourceLineNo">1433</span><a id="line.1433">        // other names:</a>
+<span class="sourceLineNo">1434</span><a id="line.1434">        if (annoFA.containsProperty(EbiFormat.PROPERTY_TAXON_NAMES)) {</a>
+<span class="sourceLineNo">1435</span><a id="line.1435">          if (annoFA.getProperty(EbiFormat.PROPERTY_TAXON_NAMES) instanceof Map) {</a>
+<span class="sourceLineNo">1436</span><a id="line.1436">            Map names = (Map) annoFA.getProperty(EbiFormat.PROPERTY_TAXON_NAMES);</a>
+<span class="sourceLineNo">1437</span><a id="line.1437">            Map dbNames = (Map) annoDB.getProperty(EbiFormat.PROPERTY_TAXON_NAMES);       </a>
+<span class="sourceLineNo">1438</span><a id="line.1438">          </a>
+<span class="sourceLineNo">1439</span><a id="line.1439">          /*</a>
+<span class="sourceLineNo">1440</span><a id="line.1440">           * delete old names, if not valid anymore.</a>
+<span class="sourceLineNo">1441</span><a id="line.1441">           */</a>
+<span class="sourceLineNo">1442</span><a id="line.1442">          for (Iterator j=dbNames.keySet().iterator(); j.hasNext(); ) {</a>
+<span class="sourceLineNo">1443</span><a id="line.1443">            String key = j.next().toString();</a>
+<span class="sourceLineNo">1444</span><a id="line.1444">            if (dbNames.get(key) instanceof Set) {</a>
+<span class="sourceLineNo">1445</span><a id="line.1445">              if (!names.containsKey(key)) // delete everything </a>
+<span class="sourceLineNo">1446</span><a id="line.1446">                for (Iterator k=((Set) dbNames.get(key)).iterator(); k.hasNext(); ) try {</a>
+<span class="sourceLineNo">1447</span><a id="line.1447">                  String elem = k.next().toString();</a>
+<span class="sourceLineNo">1448</span><a id="line.1448">                  removeName(conn, helper, tDB, key, elem);</a>
+<span class="sourceLineNo">1449</span><a id="line.1449">                } catch (BioException exc2) {</a>
+<span class="sourceLineNo">1450</span><a id="line.1450">                  exc2.printStackTrace();</a>
+<span class="sourceLineNo">1451</span><a id="line.1451">                } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1452</span><a id="line.1452">                  exc.printStackTrace();</a>
+<span class="sourceLineNo">1453</span><a id="line.1453">                } </a>
+<span class="sourceLineNo">1454</span><a id="line.1454">              // this key is still in the new taxon.</a>
+<span class="sourceLineNo">1455</span><a id="line.1455">              else for (Iterator k=((Set) dbNames.get(key)).iterator(); k.hasNext(); ) {</a>
+<span class="sourceLineNo">1456</span><a id="line.1456">                String elem = k.next().toString();</a>
+<span class="sourceLineNo">1457</span><a id="line.1457">                // many entries for this key in the new taxon.</a>
+<span class="sourceLineNo">1458</span><a id="line.1458">                if (names.get(key) instanceof Set) {</a>
+<span class="sourceLineNo">1459</span><a id="line.1459">                  if (!((Set) names.get(key)).contains(elem)) try {</a>
+<span class="sourceLineNo">1460</span><a id="line.1460">                    removeName(conn, helper, tDB, key, elem);</a>
+<span class="sourceLineNo">1461</span><a id="line.1461">                  } catch (BioException exc3) {</a>
+<span class="sourceLineNo">1462</span><a id="line.1462">                    exc3.printStackTrace();</a>
+<span class="sourceLineNo">1463</span><a id="line.1463">                  } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1464</span><a id="line.1464">                    exc.printStackTrace();</a>
+<span class="sourceLineNo">1465</span><a id="line.1465">                  }</a>
+<span class="sourceLineNo">1466</span><a id="line.1466">                 </a>
+<span class="sourceLineNo">1467</span><a id="line.1467">                // in the new taxon only one entry for this key</a>
+<span class="sourceLineNo">1468</span><a id="line.1468">                } else if (!names.get(key).equals(elem)) try {</a>
+<span class="sourceLineNo">1469</span><a id="line.1469">                  removeName(conn, helper, tDB, key, elem);</a>
+<span class="sourceLineNo">1470</span><a id="line.1470">                } catch (BioException exc2) {</a>
+<span class="sourceLineNo">1471</span><a id="line.1471">                  exc2.printStackTrace();</a>
+<span class="sourceLineNo">1472</span><a id="line.1472">                } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1473</span><a id="line.1473">                  exc.printStackTrace();</a>
+<span class="sourceLineNo">1474</span><a id="line.1474">                }</a>
+<span class="sourceLineNo">1475</span><a id="line.1475">              }</a>
+<span class="sourceLineNo">1476</span><a id="line.1476">            } else { // only one entry in the new animal</a>
+<span class="sourceLineNo">1477</span><a id="line.1477">              if (!names.containsKey(key)) change = true; </a>
+<span class="sourceLineNo">1478</span><a id="line.1478">              // many entries in the new animal.</a>
+<span class="sourceLineNo">1479</span><a id="line.1479">              else if (names.get(key) instanceof Set) {</a>
+<span class="sourceLineNo">1480</span><a id="line.1480">                if (!((Set) names.get(key)).contains(dbNames.get(key))) change = true;</a>
+<span class="sourceLineNo">1481</span><a id="line.1481">              // only one entry in the new animal (what ever)</a>
+<span class="sourceLineNo">1482</span><a id="line.1482">              } else if (!names.get(key).equals(dbNames.get(key))) change = true;</a>
+<span class="sourceLineNo">1483</span><a id="line.1483">              if (change) try { </a>
+<span class="sourceLineNo">1484</span><a id="line.1484">                removeName(conn, helper, tDB, key, dbNames.get(key).toString());</a>
+<span class="sourceLineNo">1485</span><a id="line.1485">              } catch (BioException exc2) {</a>
+<span class="sourceLineNo">1486</span><a id="line.1486">                exc2.printStackTrace();</a>
+<span class="sourceLineNo">1487</span><a id="line.1487">              }</a>
+<span class="sourceLineNo">1488</span><a id="line.1488">              change = false;</a>
+<span class="sourceLineNo">1489</span><a id="line.1489">            }</a>
+<span class="sourceLineNo">1490</span><a id="line.1490">          }</a>
+<span class="sourceLineNo">1491</span><a id="line.1491">          // update:</a>
+<span class="sourceLineNo">1492</span><a id="line.1492">          dbNames = (Map) getTaxon(conn, getRealScientificName(tDB)).getAnnotation().getProperty(EbiFormat.PROPERTY_TAXON_NAMES);</a>
+<span class="sourceLineNo">1493</span><a id="line.1493">          </a>
+<span class="sourceLineNo">1494</span><a id="line.1494">          /*</a>
+<span class="sourceLineNo">1495</span><a id="line.1495">           * New names.</a>
+<span class="sourceLineNo">1496</span><a id="line.1496">           */</a>
+<span class="sourceLineNo">1497</span><a id="line.1497">          for (Iterator j=names.keySet().iterator(); j.hasNext(); ) {</a>
+<span class="sourceLineNo">1498</span><a id="line.1498">            String key = j.next().toString();</a>
+<span class="sourceLineNo">1499</span><a id="line.1499">            // there're multiple names for this key</a>
+<span class="sourceLineNo">1500</span><a id="line.1500">            if (names.get(key) instanceof Set) {</a>
+<span class="sourceLineNo">1501</span><a id="line.1501">              for (Iterator k=((Set) names.get(key)).iterator(); k.hasNext(); ) {</a>
+<span class="sourceLineNo">1502</span><a id="line.1502">                String elem = k.next().toString();</a>
+<span class="sourceLineNo">1503</span><a id="line.1503">                if (!dbNames.containsKey(key)) change = true;</a>
+<span class="sourceLineNo">1504</span><a id="line.1504">                else if (dbNames.get(key) instanceof Set) {</a>
+<span class="sourceLineNo">1505</span><a id="line.1505">                  if (!((Set) dbNames.get(key)).contains(elem)) change = true;</a>
+<span class="sourceLineNo">1506</span><a id="line.1506">                } else if (!dbNames.get(key).equals(elem)) change = true; </a>
+<span class="sourceLineNo">1507</span><a id="line.1507">                if (change) try {</a>
+<span class="sourceLineNo">1508</span><a id="line.1508">                  addName(conn, tDB, key, elem);</a>
+<span class="sourceLineNo">1509</span><a id="line.1509">                } catch (BioRuntimeException exc3) {</a>
+<span class="sourceLineNo">1510</span><a id="line.1510">                  exc3.printStackTrace();</a>
+<span class="sourceLineNo">1511</span><a id="line.1511">                } catch (BioException exc3) {</a>
+<span class="sourceLineNo">1512</span><a id="line.1512">                  exc3.printStackTrace();</a>
+<span class="sourceLineNo">1513</span><a id="line.1513">                } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1514</span><a id="line.1514">                  exc.printStackTrace();</a>
+<span class="sourceLineNo">1515</span><a id="line.1515">                }</a>
+<span class="sourceLineNo">1516</span><a id="line.1516">                change = false;</a>
+<span class="sourceLineNo">1517</span><a id="line.1517">              }</a>
+<span class="sourceLineNo">1518</span><a id="line.1518">            // there's only one name for this key.</a>
+<span class="sourceLineNo">1519</span><a id="line.1519">            } else if (!dbNames.containsKey(key)) try {</a>
+<span class="sourceLineNo">1520</span><a id="line.1520">                addName(conn, tDB, key, names.get(key).toString());</a>
+<span class="sourceLineNo">1521</span><a id="line.1521">              } catch (BioRuntimeException exc2) {</a>
+<span class="sourceLineNo">1522</span><a id="line.1522">                exc2.printStackTrace();</a>
+<span class="sourceLineNo">1523</span><a id="line.1523">              } catch (BioException exc2) {</a>
+<span class="sourceLineNo">1524</span><a id="line.1524">                exc2.printStackTrace();</a>
+<span class="sourceLineNo">1525</span><a id="line.1525">              } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1526</span><a id="line.1526">                exc.printStackTrace();</a>
+<span class="sourceLineNo">1527</span><a id="line.1527">              }</a>
+<span class="sourceLineNo">1528</span><a id="line.1528">            }</a>
+<span class="sourceLineNo">1529</span><a id="line.1529">          }</a>
+<span class="sourceLineNo">1530</span><a id="line.1530">        }</a>
+<span class="sourceLineNo">1531</span><a id="line.1531">      }</a>
+<span class="sourceLineNo">1532</span><a id="line.1532">    } catch (NumberFormatException exc) {</a>
+<span class="sourceLineNo">1533</span><a id="line.1533">      exc.printStackTrace();</a>
+<span class="sourceLineNo">1534</span><a id="line.1534">    } catch (BioRuntimeException exc) {</a>
+<span class="sourceLineNo">1535</span><a id="line.1535">      exc.printStackTrace();</a>
+<span class="sourceLineNo">1536</span><a id="line.1536">    } catch (NoSuchElementException exc) {</a>
+<span class="sourceLineNo">1537</span><a id="line.1537">      exc.printStackTrace();</a>
+<span class="sourceLineNo">1538</span><a id="line.1538">    } catch (SQLException exc) {</a>
+<span class="sourceLineNo">1539</span><a id="line.1539">      exc.printStackTrace();</a>
+<span class="sourceLineNo">1540</span><a id="line.1540">    }</a>
+<span class="sourceLineNo">1541</span><a id="line.1541">  }</a>
+<span class="sourceLineNo">1542</span><a id="line.1542"></a>
+<span class="sourceLineNo">1543</span><a id="line.1543">  </a>
+<span class="sourceLineNo">1544</span><a id="line.1544">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

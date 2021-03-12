@@ -1,0 +1,244 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.seq.impl;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.Iterator;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.bio.seq.DNATools;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.seq.Feature;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.seq.FeatureFilter;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.seq.FeatureHolder;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.bio.seq.Sequence;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.bio.seq.SequenceTools;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.seq.projection.ProjectedFeatureHolder;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.bio.seq.projection.Projection;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.bio.seq.projection.TranslateFlipContext;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.bio.symbol.Edit;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.bio.symbol.SimpleSymbolList;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">/**</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * A reverse complement view onto &lt;code&gt;Sequence&lt;/code&gt; interface.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;p&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * All features of the underlying sequence are reflected onto the RevCompSequence using a ProjectedFeatureHolder&lt;/p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * calling createFeature() on a RevCompSequence creates a feature on the underlying</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * sequence. Non-Stranded features will return the reverse compemented view of the sequence</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * when getSymbols() is called that is to say if you get what you expect as if your RevCompSequence</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * was a regular Sequence.</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * @author David Waring</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * @author Thomas Down</a>
+<span class="sourceLineNo">055</span><a id="line.55"> */</a>
+<span class="sourceLineNo">056</span><a id="line.56">public class RevCompSequence</a>
+<span class="sourceLineNo">057</span><a id="line.57">    extends SimpleSequence</a>
+<span class="sourceLineNo">058</span><a id="line.58">{</a>
+<span class="sourceLineNo">059</span><a id="line.59">    private ProjectedFeatureHolder pfh;</a>
+<span class="sourceLineNo">060</span><a id="line.60">    protected Sequence origSeq;</a>
+<span class="sourceLineNo">061</span><a id="line.61">    </a>
+<span class="sourceLineNo">062</span><a id="line.62">    </a>
+<span class="sourceLineNo">063</span><a id="line.63">    /**</a>
+<span class="sourceLineNo">064</span><a id="line.64">    *  URN, Name and Annotation are copied as is from the original Sequence, unless you use the</a>
+<span class="sourceLineNo">065</span><a id="line.65">    *  the other contructor that sets these.</a>
+<span class="sourceLineNo">066</span><a id="line.66">    */</a>
+<span class="sourceLineNo">067</span><a id="line.67">    </a>
+<span class="sourceLineNo">068</span><a id="line.68">    public RevCompSequence(Sequence seq)</a>
+<span class="sourceLineNo">069</span><a id="line.69">        throws IllegalAlphabetException</a>
+<span class="sourceLineNo">070</span><a id="line.70">    {</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this(seq,seq.getURN(),seq.getName(),seq.getAnnotation());</a>
+<span class="sourceLineNo">072</span><a id="line.72">    }</a>
+<span class="sourceLineNo">073</span><a id="line.73">    </a>
+<span class="sourceLineNo">074</span><a id="line.74">    </a>
+<span class="sourceLineNo">075</span><a id="line.75">    public RevCompSequence(Sequence seq, String urn, String name, Annotation annotation)throws IllegalAlphabetException {</a>
+<span class="sourceLineNo">076</span><a id="line.76">        super(DNATools.reverseComplement(seq),urn,name,annotation);</a>
+<span class="sourceLineNo">077</span><a id="line.77">        pfh = new ProjectedFeatureHolder(new TranslateFlipContext(this,seq,seq.length()+1,true));</a>
+<span class="sourceLineNo">078</span><a id="line.78">        origSeq = seq;</a>
+<span class="sourceLineNo">079</span><a id="line.79">    }</a>
+<span class="sourceLineNo">080</span><a id="line.80">    </a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">    // SymbolList stuff</a>
+<span class="sourceLineNo">083</span><a id="line.83">    /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">    * edit() will try to edit the underlying Sequence. So if it is editable this will be too</a>
+<span class="sourceLineNo">085</span><a id="line.85">    * &lt;p&gt;Since I have not seen and editable Sequence I have not tested this &lt;/p&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">    *</a>
+<span class="sourceLineNo">087</span><a id="line.87">    */</a>
+<span class="sourceLineNo">088</span><a id="line.88">    public void edit(Edit e)throws ChangeVetoException,IndexOutOfBoundsException{</a>
+<span class="sourceLineNo">089</span><a id="line.89">        int pos = (this.length() - (e.pos + e.length)) + 2;</a>
+<span class="sourceLineNo">090</span><a id="line.90">        Edit newE = null;</a>
+<span class="sourceLineNo">091</span><a id="line.91">        try {</a>
+<span class="sourceLineNo">092</span><a id="line.92">            newE = new Edit (pos,e.length,DNATools.reverseComplement(e.replacement));</a>
+<span class="sourceLineNo">093</span><a id="line.93">            origSeq.edit(newE);</a>
+<span class="sourceLineNo">094</span><a id="line.94">        }catch (IllegalAlphabetException iae){</a>
+<span class="sourceLineNo">095</span><a id="line.95">            throw new BioError("Error while editing RevCompSequence " + iae.getMessage());</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97">        </a>
+<span class="sourceLineNo">098</span><a id="line.98">    }</a>
+<span class="sourceLineNo">099</span><a id="line.99">    </a>
+<span class="sourceLineNo">100</span><a id="line.100">    // Sequence stuff</a>
+<span class="sourceLineNo">101</span><a id="line.101">    public Iterator features(){</a>
+<span class="sourceLineNo">102</span><a id="line.102">        return pfh.features();</a>
+<span class="sourceLineNo">103</span><a id="line.103">    }</a>
+<span class="sourceLineNo">104</span><a id="line.104">    </a>
+<span class="sourceLineNo">105</span><a id="line.105">    public int countFeatures(){</a>
+<span class="sourceLineNo">106</span><a id="line.106">        return pfh.countFeatures();</a>
+<span class="sourceLineNo">107</span><a id="line.107">    }</a>
+<span class="sourceLineNo">108</span><a id="line.108">    </a>
+<span class="sourceLineNo">109</span><a id="line.109">    public FeatureHolder filter(FeatureFilter ff) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">        return pfh.filter(ff);</a>
+<span class="sourceLineNo">111</span><a id="line.111">    }</a>
+<span class="sourceLineNo">112</span><a id="line.112">    </a>
+<span class="sourceLineNo">113</span><a id="line.113">    public FeatureHolder filter(FeatureFilter ff, boolean recurse) {</a>
+<span class="sourceLineNo">114</span><a id="line.114">        return pfh.filter(ff, recurse);</a>
+<span class="sourceLineNo">115</span><a id="line.115">    }</a>
+<span class="sourceLineNo">116</span><a id="line.116">    </a>
+<span class="sourceLineNo">117</span><a id="line.117">    /**</a>
+<span class="sourceLineNo">118</span><a id="line.118">    * containsFeature() will return true if this seq contains the feature in question, or</a>
+<span class="sourceLineNo">119</span><a id="line.119">    * if if the original (non reverse complement) sequence contains the feature;</a>
+<span class="sourceLineNo">120</span><a id="line.120">    */ </a>
+<span class="sourceLineNo">121</span><a id="line.121">    </a>
+<span class="sourceLineNo">122</span><a id="line.122">    public boolean containsFeature(Feature f) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">        return pfh.containsFeature(f) || origSeq.containsFeature(f);</a>
+<span class="sourceLineNo">124</span><a id="line.124">    }</a>
+<span class="sourceLineNo">125</span><a id="line.125">    </a>
+<span class="sourceLineNo">126</span><a id="line.126">    public void removeFeature(Feature f)</a>
+<span class="sourceLineNo">127</span><a id="line.127">            throws ChangeVetoException, BioException {</a>
+<span class="sourceLineNo">128</span><a id="line.128">        pfh.removeFeature(f);</a>
+<span class="sourceLineNo">129</span><a id="line.129">    }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">    /**</a>
+<span class="sourceLineNo">132</span><a id="line.132">    * createFeature() will call createFeature() on the underlying Sequence.</a>
+<span class="sourceLineNo">133</span><a id="line.133">    * returns the feature as it will be projected onto the reverse complement sequence </a>
+<span class="sourceLineNo">134</span><a id="line.134">    * not the actual feature that was created.</a>
+<span class="sourceLineNo">135</span><a id="line.135">    *</a>
+<span class="sourceLineNo">136</span><a id="line.136">    */</a>
+<span class="sourceLineNo">137</span><a id="line.137">    public Feature createFeature(Feature.Template ft) throws ChangeVetoException,BioException{</a>
+<span class="sourceLineNo">138</span><a id="line.138">         return pfh.getContext().createFeature(ft);</a>
+<span class="sourceLineNo">139</span><a id="line.139">    }</a>
+<span class="sourceLineNo">140</span><a id="line.140">    </a>
+<span class="sourceLineNo">141</span><a id="line.141">    /**</a>
+<span class="sourceLineNo">142</span><a id="line.142">    * getFeatureFromOriginal() Since you can not create a feature on a projectedFeature at this time, I am </a>
+<span class="sourceLineNo">143</span><a id="line.143">    * including this method so that you can get the corresponding feature from the original sequence.</a>
+<span class="sourceLineNo">144</span><a id="line.144">    * (which is not projected) and do something with that such as createFeature().</a>
+<span class="sourceLineNo">145</span><a id="line.145">    */</a>
+<span class="sourceLineNo">146</span><a id="line.146">    </a>
+<span class="sourceLineNo">147</span><a id="line.147">    public Feature getFeatureFromOriginal(Feature f){</a>
+<span class="sourceLineNo">148</span><a id="line.148">        return ((Projection) f).getViewedFeature();</a>
+<span class="sourceLineNo">149</span><a id="line.149">    }</a>
+<span class="sourceLineNo">150</span><a id="line.150">    </a>
+<span class="sourceLineNo">151</span><a id="line.151">    /**</a>
+<span class="sourceLineNo">152</span><a id="line.152">    * clone() should make a complete copy of the Sequence with  all features (and children) and return</a>
+<span class="sourceLineNo">153</span><a id="line.153">    * a SimpleSequence that is unconnected from the original sequence.</a>
+<span class="sourceLineNo">154</span><a id="line.154">    */</a>
+<span class="sourceLineNo">155</span><a id="line.155">    </a>
+<span class="sourceLineNo">156</span><a id="line.156">    public Object clone(){</a>
+<span class="sourceLineNo">157</span><a id="line.157">        SymbolList sl = new SimpleSymbolList(this);</a>
+<span class="sourceLineNo">158</span><a id="line.158">        Sequence newSeq = new SimpleSequence(sl,this.getURN(),this.getName(),this.getAnnotation());</a>
+<span class="sourceLineNo">159</span><a id="line.159">        try{</a>
+<span class="sourceLineNo">160</span><a id="line.160">            SequenceTools.addAllFeatures(newSeq, this);</a>
+<span class="sourceLineNo">161</span><a id="line.161">        } catch ( BioException e){</a>
+<span class="sourceLineNo">162</span><a id="line.162">            throw new BioError( "Error while cloning RevCompSequenece: " + e.getMessage());</a>
+<span class="sourceLineNo">163</span><a id="line.163">        } catch (ChangeVetoException cve) {</a>
+<span class="sourceLineNo">164</span><a id="line.164">            throw new BioError("Couldn't modify newly created SimpleSequence", cve);</a>
+<span class="sourceLineNo">165</span><a id="line.165">        }</a>
+<span class="sourceLineNo">166</span><a id="line.166">            </a>
+<span class="sourceLineNo">167</span><a id="line.167">        return newSeq;</a>
+<span class="sourceLineNo">168</span><a id="line.168">        </a>
+<span class="sourceLineNo">169</span><a id="line.169">    }     </a>
+<span class="sourceLineNo">170</span><a id="line.170">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

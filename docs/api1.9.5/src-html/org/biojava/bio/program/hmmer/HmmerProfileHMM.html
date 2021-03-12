@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.bio.program.hmmer;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.bio.Annotation;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.bio.dist.Distribution;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.bio.dist.DistributionFactory;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.bio.dp.DotState;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.bio.dp.EmissionState;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.bio.dp.IllegalTransitionException;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.bio.dp.ProfileHMM;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.bio.dp.State;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.bio.symbol.Alphabet;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">037</span><a id="line.37"> </a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">/** This is a class for representing HMMER generated Profile HMM.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *  It differs from the normal ProfileHMM only in the states which are connected:</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *   - there are no insert &lt;-&gt; delete transitions allowed</a>
+<span class="sourceLineNo">045</span><a id="line.45"> *   - there is no iO initial insert state (between begin and initial match states)</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *   - there is not iN final insert state (between final match state and end state)</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *  @author Lachlan Coin</a>
+<span class="sourceLineNo">049</span><a id="line.49"> */</a>
+<span class="sourceLineNo">050</span><a id="line.50">public class HmmerProfileHMM extends ProfileHMM {</a>
+<span class="sourceLineNo">051</span><a id="line.51">  protected HmmerProfileHMM(</a>
+<span class="sourceLineNo">052</span><a id="line.52">    Alphabet alpha, int columns,</a>
+<span class="sourceLineNo">053</span><a id="line.53">    DistributionFactory matchFactory, DistributionFactory insertFactory, String name</a>
+<span class="sourceLineNo">054</span><a id="line.54">  ) throws IllegalSymbolException, IllegalTransitionException,</a>
+<span class="sourceLineNo">055</span><a id="line.55">  IllegalAlphabetException {</a>
+<span class="sourceLineNo">056</span><a id="line.56">      super(alpha,columns, matchFactory,insertFactory,name);</a>
+<span class="sourceLineNo">057</span><a id="line.57">  }</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59"> </a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">    /** This is called by constructor in setting up the allowed transitions in the model */</a>
+<span class="sourceLineNo">062</span><a id="line.62">  protected void connectModel() throws </a>
+<span class="sourceLineNo">063</span><a id="line.63">        ChangeVetoException, IllegalSymbolException, IllegalTransitionException,IllegalAlphabetException{</a>
+<span class="sourceLineNo">064</span><a id="line.64">        EmissionState mO = getMatch(0);</a>
+<span class="sourceLineNo">065</span><a id="line.65">        removeState(getInsert(0));</a>
+<span class="sourceLineNo">066</span><a id="line.66">        removeState(getInsert(columns()));</a>
+<span class="sourceLineNo">067</span><a id="line.67">        DotState dO = null;</a>
+<span class="sourceLineNo">068</span><a id="line.68">        EmissionState iO =null;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        for(int i = 1; i &lt;= columns(); i++){</a>
+<span class="sourceLineNo">070</span><a id="line.70">            EmissionState mN = getMatch(i);</a>
+<span class="sourceLineNo">071</span><a id="line.71">            EmissionState iN = getInsert(i);</a>
+<span class="sourceLineNo">072</span><a id="line.72">            DotState dN = getDelete(i);</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">            // from a model state</a>
+<span class="sourceLineNo">075</span><a id="line.75">            createTransition(mO, mN);</a>
+<span class="sourceLineNo">076</span><a id="line.76">            if(i &lt; columns())</a>
+<span class="sourceLineNo">077</span><a id="line.77">                createTransition(mN, iN);</a>
+<span class="sourceLineNo">078</span><a id="line.78">            createTransition(mO, dN);</a>
+<span class="sourceLineNo">079</span><a id="line.79">      </a>
+<span class="sourceLineNo">080</span><a id="line.80">            // from an insert state</a>
+<span class="sourceLineNo">081</span><a id="line.81">            if(i&lt;columns())</a>
+<span class="sourceLineNo">082</span><a id="line.82">                createTransition(iN, iN);</a>
+<span class="sourceLineNo">083</span><a id="line.83">           </a>
+<span class="sourceLineNo">084</span><a id="line.84">            </a>
+<span class="sourceLineNo">085</span><a id="line.85">            // from a delete state</a>
+<span class="sourceLineNo">086</span><a id="line.86">            if(i &gt; 1) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">                createTransition(dO, dN);</a>
+<span class="sourceLineNo">088</span><a id="line.88">                createTransition(dO, mN);</a>
+<span class="sourceLineNo">089</span><a id="line.89">                createTransition(iO, mN);</a>
+<span class="sourceLineNo">090</span><a id="line.90">            }        </a>
+<span class="sourceLineNo">091</span><a id="line.91">            mO = mN;</a>
+<span class="sourceLineNo">092</span><a id="line.92">            iO = iN;</a>
+<span class="sourceLineNo">093</span><a id="line.93">            dO = dN;</a>
+<span class="sourceLineNo">094</span><a id="line.94">            // transitions to and from magical states and all match states</a>
+<span class="sourceLineNo">095</span><a id="line.95">            if(i&gt;1)</a>
+<span class="sourceLineNo">096</span><a id="line.96">                createTransition(magicalState(),mN);</a>
+<span class="sourceLineNo">097</span><a id="line.97">            createTransition(mN, magicalState());</a>
+<span class="sourceLineNo">098</span><a id="line.98">        }</a>
+<span class="sourceLineNo">099</span><a id="line.99">        // for the transitions to end</a>
+<span class="sourceLineNo">100</span><a id="line.100">        createTransition(dO, magicalState());</a>
+<span class="sourceLineNo">101</span><a id="line.101">    }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">    public double transScore(State from, State to, Symbol symFrom, Symbol symTo) throws IllegalSymbolException{</a>
+<span class="sourceLineNo">104</span><a id="line.104">            return log2(getWeights(from).getWeight(to));</a>
+<span class="sourceLineNo">105</span><a id="line.105">    }</a>
+<span class="sourceLineNo">106</span><a id="line.106">    </a>
+<span class="sourceLineNo">107</span><a id="line.107">    protected static double log2(double x){</a>
+<span class="sourceLineNo">108</span><a id="line.108">        return Math.log(x)/Math.log(2);</a>
+<span class="sourceLineNo">109</span><a id="line.109">    }</a>
+<span class="sourceLineNo">110</span><a id="line.110">    </a>
+<span class="sourceLineNo">111</span><a id="line.111">    protected EmissionState makeNewInsertState(String str, Annotation ann, int[] adv, Distribution dis){</a>
+<span class="sourceLineNo">112</span><a id="line.112">          return new ProfileEmissionState(str, ann,adv, dis);</a>
+<span class="sourceLineNo">113</span><a id="line.113">  }</a>
+<span class="sourceLineNo">114</span><a id="line.114">  </a>
+<span class="sourceLineNo">115</span><a id="line.115">   protected EmissionState makeNewMatchState(String str, Annotation ann, int[] adv, Distribution dis){</a>
+<span class="sourceLineNo">116</span><a id="line.116">          return new ProfileEmissionState(str, ann,adv, dis);</a>
+<span class="sourceLineNo">117</span><a id="line.117">  }</a>
+<span class="sourceLineNo">118</span><a id="line.118">  </a>
+<span class="sourceLineNo">119</span><a id="line.119">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

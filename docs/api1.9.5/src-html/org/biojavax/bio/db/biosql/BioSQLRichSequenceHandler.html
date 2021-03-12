@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * BioSQLRichSequenceHandler.java</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Created on March 7, 2006, 3:12 PM</a>
+<span class="sourceLineNo">005</span><a id="line.5"> */</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">package org.biojavax.bio.db.biosql;</a>
+<span class="sourceLineNo">008</span><a id="line.8"></a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.lang.reflect.Method;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import java.util.ArrayList;</a>
+<span class="sourceLineNo">011</span><a id="line.11">import java.util.Iterator;</a>
+<span class="sourceLineNo">012</span><a id="line.12">import java.util.List;</a>
+<span class="sourceLineNo">013</span><a id="line.13"></a>
+<span class="sourceLineNo">014</span><a id="line.14">import org.biojava.bio.BioError;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import org.biojava.bio.BioException;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import org.biojava.bio.symbol.Alphabet;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import org.biojava.bio.symbol.Edit;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import org.biojava.bio.symbol.IllegalAlphabetException;</a>
+<span class="sourceLineNo">019</span><a id="line.19">import org.biojava.bio.symbol.IllegalSymbolException;</a>
+<span class="sourceLineNo">020</span><a id="line.20">import org.biojava.bio.symbol.SimpleSymbolList;</a>
+<span class="sourceLineNo">021</span><a id="line.21">import org.biojava.bio.symbol.Symbol;</a>
+<span class="sourceLineNo">022</span><a id="line.22">import org.biojava.bio.symbol.SymbolList;</a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.utils.ChangeVetoException;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojavax.bio.seq.DummyRichSequenceHandler;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojavax.bio.seq.RichSequence;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojavax.bio.seq.SimpleRichSequence;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojavax.bio.seq.RichLocation.Tools;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * A handler which loads sequence data from a BioSQL database, caching it where possible.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * Note that this data is read-only. If you want to modify it permanently, you must use</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * BioSQLRichSequenceDB.getRichSequence() to convert the original sequence into a proper</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * SimpleRichSequence.</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * @author Richard Holland</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * @author David Scott</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * @since 1.5</a>
+<span class="sourceLineNo">037</span><a id="line.37"> */</a>
+<span class="sourceLineNo">038</span><a id="line.38">public class BioSQLRichSequenceHandler extends DummyRichSequenceHandler {</a>
+<span class="sourceLineNo">039</span><a id="line.39">    </a>
+<span class="sourceLineNo">040</span><a id="line.40">    // the Hibernate session.</a>
+<span class="sourceLineNo">041</span><a id="line.41">    private Object session;</a>
+<span class="sourceLineNo">042</span><a id="line.42">    private Method createQuery;</a>
+<span class="sourceLineNo">043</span><a id="line.43">    private Method setParameter;</a>
+<span class="sourceLineNo">044</span><a id="line.44">    private Method uniqueResult;</a>
+<span class="sourceLineNo">045</span><a id="line.45">    </a>
+<span class="sourceLineNo">046</span><a id="line.46">    /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">     * Requires a Hibernate session to work correctly. The session parameter</a>
+<span class="sourceLineNo">048</span><a id="line.48">     * is a Hibernate Session object and must not be null. It is this session</a>
+<span class="sourceLineNo">049</span><a id="line.49">     * that database objects will be retrieved from/persisted to.</a>
+<span class="sourceLineNo">050</span><a id="line.50">     * @see &lt;a href="http://www.hibernate.org/hib_docs/v3/api/org/hibernate/Session.html"&gt; org.hibernate.Session&lt;/a&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51">     */</a>
+<span class="sourceLineNo">052</span><a id="line.52">    public BioSQLRichSequenceHandler(Object session) {</a>
+<span class="sourceLineNo">053</span><a id="line.53">        super();</a>
+<span class="sourceLineNo">054</span><a id="line.54">        try {</a>
+<span class="sourceLineNo">055</span><a id="line.55">            // Lazy load the Session class from Hibernate.</a>
+<span class="sourceLineNo">056</span><a id="line.56">            Class hibernateSession = session.getClass();</a>
+<span class="sourceLineNo">057</span><a id="line.57">            Class realHibernateSession = Class.forName("org.hibernate.Session");</a>
+<span class="sourceLineNo">058</span><a id="line.58">            // Test to see if our parameter is really a Session</a>
+<span class="sourceLineNo">059</span><a id="line.59">            if (!realHibernateSession.isAssignableFrom(hibernateSession))</a>
+<span class="sourceLineNo">060</span><a id="line.60">                throw new IllegalArgumentException("Parameter must be a org.hibernate.Session object");</a>
+<span class="sourceLineNo">061</span><a id="line.61">            this.session = session;</a>
+<span class="sourceLineNo">062</span><a id="line.62">            // Lookup the createQuery method</a>
+<span class="sourceLineNo">063</span><a id="line.63">            this.createQuery = hibernateSession.getMethod("createQuery", new Class[]{String.class});</a>
+<span class="sourceLineNo">064</span><a id="line.64">            // Lazy load the Query class from Hibernate.</a>
+<span class="sourceLineNo">065</span><a id="line.65">            Class hibernateQuery = Class.forName("org.hibernate.Query");</a>
+<span class="sourceLineNo">066</span><a id="line.66">            // Lookup the setParameter and uniqueQuery methods</a>
+<span class="sourceLineNo">067</span><a id="line.67">            this.setParameter = hibernateQuery.getMethod("setParameter", new Class[]{int.class,Object.class});</a>
+<span class="sourceLineNo">068</span><a id="line.68">            this.uniqueResult = hibernateQuery.getMethod("uniqueResult", new Class[]{});</a>
+<span class="sourceLineNo">069</span><a id="line.69">        } catch (ClassNotFoundException e) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">            throw new RuntimeException(e);</a>
+<span class="sourceLineNo">071</span><a id="line.71">        } catch (NoSuchMethodException e) {</a>
+<span class="sourceLineNo">072</span><a id="line.72">            throw new RuntimeException(e);</a>
+<span class="sourceLineNo">073</span><a id="line.73">        }</a>
+<span class="sourceLineNo">074</span><a id="line.74">    }</a>
+<span class="sourceLineNo">075</span><a id="line.75">    </a>
+<span class="sourceLineNo">076</span><a id="line.76">    /**</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * {@inheritDoc}</a>
+<span class="sourceLineNo">078</span><a id="line.78">     */</a>
+<span class="sourceLineNo">079</span><a id="line.79">    public void edit(RichSequence seq, Edit edit) throws IndexOutOfBoundsException, IllegalAlphabetException, ChangeVetoException {</a>
+<span class="sourceLineNo">080</span><a id="line.80">        if (seq instanceof SimpleRichSequence) super.edit(seq,edit);</a>
+<span class="sourceLineNo">081</span><a id="line.81">        throw new ChangeVetoException("Cannot modify this sequence. Convert to a SimpleRichSequence first.");</a>
+<span class="sourceLineNo">082</span><a id="line.82">    }</a>
+<span class="sourceLineNo">083</span><a id="line.83">    </a>
+<span class="sourceLineNo">084</span><a id="line.84">    /**</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * {@inheritDoc}</a>
+<span class="sourceLineNo">086</span><a id="line.86">     */</a>
+<span class="sourceLineNo">087</span><a id="line.87">    public Symbol symbolAt(RichSequence seq, int index) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">088</span><a id="line.88">        if (seq instanceof SimpleRichSequence) return super.symbolAt(seq,index);</a>
+<span class="sourceLineNo">089</span><a id="line.89">        return this.subList(seq, index, index).symbolAt(1);</a>
+<span class="sourceLineNo">090</span><a id="line.90">    }</a>
+<span class="sourceLineNo">091</span><a id="line.91">    </a>
+<span class="sourceLineNo">092</span><a id="line.92">    /**</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * {@inheritDoc}</a>
+<span class="sourceLineNo">094</span><a id="line.94">     */</a>
+<span class="sourceLineNo">095</span><a id="line.95">    public List toList(RichSequence seq) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">        if (seq instanceof SimpleRichSequence) return super.toList(seq);</a>
+<span class="sourceLineNo">097</span><a id="line.97">        if (seq.length()==0) return new ArrayList(); // empty list for empty seq</a>
+<span class="sourceLineNo">098</span><a id="line.98">        else return this.subList(seq,1,seq.length()).toList();</a>
+<span class="sourceLineNo">099</span><a id="line.99">    }</a>
+<span class="sourceLineNo">100</span><a id="line.100">    </a>
+<span class="sourceLineNo">101</span><a id="line.101">    /**</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * {@inheritDoc}</a>
+<span class="sourceLineNo">103</span><a id="line.103">     */</a>
+<span class="sourceLineNo">104</span><a id="line.104">    public String subStr(RichSequence seq, int start, int end) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">105</span><a id="line.105">        if (seq instanceof SimpleRichSequence) return super.subStr(seq,start,end);</a>
+<span class="sourceLineNo">106</span><a id="line.106">        if (seq.length()==0) return ""; // empty seq</a>
+<span class="sourceLineNo">107</span><a id="line.107">        else if (seq.getCircular()) {</a>
+<span class="sourceLineNo">108</span><a id="line.108">            StringBuffer result = new StringBuffer(); // place to store the resulting substring</a>
+<span class="sourceLineNo">109</span><a id="line.109">            int[] modLocation = Tools.modulateCircularLocation(start,end,seq.length());</a>
+<span class="sourceLineNo">110</span><a id="line.110">            int modStart = modLocation[0];</a>
+<span class="sourceLineNo">111</span><a id="line.111">            int modEnd = modLocation[1];</a>
+<span class="sourceLineNo">112</span><a id="line.112">            int modLength = (modEnd - modStart)+1;</a>
+<span class="sourceLineNo">113</span><a id="line.113">            int seqLength = seq.length();</a>
+<span class="sourceLineNo">114</span><a id="line.114">            if (modStart==0) modStart = seqLength;</a>
+<span class="sourceLineNo">115</span><a id="line.115">            if (modEnd==0) modEnd = seqLength;</a>
+<span class="sourceLineNo">116</span><a id="line.116">            if (modEnd&gt;seqLength) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">                // add it in chunks</a>
+<span class="sourceLineNo">118</span><a id="line.118">                int remaining = modLength;</a>
+<span class="sourceLineNo">119</span><a id="line.119">                int chunkSize = (seqLength-modStart)+1;</a>
+<span class="sourceLineNo">120</span><a id="line.120">                //   add modStart -&gt; seqLength</a>
+<span class="sourceLineNo">121</span><a id="line.121">                result.append(this.seqSubString(seq, modStart, seqLength));</a>
+<span class="sourceLineNo">122</span><a id="line.122">                remaining -= chunkSize;</a>
+<span class="sourceLineNo">123</span><a id="line.123">                //   repeat add seqLength</a>
+<span class="sourceLineNo">124</span><a id="line.124">                while (remaining &gt; seqLength) {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                    chunkSize = seqLength;</a>
+<span class="sourceLineNo">126</span><a id="line.126">                    //   add 0 -&gt; seqLength</a>
+<span class="sourceLineNo">127</span><a id="line.127">                    result.append(this.seqSubString(seq, 1, seqLength));</a>
+<span class="sourceLineNo">128</span><a id="line.128">                    remaining -= chunkSize;</a>
+<span class="sourceLineNo">129</span><a id="line.129">                }</a>
+<span class="sourceLineNo">130</span><a id="line.130">                //   add 0 -&gt; remaining</a>
+<span class="sourceLineNo">131</span><a id="line.131">                chunkSize = remaining;</a>
+<span class="sourceLineNo">132</span><a id="line.132">                result.append(this.seqSubString(seq, 1, chunkSize));</a>
+<span class="sourceLineNo">133</span><a id="line.133">            } else {</a>
+<span class="sourceLineNo">134</span><a id="line.134">                //   add modStart-&gt;modEnd</a>
+<span class="sourceLineNo">135</span><a id="line.135">                result.append(this.seqSubString(seq, modStart, modEnd));</a>
+<span class="sourceLineNo">136</span><a id="line.136">            }</a>
+<span class="sourceLineNo">137</span><a id="line.137">            return result.toString();</a>
+<span class="sourceLineNo">138</span><a id="line.138">        } else {</a>
+<span class="sourceLineNo">139</span><a id="line.139">            return this.seqSubString(seq, start, end);</a>
+<span class="sourceLineNo">140</span><a id="line.140">        }</a>
+<span class="sourceLineNo">141</span><a id="line.141">    }</a>
+<span class="sourceLineNo">142</span><a id="line.142">    </a>
+<span class="sourceLineNo">143</span><a id="line.143">    /**</a>
+<span class="sourceLineNo">144</span><a id="line.144">     * {@inheritDoc}</a>
+<span class="sourceLineNo">145</span><a id="line.145">     */</a>
+<span class="sourceLineNo">146</span><a id="line.146">    public SymbolList subList(RichSequence seq, int start, int end) throws IndexOutOfBoundsException {</a>
+<span class="sourceLineNo">147</span><a id="line.147">        if (seq instanceof SimpleRichSequence) return super.subList(seq,start,end);</a>
+<span class="sourceLineNo">148</span><a id="line.148">        return this.convertToSymbolList(this.subStr(seq,start,end),seq.getAlphabet());</a>
+<span class="sourceLineNo">149</span><a id="line.149">    }</a>
+<span class="sourceLineNo">150</span><a id="line.150">    </a>
+<span class="sourceLineNo">151</span><a id="line.151">    /**</a>
+<span class="sourceLineNo">152</span><a id="line.152">     * {@inheritDoc}</a>
+<span class="sourceLineNo">153</span><a id="line.153">     */</a>
+<span class="sourceLineNo">154</span><a id="line.154">    public String seqString(RichSequence seq) {</a>
+<span class="sourceLineNo">155</span><a id="line.155">        if (seq instanceof SimpleRichSequence) return super.seqString(seq);</a>
+<span class="sourceLineNo">156</span><a id="line.156">        // load whole stringSequence property from Sequence</a>
+<span class="sourceLineNo">157</span><a id="line.157">        try {</a>
+<span class="sourceLineNo">158</span><a id="line.158">            // Build the query object</a>
+<span class="sourceLineNo">159</span><a id="line.159">            String queryText = "select s.stringSequence from Sequence as s where s.namespace = ? and s.name = ?";</a>
+<span class="sourceLineNo">160</span><a id="line.160">            Object query = this.createQuery.invoke(this.session, new Object[]{queryText});</a>
+<span class="sourceLineNo">161</span><a id="line.161">            // Set the parameters</a>
+<span class="sourceLineNo">162</span><a id="line.162">            query = this.setParameter.invoke(query, new Object[]{new Integer(0), seq.getNamespace()});</a>
+<span class="sourceLineNo">163</span><a id="line.163">            query = this.setParameter.invoke(query, new Object[]{new Integer(1), seq.getName()});</a>
+<span class="sourceLineNo">164</span><a id="line.164">            // Get the results</a>
+<span class="sourceLineNo">165</span><a id="line.165">            Object result = this.uniqueResult.invoke(query,(Object[]) null);</a>
+<span class="sourceLineNo">166</span><a id="line.166">            // Return the found object, if found - null if not.</a>
+<span class="sourceLineNo">167</span><a id="line.167">            return (String)result;</a>
+<span class="sourceLineNo">168</span><a id="line.168">        } catch (Exception e) {</a>
+<span class="sourceLineNo">169</span><a id="line.169">            // Throw the exception with our nice message</a>
+<span class="sourceLineNo">170</span><a id="line.170">            throw new RuntimeException("Error while trying to locate full sequence "+seq,e);</a>
+<span class="sourceLineNo">171</span><a id="line.171">        }</a>
+<span class="sourceLineNo">172</span><a id="line.172">    }</a>
+<span class="sourceLineNo">173</span><a id="line.173">    </a>
+<span class="sourceLineNo">174</span><a id="line.174">    private String seqSubString(RichSequence seq, int start, int end) {</a>
+<span class="sourceLineNo">175</span><a id="line.175">        // load whole stringSequence property from Sequence</a>
+<span class="sourceLineNo">176</span><a id="line.176">        try {</a>
+<span class="sourceLineNo">177</span><a id="line.177">            // Build the query object</a>
+<span class="sourceLineNo">178</span><a id="line.178">            String queryText = "select substring(s.stringSequence,?,?) from Sequence as s where s.namespace = ? and s.name = ?";</a>
+<span class="sourceLineNo">179</span><a id="line.179">            Object query = this.createQuery.invoke(this.session, new Object[]{queryText});</a>
+<span class="sourceLineNo">180</span><a id="line.180">            // Set the parameters</a>
+<span class="sourceLineNo">181</span><a id="line.181">            query = this.setParameter.invoke(query, new Object[]{new Integer(0), new Integer(start)});</a>
+<span class="sourceLineNo">182</span><a id="line.182">            query = this.setParameter.invoke(query, new Object[]{new Integer(1), new Integer((end-start)+1)});</a>
+<span class="sourceLineNo">183</span><a id="line.183">            query = this.setParameter.invoke(query, new Object[]{new Integer(2), seq.getNamespace()});</a>
+<span class="sourceLineNo">184</span><a id="line.184">            query = this.setParameter.invoke(query, new Object[]{new Integer(3), seq.getName()});</a>
+<span class="sourceLineNo">185</span><a id="line.185">            // Get the results</a>
+<span class="sourceLineNo">186</span><a id="line.186">            Object result = this.uniqueResult.invoke(query,(Object[]) null);</a>
+<span class="sourceLineNo">187</span><a id="line.187">            // Return the found object, if found - null if not.</a>
+<span class="sourceLineNo">188</span><a id="line.188">            return (String)result;</a>
+<span class="sourceLineNo">189</span><a id="line.189">        } catch (Exception e) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">            // Throw the exception with our nice message</a>
+<span class="sourceLineNo">191</span><a id="line.191">            throw new RuntimeException("Error while trying to locate full sequence "+seq,e);</a>
+<span class="sourceLineNo">192</span><a id="line.192">        }</a>
+<span class="sourceLineNo">193</span><a id="line.193">    }</a>
+<span class="sourceLineNo">194</span><a id="line.194">    </a>
+<span class="sourceLineNo">195</span><a id="line.195">    /**</a>
+<span class="sourceLineNo">196</span><a id="line.196">     * {@inheritDoc}</a>
+<span class="sourceLineNo">197</span><a id="line.197">     */</a>
+<span class="sourceLineNo">198</span><a id="line.198">    public Iterator iterator(RichSequence seq) {</a>
+<span class="sourceLineNo">199</span><a id="line.199">        if (seq instanceof SimpleRichSequence) return super.iterator(seq);</a>
+<span class="sourceLineNo">200</span><a id="line.200">        return this.toList(seq).iterator();</a>
+<span class="sourceLineNo">201</span><a id="line.201">    }</a>
+<span class="sourceLineNo">202</span><a id="line.202">    </a>
+<span class="sourceLineNo">203</span><a id="line.203">    private SymbolList convertToSymbolList(String seq, Alphabet alpha) {</a>
+<span class="sourceLineNo">204</span><a id="line.204">        try {</a>
+<span class="sourceLineNo">205</span><a id="line.205">            return new SimpleSymbolList(alpha.getTokenization("token"), seq);</a>
+<span class="sourceLineNo">206</span><a id="line.206">        } catch (IllegalSymbolException e) {</a>
+<span class="sourceLineNo">207</span><a id="line.207">            throw new BioError("Found bad symbols in sequence string!",e);</a>
+<span class="sourceLineNo">208</span><a id="line.208">        } catch (BioException e) {</a>
+<span class="sourceLineNo">209</span><a id="line.209">            throw new BioError("Found general exception in sequence string!",e);</a>
+<span class="sourceLineNo">210</span><a id="line.210">        }</a>
+<span class="sourceLineNo">211</span><a id="line.211">    }</a>
+<span class="sourceLineNo">212</span><a id="line.212">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
