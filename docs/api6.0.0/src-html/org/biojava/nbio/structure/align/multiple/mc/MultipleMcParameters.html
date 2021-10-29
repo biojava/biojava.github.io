@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.align.multiple.mc;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import java.util.ArrayList;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import java.util.List;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.Random;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.align.ce.ConfigStrucAligParams;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">/**</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * Contains the parameters to be sent to the MC optimization.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @since 4.1.0</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *</a>
+<span class="sourceLineNo">035</span><a id="line.35"> */</a>
+<span class="sourceLineNo">036</span><a id="line.36">public class MultipleMcParameters implements ConfigStrucAligParams {</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">        private int randomSeed;</a>
+<span class="sourceLineNo">039</span><a id="line.39">        private int minBlockLen;</a>
+<span class="sourceLineNo">040</span><a id="line.40">        private int minAlignedStructures;</a>
+<span class="sourceLineNo">041</span><a id="line.41">        private double gapOpen;</a>
+<span class="sourceLineNo">042</span><a id="line.42">        private double gapExtension;</a>
+<span class="sourceLineNo">043</span><a id="line.43">        private double distanceCutoff;</a>
+<span class="sourceLineNo">044</span><a id="line.44">        private int convergenceSteps;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        private int nrThreads;</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">        /**</a>
+<span class="sourceLineNo">048</span><a id="line.48">         * Constructor with DEFAULT values of the parameters.</a>
+<span class="sourceLineNo">049</span><a id="line.49">         */</a>
+<span class="sourceLineNo">050</span><a id="line.50">        public MultipleMcParameters(){</a>
+<span class="sourceLineNo">051</span><a id="line.51">                reset();</a>
+<span class="sourceLineNo">052</span><a id="line.52">        }</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        @Override</a>
+<span class="sourceLineNo">055</span><a id="line.55">        public List&lt;String&gt; getUserConfigParameters() {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">                List&lt;String&gt; params = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">058</span><a id="line.58">                params.add("RandomSeed");</a>
+<span class="sourceLineNo">059</span><a id="line.59">                params.add("MinBlockLen");</a>
+<span class="sourceLineNo">060</span><a id="line.60">                params.add("MinAlignedStructures");</a>
+<span class="sourceLineNo">061</span><a id="line.61">                params.add("GapOpen");</a>
+<span class="sourceLineNo">062</span><a id="line.62">                params.add("GapExtension");</a>
+<span class="sourceLineNo">063</span><a id="line.63">                params.add("DistanceCutoff");</a>
+<span class="sourceLineNo">064</span><a id="line.64">                params.add("ConvergenceSteps");</a>
+<span class="sourceLineNo">065</span><a id="line.65">                params.add("NrThreads");</a>
+<span class="sourceLineNo">066</span><a id="line.66">                return params;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        }</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        @Override</a>
+<span class="sourceLineNo">070</span><a id="line.70">        public List&lt;String&gt; getUserConfigParameterNames() {</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">                List&lt;String&gt; params = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">073</span><a id="line.73">                params.add("Random Seed");</a>
+<span class="sourceLineNo">074</span><a id="line.74">                params.add("Minimum Block Length");</a>
+<span class="sourceLineNo">075</span><a id="line.75">                params.add("Minimum Structures per Column");</a>
+<span class="sourceLineNo">076</span><a id="line.76">                params.add("Gap Opening Penalty");</a>
+<span class="sourceLineNo">077</span><a id="line.77">                params.add("Gap Extension Penalty");</a>
+<span class="sourceLineNo">078</span><a id="line.78">                params.add("Distance Cutoff");</a>
+<span class="sourceLineNo">079</span><a id="line.79">                params.add("Steps to Convergence");</a>
+<span class="sourceLineNo">080</span><a id="line.80">                params.add("Number of Threads");</a>
+<span class="sourceLineNo">081</span><a id="line.81">                return params;</a>
+<span class="sourceLineNo">082</span><a id="line.82">        }</a>
+<span class="sourceLineNo">083</span><a id="line.83"></a>
+<span class="sourceLineNo">084</span><a id="line.84">        @Override</a>
+<span class="sourceLineNo">085</span><a id="line.85">        @SuppressWarnings("rawtypes")</a>
+<span class="sourceLineNo">086</span><a id="line.86">        public List&lt;Class&gt; getUserConfigTypes() {</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">                List&lt;Class&gt; params = new ArrayList&lt;Class&gt;();</a>
+<span class="sourceLineNo">089</span><a id="line.89">                params.add(Integer.class);</a>
+<span class="sourceLineNo">090</span><a id="line.90">                params.add(Integer.class);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                params.add(Integer.class);</a>
+<span class="sourceLineNo">092</span><a id="line.92">                params.add(Double.class);</a>
+<span class="sourceLineNo">093</span><a id="line.93">                params.add(Double.class);</a>
+<span class="sourceLineNo">094</span><a id="line.94">                params.add(Double.class);</a>
+<span class="sourceLineNo">095</span><a id="line.95">                params.add(Integer.class);</a>
+<span class="sourceLineNo">096</span><a id="line.96">                params.add(Integer.class);</a>
+<span class="sourceLineNo">097</span><a id="line.97">                return params;</a>
+<span class="sourceLineNo">098</span><a id="line.98">        }</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">        @Override</a>
+<span class="sourceLineNo">101</span><a id="line.101">        public List&lt;String&gt; getUserConfigHelp() {</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">                List&lt;String&gt; params =new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">104</span><a id="line.104">                String randomSeed =</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                "Random seed for the optimizer random number generator.";</a>
+<span class="sourceLineNo">106</span><a id="line.106">                String minBlockLen =</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                "Minimum number of aligned positions in a Block of the "</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                + "Multiple Alignment.";</a>
+<span class="sourceLineNo">109</span><a id="line.109">                String minAlignedStructures =</a>
+<span class="sourceLineNo">110</span><a id="line.110">                                "Minimum number of structures aligned in a column (without "</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                + "gaps). If it is 0 the minimum is calculated as a third of "</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                + "the total number of structures.";</a>
+<span class="sourceLineNo">113</span><a id="line.113">                String gapOpen = "Penalty for opening a gap in any of the structures.";</a>
+<span class="sourceLineNo">114</span><a id="line.114">                String gapExtension = "Penalty for extending a gapped region in any of"</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                + " the structures.";</a>
+<span class="sourceLineNo">116</span><a id="line.116">                String dCutoff = "Distance Cutoff: the maximum allowed distance (in A) "</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                + "between two aligned residues.";</a>
+<span class="sourceLineNo">118</span><a id="line.118">                String convergenceSteps =</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                "Number of steps without a change in the alignment before "</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                + "stopping. Proportional to the calculation time. "</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                +"If it is 0 the convergence steps are calculated proportional"</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                + " to the number of structures and their length.";</a>
+<span class="sourceLineNo">123</span><a id="line.123">                String nrThreads =</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                "Number of threads to be used for the seed calculation (all-"</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                + "to-all pairwise alignments) and the MC optimization.";</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                params.add(randomSeed);</a>
+<span class="sourceLineNo">128</span><a id="line.128">                params.add(minBlockLen);</a>
+<span class="sourceLineNo">129</span><a id="line.129">                params.add(minAlignedStructures);</a>
+<span class="sourceLineNo">130</span><a id="line.130">                params.add(gapOpen);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                params.add(gapExtension);</a>
+<span class="sourceLineNo">132</span><a id="line.132">                params.add(dCutoff);</a>
+<span class="sourceLineNo">133</span><a id="line.133">                params.add(convergenceSteps);</a>
+<span class="sourceLineNo">134</span><a id="line.134">                params.add(nrThreads);</a>
+<span class="sourceLineNo">135</span><a id="line.135">                return params;</a>
+<span class="sourceLineNo">136</span><a id="line.136">        }</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">        @Override</a>
+<span class="sourceLineNo">139</span><a id="line.139">        public String toString() {</a>
+<span class="sourceLineNo">140</span><a id="line.140">                return "MultipleMcParameters [randomSeed=" + randomSeed</a>
+<span class="sourceLineNo">141</span><a id="line.141">                                + ", minBlockLen=" + minBlockLen + ", minAlignedStructures="</a>
+<span class="sourceLineNo">142</span><a id="line.142">                                + minAlignedStructures + ", gapOpen=" + gapOpen</a>
+<span class="sourceLineNo">143</span><a id="line.143">                                + ", gapExtension=" + gapExtension + ", distanceCutoff="</a>
+<span class="sourceLineNo">144</span><a id="line.144">                                + distanceCutoff + ", convergenceSteps=" + convergenceSteps</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                + ", nrThreads=" + nrThreads + "]";</a>
+<span class="sourceLineNo">146</span><a id="line.146">        }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">        @Override</a>
+<span class="sourceLineNo">149</span><a id="line.149">        public void reset() {</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                randomSeed = new Random().nextInt(10000);</a>
+<span class="sourceLineNo">152</span><a id="line.152">                minBlockLen = 10;</a>
+<span class="sourceLineNo">153</span><a id="line.153">                minAlignedStructures = 0;</a>
+<span class="sourceLineNo">154</span><a id="line.154">                gapOpen = 20.0;</a>
+<span class="sourceLineNo">155</span><a id="line.155">                gapExtension = 15.0;</a>
+<span class="sourceLineNo">156</span><a id="line.156">                distanceCutoff = 7.0;</a>
+<span class="sourceLineNo">157</span><a id="line.157">                convergenceSteps = 0;</a>
+<span class="sourceLineNo">158</span><a id="line.158">                nrThreads = Runtime.getRuntime().availableProcessors();</a>
+<span class="sourceLineNo">159</span><a id="line.159">        }</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">        public int getRandomSeed() {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                return randomSeed;</a>
+<span class="sourceLineNo">163</span><a id="line.163">        }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">        public void setRandomSeed(Integer randomSeed) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                this.randomSeed = randomSeed;</a>
+<span class="sourceLineNo">167</span><a id="line.167">        }</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">        public int getMinBlockLen() {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                return minBlockLen;</a>
+<span class="sourceLineNo">171</span><a id="line.171">        }</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">        public void setMinBlockLen(Integer minBlockLen) {</a>
+<span class="sourceLineNo">174</span><a id="line.174">                this.minBlockLen = minBlockLen;</a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        public int getMinAlignedStructures() {</a>
+<span class="sourceLineNo">178</span><a id="line.178">                return minAlignedStructures;</a>
+<span class="sourceLineNo">179</span><a id="line.179">        }</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">        public void setMinAlignedStructures(Integer minAlignedStructures) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                this.minAlignedStructures = minAlignedStructures;</a>
+<span class="sourceLineNo">183</span><a id="line.183">        }</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">        public double getGapOpen() {</a>
+<span class="sourceLineNo">186</span><a id="line.186">                return gapOpen;</a>
+<span class="sourceLineNo">187</span><a id="line.187">        }</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">        public void setGapOpen(Double gapOpen) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">                this.gapOpen = gapOpen;</a>
+<span class="sourceLineNo">191</span><a id="line.191">        }</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">        public double getGapExtension() {</a>
+<span class="sourceLineNo">194</span><a id="line.194">                return gapExtension;</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">        public void setGapExtension(Double gapExtension) {</a>
+<span class="sourceLineNo">198</span><a id="line.198">                this.gapExtension = gapExtension;</a>
+<span class="sourceLineNo">199</span><a id="line.199">        }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        public int getConvergenceSteps() {</a>
+<span class="sourceLineNo">202</span><a id="line.202">                return convergenceSteps;</a>
+<span class="sourceLineNo">203</span><a id="line.203">        }</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">        public void setConvergenceSteps(Integer convergenceSteps) {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                this.convergenceSteps = convergenceSteps;</a>
+<span class="sourceLineNo">207</span><a id="line.207">        }</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">        public int getNrThreads() {</a>
+<span class="sourceLineNo">210</span><a id="line.210">                return nrThreads;</a>
+<span class="sourceLineNo">211</span><a id="line.211">        }</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">        public void setNrThreads(Integer nrThreads) {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                this.nrThreads = nrThreads;</a>
+<span class="sourceLineNo">215</span><a id="line.215">        }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">        public double getDistanceCutoff() {</a>
+<span class="sourceLineNo">218</span><a id="line.218">                return distanceCutoff;</a>
+<span class="sourceLineNo">219</span><a id="line.219">        }</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">        public void setDistanceCutoff(Double distanceCutoff) {</a>
+<span class="sourceLineNo">222</span><a id="line.222">                this.distanceCutoff = distanceCutoff;</a>
+<span class="sourceLineNo">223</span><a id="line.223">        }</a>
+<span class="sourceLineNo">224</span><a id="line.224">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

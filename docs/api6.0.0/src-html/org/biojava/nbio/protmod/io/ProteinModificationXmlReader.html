@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Jun 1, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Jianjiong Gao</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">package org.biojava.nbio.protmod.io;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.protmod.*;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.w3c.dom.Document;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.w3c.dom.NamedNodeMap;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.w3c.dom.Node;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.w3c.dom.NodeList;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.xml.sax.SAXException;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">import javax.xml.parsers.DocumentBuilder;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import javax.xml.parsers.DocumentBuilderFactory;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import javax.xml.parsers.ParserConfigurationException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.io.IOException;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.io.InputStream;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.*;</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">/**</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * @author Jianjiong Gao</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * @since 3.0</a>
+<span class="sourceLineNo">045</span><a id="line.45"> */</a>
+<span class="sourceLineNo">046</span><a id="line.46">public final class ProteinModificationXmlReader {</a>
+<span class="sourceLineNo">047</span><a id="line.47">        /**</a>
+<span class="sourceLineNo">048</span><a id="line.48">         * This is a utility class and thus cannot be instantialized.</a>
+<span class="sourceLineNo">049</span><a id="line.49">         */</a>
+<span class="sourceLineNo">050</span><a id="line.50">        private ProteinModificationXmlReader() {}</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        /**</a>
+<span class="sourceLineNo">053</span><a id="line.53">         * Read protein modifications from XML file and register them.</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * @param isXml {@link InputStream} of the XML file.</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @throws IOException if failed to read the XML file.</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * @throws ParserConfigurationException if parse errors occur.</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * @throws SAXException the {@link DocumentBuilder} cannot be created.</a>
+<span class="sourceLineNo">058</span><a id="line.58">         */</a>
+<span class="sourceLineNo">059</span><a id="line.59">        public static void registerProteinModificationFromXml(InputStream isXml)</a>
+<span class="sourceLineNo">060</span><a id="line.60">                        throws IOException, ParserConfigurationException, SAXException {</a>
+<span class="sourceLineNo">061</span><a id="line.61">                if (isXml==null) {</a>
+<span class="sourceLineNo">062</span><a id="line.62">                        throw new IllegalArgumentException("Null argument.");</a>
+<span class="sourceLineNo">063</span><a id="line.63">                }</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</a>
+<span class="sourceLineNo">066</span><a id="line.66">                DocumentBuilder builder = factory.newDocumentBuilder();</a>
+<span class="sourceLineNo">067</span><a id="line.67">                Document doc = builder.parse(isXml);</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">                NodeList modNodes = doc.getElementsByTagName("Entry");</a>
+<span class="sourceLineNo">070</span><a id="line.70">                int modSize = modNodes.getLength();</a>
+<span class="sourceLineNo">071</span><a id="line.71">                List&lt;Node&gt; nodes;</a>
+<span class="sourceLineNo">072</span><a id="line.72">                for (int iMod=0; iMod&lt;modSize; iMod++) {</a>
+<span class="sourceLineNo">073</span><a id="line.73">                        Node modNode = modNodes.item(iMod);</a>
+<span class="sourceLineNo">074</span><a id="line.74">                        Map&lt;String,List&lt;Node&gt;&gt; infoNodes = getChildNodes(modNode);</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">                        // ID</a>
+<span class="sourceLineNo">077</span><a id="line.77">                        nodes = infoNodes.get("Id");</a>
+<span class="sourceLineNo">078</span><a id="line.78">                        if (nodes==null || nodes.size()!=1) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                                throw new RuntimeException("Each modification must have exact " +</a>
+<span class="sourceLineNo">080</span><a id="line.80">                                                "one &lt;Id&gt; field.");</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        }</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        String id = nodes.get(0).getTextContent();</a>
+<span class="sourceLineNo">083</span><a id="line.83"></a>
+<span class="sourceLineNo">084</span><a id="line.84">                        // modification category</a>
+<span class="sourceLineNo">085</span><a id="line.85">                        nodes = infoNodes.get("Category");</a>
+<span class="sourceLineNo">086</span><a id="line.86">                        if (nodes==null || nodes.size()!=1) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">                                throw new RuntimeException("Each modification must have exact " +</a>
+<span class="sourceLineNo">088</span><a id="line.88">                                                "one &lt;Category&gt; field. See Modification "+id+".");</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        }</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        ModificationCategory cat = ModificationCategory.getByLabel(</a>
+<span class="sourceLineNo">091</span><a id="line.91">                                        nodes.get(0).getTextContent());</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        if (cat==null) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                                throw new RuntimeException(nodes.get(0).getTextContent()+</a>
+<span class="sourceLineNo">094</span><a id="line.94">                                        " is not defined as an modification category." +</a>
+<span class="sourceLineNo">095</span><a id="line.95">                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">096</span><a id="line.96">                        }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                        // occurrence type</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        nodes = infoNodes.get("Occurrence");</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        if (nodes==null || nodes.size()!=1) {</a>
+<span class="sourceLineNo">101</span><a id="line.101">                                throw new RuntimeException("Each modification must have exact " +</a>
+<span class="sourceLineNo">102</span><a id="line.102">                                                "one &lt;Occurrence&gt; field. See Modification "+id+".");</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        }</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        ModificationOccurrenceType occType = ModificationOccurrenceType</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                .getByLabel(nodes.get(0).getTextContent());</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        if (occType==null) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                throw new RuntimeException(nodes.get(0).getTextContent()+</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                        " is not defined as an modification occurence type." +</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">110</span><a id="line.110">                        }</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">                        // condition</a>
+<span class="sourceLineNo">113</span><a id="line.113">                        ModificationCondition condition = null;</a>
+<span class="sourceLineNo">114</span><a id="line.114">                        {</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                nodes = infoNodes.get("Condition");</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                if (nodes==null || nodes.size()!=1) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                        throw new RuntimeException("Each modification must have exact " +</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                                        "one &lt;Condition&gt; field. See Modification "+id+".");</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">                                Node compsNode = nodes.get(0);</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">                                // keep track of the labels of component indices</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                Map&lt;String,Integer&gt; mapLabelComp = new HashMap&lt;String,Integer&gt;();</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">                                Map&lt;String,List&lt;Node&gt;&gt; compInfoNodes = getChildNodes(compsNode);</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">                                // components</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                List&lt;Node&gt; compNodes = compInfoNodes.get("Component");</a>
+<span class="sourceLineNo">130</span><a id="line.130">                                int sizeComp = compNodes.size();</a>
+<span class="sourceLineNo">131</span><a id="line.131">                                List&lt;Component&gt; comps = new ArrayList&lt;Component&gt;(sizeComp);</a>
+<span class="sourceLineNo">132</span><a id="line.132">                                for (int iComp=0; iComp&lt;sizeComp; iComp++) {</a>
+<span class="sourceLineNo">133</span><a id="line.133">                                        Node compNode = compNodes.get(iComp);</a>
+<span class="sourceLineNo">134</span><a id="line.134">                                        // comp label</a>
+<span class="sourceLineNo">135</span><a id="line.135">                                        NamedNodeMap compNodeAttrs = compNode.getAttributes();</a>
+<span class="sourceLineNo">136</span><a id="line.136">                                        Node labelNode = compNodeAttrs.getNamedItem("component");</a>
+<span class="sourceLineNo">137</span><a id="line.137">                                        if (labelNode==null) {</a>
+<span class="sourceLineNo">138</span><a id="line.138">                                                throw new RuntimeException("Each component must have a label." +</a>
+<span class="sourceLineNo">139</span><a id="line.139">                                                                " See Modification "+id+".");</a>
+<span class="sourceLineNo">140</span><a id="line.140">                                        }</a>
+<span class="sourceLineNo">141</span><a id="line.141">                                        String label = labelNode.getTextContent();</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">                                        if (mapLabelComp.containsKey(label)) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                                                throw new RuntimeException("Each component must have a unique label." +</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                                                " See Modification "+id+".");</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                        }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">                                        // comp PDBCC ID</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                        Set&lt;String&gt; compIds = new HashSet&lt;String&gt;();</a>
+<span class="sourceLineNo">150</span><a id="line.150">                                        List&lt;Node&gt; compIdNodes = getChildNodes(compNode).get("Id");</a>
+<span class="sourceLineNo">151</span><a id="line.151">                                        if (compIdNodes!=null) {</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                                for (Node compIdNode : compIdNodes) {</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                                        NamedNodeMap compIdNodeAttr = compIdNode.getAttributes();</a>
+<span class="sourceLineNo">154</span><a id="line.154">                                                        Node compIdSource = compIdNodeAttr.getNamedItem("source");</a>
+<span class="sourceLineNo">155</span><a id="line.155">                                                        if (compIdSource!=null &amp;&amp; compIdSource.getTextContent().equals("PDBCC")) {</a>
+<span class="sourceLineNo">156</span><a id="line.156">                                                                String strComps = compIdNode.getTextContent();</a>
+<span class="sourceLineNo">157</span><a id="line.157">                                                                if (strComps.isEmpty()) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                                                                        throw new RuntimeException("Empty component." +</a>
+<span class="sourceLineNo">159</span><a id="line.159">                                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                                                }</a>
+<span class="sourceLineNo">161</span><a id="line.161">                                                                compIds.addAll(Arrays.asList(strComps.split(",")));</a>
+<span class="sourceLineNo">162</span><a id="line.162">                                                        }</a>
+<span class="sourceLineNo">163</span><a id="line.163">                                                }</a>
+<span class="sourceLineNo">164</span><a id="line.164">                                        }</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                                        if (compIds.isEmpty()) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">                                                throw new RuntimeException("Each component must have a PDBCC ID." +</a>
+<span class="sourceLineNo">168</span><a id="line.168">                                                                " See Modification "+id+".");</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                        }</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">                                        // terminal</a>
+<span class="sourceLineNo">172</span><a id="line.172">                                        boolean nTerminal = false;</a>
+<span class="sourceLineNo">173</span><a id="line.173">                                        boolean cTerminal = false;</a>
+<span class="sourceLineNo">174</span><a id="line.174">                                        List&lt;Node&gt; compTermNode = getChildNodes(compNode).get("Terminal");</a>
+<span class="sourceLineNo">175</span><a id="line.175">                                        if (compTermNode!=null) {</a>
+<span class="sourceLineNo">176</span><a id="line.176">                                                if (compTermNode.size()!=1) {</a>
+<span class="sourceLineNo">177</span><a id="line.177">                                                        throw new RuntimeException("Only one &lt;Terminal&gt; condition is allowed for " +</a>
+<span class="sourceLineNo">178</span><a id="line.178">                                                                        "each component. See Modification "+id+".");</a>
+<span class="sourceLineNo">179</span><a id="line.179">                                                }</a>
+<span class="sourceLineNo">180</span><a id="line.180">                                                String nc = compTermNode.get(0).getTextContent();</a>
+<span class="sourceLineNo">181</span><a id="line.181">                                                if (nc.equals("N")) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                                                        nTerminal = true;</a>
+<span class="sourceLineNo">183</span><a id="line.183">                                                } else if (nc.equals("C")) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                                                        cTerminal = true;</a>
+<span class="sourceLineNo">185</span><a id="line.185">                                                } else {</a>
+<span class="sourceLineNo">186</span><a id="line.186">                                                        throw new RuntimeException("Only N or C is allowed for &lt;Terminal&gt;." +</a>
+<span class="sourceLineNo">187</span><a id="line.187">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">188</span><a id="line.188">                                                }</a>
+<span class="sourceLineNo">189</span><a id="line.189">                                        }</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                                        // register</a>
+<span class="sourceLineNo">192</span><a id="line.192">                                        Component comp = Component.of(compIds, nTerminal, cTerminal);</a>
+<span class="sourceLineNo">193</span><a id="line.193">                                        comps.add(comp);</a>
+<span class="sourceLineNo">194</span><a id="line.194">                                        mapLabelComp.put(label, comps.size()-1);</a>
+<span class="sourceLineNo">195</span><a id="line.195">                                }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                                // bonds</a>
+<span class="sourceLineNo">198</span><a id="line.198">                                List&lt;Node&gt; bondNodes = compInfoNodes.get("Bond");</a>
+<span class="sourceLineNo">199</span><a id="line.199">                                List&lt;ModificationLinkage&gt; linkages = null;</a>
+<span class="sourceLineNo">200</span><a id="line.200">                                if (bondNodes!=null) {</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                        int sizeBonds = bondNodes.size();</a>
+<span class="sourceLineNo">202</span><a id="line.202">                                        linkages = new ArrayList&lt;ModificationLinkage&gt;(sizeBonds);</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                        for (int iBond=0; iBond&lt;sizeBonds; iBond++) {</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                                Node bondNode = bondNodes.get(iBond);</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                                Map&lt;String,List&lt;Node&gt;&gt; bondChildNodes = getChildNodes(bondNode);</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                                if (bondChildNodes==null) {</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                                        throw new RuntimeException("Each bond must contain two atoms" +</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                                }</a>
+<span class="sourceLineNo">210</span><a id="line.210"></a>
+<span class="sourceLineNo">211</span><a id="line.211">                                                List&lt;Node&gt; atomNodes = bondChildNodes.get("Atom");</a>
+<span class="sourceLineNo">212</span><a id="line.212">                                                if (atomNodes==null || atomNodes.size()!=2) {</a>
+<span class="sourceLineNo">213</span><a id="line.213">                                                        throw new RuntimeException("Each bond must contain two atoms" +</a>
+<span class="sourceLineNo">214</span><a id="line.214">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">215</span><a id="line.215">                                                }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                                                // atom 1</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                                NamedNodeMap atomNodeAttrs = atomNodes.get(0).getAttributes();</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                                Node compNode = atomNodeAttrs.getNamedItem("component");</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                                if (compNode==null) {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                                        throw new RuntimeException("Each atom must on a component." +</a>
+<span class="sourceLineNo">222</span><a id="line.222">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                                }</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                                String labelComp1 = compNode.getTextContent();</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                                int iComp1 = mapLabelComp.get(labelComp1);</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">                                                Node labelNode = atomNodeAttrs.getNamedItem("atom");</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                                String labelAtom1 = labelNode==null?null:labelNode.getTextContent();</a>
+<span class="sourceLineNo">229</span><a id="line.229"></a>
+<span class="sourceLineNo">230</span><a id="line.230">                                                String atom1 = atomNodes.get(0).getTextContent();</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                                if (atom1.isEmpty()) {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                                        throw new RuntimeException("Each atom must have a name. Please use wildcard * if unknown." +</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">234</span><a id="line.234">                                                }</a>
+<span class="sourceLineNo">235</span><a id="line.235">                                                List&lt;String&gt; potentialAtoms1 = Arrays.asList(atom1.split(","));</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">                                                // atom 2</a>
+<span class="sourceLineNo">238</span><a id="line.238">                                                atomNodeAttrs = atomNodes.get(1).getAttributes();</a>
+<span class="sourceLineNo">239</span><a id="line.239">                                                compNode = atomNodeAttrs.getNamedItem("component");</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                                if (compNode==null) {</a>
+<span class="sourceLineNo">241</span><a id="line.241">                                                        throw new RuntimeException("Each atom must on a component." +</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                                }</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                                String labelComp2 = compNode.getTextContent();</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                                int iComp2 = mapLabelComp.get(labelComp2);</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                                                labelNode = atomNodeAttrs.getNamedItem("atom");</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                                String labelAtom2 = labelNode==null?null:labelNode.getTextContent();</a>
+<span class="sourceLineNo">249</span><a id="line.249"></a>
+<span class="sourceLineNo">250</span><a id="line.250">                                                String atom2 = atomNodes.get(1).getTextContent();</a>
+<span class="sourceLineNo">251</span><a id="line.251">                                                if (atom2.isEmpty()) {</a>
+<span class="sourceLineNo">252</span><a id="line.252">                                                        throw new RuntimeException("Each atom must have a name. Please use wildcard * if unknown." +</a>
+<span class="sourceLineNo">253</span><a id="line.253">                                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">254</span><a id="line.254">                                                }</a>
+<span class="sourceLineNo">255</span><a id="line.255">                                                List&lt;String&gt; potentialAtoms2 = Arrays.asList(atom2.split(","));</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">                                                // add linkage</a>
+<span class="sourceLineNo">258</span><a id="line.258">                                                ModificationLinkage linkage = new ModificationLinkage(comps,</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                                                iComp1, potentialAtoms1, labelAtom1,</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                                                iComp2, potentialAtoms2, labelAtom2);</a>
+<span class="sourceLineNo">261</span><a id="line.261">                                                linkages.add(linkage);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                                        }</a>
+<span class="sourceLineNo">263</span><a id="line.263">                                }</a>
+<span class="sourceLineNo">264</span><a id="line.264"></a>
+<span class="sourceLineNo">265</span><a id="line.265">                                condition = new ModificationConditionImpl(comps, linkages);</a>
+<span class="sourceLineNo">266</span><a id="line.266">                        } // end of condition</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">                        ProteinModificationImpl.Builder modBuilder =</a>
+<span class="sourceLineNo">269</span><a id="line.269">                                new ProteinModificationImpl.Builder(id, cat, occType, condition);</a>
+<span class="sourceLineNo">270</span><a id="line.270"></a>
+<span class="sourceLineNo">271</span><a id="line.271">                        // description</a>
+<span class="sourceLineNo">272</span><a id="line.272">                        nodes = infoNodes.get("Description");</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        if (nodes!=null &amp;&amp; !nodes.isEmpty()) {</a>
+<span class="sourceLineNo">274</span><a id="line.274">                                modBuilder.setDescription(nodes.get(0).getTextContent());</a>
+<span class="sourceLineNo">275</span><a id="line.275">                        }</a>
+<span class="sourceLineNo">276</span><a id="line.276"></a>
+<span class="sourceLineNo">277</span><a id="line.277">                        // cross references</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        nodes = infoNodes.get("CrossReference");</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        if (nodes!=null) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                for (Node node:nodes) {</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                        Map&lt;String,List&lt;Node&gt;&gt; xrefInfoNodes = getChildNodes(node);</a>
+<span class="sourceLineNo">282</span><a id="line.282"></a>
+<span class="sourceLineNo">283</span><a id="line.283">                                        // source</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                        List&lt;Node&gt; xrefNode = xrefInfoNodes.get("Source");</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                        if (xrefNode==null || xrefNode.size()!=1) {</a>
+<span class="sourceLineNo">286</span><a id="line.286">                                                throw new RuntimeException("Error in XML file: " +</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                                        "a cross reference must contain exactly one &lt;Source&gt; field." +</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                        }</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                        String xrefDb = xrefNode.get(0).getTextContent();</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">                                        // id</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                        xrefNode = xrefInfoNodes.get("Id");</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                        if (xrefNode==null || xrefNode.size()!=1) {</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                                throw new RuntimeException("Error in XML file: " +</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                                        "a cross reference must contain exactly one &lt;Id&gt; field." +</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                                        " See Modification "+id+".");</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                        }</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                        String xrefId = xrefNode.get(0).getTextContent();</a>
+<span class="sourceLineNo">300</span><a id="line.300"></a>
+<span class="sourceLineNo">301</span><a id="line.301">                                        // name</a>
+<span class="sourceLineNo">302</span><a id="line.302">                                        String xrefName = null;</a>
+<span class="sourceLineNo">303</span><a id="line.303">                                        xrefNode = xrefInfoNodes.get("Name");</a>
+<span class="sourceLineNo">304</span><a id="line.304">                                        if (xrefNode!=null &amp;&amp; !xrefNode.isEmpty()) {</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                                xrefName = xrefNode.get(0).getTextContent();</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                        }</a>
+<span class="sourceLineNo">307</span><a id="line.307"></a>
+<span class="sourceLineNo">308</span><a id="line.308">                                        if (xrefDb.equals("PDBCC")) {</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                                modBuilder.setPdbccId(xrefId).setPdbccName(xrefName);</a>
+<span class="sourceLineNo">310</span><a id="line.310">                                        } else if (xrefDb.equals("RESID")) {</a>
+<span class="sourceLineNo">311</span><a id="line.311">                                                modBuilder.setResidId(xrefId).setResidName(xrefName);</a>
+<span class="sourceLineNo">312</span><a id="line.312">                                        } else if (xrefDb.equals("PSI-MOD")) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                                                modBuilder.setPsimodId(xrefId).setPsimodName(xrefName);</a>
+<span class="sourceLineNo">314</span><a id="line.314">                                        }</a>
+<span class="sourceLineNo">315</span><a id="line.315">                                }</a>
+<span class="sourceLineNo">316</span><a id="line.316">                        } // end of cross references</a>
+<span class="sourceLineNo">317</span><a id="line.317"></a>
+<span class="sourceLineNo">318</span><a id="line.318">                        // formula</a>
+<span class="sourceLineNo">319</span><a id="line.319">                        nodes = infoNodes.get("Formula");</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        if (nodes!=null &amp;&amp; !nodes.isEmpty()) {</a>
+<span class="sourceLineNo">321</span><a id="line.321">                                modBuilder.setFormula(nodes.get(0).getTextContent());</a>
+<span class="sourceLineNo">322</span><a id="line.322">                        }</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">                        // keywords</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        nodes = infoNodes.get("Keyword");</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        if (nodes!=null &amp;&amp; !nodes.isEmpty()) {</a>
+<span class="sourceLineNo">327</span><a id="line.327">                                for (Node node : nodes) {</a>
+<span class="sourceLineNo">328</span><a id="line.328">                                        modBuilder.addKeyword(node.getTextContent());</a>
+<span class="sourceLineNo">329</span><a id="line.329">                                }</a>
+<span class="sourceLineNo">330</span><a id="line.330">                        }</a>
+<span class="sourceLineNo">331</span><a id="line.331"></a>
+<span class="sourceLineNo">332</span><a id="line.332">                        ProteinModificationRegistry.register(modBuilder.build());</a>
+<span class="sourceLineNo">333</span><a id="line.333">                }</a>
+<span class="sourceLineNo">334</span><a id="line.334">        }</a>
+<span class="sourceLineNo">335</span><a id="line.335"></a>
+<span class="sourceLineNo">336</span><a id="line.336">        /**</a>
+<span class="sourceLineNo">337</span><a id="line.337">         * Utility method to group child nodes by their names.</a>
+<span class="sourceLineNo">338</span><a id="line.338">         * @param parent parent node.</a>
+<span class="sourceLineNo">339</span><a id="line.339">         * @return Map from name to child nodes.</a>
+<span class="sourceLineNo">340</span><a id="line.340">         */</a>
+<span class="sourceLineNo">341</span><a id="line.341">        private static Map&lt;String,List&lt;Node&gt;&gt; getChildNodes(Node parent) {</a>
+<span class="sourceLineNo">342</span><a id="line.342">                if (parent==null)</a>
+<span class="sourceLineNo">343</span><a id="line.343">                        return Collections.emptyMap();</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345">                Map&lt;String,List&lt;Node&gt;&gt; children = new HashMap&lt;String,List&lt;Node&gt;&gt;();</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">                NodeList nodes = parent.getChildNodes();</a>
+<span class="sourceLineNo">348</span><a id="line.348">                int nNodes = nodes.getLength();</a>
+<span class="sourceLineNo">349</span><a id="line.349">                for (int i=0; i&lt;nNodes; i++) {</a>
+<span class="sourceLineNo">350</span><a id="line.350">                        Node node = nodes.item(i);</a>
+<span class="sourceLineNo">351</span><a id="line.351">                        if (node.getNodeType()!=Node.ELEMENT_NODE)</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                continue;</a>
+<span class="sourceLineNo">353</span><a id="line.353"></a>
+<span class="sourceLineNo">354</span><a id="line.354">                        String name = node.getNodeName();</a>
+<span class="sourceLineNo">355</span><a id="line.355">                        List&lt;Node&gt; namesakes = children.get(name);</a>
+<span class="sourceLineNo">356</span><a id="line.356">                        if (namesakes==null) {</a>
+<span class="sourceLineNo">357</span><a id="line.357">                                namesakes = new ArrayList&lt;Node&gt;();</a>
+<span class="sourceLineNo">358</span><a id="line.358">                                children.put(name, namesakes);</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        }</a>
+<span class="sourceLineNo">360</span><a id="line.360">                        namesakes.add(node);</a>
+<span class="sourceLineNo">361</span><a id="line.361">                }</a>
+<span class="sourceLineNo">362</span><a id="line.362"></a>
+<span class="sourceLineNo">363</span><a id="line.363">                return children;</a>
+<span class="sourceLineNo">364</span><a id="line.364">        }</a>
+<span class="sourceLineNo">365</span><a id="line.365">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

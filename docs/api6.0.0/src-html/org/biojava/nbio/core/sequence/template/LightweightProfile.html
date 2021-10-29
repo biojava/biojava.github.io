@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on November 19, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Mark Chapman</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.core.sequence.template;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.List;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">/**</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * Defines a minimal data structure for reading and writing a sequence alignment.  The full {@code Profile} data</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * structure in the alignment module provides additional functionality.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author Mark Chapman</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * @param &lt;S&gt; each element of the alignment profile is of type S</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * @param &lt;C&gt; each element of an {@link Sequence} is a {@link Compound} of type C</a>
+<span class="sourceLineNo">035</span><a id="line.35"> */</a>
+<span class="sourceLineNo">036</span><a id="line.36">public interface LightweightProfile&lt;S extends Sequence&lt;C&gt;, C extends Compound&gt; {</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">        /**</a>
+<span class="sourceLineNo">039</span><a id="line.39">         * List of output formats.</a>
+<span class="sourceLineNo">040</span><a id="line.40">         */</a>
+<span class="sourceLineNo">041</span><a id="line.41">        enum StringFormat {</a>
+<span class="sourceLineNo">042</span><a id="line.42">                ALN,</a>
+<span class="sourceLineNo">043</span><a id="line.43">                CLUSTALW,</a>
+<span class="sourceLineNo">044</span><a id="line.44">                FASTA,</a>
+<span class="sourceLineNo">045</span><a id="line.45">                GCG,</a>
+<span class="sourceLineNo">046</span><a id="line.46">                MSF,</a>
+<span class="sourceLineNo">047</span><a id="line.47">                PDBWEB</a>
+<span class="sourceLineNo">048</span><a id="line.48">        }</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">        /**</a>
+<span class="sourceLineNo">051</span><a id="line.51">         * Returns {@link Sequence} at given index.</a>
+<span class="sourceLineNo">052</span><a id="line.52">         *</a>
+<span class="sourceLineNo">053</span><a id="line.53">         * @param listIndex index of sequence in profile</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * @return desired sequence</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @throws IndexOutOfBoundsException if listIndex &lt; 1 or listIndex &gt; number of sequences</a>
+<span class="sourceLineNo">056</span><a id="line.56">         */</a>
+<span class="sourceLineNo">057</span><a id="line.57">        S getAlignedSequence(int listIndex);</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        /**</a>
+<span class="sourceLineNo">060</span><a id="line.60">         * Returns a {@link List} containing the individual {@link Sequence}s of this alignment.</a>
+<span class="sourceLineNo">061</span><a id="line.61">         *</a>
+<span class="sourceLineNo">062</span><a id="line.62">         * @return list of aligned sequences</a>
+<span class="sourceLineNo">063</span><a id="line.63">         */</a>
+<span class="sourceLineNo">064</span><a id="line.64">        List&lt;S&gt; getAlignedSequences();</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * Returns the {@link Compound} elements of the original {@link Sequence}s at the given column.</a>
+<span class="sourceLineNo">068</span><a id="line.68">         *</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * @param alignmentIndex column index within an alignment</a>
+<span class="sourceLineNo">070</span><a id="line.70">         * @return the sequence elements</a>
+<span class="sourceLineNo">071</span><a id="line.71">         * @throws IndexOutOfBoundsException if alignmentIndex &lt; 1 or alignmentIndex &gt; {@link #getLength()}</a>
+<span class="sourceLineNo">072</span><a id="line.72">         */</a>
+<span class="sourceLineNo">073</span><a id="line.73">        List&lt;C&gt; getCompoundsAt(int alignmentIndex);</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        /**</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * Returns {@link CompoundSet} of all {@link Sequence}s</a>
+<span class="sourceLineNo">077</span><a id="line.77">         *</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * @return set of {@link Compound}s in contained sequences</a>
+<span class="sourceLineNo">079</span><a id="line.79">         */</a>
+<span class="sourceLineNo">080</span><a id="line.80">        CompoundSet&lt;C&gt; getCompoundSet();</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">        /**</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * Returns the number of columns in the alignment profile.</a>
+<span class="sourceLineNo">084</span><a id="line.84">         *</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * @return the number of columns</a>
+<span class="sourceLineNo">086</span><a id="line.86">         */</a>
+<span class="sourceLineNo">087</span><a id="line.87">        int getLength();</a>
+<span class="sourceLineNo">088</span><a id="line.88"></a>
+<span class="sourceLineNo">089</span><a id="line.89">        /**</a>
+<span class="sourceLineNo">090</span><a id="line.90">         * Returns the number of rows in this profile.  If any {@link Sequence}s are circular and overlap within the</a>
+<span class="sourceLineNo">091</span><a id="line.91">         * alignment, the returned size will be greater than the number of sequences, otherwise the numbers will be equal.</a>
+<span class="sourceLineNo">092</span><a id="line.92">         *</a>
+<span class="sourceLineNo">093</span><a id="line.93">         * @return number of rows</a>
+<span class="sourceLineNo">094</span><a id="line.94">         */</a>
+<span class="sourceLineNo">095</span><a id="line.95">        int getSize();</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">        /**</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * Returns a simple view of the alignment profile.  This shows each sequence on a separate line (or multiple lines,</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * if circular) and nothing more.  This should result in {@link #getSize()} lines with {@link #getLength()}</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * {@link Compound}s per line.</a>
+<span class="sourceLineNo">101</span><a id="line.101">         *</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * @return a simple view of the alignment profile</a>
+<span class="sourceLineNo">103</span><a id="line.103">         */</a>
+<span class="sourceLineNo">104</span><a id="line.104">        @Override</a>
+<span class="sourceLineNo">105</span><a id="line.105">        String toString();</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">        /**</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * Returns a formatted view of the alignment profile.  This shows the start and end indices of the profile for each</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * group of lines of the given width.  Each line may also be labeled.</a>
+<span class="sourceLineNo">110</span><a id="line.110">         *</a>
+<span class="sourceLineNo">111</span><a id="line.111">         * @param width limit on the line length</a>
+<span class="sourceLineNo">112</span><a id="line.112">         * @return a formatted view of the alignment profile</a>
+<span class="sourceLineNo">113</span><a id="line.113">         */</a>
+<span class="sourceLineNo">114</span><a id="line.114">        String toString(int width);</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">        /**</a>
+<span class="sourceLineNo">117</span><a id="line.117">         * Returns a formatted view of the alignment profile.  Details depend on the format given.</a>
+<span class="sourceLineNo">118</span><a id="line.118">         *</a>
+<span class="sourceLineNo">119</span><a id="line.119">         * @param format output format</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * @return a formatted view of the alignment profile</a>
+<span class="sourceLineNo">121</span><a id="line.121">         */</a>
+<span class="sourceLineNo">122</span><a id="line.122">        String toString(StringFormat format);</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.core.sequence.edits;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.core.exceptions.CompoundNotFoundException;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.core.sequence.BasicSequence;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.core.sequence.storage.JoiningSequenceReader;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.sequence.template.Compound;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.core.sequence.template.Sequence;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.ArrayList;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.List;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">/**</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * Interface for carrying out edit operations on a Sequence. The 3 major</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * methods of Editing are supported</a>
+<span class="sourceLineNo">037</span><a id="line.37"> *</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;ul&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * &lt;li&gt;Insertion&lt;/li&gt;</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;li&gt;Deletion&lt;/li&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * &lt;li&gt;Substitution&lt;/li&gt;</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * &lt;/ul&gt;</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * The interface is provided so end users can use our implementations, which</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * are implementations which attempts to create views of Sequences in an</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * editted form not a full-realised editted Sequence, or their own.</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * @author ayates</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @param &lt;C&gt; The type of compound to edit</a>
+<span class="sourceLineNo">050</span><a id="line.50"> */</a>
+<span class="sourceLineNo">051</span><a id="line.51">public interface Edit&lt;C extends Compound&gt; {</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        Sequence&lt;C&gt; edit(Sequence&lt;C&gt; sequence);</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        /**</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * Abstract class which defines all edit operations as a call to discover</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * what 5' and 3' ends of an editing Sequence should be joined together</a>
+<span class="sourceLineNo">058</span><a id="line.58">         * with a target Sequence. These ends can be of 0 length but conceptionally</a>
+<span class="sourceLineNo">059</span><a id="line.59">         * they can still exist.</a>
+<span class="sourceLineNo">060</span><a id="line.60">         */</a>
+<span class="sourceLineNo">061</span><a id="line.61">        public static abstract class AbstractEdit&lt;C extends Compound&gt; implements Edit&lt;C&gt; {</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                private final static Logger logger = LoggerFactory.getLogger(AbstractEdit.class);</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">                /**</a>
+<span class="sourceLineNo">066</span><a id="line.66">                 * Should return the 5-prime end of the given Sequence according to</a>
+<span class="sourceLineNo">067</span><a id="line.67">                 * the edit. An empty Sequence is valid.</a>
+<span class="sourceLineNo">068</span><a id="line.68">                 */</a>
+<span class="sourceLineNo">069</span><a id="line.69">                protected abstract Sequence&lt;C&gt; getFivePrime(Sequence&lt;C&gt; editingSequence);</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">                /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">                 * Should return the 3-prime end of the given Sequence according to</a>
+<span class="sourceLineNo">073</span><a id="line.73">                 * the edit. An empty Sequence is valid.</a>
+<span class="sourceLineNo">074</span><a id="line.74">                 */</a>
+<span class="sourceLineNo">075</span><a id="line.75">                protected abstract Sequence&lt;C&gt; getThreePrime(Sequence&lt;C&gt; editingSequence);</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">                @Override</a>
+<span class="sourceLineNo">079</span><a id="line.79">                public Sequence&lt;C&gt; edit(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                        Sequence&lt;C&gt; targetSequence = getTargetSequence(editingSequence);</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        List&lt;Sequence&lt;C&gt;&gt; sequences = new ArrayList&lt;Sequence&lt;C&gt;&gt;();</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">                        sequences.add(getFivePrime(editingSequence));</a>
+<span class="sourceLineNo">084</span><a id="line.84">                        sequences.add(targetSequence);</a>
+<span class="sourceLineNo">085</span><a id="line.85">                        sequences.add(getThreePrime(editingSequence));</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">                        return new JoiningSequenceReader&lt;C&gt;(sequences);</a>
+<span class="sourceLineNo">088</span><a id="line.88">                }</a>
+<span class="sourceLineNo">089</span><a id="line.89">                private int start = -1;</a>
+<span class="sourceLineNo">090</span><a id="line.90">                private int end = -1;</a>
+<span class="sourceLineNo">091</span><a id="line.91">                private String stringSequence;</a>
+<span class="sourceLineNo">092</span><a id="line.92">                private Sequence&lt;C&gt; sequence;</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">                public AbstractEdit(int start) {</a>
+<span class="sourceLineNo">095</span><a id="line.95">                        this.start = start;</a>
+<span class="sourceLineNo">096</span><a id="line.96">                }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                public AbstractEdit(int start, int end) {</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        this.start = start;</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        this.end = end;</a>
+<span class="sourceLineNo">101</span><a id="line.101">                }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">                protected void setStringSequence(String stringSequence) {</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        this.stringSequence = stringSequence;</a>
+<span class="sourceLineNo">105</span><a id="line.105">                }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">                protected void setSequence(Sequence&lt;C&gt; sequence) {</a>
+<span class="sourceLineNo">108</span><a id="line.108">                        this.sequence = sequence;</a>
+<span class="sourceLineNo">109</span><a id="line.109">                }</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                /**</a>
+<span class="sourceLineNo">112</span><a id="line.112">                 * Returns the Sequence which is our edit.</a>
+<span class="sourceLineNo">113</span><a id="line.113">                 *</a>
+<span class="sourceLineNo">114</span><a id="line.114">                 * @param editingSequence Asked for in-case we need to do String to</a>
+<span class="sourceLineNo">115</span><a id="line.115">                 * Sequence conversion so we need a CompoundSet which is given</a>
+<span class="sourceLineNo">116</span><a id="line.116">                 * by the Sequence we are editing</a>
+<span class="sourceLineNo">117</span><a id="line.117">                 * @return The Sequence&lt;C&gt; object we wish to insert</a>
+<span class="sourceLineNo">118</span><a id="line.118">                 */</a>
+<span class="sourceLineNo">119</span><a id="line.119">                public Sequence&lt;C&gt; getTargetSequence(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        if (sequence == null &amp;&amp; stringSequence != null) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                try {</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                        sequence = new BasicSequence&lt;C&gt;(</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                                                stringSequence, editingSequence.getCompoundSet());</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                } catch (CompoundNotFoundException e) {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                        // TODO is there a better way to handle this exception?</a>
+<span class="sourceLineNo">126</span><a id="line.126">                                        logger.error("Problem setting sequence, some unrecognised compounds: {}", e.getMessage());</a>
+<span class="sourceLineNo">127</span><a id="line.127">                                }</a>
+<span class="sourceLineNo">128</span><a id="line.128">                        }</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        return sequence;</a>
+<span class="sourceLineNo">130</span><a id="line.130">                }</a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">                /**</a>
+<span class="sourceLineNo">133</span><a id="line.133">                 * Returns an empty sequence with the given compound set of the editing</a>
+<span class="sourceLineNo">134</span><a id="line.134">                 * sequence</a>
+<span class="sourceLineNo">135</span><a id="line.135">                 */</a>
+<span class="sourceLineNo">136</span><a id="line.136">                protected Sequence&lt;C&gt; getEmptySequence(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        Sequence&lt;C&gt; s = null;</a>
+<span class="sourceLineNo">138</span><a id="line.138">                        try {</a>
+<span class="sourceLineNo">139</span><a id="line.139">                                s = new BasicSequence&lt;C&gt;("", editingSequence.getCompoundSet());</a>
+<span class="sourceLineNo">140</span><a id="line.140">                        } catch (CompoundNotFoundException e) {</a>
+<span class="sourceLineNo">141</span><a id="line.141">                                // should not happen</a>
+<span class="sourceLineNo">142</span><a id="line.142">                                logger.error("Could not construct empty sequence. {}. This is most likely a bug.", e.getMessage());</a>
+<span class="sourceLineNo">143</span><a id="line.143">                        }</a>
+<span class="sourceLineNo">144</span><a id="line.144">                        return s;</a>
+<span class="sourceLineNo">145</span><a id="line.145">                }</a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">                public int getStart() {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                        return start;</a>
+<span class="sourceLineNo">149</span><a id="line.149">                }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                public int getEnd() {</a>
+<span class="sourceLineNo">152</span><a id="line.152">                        return end;</a>
+<span class="sourceLineNo">153</span><a id="line.153">                }</a>
+<span class="sourceLineNo">154</span><a id="line.154">        }</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        /**</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * Implementation which allows for the deletion of bases from a Sequence</a>
+<span class="sourceLineNo">158</span><a id="line.158">         */</a>
+<span class="sourceLineNo">159</span><a id="line.159">        public static class Delete&lt;C extends Compound&gt; extends AbstractEdit&lt;C&gt; {</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">                public Delete(int position) {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                        this(position, position);</a>
+<span class="sourceLineNo">163</span><a id="line.163">                }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">                public Delete(int start, int end) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                        super(start, end);</a>
+<span class="sourceLineNo">167</span><a id="line.167">                        setStringSequence("");</a>
+<span class="sourceLineNo">168</span><a id="line.168">                }</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">                protected int getRealStart() {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                        return getStart() - 1;</a>
+<span class="sourceLineNo">172</span><a id="line.172">                }</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                protected int getRealEnd() {</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        return getEnd() + 1;</a>
+<span class="sourceLineNo">176</span><a id="line.176">                }</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">                @Override</a>
+<span class="sourceLineNo">179</span><a id="line.179">                protected Sequence&lt;C&gt; getFivePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">180</span><a id="line.180">                        int start = getRealStart();</a>
+<span class="sourceLineNo">181</span><a id="line.181">                        if (start == 0) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                                return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">183</span><a id="line.183">                        }</a>
+<span class="sourceLineNo">184</span><a id="line.184">                        return editingSequence.getSubSequence(1, start);</a>
+<span class="sourceLineNo">185</span><a id="line.185">                }</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">                @Override</a>
+<span class="sourceLineNo">188</span><a id="line.188">                protected Sequence&lt;C&gt; getThreePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">189</span><a id="line.189">                        int end = getRealEnd();</a>
+<span class="sourceLineNo">190</span><a id="line.190">                        if (end &gt; editingSequence.getLength()) {</a>
+<span class="sourceLineNo">191</span><a id="line.191">                                return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">192</span><a id="line.192">                        }</a>
+<span class="sourceLineNo">193</span><a id="line.193">                        return editingSequence.getSubSequence(end, editingSequence.getLength());</a>
+<span class="sourceLineNo">194</span><a id="line.194">                }</a>
+<span class="sourceLineNo">195</span><a id="line.195">        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">        /**</a>
+<span class="sourceLineNo">198</span><a id="line.198">         * Edit implementation which allows us to insert a base at any position</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * in a Sequence. Specifying 1 base is used to insert at the start and</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * end of a Sequence. If you wish to carry out an in-sequence insertion</a>
+<span class="sourceLineNo">201</span><a id="line.201">         * then you specify the flanking base positions e.g.</a>
+<span class="sourceLineNo">202</span><a id="line.202">         *</a>
+<span class="sourceLineNo">203</span><a id="line.203">         * &lt;pre&gt;</a>
+<span class="sourceLineNo">204</span><a id="line.204">         *   ACTG insert TT @ position 1   : TTACGT</a>
+<span class="sourceLineNo">205</span><a id="line.205">         *   ACTG insert TT @ position 2,3 : ACTTGT</a>
+<span class="sourceLineNo">206</span><a id="line.206">         *   ACTG insert A  @ position 4   : ACGTA</a>
+<span class="sourceLineNo">207</span><a id="line.207">         * &lt;/pre&gt;</a>
+<span class="sourceLineNo">208</span><a id="line.208">         *</a>
+<span class="sourceLineNo">209</span><a id="line.209">         * The code will raise exceptions if you attempt a single base edit</a>
+<span class="sourceLineNo">210</span><a id="line.210">         * with an insertion.</a>
+<span class="sourceLineNo">211</span><a id="line.211">         */</a>
+<span class="sourceLineNo">212</span><a id="line.212">        public static class Insert&lt;C extends Compound&gt; extends AbstractEdit&lt;C&gt; {</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                private final boolean singlePosition;</a>
+<span class="sourceLineNo">215</span><a id="line.215"></a>
+<span class="sourceLineNo">216</span><a id="line.216">                public Insert(String sequence, int position) {</a>
+<span class="sourceLineNo">217</span><a id="line.217">                        super(position, position);</a>
+<span class="sourceLineNo">218</span><a id="line.218">                        this.singlePosition = true;</a>
+<span class="sourceLineNo">219</span><a id="line.219">                        setStringSequence(sequence);</a>
+<span class="sourceLineNo">220</span><a id="line.220">                }</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">                public Insert(Sequence&lt;C&gt; sequence, int position) {</a>
+<span class="sourceLineNo">223</span><a id="line.223">                        super(position, position);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                        this.singlePosition = true;</a>
+<span class="sourceLineNo">225</span><a id="line.225">                        setSequence(sequence);</a>
+<span class="sourceLineNo">226</span><a id="line.226">                }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">                public Insert(String sequence, int start, int stop) {</a>
+<span class="sourceLineNo">229</span><a id="line.229">                        super(start, stop);</a>
+<span class="sourceLineNo">230</span><a id="line.230">                        this.singlePosition = false;</a>
+<span class="sourceLineNo">231</span><a id="line.231">                        setStringSequence(sequence);</a>
+<span class="sourceLineNo">232</span><a id="line.232">                }</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">                public Insert(Sequence&lt;C&gt; sequence, int start, int stop) {</a>
+<span class="sourceLineNo">235</span><a id="line.235">                        super(start, stop);</a>
+<span class="sourceLineNo">236</span><a id="line.236">                        this.singlePosition = false;</a>
+<span class="sourceLineNo">237</span><a id="line.237">                        setSequence(sequence);</a>
+<span class="sourceLineNo">238</span><a id="line.238">                }</a>
+<span class="sourceLineNo">239</span><a id="line.239"></a>
+<span class="sourceLineNo">240</span><a id="line.240">                @Override</a>
+<span class="sourceLineNo">241</span><a id="line.241">                protected Sequence&lt;C&gt; getFivePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">242</span><a id="line.242">                        if (singlePosition) {</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                if (getStart() == 1) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                        return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                } else if (getEnd() == editingSequence.getLength()) {</a>
+<span class="sourceLineNo">246</span><a id="line.246">                                        return editingSequence;</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                } else {</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                        throw new IllegalStateException("Given one position to "</a>
+<span class="sourceLineNo">249</span><a id="line.249">                                                        + "insert at but this is not the start or end "</a>
+<span class="sourceLineNo">250</span><a id="line.250">                                                        + "of the Sequence; cannot support this");</a>
+<span class="sourceLineNo">251</span><a id="line.251">                                }</a>
+<span class="sourceLineNo">252</span><a id="line.252">                        }</a>
+<span class="sourceLineNo">253</span><a id="line.253">                        return editingSequence.getSubSequence(1, getStart());</a>
+<span class="sourceLineNo">254</span><a id="line.254">                }</a>
+<span class="sourceLineNo">255</span><a id="line.255"></a>
+<span class="sourceLineNo">256</span><a id="line.256">                @Override</a>
+<span class="sourceLineNo">257</span><a id="line.257">                protected Sequence&lt;C&gt; getThreePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        if (singlePosition) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                if (getStart() == 1) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                        return editingSequence;</a>
+<span class="sourceLineNo">261</span><a id="line.261">                                } else if (getEnd() == editingSequence.getLength()) {</a>
+<span class="sourceLineNo">262</span><a id="line.262">                                        return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">263</span><a id="line.263">                                } else {</a>
+<span class="sourceLineNo">264</span><a id="line.264">                                        throw new IllegalStateException("Given one position to "</a>
+<span class="sourceLineNo">265</span><a id="line.265">                                                        + "insert at but this is not the start or end "</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                                        + "of the Sequence; cannot support this");</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                }</a>
+<span class="sourceLineNo">268</span><a id="line.268">                        }</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        return editingSequence.getSubSequence(getEnd(), editingSequence.getLength());</a>
+<span class="sourceLineNo">270</span><a id="line.270">                }</a>
+<span class="sourceLineNo">271</span><a id="line.271">        }</a>
+<span class="sourceLineNo">272</span><a id="line.272"></a>
+<span class="sourceLineNo">273</span><a id="line.273">        /**</a>
+<span class="sourceLineNo">274</span><a id="line.274">         * Allows for the substitution of bases into an existing Sequence. This</a>
+<span class="sourceLineNo">275</span><a id="line.275">         * allows us to do edits like:</a>
+<span class="sourceLineNo">276</span><a id="line.276">         *</a>
+<span class="sourceLineNo">277</span><a id="line.277">         * &lt;pre&gt;</a>
+<span class="sourceLineNo">278</span><a id="line.278">         *    Sub TT @ position 2</a>
+<span class="sourceLineNo">279</span><a id="line.279">         *    AAAA -&gt; ATTA</a>
+<span class="sourceLineNo">280</span><a id="line.280">         * &lt;/pre&gt;</a>
+<span class="sourceLineNo">281</span><a id="line.281">         *</a>
+<span class="sourceLineNo">282</span><a id="line.282">         * We do not support</a>
+<span class="sourceLineNo">283</span><a id="line.283">         *</a>
+<span class="sourceLineNo">284</span><a id="line.284">         * Edits do not require the length of the insertion but do rely on the</a>
+<span class="sourceLineNo">285</span><a id="line.285">         * presence of a CompoundSet to parse a String (if given) which means</a>
+<span class="sourceLineNo">286</span><a id="line.286">         * the eventual length of a Sequence is a lazy operation.</a>
+<span class="sourceLineNo">287</span><a id="line.287">         */</a>
+<span class="sourceLineNo">288</span><a id="line.288">        public static class Substitute&lt;C extends Compound&gt; extends AbstractEdit&lt;C&gt; {</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">                public Substitute(String sequence, int position) {</a>
+<span class="sourceLineNo">291</span><a id="line.291">                        super(position);</a>
+<span class="sourceLineNo">292</span><a id="line.292">                        setStringSequence(sequence);</a>
+<span class="sourceLineNo">293</span><a id="line.293">                }</a>
+<span class="sourceLineNo">294</span><a id="line.294"></a>
+<span class="sourceLineNo">295</span><a id="line.295">                public Substitute(Sequence&lt;C&gt; sequence, int position) {</a>
+<span class="sourceLineNo">296</span><a id="line.296">                        super(position);</a>
+<span class="sourceLineNo">297</span><a id="line.297">                        setSequence(sequence);</a>
+<span class="sourceLineNo">298</span><a id="line.298">                }</a>
+<span class="sourceLineNo">299</span><a id="line.299"></a>
+<span class="sourceLineNo">300</span><a id="line.300">                /**</a>
+<span class="sourceLineNo">301</span><a id="line.301">                 * Must use this rather than the no-args getEnd as this can return</a>
+<span class="sourceLineNo">302</span><a id="line.302">                 * -1 and the length of a sub is dependent on the length of the</a>
+<span class="sourceLineNo">303</span><a id="line.303">                 * Sequence; we cannot assume 1:1 mapping between characters in a</a>
+<span class="sourceLineNo">304</span><a id="line.304">                 * String and the number of compounds we will have to insert.</a>
+<span class="sourceLineNo">305</span><a id="line.305">                 */</a>
+<span class="sourceLineNo">306</span><a id="line.306">                public int getEnd(Sequence&lt;C&gt; sequence) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        if (getEnd() == -1) {</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                int start = getStart();</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                int length = getTargetSequence(sequence).getLength();</a>
+<span class="sourceLineNo">310</span><a id="line.310">                                return (start + length) - 1;</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        }</a>
+<span class="sourceLineNo">312</span><a id="line.312">                        return getEnd();</a>
+<span class="sourceLineNo">313</span><a id="line.313">                }</a>
+<span class="sourceLineNo">314</span><a id="line.314"></a>
+<span class="sourceLineNo">315</span><a id="line.315">                @Override</a>
+<span class="sourceLineNo">316</span><a id="line.316">                protected Sequence&lt;C&gt; getFivePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">317</span><a id="line.317">                        int start = getStart();</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        if (start == 1) {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                                return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        }</a>
+<span class="sourceLineNo">321</span><a id="line.321">                        return editingSequence.getSubSequence(1, start - 1);</a>
+<span class="sourceLineNo">322</span><a id="line.322">                }</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">                @Override</a>
+<span class="sourceLineNo">325</span><a id="line.325">                protected Sequence&lt;C&gt; getThreePrime(Sequence&lt;C&gt; editingSequence) {</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        int end = getEnd(editingSequence);</a>
+<span class="sourceLineNo">327</span><a id="line.327">                        if (end &gt; editingSequence.getLength()) {</a>
+<span class="sourceLineNo">328</span><a id="line.328">                                throw new IndexOutOfBoundsException(end +</a>
+<span class="sourceLineNo">329</span><a id="line.329">                                                " is greater than the max index of " +</a>
+<span class="sourceLineNo">330</span><a id="line.330">                                                "the editing sequence (" +</a>
+<span class="sourceLineNo">331</span><a id="line.331">                                                editingSequence.getLength());</a>
+<span class="sourceLineNo">332</span><a id="line.332">                        } else if (end == editingSequence.getLength()) {</a>
+<span class="sourceLineNo">333</span><a id="line.333">                                return getEmptySequence(editingSequence);</a>
+<span class="sourceLineNo">334</span><a id="line.334">                        }</a>
+<span class="sourceLineNo">335</span><a id="line.335">                        return editingSequence.getSubSequence(end + 1, editingSequence.getLength());</a>
+<span class="sourceLineNo">336</span><a id="line.336">                }</a>
+<span class="sourceLineNo">337</span><a id="line.337">        }</a>
+<span class="sourceLineNo">338</span><a id="line.338">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

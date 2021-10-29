@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                  BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Dec 4, 2005</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.nbio.structure.geometry;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import javax.vecmath.Matrix4d;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import javax.vecmath.Point3d;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import javax.vecmath.Vector3d;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.jama.SingularValueDecomposition;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">/**</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * A class that calculates the superposition between two sets of points using an</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * SVD Matrix Decomposition. It was introduced by Wolfgang Kabsch, hence the</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * alternative name Kabsh algorithm. Inspired by the biopython SVDSuperimposer</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * class.</a>
+<span class="sourceLineNo">037</span><a id="line.37"> *</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * @since 1.5</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * @version %I% %G%</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public class SuperPositionSVD extends SuperPositionAbstract {</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">         * Constructor for the SVD superposition algorithm.</a>
+<span class="sourceLineNo">048</span><a id="line.48">         *</a>
+<span class="sourceLineNo">049</span><a id="line.49">         * @param centered</a>
+<span class="sourceLineNo">050</span><a id="line.50">         *            true if the point arrays are centered at the origin (faster),</a>
+<span class="sourceLineNo">051</span><a id="line.51">         *            false otherwise</a>
+<span class="sourceLineNo">052</span><a id="line.52">         */</a>
+<span class="sourceLineNo">053</span><a id="line.53">        public SuperPositionSVD(boolean centered) {</a>
+<span class="sourceLineNo">054</span><a id="line.54">                super(centered);</a>
+<span class="sourceLineNo">055</span><a id="line.55">        }</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">        @Override</a>
+<span class="sourceLineNo">058</span><a id="line.58">        public Matrix4d superpose(Point3d[] fixed, Point3d[] moved) {</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">                checkInput(fixed, moved);</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">                Point3d cena = CalcPoint.centroid(fixed);</a>
+<span class="sourceLineNo">063</span><a id="line.63">                Point3d cenb = CalcPoint.centroid(moved);</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">                double[][] centAcoords = new double[][] { { cena.x, cena.y, cena.z } };</a>
+<span class="sourceLineNo">066</span><a id="line.66">                Matrix centroidA = new Matrix(centAcoords);</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68">                double[][] centBcoords = new double[][] { { cenb.x, cenb.y, cenb.z } };</a>
+<span class="sourceLineNo">069</span><a id="line.69">                Matrix centroidB = new Matrix(centBcoords);</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">                // center at centroid</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">                cena.negate();</a>
+<span class="sourceLineNo">074</span><a id="line.74">                cenb.negate();</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">                Point3d[] ats1 = CalcPoint.clonePoint3dArray(fixed);</a>
+<span class="sourceLineNo">077</span><a id="line.77">                CalcPoint.translate(new Vector3d(cena), ats1);</a>
+<span class="sourceLineNo">078</span><a id="line.78"></a>
+<span class="sourceLineNo">079</span><a id="line.79">                Point3d[] ats2 = CalcPoint.clonePoint3dArray(moved);</a>
+<span class="sourceLineNo">080</span><a id="line.80">                CalcPoint.translate(new Vector3d(cenb), ats2);</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">                double[][] coordSet1 = new double[ats1.length][3];</a>
+<span class="sourceLineNo">083</span><a id="line.83">                double[][] coordSet2 = new double[ats2.length][3];</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">                // copy the atoms into the internal coords;</a>
+<span class="sourceLineNo">086</span><a id="line.86">                for (int i = 0; i &lt; ats1.length; i++) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">                        coordSet1[i] = new double[3];</a>
+<span class="sourceLineNo">088</span><a id="line.88">                        ats1[i].get(coordSet1[i]);</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        coordSet2[i] = new double[3];</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        ats2[i].get(coordSet2[i]);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                }</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                // now this is the bridge to the Jama package:</a>
+<span class="sourceLineNo">094</span><a id="line.94">                Matrix a = new Matrix(coordSet1);</a>
+<span class="sourceLineNo">095</span><a id="line.95">                Matrix b = new Matrix(coordSet2);</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">                // # correlation matrix</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">                Matrix b_trans = b.transpose();</a>
+<span class="sourceLineNo">100</span><a id="line.100">                Matrix corr = b_trans.times(a);</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">                SingularValueDecomposition svd = corr.svd();</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">                Matrix u = svd.getU();</a>
+<span class="sourceLineNo">105</span><a id="line.105">                // v is alreaady transposed ! difference to numermic python ...</a>
+<span class="sourceLineNo">106</span><a id="line.106">                Matrix vt = svd.getV();</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                Matrix vt_orig = (Matrix) vt.clone();</a>
+<span class="sourceLineNo">109</span><a id="line.109">                Matrix u_transp = u.transpose();</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                Matrix rot_nottrans = vt.times(u_transp);</a>
+<span class="sourceLineNo">112</span><a id="line.112">                Matrix rot = rot_nottrans.transpose();</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">                // check if we have found a reflection</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">                double det = rot.det();</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118">                if (det &lt; 0) {</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        vt = vt_orig.transpose();</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        vt.set(2, 0, (0 - vt.get(2, 0)));</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        vt.set(2, 1, (0 - vt.get(2, 1)));</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        vt.set(2, 2, (0 - vt.get(2, 2)));</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">                        Matrix nv_transp = vt.transpose();</a>
+<span class="sourceLineNo">125</span><a id="line.125">                        rot_nottrans = nv_transp.times(u_transp);</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        rot = rot_nottrans.transpose();</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">                }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">                Matrix cb_tmp = centroidB.times(rot);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                Matrix tran = centroidA.minus(cb_tmp);</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133">                return Matrices.getTransformation(rot, tran);</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">        }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">        @Override</a>
+<span class="sourceLineNo">138</span><a id="line.138">        public double getRmsd(Point3d[] x, Point3d[] y) {</a>
+<span class="sourceLineNo">139</span><a id="line.139">                Point3d[] yclone = CalcPoint.clonePoint3dArray(y);</a>
+<span class="sourceLineNo">140</span><a id="line.140">                superposeAndTransform(x, yclone);</a>
+<span class="sourceLineNo">141</span><a id="line.141">                return CalcPoint.rmsd(x, yclone);</a>
+<span class="sourceLineNo">142</span><a id="line.142">        }</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

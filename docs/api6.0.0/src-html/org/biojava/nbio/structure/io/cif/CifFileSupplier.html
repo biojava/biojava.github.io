@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.nbio.structure.io.cif;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import org.rcsb.cif.model.CifFile;</a>
+<span class="sourceLineNo">004</span><a id="line.4"></a>
+<span class="sourceLineNo">005</span><a id="line.5">/**</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * Create a CifFile instance for a given container of structure data.</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * @param &lt;S&gt; the container type used as source</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * @author Sebastian Bittrich</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * @since 5.3.0</a>
+<span class="sourceLineNo">010</span><a id="line.10"> */</a>
+<span class="sourceLineNo">011</span><a id="line.11">public interface CifFileSupplier&lt;S&gt; {</a>
+<span class="sourceLineNo">012</span><a id="line.12">    /**</a>
+<span class="sourceLineNo">013</span><a id="line.13">     * Convert some model instance describing structure information to a CifFile instance.</a>
+<span class="sourceLineNo">014</span><a id="line.14">     * @param container the source of structure information</a>
+<span class="sourceLineNo">015</span><a id="line.15">     * @return a flat CifFile instance, ready for IO operations</a>
+<span class="sourceLineNo">016</span><a id="line.16">     */</a>
+<span class="sourceLineNo">017</span><a id="line.17">    CifFile get(S container);</a>
+<span class="sourceLineNo">018</span><a id="line.18">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

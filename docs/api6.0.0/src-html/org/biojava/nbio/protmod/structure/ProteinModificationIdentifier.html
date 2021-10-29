@@ -1,0 +1,979 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Jun 12, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Jianjiong Gao</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">package org.biojava.nbio.protmod.structure;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.protmod.*;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.*;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.*;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">/**</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * Identify attachment modification in a 3-D structure.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * @author Jianjiong Gao</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @since 3.0</a>
+<span class="sourceLineNo">039</span><a id="line.39"> */</a>
+<span class="sourceLineNo">040</span><a id="line.40">public class ProteinModificationIdentifier {</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">        private static final Logger logger = LoggerFactory.getLogger(ProteinModificationIdentifier.class);</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">        private double bondLengthTolerance ;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        private boolean recordUnidentifiableModifiedCompounds ;</a>
+<span class="sourceLineNo">046</span><a id="line.46">        private boolean recordAdditionalAttachments ;</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">        private Set&lt;ModifiedCompound&gt; identifiedModifiedCompounds = null;</a>
+<span class="sourceLineNo">049</span><a id="line.49">        private Set&lt;StructureAtomLinkage&gt; unidentifiableAtomLinkages = null;</a>
+<span class="sourceLineNo">050</span><a id="line.50">        private Set&lt;StructureGroup&gt; unidentifiableModifiedResidues = null;</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        /**</a>
+<span class="sourceLineNo">053</span><a id="line.53">         * Temporary save the amino acids for each call of identify().</a>
+<span class="sourceLineNo">054</span><a id="line.54">         */</a>
+<span class="sourceLineNo">055</span><a id="line.55">        private List&lt;Group&gt; residues;</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">        public ProteinModificationIdentifier(){</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">                bondLengthTolerance =  0.4;</a>
+<span class="sourceLineNo">061</span><a id="line.61">                recordUnidentifiableModifiedCompounds = false;</a>
+<span class="sourceLineNo">062</span><a id="line.62">                recordAdditionalAttachments = true;</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">                reset();</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68">        public void destroy(){</a>
+<span class="sourceLineNo">069</span><a id="line.69">                if ( identifiedModifiedCompounds != null)</a>
+<span class="sourceLineNo">070</span><a id="line.70">                        identifiedModifiedCompounds.clear();</a>
+<span class="sourceLineNo">071</span><a id="line.71">                if ( unidentifiableAtomLinkages != null)</a>
+<span class="sourceLineNo">072</span><a id="line.72">                        unidentifiableAtomLinkages.clear();</a>
+<span class="sourceLineNo">073</span><a id="line.73">                if ( unidentifiableModifiedResidues != null)</a>
+<span class="sourceLineNo">074</span><a id="line.74">                        unidentifiableModifiedResidues.clear();</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">                unidentifiableAtomLinkages = null;</a>
+<span class="sourceLineNo">077</span><a id="line.77">                unidentifiableAtomLinkages = null;</a>
+<span class="sourceLineNo">078</span><a id="line.78">                unidentifiableModifiedResidues = null;</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">        }</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">         *</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * @param bondLengthTolerance tolerance of error (in Angstroms) of the</a>
+<span class="sourceLineNo">086</span><a id="line.86">         *  covalent bond length, when calculating the atom distance threshold.</a>
+<span class="sourceLineNo">087</span><a id="line.87">         */</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public void setbondLengthTolerance(final double bondLengthTolerance) {</a>
+<span class="sourceLineNo">089</span><a id="line.89">                if (bondLengthTolerance&lt;0) {</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        throw new IllegalArgumentException("bondLengthTolerance " +</a>
+<span class="sourceLineNo">091</span><a id="line.91">                                        "must be positive.");</a>
+<span class="sourceLineNo">092</span><a id="line.92">                }</a>
+<span class="sourceLineNo">093</span><a id="line.93">                this.bondLengthTolerance = bondLengthTolerance;</a>
+<span class="sourceLineNo">094</span><a id="line.94">        }</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">         *</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @param recordUnidentifiableModifiedCompounds true if choosing to record unidentifiable</a>
+<span class="sourceLineNo">099</span><a id="line.99">         *  atoms; false, otherwise.</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * @see #getRecordUnidentifiableCompounds</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @see #getUnidentifiableModifiedResidues</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * @see #getUnidentifiableAtomLinkages</a>
+<span class="sourceLineNo">103</span><a id="line.103">         */</a>
+<span class="sourceLineNo">104</span><a id="line.104">        public void setRecordUnidentifiableCompounds(boolean recordUnidentifiableModifiedCompounds) {</a>
+<span class="sourceLineNo">105</span><a id="line.105">                this.recordUnidentifiableModifiedCompounds = recordUnidentifiableModifiedCompounds;</a>
+<span class="sourceLineNo">106</span><a id="line.106">        }</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">        /**</a>
+<span class="sourceLineNo">109</span><a id="line.109">         *</a>
+<span class="sourceLineNo">110</span><a id="line.110">         * @return true if choosing to record unidentifiable</a>
+<span class="sourceLineNo">111</span><a id="line.111">         *  atoms; false, otherwise.</a>
+<span class="sourceLineNo">112</span><a id="line.112">         * @see #setRecordUnidentifiableCompounds</a>
+<span class="sourceLineNo">113</span><a id="line.113">         * @see #getUnidentifiableModifiedResidues</a>
+<span class="sourceLineNo">114</span><a id="line.114">         * @see #getUnidentifiableAtomLinkages</a>
+<span class="sourceLineNo">115</span><a id="line.115">         */</a>
+<span class="sourceLineNo">116</span><a id="line.116">        public boolean getRecordUnidentifiableCompounds() {</a>
+<span class="sourceLineNo">117</span><a id="line.117">                return recordUnidentifiableModifiedCompounds;</a>
+<span class="sourceLineNo">118</span><a id="line.118">        }</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">        /**</a>
+<span class="sourceLineNo">121</span><a id="line.121">         *</a>
+<span class="sourceLineNo">122</span><a id="line.122">         * @param recordAdditionalAttachments true if choosing to record additional attachments</a>
+<span class="sourceLineNo">123</span><a id="line.123">         *  that are not directly attached to a modified residue.</a>
+<span class="sourceLineNo">124</span><a id="line.124">         * @see #getRecordAdditionalAttachments</a>
+<span class="sourceLineNo">125</span><a id="line.125">         */</a>
+<span class="sourceLineNo">126</span><a id="line.126">        public void setRecordAdditionalAttachments(boolean recordAdditionalAttachments) {</a>
+<span class="sourceLineNo">127</span><a id="line.127">                this.recordAdditionalAttachments = recordAdditionalAttachments;</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        /**</a>
+<span class="sourceLineNo">131</span><a id="line.131">         *</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * @return true if choosing to record additional attachments</a>
+<span class="sourceLineNo">133</span><a id="line.133">         *  that are not directly attached to a modified residue.</a>
+<span class="sourceLineNo">134</span><a id="line.134">         * @see #setRecordAdditionalAttachments</a>
+<span class="sourceLineNo">135</span><a id="line.135">         */</a>
+<span class="sourceLineNo">136</span><a id="line.136">        public boolean getRecordAdditionalAttachments() {</a>
+<span class="sourceLineNo">137</span><a id="line.137">                return recordAdditionalAttachments;</a>
+<span class="sourceLineNo">138</span><a id="line.138">        }</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">        /**</a>
+<span class="sourceLineNo">141</span><a id="line.141">         *</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @return a set of identified {@link ModifiedCompound}s from</a>
+<span class="sourceLineNo">143</span><a id="line.143">         *  the last parse result.</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @see ModifiedCompound</a>
+<span class="sourceLineNo">145</span><a id="line.145">         */</a>
+<span class="sourceLineNo">146</span><a id="line.146">        public Set&lt;ModifiedCompound&gt; getIdentifiedModifiedCompound() {</a>
+<span class="sourceLineNo">147</span><a id="line.147">                if (identifiedModifiedCompounds==null) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                        throw new IllegalStateException("No result available. Please call parse() first.");</a>
+<span class="sourceLineNo">149</span><a id="line.149">                }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">                return identifiedModifiedCompounds;</a>
+<span class="sourceLineNo">152</span><a id="line.152">        }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        /**</a>
+<span class="sourceLineNo">155</span><a id="line.155">         *</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * @return a set of atom linkages, which represent the</a>
+<span class="sourceLineNo">157</span><a id="line.157">         *  atom bonds that were not covered by the identified</a>
+<span class="sourceLineNo">158</span><a id="line.158">         *  {@link ModifiedCompound}s from the last parse result.</a>
+<span class="sourceLineNo">159</span><a id="line.159">         *  Each element of the list is a array containing two atoms.</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * @see StructureAtomLinkage</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * @see #setRecordUnidentifiableCompounds</a>
+<span class="sourceLineNo">162</span><a id="line.162">         */</a>
+<span class="sourceLineNo">163</span><a id="line.163">        public Set&lt;StructureAtomLinkage&gt; getUnidentifiableAtomLinkages() {</a>
+<span class="sourceLineNo">164</span><a id="line.164">                if (!recordUnidentifiableModifiedCompounds) {</a>
+<span class="sourceLineNo">165</span><a id="line.165">                        throw new UnsupportedOperationException("Recording unidentified atom linkages" +</a>
+<span class="sourceLineNo">166</span><a id="line.166">                                        "is not supported. Please setRecordUnidentifiableCompounds(true) first.");</a>
+<span class="sourceLineNo">167</span><a id="line.167">                }</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">                if (identifiedModifiedCompounds==null) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        throw new IllegalStateException("No result available. Please call parse() first.");</a>
+<span class="sourceLineNo">171</span><a id="line.171">                }</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">                return unidentifiableAtomLinkages;</a>
+<span class="sourceLineNo">174</span><a id="line.174">        }</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">        /**</a>
+<span class="sourceLineNo">177</span><a id="line.177">         *</a>
+<span class="sourceLineNo">178</span><a id="line.178">         * @return a set of modified residues that were not covered by</a>
+<span class="sourceLineNo">179</span><a id="line.179">         *  the identified ModifiedCompounds from the last parse</a>
+<span class="sourceLineNo">180</span><a id="line.180">         *  result.</a>
+<span class="sourceLineNo">181</span><a id="line.181">         *  @see StructureGroup</a>
+<span class="sourceLineNo">182</span><a id="line.182">         *  @see #setRecordUnidentifiableCompounds</a>
+<span class="sourceLineNo">183</span><a id="line.183">         *  @see #getIdentifiedModifiedCompound</a>
+<span class="sourceLineNo">184</span><a id="line.184">         */</a>
+<span class="sourceLineNo">185</span><a id="line.185">        public Set&lt;StructureGroup&gt; getUnidentifiableModifiedResidues() {</a>
+<span class="sourceLineNo">186</span><a id="line.186">                if (!recordUnidentifiableModifiedCompounds) {</a>
+<span class="sourceLineNo">187</span><a id="line.187">                        throw new UnsupportedOperationException("Recording unidentified atom linkages" +</a>
+<span class="sourceLineNo">188</span><a id="line.188">                                        "is not supported. Please setRecordUnidentifiableCompounds(true) first.");</a>
+<span class="sourceLineNo">189</span><a id="line.189">                }</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                if (identifiedModifiedCompounds==null) {</a>
+<span class="sourceLineNo">192</span><a id="line.192">                        throw new IllegalStateException("No result available. Please call parse() first.");</a>
+<span class="sourceLineNo">193</span><a id="line.193">                }</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">                return unidentifiableModifiedResidues;</a>
+<span class="sourceLineNo">196</span><a id="line.196">        }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        /**</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * Identify all registered modifications in a structure.</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * @param structure</a>
+<span class="sourceLineNo">201</span><a id="line.201">         */</a>
+<span class="sourceLineNo">202</span><a id="line.202">        public void identify(final Structure structure) {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                identify(structure, ProteinModificationRegistry.allModifications());</a>
+<span class="sourceLineNo">204</span><a id="line.204">        }</a>
+<span class="sourceLineNo">205</span><a id="line.205"></a>
+<span class="sourceLineNo">206</span><a id="line.206">        /**</a>
+<span class="sourceLineNo">207</span><a id="line.207">         * Identify a set of modifications in a structure.</a>
+<span class="sourceLineNo">208</span><a id="line.208">         * @param structure query {@link Structure}.</a>
+<span class="sourceLineNo">209</span><a id="line.209">         * @param potentialModifications query {@link ProteinModification}s.</a>
+<span class="sourceLineNo">210</span><a id="line.210">         */</a>
+<span class="sourceLineNo">211</span><a id="line.211">        public void identify(final Structure structure,</a>
+<span class="sourceLineNo">212</span><a id="line.212">                        final Set&lt;ProteinModification&gt; potentialModifications) {</a>
+<span class="sourceLineNo">213</span><a id="line.213">                if (structure==null) {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                        throw new IllegalArgumentException("Null structure.");</a>
+<span class="sourceLineNo">215</span><a id="line.215">                }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                identify(structure.getChains(), potentialModifications);</a>
+<span class="sourceLineNo">218</span><a id="line.218">        }</a>
+<span class="sourceLineNo">219</span><a id="line.219"></a>
+<span class="sourceLineNo">220</span><a id="line.220">        /**</a>
+<span class="sourceLineNo">221</span><a id="line.221">         * Identify all registered modifications in a chain.</a>
+<span class="sourceLineNo">222</span><a id="line.222">         * @param chain query {@link Chain}.</a>
+<span class="sourceLineNo">223</span><a id="line.223">         */</a>
+<span class="sourceLineNo">224</span><a id="line.224">        public void identify(final Chain chain) {</a>
+<span class="sourceLineNo">225</span><a id="line.225">                identify(Collections.singletonList(chain));</a>
+<span class="sourceLineNo">226</span><a id="line.226">        }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">        /**</a>
+<span class="sourceLineNo">229</span><a id="line.229">         * Identify all registered modifications in chains.</a>
+<span class="sourceLineNo">230</span><a id="line.230">         * @param chains query {@link Chain}s.</a>
+<span class="sourceLineNo">231</span><a id="line.231">         */</a>
+<span class="sourceLineNo">232</span><a id="line.232">        public void identify(final List&lt;Chain&gt; chains) {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                identify(chains, ProteinModificationRegistry.allModifications());</a>
+<span class="sourceLineNo">234</span><a id="line.234">        }</a>
+<span class="sourceLineNo">235</span><a id="line.235"></a>
+<span class="sourceLineNo">236</span><a id="line.236">        /**</a>
+<span class="sourceLineNo">237</span><a id="line.237">         * Identify a set of modifications in a a chains.</a>
+<span class="sourceLineNo">238</span><a id="line.238">         * @param chain query {@link Chain}.</a>
+<span class="sourceLineNo">239</span><a id="line.239">         * @param potentialModifications query {@link ProteinModification}s.</a>
+<span class="sourceLineNo">240</span><a id="line.240">         */</a>
+<span class="sourceLineNo">241</span><a id="line.241">        public void identify(final Chain chain,</a>
+<span class="sourceLineNo">242</span><a id="line.242">                        final Set&lt;ProteinModification&gt; potentialModifications)  {</a>
+<span class="sourceLineNo">243</span><a id="line.243">                identify(Collections.singletonList(chain), potentialModifications);</a>
+<span class="sourceLineNo">244</span><a id="line.244">        }</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">        /**</a>
+<span class="sourceLineNo">247</span><a id="line.247">         * Identify a set of modifications in a a list of chains.</a>
+<span class="sourceLineNo">248</span><a id="line.248">         * @param chains query {@link Chain}s.</a>
+<span class="sourceLineNo">249</span><a id="line.249">         * @param potentialModifications query {@link ProteinModification}s.</a>
+<span class="sourceLineNo">250</span><a id="line.250">         */</a>
+<span class="sourceLineNo">251</span><a id="line.251">        public void identify(final List&lt;Chain&gt; chains,</a>
+<span class="sourceLineNo">252</span><a id="line.252">                        final Set&lt;ProteinModification&gt; potentialModifications) {</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254">                if (chains==null) {</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        throw new IllegalArgumentException("Null structure.");</a>
+<span class="sourceLineNo">256</span><a id="line.256">                }</a>
+<span class="sourceLineNo">257</span><a id="line.257"></a>
+<span class="sourceLineNo">258</span><a id="line.258">                if (potentialModifications==null) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">                        throw new IllegalArgumentException("Null potentialModifications.");</a>
+<span class="sourceLineNo">260</span><a id="line.260">                }</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">                reset();</a>
+<span class="sourceLineNo">264</span><a id="line.264"></a>
+<span class="sourceLineNo">265</span><a id="line.265">                if (potentialModifications.isEmpty()) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">                        return;</a>
+<span class="sourceLineNo">267</span><a id="line.267">                }</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">                residues = new ArrayList&lt;Group&gt;();</a>
+<span class="sourceLineNo">271</span><a id="line.271">                List&lt;Group&gt; ligands = new ArrayList&lt;Group&gt;();</a>
+<span class="sourceLineNo">272</span><a id="line.272">                Map&lt;Component, Set&lt;Group&gt;&gt; mapCompGroups = new HashMap&lt;Component, Set&lt;Group&gt;&gt;();</a>
+<span class="sourceLineNo">273</span><a id="line.273"></a>
+<span class="sourceLineNo">274</span><a id="line.274">                for (Chain chain : chains) {</a>
+<span class="sourceLineNo">275</span><a id="line.275"></a>
+<span class="sourceLineNo">276</span><a id="line.276">                        List&lt;Group&gt; ress = StructureUtil.getAminoAcids(chain);</a>
+<span class="sourceLineNo">277</span><a id="line.277"></a>
+<span class="sourceLineNo">278</span><a id="line.278">                        //List&lt;Group&gt; ligs = chain.getAtomLigands();</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        List&lt;Group&gt; ligs = StructureTools.filterLigands(chain.getAtomGroups());</a>
+<span class="sourceLineNo">280</span><a id="line.280">                        residues.addAll(ress);</a>
+<span class="sourceLineNo">281</span><a id="line.281">                        residues.removeAll(ligs);</a>
+<span class="sourceLineNo">282</span><a id="line.282">                        ligands.addAll(ligs);</a>
+<span class="sourceLineNo">283</span><a id="line.283">                        addModificationGroups(potentialModifications, ress, ligs, mapCompGroups);</a>
+<span class="sourceLineNo">284</span><a id="line.284">                }</a>
+<span class="sourceLineNo">285</span><a id="line.285"></a>
+<span class="sourceLineNo">286</span><a id="line.286">                if (residues.isEmpty()) {</a>
+<span class="sourceLineNo">287</span><a id="line.287">                        String pdbId = "?";</a>
+<span class="sourceLineNo">288</span><a id="line.288">                        if ( chains.size() &gt; 0) {</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                Structure struc = chains.get(0).getStructure();</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                if ( struc != null)</a>
+<span class="sourceLineNo">291</span><a id="line.291">                                        pdbId = struc.getPDBCode();</a>
+<span class="sourceLineNo">292</span><a id="line.292">                        }</a>
+<span class="sourceLineNo">293</span><a id="line.293">                        logger.warn("No amino acids found for {}. Either you did not parse the PDB file with alignSEQRES records, or this record does not contain any amino acids.", pdbId);</a>
+<span class="sourceLineNo">294</span><a id="line.294">                }</a>
+<span class="sourceLineNo">295</span><a id="line.295">                List&lt;ModifiedCompound&gt; modComps = new ArrayList&lt;ModifiedCompound&gt;();</a>
+<span class="sourceLineNo">296</span><a id="line.296"></a>
+<span class="sourceLineNo">297</span><a id="line.297">                for (ProteinModification mod : potentialModifications) {</a>
+<span class="sourceLineNo">298</span><a id="line.298">                        ModificationCondition condition = mod.getCondition();</a>
+<span class="sourceLineNo">299</span><a id="line.299">                        List&lt;Component&gt; components = condition.getComponents();</a>
+<span class="sourceLineNo">300</span><a id="line.300">                        if (!mapCompGroups.keySet().containsAll(components)) {</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                // not all components exist for this mod.</a>
+<span class="sourceLineNo">302</span><a id="line.302">                                continue;</a>
+<span class="sourceLineNo">303</span><a id="line.303">                        }</a>
+<span class="sourceLineNo">304</span><a id="line.304"></a>
+<span class="sourceLineNo">305</span><a id="line.305">                        int sizeComps = components.size();</a>
+<span class="sourceLineNo">306</span><a id="line.306">                        if (sizeComps==1) {</a>
+<span class="sourceLineNo">307</span><a id="line.307"></a>
+<span class="sourceLineNo">308</span><a id="line.308">                                processCrosslink1(mapCompGroups, modComps, mod, components);</a>
+<span class="sourceLineNo">309</span><a id="line.309"></a>
+<span class="sourceLineNo">310</span><a id="line.310">                        } else {</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312">                                processMultiCrosslink(mapCompGroups, modComps, mod, condition);</a>
+<span class="sourceLineNo">313</span><a id="line.313">                        }</a>
+<span class="sourceLineNo">314</span><a id="line.314">                }</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316">                if (recordAdditionalAttachments) {</a>
+<span class="sourceLineNo">317</span><a id="line.317">                        // identify additional groups that are not directly attached to amino acids.</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        for (ModifiedCompound mc : modComps) {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                                identifyAdditionalAttachments(mc, ligands, chains);</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        }</a>
+<span class="sourceLineNo">321</span><a id="line.321">                }</a>
+<span class="sourceLineNo">322</span><a id="line.322"></a>
+<span class="sourceLineNo">323</span><a id="line.323">                mergeModComps(modComps);</a>
+<span class="sourceLineNo">324</span><a id="line.324"></a>
+<span class="sourceLineNo">325</span><a id="line.325">                identifiedModifiedCompounds.addAll(modComps);</a>
+<span class="sourceLineNo">326</span><a id="line.326"></a>
+<span class="sourceLineNo">327</span><a id="line.327"></a>
+<span class="sourceLineNo">328</span><a id="line.328">                // record unidentifiable linkage</a>
+<span class="sourceLineNo">329</span><a id="line.329">                if (recordUnidentifiableModifiedCompounds) {</a>
+<span class="sourceLineNo">330</span><a id="line.330">                        recordUnidentifiableAtomLinkages(modComps, ligands);</a>
+<span class="sourceLineNo">331</span><a id="line.331">                        recordUnidentifiableModifiedResidues(modComps);</a>
+<span class="sourceLineNo">332</span><a id="line.332">                }</a>
+<span class="sourceLineNo">333</span><a id="line.333">        }</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">        private void reset() {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                identifiedModifiedCompounds = new LinkedHashSet&lt;ModifiedCompound&gt;();</a>
+<span class="sourceLineNo">337</span><a id="line.337">                if (recordUnidentifiableModifiedCompounds) {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                        unidentifiableAtomLinkages = new LinkedHashSet&lt;StructureAtomLinkage&gt;();</a>
+<span class="sourceLineNo">339</span><a id="line.339">                        unidentifiableModifiedResidues = new LinkedHashSet&lt;StructureGroup&gt;();</a>
+<span class="sourceLineNo">340</span><a id="line.340">                }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">        }</a>
+<span class="sourceLineNo">343</span><a id="line.343"></a>
+<span class="sourceLineNo">344</span><a id="line.344">        private void processMultiCrosslink(</a>
+<span class="sourceLineNo">345</span><a id="line.345">                        Map&lt;Component, Set&lt;Group&gt;&gt; mapCompGroups,</a>
+<span class="sourceLineNo">346</span><a id="line.346">                        List&lt;ModifiedCompound&gt; modComps, ProteinModification mod,</a>
+<span class="sourceLineNo">347</span><a id="line.347">                        ModificationCondition condition) {</a>
+<span class="sourceLineNo">348</span><a id="line.348">                // for multiple components</a>
+<span class="sourceLineNo">349</span><a id="line.349"></a>
+<span class="sourceLineNo">350</span><a id="line.350">                // find linkages first</a>
+<span class="sourceLineNo">351</span><a id="line.351">                List&lt;List&lt;Atom[]&gt;&gt; matchedAtomsOfLinkages =</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                getMatchedAtomsOfLinkages(condition, mapCompGroups);</a>
+<span class="sourceLineNo">353</span><a id="line.353"></a>
+<span class="sourceLineNo">354</span><a id="line.354">                if (matchedAtomsOfLinkages.size() != condition.getLinkages().size()) {</a>
+<span class="sourceLineNo">355</span><a id="line.355">                        return;</a>
+<span class="sourceLineNo">356</span><a id="line.356">                }</a>
+<span class="sourceLineNo">357</span><a id="line.357"></a>
+<span class="sourceLineNo">358</span><a id="line.358">                assembleLinkages(matchedAtomsOfLinkages, mod, modComps);</a>
+<span class="sourceLineNo">359</span><a id="line.359"></a>
+<span class="sourceLineNo">360</span><a id="line.360">        }</a>
+<span class="sourceLineNo">361</span><a id="line.361"></a>
+<span class="sourceLineNo">362</span><a id="line.362">        private void processCrosslink1(Map&lt;Component, Set&lt;Group&gt;&gt; mapCompGroups,</a>
+<span class="sourceLineNo">363</span><a id="line.363">                        List&lt;ModifiedCompound&gt; modComps, ProteinModification mod,</a>
+<span class="sourceLineNo">364</span><a id="line.364">                        List&lt;Component&gt; components) {</a>
+<span class="sourceLineNo">365</span><a id="line.365">                // modified residue</a>
+<span class="sourceLineNo">366</span><a id="line.366">                // TODO: is this the correct logic for CROSS_LINK_1?</a>
+<span class="sourceLineNo">367</span><a id="line.367">                Set&lt;Group&gt; modifiedResidues = mapCompGroups.get(components.get(0));</a>
+<span class="sourceLineNo">368</span><a id="line.368">                if (modifiedResidues != null) {</a>
+<span class="sourceLineNo">369</span><a id="line.369">                        for (Group residue : modifiedResidues) {</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                StructureGroup strucGroup = StructureUtil.getStructureGroup(residue, true);</a>
+<span class="sourceLineNo">371</span><a id="line.371">                                ModifiedCompound modRes = new ModifiedCompoundImpl(mod, strucGroup);</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                modComps.add(modRes);</a>
+<span class="sourceLineNo">373</span><a id="line.373">                        }</a>
+<span class="sourceLineNo">374</span><a id="line.374">                }</a>
+<span class="sourceLineNo">375</span><a id="line.375">        }</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">        /**</a>
+<span class="sourceLineNo">378</span><a id="line.378">         * identify additional groups that are not directly attached to amino acids.</a>
+<span class="sourceLineNo">379</span><a id="line.379">         * @param mc {@link ModifiedCompound}</a>
+<span class="sourceLineNo">380</span><a id="line.380">         * @param ligands {@link Group}</a>
+<span class="sourceLineNo">381</span><a id="line.381">         * @param chains List of {@link Chain}s</a>
+<span class="sourceLineNo">382</span><a id="line.382">         * @return a list of added groups</a>
+<span class="sourceLineNo">383</span><a id="line.383">         */</a>
+<span class="sourceLineNo">384</span><a id="line.384">        private void identifyAdditionalAttachments(ModifiedCompound mc,</a>
+<span class="sourceLineNo">385</span><a id="line.385">                        List&lt;Group&gt; ligands, List&lt;Chain&gt; chains) {</a>
+<span class="sourceLineNo">386</span><a id="line.386">                if (ligands.isEmpty()) {</a>
+<span class="sourceLineNo">387</span><a id="line.387">                        return;</a>
+<span class="sourceLineNo">388</span><a id="line.388">                }</a>
+<span class="sourceLineNo">389</span><a id="line.389"></a>
+<span class="sourceLineNo">390</span><a id="line.390">                // TODO: should the additional groups only be allowed to the identified</a>
+<span class="sourceLineNo">391</span><a id="line.391">                // ligands or both amino acids and ligands? Currently only on ligands</a>
+<span class="sourceLineNo">392</span><a id="line.392">                // ligands to amino acid bonds for same modification of unknown category</a>
+<span class="sourceLineNo">393</span><a id="line.393">                // will be combined in mergeModComps()</a>
+<span class="sourceLineNo">394</span><a id="line.394">                // TODO: how about chain-chain links?</a>
+<span class="sourceLineNo">395</span><a id="line.395">                List&lt;Group&gt; identifiedGroups = new ArrayList&lt;Group&gt;();</a>
+<span class="sourceLineNo">396</span><a id="line.396">                for (StructureGroup num : mc.getGroups(false)) {</a>
+<span class="sourceLineNo">397</span><a id="line.397">                        Group group;</a>
+<span class="sourceLineNo">398</span><a id="line.398">                        try {</a>
+<span class="sourceLineNo">399</span><a id="line.399">                                //String numIns = "" + num.getResidueNumber();</a>
+<span class="sourceLineNo">400</span><a id="line.400">                                //if (num.getInsCode() != null) {</a>
+<span class="sourceLineNo">401</span><a id="line.401">                                //      numIns += num.getInsCode();</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                //}</a>
+<span class="sourceLineNo">403</span><a id="line.403">                                ResidueNumber resNum = new ResidueNumber();</a>
+<span class="sourceLineNo">404</span><a id="line.404">                                resNum.setChainName(num.getChainId());</a>
+<span class="sourceLineNo">405</span><a id="line.405">                                resNum.setSeqNum(num.getResidueNumber());</a>
+<span class="sourceLineNo">406</span><a id="line.406">                                resNum.setInsCode(num.getInsCode());</a>
+<span class="sourceLineNo">407</span><a id="line.407">                                //group = chain.getGroupByPDB(numIns);</a>
+<span class="sourceLineNo">408</span><a id="line.408"></a>
+<span class="sourceLineNo">409</span><a id="line.409">                                group = getGroup(num,chains);</a>
+<span class="sourceLineNo">410</span><a id="line.410">                                //group = mapChainIdChain.get(num.getChainId()).getGroupByPDB(resNum);</a>
+<span class="sourceLineNo">411</span><a id="line.411">                        } catch (StructureException e) {</a>
+<span class="sourceLineNo">412</span><a id="line.412">                                logger.error("Exception: ", e);</a>
+<span class="sourceLineNo">413</span><a id="line.413">                                // should not happen</a>
+<span class="sourceLineNo">414</span><a id="line.414">                                continue;</a>
+<span class="sourceLineNo">415</span><a id="line.415">                        }</a>
+<span class="sourceLineNo">416</span><a id="line.416">                        identifiedGroups.add(group);</a>
+<span class="sourceLineNo">417</span><a id="line.417">                }</a>
+<span class="sourceLineNo">418</span><a id="line.418"></a>
+<span class="sourceLineNo">419</span><a id="line.419">                int start = 0;</a>
+<span class="sourceLineNo">420</span><a id="line.420"></a>
+<span class="sourceLineNo">421</span><a id="line.421">                int n = identifiedGroups.size();</a>
+<span class="sourceLineNo">422</span><a id="line.422">                while (n &gt; start) {</a>
+<span class="sourceLineNo">423</span><a id="line.423">                        for (Group group1 : ligands) {</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                for (int i=start; i&lt;n; i++) {</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                        Group group2 = identifiedGroups.get(i);</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                        if (!identifiedGroups.contains(group1)) {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                                List&lt;Atom[]&gt; linkedAtoms = StructureUtil.findAtomLinkages(</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                                                group1, group2, false, bondLengthTolerance);</a>
+<span class="sourceLineNo">429</span><a id="line.429">                                                if (!linkedAtoms.isEmpty()) {</a>
+<span class="sourceLineNo">430</span><a id="line.430">                                                        for (Atom[] atoms : linkedAtoms) {</a>
+<span class="sourceLineNo">431</span><a id="line.431">                                                                mc.addAtomLinkage(StructureUtil.getStructureAtomLinkage(atoms[0],</a>
+<span class="sourceLineNo">432</span><a id="line.432">                                                                                false, atoms[1], false));</a>
+<span class="sourceLineNo">433</span><a id="line.433">                                                        }</a>
+<span class="sourceLineNo">434</span><a id="line.434">                                                        identifiedGroups.add(group1);</a>
+<span class="sourceLineNo">435</span><a id="line.435">                                                        break;</a>
+<span class="sourceLineNo">436</span><a id="line.436">                                                }</a>
+<span class="sourceLineNo">437</span><a id="line.437">                                        }</a>
+<span class="sourceLineNo">438</span><a id="line.438">                                }</a>
+<span class="sourceLineNo">439</span><a id="line.439">                        }</a>
+<span class="sourceLineNo">440</span><a id="line.440"></a>
+<span class="sourceLineNo">441</span><a id="line.441">                        start = n;</a>
+<span class="sourceLineNo">442</span><a id="line.442">                        n = identifiedGroups.size();</a>
+<span class="sourceLineNo">443</span><a id="line.443">                }</a>
+<span class="sourceLineNo">444</span><a id="line.444">        }</a>
+<span class="sourceLineNo">445</span><a id="line.445"></a>
+<span class="sourceLineNo">446</span><a id="line.446">        private Group getGroup(StructureGroup num, List&lt;Chain&gt; chains) throws StructureException {</a>
+<span class="sourceLineNo">447</span><a id="line.447">                for (Chain c : chains){</a>
+<span class="sourceLineNo">448</span><a id="line.448">                        if ( c.getId().equals(num.getChainId())){</a>
+<span class="sourceLineNo">449</span><a id="line.449"></a>
+<span class="sourceLineNo">450</span><a id="line.450">                                ResidueNumber resNum = new ResidueNumber();</a>
+<span class="sourceLineNo">451</span><a id="line.451"></a>
+<span class="sourceLineNo">452</span><a id="line.452">                                resNum.setSeqNum(num.getResidueNumber());</a>
+<span class="sourceLineNo">453</span><a id="line.453">                                resNum.setInsCode(num.getInsCode());</a>
+<span class="sourceLineNo">454</span><a id="line.454"></a>
+<span class="sourceLineNo">455</span><a id="line.455"></a>
+<span class="sourceLineNo">456</span><a id="line.456">                                return c.getGroupByPDB(resNum);</a>
+<span class="sourceLineNo">457</span><a id="line.457">                        }</a>
+<span class="sourceLineNo">458</span><a id="line.458">                }</a>
+<span class="sourceLineNo">459</span><a id="line.459"></a>
+<span class="sourceLineNo">460</span><a id="line.460">                throw new StructureException("Could not find residue " + num);</a>
+<span class="sourceLineNo">461</span><a id="line.461">        }</a>
+<span class="sourceLineNo">462</span><a id="line.462"></a>
+<span class="sourceLineNo">463</span><a id="line.463">        /**</a>
+<span class="sourceLineNo">464</span><a id="line.464">         * Merge identified modified compounds if linked.</a>
+<span class="sourceLineNo">465</span><a id="line.465">         */</a>
+<span class="sourceLineNo">466</span><a id="line.466">        private void mergeModComps(List&lt;ModifiedCompound&gt; modComps) {</a>
+<span class="sourceLineNo">467</span><a id="line.467">                TreeSet&lt;Integer&gt; remove = new TreeSet&lt;Integer&gt;();</a>
+<span class="sourceLineNo">468</span><a id="line.468">                int n = modComps.size();</a>
+<span class="sourceLineNo">469</span><a id="line.469">                for (int icurr=1; icurr&lt;n; icurr++) {</a>
+<span class="sourceLineNo">470</span><a id="line.470">                        ModifiedCompound curr = modComps.get(icurr);</a>
+<span class="sourceLineNo">471</span><a id="line.471"></a>
+<span class="sourceLineNo">472</span><a id="line.472">                        String id = curr.getModification().getId();</a>
+<span class="sourceLineNo">473</span><a id="line.473">                        if (ProteinModificationRegistry.getById(id).getCategory()</a>
+<span class="sourceLineNo">474</span><a id="line.474">                                        !=ModificationCategory.UNDEFINED)</a>
+<span class="sourceLineNo">475</span><a id="line.475">                                continue;</a>
+<span class="sourceLineNo">476</span><a id="line.476"></a>
+<span class="sourceLineNo">477</span><a id="line.477">                        // find linked compounds that before curr</a>
+<span class="sourceLineNo">478</span><a id="line.478">                        //List&lt;Integer&gt; merging = new ArrayList&lt;Integer&gt;();</a>
+<span class="sourceLineNo">479</span><a id="line.479">                        int ipre = 0;</a>
+<span class="sourceLineNo">480</span><a id="line.480">                        for (; ipre&lt;icurr; ipre++) {</a>
+<span class="sourceLineNo">481</span><a id="line.481">                                if (remove.contains(ipre))      continue;</a>
+<span class="sourceLineNo">482</span><a id="line.482">                                ModifiedCompound pre = modComps.get(ipre);</a>
+<span class="sourceLineNo">483</span><a id="line.483">                                if (!Collections.disjoint(pre.getGroups(false),</a>
+<span class="sourceLineNo">484</span><a id="line.484">                                                curr.getGroups(false))) {</a>
+<span class="sourceLineNo">485</span><a id="line.485">                                        break;</a>
+<span class="sourceLineNo">486</span><a id="line.486">                                }</a>
+<span class="sourceLineNo">487</span><a id="line.487">                        }</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">                        if (ipre&lt;icurr) {</a>
+<span class="sourceLineNo">490</span><a id="line.490">                                ModifiedCompound mcKeep = modComps.get(ipre);</a>
+<span class="sourceLineNo">491</span><a id="line.491"></a>
+<span class="sourceLineNo">492</span><a id="line.492">                                // merge modifications of the same type</a>
+<span class="sourceLineNo">493</span><a id="line.493">                                if (mcKeep.getModification().getId().equals(id)) {</a>
+<span class="sourceLineNo">494</span><a id="line.494">                                        // merging the current one to the previous one</a>
+<span class="sourceLineNo">495</span><a id="line.495">                                        mcKeep.addAtomLinkages(curr.getAtomLinkages());</a>
+<span class="sourceLineNo">496</span><a id="line.496">                                        remove.add(icurr);</a>
+<span class="sourceLineNo">497</span><a id="line.497">                                }</a>
+<span class="sourceLineNo">498</span><a id="line.498">                        }</a>
+<span class="sourceLineNo">499</span><a id="line.499">                }</a>
+<span class="sourceLineNo">500</span><a id="line.500"></a>
+<span class="sourceLineNo">501</span><a id="line.501">                Iterator&lt;Integer&gt; it = remove.descendingIterator();</a>
+<span class="sourceLineNo">502</span><a id="line.502">                while (it.hasNext()) {</a>
+<span class="sourceLineNo">503</span><a id="line.503">                        modComps.remove(it.next().intValue());</a>
+<span class="sourceLineNo">504</span><a id="line.504">                }</a>
+<span class="sourceLineNo">505</span><a id="line.505">        }</a>
+<span class="sourceLineNo">506</span><a id="line.506"></a>
+<span class="sourceLineNo">507</span><a id="line.507">        /**</a>
+<span class="sourceLineNo">508</span><a id="line.508">         * Record unidentifiable atom linkages in a chain. Only linkages between two</a>
+<span class="sourceLineNo">509</span><a id="line.509">         * residues or one residue and one ligand will be recorded.</a>
+<span class="sourceLineNo">510</span><a id="line.510">         */</a>
+<span class="sourceLineNo">511</span><a id="line.511">        private void recordUnidentifiableAtomLinkages(List&lt;ModifiedCompound&gt; modComps,</a>
+<span class="sourceLineNo">512</span><a id="line.512">                        List&lt;Group&gt; ligands) {</a>
+<span class="sourceLineNo">513</span><a id="line.513"></a>
+<span class="sourceLineNo">514</span><a id="line.514">                // first put identified linkages in a map for fast query</a>
+<span class="sourceLineNo">515</span><a id="line.515">                Set&lt;StructureAtomLinkage&gt; identifiedLinkages = new HashSet&lt;StructureAtomLinkage&gt;();</a>
+<span class="sourceLineNo">516</span><a id="line.516">                for (ModifiedCompound mc : modComps) {</a>
+<span class="sourceLineNo">517</span><a id="line.517">                        identifiedLinkages.addAll(mc.getAtomLinkages());</a>
+<span class="sourceLineNo">518</span><a id="line.518">                }</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                // record</a>
+<span class="sourceLineNo">521</span><a id="line.521">                // cross link</a>
+<span class="sourceLineNo">522</span><a id="line.522">                int nRes = residues.size();</a>
+<span class="sourceLineNo">523</span><a id="line.523">                for (int i=0; i&lt;nRes-1; i++) {</a>
+<span class="sourceLineNo">524</span><a id="line.524">                        Group group1 = residues.get(i);</a>
+<span class="sourceLineNo">525</span><a id="line.525">                        for (int j=i+1; j&lt;nRes; j++) {</a>
+<span class="sourceLineNo">526</span><a id="line.526">                                Group group2 = residues.get(j);</a>
+<span class="sourceLineNo">527</span><a id="line.527">                                List&lt;Atom[]&gt; linkages = StructureUtil.findAtomLinkages(</a>
+<span class="sourceLineNo">528</span><a id="line.528">                                                group1, group2, true, bondLengthTolerance);</a>
+<span class="sourceLineNo">529</span><a id="line.529">                                for (Atom[] atoms : linkages) {</a>
+<span class="sourceLineNo">530</span><a id="line.530">                                        StructureAtomLinkage link = StructureUtil.getStructureAtomLinkage(atoms[0],</a>
+<span class="sourceLineNo">531</span><a id="line.531">                                                        true, atoms[1], true);</a>
+<span class="sourceLineNo">532</span><a id="line.532">                                        unidentifiableAtomLinkages.add(link);</a>
+<span class="sourceLineNo">533</span><a id="line.533">                                }</a>
+<span class="sourceLineNo">534</span><a id="line.534">                        }</a>
+<span class="sourceLineNo">535</span><a id="line.535">                }</a>
+<span class="sourceLineNo">536</span><a id="line.536"></a>
+<span class="sourceLineNo">537</span><a id="line.537">                // attachment</a>
+<span class="sourceLineNo">538</span><a id="line.538">                int nLig = ligands.size();</a>
+<span class="sourceLineNo">539</span><a id="line.539">                for (int i=0; i&lt;nRes; i++) {</a>
+<span class="sourceLineNo">540</span><a id="line.540">                        Group group1 = residues.get(i);</a>
+<span class="sourceLineNo">541</span><a id="line.541">                        for (int j=0; j&lt;nLig; j++) {</a>
+<span class="sourceLineNo">542</span><a id="line.542">                                Group group2 = ligands.get(j);</a>
+<span class="sourceLineNo">543</span><a id="line.543">                                if (group1.equals(group2)) { // overlap between residues and ligands</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                        continue;</a>
+<span class="sourceLineNo">545</span><a id="line.545">                                }</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                List&lt;Atom[]&gt; linkages = StructureUtil.findAtomLinkages(</a>
+<span class="sourceLineNo">547</span><a id="line.547">                                                group1, group2, false, bondLengthTolerance);</a>
+<span class="sourceLineNo">548</span><a id="line.548">                                for (Atom[] atoms : linkages) {</a>
+<span class="sourceLineNo">549</span><a id="line.549">                                        StructureAtomLinkage link = StructureUtil.getStructureAtomLinkage(atoms[0],</a>
+<span class="sourceLineNo">550</span><a id="line.550">                                                        true, atoms[1], false);</a>
+<span class="sourceLineNo">551</span><a id="line.551">                                        unidentifiableAtomLinkages.add(link);</a>
+<span class="sourceLineNo">552</span><a id="line.552">                                }</a>
+<span class="sourceLineNo">553</span><a id="line.553">                        }</a>
+<span class="sourceLineNo">554</span><a id="line.554">                }</a>
+<span class="sourceLineNo">555</span><a id="line.555">        }</a>
+<span class="sourceLineNo">556</span><a id="line.556"></a>
+<span class="sourceLineNo">557</span><a id="line.557">        private void recordUnidentifiableModifiedResidues(List&lt;ModifiedCompound&gt; modComps) {</a>
+<span class="sourceLineNo">558</span><a id="line.558">                Set&lt;StructureGroup&gt; identifiedComps = new HashSet&lt;StructureGroup&gt;();</a>
+<span class="sourceLineNo">559</span><a id="line.559">                for (ModifiedCompound mc : modComps) {</a>
+<span class="sourceLineNo">560</span><a id="line.560">                        identifiedComps.addAll(mc.getGroups(true));</a>
+<span class="sourceLineNo">561</span><a id="line.561">                }</a>
+<span class="sourceLineNo">562</span><a id="line.562"></a>
+<span class="sourceLineNo">563</span><a id="line.563">                // TODO: use the ModifiedAminoAcid after Andreas add that.</a>
+<span class="sourceLineNo">564</span><a id="line.564">                for (Group group : residues) {</a>
+<span class="sourceLineNo">565</span><a id="line.565">                        if (group.getType().equals(GroupType.HETATM)) {</a>
+<span class="sourceLineNo">566</span><a id="line.566">                                StructureGroup strucGroup = StructureUtil.getStructureGroup(</a>
+<span class="sourceLineNo">567</span><a id="line.567">                                                group, true);</a>
+<span class="sourceLineNo">568</span><a id="line.568">                                strucGroup.setChainId(group.getChainId());</a>
+<span class="sourceLineNo">569</span><a id="line.569"></a>
+<span class="sourceLineNo">570</span><a id="line.570">                                if (!identifiedComps.contains(strucGroup)) {</a>
+<span class="sourceLineNo">571</span><a id="line.571">                                        unidentifiableModifiedResidues.add(strucGroup);</a>
+<span class="sourceLineNo">572</span><a id="line.572">                                }</a>
+<span class="sourceLineNo">573</span><a id="line.573">                        }</a>
+<span class="sourceLineNo">574</span><a id="line.574">                }</a>
+<span class="sourceLineNo">575</span><a id="line.575">        }</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577">        /**</a>
+<span class="sourceLineNo">578</span><a id="line.578">         *</a>
+<span class="sourceLineNo">579</span><a id="line.579">         * @param modifications a set of {@link ProteinModification}s.</a>
+<span class="sourceLineNo">580</span><a id="line.580">         * @param residues</a>
+<span class="sourceLineNo">581</span><a id="line.581">         * @param ligands</a>
+<span class="sourceLineNo">582</span><a id="line.582">         * @param saveTo save result to</a>
+<span class="sourceLineNo">583</span><a id="line.583">         * @return map from component to list of corresponding residues</a>
+<span class="sourceLineNo">584</span><a id="line.584">         *  in the chain.</a>
+<span class="sourceLineNo">585</span><a id="line.585">         */</a>
+<span class="sourceLineNo">586</span><a id="line.586">        private void addModificationGroups(</a>
+<span class="sourceLineNo">587</span><a id="line.587">                        final Set&lt;ProteinModification&gt; modifications,</a>
+<span class="sourceLineNo">588</span><a id="line.588">                        final List&lt;Group&gt; residues,</a>
+<span class="sourceLineNo">589</span><a id="line.589">                        final List&lt;Group&gt; ligands,</a>
+<span class="sourceLineNo">590</span><a id="line.590">                        final Map&lt;Component, Set&lt;Group&gt;&gt; saveTo) {</a>
+<span class="sourceLineNo">591</span><a id="line.591">                if (residues==null || ligands==null || modifications==null) {</a>
+<span class="sourceLineNo">592</span><a id="line.592">                        throw new IllegalArgumentException("Null argument(s).");</a>
+<span class="sourceLineNo">593</span><a id="line.593">                }</a>
+<span class="sourceLineNo">594</span><a id="line.594"></a>
+<span class="sourceLineNo">595</span><a id="line.595">                Map&lt;Component,Set&lt;Component&gt;&gt; mapSingleMultiComps = new HashMap&lt;Component,Set&lt;Component&gt;&gt;();</a>
+<span class="sourceLineNo">596</span><a id="line.596">                for (ProteinModification mod : modifications) {</a>
+<span class="sourceLineNo">597</span><a id="line.597">                        ModificationCondition condition = mod.getCondition();</a>
+<span class="sourceLineNo">598</span><a id="line.598">                        for (Component comp : condition.getComponents()) {</a>
+<span class="sourceLineNo">599</span><a id="line.599">                                for (String pdbccId : comp.getPdbccIds()) {</a>
+<span class="sourceLineNo">600</span><a id="line.600">                                        Component single = Component.of(Collections.singleton(pdbccId),</a>
+<span class="sourceLineNo">601</span><a id="line.601">                                                        comp.isNTerminal(), comp.isCTerminal());</a>
+<span class="sourceLineNo">602</span><a id="line.602">                                        Set&lt;Component&gt; mult = mapSingleMultiComps.get(single);</a>
+<span class="sourceLineNo">603</span><a id="line.603">                                        if (mult == null) {</a>
+<span class="sourceLineNo">604</span><a id="line.604">                                                mult = new HashSet&lt;Component&gt;();</a>
+<span class="sourceLineNo">605</span><a id="line.605">                                                mapSingleMultiComps.put(single, mult);</a>
+<span class="sourceLineNo">606</span><a id="line.606">                                        }</a>
+<span class="sourceLineNo">607</span><a id="line.607">                                        mult.add(comp);</a>
+<span class="sourceLineNo">608</span><a id="line.608">                                }</a>
+<span class="sourceLineNo">609</span><a id="line.609">                        }</a>
+<span class="sourceLineNo">610</span><a id="line.610">                }</a>
+<span class="sourceLineNo">611</span><a id="line.611"></a>
+<span class="sourceLineNo">612</span><a id="line.612">                {</a>
+<span class="sourceLineNo">613</span><a id="line.613">                        // ligands</a>
+<span class="sourceLineNo">614</span><a id="line.614">                        Set&lt;Component&gt; ligandsWildCard = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">615</span><a id="line.615">                                        Component.of("*"));</a>
+<span class="sourceLineNo">616</span><a id="line.616">                        for (Group group : ligands) {</a>
+<span class="sourceLineNo">617</span><a id="line.617">                                String pdbccId = group.getPDBName().trim();</a>
+<span class="sourceLineNo">618</span><a id="line.618">                                Set&lt;Component&gt; comps = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">619</span><a id="line.619">                                                Component.of(pdbccId));</a>
+<span class="sourceLineNo">620</span><a id="line.620"></a>
+<span class="sourceLineNo">621</span><a id="line.621">                                for (Component comp : unionComponentSet(ligandsWildCard, comps)) {</a>
+<span class="sourceLineNo">622</span><a id="line.622">                                        Set&lt;Group&gt; gs = saveTo.get(comp);</a>
+<span class="sourceLineNo">623</span><a id="line.623">                                        if (gs==null) {</a>
+<span class="sourceLineNo">624</span><a id="line.624">                                                gs = new LinkedHashSet&lt;Group&gt;();</a>
+<span class="sourceLineNo">625</span><a id="line.625">                                                saveTo.put(comp, gs);</a>
+<span class="sourceLineNo">626</span><a id="line.626">                                        }</a>
+<span class="sourceLineNo">627</span><a id="line.627">                                        gs.add(group);</a>
+<span class="sourceLineNo">628</span><a id="line.628">                                }</a>
+<span class="sourceLineNo">629</span><a id="line.629">                        }</a>
+<span class="sourceLineNo">630</span><a id="line.630">                }</a>
+<span class="sourceLineNo">631</span><a id="line.631"></a>
+<span class="sourceLineNo">632</span><a id="line.632">                {</a>
+<span class="sourceLineNo">633</span><a id="line.633">                        // residues</a>
+<span class="sourceLineNo">634</span><a id="line.634">                        if (residues.isEmpty()) {</a>
+<span class="sourceLineNo">635</span><a id="line.635">                                return;</a>
+<span class="sourceLineNo">636</span><a id="line.636">                        }</a>
+<span class="sourceLineNo">637</span><a id="line.637"></a>
+<span class="sourceLineNo">638</span><a id="line.638">                        Set&lt;Component&gt; residuesWildCard = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">639</span><a id="line.639">                                        Component.of("*"));</a>
+<span class="sourceLineNo">640</span><a id="line.640"></a>
+<span class="sourceLineNo">641</span><a id="line.641">                        // for all residues</a>
+<span class="sourceLineNo">642</span><a id="line.642">                        for (Group group : residues) {</a>
+<span class="sourceLineNo">643</span><a id="line.643">                                String pdbccId = group.getPDBName().trim();</a>
+<span class="sourceLineNo">644</span><a id="line.644">                                Set&lt;Component&gt; comps = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">645</span><a id="line.645">                                                Component.of(pdbccId));</a>
+<span class="sourceLineNo">646</span><a id="line.646"></a>
+<span class="sourceLineNo">647</span><a id="line.647">                                for (Component comp : unionComponentSet(residuesWildCard, comps)) {</a>
+<span class="sourceLineNo">648</span><a id="line.648">                                        Set&lt;Group&gt; gs = saveTo.get(comp);</a>
+<span class="sourceLineNo">649</span><a id="line.649">                                        if (gs==null) {</a>
+<span class="sourceLineNo">650</span><a id="line.650">                                                gs = new LinkedHashSet&lt;Group&gt;();</a>
+<span class="sourceLineNo">651</span><a id="line.651">                                                saveTo.put(comp, gs);</a>
+<span class="sourceLineNo">652</span><a id="line.652">                                        }</a>
+<span class="sourceLineNo">653</span><a id="line.653">                                        gs.add(group);</a>
+<span class="sourceLineNo">654</span><a id="line.654">                                }</a>
+<span class="sourceLineNo">655</span><a id="line.655">                        }</a>
+<span class="sourceLineNo">656</span><a id="line.656"></a>
+<span class="sourceLineNo">657</span><a id="line.657">                        // for N-terminal</a>
+<span class="sourceLineNo">658</span><a id="line.658">                        int nRes = residues.size();</a>
+<span class="sourceLineNo">659</span><a id="line.659">                        int iRes = 0;</a>
+<span class="sourceLineNo">660</span><a id="line.660">                        Group res;</a>
+<span class="sourceLineNo">661</span><a id="line.661">                        do {</a>
+<span class="sourceLineNo">662</span><a id="line.662">                                // for all ligands on N terminal and the first residue</a>
+<span class="sourceLineNo">663</span><a id="line.663">                                res = residues.get(iRes++);</a>
+<span class="sourceLineNo">664</span><a id="line.664"></a>
+<span class="sourceLineNo">665</span><a id="line.665">                                Set&lt;Component&gt; nTermWildCard = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">666</span><a id="line.666">                                                Component.of("*", true, false));</a>
+<span class="sourceLineNo">667</span><a id="line.667"></a>
+<span class="sourceLineNo">668</span><a id="line.668">                                Set&lt;Component&gt; comps = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">669</span><a id="line.669">                                                Component.of(res.getPDBName(), true, false));</a>
+<span class="sourceLineNo">670</span><a id="line.670"></a>
+<span class="sourceLineNo">671</span><a id="line.671">                                for (Component comp : unionComponentSet(nTermWildCard, comps)) {</a>
+<span class="sourceLineNo">672</span><a id="line.672">                                        Set&lt;Group&gt; gs = saveTo.get(comp);</a>
+<span class="sourceLineNo">673</span><a id="line.673">                                        if (gs==null) {</a>
+<span class="sourceLineNo">674</span><a id="line.674">                                                gs = new LinkedHashSet&lt;Group&gt;();</a>
+<span class="sourceLineNo">675</span><a id="line.675">                                                saveTo.put(comp, gs);</a>
+<span class="sourceLineNo">676</span><a id="line.676">                                        }</a>
+<span class="sourceLineNo">677</span><a id="line.677">                                        gs.add(res);</a>
+<span class="sourceLineNo">678</span><a id="line.678">                                }</a>
+<span class="sourceLineNo">679</span><a id="line.679">                        } while (iRes&lt;nRes &amp;&amp; ligands.contains(res));</a>
+<span class="sourceLineNo">680</span><a id="line.680"></a>
+<span class="sourceLineNo">681</span><a id="line.681">                        // for C-terminal</a>
+<span class="sourceLineNo">682</span><a id="line.682">                        iRes = residues.size()-1;</a>
+<span class="sourceLineNo">683</span><a id="line.683">                        do {</a>
+<span class="sourceLineNo">684</span><a id="line.684">                                // for all ligands on C terminal and the last residue</a>
+<span class="sourceLineNo">685</span><a id="line.685">                                res = residues.get(iRes--);</a>
+<span class="sourceLineNo">686</span><a id="line.686"></a>
+<span class="sourceLineNo">687</span><a id="line.687">                                Set&lt;Component&gt; cTermWildCard = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">688</span><a id="line.688">                                                Component.of("*", false, true));</a>
+<span class="sourceLineNo">689</span><a id="line.689"></a>
+<span class="sourceLineNo">690</span><a id="line.690">                                Set&lt;Component&gt; comps = mapSingleMultiComps.get(</a>
+<span class="sourceLineNo">691</span><a id="line.691">                                                Component.of(res.getPDBName(), false, true));</a>
+<span class="sourceLineNo">692</span><a id="line.692"></a>
+<span class="sourceLineNo">693</span><a id="line.693">                                for (Component comp : unionComponentSet(cTermWildCard, comps)) {</a>
+<span class="sourceLineNo">694</span><a id="line.694">                                        Set&lt;Group&gt; gs = saveTo.get(comp);</a>
+<span class="sourceLineNo">695</span><a id="line.695">                                        if (gs==null) {</a>
+<span class="sourceLineNo">696</span><a id="line.696">                                                gs = new LinkedHashSet&lt;Group&gt;();</a>
+<span class="sourceLineNo">697</span><a id="line.697">                                                saveTo.put(comp, gs);</a>
+<span class="sourceLineNo">698</span><a id="line.698">                                        }</a>
+<span class="sourceLineNo">699</span><a id="line.699">                                        gs.add(res);</a>
+<span class="sourceLineNo">700</span><a id="line.700">                                }</a>
+<span class="sourceLineNo">701</span><a id="line.701">                        } while (iRes&gt;=0 &amp;&amp; ligands.contains(res));</a>
+<span class="sourceLineNo">702</span><a id="line.702">                }</a>
+<span class="sourceLineNo">703</span><a id="line.703">        }</a>
+<span class="sourceLineNo">704</span><a id="line.704"></a>
+<span class="sourceLineNo">705</span><a id="line.705">        private Set&lt;Component&gt; unionComponentSet(Set&lt;Component&gt; set1, Set&lt;Component&gt; set2) {</a>
+<span class="sourceLineNo">706</span><a id="line.706">                if (set1 == null &amp;&amp; set2 == null)</a>
+<span class="sourceLineNo">707</span><a id="line.707">                        return Collections.emptySet();</a>
+<span class="sourceLineNo">708</span><a id="line.708"></a>
+<span class="sourceLineNo">709</span><a id="line.709">                if (set1 == null)</a>
+<span class="sourceLineNo">710</span><a id="line.710">                        return set2;</a>
+<span class="sourceLineNo">711</span><a id="line.711"></a>
+<span class="sourceLineNo">712</span><a id="line.712">                if (set2 == null)</a>
+<span class="sourceLineNo">713</span><a id="line.713">                        return set1;</a>
+<span class="sourceLineNo">714</span><a id="line.714"></a>
+<span class="sourceLineNo">715</span><a id="line.715">                Set&lt;Component&gt; set = new HashSet&lt;Component&gt;(set1.size()+set2.size());</a>
+<span class="sourceLineNo">716</span><a id="line.716">                set.addAll(set1);</a>
+<span class="sourceLineNo">717</span><a id="line.717">                set.addAll(set2);</a>
+<span class="sourceLineNo">718</span><a id="line.718"></a>
+<span class="sourceLineNo">719</span><a id="line.719">                return set;</a>
+<span class="sourceLineNo">720</span><a id="line.720">        }</a>
+<span class="sourceLineNo">721</span><a id="line.721"></a>
+<span class="sourceLineNo">722</span><a id="line.722">        /**</a>
+<span class="sourceLineNo">723</span><a id="line.723">         * Get matched atoms for all linkages.</a>
+<span class="sourceLineNo">724</span><a id="line.724">         */</a>
+<span class="sourceLineNo">725</span><a id="line.725">        private List&lt;List&lt;Atom[]&gt;&gt; getMatchedAtomsOfLinkages(</a>
+<span class="sourceLineNo">726</span><a id="line.726">                        ModificationCondition condition, Map&lt;Component, Set&lt;Group&gt;&gt; mapCompGroups) {</a>
+<span class="sourceLineNo">727</span><a id="line.727">                List&lt;ModificationLinkage&gt; linkages = condition.getLinkages();</a>
+<span class="sourceLineNo">728</span><a id="line.728">                int nLink = linkages.size();</a>
+<span class="sourceLineNo">729</span><a id="line.729"></a>
+<span class="sourceLineNo">730</span><a id="line.730">                List&lt;List&lt;Atom[]&gt;&gt; matchedAtomsOfLinkages =</a>
+<span class="sourceLineNo">731</span><a id="line.731">                                new ArrayList&lt;List&lt;Atom[]&gt;&gt;(nLink);</a>
+<span class="sourceLineNo">732</span><a id="line.732"></a>
+<span class="sourceLineNo">733</span><a id="line.733">                for (int iLink=0; iLink&lt;nLink; iLink++) {</a>
+<span class="sourceLineNo">734</span><a id="line.734">                        ModificationLinkage linkage = linkages.get(iLink);</a>
+<span class="sourceLineNo">735</span><a id="line.735">                        Component comp1 = linkage.getComponent1();</a>
+<span class="sourceLineNo">736</span><a id="line.736">                        Component comp2 = linkage.getComponent2();</a>
+<span class="sourceLineNo">737</span><a id="line.737"></a>
+<span class="sourceLineNo">738</span><a id="line.738">//                      boolean isAA1 = comp1.;</a>
+<span class="sourceLineNo">739</span><a id="line.739">//                      boolean isAA2 = comp2.getType()==true;</a>
+<span class="sourceLineNo">740</span><a id="line.740"></a>
+<span class="sourceLineNo">741</span><a id="line.741">                        Set&lt;Group&gt; groups1 = mapCompGroups.get(comp1);</a>
+<span class="sourceLineNo">742</span><a id="line.742">                        Set&lt;Group&gt; groups2 = mapCompGroups.get(comp2);</a>
+<span class="sourceLineNo">743</span><a id="line.743"></a>
+<span class="sourceLineNo">744</span><a id="line.744">                        List&lt;Atom[]&gt; list = new ArrayList&lt;Atom[]&gt;();</a>
+<span class="sourceLineNo">745</span><a id="line.745"></a>
+<span class="sourceLineNo">746</span><a id="line.746">                        List&lt;String&gt; potentialNamesOfAtomOnGroup1 = linkage.getPDBNameOfPotentialAtomsOnComponent1();</a>
+<span class="sourceLineNo">747</span><a id="line.747">                        for (String name : potentialNamesOfAtomOnGroup1) {</a>
+<span class="sourceLineNo">748</span><a id="line.748">                                if (name.equals("*")) {</a>
+<span class="sourceLineNo">749</span><a id="line.749">                                        // wildcard</a>
+<span class="sourceLineNo">750</span><a id="line.750">                                        potentialNamesOfAtomOnGroup1 = null; // search all atoms</a>
+<span class="sourceLineNo">751</span><a id="line.751">                                        break;</a>
+<span class="sourceLineNo">752</span><a id="line.752">                                }</a>
+<span class="sourceLineNo">753</span><a id="line.753">                        }</a>
+<span class="sourceLineNo">754</span><a id="line.754"></a>
+<span class="sourceLineNo">755</span><a id="line.755">                        List&lt;String&gt; potentialNamesOfAtomOnGroup2 = linkage.getPDBNameOfPotentialAtomsOnComponent2();</a>
+<span class="sourceLineNo">756</span><a id="line.756">                        for (String name : potentialNamesOfAtomOnGroup2) {</a>
+<span class="sourceLineNo">757</span><a id="line.757">                                if (name.equals("*")) {</a>
+<span class="sourceLineNo">758</span><a id="line.758">                                        // wildcard</a>
+<span class="sourceLineNo">759</span><a id="line.759">                                        potentialNamesOfAtomOnGroup2 = null; // search all atoms</a>
+<span class="sourceLineNo">760</span><a id="line.760">                                        break;</a>
+<span class="sourceLineNo">761</span><a id="line.761">                                }</a>
+<span class="sourceLineNo">762</span><a id="line.762">                        }</a>
+<span class="sourceLineNo">763</span><a id="line.763"></a>
+<span class="sourceLineNo">764</span><a id="line.764">                        for (Group g1 : groups1) {</a>
+<span class="sourceLineNo">765</span><a id="line.765">                                for (Group g2 : groups2) {</a>
+<span class="sourceLineNo">766</span><a id="line.766">                                        if (g1.equals(g2)) {</a>
+<span class="sourceLineNo">767</span><a id="line.767">                                                continue;</a>
+<span class="sourceLineNo">768</span><a id="line.768">                                        }</a>
+<span class="sourceLineNo">769</span><a id="line.769"></a>
+<span class="sourceLineNo">770</span><a id="line.770">                                        // only for wildcard match of two residues</a>
+<span class="sourceLineNo">771</span><a id="line.771">                                        boolean ignoreNCLinkage =</a>
+<span class="sourceLineNo">772</span><a id="line.772">                                                potentialNamesOfAtomOnGroup1 == null &amp;&amp;</a>
+<span class="sourceLineNo">773</span><a id="line.773">                                                potentialNamesOfAtomOnGroup2 == null &amp;&amp;</a>
+<span class="sourceLineNo">774</span><a id="line.774">                                                residues.contains(g1) &amp;&amp;</a>
+<span class="sourceLineNo">775</span><a id="line.775">                                                residues.contains(g2);</a>
+<span class="sourceLineNo">776</span><a id="line.776"></a>
+<span class="sourceLineNo">777</span><a id="line.777">                                        Atom[] atoms = StructureUtil.findNearestAtomLinkage(</a>
+<span class="sourceLineNo">778</span><a id="line.778">                                                        g1, g2,</a>
+<span class="sourceLineNo">779</span><a id="line.779">                                                        potentialNamesOfAtomOnGroup1,</a>
+<span class="sourceLineNo">780</span><a id="line.780">                                                        potentialNamesOfAtomOnGroup2,</a>
+<span class="sourceLineNo">781</span><a id="line.781">                                                        ignoreNCLinkage,</a>
+<span class="sourceLineNo">782</span><a id="line.782">                                                        bondLengthTolerance);</a>
+<span class="sourceLineNo">783</span><a id="line.783">                                        if (atoms!=null) {</a>
+<span class="sourceLineNo">784</span><a id="line.784">                                                list.add(atoms);</a>
+<span class="sourceLineNo">785</span><a id="line.785">                                        }</a>
+<span class="sourceLineNo">786</span><a id="line.786">                                }</a>
+<span class="sourceLineNo">787</span><a id="line.787">                        }</a>
+<span class="sourceLineNo">788</span><a id="line.788"></a>
+<span class="sourceLineNo">789</span><a id="line.789">                        if (list.isEmpty()) {</a>
+<span class="sourceLineNo">790</span><a id="line.790">                                // broken linkage</a>
+<span class="sourceLineNo">791</span><a id="line.791">                                break;</a>
+<span class="sourceLineNo">792</span><a id="line.792">                        }</a>
+<span class="sourceLineNo">793</span><a id="line.793"></a>
+<span class="sourceLineNo">794</span><a id="line.794">                        matchedAtomsOfLinkages.add(list);</a>
+<span class="sourceLineNo">795</span><a id="line.795">                }</a>
+<span class="sourceLineNo">796</span><a id="line.796"></a>
+<span class="sourceLineNo">797</span><a id="line.797">                return matchedAtomsOfLinkages;</a>
+<span class="sourceLineNo">798</span><a id="line.798">        }</a>
+<span class="sourceLineNo">799</span><a id="line.799"></a>
+<span class="sourceLineNo">800</span><a id="line.800">        /** Assembly the matched linkages</a>
+<span class="sourceLineNo">801</span><a id="line.801">         *</a>
+<span class="sourceLineNo">802</span><a id="line.802">         * @param matchedAtomsOfLinkages</a>
+<span class="sourceLineNo">803</span><a id="line.803">         * @param mod</a>
+<span class="sourceLineNo">804</span><a id="line.804">         * @param ret ModifiedCompound will be stored here</a>
+<span class="sourceLineNo">805</span><a id="line.805">         */</a>
+<span class="sourceLineNo">806</span><a id="line.806">        private void assembleLinkages(List&lt;List&lt;Atom[]&gt;&gt; matchedAtomsOfLinkages,</a>
+<span class="sourceLineNo">807</span><a id="line.807">                        ProteinModification mod, List&lt;ModifiedCompound&gt; ret) {</a>
+<span class="sourceLineNo">808</span><a id="line.808">                ModificationCondition condition = mod.getCondition();</a>
+<span class="sourceLineNo">809</span><a id="line.809">                List&lt;ModificationLinkage&gt; modLinks = condition.getLinkages();</a>
+<span class="sourceLineNo">810</span><a id="line.810"></a>
+<span class="sourceLineNo">811</span><a id="line.811">                int nLink = matchedAtomsOfLinkages.size();</a>
+<span class="sourceLineNo">812</span><a id="line.812">                int[] indices = new int[nLink];</a>
+<span class="sourceLineNo">813</span><a id="line.813">                Set&lt;ModifiedCompound&gt; identifiedCompounds = new HashSet&lt;ModifiedCompound&gt;();</a>
+<span class="sourceLineNo">814</span><a id="line.814">                while (indices[0]&lt;matchedAtomsOfLinkages.get(0).size()) {</a>
+<span class="sourceLineNo">815</span><a id="line.815">                        List&lt;Atom[]&gt; atomLinkages = new ArrayList&lt;Atom[]&gt;(nLink);</a>
+<span class="sourceLineNo">816</span><a id="line.816">                        for (int iLink=0; iLink&lt;nLink; iLink++) {</a>
+<span class="sourceLineNo">817</span><a id="line.817">                                Atom[] atoms = matchedAtomsOfLinkages.get(iLink).get(indices[iLink]);</a>
+<span class="sourceLineNo">818</span><a id="line.818">                                atomLinkages.add(atoms);</a>
+<span class="sourceLineNo">819</span><a id="line.819">                        }</a>
+<span class="sourceLineNo">820</span><a id="line.820">                        if (matchLinkages(modLinks, atomLinkages)) {</a>
+<span class="sourceLineNo">821</span><a id="line.821">                                // matched</a>
+<span class="sourceLineNo">822</span><a id="line.822"></a>
+<span class="sourceLineNo">823</span><a id="line.823">                                int n = atomLinkages.size();</a>
+<span class="sourceLineNo">824</span><a id="line.824">                                List&lt;StructureAtomLinkage&gt; linkages = new ArrayList&lt;StructureAtomLinkage&gt;(n);</a>
+<span class="sourceLineNo">825</span><a id="line.825">                                for (int i=0; i&lt;n; i++) {</a>
+<span class="sourceLineNo">826</span><a id="line.826">                                        Atom[] linkage = atomLinkages.get(i);</a>
+<span class="sourceLineNo">827</span><a id="line.827">                                        StructureAtomLinkage link = StructureUtil.getStructureAtomLinkage(</a>
+<span class="sourceLineNo">828</span><a id="line.828">                                                        linkage[0], residues.contains(linkage[0].getGroup()),</a>
+<span class="sourceLineNo">829</span><a id="line.829">                                                        linkage[1], residues.contains(linkage[1].getGroup()));</a>
+<span class="sourceLineNo">830</span><a id="line.830">                                        linkages.add(link);</a>
+<span class="sourceLineNo">831</span><a id="line.831">                                }</a>
+<span class="sourceLineNo">832</span><a id="line.832"></a>
+<span class="sourceLineNo">833</span><a id="line.833">                                ModifiedCompound mc = new ModifiedCompoundImpl(mod, linkages);</a>
+<span class="sourceLineNo">834</span><a id="line.834">                                if (!identifiedCompounds.contains(mc)) {</a>
+<span class="sourceLineNo">835</span><a id="line.835">                                        ret.add(mc);</a>
+<span class="sourceLineNo">836</span><a id="line.836">                                        identifiedCompounds.add(mc);</a>
+<span class="sourceLineNo">837</span><a id="line.837">                                }</a>
+<span class="sourceLineNo">838</span><a id="line.838">                        }</a>
+<span class="sourceLineNo">839</span><a id="line.839"></a>
+<span class="sourceLineNo">840</span><a id="line.840">                        // indices++ (e.g. [0,0,1]=&gt;[0,0,2]=&gt;[1,2,0])</a>
+<span class="sourceLineNo">841</span><a id="line.841">                        int i = nLink-1;</a>
+<span class="sourceLineNo">842</span><a id="line.842">                        while (i&gt;=0) {</a>
+<span class="sourceLineNo">843</span><a id="line.843">                                if (i==0 || indices[i]&lt;matchedAtomsOfLinkages.get(i).size()-1) {</a>
+<span class="sourceLineNo">844</span><a id="line.844">                                        indices[i]++;</a>
+<span class="sourceLineNo">845</span><a id="line.845">                                        break;</a>
+<span class="sourceLineNo">846</span><a id="line.846">                                } else {</a>
+<span class="sourceLineNo">847</span><a id="line.847">                                        indices[i] = 0;</a>
+<span class="sourceLineNo">848</span><a id="line.848">                                        i--;</a>
+<span class="sourceLineNo">849</span><a id="line.849">                                }</a>
+<span class="sourceLineNo">850</span><a id="line.850">                        }</a>
+<span class="sourceLineNo">851</span><a id="line.851">                }</a>
+<span class="sourceLineNo">852</span><a id="line.852">        }</a>
+<span class="sourceLineNo">853</span><a id="line.853"></a>
+<span class="sourceLineNo">854</span><a id="line.854">        /**</a>
+<span class="sourceLineNo">855</span><a id="line.855">         *</a>
+<span class="sourceLineNo">856</span><a id="line.856">         * @param linkages</a>
+<span class="sourceLineNo">857</span><a id="line.857">         * @param atomLinkages</a>
+<span class="sourceLineNo">858</span><a id="line.858">         * @return true if atomLinkages satisfy the condition; false, otherwise.</a>
+<span class="sourceLineNo">859</span><a id="line.859">         */</a>
+<span class="sourceLineNo">860</span><a id="line.860">        private boolean matchLinkages(List&lt;ModificationLinkage&gt; linkages,</a>
+<span class="sourceLineNo">861</span><a id="line.861">                        List&lt;Atom[]&gt; atomLinkages) {</a>
+<span class="sourceLineNo">862</span><a id="line.862">                int nLink = linkages.size();</a>
+<span class="sourceLineNo">863</span><a id="line.863">                if (nLink != atomLinkages.size()) {</a>
+<span class="sourceLineNo">864</span><a id="line.864">                        return false;</a>
+<span class="sourceLineNo">865</span><a id="line.865">                }</a>
+<span class="sourceLineNo">866</span><a id="line.866">                for (int i=0; i&lt;nLink-1; i++) {</a>
+<span class="sourceLineNo">867</span><a id="line.867">                        ModificationLinkage link1 = linkages.get(i);</a>
+<span class="sourceLineNo">868</span><a id="line.868">                        Atom[] atoms1 = atomLinkages.get(i);</a>
+<span class="sourceLineNo">869</span><a id="line.869">                        for (int j=i+1; j&lt;nLink; j++) {</a>
+<span class="sourceLineNo">870</span><a id="line.870">                                ModificationLinkage link2 = linkages.get(j);</a>
+<span class="sourceLineNo">871</span><a id="line.871">                                Atom[] atoms2 = atomLinkages.get(j);</a>
+<span class="sourceLineNo">872</span><a id="line.872"></a>
+<span class="sourceLineNo">873</span><a id="line.873">                                // check components</a>
+<span class="sourceLineNo">874</span><a id="line.874">                                if (((link1.getIndexOfComponent1()==link2.getIndexOfComponent1())</a>
+<span class="sourceLineNo">875</span><a id="line.875">                                                        != (atoms1[0].getGroup().equals(atoms2[0].getGroup())))</a>
+<span class="sourceLineNo">876</span><a id="line.876">                                        || ((link1.getIndexOfComponent1()==link2.getIndexOfComponent2())</a>
+<span class="sourceLineNo">877</span><a id="line.877">                                                        != (atoms1[0].getGroup().equals(atoms2[1].getGroup())))</a>
+<span class="sourceLineNo">878</span><a id="line.878">                                        || ((link1.getIndexOfComponent2()==link2.getIndexOfComponent1())</a>
+<span class="sourceLineNo">879</span><a id="line.879">                                                        != (atoms1[1].getGroup().equals(atoms2[0].getGroup())))</a>
+<span class="sourceLineNo">880</span><a id="line.880">                                        || ((link1.getIndexOfComponent2()==link2.getIndexOfComponent2())</a>
+<span class="sourceLineNo">881</span><a id="line.881">                                                        != (atoms1[1].getGroup().equals(atoms2[1].getGroup())))) {</a>
+<span class="sourceLineNo">882</span><a id="line.882">                                        return false;</a>
+<span class="sourceLineNo">883</span><a id="line.883">                                }</a>
+<span class="sourceLineNo">884</span><a id="line.884"></a>
+<span class="sourceLineNo">885</span><a id="line.885">                                // check atoms</a>
+<span class="sourceLineNo">886</span><a id="line.886">                                String label11 = link1.getLabelOfAtomOnComponent1();</a>
+<span class="sourceLineNo">887</span><a id="line.887">                                String label12 = link1.getLabelOfAtomOnComponent2();</a>
+<span class="sourceLineNo">888</span><a id="line.888">                                String label21 = link2.getLabelOfAtomOnComponent1();</a>
+<span class="sourceLineNo">889</span><a id="line.889">                                String label22 = link2.getLabelOfAtomOnComponent2();</a>
+<span class="sourceLineNo">890</span><a id="line.890">                                if ((label11!=null &amp;&amp; label21!=null &amp;&amp; label11.equals(label21))</a>
+<span class="sourceLineNo">891</span><a id="line.891">                                                        != (atoms1[0].equals(atoms2[0]))</a>
+<span class="sourceLineNo">892</span><a id="line.892">                                         || (label11!=null &amp;&amp; label22!=null &amp;&amp; label11.equals(label22))</a>
+<span class="sourceLineNo">893</span><a id="line.893">                                                        != (atoms1[0].equals(atoms2[1]))</a>
+<span class="sourceLineNo">894</span><a id="line.894">                                         || (label12!=null &amp;&amp; label21!=null &amp;&amp; label12.equals(label21))</a>
+<span class="sourceLineNo">895</span><a id="line.895">                                                        != (atoms1[1].equals(atoms2[0]))</a>
+<span class="sourceLineNo">896</span><a id="line.896">                                         || (label12!=null &amp;&amp; label22!=null &amp;&amp; label12.equals(label22))</a>
+<span class="sourceLineNo">897</span><a id="line.897">                                                        != (atoms1[1].equals(atoms2[1]))) {</a>
+<span class="sourceLineNo">898</span><a id="line.898">                                        return false;</a>
+<span class="sourceLineNo">899</span><a id="line.899">                                }</a>
+<span class="sourceLineNo">900</span><a id="line.900">                        }</a>
+<span class="sourceLineNo">901</span><a id="line.901">                }</a>
+<span class="sourceLineNo">902</span><a id="line.902"></a>
+<span class="sourceLineNo">903</span><a id="line.903">                return true;</a>
+<span class="sourceLineNo">904</span><a id="line.904">        }</a>
+<span class="sourceLineNo">905</span><a id="line.905">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

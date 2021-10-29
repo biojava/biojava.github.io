@@ -1,0 +1,1572 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.align.util;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.*;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.align.AFPTwister;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.align.ce.CECalculator;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.align.fatcat.FatCatFlexible;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.align.fatcat.FatCatRigid;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.align.model.AFPChain;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.align.xml.AFPChainXMLParser;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.geometry.Matrices;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.geometry.SuperPositions;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.io.IOException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.io.Writer;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.*;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.Map.Entry;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.util.regex.Matcher;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">import javax.vecmath.Matrix4d;</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">/**</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * Methods for analyzing and manipulating AFPChains and for</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * other pairwise alignment utilities. &lt;p&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * Current methods: replace optimal alignment, create new AFPChain,</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * format conversion, update superposition, etc.</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *</a>
+<span class="sourceLineNo">054</span><a id="line.54"> */</a>
+<span class="sourceLineNo">055</span><a id="line.55">public class AlignmentTools {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">        private static final Logger logger = LoggerFactory.getLogger(AlignmentTools.class);</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        public static boolean debug = false;</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">        /**</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * Checks that the alignment given by afpChain is sequential. This means</a>
+<span class="sourceLineNo">064</span><a id="line.64">         * that the residue indices of both proteins increase monotonically as</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * a function of the alignment position (ie both proteins are sorted).</a>
+<span class="sourceLineNo">066</span><a id="line.66">         *</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * This will return false for circularly permuted alignments or other</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * non-topological alignments. It will also return false for cases where</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * the alignment itself is sequential but it is not stored in the afpChain</a>
+<span class="sourceLineNo">070</span><a id="line.70">         * in a sorted manner.</a>
+<span class="sourceLineNo">071</span><a id="line.71">         *</a>
+<span class="sourceLineNo">072</span><a id="line.72">         * Since algorithms which create non-sequential alignments split the</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * alignment into multiple blocks, some computational time can be saved</a>
+<span class="sourceLineNo">074</span><a id="line.74">         * by only checking block boundaries for sequentiality. Setting</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * &lt;tt&gt;checkWithinBlocks&lt;/tt&gt; to &lt;tt&gt;true&lt;/tt&gt; makes this function slower,</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * but detects AFPChains with non-sequential blocks.</a>
+<span class="sourceLineNo">077</span><a id="line.77">         *</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * Note that this method should give the same results as</a>
+<span class="sourceLineNo">079</span><a id="line.79">         * {@link AFPChain#isSequentialAlignment()}. However, the AFPChain version</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * relies on the StructureAlignment algorithm correctly setting this</a>
+<span class="sourceLineNo">081</span><a id="line.81">         * parameter, which is sadly not always the case.</a>
+<span class="sourceLineNo">082</span><a id="line.82">         *</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * @param afpChain An alignment</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * @param checkWithinBlocks Indicates whether individual blocks should be</a>
+<span class="sourceLineNo">085</span><a id="line.85">         *      checked for sequentiality</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * @return True if the alignment is sequential.</a>
+<span class="sourceLineNo">087</span><a id="line.87">         */</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public static boolean isSequentialAlignment(AFPChain afpChain, boolean checkWithinBlocks) {</a>
+<span class="sourceLineNo">089</span><a id="line.89">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">090</span><a id="line.90">                int[] alnLen = afpChain.getOptLen();</a>
+<span class="sourceLineNo">091</span><a id="line.91">                int blocks = afpChain.getBlockNum();</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                if(blocks &lt; 1) return true; //trivial case</a>
+<span class="sourceLineNo">094</span><a id="line.94">                if ( alnLen[0] &lt; 1) return true;</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">                // Check that blocks are sequential</a>
+<span class="sourceLineNo">097</span><a id="line.97">                if(checkWithinBlocks) {</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        for(int block = 0; block&lt;blocks; block++) {</a>
+<span class="sourceLineNo">099</span><a id="line.99">                                if(alnLen[block] &lt; 1 ) continue; //skip empty blocks</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">                                int prevRes1 = optAln[block][0][0];</a>
+<span class="sourceLineNo">102</span><a id="line.102">                                int prevRes2 = optAln[block][1][0];</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">                                for(int pos = 1; pos&lt;alnLen[block]; pos++) {</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                        int currRes1 = optAln[block][0][pos];</a>
+<span class="sourceLineNo">106</span><a id="line.106">                                        int currRes2 = optAln[block][1][pos];</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                                        if(currRes1 &lt; prevRes1) {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                                return false;</a>
+<span class="sourceLineNo">110</span><a id="line.110">                                        }</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                        if(currRes2 &lt; prevRes2) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                                return false;</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                        }</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">                                        prevRes1 = currRes1;</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                        prevRes2 = currRes2;</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                }</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        }</a>
+<span class="sourceLineNo">119</span><a id="line.119">                }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">                // Check that blocks are sequential</a>
+<span class="sourceLineNo">122</span><a id="line.122">                int prevRes1 = optAln[0][0][alnLen[0]-1];</a>
+<span class="sourceLineNo">123</span><a id="line.123">                int prevRes2 = optAln[0][1][alnLen[0]-1];</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                for(int block = 1; block&lt;blocks;block++) {</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        if(alnLen[block] &lt; 1 ) continue; //skip empty blocks</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">                        if(optAln[block][0][0]&lt;prevRes1) {</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                return false;</a>
+<span class="sourceLineNo">130</span><a id="line.130">                        }</a>
+<span class="sourceLineNo">131</span><a id="line.131">                        if(optAln[block][1][0]&lt;prevRes2) {</a>
+<span class="sourceLineNo">132</span><a id="line.132">                                return false;</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        }</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">                        prevRes1 = optAln[block][0][alnLen[block]-1];</a>
+<span class="sourceLineNo">136</span><a id="line.136">                        prevRes2 = optAln[block][1][alnLen[block]-1];</a>
+<span class="sourceLineNo">137</span><a id="line.137">                }</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">                return true;</a>
+<span class="sourceLineNo">140</span><a id="line.140">        }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">        /**</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * Creates a Map specifying the alignment as a mapping between residue indices</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * of protein 1 and residue indices of protein 2.</a>
+<span class="sourceLineNo">145</span><a id="line.145">         *</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * &lt;p&gt;For example,&lt;pre&gt;</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * 1234</a>
+<span class="sourceLineNo">148</span><a id="line.148">         * 5678&lt;/pre&gt;</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * becomes&lt;pre&gt;</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * 1-&gt;5</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * 2-&gt;6</a>
+<span class="sourceLineNo">152</span><a id="line.152">         * 3-&gt;7</a>
+<span class="sourceLineNo">153</span><a id="line.153">         * 4-&gt;8&lt;/pre&gt;</a>
+<span class="sourceLineNo">154</span><a id="line.154">         *</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * @param afpChain An alignment</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * @return A mapping from aligned residues of protein 1 to their partners in protein 2.</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * @throws StructureException If afpChain is not one-to-one</a>
+<span class="sourceLineNo">158</span><a id="line.158">         */</a>
+<span class="sourceLineNo">159</span><a id="line.159">        public static Map&lt;Integer, Integer&gt; alignmentAsMap(AFPChain afpChain) throws StructureException {</a>
+<span class="sourceLineNo">160</span><a id="line.160">                Map&lt;Integer,Integer&gt; map = new HashMap&lt;Integer,Integer&gt;();</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                if( afpChain.getAlnLength() &lt; 1 ) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">                        return map;</a>
+<span class="sourceLineNo">164</span><a id="line.164">                }</a>
+<span class="sourceLineNo">165</span><a id="line.165">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">166</span><a id="line.166">                int[] optLen = afpChain.getOptLen();</a>
+<span class="sourceLineNo">167</span><a id="line.167">                for(int block = 0; block &lt; afpChain.getBlockNum(); block++) {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        for(int pos = 0; pos &lt; optLen[block]; pos++) {</a>
+<span class="sourceLineNo">169</span><a id="line.169">                                int res1 = optAln[block][0][pos];</a>
+<span class="sourceLineNo">170</span><a id="line.170">                                int res2 = optAln[block][1][pos];</a>
+<span class="sourceLineNo">171</span><a id="line.171">                                if(map.containsKey(res1)) {</a>
+<span class="sourceLineNo">172</span><a id="line.172">                                        throw new StructureException(String.format("Residue %d aligned to both %d and %d.", res1,map.get(res1),res2));</a>
+<span class="sourceLineNo">173</span><a id="line.173">                                }</a>
+<span class="sourceLineNo">174</span><a id="line.174">                                map.put(res1,res2);</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        }</a>
+<span class="sourceLineNo">176</span><a id="line.176">                }</a>
+<span class="sourceLineNo">177</span><a id="line.177">                return map;</a>
+<span class="sourceLineNo">178</span><a id="line.178">        }</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">        /**</a>
+<span class="sourceLineNo">181</span><a id="line.181">         * Applies an alignment k times. Eg if alignmentMap defines function f(x),</a>
+<span class="sourceLineNo">182</span><a id="line.182">         * this returns a function f^k(x)=f(f(...f(x)...)).</a>
+<span class="sourceLineNo">183</span><a id="line.183">         *</a>
+<span class="sourceLineNo">184</span><a id="line.184">         * @param &lt;T&gt;</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * @param alignmentMap The input function, as a map (see {@link AlignmentTools#alignmentAsMap(AFPChain)})</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * @param k The number of times to apply the alignment</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * @return A new alignment. If the input function is not automorphic</a>
+<span class="sourceLineNo">188</span><a id="line.188">         *  (one-to-one), then some inputs may map to null, indicating that the</a>
+<span class="sourceLineNo">189</span><a id="line.189">         *  function is undefined for that input.</a>
+<span class="sourceLineNo">190</span><a id="line.190">         */</a>
+<span class="sourceLineNo">191</span><a id="line.191">        public static &lt;T&gt; Map&lt;T,T&gt; applyAlignment(Map&lt;T, T&gt; alignmentMap, int k) {</a>
+<span class="sourceLineNo">192</span><a id="line.192">                return applyAlignment(alignmentMap, new IdentityMap&lt;T&gt;(), k);</a>
+<span class="sourceLineNo">193</span><a id="line.193">        }</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">        /**</a>
+<span class="sourceLineNo">196</span><a id="line.196">         * Applies an alignment k times. Eg if alignmentMap defines function f(x),</a>
+<span class="sourceLineNo">197</span><a id="line.197">         * this returns a function f^k(x)=f(f(...f(x)...)).</a>
+<span class="sourceLineNo">198</span><a id="line.198">         *</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * To allow for functions with different domains and codomains, the identity</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * function allows converting back in a reasonable way. For instance, if</a>
+<span class="sourceLineNo">201</span><a id="line.201">         * alignmentMap represented an alignment between two proteins with different</a>
+<span class="sourceLineNo">202</span><a id="line.202">         * numbering schemes, the identity function could calculate the offset</a>
+<span class="sourceLineNo">203</span><a id="line.203">         * between residue numbers, eg I(x) = x-offset.</a>
+<span class="sourceLineNo">204</span><a id="line.204">         *</a>
+<span class="sourceLineNo">205</span><a id="line.205">         * When an identity function is provided, the returned function calculates</a>
+<span class="sourceLineNo">206</span><a id="line.206">         * f^k(x) = f(I( f(I( ... f(x) ... )) )).</a>
+<span class="sourceLineNo">207</span><a id="line.207">         *</a>
+<span class="sourceLineNo">208</span><a id="line.208">         * @param &lt;S&gt;</a>
+<span class="sourceLineNo">209</span><a id="line.209">         * @param &lt;T&gt;</a>
+<span class="sourceLineNo">210</span><a id="line.210">         * @param alignmentMap The input function, as a map (see {@link AlignmentTools#alignmentAsMap(AFPChain)})</a>
+<span class="sourceLineNo">211</span><a id="line.211">         * @param identity An identity-like function providing the isomorphism between</a>
+<span class="sourceLineNo">212</span><a id="line.212">         *  the codomain of alignmentMap (of type &lt;T&gt;) and the domain (type &lt;S&gt;).</a>
+<span class="sourceLineNo">213</span><a id="line.213">         * @param k The number of times to apply the alignment</a>
+<span class="sourceLineNo">214</span><a id="line.214">         * @return A new alignment. If the input function is not automorphic</a>
+<span class="sourceLineNo">215</span><a id="line.215">         *  (one-to-one), then some inputs may map to null, indicating that the</a>
+<span class="sourceLineNo">216</span><a id="line.216">         *  function is undefined for that input.</a>
+<span class="sourceLineNo">217</span><a id="line.217">         */</a>
+<span class="sourceLineNo">218</span><a id="line.218">        public static &lt;S,T&gt; Map&lt;S,T&gt; applyAlignment(Map&lt;S, T&gt; alignmentMap, Map&lt;T,S&gt; identity, int k) {</a>
+<span class="sourceLineNo">219</span><a id="line.219"></a>
+<span class="sourceLineNo">220</span><a id="line.220">                // This implementation simply applies the map k times.</a>
+<span class="sourceLineNo">221</span><a id="line.221">                // If k were large, it would be more efficient to do this recursively,</a>
+<span class="sourceLineNo">222</span><a id="line.222">                // (eg f^4 = (f^2)^2) but k will usually be small.</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">                if(k&lt;0) throw new IllegalArgumentException("k must be positive");</a>
+<span class="sourceLineNo">225</span><a id="line.225">                if(k==1) {</a>
+<span class="sourceLineNo">226</span><a id="line.226">                        return new HashMap&lt;S,T&gt;(alignmentMap);</a>
+<span class="sourceLineNo">227</span><a id="line.227">                }</a>
+<span class="sourceLineNo">228</span><a id="line.228">                // Convert to lists to establish a fixed order</a>
+<span class="sourceLineNo">229</span><a id="line.229">                List&lt;S&gt; preimage = new ArrayList&lt;S&gt;(alignmentMap.keySet()); // currently unmodified</a>
+<span class="sourceLineNo">230</span><a id="line.230">                List&lt;S&gt; image = new ArrayList&lt;S&gt;(preimage);</a>
+<span class="sourceLineNo">231</span><a id="line.231"></a>
+<span class="sourceLineNo">232</span><a id="line.232">                for(int n=1;n&lt;k;n++) {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                        // apply alignment</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        for(int i=0;i&lt;image.size();i++) {</a>
+<span class="sourceLineNo">235</span><a id="line.235">                                S pre = image.get(i);</a>
+<span class="sourceLineNo">236</span><a id="line.236">                                T intermediate = (pre==null?null: alignmentMap.get(pre));</a>
+<span class="sourceLineNo">237</span><a id="line.237">                                S post = (intermediate==null?null: identity.get(intermediate));</a>
+<span class="sourceLineNo">238</span><a id="line.238">                                image.set(i, post);</a>
+<span class="sourceLineNo">239</span><a id="line.239">                        }</a>
+<span class="sourceLineNo">240</span><a id="line.240">                }</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">                Map&lt;S, T&gt; imageMap = new HashMap&lt;S,T&gt;(alignmentMap.size());</a>
+<span class="sourceLineNo">245</span><a id="line.245"></a>
+<span class="sourceLineNo">246</span><a id="line.246">                //TODO handle nulls consistently.</a>
+<span class="sourceLineNo">247</span><a id="line.247">                // assure that all the residues in the domain are valid keys</a>
+<span class="sourceLineNo">248</span><a id="line.248">                /*</a>
+<span class="sourceLineNo">249</span><a id="line.249">                for(int i=0;i&lt;preimage.size();i++) {</a>
+<span class="sourceLineNo">250</span><a id="line.250">                        S pre = preimage.get(i);</a>
+<span class="sourceLineNo">251</span><a id="line.251">                        T intermediate = (pre==null?null: alignmentMap.get(pre));</a>
+<span class="sourceLineNo">252</span><a id="line.252">                        S post = (intermediate==null?null: identity.get(intermediate));</a>
+<span class="sourceLineNo">253</span><a id="line.253">                        imageMap.put(post, null);</a>
+<span class="sourceLineNo">254</span><a id="line.254">                }</a>
+<span class="sourceLineNo">255</span><a id="line.255">                 */</a>
+<span class="sourceLineNo">256</span><a id="line.256">                // now populate with actual values</a>
+<span class="sourceLineNo">257</span><a id="line.257">                for(int i=0;i&lt;preimage.size();i++) {</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        S pre = preimage.get(i);</a>
+<span class="sourceLineNo">259</span><a id="line.259"></a>
+<span class="sourceLineNo">260</span><a id="line.260">                        // image is currently f^k-1(x), so take the final step</a>
+<span class="sourceLineNo">261</span><a id="line.261">                        S preK1 = image.get(i);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                        T postK = (preK1==null?null: alignmentMap.get(preK1));</a>
+<span class="sourceLineNo">263</span><a id="line.263">                        imageMap.put(pre,postK);</a>
+<span class="sourceLineNo">264</span><a id="line.264"></a>
+<span class="sourceLineNo">265</span><a id="line.265">                }</a>
+<span class="sourceLineNo">266</span><a id="line.266">                return imageMap;</a>
+<span class="sourceLineNo">267</span><a id="line.267">        }</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269">        /**</a>
+<span class="sourceLineNo">270</span><a id="line.270">         * Helper for {@link #getSymmetryOrder(Map, Map, int, float)} with a true</a>
+<span class="sourceLineNo">271</span><a id="line.271">         * identity function (X-&gt;X).</a>
+<span class="sourceLineNo">272</span><a id="line.272">         *</a>
+<span class="sourceLineNo">273</span><a id="line.273">         * &lt;p&gt;This method should only be used in cases where the two proteins</a>
+<span class="sourceLineNo">274</span><a id="line.274">         * aligned have identical numbering, as for self-alignments. See</a>
+<span class="sourceLineNo">275</span><a id="line.275">         * {@link #getSymmetryOrder(AFPChain, int, float)} for a way to guess</a>
+<span class="sourceLineNo">276</span><a id="line.276">         * the sequential correspondence between two proteins.</a>
+<span class="sourceLineNo">277</span><a id="line.277">         *</a>
+<span class="sourceLineNo">278</span><a id="line.278">         * @param alignment</a>
+<span class="sourceLineNo">279</span><a id="line.279">         * @param maxSymmetry</a>
+<span class="sourceLineNo">280</span><a id="line.280">         * @param minimumMetricChange</a>
+<span class="sourceLineNo">281</span><a id="line.281">         * @return</a>
+<span class="sourceLineNo">282</span><a id="line.282">         */</a>
+<span class="sourceLineNo">283</span><a id="line.283">        public static int getSymmetryOrder(Map&lt;Integer, Integer&gt; alignment,</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                                                           final int maxSymmetry, final float minimumMetricChange) {</a>
+<span class="sourceLineNo">285</span><a id="line.285">                return getSymmetryOrder(alignment, new IdentityMap&lt;Integer&gt;(), maxSymmetry, minimumMetricChange);</a>
+<span class="sourceLineNo">286</span><a id="line.286">        }</a>
+<span class="sourceLineNo">287</span><a id="line.287">        /**</a>
+<span class="sourceLineNo">288</span><a id="line.288">         * Tries to detect symmetry in an alignment.</a>
+<span class="sourceLineNo">289</span><a id="line.289">         *</a>
+<span class="sourceLineNo">290</span><a id="line.290">         * &lt;p&gt;Conceptually, an alignment is a function f:A-&gt;B between two sets of</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * integers. The function may have simple topology (meaning that if two</a>
+<span class="sourceLineNo">292</span><a id="line.292">         * elements of A are close, then their images in B will also be close), or</a>
+<span class="sourceLineNo">293</span><a id="line.293">         * may have more complex topology (such as a circular permutation). This</a>
+<span class="sourceLineNo">294</span><a id="line.294">         * function checks &lt;i&gt;alignment&lt;/i&gt; against a reference function</a>
+<span class="sourceLineNo">295</span><a id="line.295">         * &lt;i&gt;identity&lt;/i&gt;, which should have simple topology. It then tries to</a>
+<span class="sourceLineNo">296</span><a id="line.296">         * determine the symmetry order of &lt;i&gt;alignment&lt;/i&gt; relative to</a>
+<span class="sourceLineNo">297</span><a id="line.297">         * &lt;i&gt;identity&lt;/i&gt;, up to a maximum order of &lt;i&gt;maxSymmetry&lt;/i&gt;.</a>
+<span class="sourceLineNo">298</span><a id="line.298">         *</a>
+<span class="sourceLineNo">299</span><a id="line.299">         *</a>
+<span class="sourceLineNo">300</span><a id="line.300">         * &lt;p&gt;&lt;strong&gt;Details&lt;/strong&gt;&lt;br/&gt;</a>
+<span class="sourceLineNo">301</span><a id="line.301">         * Considers the offset (in number of residues) which a residue moves</a>
+<span class="sourceLineNo">302</span><a id="line.302">         * after undergoing &lt;i&gt;n&lt;/i&gt; alternating transforms by alignment and</a>
+<span class="sourceLineNo">303</span><a id="line.303">         * identity. If &lt;i&gt;n&lt;/i&gt; corresponds to the intrinsic order of the alignment,</a>
+<span class="sourceLineNo">304</span><a id="line.304">         * this will be small. This algorithm tries increasing values of &lt;i&gt;n&lt;/i&gt;</a>
+<span class="sourceLineNo">305</span><a id="line.305">         * and looks for abrupt decreases in the root mean squared offset.</a>
+<span class="sourceLineNo">306</span><a id="line.306">         * If none are found at &lt;i&gt;n&lt;/i&gt;&lt;=maxSymmetry, the alignment is reported as</a>
+<span class="sourceLineNo">307</span><a id="line.307">         * non-symmetric.</a>
+<span class="sourceLineNo">308</span><a id="line.308">         *</a>
+<span class="sourceLineNo">309</span><a id="line.309">         * @param alignment The alignment to test for symmetry</a>
+<span class="sourceLineNo">310</span><a id="line.310">         * @param identity An alignment with simple topology which approximates</a>
+<span class="sourceLineNo">311</span><a id="line.311">         *  the sequential relationship between the two proteins. Should map in the</a>
+<span class="sourceLineNo">312</span><a id="line.312">         *  reverse direction from alignment.</a>
+<span class="sourceLineNo">313</span><a id="line.313">         * @param maxSymmetry Maximum symmetry to consider. High values increase</a>
+<span class="sourceLineNo">314</span><a id="line.314">         *  the calculation time and can lead to overfitting.</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * @param minimumMetricChange Percent decrease in root mean squared offsets</a>
+<span class="sourceLineNo">316</span><a id="line.316">         *  in order to declare symmetry. 0.4f seems to work well for CeSymm.</a>
+<span class="sourceLineNo">317</span><a id="line.317">         * @return The order of symmetry of alignment, or 1 if no order &lt;=</a>
+<span class="sourceLineNo">318</span><a id="line.318">         *  maxSymmetry is found.</a>
+<span class="sourceLineNo">319</span><a id="line.319">         *</a>
+<span class="sourceLineNo">320</span><a id="line.320">         * @see IdentityMap For a simple identity function</a>
+<span class="sourceLineNo">321</span><a id="line.321">         */</a>
+<span class="sourceLineNo">322</span><a id="line.322">        public static int getSymmetryOrder(Map&lt;Integer, Integer&gt; alignment, Map&lt;Integer,Integer&gt; identity,</a>
+<span class="sourceLineNo">323</span><a id="line.323">                                                                           final int maxSymmetry, final float minimumMetricChange) {</a>
+<span class="sourceLineNo">324</span><a id="line.324">                List&lt;Integer&gt; preimage = new ArrayList&lt;Integer&gt;(alignment.keySet()); // currently unmodified</a>
+<span class="sourceLineNo">325</span><a id="line.325">                List&lt;Integer&gt; image = new ArrayList&lt;Integer&gt;(preimage);</a>
+<span class="sourceLineNo">326</span><a id="line.326"></a>
+<span class="sourceLineNo">327</span><a id="line.327">                int bestSymmetry = 1;</a>
+<span class="sourceLineNo">328</span><a id="line.328">                double bestMetric = Double.POSITIVE_INFINITY; //lower is better</a>
+<span class="sourceLineNo">329</span><a id="line.329">                boolean foundSymmetry = false;</a>
+<span class="sourceLineNo">330</span><a id="line.330"></a>
+<span class="sourceLineNo">331</span><a id="line.331">                if(debug) {</a>
+<span class="sourceLineNo">332</span><a id="line.332">                        logger.trace("Symm\tPos\tDelta");</a>
+<span class="sourceLineNo">333</span><a id="line.333">                }</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">                for(int n=1;n&lt;=maxSymmetry;n++) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        int deltasSq = 0;</a>
+<span class="sourceLineNo">337</span><a id="line.337">                        int numDeltas = 0;</a>
+<span class="sourceLineNo">338</span><a id="line.338">                        // apply alignment</a>
+<span class="sourceLineNo">339</span><a id="line.339">                        for(int i=0;i&lt;image.size();i++) {</a>
+<span class="sourceLineNo">340</span><a id="line.340">                                Integer pre = image.get(i);</a>
+<span class="sourceLineNo">341</span><a id="line.341">                                Integer intermediate = (pre==null?null: alignment.get(pre));</a>
+<span class="sourceLineNo">342</span><a id="line.342">                                Integer post = (intermediate==null?null: identity.get(intermediate));</a>
+<span class="sourceLineNo">343</span><a id="line.343">                                image.set(i, post);</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345">                                if(post != null) {</a>
+<span class="sourceLineNo">346</span><a id="line.346">                                        int delta = post-preimage.get(i);</a>
+<span class="sourceLineNo">347</span><a id="line.347"></a>
+<span class="sourceLineNo">348</span><a id="line.348">                                        deltasSq += delta*delta;</a>
+<span class="sourceLineNo">349</span><a id="line.349">                                        numDeltas++;</a>
+<span class="sourceLineNo">350</span><a id="line.350"></a>
+<span class="sourceLineNo">351</span><a id="line.351">                                        if(debug) {</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                                logger.debug("%d\t%d\t%d\n",n,preimage.get(i),delta);</a>
+<span class="sourceLineNo">353</span><a id="line.353">                                        }</a>
+<span class="sourceLineNo">354</span><a id="line.354">                                }</a>
+<span class="sourceLineNo">355</span><a id="line.355"></a>
+<span class="sourceLineNo">356</span><a id="line.356">                        }</a>
+<span class="sourceLineNo">357</span><a id="line.357"></a>
+<span class="sourceLineNo">358</span><a id="line.358">                        // Metrics: RMS compensates for the trend of smaller numDeltas with higher order</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        // Not normalizing by numDeltas favors smaller orders</a>
+<span class="sourceLineNo">360</span><a id="line.360"></a>
+<span class="sourceLineNo">361</span><a id="line.361">                        double metric = Math.sqrt((double)deltasSq/numDeltas); // root mean squared distance</a>
+<span class="sourceLineNo">362</span><a id="line.362"></a>
+<span class="sourceLineNo">363</span><a id="line.363">                        if(!foundSymmetry &amp;&amp; metric &lt; bestMetric * minimumMetricChange) {</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                // n = 1 is never the best symmetry</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                if(bestMetric &lt; Double.POSITIVE_INFINITY) {</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                        foundSymmetry = true;</a>
+<span class="sourceLineNo">367</span><a id="line.367">                                }</a>
+<span class="sourceLineNo">368</span><a id="line.368">                                bestSymmetry = n;</a>
+<span class="sourceLineNo">369</span><a id="line.369">                                bestMetric = metric;</a>
+<span class="sourceLineNo">370</span><a id="line.370">                        }</a>
+<span class="sourceLineNo">371</span><a id="line.371"></a>
+<span class="sourceLineNo">372</span><a id="line.372">                        // When debugging need to loop over everything. Unneeded in production</a>
+<span class="sourceLineNo">373</span><a id="line.373">                        if(!debug &amp;&amp; foundSymmetry) {</a>
+<span class="sourceLineNo">374</span><a id="line.374">                                break;</a>
+<span class="sourceLineNo">375</span><a id="line.375">                        }</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">                }</a>
+<span class="sourceLineNo">378</span><a id="line.378">                if(foundSymmetry) {</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        return bestSymmetry;</a>
+<span class="sourceLineNo">380</span><a id="line.380">                } else {</a>
+<span class="sourceLineNo">381</span><a id="line.381">                        return 1;</a>
+<span class="sourceLineNo">382</span><a id="line.382">                }</a>
+<span class="sourceLineNo">383</span><a id="line.383">        }</a>
+<span class="sourceLineNo">384</span><a id="line.384"></a>
+<span class="sourceLineNo">385</span><a id="line.385"></a>
+<span class="sourceLineNo">386</span><a id="line.386">        /**</a>
+<span class="sourceLineNo">387</span><a id="line.387">         * Guesses the order of symmetry in an alignment</a>
+<span class="sourceLineNo">388</span><a id="line.388">         *</a>
+<span class="sourceLineNo">389</span><a id="line.389">         * &lt;p&gt;Uses {@link #getSymmetryOrder(Map alignment, Map identity, int, float)}</a>
+<span class="sourceLineNo">390</span><a id="line.390">         * to determine the the symmetry order. For the identity alignment, sorts</a>
+<span class="sourceLineNo">391</span><a id="line.391">         * the aligned residues of each protein sequentially, then defines the ith</a>
+<span class="sourceLineNo">392</span><a id="line.392">         * residues of each protein to be equivalent.</a>
+<span class="sourceLineNo">393</span><a id="line.393">         *</a>
+<span class="sourceLineNo">394</span><a id="line.394">         * &lt;p&gt;Note that the selection of the identity alignment here is &lt;i&gt;very&lt;/i&gt;</a>
+<span class="sourceLineNo">395</span><a id="line.395">         * naive, and only works for proteins with very good coverage. Wherever</a>
+<span class="sourceLineNo">396</span><a id="line.396">         * possible, it is better to construct an identity function explicitly</a>
+<span class="sourceLineNo">397</span><a id="line.397">         * from a sequence alignment (or use an {@link IdentityMap} for internally</a>
+<span class="sourceLineNo">398</span><a id="line.398">         * symmetric proteins) and use {@link #getSymmetryOrder(Map, Map, int, float)}.</a>
+<span class="sourceLineNo">399</span><a id="line.399">         */</a>
+<span class="sourceLineNo">400</span><a id="line.400">        public static int getSymmetryOrder(AFPChain afpChain, int maxSymmetry, float minimumMetricChange) throws StructureException {</a>
+<span class="sourceLineNo">401</span><a id="line.401">                // alignment comes from the afpChain alignment</a>
+<span class="sourceLineNo">402</span><a id="line.402">                Map&lt;Integer,Integer&gt; alignment = AlignmentTools.alignmentAsMap(afpChain);</a>
+<span class="sourceLineNo">403</span><a id="line.403"></a>
+<span class="sourceLineNo">404</span><a id="line.404">                // Now construct identity to map aligned residues in sequential order</a>
+<span class="sourceLineNo">405</span><a id="line.405">                Map&lt;Integer, Integer&gt; identity = guessSequentialAlignment(alignment, true);</a>
+<span class="sourceLineNo">406</span><a id="line.406"></a>
+<span class="sourceLineNo">407</span><a id="line.407"></a>
+<span class="sourceLineNo">408</span><a id="line.408">                return AlignmentTools.getSymmetryOrder(alignment,</a>
+<span class="sourceLineNo">409</span><a id="line.409">                                identity,</a>
+<span class="sourceLineNo">410</span><a id="line.410">                                maxSymmetry, minimumMetricChange);</a>
+<span class="sourceLineNo">411</span><a id="line.411">        }</a>
+<span class="sourceLineNo">412</span><a id="line.412"></a>
+<span class="sourceLineNo">413</span><a id="line.413">        /**</a>
+<span class="sourceLineNo">414</span><a id="line.414">         * Takes a potentially non-sequential alignment and guesses a sequential</a>
+<span class="sourceLineNo">415</span><a id="line.415">         * version of it. Residues from each structure are sorted sequentially and</a>
+<span class="sourceLineNo">416</span><a id="line.416">         * then compared directly.</a>
+<span class="sourceLineNo">417</span><a id="line.417">         *</a>
+<span class="sourceLineNo">418</span><a id="line.418">         * &lt;p&gt;The results of this method are consistent with what one might expect</a>
+<span class="sourceLineNo">419</span><a id="line.419">         * from an identity function, and are therefore useful with</a>
+<span class="sourceLineNo">420</span><a id="line.420">         * {@link #getSymmetryOrder(Map, Map identity, int, float)}.</a>
+<span class="sourceLineNo">421</span><a id="line.421">         * &lt;ul&gt;</a>
+<span class="sourceLineNo">422</span><a id="line.422">         *  &lt;li&gt;Perfect self-alignments will have the same pre-image and image,</a>
+<span class="sourceLineNo">423</span><a id="line.423">         *      so will map X-&gt;X&lt;/li&gt;</a>
+<span class="sourceLineNo">424</span><a id="line.424">         *  &lt;li&gt;Gaps and alignment errors will cause errors in the resulting map,</a>
+<span class="sourceLineNo">425</span><a id="line.425">         *      but only locally. Errors do not propagate through the whole</a>
+<span class="sourceLineNo">426</span><a id="line.426">         *      alignment.&lt;/li&gt;</a>
+<span class="sourceLineNo">427</span><a id="line.427">         * &lt;/ul&gt;</a>
+<span class="sourceLineNo">428</span><a id="line.428">         *</a>
+<span class="sourceLineNo">429</span><a id="line.429">         * &lt;h4&gt;Example:&lt;/h4&gt;</a>
+<span class="sourceLineNo">430</span><a id="line.430">         * A non sequential alignment, represented schematically as</a>
+<span class="sourceLineNo">431</span><a id="line.431">         * &lt;pre&gt;</a>
+<span class="sourceLineNo">432</span><a id="line.432">         * 12456789</a>
+<span class="sourceLineNo">433</span><a id="line.433">         * 78912345&lt;/pre&gt;</a>
+<span class="sourceLineNo">434</span><a id="line.434">         * would result in a map</a>
+<span class="sourceLineNo">435</span><a id="line.435">         * &lt;pre&gt;</a>
+<span class="sourceLineNo">436</span><a id="line.436">         * 12456789</a>
+<span class="sourceLineNo">437</span><a id="line.437">         * 12345789&lt;/pre&gt;</a>
+<span class="sourceLineNo">438</span><a id="line.438">         * @param alignment The non-sequential input alignment</a>
+<span class="sourceLineNo">439</span><a id="line.439">         * @param inverseAlignment If false, map from structure1 to structure2. If</a>
+<span class="sourceLineNo">440</span><a id="line.440">         *  true, generate the inverse of that map.</a>
+<span class="sourceLineNo">441</span><a id="line.441">         * @return A mapping from sequential residues of one protein to those of the other</a>
+<span class="sourceLineNo">442</span><a id="line.442">         * @throws IllegalArgumentException if the input alignment is not one-to-one.</a>
+<span class="sourceLineNo">443</span><a id="line.443">         */</a>
+<span class="sourceLineNo">444</span><a id="line.444">        public static Map&lt;Integer, Integer&gt; guessSequentialAlignment(</a>
+<span class="sourceLineNo">445</span><a id="line.445">                        Map&lt;Integer,Integer&gt; alignment, boolean inverseAlignment) {</a>
+<span class="sourceLineNo">446</span><a id="line.446">                Map&lt;Integer,Integer&gt; identity = new HashMap&lt;Integer,Integer&gt;();</a>
+<span class="sourceLineNo">447</span><a id="line.447"></a>
+<span class="sourceLineNo">448</span><a id="line.448">                SortedSet&lt;Integer&gt; aligned1 = new TreeSet&lt;Integer&gt;();</a>
+<span class="sourceLineNo">449</span><a id="line.449">                SortedSet&lt;Integer&gt; aligned2 = new TreeSet&lt;Integer&gt;();</a>
+<span class="sourceLineNo">450</span><a id="line.450"></a>
+<span class="sourceLineNo">451</span><a id="line.451">                for(Entry&lt;Integer,Integer&gt; pair : alignment.entrySet()) {</a>
+<span class="sourceLineNo">452</span><a id="line.452">                        aligned1.add(pair.getKey());</a>
+<span class="sourceLineNo">453</span><a id="line.453">                        if( !aligned2.add(pair.getValue()) )</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                throw new IllegalArgumentException("Alignment is not one-to-one for residue "+pair.getValue()+" of the second structure.");</a>
+<span class="sourceLineNo">455</span><a id="line.455">                }</a>
+<span class="sourceLineNo">456</span><a id="line.456"></a>
+<span class="sourceLineNo">457</span><a id="line.457">                Iterator&lt;Integer&gt; it1 = aligned1.iterator();</a>
+<span class="sourceLineNo">458</span><a id="line.458">                Iterator&lt;Integer&gt; it2 = aligned2.iterator();</a>
+<span class="sourceLineNo">459</span><a id="line.459">                while(it1.hasNext()) {</a>
+<span class="sourceLineNo">460</span><a id="line.460">                        if(inverseAlignment) { // 2-&gt;1</a>
+<span class="sourceLineNo">461</span><a id="line.461">                                identity.put(it2.next(),it1.next());</a>
+<span class="sourceLineNo">462</span><a id="line.462">                        } else { // 1-&gt;2</a>
+<span class="sourceLineNo">463</span><a id="line.463">                                identity.put(it1.next(),it2.next());</a>
+<span class="sourceLineNo">464</span><a id="line.464">                        }</a>
+<span class="sourceLineNo">465</span><a id="line.465">                }</a>
+<span class="sourceLineNo">466</span><a id="line.466">                return identity;</a>
+<span class="sourceLineNo">467</span><a id="line.467">        }</a>
+<span class="sourceLineNo">468</span><a id="line.468"></a>
+<span class="sourceLineNo">469</span><a id="line.469">        /**</a>
+<span class="sourceLineNo">470</span><a id="line.470">         * Retrieves the optimum alignment from an AFPChain and returns it as a</a>
+<span class="sourceLineNo">471</span><a id="line.471">         * java collection. The result is indexed in the same way as</a>
+<span class="sourceLineNo">472</span><a id="line.472">         * {@link AFPChain#getOptAln()}, but has the correct size().</a>
+<span class="sourceLineNo">473</span><a id="line.473">         * &lt;pre&gt;</a>
+<span class="sourceLineNo">474</span><a id="line.474">         * List&lt;List&lt;List&lt;Integer&gt;&gt;&gt; aln = getOptAlnAsList(AFPChain afpChain);</a>
+<span class="sourceLineNo">475</span><a id="line.475">         * aln.get(blockNum).get(structureNum={0,1}).get(pos)&lt;/pre&gt;</a>
+<span class="sourceLineNo">476</span><a id="line.476">         *</a>
+<span class="sourceLineNo">477</span><a id="line.477">         * @param afpChain</a>
+<span class="sourceLineNo">478</span><a id="line.478">         * @return</a>
+<span class="sourceLineNo">479</span><a id="line.479">         */</a>
+<span class="sourceLineNo">480</span><a id="line.480">        public static List&lt;List&lt;List&lt;Integer&gt;&gt;&gt; getOptAlnAsList(AFPChain afpChain) {</a>
+<span class="sourceLineNo">481</span><a id="line.481">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">482</span><a id="line.482">                int[] optLen = afpChain.getOptLen();</a>
+<span class="sourceLineNo">483</span><a id="line.483">                List&lt;List&lt;List&lt;Integer&gt;&gt;&gt; blocks = new ArrayList&lt;List&lt;List&lt;Integer&gt;&gt;&gt;(afpChain.getBlockNum());</a>
+<span class="sourceLineNo">484</span><a id="line.484">                for(int blockNum=0;blockNum&lt;afpChain.getBlockNum();blockNum++) {</a>
+<span class="sourceLineNo">485</span><a id="line.485">                        //TODO could improve speed an memory by wrapping the arrays with</a>
+<span class="sourceLineNo">486</span><a id="line.486">                        // an unmodifiable list, similar to Arrays.asList(...) but with the</a>
+<span class="sourceLineNo">487</span><a id="line.487">                        // correct size parameter.</a>
+<span class="sourceLineNo">488</span><a id="line.488">                        List&lt;Integer&gt; align1 = new ArrayList&lt;Integer&gt;(optLen[blockNum]);</a>
+<span class="sourceLineNo">489</span><a id="line.489">                        List&lt;Integer&gt; align2 = new ArrayList&lt;Integer&gt;(optLen[blockNum]);</a>
+<span class="sourceLineNo">490</span><a id="line.490">                        for(int pos=0;pos&lt;optLen[blockNum];pos++) {</a>
+<span class="sourceLineNo">491</span><a id="line.491">                                align1.add(optAln[blockNum][0][pos]);</a>
+<span class="sourceLineNo">492</span><a id="line.492">                                align2.add(optAln[blockNum][1][pos]);</a>
+<span class="sourceLineNo">493</span><a id="line.493">                        }</a>
+<span class="sourceLineNo">494</span><a id="line.494">                        List&lt;List&lt;Integer&gt;&gt; block = new ArrayList&lt;List&lt;Integer&gt;&gt;(2);</a>
+<span class="sourceLineNo">495</span><a id="line.495">                        block.add(align1);</a>
+<span class="sourceLineNo">496</span><a id="line.496">                        block.add(align2);</a>
+<span class="sourceLineNo">497</span><a id="line.497">                        blocks.add(block);</a>
+<span class="sourceLineNo">498</span><a id="line.498">                }</a>
+<span class="sourceLineNo">499</span><a id="line.499"></a>
+<span class="sourceLineNo">500</span><a id="line.500">                return blocks;</a>
+<span class="sourceLineNo">501</span><a id="line.501">        }</a>
+<span class="sourceLineNo">502</span><a id="line.502"></a>
+<span class="sourceLineNo">503</span><a id="line.503"></a>
+<span class="sourceLineNo">504</span><a id="line.504"></a>
+<span class="sourceLineNo">505</span><a id="line.505">        /**</a>
+<span class="sourceLineNo">506</span><a id="line.506">         * A Map&lt;K,V&gt; can be viewed as a function from K to V. This class represents</a>
+<span class="sourceLineNo">507</span><a id="line.507">         * the identity function. Getting a value results in the value itself.</a>
+<span class="sourceLineNo">508</span><a id="line.508">         *</a>
+<span class="sourceLineNo">509</span><a id="line.509">         * &lt;p&gt;The class is a bit inconsistent when representing its contents. On</a>
+<span class="sourceLineNo">510</span><a id="line.510">         * the one hand, containsKey(key) is true for all objects. However,</a>
+<span class="sourceLineNo">511</span><a id="line.511">         * attempting to iterate through the values returns an empty set.</a>
+<span class="sourceLineNo">512</span><a id="line.512">         *</a>
+<span class="sourceLineNo">513</span><a id="line.513">         * @author Spencer Bliven</a>
+<span class="sourceLineNo">514</span><a id="line.514">         *</a>
+<span class="sourceLineNo">515</span><a id="line.515">         * @param &lt;K&gt;</a>
+<span class="sourceLineNo">516</span><a id="line.516">         */</a>
+<span class="sourceLineNo">517</span><a id="line.517">        public static class IdentityMap&lt;K&gt; extends AbstractMap&lt;K,K&gt; {</a>
+<span class="sourceLineNo">518</span><a id="line.518">                public IdentityMap() {}</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                /**</a>
+<span class="sourceLineNo">521</span><a id="line.521">                 * @param key</a>
+<span class="sourceLineNo">522</span><a id="line.522">                 * @return the key</a>
+<span class="sourceLineNo">523</span><a id="line.523">                 * @throws ClassCastException if key is not of type K</a>
+<span class="sourceLineNo">524</span><a id="line.524">                 */</a>
+<span class="sourceLineNo">525</span><a id="line.525">                @SuppressWarnings("unchecked")</a>
+<span class="sourceLineNo">526</span><a id="line.526">                @Override</a>
+<span class="sourceLineNo">527</span><a id="line.527">                public K get(Object key) {</a>
+<span class="sourceLineNo">528</span><a id="line.528">                        return (K)key;</a>
+<span class="sourceLineNo">529</span><a id="line.529">                }</a>
+<span class="sourceLineNo">530</span><a id="line.530"></a>
+<span class="sourceLineNo">531</span><a id="line.531">                /**</a>
+<span class="sourceLineNo">532</span><a id="line.532">                 * Always returns the empty set</a>
+<span class="sourceLineNo">533</span><a id="line.533">                 */</a>
+<span class="sourceLineNo">534</span><a id="line.534">                @Override</a>
+<span class="sourceLineNo">535</span><a id="line.535">                public Set&lt;java.util.Map.Entry&lt;K, K&gt;&gt; entrySet() {</a>
+<span class="sourceLineNo">536</span><a id="line.536">                        return Collections.emptySet();</a>
+<span class="sourceLineNo">537</span><a id="line.537">                }</a>
+<span class="sourceLineNo">538</span><a id="line.538"></a>
+<span class="sourceLineNo">539</span><a id="line.539">                @Override</a>
+<span class="sourceLineNo">540</span><a id="line.540">                public boolean containsKey(Object key) {</a>
+<span class="sourceLineNo">541</span><a id="line.541">                        return true;</a>
+<span class="sourceLineNo">542</span><a id="line.542">                }</a>
+<span class="sourceLineNo">543</span><a id="line.543">        }</a>
+<span class="sourceLineNo">544</span><a id="line.544"></a>
+<span class="sourceLineNo">545</span><a id="line.545">        /**</a>
+<span class="sourceLineNo">546</span><a id="line.546">         * Fundamentally, an alignment is just a list of aligned residues in each</a>
+<span class="sourceLineNo">547</span><a id="line.547">         * protein. This method converts two lists of ResidueNumbers into an</a>
+<span class="sourceLineNo">548</span><a id="line.548">         * AFPChain.</a>
+<span class="sourceLineNo">549</span><a id="line.549">         *</a>
+<span class="sourceLineNo">550</span><a id="line.550">         * &lt;p&gt;Parameters are filled with defaults (often null) or sometimes</a>
+<span class="sourceLineNo">551</span><a id="line.551">         * calculated.</a>
+<span class="sourceLineNo">552</span><a id="line.552">         *</a>
+<span class="sourceLineNo">553</span><a id="line.553">         * &lt;p&gt;For a way to modify the alignment of an existing AFPChain, see</a>
+<span class="sourceLineNo">554</span><a id="line.554">         * {@link AlignmentTools#replaceOptAln(AFPChain, Atom[], Atom[], Map)}</a>
+<span class="sourceLineNo">555</span><a id="line.555">         * @param ca1 CA atoms of the first protein</a>
+<span class="sourceLineNo">556</span><a id="line.556">         * @param ca2 CA atoms of the second protein</a>
+<span class="sourceLineNo">557</span><a id="line.557">         * @param aligned1 A list of aligned residues from the first protein</a>
+<span class="sourceLineNo">558</span><a id="line.558">         * @param aligned2 A list of aligned residues from the second protein.</a>
+<span class="sourceLineNo">559</span><a id="line.559">         *  Must be the same length as aligned1.</a>
+<span class="sourceLineNo">560</span><a id="line.560">         * @return An AFPChain representing the alignment. Many properties may be</a>
+<span class="sourceLineNo">561</span><a id="line.561">         *  null or another default.</a>
+<span class="sourceLineNo">562</span><a id="line.562">         * @throws StructureException if an error occured during superposition</a>
+<span class="sourceLineNo">563</span><a id="line.563">         * @throws IllegalArgumentException if aligned1 and aligned2 have different</a>
+<span class="sourceLineNo">564</span><a id="line.564">         *  lengths</a>
+<span class="sourceLineNo">565</span><a id="line.565">         * @see AlignmentTools#replaceOptAln(AFPChain, Atom[], Atom[], Map)</a>
+<span class="sourceLineNo">566</span><a id="line.566">         */</a>
+<span class="sourceLineNo">567</span><a id="line.567">        public static AFPChain createAFPChain(Atom[] ca1, Atom[] ca2,</a>
+<span class="sourceLineNo">568</span><a id="line.568">                                                                                  ResidueNumber[] aligned1, ResidueNumber[] aligned2 ) throws StructureException {</a>
+<span class="sourceLineNo">569</span><a id="line.569">                //input validation</a>
+<span class="sourceLineNo">570</span><a id="line.570">                int alnLen = aligned1.length;</a>
+<span class="sourceLineNo">571</span><a id="line.571">                if(alnLen != aligned2.length) {</a>
+<span class="sourceLineNo">572</span><a id="line.572">                        throw new IllegalArgumentException("Alignment lengths are not equal");</a>
+<span class="sourceLineNo">573</span><a id="line.573">                }</a>
+<span class="sourceLineNo">574</span><a id="line.574"></a>
+<span class="sourceLineNo">575</span><a id="line.575">                AFPChain a = new AFPChain(AFPChain.UNKNOWN_ALGORITHM);</a>
+<span class="sourceLineNo">576</span><a id="line.576">                try {</a>
+<span class="sourceLineNo">577</span><a id="line.577">                        a.setName1(ca1[0].getGroup().getChain().getStructure().getName());</a>
+<span class="sourceLineNo">578</span><a id="line.578">                        if(ca2[0].getGroup().getChain().getStructure() != null) {</a>
+<span class="sourceLineNo">579</span><a id="line.579">                                // common case for cloned ca2</a>
+<span class="sourceLineNo">580</span><a id="line.580">                                a.setName2(ca2[0].getGroup().getChain().getStructure().getName());</a>
+<span class="sourceLineNo">581</span><a id="line.581">                        }</a>
+<span class="sourceLineNo">582</span><a id="line.582">                } catch(Exception e) {</a>
+<span class="sourceLineNo">583</span><a id="line.583">                        // One of the structures wasn't fully created. Ignore</a>
+<span class="sourceLineNo">584</span><a id="line.584">                }</a>
+<span class="sourceLineNo">585</span><a id="line.585">                a.setBlockNum(1);</a>
+<span class="sourceLineNo">586</span><a id="line.586">                a.setCa1Length(ca1.length);</a>
+<span class="sourceLineNo">587</span><a id="line.587">                a.setCa2Length(ca2.length);</a>
+<span class="sourceLineNo">588</span><a id="line.588"></a>
+<span class="sourceLineNo">589</span><a id="line.589">                a.setOptLength(alnLen);</a>
+<span class="sourceLineNo">590</span><a id="line.590">                a.setOptLen(new int[] {alnLen});</a>
+<span class="sourceLineNo">591</span><a id="line.591"></a>
+<span class="sourceLineNo">592</span><a id="line.592"></a>
+<span class="sourceLineNo">593</span><a id="line.593">                Matrix[] ms = new Matrix[a.getBlockNum()];</a>
+<span class="sourceLineNo">594</span><a id="line.594">                a.setBlockRotationMatrix(ms);</a>
+<span class="sourceLineNo">595</span><a id="line.595">                Atom[] blockShiftVector = new Atom[a.getBlockNum()];</a>
+<span class="sourceLineNo">596</span><a id="line.596">                a.setBlockShiftVector(blockShiftVector);</a>
+<span class="sourceLineNo">597</span><a id="line.597"></a>
+<span class="sourceLineNo">598</span><a id="line.598">                String[][][] pdbAln = new String[1][2][alnLen];</a>
+<span class="sourceLineNo">599</span><a id="line.599">                for(int i=0;i&lt;alnLen;i++) {</a>
+<span class="sourceLineNo">600</span><a id="line.600">                        pdbAln[0][0][i] = aligned1[i].getChainName()+":"+aligned1[i];</a>
+<span class="sourceLineNo">601</span><a id="line.601">                        pdbAln[0][1][i] = aligned2[i].getChainName()+":"+aligned2[i];</a>
+<span class="sourceLineNo">602</span><a id="line.602">                }</a>
+<span class="sourceLineNo">603</span><a id="line.603"></a>
+<span class="sourceLineNo">604</span><a id="line.604">                a.setPdbAln(pdbAln);</a>
+<span class="sourceLineNo">605</span><a id="line.605"></a>
+<span class="sourceLineNo">606</span><a id="line.606">                // convert pdbAln to optAln, and fill in some other basic parameters</a>
+<span class="sourceLineNo">607</span><a id="line.607">                AFPChainXMLParser.rebuildAFPChain(a, ca1, ca2);</a>
+<span class="sourceLineNo">608</span><a id="line.608"></a>
+<span class="sourceLineNo">609</span><a id="line.609">                return a;</a>
+<span class="sourceLineNo">610</span><a id="line.610"></a>
+<span class="sourceLineNo">611</span><a id="line.611">                // Currently a single block. Split into several blocks by sequence if needed</a>
+<span class="sourceLineNo">612</span><a id="line.612">                //              return AlignmentTools.splitBlocksByTopology(a,ca1,ca2);</a>
+<span class="sourceLineNo">613</span><a id="line.613">        }</a>
+<span class="sourceLineNo">614</span><a id="line.614"></a>
+<span class="sourceLineNo">615</span><a id="line.615">        /**</a>
+<span class="sourceLineNo">616</span><a id="line.616">         *</a>
+<span class="sourceLineNo">617</span><a id="line.617">         * @param a</a>
+<span class="sourceLineNo">618</span><a id="line.618">         * @param ca1</a>
+<span class="sourceLineNo">619</span><a id="line.619">         * @param ca2</a>
+<span class="sourceLineNo">620</span><a id="line.620">         * @return</a>
+<span class="sourceLineNo">621</span><a id="line.621">         * @throws StructureException if an error occurred during superposition</a>
+<span class="sourceLineNo">622</span><a id="line.622">         */</a>
+<span class="sourceLineNo">623</span><a id="line.623">        public static AFPChain splitBlocksByTopology(AFPChain a, Atom[] ca1, Atom[] ca2) throws StructureException {</a>
+<span class="sourceLineNo">624</span><a id="line.624">                int[][][] optAln = a.getOptAln();</a>
+<span class="sourceLineNo">625</span><a id="line.625">                int blockNum = a.getBlockNum();</a>
+<span class="sourceLineNo">626</span><a id="line.626">                int[] optLen = a.getOptLen();</a>
+<span class="sourceLineNo">627</span><a id="line.627"></a>
+<span class="sourceLineNo">628</span><a id="line.628">                // Determine block lengths</a>
+<span class="sourceLineNo">629</span><a id="line.629">                // Split blocks if residue indices don't increase monotonically</a>
+<span class="sourceLineNo">630</span><a id="line.630">                List&lt;Integer&gt; newBlkLen = new ArrayList&lt;Integer&gt;();</a>
+<span class="sourceLineNo">631</span><a id="line.631">                boolean blockChanged = false;</a>
+<span class="sourceLineNo">632</span><a id="line.632">                for(int blk=0;blk&lt;blockNum;blk++) {</a>
+<span class="sourceLineNo">633</span><a id="line.633">                        int currLen=1;</a>
+<span class="sourceLineNo">634</span><a id="line.634">                        for(int pos=1;pos&lt;optLen[blk];pos++) {</a>
+<span class="sourceLineNo">635</span><a id="line.635">                                if( optAln[blk][0][pos] &lt;= optAln[blk][0][pos-1]</a>
+<span class="sourceLineNo">636</span><a id="line.636">                                                || optAln[blk][1][pos] &lt;= optAln[blk][1][pos-1] )</a>
+<span class="sourceLineNo">637</span><a id="line.637">                                {</a>
+<span class="sourceLineNo">638</span><a id="line.638">                                        //start a new block</a>
+<span class="sourceLineNo">639</span><a id="line.639">                                        newBlkLen.add(currLen);</a>
+<span class="sourceLineNo">640</span><a id="line.640">                                        currLen = 0;</a>
+<span class="sourceLineNo">641</span><a id="line.641">                                        blockChanged = true;</a>
+<span class="sourceLineNo">642</span><a id="line.642">                                }</a>
+<span class="sourceLineNo">643</span><a id="line.643">                                currLen++;</a>
+<span class="sourceLineNo">644</span><a id="line.644">                        }</a>
+<span class="sourceLineNo">645</span><a id="line.645">                        if(optLen[blk] &lt; 2 ) {</a>
+<span class="sourceLineNo">646</span><a id="line.646">                                newBlkLen.add(optLen[blk]);</a>
+<span class="sourceLineNo">647</span><a id="line.647">                        } else {</a>
+<span class="sourceLineNo">648</span><a id="line.648">                                newBlkLen.add(currLen);</a>
+<span class="sourceLineNo">649</span><a id="line.649">                        }</a>
+<span class="sourceLineNo">650</span><a id="line.650">                }</a>
+<span class="sourceLineNo">651</span><a id="line.651"></a>
+<span class="sourceLineNo">652</span><a id="line.652">                // Check if anything needs to be split</a>
+<span class="sourceLineNo">653</span><a id="line.653">                if( !blockChanged ) {</a>
+<span class="sourceLineNo">654</span><a id="line.654">                        return a;</a>
+<span class="sourceLineNo">655</span><a id="line.655">                }</a>
+<span class="sourceLineNo">656</span><a id="line.656"></a>
+<span class="sourceLineNo">657</span><a id="line.657">                // Split blocks</a>
+<span class="sourceLineNo">658</span><a id="line.658">                List&lt;int[][]&gt; blocks = new ArrayList&lt;int[][]&gt;( newBlkLen.size() );</a>
+<span class="sourceLineNo">659</span><a id="line.659"></a>
+<span class="sourceLineNo">660</span><a id="line.660">                int oldBlk = 0;</a>
+<span class="sourceLineNo">661</span><a id="line.661">                int pos = 0;</a>
+<span class="sourceLineNo">662</span><a id="line.662">                for(int blkLen : newBlkLen) {</a>
+<span class="sourceLineNo">663</span><a id="line.663">                        if( blkLen == optLen[oldBlk] ) {</a>
+<span class="sourceLineNo">664</span><a id="line.664">                                assert(pos == 0); //should be the whole block</a>
+<span class="sourceLineNo">665</span><a id="line.665">                                // Use the old block</a>
+<span class="sourceLineNo">666</span><a id="line.666">                                blocks.add(optAln[oldBlk]);</a>
+<span class="sourceLineNo">667</span><a id="line.667">                        } else {</a>
+<span class="sourceLineNo">668</span><a id="line.668">                                int[][] newBlock = new int[2][blkLen];</a>
+<span class="sourceLineNo">669</span><a id="line.669">                                assert( pos+blkLen &lt;= optLen[oldBlk] ); // don't overrun block</a>
+<span class="sourceLineNo">670</span><a id="line.670">                                for(int i=0; i&lt;blkLen;i++) {</a>
+<span class="sourceLineNo">671</span><a id="line.671">                                        newBlock[0][i] = optAln[oldBlk][0][pos + i];</a>
+<span class="sourceLineNo">672</span><a id="line.672">                                        newBlock[1][i] = optAln[oldBlk][1][pos + i];</a>
+<span class="sourceLineNo">673</span><a id="line.673">                                }</a>
+<span class="sourceLineNo">674</span><a id="line.674">                                pos += blkLen;</a>
+<span class="sourceLineNo">675</span><a id="line.675">                                blocks.add(newBlock);</a>
+<span class="sourceLineNo">676</span><a id="line.676"></a>
+<span class="sourceLineNo">677</span><a id="line.677">                                if( pos == optLen[oldBlk] ) {</a>
+<span class="sourceLineNo">678</span><a id="line.678">                                        // Finished this oldBlk, start the next</a>
+<span class="sourceLineNo">679</span><a id="line.679">                                        oldBlk++;</a>
+<span class="sourceLineNo">680</span><a id="line.680">                                        pos = 0;</a>
+<span class="sourceLineNo">681</span><a id="line.681">                                }</a>
+<span class="sourceLineNo">682</span><a id="line.682">                        }</a>
+<span class="sourceLineNo">683</span><a id="line.683">                }</a>
+<span class="sourceLineNo">684</span><a id="line.684"></a>
+<span class="sourceLineNo">685</span><a id="line.685">                // Store new blocks</a>
+<span class="sourceLineNo">686</span><a id="line.686">                int[][][] newOptAln = blocks.toArray(new int[0][][]);</a>
+<span class="sourceLineNo">687</span><a id="line.687">                int[] newBlockLens = new int[newBlkLen.size()];</a>
+<span class="sourceLineNo">688</span><a id="line.688">                for(int i=0;i&lt;newBlkLen.size();i++) {</a>
+<span class="sourceLineNo">689</span><a id="line.689">                        newBlockLens[i] = newBlkLen.get(i);</a>
+<span class="sourceLineNo">690</span><a id="line.690">                }</a>
+<span class="sourceLineNo">691</span><a id="line.691"></a>
+<span class="sourceLineNo">692</span><a id="line.692">                return replaceOptAln(a, ca1, ca2, blocks.size(), newBlockLens, newOptAln);</a>
+<span class="sourceLineNo">693</span><a id="line.693">        }</a>
+<span class="sourceLineNo">694</span><a id="line.694"></a>
+<span class="sourceLineNo">695</span><a id="line.695">        /**</a>
+<span class="sourceLineNo">696</span><a id="line.696">         * It replaces an optimal alignment of an AFPChain and calculates all the new alignment scores and variables.</a>
+<span class="sourceLineNo">697</span><a id="line.697">         */</a>
+<span class="sourceLineNo">698</span><a id="line.698">        public static AFPChain replaceOptAln(int[][][] newAlgn, AFPChain afpChain, Atom[] ca1, Atom[] ca2) throws StructureException {</a>
+<span class="sourceLineNo">699</span><a id="line.699"></a>
+<span class="sourceLineNo">700</span><a id="line.700">                //The order is the number of groups in the newAlgn</a>
+<span class="sourceLineNo">701</span><a id="line.701">                int order = newAlgn.length;</a>
+<span class="sourceLineNo">702</span><a id="line.702"></a>
+<span class="sourceLineNo">703</span><a id="line.703">                //Calculate the alignment length from all the subunits lengths</a>
+<span class="sourceLineNo">704</span><a id="line.704">                int[] optLens = new int[order];</a>
+<span class="sourceLineNo">705</span><a id="line.705">                for(int s=0;s&lt;order;s++) {</a>
+<span class="sourceLineNo">706</span><a id="line.706">                        optLens[s] = newAlgn[s][0].length;</a>
+<span class="sourceLineNo">707</span><a id="line.707">                }</a>
+<span class="sourceLineNo">708</span><a id="line.708">                int optLength = 0;</a>
+<span class="sourceLineNo">709</span><a id="line.709">                for(int s=0;s&lt;order;s++) {</a>
+<span class="sourceLineNo">710</span><a id="line.710">                        optLength += optLens[s];</a>
+<span class="sourceLineNo">711</span><a id="line.711">                }</a>
+<span class="sourceLineNo">712</span><a id="line.712"></a>
+<span class="sourceLineNo">713</span><a id="line.713">                //Create a copy of the original AFPChain and set everything needed for the structure update</a>
+<span class="sourceLineNo">714</span><a id="line.714">                AFPChain copyAFP = (AFPChain) afpChain.clone();</a>
+<span class="sourceLineNo">715</span><a id="line.715"></a>
+<span class="sourceLineNo">716</span><a id="line.716">                //Set the new parameters of the optimal alignment</a>
+<span class="sourceLineNo">717</span><a id="line.717">                copyAFP.setOptLength(optLength);</a>
+<span class="sourceLineNo">718</span><a id="line.718">                copyAFP.setOptLen(optLens);</a>
+<span class="sourceLineNo">719</span><a id="line.719">                copyAFP.setOptAln(newAlgn);</a>
+<span class="sourceLineNo">720</span><a id="line.720"></a>
+<span class="sourceLineNo">721</span><a id="line.721">                //Set the block information of the new alignment</a>
+<span class="sourceLineNo">722</span><a id="line.722">                copyAFP.setBlockNum(order);</a>
+<span class="sourceLineNo">723</span><a id="line.723">                copyAFP.setBlockSize(optLens);</a>
+<span class="sourceLineNo">724</span><a id="line.724">                copyAFP.setBlockResList(newAlgn);</a>
+<span class="sourceLineNo">725</span><a id="line.725">                copyAFP.setBlockResSize(optLens);</a>
+<span class="sourceLineNo">726</span><a id="line.726">                copyAFP.setBlockGap(calculateBlockGap(newAlgn));</a>
+<span class="sourceLineNo">727</span><a id="line.727"></a>
+<span class="sourceLineNo">728</span><a id="line.728">                //Recalculate properties: superposition, tm-score, etc</a>
+<span class="sourceLineNo">729</span><a id="line.729">                Atom[] ca2clone = StructureTools.cloneAtomArray(ca2); // don't modify ca2 positions</a>
+<span class="sourceLineNo">730</span><a id="line.730">                AlignmentTools.updateSuperposition(copyAFP, ca1, ca2clone);</a>
+<span class="sourceLineNo">731</span><a id="line.731"></a>
+<span class="sourceLineNo">732</span><a id="line.732">                //It re-does the sequence alignment strings from the OptAlgn information only</a>
+<span class="sourceLineNo">733</span><a id="line.733">                copyAFP.setAlnsymb(null);</a>
+<span class="sourceLineNo">734</span><a id="line.734">                AFPAlignmentDisplay.getAlign(copyAFP, ca1, ca2clone);</a>
+<span class="sourceLineNo">735</span><a id="line.735"></a>
+<span class="sourceLineNo">736</span><a id="line.736">                return copyAFP;</a>
+<span class="sourceLineNo">737</span><a id="line.737">        }</a>
+<span class="sourceLineNo">738</span><a id="line.738"></a>
+<span class="sourceLineNo">739</span><a id="line.739">        /**</a>
+<span class="sourceLineNo">740</span><a id="line.740">         * Takes an AFPChain and replaces the optimal alignment based on an alignment map</a>
+<span class="sourceLineNo">741</span><a id="line.741">         *</a>
+<span class="sourceLineNo">742</span><a id="line.742">         * &lt;p&gt;Parameters are filled with defaults (often null) or sometimes</a>
+<span class="sourceLineNo">743</span><a id="line.743">         * calculated.</a>
+<span class="sourceLineNo">744</span><a id="line.744">         *</a>
+<span class="sourceLineNo">745</span><a id="line.745">         * &lt;p&gt;For a way to create a new AFPChain, see</a>
+<span class="sourceLineNo">746</span><a id="line.746">         * {@link AlignmentTools#createAFPChain(Atom[], Atom[], ResidueNumber[], ResidueNumber[])}</a>
+<span class="sourceLineNo">747</span><a id="line.747">         *</a>
+<span class="sourceLineNo">748</span><a id="line.748">         * @param afpChain The alignment to be modified</a>
+<span class="sourceLineNo">749</span><a id="line.749">         * @param alignment The new alignment, as a Map</a>
+<span class="sourceLineNo">750</span><a id="line.750">         * @throws StructureException if an error occurred during superposition</a>
+<span class="sourceLineNo">751</span><a id="line.751">         * @see AlignmentTools#createAFPChain(Atom[], Atom[], ResidueNumber[], ResidueNumber[])</a>
+<span class="sourceLineNo">752</span><a id="line.752">         */</a>
+<span class="sourceLineNo">753</span><a id="line.753">        public static AFPChain replaceOptAln(AFPChain afpChain, Atom[] ca1, Atom[] ca2,</a>
+<span class="sourceLineNo">754</span><a id="line.754">                                                                                 Map&lt;Integer, Integer&gt; alignment) throws StructureException {</a>
+<span class="sourceLineNo">755</span><a id="line.755"></a>
+<span class="sourceLineNo">756</span><a id="line.756">                // Determine block lengths</a>
+<span class="sourceLineNo">757</span><a id="line.757">                // Sort ca1 indices, then start a new block whenever ca2 indices aren't</a>
+<span class="sourceLineNo">758</span><a id="line.758">                // increasing monotonically.</a>
+<span class="sourceLineNo">759</span><a id="line.759">                Integer[] res1 = alignment.keySet().toArray(new Integer[0]);</a>
+<span class="sourceLineNo">760</span><a id="line.760">                Arrays.sort(res1);</a>
+<span class="sourceLineNo">761</span><a id="line.761">                List&lt;Integer&gt; blockLens = new ArrayList&lt;Integer&gt;(2);</a>
+<span class="sourceLineNo">762</span><a id="line.762">                int optLength = 0;</a>
+<span class="sourceLineNo">763</span><a id="line.763">                Integer lastRes = alignment.get(res1[0]);</a>
+<span class="sourceLineNo">764</span><a id="line.764">                int blkLen = lastRes==null?0:1;</a>
+<span class="sourceLineNo">765</span><a id="line.765">                for(int i=1;i&lt;res1.length;i++) {</a>
+<span class="sourceLineNo">766</span><a id="line.766">                        Integer currRes = alignment.get(res1[i]); //res2 index</a>
+<span class="sourceLineNo">767</span><a id="line.767">                        assert(currRes != null);// could be converted to if statement if assertion doesn't hold; just modify below as well.</a>
+<span class="sourceLineNo">768</span><a id="line.768">                        if(lastRes&lt;currRes) {</a>
+<span class="sourceLineNo">769</span><a id="line.769">                                blkLen++;</a>
+<span class="sourceLineNo">770</span><a id="line.770">                        } else {</a>
+<span class="sourceLineNo">771</span><a id="line.771">                                // CP!</a>
+<span class="sourceLineNo">772</span><a id="line.772">                                blockLens.add(blkLen);</a>
+<span class="sourceLineNo">773</span><a id="line.773">                                optLength+=blkLen;</a>
+<span class="sourceLineNo">774</span><a id="line.774">                                blkLen = 1;</a>
+<span class="sourceLineNo">775</span><a id="line.775">                        }</a>
+<span class="sourceLineNo">776</span><a id="line.776">                        lastRes = currRes;</a>
+<span class="sourceLineNo">777</span><a id="line.777">                }</a>
+<span class="sourceLineNo">778</span><a id="line.778">                blockLens.add(blkLen);</a>
+<span class="sourceLineNo">779</span><a id="line.779">                optLength+=blkLen;</a>
+<span class="sourceLineNo">780</span><a id="line.780"></a>
+<span class="sourceLineNo">781</span><a id="line.781">                // Create array structure for alignment</a>
+<span class="sourceLineNo">782</span><a id="line.782">                int[][][] optAln = new int[blockLens.size()][][];</a>
+<span class="sourceLineNo">783</span><a id="line.783">                int pos1 = 0; //index into res1</a>
+<span class="sourceLineNo">784</span><a id="line.784">                for(int blk=0;blk&lt;blockLens.size();blk++) {</a>
+<span class="sourceLineNo">785</span><a id="line.785">                        optAln[blk] = new int[2][];</a>
+<span class="sourceLineNo">786</span><a id="line.786">                        blkLen = blockLens.get(blk);</a>
+<span class="sourceLineNo">787</span><a id="line.787">                        optAln[blk][0] = new int[blkLen];</a>
+<span class="sourceLineNo">788</span><a id="line.788">                        optAln[blk][1] = new int[blkLen];</a>
+<span class="sourceLineNo">789</span><a id="line.789">                        int pos = 0; //index into optAln</a>
+<span class="sourceLineNo">790</span><a id="line.790">                        while(pos&lt;blkLen) {</a>
+<span class="sourceLineNo">791</span><a id="line.791">                                optAln[blk][0][pos]=res1[pos1];</a>
+<span class="sourceLineNo">792</span><a id="line.792">                                Integer currRes = alignment.get(res1[pos1]);</a>
+<span class="sourceLineNo">793</span><a id="line.793">                                optAln[blk][1][pos]=currRes;</a>
+<span class="sourceLineNo">794</span><a id="line.794">                                pos++;</a>
+<span class="sourceLineNo">795</span><a id="line.795">                                pos1++;</a>
+<span class="sourceLineNo">796</span><a id="line.796">                        }</a>
+<span class="sourceLineNo">797</span><a id="line.797">                }</a>
+<span class="sourceLineNo">798</span><a id="line.798">                assert(pos1 == optLength);</a>
+<span class="sourceLineNo">799</span><a id="line.799"></a>
+<span class="sourceLineNo">800</span><a id="line.800">                // Create length array</a>
+<span class="sourceLineNo">801</span><a id="line.801">                int[] optLens = new int[blockLens.size()];</a>
+<span class="sourceLineNo">802</span><a id="line.802">                for(int i=0;i&lt;blockLens.size();i++) {</a>
+<span class="sourceLineNo">803</span><a id="line.803">                        optLens[i] = blockLens.get(i);</a>
+<span class="sourceLineNo">804</span><a id="line.804">                }</a>
+<span class="sourceLineNo">805</span><a id="line.805"></a>
+<span class="sourceLineNo">806</span><a id="line.806">                return replaceOptAln(afpChain, ca1, ca2, blockLens.size(), optLens, optAln);</a>
+<span class="sourceLineNo">807</span><a id="line.807">        }</a>
+<span class="sourceLineNo">808</span><a id="line.808"></a>
+<span class="sourceLineNo">809</span><a id="line.809">        /**</a>
+<span class="sourceLineNo">810</span><a id="line.810">         * @param afpChain Input afpchain. UNMODIFIED</a>
+<span class="sourceLineNo">811</span><a id="line.811">         * @param ca1</a>
+<span class="sourceLineNo">812</span><a id="line.812">         * @param ca2</a>
+<span class="sourceLineNo">813</span><a id="line.813">         * @param optLens</a>
+<span class="sourceLineNo">814</span><a id="line.814">         * @param optAln</a>
+<span class="sourceLineNo">815</span><a id="line.815">         * @return A NEW AfpChain based off the input but with the optAln modified</a>
+<span class="sourceLineNo">816</span><a id="line.816">         * @throws StructureException if an error occured during superposition</a>
+<span class="sourceLineNo">817</span><a id="line.817">         */</a>
+<span class="sourceLineNo">818</span><a id="line.818">        public static AFPChain replaceOptAln(AFPChain afpChain, Atom[] ca1, Atom[] ca2,</a>
+<span class="sourceLineNo">819</span><a id="line.819">                                                                                 int blockNum, int[] optLens, int[][][] optAln) throws StructureException {</a>
+<span class="sourceLineNo">820</span><a id="line.820">                int optLength = 0;</a>
+<span class="sourceLineNo">821</span><a id="line.821">                for( int blk=0;blk&lt;blockNum;blk++) {</a>
+<span class="sourceLineNo">822</span><a id="line.822">                        optLength += optLens[blk];</a>
+<span class="sourceLineNo">823</span><a id="line.823">                }</a>
+<span class="sourceLineNo">824</span><a id="line.824"></a>
+<span class="sourceLineNo">825</span><a id="line.825">                //set everything</a>
+<span class="sourceLineNo">826</span><a id="line.826">                AFPChain refinedAFP = (AFPChain) afpChain.clone();</a>
+<span class="sourceLineNo">827</span><a id="line.827">                refinedAFP.setOptLength(optLength);</a>
+<span class="sourceLineNo">828</span><a id="line.828">                refinedAFP.setBlockSize(optLens);</a>
+<span class="sourceLineNo">829</span><a id="line.829">                refinedAFP.setOptLen(optLens);</a>
+<span class="sourceLineNo">830</span><a id="line.830">                refinedAFP.setOptAln(optAln);</a>
+<span class="sourceLineNo">831</span><a id="line.831">                refinedAFP.setBlockNum(blockNum);</a>
+<span class="sourceLineNo">832</span><a id="line.832"></a>
+<span class="sourceLineNo">833</span><a id="line.833">                //TODO recalculate properties: superposition, tm-score, etc</a>
+<span class="sourceLineNo">834</span><a id="line.834">                Atom[] ca2clone = StructureTools.cloneAtomArray(ca2); // don't modify ca2 positions</a>
+<span class="sourceLineNo">835</span><a id="line.835">                AlignmentTools.updateSuperposition(refinedAFP, ca1, ca2clone);</a>
+<span class="sourceLineNo">836</span><a id="line.836"></a>
+<span class="sourceLineNo">837</span><a id="line.837">                AFPAlignmentDisplay.getAlign(refinedAFP, ca1, ca2clone);</a>
+<span class="sourceLineNo">838</span><a id="line.838">                return refinedAFP;</a>
+<span class="sourceLineNo">839</span><a id="line.839">        }</a>
+<span class="sourceLineNo">840</span><a id="line.840"></a>
+<span class="sourceLineNo">841</span><a id="line.841"></a>
+<span class="sourceLineNo">842</span><a id="line.842">        /**</a>
+<span class="sourceLineNo">843</span><a id="line.843">         * After the alignment changes (optAln, optLen, blockNum, at a minimum),</a>
+<span class="sourceLineNo">844</span><a id="line.844">         * many other properties which depend on the superposition will be invalid.</a>
+<span class="sourceLineNo">845</span><a id="line.845">         *</a>
+<span class="sourceLineNo">846</span><a id="line.846">         * This method re-runs a rigid superposition over the whole alignment</a>
+<span class="sourceLineNo">847</span><a id="line.847">         * and repopulates the required properties, including RMSD (TotalRMSD) and</a>
+<span class="sourceLineNo">848</span><a id="line.848">         * TM-Score.</a>
+<span class="sourceLineNo">849</span><a id="line.849">         * @param afpChain</a>
+<span class="sourceLineNo">850</span><a id="line.850">         * @param ca1</a>
+<span class="sourceLineNo">851</span><a id="line.851">         * @param ca2 Second set of ca atoms. Will be modified based on the superposition</a>
+<span class="sourceLineNo">852</span><a id="line.852">         * @throws StructureException</a>
+<span class="sourceLineNo">853</span><a id="line.853">         * @see {@link CECalculator#calc_rmsd(Atom[], Atom[], int, boolean)}</a>
+<span class="sourceLineNo">854</span><a id="line.854">         *  contains much of the same code, but stores results in a CECalculator</a>
+<span class="sourceLineNo">855</span><a id="line.855">         *  instance rather than an AFPChain</a>
+<span class="sourceLineNo">856</span><a id="line.856">         */</a>
+<span class="sourceLineNo">857</span><a id="line.857">        public static void updateSuperposition(AFPChain afpChain, Atom[] ca1,</a>
+<span class="sourceLineNo">858</span><a id="line.858">                        Atom[] ca2) throws StructureException {</a>
+<span class="sourceLineNo">859</span><a id="line.859"></a>
+<span class="sourceLineNo">860</span><a id="line.860">                //Update ca information, because the atom array might also be changed</a>
+<span class="sourceLineNo">861</span><a id="line.861">                afpChain.setCa1Length(ca1.length);</a>
+<span class="sourceLineNo">862</span><a id="line.862">                afpChain.setCa2Length(ca2.length);</a>
+<span class="sourceLineNo">863</span><a id="line.863"></a>
+<span class="sourceLineNo">864</span><a id="line.864">                //We need this to get the correct superposition</a>
+<span class="sourceLineNo">865</span><a id="line.865">                int[] focusRes1 = afpChain.getFocusRes1();</a>
+<span class="sourceLineNo">866</span><a id="line.866">                int[] focusRes2 = afpChain.getFocusRes2();</a>
+<span class="sourceLineNo">867</span><a id="line.867">                if (focusRes1 == null) {</a>
+<span class="sourceLineNo">868</span><a id="line.868">                        focusRes1 = new int[afpChain.getCa1Length()];</a>
+<span class="sourceLineNo">869</span><a id="line.869">                        afpChain.setFocusRes1(focusRes1);</a>
+<span class="sourceLineNo">870</span><a id="line.870">                }</a>
+<span class="sourceLineNo">871</span><a id="line.871">                if (focusRes2 == null) {</a>
+<span class="sourceLineNo">872</span><a id="line.872">                        focusRes2 = new int[afpChain.getCa2Length()];</a>
+<span class="sourceLineNo">873</span><a id="line.873">                        afpChain.setFocusRes2(focusRes2);</a>
+<span class="sourceLineNo">874</span><a id="line.874">                }</a>
+<span class="sourceLineNo">875</span><a id="line.875"></a>
+<span class="sourceLineNo">876</span><a id="line.876">                if (afpChain.getNrEQR() == 0) return;</a>
+<span class="sourceLineNo">877</span><a id="line.877"></a>
+<span class="sourceLineNo">878</span><a id="line.878">                // create new arrays for the subset of atoms in the alignment.</a>
+<span class="sourceLineNo">879</span><a id="line.879">                Atom[] ca1aligned = new Atom[afpChain.getOptLength()];</a>
+<span class="sourceLineNo">880</span><a id="line.880">                Atom[] ca2aligned = new Atom[afpChain.getOptLength()];</a>
+<span class="sourceLineNo">881</span><a id="line.881"></a>
+<span class="sourceLineNo">882</span><a id="line.882">                fillAlignedAtomArrays(afpChain, ca1, ca2, ca1aligned, ca2aligned);</a>
+<span class="sourceLineNo">883</span><a id="line.883"></a>
+<span class="sourceLineNo">884</span><a id="line.884">                //Superimpose the two structures in correspondance to the new alignment</a>
+<span class="sourceLineNo">885</span><a id="line.885">                Matrix4d trans = SuperPositions.superpose(Calc.atomsToPoints(ca1aligned),</a>
+<span class="sourceLineNo">886</span><a id="line.886">                                Calc.atomsToPoints(ca2aligned));</a>
+<span class="sourceLineNo">887</span><a id="line.887"></a>
+<span class="sourceLineNo">888</span><a id="line.888">                Matrix matrix = Matrices.getRotationJAMA(trans);</a>
+<span class="sourceLineNo">889</span><a id="line.889">                Atom shift = Calc.getTranslationVector(trans);</a>
+<span class="sourceLineNo">890</span><a id="line.890"></a>
+<span class="sourceLineNo">891</span><a id="line.891">                Matrix[] blockMxs = new Matrix[afpChain.getBlockNum()];</a>
+<span class="sourceLineNo">892</span><a id="line.892">                Arrays.fill(blockMxs, matrix);</a>
+<span class="sourceLineNo">893</span><a id="line.893">                afpChain.setBlockRotationMatrix(blockMxs);</a>
+<span class="sourceLineNo">894</span><a id="line.894">                Atom[] blockShifts = new Atom[afpChain.getBlockNum()];</a>
+<span class="sourceLineNo">895</span><a id="line.895">                Arrays.fill(blockShifts, shift);</a>
+<span class="sourceLineNo">896</span><a id="line.896">                afpChain.setBlockShiftVector(blockShifts);</a>
+<span class="sourceLineNo">897</span><a id="line.897"></a>
+<span class="sourceLineNo">898</span><a id="line.898">                for (Atom a : ca2aligned) {</a>
+<span class="sourceLineNo">899</span><a id="line.899">                        Calc.rotate(a, matrix);</a>
+<span class="sourceLineNo">900</span><a id="line.900">                        Calc.shift(a, shift);</a>
+<span class="sourceLineNo">901</span><a id="line.901">                }</a>
+<span class="sourceLineNo">902</span><a id="line.902"></a>
+<span class="sourceLineNo">903</span><a id="line.903">                //Calculate the RMSD and TM score for the new alignment</a>
+<span class="sourceLineNo">904</span><a id="line.904">                double rmsd = Calc.rmsd(ca1aligned, ca2aligned);</a>
+<span class="sourceLineNo">905</span><a id="line.905">                double tmScore = Calc.getTMScore(ca1aligned, ca2aligned, ca1.length, ca2.length);</a>
+<span class="sourceLineNo">906</span><a id="line.906">                afpChain.setTotalRmsdOpt(rmsd);</a>
+<span class="sourceLineNo">907</span><a id="line.907">                afpChain.setTMScore(tmScore);</a>
+<span class="sourceLineNo">908</span><a id="line.908"></a>
+<span class="sourceLineNo">909</span><a id="line.909">                int[] blockLens = afpChain.getOptLen();</a>
+<span class="sourceLineNo">910</span><a id="line.910">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">911</span><a id="line.911"></a>
+<span class="sourceLineNo">912</span><a id="line.912">                //Calculate the RMSD and TM score for every block of the new alignment</a>
+<span class="sourceLineNo">913</span><a id="line.913">                double[] blockRMSD = new double[afpChain.getBlockNum()];</a>
+<span class="sourceLineNo">914</span><a id="line.914">                double[] blockScore = new double[afpChain.getBlockNum()];</a>
+<span class="sourceLineNo">915</span><a id="line.915">                for (int k=0; k&lt;afpChain.getBlockNum(); k++){</a>
+<span class="sourceLineNo">916</span><a id="line.916">                        //Create the atom arrays corresponding to the aligned residues in the block</a>
+<span class="sourceLineNo">917</span><a id="line.917">                        Atom[] ca1block = new Atom[afpChain.getOptLen()[k]];</a>
+<span class="sourceLineNo">918</span><a id="line.918">                        Atom[] ca2block = new Atom[afpChain.getOptLen()[k]];</a>
+<span class="sourceLineNo">919</span><a id="line.919">                        int position=0;</a>
+<span class="sourceLineNo">920</span><a id="line.920">                        for(int i=0;i&lt;blockLens[k];i++) {</a>
+<span class="sourceLineNo">921</span><a id="line.921">                                int pos1 = optAln[k][0][i];</a>
+<span class="sourceLineNo">922</span><a id="line.922">                                int pos2 = optAln[k][1][i];</a>
+<span class="sourceLineNo">923</span><a id="line.923">                                Atom a1 = ca1[pos1];</a>
+<span class="sourceLineNo">924</span><a id="line.924">                                Atom a2 = (Atom) ca2[pos2].clone();</a>
+<span class="sourceLineNo">925</span><a id="line.925">                                ca1block[position] = a1;</a>
+<span class="sourceLineNo">926</span><a id="line.926">                                ca2block[position] = a2;</a>
+<span class="sourceLineNo">927</span><a id="line.927">                                position++;</a>
+<span class="sourceLineNo">928</span><a id="line.928">                        }</a>
+<span class="sourceLineNo">929</span><a id="line.929">                        if (position != afpChain.getOptLen()[k]){</a>
+<span class="sourceLineNo">930</span><a id="line.930">                                logger.warn("AFPChainScorer getTMScore: Problems reconstructing block alignment! nr of loaded atoms is " + position + " but should be " + afpChain.getOptLen()[k]);</a>
+<span class="sourceLineNo">931</span><a id="line.931">                                // we need to resize the array, because we allocated too many atoms earlier on.</a>
+<span class="sourceLineNo">932</span><a id="line.932">                                ca1block = (Atom[]) resizeArray(ca1block, position);</a>
+<span class="sourceLineNo">933</span><a id="line.933">                                ca2block = (Atom[]) resizeArray(ca2block, position);</a>
+<span class="sourceLineNo">934</span><a id="line.934">                        }</a>
+<span class="sourceLineNo">935</span><a id="line.935">                        //Superimpose the two block structures</a>
+<span class="sourceLineNo">936</span><a id="line.936">                        Matrix4d transb = SuperPositions.superpose(Calc.atomsToPoints(ca1block),</a>
+<span class="sourceLineNo">937</span><a id="line.937">                                        Calc.atomsToPoints(ca2block));</a>
+<span class="sourceLineNo">938</span><a id="line.938"></a>
+<span class="sourceLineNo">939</span><a id="line.939">                        blockMxs[k] = Matrices.getRotationJAMA(trans);</a>
+<span class="sourceLineNo">940</span><a id="line.940">                        blockShifts[k] = Calc.getTranslationVector(trans);</a>
+<span class="sourceLineNo">941</span><a id="line.941"></a>
+<span class="sourceLineNo">942</span><a id="line.942">                        Calc.transform(ca2block, transb);</a>
+<span class="sourceLineNo">943</span><a id="line.943"></a>
+<span class="sourceLineNo">944</span><a id="line.944">                        //Calculate the RMSD and TM score for the block</a>
+<span class="sourceLineNo">945</span><a id="line.945">                        double rmsdb = Calc.rmsd(ca1block, ca2block);</a>
+<span class="sourceLineNo">946</span><a id="line.946">                        double tmScoreb = Calc.getTMScore(ca1block, ca2block, ca1.length, ca2.length);</a>
+<span class="sourceLineNo">947</span><a id="line.947">                        blockRMSD[k] = rmsdb;</a>
+<span class="sourceLineNo">948</span><a id="line.948">                        blockScore[k] = tmScoreb;</a>
+<span class="sourceLineNo">949</span><a id="line.949">                }</a>
+<span class="sourceLineNo">950</span><a id="line.950">                afpChain.setOptRmsd(blockRMSD);</a>
+<span class="sourceLineNo">951</span><a id="line.951">                afpChain.setBlockRmsd(blockRMSD);</a>
+<span class="sourceLineNo">952</span><a id="line.952">                afpChain.setBlockScore(blockScore);</a>
+<span class="sourceLineNo">953</span><a id="line.953">        }</a>
+<span class="sourceLineNo">954</span><a id="line.954"></a>
+<span class="sourceLineNo">955</span><a id="line.955">        /**</a>
+<span class="sourceLineNo">956</span><a id="line.956">         * Reallocates an array with a new size, and copies the contents</a>
+<span class="sourceLineNo">957</span><a id="line.957">         * of the old array to the new array.</a>
+<span class="sourceLineNo">958</span><a id="line.958">         * @param oldArray  the old array, to be reallocated.</a>
+<span class="sourceLineNo">959</span><a id="line.959">         * @param newSize   the new array size.</a>
+<span class="sourceLineNo">960</span><a id="line.960">         * @return          A new array with the same contents.</a>
+<span class="sourceLineNo">961</span><a id="line.961">         */</a>
+<span class="sourceLineNo">962</span><a id="line.962">        public static Object resizeArray (Object oldArray, int newSize) {</a>
+<span class="sourceLineNo">963</span><a id="line.963">                int oldSize = java.lang.reflect.Array.getLength(oldArray);</a>
+<span class="sourceLineNo">964</span><a id="line.964">                @SuppressWarnings("rawtypes")</a>
+<span class="sourceLineNo">965</span><a id="line.965">                Class elementType = oldArray.getClass().getComponentType();</a>
+<span class="sourceLineNo">966</span><a id="line.966">                Object newArray = java.lang.reflect.Array.newInstance(</a>
+<span class="sourceLineNo">967</span><a id="line.967">                                elementType,newSize);</a>
+<span class="sourceLineNo">968</span><a id="line.968">                int preserveLength = Math.min(oldSize,newSize);</a>
+<span class="sourceLineNo">969</span><a id="line.969">                if (preserveLength &gt; 0)</a>
+<span class="sourceLineNo">970</span><a id="line.970">                        System.arraycopy (oldArray,0,newArray,0,preserveLength);</a>
+<span class="sourceLineNo">971</span><a id="line.971">                return newArray;</a>
+<span class="sourceLineNo">972</span><a id="line.972">        }</a>
+<span class="sourceLineNo">973</span><a id="line.973"></a>
+<span class="sourceLineNo">974</span><a id="line.974">        /**</a>
+<span class="sourceLineNo">975</span><a id="line.975">         * Print an alignment map in a concise representation. Edges are given</a>
+<span class="sourceLineNo">976</span><a id="line.976">         * as two numbers separated by '&gt;'. They are chained together where possible,</a>
+<span class="sourceLineNo">977</span><a id="line.977">         * or separated by spaces where disjoint or branched.</a>
+<span class="sourceLineNo">978</span><a id="line.978">         *</a>
+<span class="sourceLineNo">979</span><a id="line.979">         * &lt;p&gt;Note that more concise representations may be possible.&lt;/p&gt;</a>
+<span class="sourceLineNo">980</span><a id="line.980">         *</a>
+<span class="sourceLineNo">981</span><a id="line.981">         * Examples:</a>
+<span class="sourceLineNo">982</span><a id="line.982">         * &lt;li&gt;1&gt;2&gt;3&gt;1&lt;/li&gt;</a>
+<span class="sourceLineNo">983</span><a id="line.983">         * &lt;li&gt;1&gt;2&gt;3&gt;2 4&gt;3&lt;/li&gt;</a>
+<span class="sourceLineNo">984</span><a id="line.984">         *</a>
+<span class="sourceLineNo">985</span><a id="line.985">         * @param alignment The input function, as a map (see {@link AlignmentTools#alignmentAsMap(AFPChain)})</a>
+<span class="sourceLineNo">986</span><a id="line.986">         * @param identity An identity-like function providing the isomorphism between</a>
+<span class="sourceLineNo">987</span><a id="line.987">         *  the codomain of alignment (of type &lt;T&gt;) and the domain (type &lt;S&gt;).</a>
+<span class="sourceLineNo">988</span><a id="line.988">         * @return</a>
+<span class="sourceLineNo">989</span><a id="line.989">         */</a>
+<span class="sourceLineNo">990</span><a id="line.990">        public static &lt;S,T&gt; String toConciseAlignmentString(Map&lt;S,T&gt; alignment, Map&lt;T,S&gt; identity) {</a>
+<span class="sourceLineNo">991</span><a id="line.991">                // Clone input to prevent changes</a>
+<span class="sourceLineNo">992</span><a id="line.992">                Map&lt;S,T&gt; alig = new HashMap&lt;S,T&gt;(alignment);</a>
+<span class="sourceLineNo">993</span><a id="line.993"></a>
+<span class="sourceLineNo">994</span><a id="line.994">                // Generate inverse alignment</a>
+<span class="sourceLineNo">995</span><a id="line.995">                Map&lt;S,List&lt;S&gt;&gt; inverse = new HashMap&lt;S,List&lt;S&gt;&gt;();</a>
+<span class="sourceLineNo">996</span><a id="line.996">                for(Entry&lt;S,T&gt; e: alig.entrySet()) {</a>
+<span class="sourceLineNo">997</span><a id="line.997">                        S val = identity.get(e.getValue());</a>
+<span class="sourceLineNo">998</span><a id="line.998">                        if( inverse.containsKey(val) ) {</a>
+<span class="sourceLineNo">999</span><a id="line.999">                                List&lt;S&gt; l = inverse.get(val);</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">                                l.add(e.getKey());</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">                        } else {</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">                                List&lt;S&gt; l = new ArrayList&lt;S&gt;();</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">                                l.add(e.getKey());</a>
+<span class="sourceLineNo">1004</span><a id="line.1004">                                inverse.put(val,l);</a>
+<span class="sourceLineNo">1005</span><a id="line.1005">                        }</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">                }</a>
+<span class="sourceLineNo">1007</span><a id="line.1007"></a>
+<span class="sourceLineNo">1008</span><a id="line.1008">                StringBuilder str = new StringBuilder();</a>
+<span class="sourceLineNo">1009</span><a id="line.1009"></a>
+<span class="sourceLineNo">1010</span><a id="line.1010">                while(!alig.isEmpty()){</a>
+<span class="sourceLineNo">1011</span><a id="line.1011">                        // Pick an edge and work upstream to a root or cycle</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">                        S seedNode = alig.keySet().iterator().next();</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">                        S node = seedNode;</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">                        if( inverse.containsKey(seedNode)) {</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">                                node = inverse.get(seedNode).iterator().next();</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">                                while( node != seedNode &amp;&amp; inverse.containsKey(node)) {</a>
+<span class="sourceLineNo">1017</span><a id="line.1017">                                        node = inverse.get(node).iterator().next();</a>
+<span class="sourceLineNo">1018</span><a id="line.1018">                                }</a>
+<span class="sourceLineNo">1019</span><a id="line.1019">                        }</a>
+<span class="sourceLineNo">1020</span><a id="line.1020"></a>
+<span class="sourceLineNo">1021</span><a id="line.1021">                        // Now work downstream, deleting edges as we go</a>
+<span class="sourceLineNo">1022</span><a id="line.1022">                        seedNode = node;</a>
+<span class="sourceLineNo">1023</span><a id="line.1023">                        str.append(node);</a>
+<span class="sourceLineNo">1024</span><a id="line.1024"></a>
+<span class="sourceLineNo">1025</span><a id="line.1025">                        while(alig.containsKey(node)) {</a>
+<span class="sourceLineNo">1026</span><a id="line.1026">                                S lastNode = node;</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">                                node = identity.get( alig.get(lastNode) );</a>
+<span class="sourceLineNo">1028</span><a id="line.1028"></a>
+<span class="sourceLineNo">1029</span><a id="line.1029">                                // Output</a>
+<span class="sourceLineNo">1030</span><a id="line.1030">                                str.append('&gt;');</a>
+<span class="sourceLineNo">1031</span><a id="line.1031">                                str.append(node);</a>
+<span class="sourceLineNo">1032</span><a id="line.1032"></a>
+<span class="sourceLineNo">1033</span><a id="line.1033">                                // Remove edge</a>
+<span class="sourceLineNo">1034</span><a id="line.1034">                                alig.remove(lastNode);</a>
+<span class="sourceLineNo">1035</span><a id="line.1035">                                List&lt;S&gt; inv = inverse.get(node);</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">                                if(inv.size() &gt; 1) {</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">                                        inv.remove(node);</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">                                } else {</a>
+<span class="sourceLineNo">1039</span><a id="line.1039">                                        inverse.remove(node);</a>
+<span class="sourceLineNo">1040</span><a id="line.1040">                                }</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">                        }</a>
+<span class="sourceLineNo">1042</span><a id="line.1042">                        if(!alig.isEmpty()) {</a>
+<span class="sourceLineNo">1043</span><a id="line.1043">                                str.append(' ');</a>
+<span class="sourceLineNo">1044</span><a id="line.1044">                        }</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">                }</a>
+<span class="sourceLineNo">1046</span><a id="line.1046"></a>
+<span class="sourceLineNo">1047</span><a id="line.1047">                return str.toString();</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">        }</a>
+<span class="sourceLineNo">1049</span><a id="line.1049"></a>
+<span class="sourceLineNo">1050</span><a id="line.1050">        /**</a>
+<span class="sourceLineNo">1051</span><a id="line.1051">         * @see #toConciseAlignmentString(Map, Map)</a>
+<span class="sourceLineNo">1052</span><a id="line.1052">         */</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">        public static &lt;T&gt; String toConciseAlignmentString(Map&lt;T, T&gt; alignment) {</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">                return toConciseAlignmentString(alignment, new IdentityMap&lt;T&gt;());</a>
+<span class="sourceLineNo">1055</span><a id="line.1055">        }</a>
+<span class="sourceLineNo">1056</span><a id="line.1056"></a>
+<span class="sourceLineNo">1057</span><a id="line.1057">        /**</a>
+<span class="sourceLineNo">1058</span><a id="line.1058">         * @see #toConciseAlignmentString(Map, Map)</a>
+<span class="sourceLineNo">1059</span><a id="line.1059">         */</a>
+<span class="sourceLineNo">1060</span><a id="line.1060">        public static Map&lt;Integer, Integer&gt; fromConciseAlignmentString(String string) {</a>
+<span class="sourceLineNo">1061</span><a id="line.1061">                Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();</a>
+<span class="sourceLineNo">1062</span><a id="line.1062">                boolean matches = true;</a>
+<span class="sourceLineNo">1063</span><a id="line.1063">                while (matches) {</a>
+<span class="sourceLineNo">1064</span><a id="line.1064">                        Pattern pattern = Pattern.compile("(\\d+)&gt;(\\d+)");</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">                        Matcher matcher = pattern.matcher(string);</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">                        matches = matcher.find();</a>
+<span class="sourceLineNo">1067</span><a id="line.1067">                        if (matches) {</a>
+<span class="sourceLineNo">1068</span><a id="line.1068">                                Integer from = Integer.parseInt(matcher.group(1));</a>
+<span class="sourceLineNo">1069</span><a id="line.1069">                                Integer to = Integer.parseInt(matcher.group(2));</a>
+<span class="sourceLineNo">1070</span><a id="line.1070">                                map.put(from, to);</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">                                string = string.substring(matcher.end(1) + 1);</a>
+<span class="sourceLineNo">1072</span><a id="line.1072">                        }</a>
+<span class="sourceLineNo">1073</span><a id="line.1073">                }</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">                return map;</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">        }</a>
+<span class="sourceLineNo">1076</span><a id="line.1076"></a>
+<span class="sourceLineNo">1077</span><a id="line.1077">        /**</a>
+<span class="sourceLineNo">1078</span><a id="line.1078">         * Method that calculates the number of gaps in each subunit block of an optimal AFP alignment.</a>
+<span class="sourceLineNo">1079</span><a id="line.1079">         *</a>
+<span class="sourceLineNo">1080</span><a id="line.1080">         * INPUT: an optimal alignment in the format int[][][].</a>
+<span class="sourceLineNo">1081</span><a id="line.1081">         * OUTPUT: an int[] array of &lt;order&gt; length containing the gaps in each block as int[block].</a>
+<span class="sourceLineNo">1082</span><a id="line.1082">         */</a>
+<span class="sourceLineNo">1083</span><a id="line.1083">        public static int[] calculateBlockGap(int[][][] optAln){</a>
+<span class="sourceLineNo">1084</span><a id="line.1084"></a>
+<span class="sourceLineNo">1085</span><a id="line.1085">                //Initialize the array to be returned</a>
+<span class="sourceLineNo">1086</span><a id="line.1086">                int [] blockGap = new int[optAln.length];</a>
+<span class="sourceLineNo">1087</span><a id="line.1087"></a>
+<span class="sourceLineNo">1088</span><a id="line.1088">                //Loop for every block and look in both chains for non-contiguous residues.</a>
+<span class="sourceLineNo">1089</span><a id="line.1089">                for (int i=0; i&lt;optAln.length; i++){</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">                        int gaps = 0; //the number of gaps in that block</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">                        int last1 = 0; //the last residue position in chain 1</a>
+<span class="sourceLineNo">1092</span><a id="line.1092">                        int last2 = 0; //the last residue position in chain 2</a>
+<span class="sourceLineNo">1093</span><a id="line.1093">                        //Loop for every position in the block</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">                        for (int j=0; j&lt;optAln[i][0].length; j++){</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">                                //If the first position is evaluated initialize the last positions</a>
+<span class="sourceLineNo">1096</span><a id="line.1096">                                if (j==0){</a>
+<span class="sourceLineNo">1097</span><a id="line.1097">                                        last1 = optAln[i][0][j];</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">                                        last2 = optAln[i][1][j];</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">                                }</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">                                else{</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">                                        //If one of the positions or both are not contiguous increment the number of gaps</a>
+<span class="sourceLineNo">1102</span><a id="line.1102">                                        if (optAln[i][0][j] &gt; last1+1 || optAln[i][1][j] &gt; last2+1){</a>
+<span class="sourceLineNo">1103</span><a id="line.1103">                                                gaps++;</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">                                                last1 = optAln[i][0][j];</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">                                                last2 = optAln[i][1][j];</a>
+<span class="sourceLineNo">1106</span><a id="line.1106">                                        }</a>
+<span class="sourceLineNo">1107</span><a id="line.1107">                                        //Otherwise just set the last position to the current one</a>
+<span class="sourceLineNo">1108</span><a id="line.1108">                                        else{</a>
+<span class="sourceLineNo">1109</span><a id="line.1109">                                                last1 = optAln[i][0][j];</a>
+<span class="sourceLineNo">1110</span><a id="line.1110">                                                last2 = optAln[i][1][j];</a>
+<span class="sourceLineNo">1111</span><a id="line.1111">                                        }</a>
+<span class="sourceLineNo">1112</span><a id="line.1112">                                }</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">                        }</a>
+<span class="sourceLineNo">1114</span><a id="line.1114">                        blockGap[i] = gaps;</a>
+<span class="sourceLineNo">1115</span><a id="line.1115">                }</a>
+<span class="sourceLineNo">1116</span><a id="line.1116">                return blockGap;</a>
+<span class="sourceLineNo">1117</span><a id="line.1117">        }</a>
+<span class="sourceLineNo">1118</span><a id="line.1118"></a>
+<span class="sourceLineNo">1119</span><a id="line.1119">        /**</a>
+<span class="sourceLineNo">1120</span><a id="line.1120">         * Creates a simple interaction format (SIF) file for an alignment.</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">         *</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">         * The SIF file can be read by network software (eg Cytoscape) to analyze</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">         * alignments as graphs.</a>
+<span class="sourceLineNo">1124</span><a id="line.1124">         *</a>
+<span class="sourceLineNo">1125</span><a id="line.1125">         * This function creates a graph with residues as nodes and two types of edges:</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">         *   1. backbone edges, which connect adjacent residues in the aligned protein</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">         *   2. alignment edges, which connect aligned residues</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">         *</a>
+<span class="sourceLineNo">1129</span><a id="line.1129">         * @param out Stream to write to</a>
+<span class="sourceLineNo">1130</span><a id="line.1130">         * @param afpChain alignment to write</a>
+<span class="sourceLineNo">1131</span><a id="line.1131">         * @param ca1 First protein, used to generate node names</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">         * @param ca2 Second protein, used to generate node names</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">         * @param backboneInteraction Two-letter string used to identify backbone edges</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">         * @param alignmentInteraction Two-letter string used to identify alignment edges</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">         * @throws IOException</a>
+<span class="sourceLineNo">1136</span><a id="line.1136">         */</a>
+<span class="sourceLineNo">1137</span><a id="line.1137">        public static void alignmentToSIF(Writer out,AFPChain afpChain,</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">                                                                          Atom[] ca1,Atom[] ca2, String backboneInteraction,</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">                                                                          String alignmentInteraction) throws IOException {</a>
+<span class="sourceLineNo">1140</span><a id="line.1140"></a>
+<span class="sourceLineNo">1141</span><a id="line.1141">                //out.write("Res1\tInteraction\tRes2\n");</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">                String name1 = afpChain.getName1();</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">                String name2 = afpChain.getName2();</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">                if(name1==null) name1=""; else name1+=":";</a>
+<span class="sourceLineNo">1145</span><a id="line.1145">                if(name2==null) name2=""; else name2+=":";</a>
+<span class="sourceLineNo">1146</span><a id="line.1146"></a>
+<span class="sourceLineNo">1147</span><a id="line.1147">                // Print alignment edges</a>
+<span class="sourceLineNo">1148</span><a id="line.1148">                int nblocks = afpChain.getBlockNum();</a>
+<span class="sourceLineNo">1149</span><a id="line.1149">                int[] blockLen = afpChain.getOptLen();</a>
+<span class="sourceLineNo">1150</span><a id="line.1150">                int[][][] optAlign = afpChain.getOptAln();</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">                for(int b=0;b&lt;nblocks;b++) {</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">                        for(int r=0;r&lt;blockLen[b];r++) {</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">                                int res1 = optAlign[b][0][r];</a>
+<span class="sourceLineNo">1154</span><a id="line.1154">                                int res2 = optAlign[b][1][r];</a>
+<span class="sourceLineNo">1155</span><a id="line.1155"></a>
+<span class="sourceLineNo">1156</span><a id="line.1156">                                ResidueNumber rn1 = ca1[res1].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1157</span><a id="line.1157">                                ResidueNumber rn2 = ca2[res2].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1158</span><a id="line.1158"></a>
+<span class="sourceLineNo">1159</span><a id="line.1159">                                String node1 = name1+rn1.getChainName()+rn1.toString();</a>
+<span class="sourceLineNo">1160</span><a id="line.1160">                                String node2 = name2+rn2.getChainName()+rn2.toString();</a>
+<span class="sourceLineNo">1161</span><a id="line.1161"></a>
+<span class="sourceLineNo">1162</span><a id="line.1162">                                out.write(String.format("%s\t%s\t%s\n",node1, alignmentInteraction, node2));</a>
+<span class="sourceLineNo">1163</span><a id="line.1163">                        }</a>
+<span class="sourceLineNo">1164</span><a id="line.1164">                }</a>
+<span class="sourceLineNo">1165</span><a id="line.1165"></a>
+<span class="sourceLineNo">1166</span><a id="line.1166">                // Print first backbone edges</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">                ResidueNumber rn = ca1[0].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">                String last = name1+rn.getChainName()+rn.toString();</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">                for(int i=1;i&lt;ca1.length;i++) {</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">                        rn = ca1[i].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">                        String curr = name1+rn.getChainName()+rn.toString();</a>
+<span class="sourceLineNo">1172</span><a id="line.1172">                        out.write(String.format("%s\t%s\t%s\n",last, backboneInteraction, curr));</a>
+<span class="sourceLineNo">1173</span><a id="line.1173">                        last = curr;</a>
+<span class="sourceLineNo">1174</span><a id="line.1174">                }</a>
+<span class="sourceLineNo">1175</span><a id="line.1175"></a>
+<span class="sourceLineNo">1176</span><a id="line.1176">                // Print second backbone edges, if the proteins differ</a>
+<span class="sourceLineNo">1177</span><a id="line.1177">                // Do some quick checks for whether the proteins differ</a>
+<span class="sourceLineNo">1178</span><a id="line.1178">                // (Not perfect, but should detect major differences and CPs.)</a>
+<span class="sourceLineNo">1179</span><a id="line.1179">                if(!name1.equals(name2) ||</a>
+<span class="sourceLineNo">1180</span><a id="line.1180">                                ca1.length!=ca2.length ||</a>
+<span class="sourceLineNo">1181</span><a id="line.1181">                                (ca1.length&gt;0 &amp;&amp; ca1[0].getGroup()!=null &amp;&amp; ca2[0].getGroup()!=null &amp;&amp;</a>
+<span class="sourceLineNo">1182</span><a id="line.1182">                                                !ca1[0].getGroup().getResidueNumber().equals(ca2[0].getGroup().getResidueNumber()) ) ) {</a>
+<span class="sourceLineNo">1183</span><a id="line.1183">                        rn = ca2[0].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1184</span><a id="line.1184">                        last = name2+rn.getChainName()+rn.toString();</a>
+<span class="sourceLineNo">1185</span><a id="line.1185">                        for(int i=1;i&lt;ca2.length;i++) {</a>
+<span class="sourceLineNo">1186</span><a id="line.1186">                                rn = ca2[i].getGroup().getResidueNumber();</a>
+<span class="sourceLineNo">1187</span><a id="line.1187">                                String curr = name2+rn.getChainName()+rn.toString();</a>
+<span class="sourceLineNo">1188</span><a id="line.1188">                                out.write(String.format("%s\t%s\t%s\n",last, backboneInteraction, curr));</a>
+<span class="sourceLineNo">1189</span><a id="line.1189">                                last = curr;</a>
+<span class="sourceLineNo">1190</span><a id="line.1190">                        }</a>
+<span class="sourceLineNo">1191</span><a id="line.1191">                }</a>
+<span class="sourceLineNo">1192</span><a id="line.1192">        }</a>
+<span class="sourceLineNo">1193</span><a id="line.1193"></a>
+<span class="sourceLineNo">1194</span><a id="line.1194"></a>
+<span class="sourceLineNo">1195</span><a id="line.1195"></a>
+<span class="sourceLineNo">1196</span><a id="line.1196">        /** get an artificial List of chains containing the Atoms and groups.</a>
+<span class="sourceLineNo">1197</span><a id="line.1197">         * Does NOT rotate anything.</a>
+<span class="sourceLineNo">1198</span><a id="line.1198">         * @param ca</a>
+<span class="sourceLineNo">1199</span><a id="line.1199">         * @return a list of Chains that is built up from the Atoms in the ca array</a>
+<span class="sourceLineNo">1200</span><a id="line.1200">         * @throws StructureException</a>
+<span class="sourceLineNo">1201</span><a id="line.1201">         */</a>
+<span class="sourceLineNo">1202</span><a id="line.1202">        public static final List&lt;Chain&gt; getAlignedModel(Atom[] ca){</a>
+<span class="sourceLineNo">1203</span><a id="line.1203"></a>
+<span class="sourceLineNo">1204</span><a id="line.1204">                List&lt;Chain&gt; model = new ArrayList&lt;Chain&gt;();</a>
+<span class="sourceLineNo">1205</span><a id="line.1205">                for ( Atom a: ca){</a>
+<span class="sourceLineNo">1206</span><a id="line.1206"></a>
+<span class="sourceLineNo">1207</span><a id="line.1207">                        Group g = a.getGroup();</a>
+<span class="sourceLineNo">1208</span><a id="line.1208">                        Chain parentC = g.getChain();</a>
+<span class="sourceLineNo">1209</span><a id="line.1209"></a>
+<span class="sourceLineNo">1210</span><a id="line.1210">                        Chain newChain = null;</a>
+<span class="sourceLineNo">1211</span><a id="line.1211">                        for ( Chain c :  model) {</a>
+<span class="sourceLineNo">1212</span><a id="line.1212">                                if ( c.getId().equals(parentC.getId())){</a>
+<span class="sourceLineNo">1213</span><a id="line.1213">                                        newChain = c;</a>
+<span class="sourceLineNo">1214</span><a id="line.1214">                                        break;</a>
+<span class="sourceLineNo">1215</span><a id="line.1215">                                }</a>
+<span class="sourceLineNo">1216</span><a id="line.1216">                        }</a>
+<span class="sourceLineNo">1217</span><a id="line.1217">                        if ( newChain == null){</a>
+<span class="sourceLineNo">1218</span><a id="line.1218"></a>
+<span class="sourceLineNo">1219</span><a id="line.1219">                                newChain = new ChainImpl();</a>
+<span class="sourceLineNo">1220</span><a id="line.1220"></a>
+<span class="sourceLineNo">1221</span><a id="line.1221">                                newChain.setId(parentC.getId());</a>
+<span class="sourceLineNo">1222</span><a id="line.1222"></a>
+<span class="sourceLineNo">1223</span><a id="line.1223">                                model.add(newChain);</a>
+<span class="sourceLineNo">1224</span><a id="line.1224">                        }</a>
+<span class="sourceLineNo">1225</span><a id="line.1225"></a>
+<span class="sourceLineNo">1226</span><a id="line.1226">                        newChain.addGroup(g);</a>
+<span class="sourceLineNo">1227</span><a id="line.1227"></a>
+<span class="sourceLineNo">1228</span><a id="line.1228">                }</a>
+<span class="sourceLineNo">1229</span><a id="line.1229"></a>
+<span class="sourceLineNo">1230</span><a id="line.1230">                return model;</a>
+<span class="sourceLineNo">1231</span><a id="line.1231">        }</a>
+<span class="sourceLineNo">1232</span><a id="line.1232"></a>
+<span class="sourceLineNo">1233</span><a id="line.1233"></a>
+<span class="sourceLineNo">1234</span><a id="line.1234">        /** Get an artifical Structure containing both chains.</a>
+<span class="sourceLineNo">1235</span><a id="line.1235">         * Does NOT rotate anything</a>
+<span class="sourceLineNo">1236</span><a id="line.1236">         * @param ca1</a>
+<span class="sourceLineNo">1237</span><a id="line.1237">         * @param ca2</a>
+<span class="sourceLineNo">1238</span><a id="line.1238">         * @return a structure object containing two models, one for each set of Atoms.</a>
+<span class="sourceLineNo">1239</span><a id="line.1239">         * @throws StructureException</a>
+<span class="sourceLineNo">1240</span><a id="line.1240">         */</a>
+<span class="sourceLineNo">1241</span><a id="line.1241">        public static final Structure getAlignedStructure(Atom[] ca1, Atom[] ca2) throws StructureException{</a>
+<span class="sourceLineNo">1242</span><a id="line.1242"></a>
+<span class="sourceLineNo">1243</span><a id="line.1243">                /* Previous implementation commented</a>
+<span class="sourceLineNo">1244</span><a id="line.1244"></a>
+<span class="sourceLineNo">1245</span><a id="line.1245">                Structure s = new StructureImpl();</a>
+<span class="sourceLineNo">1246</span><a id="line.1246"></a>
+<span class="sourceLineNo">1247</span><a id="line.1247"></a>
+<span class="sourceLineNo">1248</span><a id="line.1248">                List&lt;Chain&gt;model1 = getAlignedModel(ca1);</a>
+<span class="sourceLineNo">1249</span><a id="line.1249">                List&lt;Chain&gt;model2 = getAlignedModel(ca2);</a>
+<span class="sourceLineNo">1250</span><a id="line.1250">                s.addModel(model1);</a>
+<span class="sourceLineNo">1251</span><a id="line.1251">                s.addModel(model2);</a>
+<span class="sourceLineNo">1252</span><a id="line.1252"></a>
+<span class="sourceLineNo">1253</span><a id="line.1253">                return s;*/</a>
+<span class="sourceLineNo">1254</span><a id="line.1254"></a>
+<span class="sourceLineNo">1255</span><a id="line.1255">                Structure s = new StructureImpl();</a>
+<span class="sourceLineNo">1256</span><a id="line.1256"></a>
+<span class="sourceLineNo">1257</span><a id="line.1257">                List&lt;Chain&gt;model1 = getAlignedModel(ca1);</a>
+<span class="sourceLineNo">1258</span><a id="line.1258">                s.addModel(model1);</a>
+<span class="sourceLineNo">1259</span><a id="line.1259">                List&lt;Chain&gt; model2 = getAlignedModel(ca2);</a>
+<span class="sourceLineNo">1260</span><a id="line.1260">                s.addModel(model2);</a>
+<span class="sourceLineNo">1261</span><a id="line.1261"></a>
+<span class="sourceLineNo">1262</span><a id="line.1262">                return s;</a>
+<span class="sourceLineNo">1263</span><a id="line.1263">        }</a>
+<span class="sourceLineNo">1264</span><a id="line.1264"></a>
+<span class="sourceLineNo">1265</span><a id="line.1265">        /** Rotate the Atoms/Groups so they are aligned for the 3D visualisation</a>
+<span class="sourceLineNo">1266</span><a id="line.1266">         *</a>
+<span class="sourceLineNo">1267</span><a id="line.1267">         * @param afpChain</a>
+<span class="sourceLineNo">1268</span><a id="line.1268">         * @param ca1</a>
+<span class="sourceLineNo">1269</span><a id="line.1269">         * @param ca2</a>
+<span class="sourceLineNo">1270</span><a id="line.1270">         * @return an array of Groups that are transformed for 3D display</a>
+<span class="sourceLineNo">1271</span><a id="line.1271">         * @throws StructureException</a>
+<span class="sourceLineNo">1272</span><a id="line.1272">         */</a>
+<span class="sourceLineNo">1273</span><a id="line.1273">        public static Group[] prepareGroupsForDisplay(AFPChain afpChain, Atom[] ca1, Atom[] ca2) throws StructureException{</a>
+<span class="sourceLineNo">1274</span><a id="line.1274"></a>
+<span class="sourceLineNo">1275</span><a id="line.1275"></a>
+<span class="sourceLineNo">1276</span><a id="line.1276">                if ( afpChain.getBlockRotationMatrix().length == 0 ) {</a>
+<span class="sourceLineNo">1277</span><a id="line.1277">                        // probably the alignment is too short!</a>
+<span class="sourceLineNo">1278</span><a id="line.1278">                        System.err.println("No rotation matrix found to rotate 2nd structure!");</a>
+<span class="sourceLineNo">1279</span><a id="line.1279">                        afpChain.setBlockRotationMatrix(new Matrix[]{Matrix.identity(3, 3)});</a>
+<span class="sourceLineNo">1280</span><a id="line.1280">                        afpChain.setBlockShiftVector(new Atom[]{new AtomImpl()});</a>
+<span class="sourceLineNo">1281</span><a id="line.1281">                }</a>
+<span class="sourceLineNo">1282</span><a id="line.1282"></a>
+<span class="sourceLineNo">1283</span><a id="line.1283">                // List of groups to be rotated according to the alignment</a>
+<span class="sourceLineNo">1284</span><a id="line.1284">                Group[] twistedGroups = new Group[ ca2.length];</a>
+<span class="sourceLineNo">1285</span><a id="line.1285"></a>
+<span class="sourceLineNo">1286</span><a id="line.1286">                //int blockNum = afpChain.getBlockNum();</a>
+<span class="sourceLineNo">1287</span><a id="line.1287"></a>
+<span class="sourceLineNo">1288</span><a id="line.1288">                int i = -1;</a>
+<span class="sourceLineNo">1289</span><a id="line.1289"></a>
+<span class="sourceLineNo">1290</span><a id="line.1290">                // List of groups from the structure not included in ca2 (e.g. ligands)</a>
+<span class="sourceLineNo">1291</span><a id="line.1291">                // Will be rotated according to first block</a>
+<span class="sourceLineNo">1292</span><a id="line.1292">                List&lt;Group&gt; hetatms2 = StructureTools.getUnalignedGroups(ca2);</a>
+<span class="sourceLineNo">1293</span><a id="line.1293"></a>
+<span class="sourceLineNo">1294</span><a id="line.1294">                if (  (afpChain.getAlgorithmName().equals(FatCatRigid.algorithmName) ) || (afpChain.getAlgorithmName().equals(FatCatFlexible.algorithmName) ) ){</a>
+<span class="sourceLineNo">1295</span><a id="line.1295"></a>
+<span class="sourceLineNo">1296</span><a id="line.1296">                        for (Atom a: ca2){</a>
+<span class="sourceLineNo">1297</span><a id="line.1297">                                i++;</a>
+<span class="sourceLineNo">1298</span><a id="line.1298">                                twistedGroups[i]=a.getGroup();</a>
+<span class="sourceLineNo">1299</span><a id="line.1299"></a>
+<span class="sourceLineNo">1300</span><a id="line.1300">                        }</a>
+<span class="sourceLineNo">1301</span><a id="line.1301"></a>
+<span class="sourceLineNo">1302</span><a id="line.1302">                        twistedGroups = AFPTwister.twistOptimized(afpChain, ca1, ca2);</a>
+<span class="sourceLineNo">1303</span><a id="line.1303"></a>
+<span class="sourceLineNo">1304</span><a id="line.1304">                        //} else  if  (( blockNum == 1 ) || (afpChain.getAlgorithmName().equals(CeCPMain.algorithmName))) {</a>
+<span class="sourceLineNo">1305</span><a id="line.1305">                } else {</a>
+<span class="sourceLineNo">1306</span><a id="line.1306"></a>
+<span class="sourceLineNo">1307</span><a id="line.1307">                        Matrix m   =  afpChain.getBlockRotationMatrix()[ 0];</a>
+<span class="sourceLineNo">1308</span><a id="line.1308">                        Atom shift =  afpChain.getBlockShiftVector()   [ 0 ];</a>
+<span class="sourceLineNo">1309</span><a id="line.1309"></a>
+<span class="sourceLineNo">1310</span><a id="line.1310">                        shiftCA2(afpChain, ca2, m,shift, twistedGroups);</a>
+<span class="sourceLineNo">1311</span><a id="line.1311"></a>
+<span class="sourceLineNo">1312</span><a id="line.1312">                }</a>
+<span class="sourceLineNo">1313</span><a id="line.1313"></a>
+<span class="sourceLineNo">1314</span><a id="line.1314">                if ( afpChain.getBlockNum() &gt; 0){</a>
+<span class="sourceLineNo">1315</span><a id="line.1315"></a>
+<span class="sourceLineNo">1316</span><a id="line.1316">                        // Superimpose ligands relative to the first block</a>
+<span class="sourceLineNo">1317</span><a id="line.1317">                        if( hetatms2.size() &gt; 0 ) {</a>
+<span class="sourceLineNo">1318</span><a id="line.1318"></a>
+<span class="sourceLineNo">1319</span><a id="line.1319">                                if ( afpChain.getBlockRotationMatrix().length &gt; 0 ) {</a>
+<span class="sourceLineNo">1320</span><a id="line.1320"></a>
+<span class="sourceLineNo">1321</span><a id="line.1321">                                        Matrix m1      = afpChain.getBlockRotationMatrix()[0];</a>
+<span class="sourceLineNo">1322</span><a id="line.1322">                                        //m1.print(3,3);</a>
+<span class="sourceLineNo">1323</span><a id="line.1323">                                        Atom   vector1 = afpChain.getBlockShiftVector()[0];</a>
+<span class="sourceLineNo">1324</span><a id="line.1324">                                        //System.out.println("shift vector:" + vector1);</a>
+<span class="sourceLineNo">1325</span><a id="line.1325"></a>
+<span class="sourceLineNo">1326</span><a id="line.1326">                                        for ( Group g : hetatms2){</a>
+<span class="sourceLineNo">1327</span><a id="line.1327">                                                Calc.rotate(g, m1);</a>
+<span class="sourceLineNo">1328</span><a id="line.1328">                                                Calc.shift(g,vector1);</a>
+<span class="sourceLineNo">1329</span><a id="line.1329">                                        }</a>
+<span class="sourceLineNo">1330</span><a id="line.1330">                                }</a>
+<span class="sourceLineNo">1331</span><a id="line.1331">                        }</a>
+<span class="sourceLineNo">1332</span><a id="line.1332">                }</a>
+<span class="sourceLineNo">1333</span><a id="line.1333"></a>
+<span class="sourceLineNo">1334</span><a id="line.1334">                return twistedGroups;</a>
+<span class="sourceLineNo">1335</span><a id="line.1335">        }</a>
+<span class="sourceLineNo">1336</span><a id="line.1336"></a>
+<span class="sourceLineNo">1337</span><a id="line.1337">        /** only shift CA positions.</a>
+<span class="sourceLineNo">1338</span><a id="line.1338">         *</a>
+<span class="sourceLineNo">1339</span><a id="line.1339">         */</a>
+<span class="sourceLineNo">1340</span><a id="line.1340">        public static void shiftCA2(AFPChain afpChain, Atom[] ca2,  Matrix m, Atom shift, Group[] twistedGroups) {</a>
+<span class="sourceLineNo">1341</span><a id="line.1341"></a>
+<span class="sourceLineNo">1342</span><a id="line.1342">                int i = -1;</a>
+<span class="sourceLineNo">1343</span><a id="line.1343">                for (Atom a: ca2){</a>
+<span class="sourceLineNo">1344</span><a id="line.1344">                        i++;</a>
+<span class="sourceLineNo">1345</span><a id="line.1345">                        Group g = a.getGroup();</a>
+<span class="sourceLineNo">1346</span><a id="line.1346"></a>
+<span class="sourceLineNo">1347</span><a id="line.1347">                        Calc.rotate(g,m);</a>
+<span class="sourceLineNo">1348</span><a id="line.1348">                        Calc.shift(g, shift);</a>
+<span class="sourceLineNo">1349</span><a id="line.1349"></a>
+<span class="sourceLineNo">1350</span><a id="line.1350">                        if (g.hasAltLoc()){</a>
+<span class="sourceLineNo">1351</span><a id="line.1351">                                for (Group alt: g.getAltLocs()){</a>
+<span class="sourceLineNo">1352</span><a id="line.1352">                                        for (Atom alta : alt.getAtoms()){</a>
+<span class="sourceLineNo">1353</span><a id="line.1353">                                                if ( g.getAtoms().contains(alta))</a>
+<span class="sourceLineNo">1354</span><a id="line.1354">                                                        continue;</a>
+<span class="sourceLineNo">1355</span><a id="line.1355">                                                Calc.rotate(alta,m);</a>
+<span class="sourceLineNo">1356</span><a id="line.1356">                                                Calc.shift(alta,shift);</a>
+<span class="sourceLineNo">1357</span><a id="line.1357">                                        }</a>
+<span class="sourceLineNo">1358</span><a id="line.1358">                                }</a>
+<span class="sourceLineNo">1359</span><a id="line.1359">                        }</a>
+<span class="sourceLineNo">1360</span><a id="line.1360">                        twistedGroups[i]=g;</a>
+<span class="sourceLineNo">1361</span><a id="line.1361">                }</a>
+<span class="sourceLineNo">1362</span><a id="line.1362">        }</a>
+<span class="sourceLineNo">1363</span><a id="line.1363"></a>
+<span class="sourceLineNo">1364</span><a id="line.1364">        /**</a>
+<span class="sourceLineNo">1365</span><a id="line.1365">         * Fill the aligned Atom arrays with the equivalent residues in the afpChain.</a>
+<span class="sourceLineNo">1366</span><a id="line.1366">         * @param afpChain</a>
+<span class="sourceLineNo">1367</span><a id="line.1367">         * @param ca1</a>
+<span class="sourceLineNo">1368</span><a id="line.1368">         * @param ca2</a>
+<span class="sourceLineNo">1369</span><a id="line.1369">         * @param ca1aligned</a>
+<span class="sourceLineNo">1370</span><a id="line.1370">         * @param ca2aligned</a>
+<span class="sourceLineNo">1371</span><a id="line.1371">         */</a>
+<span class="sourceLineNo">1372</span><a id="line.1372">        public static void fillAlignedAtomArrays(AFPChain afpChain, Atom[] ca1,</a>
+<span class="sourceLineNo">1373</span><a id="line.1373">                        Atom[] ca2, Atom[] ca1aligned, Atom[] ca2aligned) {</a>
+<span class="sourceLineNo">1374</span><a id="line.1374"></a>
+<span class="sourceLineNo">1375</span><a id="line.1375">                int pos=0;</a>
+<span class="sourceLineNo">1376</span><a id="line.1376">                int[] blockLens = afpChain.getOptLen();</a>
+<span class="sourceLineNo">1377</span><a id="line.1377">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">1378</span><a id="line.1378">                assert(afpChain.getBlockNum() &lt;= optAln.length);</a>
+<span class="sourceLineNo">1379</span><a id="line.1379"></a>
+<span class="sourceLineNo">1380</span><a id="line.1380">                for (int block=0; block &lt; afpChain.getBlockNum(); block++) {</a>
+<span class="sourceLineNo">1381</span><a id="line.1381">                        for(int i=0;i&lt;blockLens[block];i++) {</a>
+<span class="sourceLineNo">1382</span><a id="line.1382">                                int pos1 = optAln[block][0][i];</a>
+<span class="sourceLineNo">1383</span><a id="line.1383">                                int pos2 = optAln[block][1][i];</a>
+<span class="sourceLineNo">1384</span><a id="line.1384">                                Atom a1 = ca1[pos1];</a>
+<span class="sourceLineNo">1385</span><a id="line.1385">                                Atom a2 = (Atom) ca2[pos2].clone();</a>
+<span class="sourceLineNo">1386</span><a id="line.1386">                                ca1aligned[pos] = a1;</a>
+<span class="sourceLineNo">1387</span><a id="line.1387">                                ca2aligned[pos] = a2;</a>
+<span class="sourceLineNo">1388</span><a id="line.1388">                                pos++;</a>
+<span class="sourceLineNo">1389</span><a id="line.1389">                        }</a>
+<span class="sourceLineNo">1390</span><a id="line.1390">                }</a>
+<span class="sourceLineNo">1391</span><a id="line.1391"></a>
+<span class="sourceLineNo">1392</span><a id="line.1392">                // this can happen when we load an old XML serialization which did not support modern ChemComp representation of modified residues.</a>
+<span class="sourceLineNo">1393</span><a id="line.1393">                if (pos != afpChain.getOptLength()){</a>
+<span class="sourceLineNo">1394</span><a id="line.1394">                        logger.warn("AFPChainScorer getTMScore: Problems reconstructing alignment! nr of loaded atoms is " + pos + " but should be " + afpChain.getOptLength());</a>
+<span class="sourceLineNo">1395</span><a id="line.1395">                        // we need to resize the array, because we allocated too many atoms earlier on.</a>
+<span class="sourceLineNo">1396</span><a id="line.1396">                        ca1aligned = (Atom[]) resizeArray(ca1aligned, pos);</a>
+<span class="sourceLineNo">1397</span><a id="line.1397">                        ca2aligned = (Atom[]) resizeArray(ca2aligned, pos);</a>
+<span class="sourceLineNo">1398</span><a id="line.1398">                }</a>
+<span class="sourceLineNo">1399</span><a id="line.1399"></a>
+<span class="sourceLineNo">1400</span><a id="line.1400">        }</a>
+<span class="sourceLineNo">1401</span><a id="line.1401"></a>
+<span class="sourceLineNo">1402</span><a id="line.1402">        /**</a>
+<span class="sourceLineNo">1403</span><a id="line.1403">         * Find the alignment position with the highest atomic distance between the</a>
+<span class="sourceLineNo">1404</span><a id="line.1404">         * equivalent atomic positions of the arrays and remove it from the</a>
+<span class="sourceLineNo">1405</span><a id="line.1405">         * alignment.</a>
+<span class="sourceLineNo">1406</span><a id="line.1406">         *</a>
+<span class="sourceLineNo">1407</span><a id="line.1407">         * @param afpChain</a>
+<span class="sourceLineNo">1408</span><a id="line.1408">         *            original alignment, will be modified</a>
+<span class="sourceLineNo">1409</span><a id="line.1409">         * @param ca1</a>
+<span class="sourceLineNo">1410</span><a id="line.1410">         *            atom array, will not be modified</a>
+<span class="sourceLineNo">1411</span><a id="line.1411">         * @param ca2</a>
+<span class="sourceLineNo">1412</span><a id="line.1412">         *            atom array, will not be modified</a>
+<span class="sourceLineNo">1413</span><a id="line.1413">         * @return the original alignment, with the alignment position at the</a>
+<span class="sourceLineNo">1414</span><a id="line.1414">         *         highest distance removed</a>
+<span class="sourceLineNo">1415</span><a id="line.1415">         * @throws StructureException</a>
+<span class="sourceLineNo">1416</span><a id="line.1416">         */</a>
+<span class="sourceLineNo">1417</span><a id="line.1417">        public static AFPChain deleteHighestDistanceColumn(AFPChain afpChain,</a>
+<span class="sourceLineNo">1418</span><a id="line.1418">                        Atom[] ca1, Atom[] ca2) throws StructureException {</a>
+<span class="sourceLineNo">1419</span><a id="line.1419"></a>
+<span class="sourceLineNo">1420</span><a id="line.1420">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">1421</span><a id="line.1421"></a>
+<span class="sourceLineNo">1422</span><a id="line.1422">                int maxBlock = 0;</a>
+<span class="sourceLineNo">1423</span><a id="line.1423">                int maxPos = 0;</a>
+<span class="sourceLineNo">1424</span><a id="line.1424">                double maxDistance = Double.MIN_VALUE;</a>
+<span class="sourceLineNo">1425</span><a id="line.1425"></a>
+<span class="sourceLineNo">1426</span><a id="line.1426">                for (int b = 0; b &lt; optAln.length; b++) {</a>
+<span class="sourceLineNo">1427</span><a id="line.1427">                        for (int p = 0; p &lt; optAln[b][0].length; p++) {</a>
+<span class="sourceLineNo">1428</span><a id="line.1428">                                Atom ca2clone = ca2[optAln[b][1][p]];</a>
+<span class="sourceLineNo">1429</span><a id="line.1429">                                Calc.rotate(ca2clone, afpChain.getBlockRotationMatrix()[b]);</a>
+<span class="sourceLineNo">1430</span><a id="line.1430">                                Calc.shift(ca2clone, afpChain.getBlockShiftVector()[b]);</a>
+<span class="sourceLineNo">1431</span><a id="line.1431"></a>
+<span class="sourceLineNo">1432</span><a id="line.1432">                                double distance = Calc.getDistance(ca1[optAln[b][0][p]],</a>
+<span class="sourceLineNo">1433</span><a id="line.1433">                                                ca2clone);</a>
+<span class="sourceLineNo">1434</span><a id="line.1434">                                if (distance &gt; maxDistance) {</a>
+<span class="sourceLineNo">1435</span><a id="line.1435">                                        maxBlock = b;</a>
+<span class="sourceLineNo">1436</span><a id="line.1436">                                        maxPos = p;</a>
+<span class="sourceLineNo">1437</span><a id="line.1437">                                        maxDistance = distance;</a>
+<span class="sourceLineNo">1438</span><a id="line.1438">                                }</a>
+<span class="sourceLineNo">1439</span><a id="line.1439">                        }</a>
+<span class="sourceLineNo">1440</span><a id="line.1440">                }</a>
+<span class="sourceLineNo">1441</span><a id="line.1441"></a>
+<span class="sourceLineNo">1442</span><a id="line.1442">                return deleteColumn(afpChain, ca1, ca2, maxBlock, maxPos);</a>
+<span class="sourceLineNo">1443</span><a id="line.1443">        }</a>
+<span class="sourceLineNo">1444</span><a id="line.1444"></a>
+<span class="sourceLineNo">1445</span><a id="line.1445">        /**</a>
+<span class="sourceLineNo">1446</span><a id="line.1446">         * Delete an alignment position from the original alignment object.</a>
+<span class="sourceLineNo">1447</span><a id="line.1447">         *</a>
+<span class="sourceLineNo">1448</span><a id="line.1448">         * @param afpChain</a>
+<span class="sourceLineNo">1449</span><a id="line.1449">         *            original alignment, will be modified</a>
+<span class="sourceLineNo">1450</span><a id="line.1450">         * @param ca1</a>
+<span class="sourceLineNo">1451</span><a id="line.1451">         *            atom array, will not be modified</a>
+<span class="sourceLineNo">1452</span><a id="line.1452">         * @param ca2</a>
+<span class="sourceLineNo">1453</span><a id="line.1453">         *            atom array, will not be modified</a>
+<span class="sourceLineNo">1454</span><a id="line.1454">         * @param block</a>
+<span class="sourceLineNo">1455</span><a id="line.1455">         *            block of the alignment position</a>
+<span class="sourceLineNo">1456</span><a id="line.1456">         * @param pos</a>
+<span class="sourceLineNo">1457</span><a id="line.1457">         *            position index in the block</a>
+<span class="sourceLineNo">1458</span><a id="line.1458">         * @return the original alignment, with the alignment position removed</a>
+<span class="sourceLineNo">1459</span><a id="line.1459">         * @throws StructureException</a>
+<span class="sourceLineNo">1460</span><a id="line.1460">         */</a>
+<span class="sourceLineNo">1461</span><a id="line.1461">        public static AFPChain deleteColumn(AFPChain afpChain, Atom[] ca1,</a>
+<span class="sourceLineNo">1462</span><a id="line.1462">                        Atom[] ca2, int block, int pos) throws StructureException {</a>
+<span class="sourceLineNo">1463</span><a id="line.1463"></a>
+<span class="sourceLineNo">1464</span><a id="line.1464">                // Check validity of the inputs</a>
+<span class="sourceLineNo">1465</span><a id="line.1465">                if (afpChain.getBlockNum() &lt;= block) {</a>
+<span class="sourceLineNo">1466</span><a id="line.1466">                        throw new IndexOutOfBoundsException(String.format(</a>
+<span class="sourceLineNo">1467</span><a id="line.1467">                                        "Block index requested (%d) is higher than the total number of AFPChain blocks (%d).",</a>
+<span class="sourceLineNo">1468</span><a id="line.1468">                                        block, afpChain.getBlockNum()));</a>
+<span class="sourceLineNo">1469</span><a id="line.1469">                }</a>
+<span class="sourceLineNo">1470</span><a id="line.1470">                if (afpChain.getOptAln()[block][0].length &lt;= pos) {</a>
+<span class="sourceLineNo">1471</span><a id="line.1471">                        throw new IndexOutOfBoundsException(String.format(</a>
+<span class="sourceLineNo">1472</span><a id="line.1472">                                        "Position index requested (%d) is higher than the total number of aligned position in the AFPChain block (%d).",</a>
+<span class="sourceLineNo">1473</span><a id="line.1473">                                        block, afpChain.getBlockSize()[block]));</a>
+<span class="sourceLineNo">1474</span><a id="line.1474">                }</a>
+<span class="sourceLineNo">1475</span><a id="line.1475"></a>
+<span class="sourceLineNo">1476</span><a id="line.1476">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">1477</span><a id="line.1477"></a>
+<span class="sourceLineNo">1478</span><a id="line.1478">                int[] newPos0 = new int[optAln[block][0].length - 1];</a>
+<span class="sourceLineNo">1479</span><a id="line.1479">                int[] newPos1 = new int[optAln[block][1].length - 1];</a>
+<span class="sourceLineNo">1480</span><a id="line.1480"></a>
+<span class="sourceLineNo">1481</span><a id="line.1481">                int position = 0;</a>
+<span class="sourceLineNo">1482</span><a id="line.1482">                for (int p = 0; p &lt; optAln[block][0].length; p++) {</a>
+<span class="sourceLineNo">1483</span><a id="line.1483"></a>
+<span class="sourceLineNo">1484</span><a id="line.1484">                        if (p == pos)</a>
+<span class="sourceLineNo">1485</span><a id="line.1485">                                continue;</a>
+<span class="sourceLineNo">1486</span><a id="line.1486"></a>
+<span class="sourceLineNo">1487</span><a id="line.1487">                        newPos0[position] = optAln[block][0][p];</a>
+<span class="sourceLineNo">1488</span><a id="line.1488">                        newPos1[position] = optAln[block][1][p];</a>
+<span class="sourceLineNo">1489</span><a id="line.1489"></a>
+<span class="sourceLineNo">1490</span><a id="line.1490">                        position++;</a>
+<span class="sourceLineNo">1491</span><a id="line.1491">                }</a>
+<span class="sourceLineNo">1492</span><a id="line.1492"></a>
+<span class="sourceLineNo">1493</span><a id="line.1493">                optAln[block][0] = newPos0;</a>
+<span class="sourceLineNo">1494</span><a id="line.1494">                optAln[block][1] = newPos1;</a>
+<span class="sourceLineNo">1495</span><a id="line.1495"></a>
+<span class="sourceLineNo">1496</span><a id="line.1496">                return AlignmentTools.replaceOptAln(optAln, afpChain, ca1, ca2);</a>
+<span class="sourceLineNo">1497</span><a id="line.1497">        }</a>
+<span class="sourceLineNo">1498</span><a id="line.1498">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

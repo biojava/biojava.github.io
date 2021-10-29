@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on May 17, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Andreas Prlic</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">package demo;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.*;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.align.util.AtomCache;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.io.CifFileReader;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.io.StructureProvider;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.io.StructureFiletype;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.List;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">/** An example of how to read MMcif files</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">038</span><a id="line.38"> *</a>
+<span class="sourceLineNo">039</span><a id="line.39"> */</a>
+<span class="sourceLineNo">040</span><a id="line.40">public class DemoMMCIFReader</a>
+<span class="sourceLineNo">041</span><a id="line.41">{</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">        public static void main(String[] args){</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">                DemoMMCIFReader demo = new DemoMMCIFReader();</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">                demo.loadSimple();</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">                demo.loadFromDirectAccess();</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">        }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        /**</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * A basic example how to load an mmCif file and get a Structure object</a>
+<span class="sourceLineNo">055</span><a id="line.55">         *</a>
+<span class="sourceLineNo">056</span><a id="line.56">         */</a>
+<span class="sourceLineNo">057</span><a id="line.57">        public void loadSimple(){</a>
+<span class="sourceLineNo">058</span><a id="line.58">                String pdbId = "4hhb";</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">                AtomCache cache = new AtomCache();</a>
+<span class="sourceLineNo">061</span><a id="line.61">                cache.setFiletype(StructureFiletype.CIF);</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                StructureIO.setAtomCache(cache);</a>
+<span class="sourceLineNo">064</span><a id="line.64">                try {</a>
+<span class="sourceLineNo">065</span><a id="line.65">                        Structure s = StructureIO.getStructure(pdbId);</a>
+<span class="sourceLineNo">066</span><a id="line.66">                        System.out.println(pdbId + " has nr atoms: " + StructureTools.getNrAtoms(s));</a>
+<span class="sourceLineNo">067</span><a id="line.67">                } catch (Exception e){</a>
+<span class="sourceLineNo">068</span><a id="line.68">                        e.printStackTrace();</a>
+<span class="sourceLineNo">069</span><a id="line.69">                }</a>
+<span class="sourceLineNo">070</span><a id="line.70">        }</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">        /**</a>
+<span class="sourceLineNo">074</span><a id="line.74">         * An example demonstrating how to directly use the mmCif file parsing classes. This could potentially be used</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * to use the parser to populate a data-structure that is different from the biojava-structure data model.</a>
+<span class="sourceLineNo">076</span><a id="line.76">         *</a>
+<span class="sourceLineNo">077</span><a id="line.77">         */</a>
+<span class="sourceLineNo">078</span><a id="line.78">        public void loadFromDirectAccess(){</a>
+<span class="sourceLineNo">079</span><a id="line.79">                String pdbId = "1A4W";</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">                StructureProvider pdbreader = new CifFileReader();</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">                try {</a>
+<span class="sourceLineNo">084</span><a id="line.84">                        Structure s = pdbreader.getStructureById(pdbId);</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">                        System.out.println("Getting chain H of 1A4W");</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">                        List&lt;Chain&gt; hs = s.getNonPolyChainsByPDB("H");</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">                        Chain h = hs.get(0);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                        List&lt;Group&gt; ligands = h.getAtomGroups();</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                        System.out.println("These ligands have been found in chain " + h.getName());</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">                        for (Group l:ligands){</a>
+<span class="sourceLineNo">096</span><a id="line.96">                                System.out.println(l);</a>
+<span class="sourceLineNo">097</span><a id="line.97">                        }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">                        System.out.println("Accessing QWE directly: ");</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        Group qwe = s.getNonPolyChainsByPDB("H").get(2).getGroupByPDB(new ResidueNumber("H",373,null));</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">                        System.out.println(qwe.getChemComp());</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">                        System.out.println(h.getSeqResSequence());</a>
+<span class="sourceLineNo">105</span><a id="line.105">                        System.out.println(h.getAtomSequence());</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        System.out.println(h.getAtomGroups(GroupType.HETATM));</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                        System.out.println("Entities: " + s.getEntityInfos());</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">                } catch (Exception e) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                        e.printStackTrace();</a>
+<span class="sourceLineNo">112</span><a id="line.112">                }</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">        }</a>
+<span class="sourceLineNo">116</span><a id="line.116">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

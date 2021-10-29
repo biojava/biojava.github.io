@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.cluster;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.*;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.ArrayList;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Collections;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.List;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">/**</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * The SubunitExtractor extracts the information of each protein {@link Chain}</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * in a {@link Structure} and converts them into a List of {@link Subunit}.</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * @author Peter Rose</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * @author Aleix Lafita</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * @since 5.0.0</a>
+<span class="sourceLineNo">038</span><a id="line.38"> *</a>
+<span class="sourceLineNo">039</span><a id="line.39"> */</a>
+<span class="sourceLineNo">040</span><a id="line.40">public class SubunitExtractor {</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">        private static final Logger logger = LoggerFactory</a>
+<span class="sourceLineNo">043</span><a id="line.43">                        .getLogger(SubunitExtractor.class);</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">        /** Prevent instantiation **/</a>
+<span class="sourceLineNo">046</span><a id="line.46">        private SubunitExtractor() {</a>
+<span class="sourceLineNo">047</span><a id="line.47">        }</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">        /**</a>
+<span class="sourceLineNo">050</span><a id="line.50">         * Extract the information of each protein Chain in a Structure and converts</a>
+<span class="sourceLineNo">051</span><a id="line.51">         * them into a List of Subunit. The name of the Subunits is set to</a>
+<span class="sourceLineNo">052</span><a id="line.52">         * {@link Chain#getId()}.</a>
+<span class="sourceLineNo">053</span><a id="line.53">         *</a>
+<span class="sourceLineNo">054</span><a id="line.54">         *</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @param structure</a>
+<span class="sourceLineNo">056</span><a id="line.56">         *            Structure object with protein Chains</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * @param absMinLen</a>
+<span class="sourceLineNo">058</span><a id="line.58">         *            {@link SubunitClustererParameters#getAbsoluteMinimumSequenceLength()}</a>
+<span class="sourceLineNo">059</span><a id="line.59">         * @param fraction</a>
+<span class="sourceLineNo">060</span><a id="line.60">         *            {@link SubunitClustererParameters#getMinimumSequenceLengthFraction()}</a>
+<span class="sourceLineNo">061</span><a id="line.61">         * @param minLen</a>
+<span class="sourceLineNo">062</span><a id="line.62">         *            {@link SubunitClustererParameters#getMinimumSequenceLength()}</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * @return List of Subunits</a>
+<span class="sourceLineNo">064</span><a id="line.64">         */</a>
+<span class="sourceLineNo">065</span><a id="line.65">        public static List&lt;Subunit&gt; extractSubunits(Structure structure,</a>
+<span class="sourceLineNo">066</span><a id="line.66">                        int absMinLen, double fraction, int minLen) {</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68">                // The extracted subunit container</a>
+<span class="sourceLineNo">069</span><a id="line.69">                List&lt;Subunit&gt; subunits = new ArrayList&lt;Subunit&gt;();</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">                for (Chain c : structure.getPolyChains()) {</a>
+<span class="sourceLineNo">072</span><a id="line.72">                        // Only take protein chains</a>
+<span class="sourceLineNo">073</span><a id="line.73">                        if (c.isProtein()) {</a>
+<span class="sourceLineNo">074</span><a id="line.74">                                Atom[] ca = StructureTools.getRepresentativeAtomArray(c);</a>
+<span class="sourceLineNo">075</span><a id="line.75">                                logger.debug("Chain " + c.getId() + "; CA Atoms: " + ca.length + "; SEQRES: " + c.getSeqResSequence());</a>
+<span class="sourceLineNo">076</span><a id="line.76">                                if (ca.length==0)</a>
+<span class="sourceLineNo">077</span><a id="line.77">                                        continue;</a>
+<span class="sourceLineNo">078</span><a id="line.78">                                subunits.add(new Subunit(ca, c.getId(), null, structure));</a>
+<span class="sourceLineNo">079</span><a id="line.79">                        }</a>
+<span class="sourceLineNo">080</span><a id="line.80">                }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">                // Calculate the minimum length of a Subunit</a>
+<span class="sourceLineNo">083</span><a id="line.83">                int adjustedMinLen = calcAdjustedMinimumSequenceLength(subunits,</a>
+<span class="sourceLineNo">084</span><a id="line.84">                                absMinLen, fraction, minLen);</a>
+<span class="sourceLineNo">085</span><a id="line.85">                logger.debug("Adjusted minimum sequence length: " + adjustedMinLen);</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">                // Filter out short Subunits</a>
+<span class="sourceLineNo">088</span><a id="line.88">                for (int s = subunits.size() - 1; s &gt;= 0; s--) {</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        if (subunits.get(s).size() &lt; adjustedMinLen)</a>
+<span class="sourceLineNo">090</span><a id="line.90">                                subunits.remove(s);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                }</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">                return subunits;</a>
+<span class="sourceLineNo">094</span><a id="line.94">        }</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * Returns an adapted minimum sequence length. This method ensure that</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * structure that only have short chains are not excluded by the</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * minimumSequenceLength cutoff value.</a>
+<span class="sourceLineNo">100</span><a id="line.100">         *</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @return adjustedMinimumSequenceLength</a>
+<span class="sourceLineNo">102</span><a id="line.102">         */</a>
+<span class="sourceLineNo">103</span><a id="line.103">        private static int calcAdjustedMinimumSequenceLength(</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        List&lt;Subunit&gt; subunits, int absMinLen, double fraction, int minLen) {</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">                int maxLength = Integer.MIN_VALUE;</a>
+<span class="sourceLineNo">107</span><a id="line.107">                int minLength = Integer.MAX_VALUE;</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">                // Extract the length List, the min and the max</a>
+<span class="sourceLineNo">110</span><a id="line.110">                List&lt;Integer&gt; lengths = new ArrayList&lt;Integer&gt;();</a>
+<span class="sourceLineNo">111</span><a id="line.111">                for (int i = 0; i &lt; subunits.size(); i++) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        if (subunits.get(i).size() &gt;= absMinLen) {</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                maxLength = Math.max(subunits.get(i).size(), maxLength);</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                minLength = Math.min(subunits.get(i).size(), minLength);</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                lengths.add(subunits.get(i).size());</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">                        }</a>
+<span class="sourceLineNo">118</span><a id="line.118">                }</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">                int adjustedMinimumSequenceLength = minLen;</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">                if (lengths.size() &lt; 2)</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        return adjustedMinimumSequenceLength;</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                // Calculate the median of the lengths</a>
+<span class="sourceLineNo">126</span><a id="line.126">                double median = 0;</a>
+<span class="sourceLineNo">127</span><a id="line.127">                Collections.sort(lengths);</a>
+<span class="sourceLineNo">128</span><a id="line.128">                if (lengths.size() % 2 == 1) {</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        int middle = (lengths.size() - 1) / 2;</a>
+<span class="sourceLineNo">130</span><a id="line.130">                        median = lengths.get(middle);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                } else {</a>
+<span class="sourceLineNo">132</span><a id="line.132">                        int middle2 = lengths.size() / 2;</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        int middle1 = middle2 - 1;</a>
+<span class="sourceLineNo">134</span><a id="line.134">                        median = 0.5 * (lengths.get(middle1) + lengths.get(middle2));</a>
+<span class="sourceLineNo">135</span><a id="line.135">                }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">                // If the median * fraction is lower than the minLength</a>
+<span class="sourceLineNo">138</span><a id="line.138">                if (minLength &gt;= median * fraction) {</a>
+<span class="sourceLineNo">139</span><a id="line.139">                        adjustedMinimumSequenceLength = Math.min(minLength, minLen);</a>
+<span class="sourceLineNo">140</span><a id="line.140">                }</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">                return adjustedMinimumSequenceLength;</a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

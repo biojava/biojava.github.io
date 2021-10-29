@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.nbio.structure.chem;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import org.biojava.nbio.structure.io.cif.ChemCompConverter;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.io.BufferedOutputStream;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.io.File;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.io.FileOutputStream;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import java.io.IOException;</a>
+<span class="sourceLineNo">011</span><a id="line.11">import java.nio.file.FileSystem;</a>
+<span class="sourceLineNo">012</span><a id="line.12">import java.nio.file.FileSystems;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import java.nio.file.Files;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import java.nio.file.Path;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import java.nio.file.Paths;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import java.nio.file.StandardCopyOption;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import java.util.HashSet;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import java.util.Set;</a>
+<span class="sourceLineNo">019</span><a id="line.19">import java.util.zip.ZipEntry;</a>
+<span class="sourceLineNo">020</span><a id="line.20">import java.util.zip.ZipOutputStream;</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">/**</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * This chemical component provider retrieves and caches chemical component definition files from a</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * zip archive specified in its construction.  If the archive does not contain the record, an attempt is</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * made to download it using DownloadChemCompProvider. The downloaded file is then added to the archive.</a>
+<span class="sourceLineNo">026</span><a id="line.26"> *</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * The class is thread-safe and the same ZipChemCompProvider should be used by all threads to prevent</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * simultaneous read or write to the zip archive.  A zip archive will be created if missing.</a>
+<span class="sourceLineNo">029</span><a id="line.29"> *</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * @author edlunde</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * @author larsonm</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @since 12/05/12</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * updated 3/5/2016 for Java 7 ZipFileSystem</a>
+<span class="sourceLineNo">034</span><a id="line.34"> */</a>
+<span class="sourceLineNo">035</span><a id="line.35">public class ZipChemCompProvider implements ChemCompProvider{</a>
+<span class="sourceLineNo">036</span><a id="line.36">    private static final Logger s_logger = LoggerFactory.getLogger(ZipChemCompProvider.class);</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">    private final Path m_tempDir;  // Base path where $m_zipRootDir/ will be downloaded to.</a>
+<span class="sourceLineNo">039</span><a id="line.39">    private final Path m_zipRootDir;</a>
+<span class="sourceLineNo">040</span><a id="line.40">    private final Path m_zipFile;</a>
+<span class="sourceLineNo">041</span><a id="line.41">    private final DownloadChemCompProvider m_dlProvider;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">    private boolean m_removeCif;</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">    // Missing IDs from library that cannot be download added here to prevent delays.</a>
+<span class="sourceLineNo">046</span><a id="line.46">    private Set&lt;String&gt; unavailable = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">    /**</a>
+<span class="sourceLineNo">049</span><a id="line.49">     * ZipChemCompProvider is a Chemical Component provider that stores chemical components</a>
+<span class="sourceLineNo">050</span><a id="line.50">     * in a zip archive.  Missing chemical components are downloaded and appended to the</a>
+<span class="sourceLineNo">051</span><a id="line.51">     * archive.  If non-existent a new zip archive will be created.</a>
+<span class="sourceLineNo">052</span><a id="line.52">     *</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * @param chemicalComponentDictionaryFile : path to zip archive for chemical components.</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * @param tempDir : path for temporary directory, (null) defaults to path in property "java.io.tmpdir".</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * @throws IOException</a>
+<span class="sourceLineNo">056</span><a id="line.56">     */</a>
+<span class="sourceLineNo">057</span><a id="line.57">    public ZipChemCompProvider(String chemicalComponentDictionaryFile, String tempDir) throws IOException {</a>
+<span class="sourceLineNo">058</span><a id="line.58">        this.m_zipFile = Paths.get(chemicalComponentDictionaryFile);</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        // Use a default temporary directory if not passed a value.</a>
+<span class="sourceLineNo">061</span><a id="line.61">        if (tempDir == null || tempDir.equals("")) {</a>
+<span class="sourceLineNo">062</span><a id="line.62">            this.m_tempDir = Paths.get(System.getProperty("java.io.tmpdir"));</a>
+<span class="sourceLineNo">063</span><a id="line.63">        } else {</a>
+<span class="sourceLineNo">064</span><a id="line.64">            this.m_tempDir = Paths.get(tempDir);</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.m_zipRootDir = Paths.get("chemcomp");</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        // Setup an instance of the download chemcomp provider.</a>
+<span class="sourceLineNo">070</span><a id="line.70">        this.m_dlProvider = new DownloadChemCompProvider(m_tempDir.toString());</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.m_removeCif = true;</a>
+<span class="sourceLineNo">072</span><a id="line.72">        initializeZip();</a>
+<span class="sourceLineNo">073</span><a id="line.73">    }</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">    // See comments in addToZipFileSystem for why initialization is required with</a>
+<span class="sourceLineNo">076</span><a id="line.76">    // ZipFileSystems - due to URI issues in Java7.</a>
+<span class="sourceLineNo">077</span><a id="line.77">    private void initializeZip() throws IOException {</a>
+<span class="sourceLineNo">078</span><a id="line.78">        s_logger.info("Using chemical component dictionary: {}", m_zipFile.toString());</a>
+<span class="sourceLineNo">079</span><a id="line.79">        final File f = m_zipFile.toFile();</a>
+<span class="sourceLineNo">080</span><a id="line.80">        if (!f.exists()) {</a>
+<span class="sourceLineNo">081</span><a id="line.81">            s_logger.info("Creating missing zip archive: {}", m_zipFile.toString());</a>
+<span class="sourceLineNo">082</span><a id="line.82">            FileOutputStream fo = new FileOutputStream(f);</a>
+<span class="sourceLineNo">083</span><a id="line.83">            try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(fo))) {</a>
+<span class="sourceLineNo">084</span><a id="line.84">                zip.putNextEntry(new ZipEntry("chemcomp/"));</a>
+<span class="sourceLineNo">085</span><a id="line.85">                zip.closeEntry();</a>
+<span class="sourceLineNo">086</span><a id="line.86">            }</a>
+<span class="sourceLineNo">087</span><a id="line.87">        }</a>
+<span class="sourceLineNo">088</span><a id="line.88">    }</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">    /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * Remove downloaded .cif.gz after adding to zip archive?</a>
+<span class="sourceLineNo">092</span><a id="line.92">     * Default is true.</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * @param doRemove</a>
+<span class="sourceLineNo">094</span><a id="line.94">     */</a>
+<span class="sourceLineNo">095</span><a id="line.95">    public void setRemoveCif(boolean doRemove) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">        m_removeCif = doRemove;</a>
+<span class="sourceLineNo">097</span><a id="line.97">    }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">    /**</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * (non-Javadoc)</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * @see ChemCompProvider#getChemComp(java.lang.String)</a>
+<span class="sourceLineNo">102</span><a id="line.102">     *</a>
+<span class="sourceLineNo">103</span><a id="line.103">     * @param recordName : three letter PDB name for a residue</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * @return ChemComp from .zip or ChemComp from repository.  Will return empty ChemComp when unable to find a residue and will return null if not provided a valid recordName.</a>
+<span class="sourceLineNo">105</span><a id="line.105">     */</a>
+<span class="sourceLineNo">106</span><a id="line.106">    @Override</a>
+<span class="sourceLineNo">107</span><a id="line.107">    public ChemComp getChemComp(String recordName) {</a>
+<span class="sourceLineNo">108</span><a id="line.108">        if (null == recordName) return null;</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">        // handle non-existent ChemComp codes and do not repeatedly attempt to add these.</a>
+<span class="sourceLineNo">111</span><a id="line.111">        for (String str : unavailable) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">            if (recordName.equals(str)) return getEmptyChemComp(recordName);</a>
+<span class="sourceLineNo">113</span><a id="line.113">        }</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">        // Try to pull from zip, if fail then download.</a>
+<span class="sourceLineNo">116</span><a id="line.116">        ChemComp cc = getFromZip(recordName);</a>
+<span class="sourceLineNo">117</span><a id="line.117">        if (cc == null) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">            s_logger.info("File {} not found in archive. Attempting download from PDB.", recordName);</a>
+<span class="sourceLineNo">119</span><a id="line.119">            cc = downloadAndAdd(recordName);</a>
+<span class="sourceLineNo">120</span><a id="line.120">        }</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">        // If a null record or an empty chemcomp, return a default ChemComp and blacklist.</a>
+<span class="sourceLineNo">123</span><a id="line.123">        if (cc == null || (null == cc.getName() &amp;&amp; cc.getAtoms().size() == 0)) {</a>
+<span class="sourceLineNo">124</span><a id="line.124">            s_logger.info("Unable to find or download {} - excluding from future searches.", recordName);</a>
+<span class="sourceLineNo">125</span><a id="line.125">            unavailable.add(recordName);</a>
+<span class="sourceLineNo">126</span><a id="line.126">            return getEmptyChemComp(recordName);</a>
+<span class="sourceLineNo">127</span><a id="line.127">        }</a>
+<span class="sourceLineNo">128</span><a id="line.128">        return cc;</a>
+<span class="sourceLineNo">129</span><a id="line.129">    }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">    /** Use DownloadChemCompProvider to grab a gzipped cif record from the PDB.</a>
+<span class="sourceLineNo">132</span><a id="line.132">     *  Zip all downloaded cif.gz files into the dictionary.</a>
+<span class="sourceLineNo">133</span><a id="line.133">     *</a>
+<span class="sourceLineNo">134</span><a id="line.134">     * @param recordName is the three-letter chemical component code (i.e. residue name).</a>
+<span class="sourceLineNo">135</span><a id="line.135">     * @return ChemComp matching recordName</a>
+<span class="sourceLineNo">136</span><a id="line.136">     */</a>
+<span class="sourceLineNo">137</span><a id="line.137">    private ChemComp downloadAndAdd(String recordName){</a>
+<span class="sourceLineNo">138</span><a id="line.138">        final ChemComp cc = m_dlProvider.getChemComp(recordName);</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">        // final File [] files = finder(m_tempDir.resolve("chemcomp").toString(), "cif.gz");</a>
+<span class="sourceLineNo">141</span><a id="line.141">        final File [] files = new File[1];</a>
+<span class="sourceLineNo">142</span><a id="line.142">        Path cif = m_tempDir.resolve("chemcomp").resolve(recordName + ".cif.gz");</a>
+<span class="sourceLineNo">143</span><a id="line.143">        files[0] = cif.toFile();</a>
+<span class="sourceLineNo">144</span><a id="line.144">        if (files[0] != null) {</a>
+<span class="sourceLineNo">145</span><a id="line.145">            addToZipFileSystem(m_zipFile, files, m_zipRootDir);</a>
+<span class="sourceLineNo">146</span><a id="line.146">            if (m_removeCif) for (File f : files) f.delete();</a>
+<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">148</span><a id="line.148">        return cc;</a>
+<span class="sourceLineNo">149</span><a id="line.149">    }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">    /**</a>
+<span class="sourceLineNo">152</span><a id="line.152">     * Cleanup chemical component (.cif.gz) files downloaded to tmpdir.</a>
+<span class="sourceLineNo">153</span><a id="line.153">     * @param tempdir : path to temporary directory for chemical components</a>
+<span class="sourceLineNo">154</span><a id="line.154">     */</a>
+<span class="sourceLineNo">155</span><a id="line.155">    public static void purgeTempFiles(String tempdir) {</a>
+<span class="sourceLineNo">156</span><a id="line.156">        if (tempdir == null) return;</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        s_logger.info("Removing: "+tempdir);</a>
+<span class="sourceLineNo">159</span><a id="line.159">        Path dlPath = Paths.get(tempdir).resolve("chemcomp");</a>
+<span class="sourceLineNo">160</span><a id="line.160">        File[] chemCompOutFiles = finder(dlPath.toString(), "cif.gz");</a>
+<span class="sourceLineNo">161</span><a id="line.161">        if (null != chemCompOutFiles) for (File f : chemCompOutFiles) f.delete();</a>
+<span class="sourceLineNo">162</span><a id="line.162">        dlPath.toFile().delete();</a>
+<span class="sourceLineNo">163</span><a id="line.163">    }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">    /**</a>
+<span class="sourceLineNo">166</span><a id="line.166">     * Return an empty ChemComp group for a three-letter resName.</a>
+<span class="sourceLineNo">167</span><a id="line.167">     * @param resName</a>
+<span class="sourceLineNo">168</span><a id="line.168">     * @return</a>
+<span class="sourceLineNo">169</span><a id="line.169">     */</a>
+<span class="sourceLineNo">170</span><a id="line.170">    private ChemComp getEmptyChemComp(String resName){</a>
+<span class="sourceLineNo">171</span><a id="line.171">        String pdbName = ""; // Empty string is default</a>
+<span class="sourceLineNo">172</span><a id="line.172">        if (null != resName &amp;&amp; resName.length() &gt;= 3) {</a>
+<span class="sourceLineNo">173</span><a id="line.173">            pdbName = resName.substring(0,3);</a>
+<span class="sourceLineNo">174</span><a id="line.174">        }</a>
+<span class="sourceLineNo">175</span><a id="line.175">        final ChemComp comp = new ChemComp();</a>
+<span class="sourceLineNo">176</span><a id="line.176">        comp.setOneLetterCode("?");</a>
+<span class="sourceLineNo">177</span><a id="line.177">        comp.setThreeLetterCode(pdbName);</a>
+<span class="sourceLineNo">178</span><a id="line.178">        comp.setPolymerType(PolymerType.unknown);</a>
+<span class="sourceLineNo">179</span><a id="line.179">        comp.setResidueType(ResidueType.atomn);</a>
+<span class="sourceLineNo">180</span><a id="line.180">        return comp;</a>
+<span class="sourceLineNo">181</span><a id="line.181">    }</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">    /**</a>
+<span class="sourceLineNo">184</span><a id="line.184">     * Return File(s) in dirName that match suffix.</a>
+<span class="sourceLineNo">185</span><a id="line.185">     * @param dirName</a>
+<span class="sourceLineNo">186</span><a id="line.186">     * @param suffix</a>
+<span class="sourceLineNo">187</span><a id="line.187">     * @return</a>
+<span class="sourceLineNo">188</span><a id="line.188">     */</a>
+<span class="sourceLineNo">189</span><a id="line.189">    static private File[] finder(String dirName, final String suffix) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">        if (null == dirName || null == suffix) {</a>
+<span class="sourceLineNo">191</span><a id="line.191">            return null;</a>
+<span class="sourceLineNo">192</span><a id="line.192">        }</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">        final File dir = new File(dirName);</a>
+<span class="sourceLineNo">195</span><a id="line.195">        return dir.listFiles((dir1, filename) -&gt; filename.endsWith(suffix));</a>
+<span class="sourceLineNo">196</span><a id="line.196">    }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">    /**</a>
+<span class="sourceLineNo">199</span><a id="line.199">     * This is synchronized, along with addToFileSystem to prevent simulatenous reading/writing.</a>
+<span class="sourceLineNo">200</span><a id="line.200">     * @param recordName to find in zipfile.</a>
+<span class="sourceLineNo">201</span><a id="line.201">     * @return ChemComp if found or null if missing.</a>
+<span class="sourceLineNo">202</span><a id="line.202">     */</a>
+<span class="sourceLineNo">203</span><a id="line.203">    private synchronized ChemComp getFromZip(String recordName) {</a>
+<span class="sourceLineNo">204</span><a id="line.204">        ChemComp cc = null;</a>
+<span class="sourceLineNo">205</span><a id="line.205">        if (!m_zipFile.toFile().exists()) return cc;</a>
+<span class="sourceLineNo">206</span><a id="line.206">        final String filename = "chemcomp/" + recordName + ".cif.gz";</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">        // try with resources block to read from the filesystem.</a>
+<span class="sourceLineNo">209</span><a id="line.209">        // Don't remove the (ClassLoader) cast! It is required for openjdk 11.</a>
+<span class="sourceLineNo">210</span><a id="line.210">        try (FileSystem fs = FileSystems.newFileSystem(m_zipFile, (ClassLoader)null)) {</a>
+<span class="sourceLineNo">211</span><a id="line.211">            Path cif = fs.getPath(filename);</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">            if (Files.exists(cif)) {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                s_logger.debug("reading {} from {}", recordName, m_zipFile);</a>
+<span class="sourceLineNo">215</span><a id="line.215">                final ChemicalComponentDictionary dict = ChemCompConverter.fromPath(cif);</a>
+<span class="sourceLineNo">216</span><a id="line.216">                cc = dict.getChemComp(recordName);</a>
+<span class="sourceLineNo">217</span><a id="line.217">            }</a>
+<span class="sourceLineNo">218</span><a id="line.218">        } catch (IOException e) {</a>
+<span class="sourceLineNo">219</span><a id="line.219">            s_logger.error("Unable to read from zip file : {}", e.getMessage());</a>
+<span class="sourceLineNo">220</span><a id="line.220">        }</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">        return cc;</a>
+<span class="sourceLineNo">223</span><a id="line.223">    }</a>
+<span class="sourceLineNo">224</span><a id="line.224"></a>
+<span class="sourceLineNo">225</span><a id="line.225">    /**</a>
+<span class="sourceLineNo">226</span><a id="line.226">     * Add an array of files to a zip archive.</a>
+<span class="sourceLineNo">227</span><a id="line.227">     * Synchronized to prevent simultaneous reading/writing.</a>
+<span class="sourceLineNo">228</span><a id="line.228">     *</a>
+<span class="sourceLineNo">229</span><a id="line.229">     * @param zipFile is a destination zip archive</a>
+<span class="sourceLineNo">230</span><a id="line.230">     * @param files is an array of files to be added</a>
+<span class="sourceLineNo">231</span><a id="line.231">     * @param pathWithinArchive is the path within the archive to add files to</a>
+<span class="sourceLineNo">232</span><a id="line.232">     * @return true if successfully appended these files.</a>
+<span class="sourceLineNo">233</span><a id="line.233">     */</a>
+<span class="sourceLineNo">234</span><a id="line.234">    private synchronized boolean addToZipFileSystem(Path zipFile, File[] files, Path pathWithinArchive) {</a>
+<span class="sourceLineNo">235</span><a id="line.235">        boolean ret = false;</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">        /* URIs in Java 7 cannot have spaces, must use Path instead</a>
+<span class="sourceLineNo">238</span><a id="line.238">         * and so, cannot use the properties map to describe need to create</a>
+<span class="sourceLineNo">239</span><a id="line.239">         * a new zip archive.  ZipChemCompProvider.initilizeZip to creates the</a>
+<span class="sourceLineNo">240</span><a id="line.240">         * missing zip file */</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242">                /*</a>
+<span class="sourceLineNo">243</span><a id="line.243">                // convert the filename to a URI</a>
+<span class="sourceLineNo">244</span><a id="line.244">                String uriString = "jar:file:" + zipFile.toUri().getPath();</a>
+<span class="sourceLineNo">245</span><a id="line.245">                final URI uri = URI.create(uriString);</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                // if filesystem doesn't exist, create one.</a>
+<span class="sourceLineNo">248</span><a id="line.248">                final Map&lt;String, String&gt; env = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">249</span><a id="line.249">                // Create a new zip if one isn't present.</a>
+<span class="sourceLineNo">250</span><a id="line.250">                if (!zipFile.toFile().exists()) {</a>
+<span class="sourceLineNo">251</span><a id="line.251">                        System.out.println("Need to create " + zipFile.toString());</a>
+<span class="sourceLineNo">252</span><a id="line.252">                }</a>
+<span class="sourceLineNo">253</span><a id="line.253">                env.put("create", String.valueOf(!zipFile.toFile().exists()));</a>
+<span class="sourceLineNo">254</span><a id="line.254">                // Specify the encoding as UTF -8</a>
+<span class="sourceLineNo">255</span><a id="line.255">                env.put("encoding", "UTF-8");</a>
+<span class="sourceLineNo">256</span><a id="line.256">                */</a>
+<span class="sourceLineNo">257</span><a id="line.257"></a>
+<span class="sourceLineNo">258</span><a id="line.258">        // Copy in each file.</a>
+<span class="sourceLineNo">259</span><a id="line.259">        // Don't remove the (ClassLoader) cast! It is required for openjdk 11.</a>
+<span class="sourceLineNo">260</span><a id="line.260">        try (FileSystem zipfs = FileSystems.newFileSystem(zipFile, (ClassLoader)null)) {</a>
+<span class="sourceLineNo">261</span><a id="line.261">            Files.createDirectories(pathWithinArchive);</a>
+<span class="sourceLineNo">262</span><a id="line.262">            for (File f : files) {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                if (!f.isDirectory() &amp;&amp; f.exists()) {</a>
+<span class="sourceLineNo">264</span><a id="line.264">                    Path externalFile = f.toPath();</a>
+<span class="sourceLineNo">265</span><a id="line.265">                    Path pathInZipFile = zipfs.getPath(pathWithinArchive.resolve(f.getName()).toString());</a>
+<span class="sourceLineNo">266</span><a id="line.266">                    Files.copy(externalFile, pathInZipFile,</a>
+<span class="sourceLineNo">267</span><a id="line.267">                            StandardCopyOption.REPLACE_EXISTING);</a>
+<span class="sourceLineNo">268</span><a id="line.268">                }</a>
+<span class="sourceLineNo">269</span><a id="line.269">            }</a>
+<span class="sourceLineNo">270</span><a id="line.270">            ret = true;</a>
+<span class="sourceLineNo">271</span><a id="line.271">        } catch (IOException ex) {</a>
+<span class="sourceLineNo">272</span><a id="line.272">            s_logger.error("Unable to add entries to Chemical Component zip archive : {}", ex.getMessage());</a>
+<span class="sourceLineNo">273</span><a id="line.273">            ret = false;</a>
+<span class="sourceLineNo">274</span><a id="line.274">        }</a>
+<span class="sourceLineNo">275</span><a id="line.275">        return ret;</a>
+<span class="sourceLineNo">276</span><a id="line.276">    }</a>
+<span class="sourceLineNo">277</span><a id="line.277">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

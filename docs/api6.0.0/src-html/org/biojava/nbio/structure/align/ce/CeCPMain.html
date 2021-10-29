@@ -1,0 +1,845 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on Mar 9, 2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Spencer Bliven</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">package org.biojava.nbio.structure.align.ce;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.*;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.align.model.AFPChain;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.align.util.AFPAlignmentDisplay;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.align.util.ConfigurationException;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.geometry.Matrices;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.geometry.SuperPositions;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.structure.jama.Matrix;</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.lang.reflect.InvocationTargetException;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.ArrayList;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.Arrays;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.util.List;</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">import javax.vecmath.Matrix4d;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">/**</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * A wrapper for {@link CeMain} which sets default parameters to be appropriate for finding</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * circular permutations.</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * &lt;p&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * A circular permutation consists of a single cleavage point and rearrangement</a>
+<span class="sourceLineNo">048</span><a id="line.48"> * between two structures, for example:</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * ABCDEFG</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * DEFGABC</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * @author Spencer Bliven.</a>
+<span class="sourceLineNo">054</span><a id="line.54"> *</a>
+<span class="sourceLineNo">055</span><a id="line.55"> */</a>
+<span class="sourceLineNo">056</span><a id="line.56">public class CeCPMain extends CeMain {</a>
+<span class="sourceLineNo">057</span><a id="line.57">        private static boolean debug = false;</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        public static final String algorithmName = "jCE Circular Permutation";</a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">        /**</a>
+<span class="sourceLineNo">062</span><a id="line.62">         *  version history:</a>
+<span class="sourceLineNo">063</span><a id="line.63">         *  1.5 - Added more parameters to the command line, including -maxOptRMSD</a>
+<span class="sourceLineNo">064</span><a id="line.64">         *  1.4 - Added DuplicationHint parameter &amp; default to duplicating the shorter chain</a>
+<span class="sourceLineNo">065</span><a id="line.65">         *  1.3 - Short CPs are now discarded</a>
+<span class="sourceLineNo">066</span><a id="line.66">         *  1.2 - now supports check AlignmentTools.isSequentialAlignment. XML protocol</a>
+<span class="sourceLineNo">067</span><a id="line.67">         *  1.1 - skipped, (trying to avoid confusion with jfatcat in all vs. all comparisons)</a>
+<span class="sourceLineNo">068</span><a id="line.68">         *  1.0 - initial release</a>
+<span class="sourceLineNo">069</span><a id="line.69">         */</a>
+<span class="sourceLineNo">070</span><a id="line.70">        public static final String version = "1.5";</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">        public CeCPMain(){</a>
+<span class="sourceLineNo">073</span><a id="line.73">                super();</a>
+<span class="sourceLineNo">074</span><a id="line.74">                params = new CECPParameters();</a>
+<span class="sourceLineNo">075</span><a id="line.75">        }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">        @Override</a>
+<span class="sourceLineNo">078</span><a id="line.78">        public String getAlgorithmName() {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                return CeCPMain.algorithmName;</a>
+<span class="sourceLineNo">080</span><a id="line.80">        }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">        @Override</a>
+<span class="sourceLineNo">083</span><a id="line.83">        public String getVersion() {</a>
+<span class="sourceLineNo">084</span><a id="line.84">                return CeCPMain.version;</a>
+<span class="sourceLineNo">085</span><a id="line.85">        }</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        public static void main(String[] args) throws ConfigurationException {</a>
+<span class="sourceLineNo">088</span><a id="line.88">                CeCPUserArgumentProcessor processor = new CeCPUserArgumentProcessor(); //Responsible for creating a CeCPMain instance</a>
+<span class="sourceLineNo">089</span><a id="line.89">                processor.process(args);</a>
+<span class="sourceLineNo">090</span><a id="line.90">        }</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">        /**</a>
+<span class="sourceLineNo">094</span><a id="line.94">         * Aligns ca1 and ca2 using a heuristic to check for CPs.</a>
+<span class="sourceLineNo">095</span><a id="line.95">         * &lt;p&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96">         * Aligns ca1 against a doubled ca2, then cleans up the alignment.</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * @param ca1</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @param ca2</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @param param</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * @return the alignment, possibly containing a CP.</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @throws StructureException</a>
+<span class="sourceLineNo">102</span><a id="line.102">         */</a>
+<span class="sourceLineNo">103</span><a id="line.103">        @Override</a>
+<span class="sourceLineNo">104</span><a id="line.104">        public AFPChain align(Atom[] ca1, Atom[] ca2, Object param) throws StructureException{</a>
+<span class="sourceLineNo">105</span><a id="line.105">                if ( ! (param instanceof CECPParameters))</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        throw new IllegalArgumentException("CE algorithm needs an object of call CeParameters as argument.");</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">                CECPParameters cpparams = (CECPParameters) param;</a>
+<span class="sourceLineNo">109</span><a id="line.109">                this.params = cpparams;</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                boolean duplicateRight;</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">                switch( cpparams.getDuplicationHint() ) {</a>
+<span class="sourceLineNo">114</span><a id="line.114">                case LEFT:</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        duplicateRight = false;</a>
+<span class="sourceLineNo">116</span><a id="line.116">                        break;</a>
+<span class="sourceLineNo">117</span><a id="line.117">                case RIGHT:</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        duplicateRight = true;</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        break;</a>
+<span class="sourceLineNo">120</span><a id="line.120">                case SHORTER:</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        duplicateRight = ca1.length &gt;= ca2.length;</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        break;</a>
+<span class="sourceLineNo">123</span><a id="line.123">                default:</a>
+<span class="sourceLineNo">124</span><a id="line.124">                        duplicateRight = true;</a>
+<span class="sourceLineNo">125</span><a id="line.125">                }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">                if( duplicateRight ) {</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        return alignRight(ca1, ca2, cpparams);</a>
+<span class="sourceLineNo">130</span><a id="line.130">                } else {</a>
+<span class="sourceLineNo">131</span><a id="line.131">                        if(debug) {</a>
+<span class="sourceLineNo">132</span><a id="line.132">                                System.out.println("Swapping alignment order.");</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        }</a>
+<span class="sourceLineNo">134</span><a id="line.134">                        AFPChain afpChain = this.alignRight(ca2, ca1, cpparams);</a>
+<span class="sourceLineNo">135</span><a id="line.135">                        return invertAlignment(afpChain);</a>
+<span class="sourceLineNo">136</span><a id="line.136">                }</a>
+<span class="sourceLineNo">137</span><a id="line.137">        }</a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">        /**</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * Aligns the structures, duplicating ca2 regardless of</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * {@link CECPParameters.getDuplicationHint() param.getDuplicationHint}.</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @param ca1</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * @param ca2</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @param cpparams</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * @return</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * @throws StructureException</a>
+<span class="sourceLineNo">147</span><a id="line.147">         */</a>
+<span class="sourceLineNo">148</span><a id="line.148">        private AFPChain alignRight(Atom[] ca1, Atom[] ca2, CECPParameters cpparams)</a>
+<span class="sourceLineNo">149</span><a id="line.149">                        throws StructureException {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                long startTime = System.currentTimeMillis();</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">                Atom[] ca2m = StructureTools.duplicateCA2(ca2);</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">                if(debug) {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                        System.out.format("Duplicating ca2 took %s ms\n",System.currentTimeMillis()-startTime);</a>
+<span class="sourceLineNo">156</span><a id="line.156">                        startTime = System.currentTimeMillis();</a>
+<span class="sourceLineNo">157</span><a id="line.157">                }</a>
+<span class="sourceLineNo">158</span><a id="line.158"></a>
+<span class="sourceLineNo">159</span><a id="line.159">                // Do alignment</a>
+<span class="sourceLineNo">160</span><a id="line.160">                AFPChain afpChain = super.align(ca1, ca2m,params);</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                // since the process of creating ca2m strips the name info away, set it explicitely</a>
+<span class="sourceLineNo">163</span><a id="line.163">                try {</a>
+<span class="sourceLineNo">164</span><a id="line.164">                        afpChain.setName2(ca2[0].getGroup().getChain().getStructure().getName());</a>
+<span class="sourceLineNo">165</span><a id="line.165">                } catch( Exception e) {}</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">                if(debug) {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                        System.out.format("Running %dx2*%d alignment took %s ms\n",ca1.length,ca2.length,System.currentTimeMillis()-startTime);</a>
+<span class="sourceLineNo">169</span><a id="line.169">                        startTime = System.currentTimeMillis();</a>
+<span class="sourceLineNo">170</span><a id="line.170">                }</a>
+<span class="sourceLineNo">171</span><a id="line.171">                afpChain = postProcessAlignment(afpChain, ca1, ca2m, calculator, cpparams);</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">                if(debug) {</a>
+<span class="sourceLineNo">174</span><a id="line.174">                        System.out.format("Finding CP point took %s ms\n",System.currentTimeMillis()-startTime);</a>
+<span class="sourceLineNo">175</span><a id="line.175">                        startTime = System.currentTimeMillis();</a>
+<span class="sourceLineNo">176</span><a id="line.176">                }</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">                return afpChain;</a>
+<span class="sourceLineNo">179</span><a id="line.179">        }</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">        /** Circular permutation specific code to be run after the standard CE alignment</a>
+<span class="sourceLineNo">184</span><a id="line.184">         *</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * @param afpChain The finished alignment</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * @param ca1 CA atoms of the first protein</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * @param ca2m A duplicated copy of the second protein</a>
+<span class="sourceLineNo">188</span><a id="line.188">         * @param calculator The CECalculator used to create afpChain</a>
+<span class="sourceLineNo">189</span><a id="line.189">         * @throws StructureException</a>
+<span class="sourceLineNo">190</span><a id="line.190">         */</a>
+<span class="sourceLineNo">191</span><a id="line.191">        public static AFPChain postProcessAlignment(AFPChain afpChain, Atom[] ca1, Atom[] ca2m,CECalculator calculator ) throws StructureException{</a>
+<span class="sourceLineNo">192</span><a id="line.192">                return postProcessAlignment(afpChain, ca1, ca2m, calculator, null);</a>
+<span class="sourceLineNo">193</span><a id="line.193">        }</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">        /** Circular permutation specific code to be run after the standard CE alignment</a>
+<span class="sourceLineNo">196</span><a id="line.196">         *</a>
+<span class="sourceLineNo">197</span><a id="line.197">         * @param afpChain The finished alignment</a>
+<span class="sourceLineNo">198</span><a id="line.198">         * @param ca1 CA atoms of the first protein</a>
+<span class="sourceLineNo">199</span><a id="line.199">         * @param ca2m A duplicated copy of the second protein</a>
+<span class="sourceLineNo">200</span><a id="line.200">         * @param calculator The CECalculator used to create afpChain</a>
+<span class="sourceLineNo">201</span><a id="line.201">         * @param param Parameters</a>
+<span class="sourceLineNo">202</span><a id="line.202">         * @throws StructureException</a>
+<span class="sourceLineNo">203</span><a id="line.203">         */</a>
+<span class="sourceLineNo">204</span><a id="line.204">        public static AFPChain postProcessAlignment(AFPChain afpChain, Atom[] ca1, Atom[] ca2m,CECalculator calculator, CECPParameters param ) throws StructureException{</a>
+<span class="sourceLineNo">205</span><a id="line.205"></a>
+<span class="sourceLineNo">206</span><a id="line.206">                // remove bottom half of the matrix</a>
+<span class="sourceLineNo">207</span><a id="line.207">                Matrix doubledMatrix = afpChain.getDistanceMatrix();</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">                // the matrix can be null if the alignment is too short.</a>
+<span class="sourceLineNo">210</span><a id="line.210">                if ( doubledMatrix != null ) {</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        assert(doubledMatrix.getRowDimension() == ca1.length);</a>
+<span class="sourceLineNo">212</span><a id="line.212">                        assert(doubledMatrix.getColumnDimension() == ca2m.length);</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                        Matrix singleMatrix = doubledMatrix.getMatrix(0, ca1.length-1, 0, (ca2m.length/2)-1);</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        assert(singleMatrix.getRowDimension() == ca1.length);</a>
+<span class="sourceLineNo">216</span><a id="line.216">                        assert(singleMatrix.getColumnDimension() == (ca2m.length/2));</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">                        afpChain.setDistanceMatrix(singleMatrix);</a>
+<span class="sourceLineNo">219</span><a id="line.219">                }</a>
+<span class="sourceLineNo">220</span><a id="line.220">                // Check for circular permutations</a>
+<span class="sourceLineNo">221</span><a id="line.221">                int alignLen = afpChain.getOptLength();</a>
+<span class="sourceLineNo">222</span><a id="line.222">                if ( alignLen &gt; 0) {</a>
+<span class="sourceLineNo">223</span><a id="line.223">                        afpChain = filterDuplicateAFPs(afpChain,calculator,ca1,ca2m,param);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                }</a>
+<span class="sourceLineNo">225</span><a id="line.225">                return afpChain;</a>
+<span class="sourceLineNo">226</span><a id="line.226">        }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">        /**</a>
+<span class="sourceLineNo">229</span><a id="line.229">         * Swaps the order of structures in an AFPChain</a>
+<span class="sourceLineNo">230</span><a id="line.230">         * @param a</a>
+<span class="sourceLineNo">231</span><a id="line.231">         * @return</a>
+<span class="sourceLineNo">232</span><a id="line.232">         */</a>
+<span class="sourceLineNo">233</span><a id="line.233">        public AFPChain invertAlignment(AFPChain a) {</a>
+<span class="sourceLineNo">234</span><a id="line.234">                String name1 = a.getName1();</a>
+<span class="sourceLineNo">235</span><a id="line.235">                String name2 = a.getName2();</a>
+<span class="sourceLineNo">236</span><a id="line.236">                a.setName1(name2);</a>
+<span class="sourceLineNo">237</span><a id="line.237">                a.setName2(name1);</a>
+<span class="sourceLineNo">238</span><a id="line.238"></a>
+<span class="sourceLineNo">239</span><a id="line.239">                int len1 = a.getCa1Length();</a>
+<span class="sourceLineNo">240</span><a id="line.240">                a.setCa1Length( a.getCa2Length() );</a>
+<span class="sourceLineNo">241</span><a id="line.241">                a.setCa2Length( len1 );</a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243">                int beg1 = a.getAlnbeg1();</a>
+<span class="sourceLineNo">244</span><a id="line.244">                a.setAlnbeg1(a.getAlnbeg2());</a>
+<span class="sourceLineNo">245</span><a id="line.245">                a.setAlnbeg2(beg1);</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                char[] alnseq1 = a.getAlnseq1();</a>
+<span class="sourceLineNo">248</span><a id="line.248">                a.setAlnseq1(a.getAlnseq2());</a>
+<span class="sourceLineNo">249</span><a id="line.249">                a.setAlnseq2(alnseq1);</a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">                Matrix distab1 = a.getDisTable1();</a>
+<span class="sourceLineNo">252</span><a id="line.252">                a.setDisTable1(a.getDisTable2());</a>
+<span class="sourceLineNo">253</span><a id="line.253">                a.setDisTable2(distab1);</a>
+<span class="sourceLineNo">254</span><a id="line.254"></a>
+<span class="sourceLineNo">255</span><a id="line.255">                int[] focusRes1 = a.getFocusRes1();</a>
+<span class="sourceLineNo">256</span><a id="line.256">                a.setFocusRes1(a.getFocusRes2());</a>
+<span class="sourceLineNo">257</span><a id="line.257">                a.setFocusRes2(focusRes1);</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">                //What are aftIndex and befIndex used for? How are they indexed?</a>
+<span class="sourceLineNo">260</span><a id="line.260">                //a.getAfpAftIndex()</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">                String[][][] pdbAln = a.getPdbAln();</a>
+<span class="sourceLineNo">264</span><a id="line.264">                if( pdbAln != null) {</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        for(int block = 0; block &lt; a.getBlockNum(); block++) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">                                String[] paln1 = pdbAln[block][0];</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                pdbAln[block][0] = pdbAln[block][1];</a>
+<span class="sourceLineNo">268</span><a id="line.268">                                pdbAln[block][1] = paln1;</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        }</a>
+<span class="sourceLineNo">270</span><a id="line.270">                }</a>
+<span class="sourceLineNo">271</span><a id="line.271"></a>
+<span class="sourceLineNo">272</span><a id="line.272">                int[][][] optAln = a.getOptAln();</a>
+<span class="sourceLineNo">273</span><a id="line.273">                if( optAln != null ) {</a>
+<span class="sourceLineNo">274</span><a id="line.274">                        for(int block = 0; block &lt; a.getBlockNum(); block++) {</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                int[] aln1 = optAln[block][0];</a>
+<span class="sourceLineNo">276</span><a id="line.276">                                optAln[block][0] = optAln[block][1];</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                optAln[block][1] = aln1;</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        }</a>
+<span class="sourceLineNo">279</span><a id="line.279">                }</a>
+<span class="sourceLineNo">280</span><a id="line.280">                a.setOptAln(optAln); // triggers invalidate()</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">                Matrix distmat = a.getDistanceMatrix();</a>
+<span class="sourceLineNo">283</span><a id="line.283">                if(distmat != null)</a>
+<span class="sourceLineNo">284</span><a id="line.284">                        a.setDistanceMatrix(distmat.transpose());</a>
+<span class="sourceLineNo">285</span><a id="line.285"></a>
+<span class="sourceLineNo">286</span><a id="line.286"></a>
+<span class="sourceLineNo">287</span><a id="line.287">                // invert the rotation matrices</a>
+<span class="sourceLineNo">288</span><a id="line.288">                Matrix[] blockRotMat = a.getBlockRotationMatrix();</a>
+<span class="sourceLineNo">289</span><a id="line.289">                Atom[] shiftVec = a.getBlockShiftVector();</a>
+<span class="sourceLineNo">290</span><a id="line.290">                if( blockRotMat != null) {</a>
+<span class="sourceLineNo">291</span><a id="line.291">                        for(int block = 0; block &lt; a.getBlockNum(); block++) {</a>
+<span class="sourceLineNo">292</span><a id="line.292">                                if(blockRotMat[block] != null) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                        // if y=x*A+b, then x=y*inv(A)-b*inv(A)</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                        blockRotMat[block] = blockRotMat[block].inverse();</a>
+<span class="sourceLineNo">295</span><a id="line.295"></a>
+<span class="sourceLineNo">296</span><a id="line.296">                                        Calc.rotate(shiftVec[block],blockRotMat[block]);</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                        shiftVec[block] = Calc.invert(shiftVec[block]);</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                }</a>
+<span class="sourceLineNo">299</span><a id="line.299">                        }</a>
+<span class="sourceLineNo">300</span><a id="line.300">                }</a>
+<span class="sourceLineNo">301</span><a id="line.301"></a>
+<span class="sourceLineNo">302</span><a id="line.302">                return a;</a>
+<span class="sourceLineNo">303</span><a id="line.303">        }</a>
+<span class="sourceLineNo">304</span><a id="line.304"></a>
+<span class="sourceLineNo">305</span><a id="line.305">        /**</a>
+<span class="sourceLineNo">306</span><a id="line.306">         * Takes as input an AFPChain where ca2 has been artificially duplicated.</a>
+<span class="sourceLineNo">307</span><a id="line.307">         * This raises the possibility that some residues of ca2 will appear in</a>
+<span class="sourceLineNo">308</span><a id="line.308">         * multiple AFPs. This method filters out duplicates and makes sure that</a>
+<span class="sourceLineNo">309</span><a id="line.309">         * all AFPs are numbered relative to the original ca2.</a>
+<span class="sourceLineNo">310</span><a id="line.310">         *</a>
+<span class="sourceLineNo">311</span><a id="line.311">         * &lt;p&gt;The current version chooses a CP site such that the length of the</a>
+<span class="sourceLineNo">312</span><a id="line.312">         * alignment is maximized.</a>
+<span class="sourceLineNo">313</span><a id="line.313">         *</a>
+<span class="sourceLineNo">314</span><a id="line.314">         * &lt;p&gt;This method does &lt;i&gt;not&lt;/i&gt; update scores to reflect the filtered alignment.</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * It &lt;i&gt;does&lt;/i&gt; update the RMSD and superposition.</a>
+<span class="sourceLineNo">316</span><a id="line.316">         *</a>
+<span class="sourceLineNo">317</span><a id="line.317">         * @param afpChain The alignment between ca1 and ca2-ca2. Blindly assumes</a>
+<span class="sourceLineNo">318</span><a id="line.318">         *  that ca2 has been duplicated.</a>
+<span class="sourceLineNo">319</span><a id="line.319">         * @return A new AFPChain consisting of ca1 to ca2, with each residue in</a>
+<span class="sourceLineNo">320</span><a id="line.320">         *  at most 1 AFP.</a>
+<span class="sourceLineNo">321</span><a id="line.321">         * @throws StructureException</a>
+<span class="sourceLineNo">322</span><a id="line.322">         */</a>
+<span class="sourceLineNo">323</span><a id="line.323">        public static AFPChain filterDuplicateAFPs(AFPChain afpChain, CECalculator ceCalc, Atom[] ca1, Atom[] ca2duplicated) throws StructureException {</a>
+<span class="sourceLineNo">324</span><a id="line.324">                return filterDuplicateAFPs(afpChain, ceCalc, ca1, ca2duplicated, null);</a>
+<span class="sourceLineNo">325</span><a id="line.325">        }</a>
+<span class="sourceLineNo">326</span><a id="line.326">        public static AFPChain filterDuplicateAFPs(AFPChain afpChain, CECalculator ceCalc,</a>
+<span class="sourceLineNo">327</span><a id="line.327">                        Atom[] ca1, Atom[] ca2duplicated, CECPParameters params) throws StructureException {</a>
+<span class="sourceLineNo">328</span><a id="line.328">                AFPChain newAFPChain = new AFPChain(afpChain);</a>
+<span class="sourceLineNo">329</span><a id="line.329"></a>
+<span class="sourceLineNo">330</span><a id="line.330">                if(params == null)</a>
+<span class="sourceLineNo">331</span><a id="line.331">                        params = new CECPParameters();</a>
+<span class="sourceLineNo">332</span><a id="line.332"></a>
+<span class="sourceLineNo">333</span><a id="line.333">                final int minCPlength = params.getMinCPLength();</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335"></a>
+<span class="sourceLineNo">336</span><a id="line.336">                int ca2len = afpChain.getCa2Length()/2;</a>
+<span class="sourceLineNo">337</span><a id="line.337">                newAFPChain.setCa2Length(ca2len);</a>
+<span class="sourceLineNo">338</span><a id="line.338"></a>
+<span class="sourceLineNo">339</span><a id="line.339">                // Fix optimal alignment</a>
+<span class="sourceLineNo">340</span><a id="line.340">                int[][][] optAln = afpChain.getOptAln();</a>
+<span class="sourceLineNo">341</span><a id="line.341">                int[] optLen = afpChain.getOptLen();</a>
+<span class="sourceLineNo">342</span><a id="line.342">                int alignLen = afpChain.getOptLength();</a>
+<span class="sourceLineNo">343</span><a id="line.343">                if (alignLen &lt; 1) return newAFPChain;</a>
+<span class="sourceLineNo">344</span><a id="line.344"></a>
+<span class="sourceLineNo">345</span><a id="line.345">                assert(afpChain.getBlockNum() == 1); // Assume that CE returns just one block</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347"></a>
+<span class="sourceLineNo">348</span><a id="line.348">                // Determine the region where ca2 and ca2' overlap</a>
+<span class="sourceLineNo">349</span><a id="line.349"></a>
+<span class="sourceLineNo">350</span><a id="line.350">                // The bounds of the alignment wrt ca2-ca2'</a>
+<span class="sourceLineNo">351</span><a id="line.351">                int nStart = optAln[0][1][0]; //alignment N-terminal</a>
+<span class="sourceLineNo">352</span><a id="line.352">                int cEnd = optAln[0][1][alignLen-1]; // alignment C-terminal</a>
+<span class="sourceLineNo">353</span><a id="line.353">                // overlap is between nStart and cEnd</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355"></a>
+<span class="sourceLineNo">356</span><a id="line.356">                int firstRes = nStart; // start res number after trimming</a>
+<span class="sourceLineNo">357</span><a id="line.357">                int lastRes = nStart+ca2len;  // last res number after trimming</a>
+<span class="sourceLineNo">358</span><a id="line.358">                if(nStart &gt;= ca2len || cEnd &lt; ca2len) { // no circular permutation</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        firstRes=nStart;</a>
+<span class="sourceLineNo">360</span><a id="line.360">                        lastRes=cEnd;</a>
+<span class="sourceLineNo">361</span><a id="line.361">                } else {</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        // Rule: maximize the length of the alignment</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">                        int overlapLength = cEnd+1 - nStart - ca2len;</a>
+<span class="sourceLineNo">365</span><a id="line.365">                        if(overlapLength &lt;= 0) {</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                // no overlap!</a>
+<span class="sourceLineNo">367</span><a id="line.367"></a>
+<span class="sourceLineNo">368</span><a id="line.368">                                CPRange minCP = calculateMinCP(optAln[0][1], alignLen, ca2len, minCPlength);</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">                                firstRes=nStart;</a>
+<span class="sourceLineNo">371</span><a id="line.371">                                lastRes=cEnd;</a>
+<span class="sourceLineNo">372</span><a id="line.372"></a>
+<span class="sourceLineNo">373</span><a id="line.373">                                // Remove short blocks</a>
+<span class="sourceLineNo">374</span><a id="line.374">                                if(firstRes &gt; minCP.n) {</a>
+<span class="sourceLineNo">375</span><a id="line.375">                                        firstRes = ca2len;</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">                                        if(debug) {</a>
+<span class="sourceLineNo">378</span><a id="line.378">                                                System.out.format("Discarding n-terminal block as too " +</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                                                "short (%d residues, needs %d)\n",</a>
+<span class="sourceLineNo">380</span><a id="line.380">                                                                minCP.mid, minCPlength);</a>
+<span class="sourceLineNo">381</span><a id="line.381">                                        }</a>
+<span class="sourceLineNo">382</span><a id="line.382">                                }</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">                                if(lastRes &lt; minCP.c) {</a>
+<span class="sourceLineNo">385</span><a id="line.385">                                        lastRes = ca2len-1;</a>
+<span class="sourceLineNo">386</span><a id="line.386"></a>
+<span class="sourceLineNo">387</span><a id="line.387">                                        if(debug) {</a>
+<span class="sourceLineNo">388</span><a id="line.388">                                                System.out.format("Discarding c-terminal block as too " +</a>
+<span class="sourceLineNo">389</span><a id="line.389">                                                                "short (%d residues, needs %d)\n",</a>
+<span class="sourceLineNo">390</span><a id="line.390">                                                                optLen[0] - minCP.mid, minCPlength);</a>
+<span class="sourceLineNo">391</span><a id="line.391">                                        }</a>
+<span class="sourceLineNo">392</span><a id="line.392">                                }</a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394">                        }</a>
+<span class="sourceLineNo">395</span><a id="line.395">                        else {</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                // overlap!</a>
+<span class="sourceLineNo">397</span><a id="line.397"></a>
+<span class="sourceLineNo">398</span><a id="line.398">                                CutPoint cp = calculateCutPoint(optAln[0][1], nStart, cEnd,</a>
+<span class="sourceLineNo">399</span><a id="line.399">                                                overlapLength, alignLen, minCPlength, ca2len, firstRes);</a>
+<span class="sourceLineNo">400</span><a id="line.400"></a>
+<span class="sourceLineNo">401</span><a id="line.401">                                // Adjust alignment length for trimming</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                //alignLen -= cp.numResiduesCut; //TODO inaccurate</a>
+<span class="sourceLineNo">403</span><a id="line.403"></a>
+<span class="sourceLineNo">404</span><a id="line.404">                                firstRes = cp.firstRes;</a>
+<span class="sourceLineNo">405</span><a id="line.405">                                lastRes = cp.lastRes;</a>
+<span class="sourceLineNo">406</span><a id="line.406"></a>
+<span class="sourceLineNo">407</span><a id="line.407">                                //TODO Now have CP site, and could do a NxM alignment for further optimization.</a>
+<span class="sourceLineNo">408</span><a id="line.408">                                // For now, does not appear to be worth the 50% increase in time</a>
+<span class="sourceLineNo">409</span><a id="line.409"></a>
+<span class="sourceLineNo">410</span><a id="line.410">                                //TODO Bug: scores need to be recalculated</a>
+<span class="sourceLineNo">411</span><a id="line.411">                        }</a>
+<span class="sourceLineNo">412</span><a id="line.412">                }</a>
+<span class="sourceLineNo">413</span><a id="line.413"></a>
+<span class="sourceLineNo">414</span><a id="line.414"></a>
+<span class="sourceLineNo">415</span><a id="line.415"></a>
+<span class="sourceLineNo">416</span><a id="line.416">                // Fix numbering:</a>
+<span class="sourceLineNo">417</span><a id="line.417">                // First, split up the atoms into left and right blocks</a>
+<span class="sourceLineNo">418</span><a id="line.418">                List&lt; ResiduePair &gt; left = new ArrayList&lt;ResiduePair&gt;(); // residues from left of duplication</a>
+<span class="sourceLineNo">419</span><a id="line.419">                List&lt; ResiduePair &gt; right = new ArrayList&lt;ResiduePair&gt;(); // residues from right of duplication</a>
+<span class="sourceLineNo">420</span><a id="line.420"></a>
+<span class="sourceLineNo">421</span><a id="line.421">                for(int i=0;i&lt;optLen[0];i++) {</a>
+<span class="sourceLineNo">422</span><a id="line.422">                        if( optAln[0][1][i] &gt;= firstRes &amp;&amp; optAln[0][1][i] &lt;= lastRes ) { // not trimmed</a>
+<span class="sourceLineNo">423</span><a id="line.423">                                if(optAln[0][1][i] &lt; ca2len) { // in first half of ca2</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                        left.add(new ResiduePair(optAln[0][0][i],optAln[0][1][i]));</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                }</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                else {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                        right.add(new ResiduePair(optAln[0][0][i],optAln[0][1][i]-ca2len));</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                }</a>
+<span class="sourceLineNo">429</span><a id="line.429">                        }</a>
+<span class="sourceLineNo">430</span><a id="line.430">                }</a>
+<span class="sourceLineNo">431</span><a id="line.431">                //assert(left.size()+right.size() == alignLen);</a>
+<span class="sourceLineNo">432</span><a id="line.432">                alignLen = 0;</a>
+<span class="sourceLineNo">433</span><a id="line.433"></a>
+<span class="sourceLineNo">434</span><a id="line.434">                // Now we don't care about left/right, so just call them "blocks"</a>
+<span class="sourceLineNo">435</span><a id="line.435">                List&lt;List&lt;ResiduePair&gt;&gt; blocks = new ArrayList&lt;List&lt;ResiduePair&gt;&gt;(2);</a>
+<span class="sourceLineNo">436</span><a id="line.436">                if( !left.isEmpty() ) {</a>
+<span class="sourceLineNo">437</span><a id="line.437">                        blocks.add(left);</a>
+<span class="sourceLineNo">438</span><a id="line.438">                        alignLen += left.size();</a>
+<span class="sourceLineNo">439</span><a id="line.439">                }</a>
+<span class="sourceLineNo">440</span><a id="line.440">                if( !right.isEmpty()) {</a>
+<span class="sourceLineNo">441</span><a id="line.441">                        blocks.add(right);</a>
+<span class="sourceLineNo">442</span><a id="line.442">                        alignLen += right.size();</a>
+<span class="sourceLineNo">443</span><a id="line.443">                }</a>
+<span class="sourceLineNo">444</span><a id="line.444">                left=null; right = null;</a>
+<span class="sourceLineNo">445</span><a id="line.445"></a>
+<span class="sourceLineNo">446</span><a id="line.446">                // Put the blocks back together into arrays for the AFPChain</a>
+<span class="sourceLineNo">447</span><a id="line.447">                int[][][] newAlign = new int[blocks.size()][][];</a>
+<span class="sourceLineNo">448</span><a id="line.448">                int[] blockLengths = new int[blocks.size()];</a>
+<span class="sourceLineNo">449</span><a id="line.449">                for(int blockNum = 0; blockNum &lt; blocks.size(); blockNum++) {</a>
+<span class="sourceLineNo">450</span><a id="line.450">                        //Alignment</a>
+<span class="sourceLineNo">451</span><a id="line.451">                        List&lt;ResiduePair&gt; block = blocks.get(blockNum);</a>
+<span class="sourceLineNo">452</span><a id="line.452">                        newAlign[blockNum] = new int[2][block.size()];</a>
+<span class="sourceLineNo">453</span><a id="line.453">                        for(int i=0;i&lt;block.size();i++) {</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                ResiduePair pair = block.get(i);</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                newAlign[blockNum][0][i] = pair.a;</a>
+<span class="sourceLineNo">456</span><a id="line.456">                                newAlign[blockNum][1][i] = pair.b;</a>
+<span class="sourceLineNo">457</span><a id="line.457">                        }</a>
+<span class="sourceLineNo">458</span><a id="line.458"></a>
+<span class="sourceLineNo">459</span><a id="line.459">                        // Block lengths</a>
+<span class="sourceLineNo">460</span><a id="line.460">                        blockLengths[blockNum] = block.size();</a>
+<span class="sourceLineNo">461</span><a id="line.461">                }</a>
+<span class="sourceLineNo">462</span><a id="line.462">                // Set Alignment</a>
+<span class="sourceLineNo">463</span><a id="line.463">                newAFPChain.setOptAln(newAlign);</a>
+<span class="sourceLineNo">464</span><a id="line.464">                newAFPChain.setOptLen(blockLengths );</a>
+<span class="sourceLineNo">465</span><a id="line.465">                newAFPChain.setOptLength(alignLen);</a>
+<span class="sourceLineNo">466</span><a id="line.466">                newAFPChain.setBlockNum(blocks.size());</a>
+<span class="sourceLineNo">467</span><a id="line.467">                newAFPChain.setBlockResSize(blockLengths.clone());</a>
+<span class="sourceLineNo">468</span><a id="line.468">                newAFPChain.setSequentialAlignment(blocks.size() == 1);</a>
+<span class="sourceLineNo">469</span><a id="line.469"></a>
+<span class="sourceLineNo">470</span><a id="line.470">                // TODO make the AFPSet consistent</a>
+<span class="sourceLineNo">471</span><a id="line.471">                // TODO lots more block properties &amp; old AFP properties</a>
+<span class="sourceLineNo">472</span><a id="line.472"></a>
+<span class="sourceLineNo">473</span><a id="line.473">                // Recalculate superposition</a>
+<span class="sourceLineNo">474</span><a id="line.474">                Atom[] atoms1 = new Atom[alignLen];</a>
+<span class="sourceLineNo">475</span><a id="line.475">                Atom[] atoms2 = new Atom[alignLen];</a>
+<span class="sourceLineNo">476</span><a id="line.476"></a>
+<span class="sourceLineNo">477</span><a id="line.477">                int pos=0;</a>
+<span class="sourceLineNo">478</span><a id="line.478">                for(List&lt;ResiduePair&gt; block:blocks ) {</a>
+<span class="sourceLineNo">479</span><a id="line.479">                        for(ResiduePair pair:block) {</a>
+<span class="sourceLineNo">480</span><a id="line.480">                                atoms1[pos] = ca1[pair.a];</a>
+<span class="sourceLineNo">481</span><a id="line.481">                                // Clone residue to allow modification</a>
+<span class="sourceLineNo">482</span><a id="line.482">                                Atom atom2 = ca2duplicated[pair.b];</a>
+<span class="sourceLineNo">483</span><a id="line.483">                                Group g = (Group) atom2.getGroup().clone();</a>
+<span class="sourceLineNo">484</span><a id="line.484">                                atoms2[pos] = g.getAtom( atom2.getName() );</a>
+<span class="sourceLineNo">485</span><a id="line.485">                                pos++;</a>
+<span class="sourceLineNo">486</span><a id="line.486">                        }</a>
+<span class="sourceLineNo">487</span><a id="line.487">                }</a>
+<span class="sourceLineNo">488</span><a id="line.488">                assert(pos == alignLen);</a>
+<span class="sourceLineNo">489</span><a id="line.489"></a>
+<span class="sourceLineNo">490</span><a id="line.490">                // Sets the rotation matrix in ceCalc to the proper value</a>
+<span class="sourceLineNo">491</span><a id="line.491">                double rmsd = -1;</a>
+<span class="sourceLineNo">492</span><a id="line.492">                double tmScore = 0.;</a>
+<span class="sourceLineNo">493</span><a id="line.493">                double[] blockRMSDs = new double[blocks.size()];</a>
+<span class="sourceLineNo">494</span><a id="line.494">                Matrix[] blockRotationMatrices = new Matrix[blocks.size()];</a>
+<span class="sourceLineNo">495</span><a id="line.495">                Atom[] blockShifts = new Atom[blocks.size()];</a>
+<span class="sourceLineNo">496</span><a id="line.496"></a>
+<span class="sourceLineNo">497</span><a id="line.497">                if(alignLen&gt;0) {</a>
+<span class="sourceLineNo">498</span><a id="line.498"></a>
+<span class="sourceLineNo">499</span><a id="line.499">                        // superimpose</a>
+<span class="sourceLineNo">500</span><a id="line.500">                        Matrix4d trans = SuperPositions.superpose(Calc.atomsToPoints(atoms1),</a>
+<span class="sourceLineNo">501</span><a id="line.501">                                        Calc.atomsToPoints(atoms2));</a>
+<span class="sourceLineNo">502</span><a id="line.502"></a>
+<span class="sourceLineNo">503</span><a id="line.503">                        Matrix matrix = Matrices.getRotationJAMA(trans);</a>
+<span class="sourceLineNo">504</span><a id="line.504">                        Atom shift = Calc.getTranslationVector(trans);</a>
+<span class="sourceLineNo">505</span><a id="line.505"></a>
+<span class="sourceLineNo">506</span><a id="line.506">                        for( Atom a : atoms2 )</a>
+<span class="sourceLineNo">507</span><a id="line.507">                                Calc.transform(a.getGroup(), trans);</a>
+<span class="sourceLineNo">508</span><a id="line.508"></a>
+<span class="sourceLineNo">509</span><a id="line.509">                        //and get overall rmsd</a>
+<span class="sourceLineNo">510</span><a id="line.510">                        rmsd = Calc.rmsd(atoms1, atoms2);</a>
+<span class="sourceLineNo">511</span><a id="line.511">                        tmScore = Calc.getTMScore(atoms1, atoms2, ca1.length, ca2len);</a>
+<span class="sourceLineNo">512</span><a id="line.512"></a>
+<span class="sourceLineNo">513</span><a id="line.513">                        // set all block rotations to the overall rotation</a>
+<span class="sourceLineNo">514</span><a id="line.514">                        // It's not well documented if this is the expected behavior, but</a>
+<span class="sourceLineNo">515</span><a id="line.515">                        // it seems to work.</a>
+<span class="sourceLineNo">516</span><a id="line.516">                        blockRotationMatrices[0] = matrix;</a>
+<span class="sourceLineNo">517</span><a id="line.517">                        blockShifts[0] = shift;</a>
+<span class="sourceLineNo">518</span><a id="line.518">                        blockRMSDs[0] = -1;</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                        for(int i=1;i&lt;blocks.size();i++) {</a>
+<span class="sourceLineNo">521</span><a id="line.521">                                blockRMSDs[i] = -1; //TODO Recalculate for the FATCAT text format</a>
+<span class="sourceLineNo">522</span><a id="line.522">                                blockRotationMatrices[i] = (Matrix) blockRotationMatrices[0].clone();</a>
+<span class="sourceLineNo">523</span><a id="line.523">                                blockShifts[i] = (Atom) blockShifts[0].clone();</a>
+<span class="sourceLineNo">524</span><a id="line.524">                        }</a>
+<span class="sourceLineNo">525</span><a id="line.525"></a>
+<span class="sourceLineNo">526</span><a id="line.526">                }</a>
+<span class="sourceLineNo">527</span><a id="line.527">                newAFPChain.setOptRmsd(blockRMSDs);</a>
+<span class="sourceLineNo">528</span><a id="line.528">                newAFPChain.setBlockRmsd(blockRMSDs);</a>
+<span class="sourceLineNo">529</span><a id="line.529">                newAFPChain.setBlockRotationMatrix(blockRotationMatrices);</a>
+<span class="sourceLineNo">530</span><a id="line.530">                newAFPChain.setBlockShiftVector(blockShifts);</a>
+<span class="sourceLineNo">531</span><a id="line.531">                newAFPChain.setTotalRmsdOpt(rmsd);</a>
+<span class="sourceLineNo">532</span><a id="line.532">                newAFPChain.setTMScore( tmScore );</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">                // Clean up remaining properties using the FatCat helper method</a>
+<span class="sourceLineNo">535</span><a id="line.535">                Atom[] ca2 = new Atom[ca2len];</a>
+<span class="sourceLineNo">536</span><a id="line.536">                System.arraycopy(ca2duplicated, 0, ca2, 0, ca2len);</a>
+<span class="sourceLineNo">537</span><a id="line.537">                AFPAlignmentDisplay.getAlign(newAFPChain, ca1, ca2duplicated);</a>
+<span class="sourceLineNo">538</span><a id="line.538"></a>
+<span class="sourceLineNo">539</span><a id="line.539">                return newAFPChain;</a>
+<span class="sourceLineNo">540</span><a id="line.540">        }</a>
+<span class="sourceLineNo">541</span><a id="line.541"></a>
+<span class="sourceLineNo">542</span><a id="line.542">        private static int[] countCtermResidues(int[] block, int blockLen,</a>
+<span class="sourceLineNo">543</span><a id="line.543">                        int cEnd, int overlapLength) {</a>
+<span class="sourceLineNo">544</span><a id="line.544">                int[] cTermResCount = new int[overlapLength+1]; // # res at or to the right of i within overlap</a>
+<span class="sourceLineNo">545</span><a id="line.545">                cTermResCount[overlapLength] = 0;</a>
+<span class="sourceLineNo">546</span><a id="line.546">                int alignPos = blockLen - 1;</a>
+<span class="sourceLineNo">547</span><a id="line.547">                for(int i=overlapLength-1;i&gt;=0;i--) { // i starts at the c-term and increases to the left</a>
+<span class="sourceLineNo">548</span><a id="line.548">                        if(block[alignPos] == cEnd - overlapLength+1 + i) { // matches the aligned pair</a>
+<span class="sourceLineNo">549</span><a id="line.549">                                // the c-term contains the -ith overlapping residue</a>
+<span class="sourceLineNo">550</span><a id="line.550">                                cTermResCount[i] = cTermResCount[i+1]+1;</a>
+<span class="sourceLineNo">551</span><a id="line.551">                                alignPos--;</a>
+<span class="sourceLineNo">552</span><a id="line.552">                        } else {</a>
+<span class="sourceLineNo">553</span><a id="line.553">                                cTermResCount[i] = cTermResCount[i+1];</a>
+<span class="sourceLineNo">554</span><a id="line.554">                        }</a>
+<span class="sourceLineNo">555</span><a id="line.555">                }</a>
+<span class="sourceLineNo">556</span><a id="line.556">                return cTermResCount;</a>
+<span class="sourceLineNo">557</span><a id="line.557">        }</a>
+<span class="sourceLineNo">558</span><a id="line.558"></a>
+<span class="sourceLineNo">559</span><a id="line.559">        private static int[] countNtermResidues(int[] block, int nStart,</a>
+<span class="sourceLineNo">560</span><a id="line.560">                        int overlapLength) {</a>
+<span class="sourceLineNo">561</span><a id="line.561">                int[] nTermResCount = new int[overlapLength+1]; // increases monotonically</a>
+<span class="sourceLineNo">562</span><a id="line.562">                nTermResCount[0] = 0;</a>
+<span class="sourceLineNo">563</span><a id="line.563">                int alignPos = 0; // index of the next aligned pair</a>
+<span class="sourceLineNo">564</span><a id="line.564"></a>
+<span class="sourceLineNo">565</span><a id="line.565">                for(int i=1;i&lt;=overlapLength;i++) {</a>
+<span class="sourceLineNo">566</span><a id="line.566">                        if(block[alignPos] == nStart + i-1 ) { // matches the aligned pair</a>
+<span class="sourceLineNo">567</span><a id="line.567">                                // the n-term contains the ith overlapping residue</a>
+<span class="sourceLineNo">568</span><a id="line.568">                                nTermResCount[i] = nTermResCount[i-1]+1;</a>
+<span class="sourceLineNo">569</span><a id="line.569">                                alignPos++;</a>
+<span class="sourceLineNo">570</span><a id="line.570">                        } else {</a>
+<span class="sourceLineNo">571</span><a id="line.571">                                nTermResCount[i] = nTermResCount[i-1];</a>
+<span class="sourceLineNo">572</span><a id="line.572">                        }</a>
+<span class="sourceLineNo">573</span><a id="line.573">                }</a>
+<span class="sourceLineNo">574</span><a id="line.574">                return nTermResCount;</a>
+<span class="sourceLineNo">575</span><a id="line.575">        }</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577"></a>
+<span class="sourceLineNo">578</span><a id="line.578">        /**</a>
+<span class="sourceLineNo">579</span><a id="line.579">         * A light class to store an alignment between two residues.</a>
+<span class="sourceLineNo">580</span><a id="line.580">         * @author Spencer Bliven</a>
+<span class="sourceLineNo">581</span><a id="line.581">         * @see #filterDuplicateAFPs()</a>
+<span class="sourceLineNo">582</span><a id="line.582">         */</a>
+<span class="sourceLineNo">583</span><a id="line.583">        private static class ResiduePair {</a>
+<span class="sourceLineNo">584</span><a id="line.584">                public int a;</a>
+<span class="sourceLineNo">585</span><a id="line.585">                public int b;</a>
+<span class="sourceLineNo">586</span><a id="line.586">                public ResiduePair(int a, int b) {</a>
+<span class="sourceLineNo">587</span><a id="line.587">                        this.a=a;</a>
+<span class="sourceLineNo">588</span><a id="line.588">                        this.b=b;</a>
+<span class="sourceLineNo">589</span><a id="line.589">                }</a>
+<span class="sourceLineNo">590</span><a id="line.590">                @Override</a>
+<span class="sourceLineNo">591</span><a id="line.591">                public String toString() {</a>
+<span class="sourceLineNo">592</span><a id="line.592">                        return a+":"+b;</a>
+<span class="sourceLineNo">593</span><a id="line.593">                }</a>
+<span class="sourceLineNo">594</span><a id="line.594">        }</a>
+<span class="sourceLineNo">595</span><a id="line.595"></a>
+<span class="sourceLineNo">596</span><a id="line.596"></a>
+<span class="sourceLineNo">597</span><a id="line.597">        /**</a>
+<span class="sourceLineNo">598</span><a id="line.598">         * Tiny wrapper for the disallowed regions of an alignment.</a>
+<span class="sourceLineNo">599</span><a id="line.599">         * @see CeCPMain#calculateMinCP(int[], int, int, int)</a>
+<span class="sourceLineNo">600</span><a id="line.600">         * @author Spencer Bliven</a>
+<span class="sourceLineNo">601</span><a id="line.601">         *</a>
+<span class="sourceLineNo">602</span><a id="line.602">         */</a>
+<span class="sourceLineNo">603</span><a id="line.603">        protected static class CPRange {</a>
+<span class="sourceLineNo">604</span><a id="line.604">                /**</a>
+<span class="sourceLineNo">605</span><a id="line.605">                 * last allowed n-term</a>
+<span class="sourceLineNo">606</span><a id="line.606">                 */</a>
+<span class="sourceLineNo">607</span><a id="line.607">                public int n;</a>
+<span class="sourceLineNo">608</span><a id="line.608">                /**</a>
+<span class="sourceLineNo">609</span><a id="line.609">                 * midpoint of the alignment</a>
+<span class="sourceLineNo">610</span><a id="line.610">                 */</a>
+<span class="sourceLineNo">611</span><a id="line.611">                public int mid;</a>
+<span class="sourceLineNo">612</span><a id="line.612">                /**</a>
+<span class="sourceLineNo">613</span><a id="line.613">                 * first allowed c-term</a>
+<span class="sourceLineNo">614</span><a id="line.614">                 */</a>
+<span class="sourceLineNo">615</span><a id="line.615">                public int c;</a>
+<span class="sourceLineNo">616</span><a id="line.616">        }</a>
+<span class="sourceLineNo">617</span><a id="line.617"></a>
+<span class="sourceLineNo">618</span><a id="line.618">        /**</a>
+<span class="sourceLineNo">619</span><a id="line.619">         * Finds the alignment index of the residues minCPlength before and after</a>
+<span class="sourceLineNo">620</span><a id="line.620">         * the duplication.</a>
+<span class="sourceLineNo">621</span><a id="line.621">         *</a>
+<span class="sourceLineNo">622</span><a id="line.622">         * @param block The permuted block being considered, generally optAln[0][1]</a>
+<span class="sourceLineNo">623</span><a id="line.623">         * @param blockLen The length of the block (in case extra memory was allocated in block)</a>
+<span class="sourceLineNo">624</span><a id="line.624">         * @param ca2len The length, in residues, of the protein specified by block</a>
+<span class="sourceLineNo">625</span><a id="line.625">         * @param minCPlength The minimum number of residues allowed for a CP</a>
+<span class="sourceLineNo">626</span><a id="line.626">         * @return a CPRange with the following components:</a>
+<span class="sourceLineNo">627</span><a id="line.627">         *  &lt;dl&gt;&lt;dt&gt;n&lt;/dt&gt;&lt;dd&gt;Index into &lt;code&gt;block&lt;/code&gt; of the residue such that</a>
+<span class="sourceLineNo">628</span><a id="line.628">         *      &lt;code&gt;minCPlength&lt;/code&gt; residues remain to the end of &lt;code&gt;ca2len&lt;/code&gt;,</a>
+<span class="sourceLineNo">629</span><a id="line.629">         *      or -1 if no residue fits that criterium.&lt;/dd&gt;</a>
+<span class="sourceLineNo">630</span><a id="line.630">         *  &lt;dt&gt;mid&lt;/dt&gt;&lt;dd&gt;Index of the first residue higher than &lt;code&gt;ca2len&lt;/code&gt;.&lt;/dd&gt;</a>
+<span class="sourceLineNo">631</span><a id="line.631">         *  &lt;dt&gt;c&lt;/dt&gt;&lt;dd&gt;Index of &lt;code&gt;minCPlength&lt;/code&gt;-th residue after ca2len,</a>
+<span class="sourceLineNo">632</span><a id="line.632">         *      or ca2len*2 if no residue fits that criterium.&lt;/dd&gt;</a>
+<span class="sourceLineNo">633</span><a id="line.633">         *  &lt;/dl&gt;</a>
+<span class="sourceLineNo">634</span><a id="line.634">         */</a>
+<span class="sourceLineNo">635</span><a id="line.635">        protected static CPRange calculateMinCP(int[] block, int blockLen, int ca2len, int minCPlength) {</a>
+<span class="sourceLineNo">636</span><a id="line.636">                CPRange range = new CPRange();</a>
+<span class="sourceLineNo">637</span><a id="line.637"></a>
+<span class="sourceLineNo">638</span><a id="line.638">                // Find the cut point within the alignment.</a>
+<span class="sourceLineNo">639</span><a id="line.639">                // Either returns the index i of the alignment such that block[i] == ca2len,</a>
+<span class="sourceLineNo">640</span><a id="line.640">                // or else returns -i-1 where block[i] is the first element &gt; ca2len.</a>
+<span class="sourceLineNo">641</span><a id="line.641">                int middle = Arrays.binarySearch(block, ca2len);</a>
+<span class="sourceLineNo">642</span><a id="line.642">                if(middle &lt; 0) {</a>
+<span class="sourceLineNo">643</span><a id="line.643">                        middle = -middle -1;</a>
+<span class="sourceLineNo">644</span><a id="line.644">                }</a>
+<span class="sourceLineNo">645</span><a id="line.645">                // Middle is now the first res after the duplication</a>
+<span class="sourceLineNo">646</span><a id="line.646">                range.mid = middle;</a>
+<span class="sourceLineNo">647</span><a id="line.647"></a>
+<span class="sourceLineNo">648</span><a id="line.648">                int minCPntermIndex = middle-minCPlength;</a>
+<span class="sourceLineNo">649</span><a id="line.649">                if(minCPntermIndex &gt;= 0) {</a>
+<span class="sourceLineNo">650</span><a id="line.650">                        range.n = block[minCPntermIndex];</a>
+<span class="sourceLineNo">651</span><a id="line.651">                } else {</a>
+<span class="sourceLineNo">652</span><a id="line.652">                        range.n = -1;</a>
+<span class="sourceLineNo">653</span><a id="line.653">                }</a>
+<span class="sourceLineNo">654</span><a id="line.654"></a>
+<span class="sourceLineNo">655</span><a id="line.655">                int minCPctermIndex = middle+minCPlength-1;</a>
+<span class="sourceLineNo">656</span><a id="line.656">                if(minCPctermIndex &lt; blockLen) {</a>
+<span class="sourceLineNo">657</span><a id="line.657">                        range.c = block[minCPctermIndex];</a>
+<span class="sourceLineNo">658</span><a id="line.658">                } else {</a>
+<span class="sourceLineNo">659</span><a id="line.659">                        range.c = ca2len*2;</a>
+<span class="sourceLineNo">660</span><a id="line.660">                }</a>
+<span class="sourceLineNo">661</span><a id="line.661"></a>
+<span class="sourceLineNo">662</span><a id="line.662">                // Stub:</a>
+<span class="sourceLineNo">663</span><a id="line.663">                // Best-case: assume all residues in the termini are aligned</a>
+<span class="sourceLineNo">664</span><a id="line.664">                //range.n = ca2len - minCPlength;</a>
+<span class="sourceLineNo">665</span><a id="line.665">                //range.c = ca2len + minCPlength-1;</a>
+<span class="sourceLineNo">666</span><a id="line.666"></a>
+<span class="sourceLineNo">667</span><a id="line.667">                return range;</a>
+<span class="sourceLineNo">668</span><a id="line.668">        }</a>
+<span class="sourceLineNo">669</span><a id="line.669"></a>
+<span class="sourceLineNo">670</span><a id="line.670"></a>
+<span class="sourceLineNo">671</span><a id="line.671">        private static class CutPoint {</a>
+<span class="sourceLineNo">672</span><a id="line.672">                public int numResiduesCut;</a>
+<span class="sourceLineNo">673</span><a id="line.673">                public int firstRes;</a>
+<span class="sourceLineNo">674</span><a id="line.674">                public int lastRes;</a>
+<span class="sourceLineNo">675</span><a id="line.675">        }</a>
+<span class="sourceLineNo">676</span><a id="line.676"></a>
+<span class="sourceLineNo">677</span><a id="line.677">        private static CutPoint calculateCutPoint(int[] block,int nStart, int cEnd,</a>
+<span class="sourceLineNo">678</span><a id="line.678">                        int overlapLength, int alignLen, int minCPlength, int ca2len, int firstRes) {</a>
+<span class="sourceLineNo">679</span><a id="line.679"></a>
+<span class="sourceLineNo">680</span><a id="line.680">                // We require at least minCPlength residues in a block.</a>
+<span class="sourceLineNo">681</span><a id="line.681">                //TODO calculate these explicitely based on the alignment</a>
+<span class="sourceLineNo">682</span><a id="line.682"></a>
+<span class="sourceLineNo">683</span><a id="line.683">                // The last valid n-term</a>
+<span class="sourceLineNo">684</span><a id="line.684">                CPRange minCP = calculateMinCP(block, alignLen, ca2len, minCPlength);</a>
+<span class="sourceLineNo">685</span><a id="line.685">                int minCPnterm = minCP.n;</a>
+<span class="sourceLineNo">686</span><a id="line.686">                // The first valid c-term</a>
+<span class="sourceLineNo">687</span><a id="line.687">                int minCPcterm = minCP.c;</a>
+<span class="sourceLineNo">688</span><a id="line.688"></a>
+<span class="sourceLineNo">689</span><a id="line.689"></a>
+<span class="sourceLineNo">690</span><a id="line.690">                // # res at or to the left of i within the overlap</a>
+<span class="sourceLineNo">691</span><a id="line.691">                int[] nTermResCount = countNtermResidues(block, nStart,</a>
+<span class="sourceLineNo">692</span><a id="line.692">                                overlapLength);</a>
+<span class="sourceLineNo">693</span><a id="line.693"></a>
+<span class="sourceLineNo">694</span><a id="line.694">                // Determine the position with the largest sum of lengths</a>
+<span class="sourceLineNo">695</span><a id="line.695">                int[] cTermResCount = countCtermResidues(block, alignLen,</a>
+<span class="sourceLineNo">696</span><a id="line.696">                                cEnd, overlapLength);</a>
+<span class="sourceLineNo">697</span><a id="line.697"></a>
+<span class="sourceLineNo">698</span><a id="line.698">                // Alignment length for a cut at the left of the overlap</a>
+<span class="sourceLineNo">699</span><a id="line.699">                int maxResCount=-1;</a>
+<span class="sourceLineNo">700</span><a id="line.700">                for(int i=0;i&lt;=overlapLength;i++) { // i is the position of the CP within the overlap region</a>
+<span class="sourceLineNo">701</span><a id="line.701">                        // Calculate number of residues which remain after the CP</a>
+<span class="sourceLineNo">702</span><a id="line.702">                        int nRemain,cRemain;</a>
+<span class="sourceLineNo">703</span><a id="line.703">                        if(nStart+i &lt;= minCPnterm) {</a>
+<span class="sourceLineNo">704</span><a id="line.704">                                nRemain = nTermResCount[overlapLength]-nTermResCount[i];</a>
+<span class="sourceLineNo">705</span><a id="line.705">                        } else {</a>
+<span class="sourceLineNo">706</span><a id="line.706">                                nRemain = 0;</a>
+<span class="sourceLineNo">707</span><a id="line.707">                        }</a>
+<span class="sourceLineNo">708</span><a id="line.708">                        if(cEnd-overlapLength+i &gt;= minCPcterm) {</a>
+<span class="sourceLineNo">709</span><a id="line.709">                                cRemain = cTermResCount[0] - cTermResCount[i];</a>
+<span class="sourceLineNo">710</span><a id="line.710">                        } else {</a>
+<span class="sourceLineNo">711</span><a id="line.711">                                cRemain = 0;</a>
+<span class="sourceLineNo">712</span><a id="line.712">                        }</a>
+<span class="sourceLineNo">713</span><a id="line.713"></a>
+<span class="sourceLineNo">714</span><a id="line.714">                        // Look for the cut point which cuts off the minimum number of res</a>
+<span class="sourceLineNo">715</span><a id="line.715">                        if(nRemain + cRemain &gt; maxResCount ) { // '&gt;' biases towards keeping the n-term</a>
+<span class="sourceLineNo">716</span><a id="line.716">                                maxResCount = nRemain + cRemain;</a>
+<span class="sourceLineNo">717</span><a id="line.717">                                firstRes = nStart+ i;</a>
+<span class="sourceLineNo">718</span><a id="line.718">                        }</a>
+<span class="sourceLineNo">719</span><a id="line.719">                }</a>
+<span class="sourceLineNo">720</span><a id="line.720"></a>
+<span class="sourceLineNo">721</span><a id="line.721">                // Calculate the number of residues cut within the overlap</a>
+<span class="sourceLineNo">722</span><a id="line.722">                int numResiduesCut = nTermResCount[overlapLength]+cTermResCount[0]-maxResCount;</a>
+<span class="sourceLineNo">723</span><a id="line.723"></a>
+<span class="sourceLineNo">724</span><a id="line.724">                // Remove short blocks</a>
+<span class="sourceLineNo">725</span><a id="line.725">                if(firstRes &gt; minCPnterm) {</a>
+<span class="sourceLineNo">726</span><a id="line.726">                        // update number of residues cut for those outside the overlap</a>
+<span class="sourceLineNo">727</span><a id="line.727">                        numResiduesCut += 0; //TODO</a>
+<span class="sourceLineNo">728</span><a id="line.728"></a>
+<span class="sourceLineNo">729</span><a id="line.729">                        firstRes = ca2len;</a>
+<span class="sourceLineNo">730</span><a id="line.730">                }</a>
+<span class="sourceLineNo">731</span><a id="line.731"></a>
+<span class="sourceLineNo">732</span><a id="line.732">                int lastRes = firstRes+ca2len-1;</a>
+<span class="sourceLineNo">733</span><a id="line.733">                if(lastRes &lt; minCPcterm) {</a>
+<span class="sourceLineNo">734</span><a id="line.734">                        // update number of residues cut for those outside the overlap</a>
+<span class="sourceLineNo">735</span><a id="line.735">                        numResiduesCut += 0; //TODO</a>
+<span class="sourceLineNo">736</span><a id="line.736"></a>
+<span class="sourceLineNo">737</span><a id="line.737">                        lastRes = ca2len-1;</a>
+<span class="sourceLineNo">738</span><a id="line.738">                }</a>
+<span class="sourceLineNo">739</span><a id="line.739"></a>
+<span class="sourceLineNo">740</span><a id="line.740"></a>
+<span class="sourceLineNo">741</span><a id="line.741">                CutPoint cp = new CutPoint();</a>
+<span class="sourceLineNo">742</span><a id="line.742">                cp.firstRes=firstRes;</a>
+<span class="sourceLineNo">743</span><a id="line.743">                cp.numResiduesCut = numResiduesCut;</a>
+<span class="sourceLineNo">744</span><a id="line.744">                cp.lastRes = lastRes;</a>
+<span class="sourceLineNo">745</span><a id="line.745"></a>
+<span class="sourceLineNo">746</span><a id="line.746">                if(debug) {</a>
+<span class="sourceLineNo">747</span><a id="line.747">                        System.out.format("Found a CP at residue %d. Trimming %d aligned residues from %d-%d of block 0 and %d-%d of block 1.\n",</a>
+<span class="sourceLineNo">748</span><a id="line.748">                                        firstRes,cp.numResiduesCut,nStart,firstRes-1,firstRes, cEnd-ca2len);</a>
+<span class="sourceLineNo">749</span><a id="line.749">                }</a>
+<span class="sourceLineNo">750</span><a id="line.750"></a>
+<span class="sourceLineNo">751</span><a id="line.751">                return cp;</a>
+<span class="sourceLineNo">752</span><a id="line.752">        }</a>
+<span class="sourceLineNo">753</span><a id="line.753"></a>
+<span class="sourceLineNo">754</span><a id="line.754"></a>
+<span class="sourceLineNo">755</span><a id="line.755">        // try showing a GUI</a>
+<span class="sourceLineNo">756</span><a id="line.756">        // requires additional dependencies biojava-structure-gui and JmolApplet</a>
+<span class="sourceLineNo">757</span><a id="line.757">        // TODO dmyersturnbull: This should probably be in structure-gui</a>
+<span class="sourceLineNo">758</span><a id="line.758">        @SuppressWarnings("unused")</a>
+<span class="sourceLineNo">759</span><a id="line.759">        private static void displayAlignment(AFPChain afpChain, Atom[] ca1, Atom[] ca2) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, StructureException {</a>
+<span class="sourceLineNo">760</span><a id="line.760">                Atom[] ca1clone = StructureTools.cloneAtomArray(ca1);</a>
+<span class="sourceLineNo">761</span><a id="line.761">                Atom[] ca2clone = StructureTools.cloneAtomArray(ca2);</a>
+<span class="sourceLineNo">762</span><a id="line.762">                if (! GuiWrapper.isGuiModuleInstalled()) {</a>
+<span class="sourceLineNo">763</span><a id="line.763">                        System.err.println("The biojava-structure-gui and/or JmolApplet modules are not installed. Please install!");</a>
+<span class="sourceLineNo">764</span><a id="line.764">                        // display alignment in console</a>
+<span class="sourceLineNo">765</span><a id="line.765">                        System.out.println(afpChain.toCE(ca1clone, ca2clone));</a>
+<span class="sourceLineNo">766</span><a id="line.766">                } else {</a>
+<span class="sourceLineNo">767</span><a id="line.767">                        Object jmol = GuiWrapper.display(afpChain,ca1clone,ca2clone);</a>
+<span class="sourceLineNo">768</span><a id="line.768">                        GuiWrapper.showAlignmentImage(afpChain, ca1clone,ca2clone,jmol);</a>
+<span class="sourceLineNo">769</span><a id="line.769">                }</a>
+<span class="sourceLineNo">770</span><a id="line.770">        }</a>
+<span class="sourceLineNo">771</span><a id="line.771">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

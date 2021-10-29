@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.io;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.ResidueNumber;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.StructureException;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.align.util.AtomCache;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.core.sequence.ProteinSequence;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.core.sequence.io.FastaReader;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.core.sequence.io.template.SequenceCreatorInterface;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.core.sequence.io.template.SequenceHeaderParserInterface;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.io.File;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.io.FileNotFoundException;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.io.IOException;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.io.InputStream;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.util.LinkedHashMap;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">/**</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * Reads a protein sequence from a fasta file and attempts to match it to a</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * 3D structure. Any gaps ('-') in the fasta file are preserved as null atoms in</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * the output, allowing structural alignments to be read from fasta files.</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * &lt;p&gt;Structures are loaded from an AtomCache. For this to work, the accession</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * for each protein should be parsed from the fasta header line into a form</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * understood by {@link AtomCache#getStructure(String)}.</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * &lt;p&gt;Lowercase letters are sometimes used to specify unaligned residues.</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * This information can be preserved by using a CasePreservingSequenceCreator,</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * which allows the case of residues to be accessed through the</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * {@link ProteinSequence#getUserCollection()} method.</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">055</span><a id="line.55"> *</a>
+<span class="sourceLineNo">056</span><a id="line.56"> */</a>
+<span class="sourceLineNo">057</span><a id="line.57">public class FastaStructureParser {</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        // inputs</a>
+<span class="sourceLineNo">060</span><a id="line.60">        private FastaReader&lt;ProteinSequence, AminoAcidCompound&gt; reader;</a>
+<span class="sourceLineNo">061</span><a id="line.61">        private AtomCache cache;</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        // cache processed data</a>
+<span class="sourceLineNo">064</span><a id="line.64">        private String[] accessions;</a>
+<span class="sourceLineNo">065</span><a id="line.65">        private ProteinSequence[] sequences;</a>
+<span class="sourceLineNo">066</span><a id="line.66">        private Structure[] structures;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        private ResidueNumber[][] residues;</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        public FastaStructureParser(InputStream is,</a>
+<span class="sourceLineNo">070</span><a id="line.70">                        SequenceHeaderParserInterface&lt;ProteinSequence, AminoAcidCompound&gt; headerParser,</a>
+<span class="sourceLineNo">071</span><a id="line.71">                        SequenceCreatorInterface&lt;AminoAcidCompound&gt; sequenceCreator,</a>
+<span class="sourceLineNo">072</span><a id="line.72">                        AtomCache cache)</a>
+<span class="sourceLineNo">073</span><a id="line.73">        {</a>
+<span class="sourceLineNo">074</span><a id="line.74">                this(new FastaReader&lt;ProteinSequence, AminoAcidCompound&gt;(</a>
+<span class="sourceLineNo">075</span><a id="line.75">                                is, headerParser, sequenceCreator),cache);</a>
+<span class="sourceLineNo">076</span><a id="line.76">        }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">        public FastaStructureParser(File file,</a>
+<span class="sourceLineNo">079</span><a id="line.79">                        SequenceHeaderParserInterface&lt;ProteinSequence, AminoAcidCompound&gt; headerParser,</a>
+<span class="sourceLineNo">080</span><a id="line.80">                        SequenceCreatorInterface&lt;AminoAcidCompound&gt; sequenceCreator,</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        AtomCache cache) throws FileNotFoundException</a>
+<span class="sourceLineNo">082</span><a id="line.82">        {</a>
+<span class="sourceLineNo">083</span><a id="line.83">                this(new FastaReader&lt;ProteinSequence, AminoAcidCompound&gt;(</a>
+<span class="sourceLineNo">084</span><a id="line.84">                                file, headerParser, sequenceCreator), cache);</a>
+<span class="sourceLineNo">085</span><a id="line.85">        }</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        public FastaStructureParser(FastaReader&lt;ProteinSequence, AminoAcidCompound&gt; reader,</a>
+<span class="sourceLineNo">088</span><a id="line.88">                        AtomCache cache) {</a>
+<span class="sourceLineNo">089</span><a id="line.89">                this.reader = reader;</a>
+<span class="sourceLineNo">090</span><a id="line.90">                this.cache = cache;</a>
+<span class="sourceLineNo">091</span><a id="line.91">                this.accessions = null;</a>
+<span class="sourceLineNo">092</span><a id="line.92">                this.sequences = null;</a>
+<span class="sourceLineNo">093</span><a id="line.93">                this.structures = null;</a>
+<span class="sourceLineNo">094</span><a id="line.94">                this.residues = null;</a>
+<span class="sourceLineNo">095</span><a id="line.95">        }</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">        /**</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * Parses the fasta file and loads it into memory.</a>
+<span class="sourceLineNo">100</span><a id="line.100">         *</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * Information can be subsequently accessed through</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * {@link #getSequences()},</a>
+<span class="sourceLineNo">103</span><a id="line.103">         * {@link #getStructures()},</a>
+<span class="sourceLineNo">104</span><a id="line.104">         * {@link #getResidues()}, and</a>
+<span class="sourceLineNo">105</span><a id="line.105">         * {@link #getAccessions()}.</a>
+<span class="sourceLineNo">106</span><a id="line.106">         *</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * @throws IOException</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @throws StructureException</a>
+<span class="sourceLineNo">109</span><a id="line.109">         */</a>
+<span class="sourceLineNo">110</span><a id="line.110">        public void process() throws IOException, StructureException {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                if(sequences == null) { // only process once, then return cached values</a>
+<span class="sourceLineNo">112</span><a id="line.112">                        LinkedHashMap&lt;String, ProteinSequence&gt; sequenceMap = reader.process();</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">                        sequences = sequenceMap.values().toArray(new ProteinSequence[0]);</a>
+<span class="sourceLineNo">115</span><a id="line.115">                        accessions = new String[sequences.length];</a>
+<span class="sourceLineNo">116</span><a id="line.116">                        structures = new Structure[sequences.length];</a>
+<span class="sourceLineNo">117</span><a id="line.117">                        residues = new ResidueNumber[sequences.length][];</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">                        // Match each sequence  to a series of PDB Residue numbers</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        for(int i=0;i&lt;sequences.length;i++) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                accessions[i] = sequences[i].getAccession().getID();</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">                                //System.out.println("Fetching "+accession);</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                structures[i] = cache.getStructure(accessions[i]);</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">                                residues[i] = StructureSequenceMatcher.matchSequenceToStructure(sequences[i], structures[i]);</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">                                assert( residues[i].length == sequences[i].getLength());</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        }</a>
+<span class="sourceLineNo">130</span><a id="line.130">                }</a>
+<span class="sourceLineNo">131</span><a id="line.131">        }</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">        /**</a>
+<span class="sourceLineNo">135</span><a id="line.135">         * Gets the protein sequences read from the Fasta file.</a>
+<span class="sourceLineNo">136</span><a id="line.136">         * Returns null if {@link #process()} has not been called.</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * @return An array ProteinSequences from</a>
+<span class="sourceLineNo">138</span><a id="line.138">         *  parsing the fasta file, or null if process() hasn't been called.</a>
+<span class="sourceLineNo">139</span><a id="line.139">         */</a>
+<span class="sourceLineNo">140</span><a id="line.140">        public ProteinSequence[] getSequences() {</a>
+<span class="sourceLineNo">141</span><a id="line.141">                return sequences;</a>
+<span class="sourceLineNo">142</span><a id="line.142">        }</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">        /**</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * Gets the protein structures mapped from the Fasta file.</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * Returns null if {@link #process()} has not been called.</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * @return An array of Structures for each protein</a>
+<span class="sourceLineNo">148</span><a id="line.148">         *  in the fasta file, or null if process() hasn't been called.</a>
+<span class="sourceLineNo">149</span><a id="line.149">         */</a>
+<span class="sourceLineNo">150</span><a id="line.150">        public Structure[] getStructures() {</a>
+<span class="sourceLineNo">151</span><a id="line.151">                return structures;</a>
+<span class="sourceLineNo">152</span><a id="line.152">        }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        /**</a>
+<span class="sourceLineNo">155</span><a id="line.155">         * For each residue in the fasta file, return the ResidueNumber in the</a>
+<span class="sourceLineNo">156</span><a id="line.156">         * corresponding structure. If the residue cannot be found in the structure,</a>
+<span class="sourceLineNo">157</span><a id="line.157">         * that entry will be null. This can happen if that residue was not included</a>
+<span class="sourceLineNo">158</span><a id="line.158">         * in the PDB file (eg disordered residues), if the fasta sequence does not</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * match the PDB sequence, or if errors occur during the matching process.</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * @return A 2D array of ResidueNumbers, or null if process() hasn't been called.</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * @see StructureSequenceMatcher#matchSequenceToStructure(ProteinSequence, Structure)</a>
+<span class="sourceLineNo">162</span><a id="line.162">         */</a>
+<span class="sourceLineNo">163</span><a id="line.163">        public ResidueNumber[][] getResidues() {</a>
+<span class="sourceLineNo">164</span><a id="line.164">                return residues;</a>
+<span class="sourceLineNo">165</span><a id="line.165">        }</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">        /**</a>
+<span class="sourceLineNo">168</span><a id="line.168">         * Gets the protein accessions mapped from the Fasta file.</a>
+<span class="sourceLineNo">169</span><a id="line.169">         * Returns null if {@link #process()} has not been called.</a>
+<span class="sourceLineNo">170</span><a id="line.170">         * @return An array of Structures for each protein</a>
+<span class="sourceLineNo">171</span><a id="line.171">         *  in the fasta file, or null if process() hasn't been called.</a>
+<span class="sourceLineNo">172</span><a id="line.172">         */</a>
+<span class="sourceLineNo">173</span><a id="line.173">        public String[] getAccessions() {</a>
+<span class="sourceLineNo">174</span><a id="line.174">                return accessions;</a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
