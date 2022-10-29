@@ -1,0 +1,698 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on 12.03.2004</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.structure;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.chem.ChemComp;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.chem.ChemCompGroupFactory;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.chem.PolymerType;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.io.FileConvert;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.core.exceptions.CompoundNotFoundException;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.core.sequence.ProteinSequence;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.core.sequence.template.Sequence;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.util.*;</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">/**</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * A Chain in a PDB file. It contains several groups which can be of</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * one of the types defined in the {@link GroupType} constants.</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * @author Jules Jacobsen</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * @since 1.4</a>
+<span class="sourceLineNo">048</span><a id="line.48"> */</a>
+<span class="sourceLineNo">049</span><a id="line.49">public class ChainImpl implements Chain {</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">        private final static Logger logger = LoggerFactory.getLogger(ChainImpl.class);</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        private static final long serialVersionUID = 1990171805277911840L;</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        /**</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * The default chain identifier used to be an empty space</a>
+<span class="sourceLineNo">057</span><a id="line.57">         */</a>
+<span class="sourceLineNo">058</span><a id="line.58">        private static final String DEFAULT_CHAIN_ID = "A";</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        private String authId; // the 'public' chain identifier as assigned by authors in PDB files</a>
+<span class="sourceLineNo">061</span><a id="line.61">        private String asymId; // the 'internal' chain identifier as used in mmCIF files</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        private List&lt;Group&gt; groups;</a>
+<span class="sourceLineNo">064</span><a id="line.64">        private List&lt;Group&gt; seqResGroups;</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        private EntityInfo entity;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        private Structure parent;</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        private final Map&lt;String, Integer&gt; pdbResnumMap;</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">        private List&lt;SeqMisMatch&gt; seqMisMatches;</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73">        /**</a>
+<span class="sourceLineNo">074</span><a id="line.74">         *  Constructs a ChainImpl object.</a>
+<span class="sourceLineNo">075</span><a id="line.75">         */</a>
+<span class="sourceLineNo">076</span><a id="line.76">        public ChainImpl() {</a>
+<span class="sourceLineNo">077</span><a id="line.77">                super();</a>
+<span class="sourceLineNo">078</span><a id="line.78"></a>
+<span class="sourceLineNo">079</span><a id="line.79">                authId = DEFAULT_CHAIN_ID;</a>
+<span class="sourceLineNo">080</span><a id="line.80">                groups = new ArrayList&lt;&gt;() ;</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">                seqResGroups = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">083</span><a id="line.83">                pdbResnumMap = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">084</span><a id="line.84">                asymId = null;</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">        }</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">        @Override</a>
+<span class="sourceLineNo">089</span><a id="line.89">        public String getId() {</a>
+<span class="sourceLineNo">090</span><a id="line.90">                return asymId;</a>
+<span class="sourceLineNo">091</span><a id="line.91">        }</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">        @Override</a>
+<span class="sourceLineNo">094</span><a id="line.94">        public void setId(String asymId) {</a>
+<span class="sourceLineNo">095</span><a id="line.95">                this.asymId = asymId;</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">        @Override</a>
+<span class="sourceLineNo">099</span><a id="line.99">        public String getName() { return authId; }</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">        @Override</a>
+<span class="sourceLineNo">102</span><a id="line.102">        public void setName(String authId) { this.authId = authId; }</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">        @Override</a>
+<span class="sourceLineNo">105</span><a id="line.105">        public void setStructure(Structure parent){</a>
+<span class="sourceLineNo">106</span><a id="line.106">                this.parent = parent;</a>
+<span class="sourceLineNo">107</span><a id="line.107">        }</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">        @Override</a>
+<span class="sourceLineNo">110</span><a id="line.110">        public Structure getStructure() {</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">                return parent;</a>
+<span class="sourceLineNo">113</span><a id="line.113">        }</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">        @Override</a>
+<span class="sourceLineNo">116</span><a id="line.116">        public Object clone() {</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118">                // go through all groups and add to new Chain.</a>
+<span class="sourceLineNo">119</span><a id="line.119">                ChainImpl n = new ChainImpl();</a>
+<span class="sourceLineNo">120</span><a id="line.120">                // copy chain data:</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">                n.setId(getId());</a>
+<span class="sourceLineNo">123</span><a id="line.123">                n.setName(getName());</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                // NOTE the EntityInfo will be reset at the parent level (Structure) if cloning is happening from parent level</a>
+<span class="sourceLineNo">126</span><a id="line.126">                // here we don't deep-copy it and just keep the same reference, in case the cloning is happening at the Chain level only</a>
+<span class="sourceLineNo">127</span><a id="line.127">                n.setEntityInfo(this.entity);</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">                for (Group group : groups) {</a>
+<span class="sourceLineNo">131</span><a id="line.131">                        Group g = (Group) group.clone();</a>
+<span class="sourceLineNo">132</span><a id="line.132">                        n.addGroup(g);</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        g.setChain(n);</a>
+<span class="sourceLineNo">134</span><a id="line.134">                }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">                if (seqResGroups!=null){</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">                        List&lt;Group&gt; tmpSeqRes = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">                        // cloning seqres and atom groups is ugly, due to their</a>
+<span class="sourceLineNo">141</span><a id="line.141">                        // nested relationship (some of the atoms can be in the seqres, but not all)</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">                        for (Group seqResGroup : seqResGroups) {</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">                                if (seqResGroup==null) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                        tmpSeqRes.add(null);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                                        continue;</a>
+<span class="sourceLineNo">148</span><a id="line.148">                                }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">                                int i = groups.indexOf(seqResGroup);</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">                                Group g ;</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">                                if (i!=-1) {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                                        // group found in atom groups, we get the equivalent reference from the newly cloned atom groups</a>
+<span class="sourceLineNo">156</span><a id="line.156">                                        g = n.getAtomGroup(i);</a>
+<span class="sourceLineNo">157</span><a id="line.157">                                } else {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                                        // group not found in atom groups, we clone the seqres group</a>
+<span class="sourceLineNo">159</span><a id="line.159">                                        g = (Group) seqResGroup.clone();</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                }</a>
+<span class="sourceLineNo">161</span><a id="line.161">                                g.setChain(n);</a>
+<span class="sourceLineNo">162</span><a id="line.162">                                tmpSeqRes.add(g);</a>
+<span class="sourceLineNo">163</span><a id="line.163">                        }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">                        n.setSeqResGroups(tmpSeqRes);</a>
+<span class="sourceLineNo">166</span><a id="line.166">                }</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                return n ;</a>
+<span class="sourceLineNo">169</span><a id="line.169">        }</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">        @Override</a>
+<span class="sourceLineNo">172</span><a id="line.172">        public void setEntityInfo(EntityInfo mol) {</a>
+<span class="sourceLineNo">173</span><a id="line.173">                this.entity = mol;</a>
+<span class="sourceLineNo">174</span><a id="line.174">        }</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">        @Override</a>
+<span class="sourceLineNo">177</span><a id="line.177">        public EntityInfo getEntityInfo() {</a>
+<span class="sourceLineNo">178</span><a id="line.178">                return this.entity;</a>
+<span class="sourceLineNo">179</span><a id="line.179">        }</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">        @Override</a>
+<span class="sourceLineNo">182</span><a id="line.182">        public void addGroup(Group group) {</a>
+<span class="sourceLineNo">183</span><a id="line.183"></a>
+<span class="sourceLineNo">184</span><a id="line.184">                group.setChain(this);</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">                // Set the altlocs chain as well</a>
+<span class="sourceLineNo">187</span><a id="line.187">                for(Group g : group.getAltLocs()) {</a>
+<span class="sourceLineNo">188</span><a id="line.188">                        g.setChain(this);</a>
+<span class="sourceLineNo">189</span><a id="line.189">                }</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">                groups.add(group);</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">                // store the position internally for quick access of this group</a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195">                String pdbResnum = null ;</a>
+<span class="sourceLineNo">196</span><a id="line.196">                ResidueNumber resNum = group.getResidueNumber();</a>
+<span class="sourceLineNo">197</span><a id="line.197">                if ( resNum != null)</a>
+<span class="sourceLineNo">198</span><a id="line.198">                        pdbResnum = resNum.toString();</a>
+<span class="sourceLineNo">199</span><a id="line.199">                if ( pdbResnum != null) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">                        Integer pos = groups.size() - 1;</a>
+<span class="sourceLineNo">201</span><a id="line.201">                        // ARGH sometimes numbering in PDB files is confusing.</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        // e.g. PDB: 1sfe</a>
+<span class="sourceLineNo">203</span><a id="line.203">                        /*</a>
+<span class="sourceLineNo">204</span><a id="line.204">                         * ATOM    620  N   GLY    93     -24.320  -6.591   4.210  1.00 46.82           N</a>
+<span class="sourceLineNo">205</span><a id="line.205">                         * ATOM    621  CA  GLY    93     -24.960  -6.849   5.497  1.00 47.35           C</a>
+<span class="sourceLineNo">206</span><a id="line.206">                         * ATOM    622  C   GLY    93     -26.076  -5.873   5.804  1.00 47.24           C</a>
+<span class="sourceLineNo">207</span><a id="line.207">                         * ATOM    623  O   GLY    93     -26.382  -4.986   5.006  1.00 47.56           O</a>
+<span class="sourceLineNo">208</span><a id="line.208">                         *    and ...</a>
+<span class="sourceLineNo">209</span><a id="line.209">                         * HETATM 1348  O   HOH    92     -21.853 -16.886  19.138  1.00 66.92           O</a>
+<span class="sourceLineNo">210</span><a id="line.210">                         * HETATM 1349  O   HOH    93     -26.126   1.226  29.069  1.00 71.69           O</a>
+<span class="sourceLineNo">211</span><a id="line.211">                         * HETATM 1350  O   HOH    94     -22.250 -18.060  -6.401  1.00 61.97           O</a>
+<span class="sourceLineNo">212</span><a id="line.212">                         */</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">                        // this check is to give in this case the entry priority that is an AminoAcid / comes first...</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        // a good example of same residue number for 2 residues is 3th3, chain T, residue 201 (a LYS and a sugar BGC covalently attached to it) - JD 2016-03-09</a>
+<span class="sourceLineNo">216</span><a id="line.216">                        if (  pdbResnumMap.containsKey(pdbResnum)) {</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">                                logger.warn("Adding residue {}({}) to chain {} but a residue with same residue number is already present: {}({}). Will add only the aminoacid residue (if any) to the lookup, lookups for that residue number won't work properly.",</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                                pdbResnum, group.getPDBName(), getId(), groups.get(pdbResnumMap.get(pdbResnum)).getResidueNumber(), groups.get(pdbResnumMap.get(pdbResnum)).getPDBName());</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                if ( group instanceof AminoAcid)</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                        pdbResnumMap.put(pdbResnum,pos);</a>
+<span class="sourceLineNo">222</span><a id="line.222">                        } else</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                pdbResnumMap.put(pdbResnum,pos);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">        }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">        @Override</a>
+<span class="sourceLineNo">229</span><a id="line.229">        public Group getAtomGroup(int position) {</a>
+<span class="sourceLineNo">230</span><a id="line.230"></a>
+<span class="sourceLineNo">231</span><a id="line.231">                return groups.get(position);</a>
+<span class="sourceLineNo">232</span><a id="line.232">        }</a>
+<span class="sourceLineNo">233</span><a id="line.233"></a>
+<span class="sourceLineNo">234</span><a id="line.234">        @Override</a>
+<span class="sourceLineNo">235</span><a id="line.235">        public List&lt;Group&gt; getAtomGroups(GroupType type){</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">                List&lt;Group&gt; tmp = new ArrayList&lt;&gt;() ;</a>
+<span class="sourceLineNo">238</span><a id="line.238">                for (Group g : groups) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                        if (g.getType().equals(type)) {</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                tmp.add(g);</a>
+<span class="sourceLineNo">241</span><a id="line.241">                        }</a>
+<span class="sourceLineNo">242</span><a id="line.242">                }</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">                return tmp ;</a>
+<span class="sourceLineNo">245</span><a id="line.245">        }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">        @Override</a>
+<span class="sourceLineNo">248</span><a id="line.248">        public List&lt;Group&gt; getAtomGroups(){</a>
+<span class="sourceLineNo">249</span><a id="line.249">                return groups ;</a>
+<span class="sourceLineNo">250</span><a id="line.250">        }</a>
+<span class="sourceLineNo">251</span><a id="line.251"></a>
+<span class="sourceLineNo">252</span><a id="line.252">        @Override</a>
+<span class="sourceLineNo">253</span><a id="line.253">        public void setAtomGroups(List&lt;Group&gt; groups){</a>
+<span class="sourceLineNo">254</span><a id="line.254">                for (Group g:groups){</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        g.setChain(this);</a>
+<span class="sourceLineNo">256</span><a id="line.256">                }</a>
+<span class="sourceLineNo">257</span><a id="line.257">                this.groups = groups;</a>
+<span class="sourceLineNo">258</span><a id="line.258">        }</a>
+<span class="sourceLineNo">259</span><a id="line.259"></a>
+<span class="sourceLineNo">260</span><a id="line.260">        @Override</a>
+<span class="sourceLineNo">261</span><a id="line.261">        public Group[] getGroupsByPDB(ResidueNumber start, ResidueNumber end, boolean ignoreMissing)</a>
+<span class="sourceLineNo">262</span><a id="line.262">                        throws StructureException {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                // Short-circut for include all groups</a>
+<span class="sourceLineNo">264</span><a id="line.264">                if(start == null &amp;&amp; end == null) {</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        return groups.toArray(new Group[0]);</a>
+<span class="sourceLineNo">266</span><a id="line.266">                }</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">                List&lt;Group&gt; retlst = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">                boolean adding, foundStart;</a>
+<span class="sourceLineNo">271</span><a id="line.271">                if( start == null ) {</a>
+<span class="sourceLineNo">272</span><a id="line.272">                        // start with first group</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        adding = true;</a>
+<span class="sourceLineNo">274</span><a id="line.274">                        foundStart = true;</a>
+<span class="sourceLineNo">275</span><a id="line.275">                } else {</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        adding = false;</a>
+<span class="sourceLineNo">277</span><a id="line.277">                        foundStart = false;</a>
+<span class="sourceLineNo">278</span><a id="line.278">                }</a>
+<span class="sourceLineNo">279</span><a id="line.279"></a>
+<span class="sourceLineNo">280</span><a id="line.280">                for (Group g: groups){</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">                        // Check for start</a>
+<span class="sourceLineNo">283</span><a id="line.283">                        if (!adding &amp;&amp; start.equalsPositional(g.getResidueNumber())) {</a>
+<span class="sourceLineNo">284</span><a id="line.284">                                adding = true;</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                foundStart = true;</a>
+<span class="sourceLineNo">286</span><a id="line.286">                        }</a>
+<span class="sourceLineNo">287</span><a id="line.287"></a>
+<span class="sourceLineNo">288</span><a id="line.288">                        // Check if past start</a>
+<span class="sourceLineNo">289</span><a id="line.289">                        if ( ignoreMissing &amp;&amp; ! (foundStart &amp;&amp; adding) ) {</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                ResidueNumber pos = g.getResidueNumber();</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">                                if ( start != null &amp;&amp; start.compareToPositional(pos) &lt;= 0) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                        foundStart = true;</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                        adding = true;</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                }</a>
+<span class="sourceLineNo">296</span><a id="line.296">                        }</a>
+<span class="sourceLineNo">297</span><a id="line.297"></a>
+<span class="sourceLineNo">298</span><a id="line.298">                        if ( adding)</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                retlst.add(g);</a>
+<span class="sourceLineNo">300</span><a id="line.300"></a>
+<span class="sourceLineNo">301</span><a id="line.301">                        // check for end</a>
+<span class="sourceLineNo">302</span><a id="line.302">                        if ( end != null &amp;&amp; end.equalsPositional(g.getResidueNumber())) {</a>
+<span class="sourceLineNo">303</span><a id="line.303">                                if ( ! adding)</a>
+<span class="sourceLineNo">304</span><a id="line.304">                                        throw new StructureException("did not find start PDB residue number " + start + " in chain " + authId);</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                adding = false;</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                break;</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        }</a>
+<span class="sourceLineNo">308</span><a id="line.308">                        // check if past end</a>
+<span class="sourceLineNo">309</span><a id="line.309">                        if ( ignoreMissing &amp;&amp; adding &amp;&amp; end != null){</a>
+<span class="sourceLineNo">310</span><a id="line.310"></a>
+<span class="sourceLineNo">311</span><a id="line.311">                                ResidueNumber pos = g.getResidueNumber();</a>
+<span class="sourceLineNo">312</span><a id="line.312">                                if ( end.compareToPositional(pos) &lt;= 0) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">                                        adding = false;</a>
+<span class="sourceLineNo">314</span><a id="line.314">                                        break;</a>
+<span class="sourceLineNo">315</span><a id="line.315">                                }</a>
+<span class="sourceLineNo">316</span><a id="line.316"></a>
+<span class="sourceLineNo">317</span><a id="line.317">                        }</a>
+<span class="sourceLineNo">318</span><a id="line.318">                }</a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">                if ( ! foundStart){</a>
+<span class="sourceLineNo">321</span><a id="line.321">                        throw new StructureException("did not find start PDB residue number " + start + " in chain " + authId);</a>
+<span class="sourceLineNo">322</span><a id="line.322">                }</a>
+<span class="sourceLineNo">323</span><a id="line.323">                if ( end != null &amp;&amp; adding &amp;&amp; !ignoreMissing) {</a>
+<span class="sourceLineNo">324</span><a id="line.324">                        throw new StructureException("did not find end PDB residue number " + end + " in chain " + authId);</a>
+<span class="sourceLineNo">325</span><a id="line.325">                }</a>
+<span class="sourceLineNo">326</span><a id="line.326"></a>
+<span class="sourceLineNo">327</span><a id="line.327">                //not checking if the end has been found in this case...</a>
+<span class="sourceLineNo">328</span><a id="line.328"></a>
+<span class="sourceLineNo">329</span><a id="line.329">                return retlst.toArray(new Group[0]);</a>
+<span class="sourceLineNo">330</span><a id="line.330">        }</a>
+<span class="sourceLineNo">331</span><a id="line.331"></a>
+<span class="sourceLineNo">332</span><a id="line.332">        @Override</a>
+<span class="sourceLineNo">333</span><a id="line.333">        public Group getGroupByPDB(ResidueNumber resNum) throws StructureException {</a>
+<span class="sourceLineNo">334</span><a id="line.334">                String pdbresnum = resNum.toString();</a>
+<span class="sourceLineNo">335</span><a id="line.335">                if ( pdbResnumMap.containsKey(pdbresnum)) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                        Integer pos = pdbResnumMap.get(pdbresnum);</a>
+<span class="sourceLineNo">337</span><a id="line.337">                        return groups.get(pos);</a>
+<span class="sourceLineNo">338</span><a id="line.338">                } else {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                        throw new StructureException("unknown PDB residue number " + pdbresnum + " in chain " + authId);</a>
+<span class="sourceLineNo">340</span><a id="line.340">                }</a>
+<span class="sourceLineNo">341</span><a id="line.341">        }</a>
+<span class="sourceLineNo">342</span><a id="line.342"></a>
+<span class="sourceLineNo">343</span><a id="line.343">        @Override</a>
+<span class="sourceLineNo">344</span><a id="line.344">        public Group[] getGroupsByPDB(ResidueNumber start, ResidueNumber end)</a>
+<span class="sourceLineNo">345</span><a id="line.345">                        throws StructureException {</a>
+<span class="sourceLineNo">346</span><a id="line.346">                return getGroupsByPDB(start, end, false);</a>
+<span class="sourceLineNo">347</span><a id="line.347">        }</a>
+<span class="sourceLineNo">348</span><a id="line.348"></a>
+<span class="sourceLineNo">349</span><a id="line.349">        @Override</a>
+<span class="sourceLineNo">350</span><a id="line.350">        public int getSeqResLength() {</a>
+<span class="sourceLineNo">351</span><a id="line.351">                //new method returns the length of the sequence defined in the SEQRES records</a>
+<span class="sourceLineNo">352</span><a id="line.352">                return seqResGroups.size();</a>
+<span class="sourceLineNo">353</span><a id="line.353">        }</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355">        @Override</a>
+<span class="sourceLineNo">356</span><a id="line.356">        public String toString(){</a>
+<span class="sourceLineNo">357</span><a id="line.357">                String newline = System.getProperty("line.separator");</a>
+<span class="sourceLineNo">358</span><a id="line.358">                StringBuilder str = new StringBuilder();</a>
+<span class="sourceLineNo">359</span><a id="line.359">                str.append("Chain asymId:").append(getId()).append(" authId:").append(getName()).append(newline);</a>
+<span class="sourceLineNo">360</span><a id="line.360">                if ( entity != null ){</a>
+<span class="sourceLineNo">361</span><a id="line.361">                        if ( entity.getDescription() != null){</a>
+<span class="sourceLineNo">362</span><a id="line.362">                                str.append(entity.getDescription()).append(newline);</a>
+<span class="sourceLineNo">363</span><a id="line.363">                        }</a>
+<span class="sourceLineNo">364</span><a id="line.364">                }</a>
+<span class="sourceLineNo">365</span><a id="line.365">                str.append("total SEQRES length: ").append(getSeqResGroups().size()).append(" total ATOM length:")</a>
+<span class="sourceLineNo">366</span><a id="line.366">                .append(getAtomLength()).append(" residues ").append(newline);</a>
+<span class="sourceLineNo">367</span><a id="line.367"></a>
+<span class="sourceLineNo">368</span><a id="line.368">                return str.toString() ;</a>
+<span class="sourceLineNo">369</span><a id="line.369">        }</a>
+<span class="sourceLineNo">370</span><a id="line.370"></a>
+<span class="sourceLineNo">371</span><a id="line.371">        @Override</a>
+<span class="sourceLineNo">372</span><a id="line.372">        public Sequence&lt;?&gt; getBJSequence()  {</a>
+<span class="sourceLineNo">373</span><a id="line.373"></a>
+<span class="sourceLineNo">374</span><a id="line.374">                String seq = getSeqResSequence();</a>
+<span class="sourceLineNo">375</span><a id="line.375"></a>
+<span class="sourceLineNo">376</span><a id="line.376">                Sequence&lt;AminoAcidCompound&gt; s = null;</a>
+<span class="sourceLineNo">377</span><a id="line.377"></a>
+<span class="sourceLineNo">378</span><a id="line.378">                try {</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        s = new ProteinSequence(seq);</a>
+<span class="sourceLineNo">380</span><a id="line.380">                } catch (CompoundNotFoundException e) {</a>
+<span class="sourceLineNo">381</span><a id="line.381">                        logger.error("Could not create sequence object from seqres sequence. Some unknown compound: {}",e.getMessage());</a>
+<span class="sourceLineNo">382</span><a id="line.382">                }</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">                //TODO: return a DNA sequence if the content is DNA...</a>
+<span class="sourceLineNo">385</span><a id="line.385">                return s;</a>
+<span class="sourceLineNo">386</span><a id="line.386">        }</a>
+<span class="sourceLineNo">387</span><a id="line.387"></a>
+<span class="sourceLineNo">388</span><a id="line.388">        @Override</a>
+<span class="sourceLineNo">389</span><a id="line.389">        public String getAtomSequence(){</a>
+<span class="sourceLineNo">390</span><a id="line.390"></a>
+<span class="sourceLineNo">391</span><a id="line.391">                List&lt;Group&gt; groups = getAtomGroups();</a>
+<span class="sourceLineNo">392</span><a id="line.392">                StringBuilder sequence = new StringBuilder() ;</a>
+<span class="sourceLineNo">393</span><a id="line.393"></a>
+<span class="sourceLineNo">394</span><a id="line.394">                for ( Group g: groups){</a>
+<span class="sourceLineNo">395</span><a id="line.395">                        ChemComp cc = g.getChemComp();</a>
+<span class="sourceLineNo">396</span><a id="line.396"></a>
+<span class="sourceLineNo">397</span><a id="line.397">                        if ( PolymerType.PROTEIN_ONLY.contains(cc.getPolymerType()) ||</a>
+<span class="sourceLineNo">398</span><a id="line.398">                                        PolymerType.POLYNUCLEOTIDE_ONLY.contains(cc.getPolymerType())){</a>
+<span class="sourceLineNo">399</span><a id="line.399">                                // an amino acid residue.. use for alignment</a>
+<span class="sourceLineNo">400</span><a id="line.400">                                String oneLetter= ChemCompGroupFactory.getOneLetterCode(cc);</a>
+<span class="sourceLineNo">401</span><a id="line.401">                                if ( oneLetter == null)</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                        oneLetter = Character.toString(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">403</span><a id="line.403">                                sequence.append(oneLetter);</a>
+<span class="sourceLineNo">404</span><a id="line.404">                        }</a>
+<span class="sourceLineNo">405</span><a id="line.405"></a>
+<span class="sourceLineNo">406</span><a id="line.406">                }</a>
+<span class="sourceLineNo">407</span><a id="line.407">                return sequence.toString();</a>
+<span class="sourceLineNo">408</span><a id="line.408">        }</a>
+<span class="sourceLineNo">409</span><a id="line.409"></a>
+<span class="sourceLineNo">410</span><a id="line.410">        @Override</a>
+<span class="sourceLineNo">411</span><a id="line.411">        public String getSeqResSequence(){</a>
+<span class="sourceLineNo">412</span><a id="line.412"></a>
+<span class="sourceLineNo">413</span><a id="line.413">                StringBuilder str = new StringBuilder();</a>
+<span class="sourceLineNo">414</span><a id="line.414">                for (Group g : seqResGroups) {</a>
+<span class="sourceLineNo">415</span><a id="line.415">                        ChemComp cc = g.getChemComp();</a>
+<span class="sourceLineNo">416</span><a id="line.416">                        if ( cc == null) {</a>
+<span class="sourceLineNo">417</span><a id="line.417">                                logger.warn("Could not load ChemComp for group: {}", g);</a>
+<span class="sourceLineNo">418</span><a id="line.418">                                str.append(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">419</span><a id="line.419">                        } else if ( PolymerType.PROTEIN_ONLY.contains(cc.getPolymerType()) ||</a>
+<span class="sourceLineNo">420</span><a id="line.420">                                        PolymerType.POLYNUCLEOTIDE_ONLY.contains(cc.getPolymerType())){</a>
+<span class="sourceLineNo">421</span><a id="line.421">                                // an amino acid residue.. use for alignment</a>
+<span class="sourceLineNo">422</span><a id="line.422">                                String oneLetter= ChemCompGroupFactory.getOneLetterCode(cc);</a>
+<span class="sourceLineNo">423</span><a id="line.423">                                // AB oneLetter.length() should be one. e.g. in 1EMA it is 3 and this makes mapping residue to sequence impossible.</a>
+<span class="sourceLineNo">424</span><a id="line.424">                                if ( oneLetter == null || oneLetter.isEmpty() || oneLetter.equals("?")) {</a>
+<span class="sourceLineNo">425</span><a id="line.425">                                        oneLetter = Character.toString(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                }</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                str.append(oneLetter);</a>
+<span class="sourceLineNo">428</span><a id="line.428">                        } else {</a>
+<span class="sourceLineNo">429</span><a id="line.429">                                str.append(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">430</span><a id="line.430">                        }</a>
+<span class="sourceLineNo">431</span><a id="line.431">                }</a>
+<span class="sourceLineNo">432</span><a id="line.432">                return str.toString();</a>
+<span class="sourceLineNo">433</span><a id="line.433">        }</a>
+<span class="sourceLineNo">434</span><a id="line.434"></a>
+<span class="sourceLineNo">435</span><a id="line.435">        /**</a>
+<span class="sourceLineNo">436</span><a id="line.436">         * Get the one letter sequence so that Sequence is guaranteed to</a>
+<span class="sourceLineNo">437</span><a id="line.437">         * be the same length as seqResGroups.</a>
+<span class="sourceLineNo">438</span><a id="line.438">         * Method related to https://github.com/biojava/biojava/issues/457</a>
+<span class="sourceLineNo">439</span><a id="line.439">         * @return a string of the sequence guaranteed to be the same length</a>
+<span class="sourceLineNo">440</span><a id="line.440">         * as seqResGroups.</a>
+<span class="sourceLineNo">441</span><a id="line.441">         */</a>
+<span class="sourceLineNo">442</span><a id="line.442">        public String getSeqResOneLetterSeq(){</a>
+<span class="sourceLineNo">443</span><a id="line.443"></a>
+<span class="sourceLineNo">444</span><a id="line.444">                StringBuilder str = new StringBuilder();</a>
+<span class="sourceLineNo">445</span><a id="line.445">                for (Group g : seqResGroups) {</a>
+<span class="sourceLineNo">446</span><a id="line.446">                        ChemComp cc = g.getChemComp();</a>
+<span class="sourceLineNo">447</span><a id="line.447">                        if ( cc == null) {</a>
+<span class="sourceLineNo">448</span><a id="line.448">                                logger.warn("Could not load ChemComp for group: {}", g);</a>
+<span class="sourceLineNo">449</span><a id="line.449">                                str.append(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">450</span><a id="line.450">                        } else if ( PolymerType.PROTEIN_ONLY.contains(cc.getPolymerType()) ||</a>
+<span class="sourceLineNo">451</span><a id="line.451">                                        PolymerType.POLYNUCLEOTIDE_ONLY.contains(cc.getPolymerType())){</a>
+<span class="sourceLineNo">452</span><a id="line.452">                                // an amino acid residue.. use for alignment</a>
+<span class="sourceLineNo">453</span><a id="line.453">                                String oneLetter= ChemCompGroupFactory.getOneLetterCode(cc);</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                // AB oneLetter.length() should be one. e.g. in 1EMA it is 3 and this makes mapping residue to sequence impossible.</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                if ( oneLetter == null || oneLetter.isEmpty() || oneLetter.equals("?") || oneLetter.length()!=1) {</a>
+<span class="sourceLineNo">456</span><a id="line.456">                                        oneLetter = Character.toString(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">457</span><a id="line.457">                                }</a>
+<span class="sourceLineNo">458</span><a id="line.458">                                str.append(oneLetter);</a>
+<span class="sourceLineNo">459</span><a id="line.459">                        } else {</a>
+<span class="sourceLineNo">460</span><a id="line.460">                                str.append(StructureTools.UNKNOWN_GROUP_LABEL);</a>
+<span class="sourceLineNo">461</span><a id="line.461">                        }</a>
+<span class="sourceLineNo">462</span><a id="line.462">                }</a>
+<span class="sourceLineNo">463</span><a id="line.463">                return str.toString();</a>
+<span class="sourceLineNo">464</span><a id="line.464">        }</a>
+<span class="sourceLineNo">465</span><a id="line.465"></a>
+<span class="sourceLineNo">466</span><a id="line.466">        @Override</a>
+<span class="sourceLineNo">467</span><a id="line.467">        public Group getSeqResGroup(int position) {</a>
+<span class="sourceLineNo">468</span><a id="line.468">                return seqResGroups.get(position);</a>
+<span class="sourceLineNo">469</span><a id="line.469">        }</a>
+<span class="sourceLineNo">470</span><a id="line.470"></a>
+<span class="sourceLineNo">471</span><a id="line.471">        @Override</a>
+<span class="sourceLineNo">472</span><a id="line.472">        public List&lt;Group&gt; getSeqResGroups(GroupType type) {</a>
+<span class="sourceLineNo">473</span><a id="line.473">                List&lt;Group&gt; tmp = new ArrayList&lt;&gt;() ;</a>
+<span class="sourceLineNo">474</span><a id="line.474">                for (Group g : seqResGroups) {</a>
+<span class="sourceLineNo">475</span><a id="line.475">                        if (g.getType().equals(type)) {</a>
+<span class="sourceLineNo">476</span><a id="line.476">                                tmp.add(g);</a>
+<span class="sourceLineNo">477</span><a id="line.477">                        }</a>
+<span class="sourceLineNo">478</span><a id="line.478">                }</a>
+<span class="sourceLineNo">479</span><a id="line.479"></a>
+<span class="sourceLineNo">480</span><a id="line.480">                return tmp ;</a>
+<span class="sourceLineNo">481</span><a id="line.481">        }</a>
+<span class="sourceLineNo">482</span><a id="line.482"></a>
+<span class="sourceLineNo">483</span><a id="line.483">        @Override</a>
+<span class="sourceLineNo">484</span><a id="line.484">        public List&lt;Group&gt; getSeqResGroups() {</a>
+<span class="sourceLineNo">485</span><a id="line.485">                return seqResGroups;</a>
+<span class="sourceLineNo">486</span><a id="line.486">        }</a>
+<span class="sourceLineNo">487</span><a id="line.487"></a>
+<span class="sourceLineNo">488</span><a id="line.488">        @Override</a>
+<span class="sourceLineNo">489</span><a id="line.489">        public void setSeqResGroups(List&lt;Group&gt; groups){</a>
+<span class="sourceLineNo">490</span><a id="line.490">                for (Group g: groups){</a>
+<span class="sourceLineNo">491</span><a id="line.491">                        if (g != null) {</a>
+<span class="sourceLineNo">492</span><a id="line.492">                                g.setChain(this);</a>
+<span class="sourceLineNo">493</span><a id="line.493">                        }</a>
+<span class="sourceLineNo">494</span><a id="line.494">                }</a>
+<span class="sourceLineNo">495</span><a id="line.495">                this.seqResGroups = groups;</a>
+<span class="sourceLineNo">496</span><a id="line.496">        }</a>
+<span class="sourceLineNo">497</span><a id="line.497"></a>
+<span class="sourceLineNo">498</span><a id="line.498">        @Override</a>
+<span class="sourceLineNo">499</span><a id="line.499">        public int getAtomLength() {</a>
+<span class="sourceLineNo">500</span><a id="line.500"></a>
+<span class="sourceLineNo">501</span><a id="line.501">                return groups.size();</a>
+<span class="sourceLineNo">502</span><a id="line.502">        }</a>
+<span class="sourceLineNo">503</span><a id="line.503"></a>
+<span class="sourceLineNo">504</span><a id="line.504">        @Override</a>
+<span class="sourceLineNo">505</span><a id="line.505">        public String toPDB() {</a>
+<span class="sourceLineNo">506</span><a id="line.506">                return FileConvert.toPDB(this);</a>
+<span class="sourceLineNo">507</span><a id="line.507">        }</a>
+<span class="sourceLineNo">508</span><a id="line.508"></a>
+<span class="sourceLineNo">509</span><a id="line.509">        @Override</a>
+<span class="sourceLineNo">510</span><a id="line.510">        public String toMMCIF() {</a>
+<span class="sourceLineNo">511</span><a id="line.511">                return FileConvert.toMMCIF(this);</a>
+<span class="sourceLineNo">512</span><a id="line.512">        }</a>
+<span class="sourceLineNo">513</span><a id="line.513"></a>
+<span class="sourceLineNo">514</span><a id="line.514">        @Override</a>
+<span class="sourceLineNo">515</span><a id="line.515">        public void setSeqMisMatches(List&lt;SeqMisMatch&gt; seqMisMatches) {</a>
+<span class="sourceLineNo">516</span><a id="line.516">                this.seqMisMatches = seqMisMatches;</a>
+<span class="sourceLineNo">517</span><a id="line.517">        }</a>
+<span class="sourceLineNo">518</span><a id="line.518"></a>
+<span class="sourceLineNo">519</span><a id="line.519">        @Override</a>
+<span class="sourceLineNo">520</span><a id="line.520">        public List&lt;SeqMisMatch&gt; getSeqMisMatches() {</a>
+<span class="sourceLineNo">521</span><a id="line.521">                return seqMisMatches;</a>
+<span class="sourceLineNo">522</span><a id="line.522">        }</a>
+<span class="sourceLineNo">523</span><a id="line.523"></a>
+<span class="sourceLineNo">524</span><a id="line.524">        @Override</a>
+<span class="sourceLineNo">525</span><a id="line.525">        public EntityType getEntityType() {</a>
+<span class="sourceLineNo">526</span><a id="line.526">                if (getEntityInfo()==null) return null;</a>
+<span class="sourceLineNo">527</span><a id="line.527">                return getEntityInfo().getType();</a>
+<span class="sourceLineNo">528</span><a id="line.528">        }</a>
+<span class="sourceLineNo">529</span><a id="line.529"></a>
+<span class="sourceLineNo">530</span><a id="line.530">        @Override</a>
+<span class="sourceLineNo">531</span><a id="line.531">        public boolean isWaterOnly() {</a>
+<span class="sourceLineNo">532</span><a id="line.532">                for (Group g : getAtomGroups()) {</a>
+<span class="sourceLineNo">533</span><a id="line.533">                        if (!g.isWater())</a>
+<span class="sourceLineNo">534</span><a id="line.534">                                return false;</a>
+<span class="sourceLineNo">535</span><a id="line.535">                }</a>
+<span class="sourceLineNo">536</span><a id="line.536">                return true;</a>
+<span class="sourceLineNo">537</span><a id="line.537">        }</a>
+<span class="sourceLineNo">538</span><a id="line.538"></a>
+<span class="sourceLineNo">539</span><a id="line.539">        @Override</a>
+<span class="sourceLineNo">540</span><a id="line.540">        public boolean isPureNonPolymer() {</a>
+<span class="sourceLineNo">541</span><a id="line.541">                for (Group g : getAtomGroups()) {</a>
+<span class="sourceLineNo">542</span><a id="line.542"></a>
+<span class="sourceLineNo">543</span><a id="line.543">                        //ChemComp cc = g.getChemComp();</a>
+<span class="sourceLineNo">544</span><a id="line.544"></a>
+<span class="sourceLineNo">545</span><a id="line.545">                        if (    g.isPolymeric() &amp;&amp;</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                        !g.isHetAtomInFile() ) {</a>
+<span class="sourceLineNo">547</span><a id="line.547"></a>
+<span class="sourceLineNo">548</span><a id="line.548">                                // important: the aminoacid or nucleotide residue can be in Atom records</a>
+<span class="sourceLineNo">549</span><a id="line.549"></a>
+<span class="sourceLineNo">550</span><a id="line.550">                                return false;</a>
+<span class="sourceLineNo">551</span><a id="line.551">                        }</a>
+<span class="sourceLineNo">552</span><a id="line.552"></a>
+<span class="sourceLineNo">553</span><a id="line.553">                }</a>
+<span class="sourceLineNo">554</span><a id="line.554">                return true;</a>
+<span class="sourceLineNo">555</span><a id="line.555">        }</a>
+<span class="sourceLineNo">556</span><a id="line.556"></a>
+<span class="sourceLineNo">557</span><a id="line.557">        @Override</a>
+<span class="sourceLineNo">558</span><a id="line.558">        public GroupType getPredominantGroupType(){</a>
+<span class="sourceLineNo">559</span><a id="line.559"></a>
+<span class="sourceLineNo">560</span><a id="line.560">                double ratioResiduesToTotal = StructureTools.RATIO_RESIDUES_TO_TOTAL;</a>
+<span class="sourceLineNo">561</span><a id="line.561"></a>
+<span class="sourceLineNo">562</span><a id="line.562">                int sizeAminos = getAtomGroups(GroupType.AMINOACID).size();</a>
+<span class="sourceLineNo">563</span><a id="line.563">                int sizeNucleotides = getAtomGroups(GroupType.NUCLEOTIDE).size();</a>
+<span class="sourceLineNo">564</span><a id="line.564">                List&lt;Group&gt; hetAtoms = getAtomGroups(GroupType.HETATM);</a>
+<span class="sourceLineNo">565</span><a id="line.565">                int sizeHetatoms = hetAtoms.size();</a>
+<span class="sourceLineNo">566</span><a id="line.566">                int sizeWaters = 0;</a>
+<span class="sourceLineNo">567</span><a id="line.567">                for (Group g : hetAtoms) {</a>
+<span class="sourceLineNo">568</span><a id="line.568">                        if (g.isWater())</a>
+<span class="sourceLineNo">569</span><a id="line.569">                                sizeWaters++;</a>
+<span class="sourceLineNo">570</span><a id="line.570">                }</a>
+<span class="sourceLineNo">571</span><a id="line.571">                int sizeHetatomsWithoutWater = sizeHetatoms - sizeWaters;</a>
+<span class="sourceLineNo">572</span><a id="line.572"></a>
+<span class="sourceLineNo">573</span><a id="line.573">                int fullSize = sizeAminos + sizeNucleotides + sizeHetatomsWithoutWater;</a>
+<span class="sourceLineNo">574</span><a id="line.574"></a>
+<span class="sourceLineNo">575</span><a id="line.575">                if ((double) sizeAminos / (double) fullSize &gt; ratioResiduesToTotal)</a>
+<span class="sourceLineNo">576</span><a id="line.576">                        return GroupType.AMINOACID;</a>
+<span class="sourceLineNo">577</span><a id="line.577"></a>
+<span class="sourceLineNo">578</span><a id="line.578">                if ((double) sizeNucleotides / (double) fullSize &gt; ratioResiduesToTotal)</a>
+<span class="sourceLineNo">579</span><a id="line.579">                        return GroupType.NUCLEOTIDE;</a>
+<span class="sourceLineNo">580</span><a id="line.580"></a>
+<span class="sourceLineNo">581</span><a id="line.581">                if ((double) (sizeHetatomsWithoutWater) / (double) fullSize &gt; ratioResiduesToTotal)</a>
+<span class="sourceLineNo">582</span><a id="line.582">                        return GroupType.HETATM;</a>
+<span class="sourceLineNo">583</span><a id="line.583"></a>
+<span class="sourceLineNo">584</span><a id="line.584">                // finally if neither condition works, we try based on majority, but log</a>
+<span class="sourceLineNo">585</span><a id="line.585">                // it</a>
+<span class="sourceLineNo">586</span><a id="line.586">                GroupType max;</a>
+<span class="sourceLineNo">587</span><a id="line.587">                if (sizeNucleotides &gt; sizeAminos) {</a>
+<span class="sourceLineNo">588</span><a id="line.588">                        if (sizeNucleotides &gt; sizeHetatomsWithoutWater) {</a>
+<span class="sourceLineNo">589</span><a id="line.589">                                max = GroupType.NUCLEOTIDE;</a>
+<span class="sourceLineNo">590</span><a id="line.590">                        } else {</a>
+<span class="sourceLineNo">591</span><a id="line.591">                                max = GroupType.HETATM;</a>
+<span class="sourceLineNo">592</span><a id="line.592">                        }</a>
+<span class="sourceLineNo">593</span><a id="line.593">                } else {</a>
+<span class="sourceLineNo">594</span><a id="line.594">                        if (sizeAminos &gt; sizeHetatomsWithoutWater) {</a>
+<span class="sourceLineNo">595</span><a id="line.595">                                max = GroupType.AMINOACID;</a>
+<span class="sourceLineNo">596</span><a id="line.596">                        } else {</a>
+<span class="sourceLineNo">597</span><a id="line.597">                                max = GroupType.HETATM;</a>
+<span class="sourceLineNo">598</span><a id="line.598">                        }</a>
+<span class="sourceLineNo">599</span><a id="line.599">                }</a>
+<span class="sourceLineNo">600</span><a id="line.600">                logger.debug(</a>
+<span class="sourceLineNo">601</span><a id="line.601">                                "Ratio of residues to total for chain with asym_id {} is below {}. Assuming it is a {} chain. "</a>
+<span class="sourceLineNo">602</span><a id="line.602">                                                + "Counts: # aa residues: {}, # nuc residues: {}, # non-water het residues: {}, # waters: {}, "</a>
+<span class="sourceLineNo">603</span><a id="line.603">                                                + "ratio aa/total: {}, ratio nuc/total: {}",</a>
+<span class="sourceLineNo">604</span><a id="line.604">                                getId(), ratioResiduesToTotal, max, sizeAminos,</a>
+<span class="sourceLineNo">605</span><a id="line.605">                                sizeNucleotides, sizeHetatomsWithoutWater, sizeWaters,</a>
+<span class="sourceLineNo">606</span><a id="line.606">                                (double) sizeAminos / (double) fullSize,</a>
+<span class="sourceLineNo">607</span><a id="line.607">                                (double) sizeNucleotides / (double) fullSize);</a>
+<span class="sourceLineNo">608</span><a id="line.608"></a>
+<span class="sourceLineNo">609</span><a id="line.609">                return max;</a>
+<span class="sourceLineNo">610</span><a id="line.610">        }</a>
+<span class="sourceLineNo">611</span><a id="line.611"></a>
+<span class="sourceLineNo">612</span><a id="line.612">        @Override</a>
+<span class="sourceLineNo">613</span><a id="line.613">        public  boolean isProtein() {</a>
+<span class="sourceLineNo">614</span><a id="line.614">                return getPredominantGroupType() == GroupType.AMINOACID;</a>
+<span class="sourceLineNo">615</span><a id="line.615">        }</a>
+<span class="sourceLineNo">616</span><a id="line.616"></a>
+<span class="sourceLineNo">617</span><a id="line.617">        @Override</a>
+<span class="sourceLineNo">618</span><a id="line.618">        public  boolean isNucleicAcid() {</a>
+<span class="sourceLineNo">619</span><a id="line.619">                return getPredominantGroupType() == GroupType.NUCLEOTIDE;</a>
+<span class="sourceLineNo">620</span><a id="line.620">        }</a>
+<span class="sourceLineNo">621</span><a id="line.621"></a>
+<span class="sourceLineNo">622</span><a id="line.622"></a>
+<span class="sourceLineNo">623</span><a id="line.623">}</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

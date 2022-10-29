@@ -1,0 +1,1892 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.nbio.structure.io.cif;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.time.LocalDate;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import java.time.ZoneId;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import java.time.format.DateTimeFormatter;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import java.time.format.DateTimeFormatterBuilder;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.util.ArrayList;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.util.Date;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.util.HashMap;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import java.util.LinkedHashMap;</a>
+<span class="sourceLineNo">011</span><a id="line.11">import java.util.List;</a>
+<span class="sourceLineNo">012</span><a id="line.12">import java.util.Locale;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import java.util.Map;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import java.util.NoSuchElementException;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import java.util.Optional;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import java.util.OptionalInt;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import java.util.stream.Collectors;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import java.util.stream.IntStream;</a>
+<span class="sourceLineNo">019</span><a id="line.19"></a>
+<span class="sourceLineNo">020</span><a id="line.20">import javax.vecmath.Matrix4d;</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">import org.biojava.nbio.structure.AminoAcid;</a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.AminoAcidImpl;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.AtomImpl;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.Chain;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.ChainImpl;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.DBRef;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.Element;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.EntityInfo;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.structure.EntityType;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.structure.Group;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.structure.GroupType;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.structure.HetatomImpl;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.structure.NucleotideImpl;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.biojava.nbio.structure.PDBCrystallographicInfo;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.biojava.nbio.structure.PDBHeader;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.biojava.nbio.structure.PdbId;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.biojava.nbio.structure.ResidueNumber;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.biojava.nbio.structure.SeqMisMatch;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.biojava.nbio.structure.SeqMisMatchImpl;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.biojava.nbio.structure.Site;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.nbio.structure.StructureException;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.biojava.nbio.structure.StructureImpl;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import org.biojava.nbio.structure.StructureTools;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import org.biojava.nbio.structure.chem.ChemCompGroupFactory;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import org.biojava.nbio.structure.io.BondMaker;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import org.biojava.nbio.structure.io.ChargeAdder;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import org.biojava.nbio.structure.io.EntityFinder;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import org.biojava.nbio.structure.io.FileParsingParameters;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import org.biojava.nbio.structure.io.SeqRes2AtomAligner;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import org.biojava.nbio.structure.quaternary.BioAssemblyInfo;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import org.biojava.nbio.structure.quaternary.BiologicalAssemblyBuilder;</a>
+<span class="sourceLineNo">055</span><a id="line.55">import org.biojava.nbio.structure.quaternary.BiologicalAssemblyTransformation;</a>
+<span class="sourceLineNo">056</span><a id="line.56">import org.biojava.nbio.structure.xtal.CrystalCell;</a>
+<span class="sourceLineNo">057</span><a id="line.57">import org.biojava.nbio.structure.xtal.SpaceGroup;</a>
+<span class="sourceLineNo">058</span><a id="line.58">import org.biojava.nbio.structure.xtal.SymoplibParser;</a>
+<span class="sourceLineNo">059</span><a id="line.59">import org.rcsb.cif.model.FloatColumn;</a>
+<span class="sourceLineNo">060</span><a id="line.60">import org.rcsb.cif.model.IntColumn;</a>
+<span class="sourceLineNo">061</span><a id="line.61">import org.rcsb.cif.model.StrColumn;</a>
+<span class="sourceLineNo">062</span><a id="line.62">import org.rcsb.cif.model.ValueKind;</a>
+<span class="sourceLineNo">063</span><a id="line.63">import org.rcsb.cif.schema.mm.AtomSite;</a>
+<span class="sourceLineNo">064</span><a id="line.64">import org.rcsb.cif.schema.mm.AtomSites;</a>
+<span class="sourceLineNo">065</span><a id="line.65">import org.rcsb.cif.schema.mm.AuditAuthor;</a>
+<span class="sourceLineNo">066</span><a id="line.66">import org.rcsb.cif.schema.mm.Cell;</a>
+<span class="sourceLineNo">067</span><a id="line.67">import org.rcsb.cif.schema.mm.ChemComp;</a>
+<span class="sourceLineNo">068</span><a id="line.68">import org.rcsb.cif.schema.mm.ChemCompBond;</a>
+<span class="sourceLineNo">069</span><a id="line.69">import org.rcsb.cif.schema.mm.DatabasePDBRemark;</a>
+<span class="sourceLineNo">070</span><a id="line.70">import org.rcsb.cif.schema.mm.DatabasePDBRev;</a>
+<span class="sourceLineNo">071</span><a id="line.71">import org.rcsb.cif.schema.mm.DatabasePDBRevRecord;</a>
+<span class="sourceLineNo">072</span><a id="line.72">import org.rcsb.cif.schema.mm.Em3dReconstruction;</a>
+<span class="sourceLineNo">073</span><a id="line.73">import org.rcsb.cif.schema.mm.Entity;</a>
+<span class="sourceLineNo">074</span><a id="line.74">import org.rcsb.cif.schema.mm.EntityPoly;</a>
+<span class="sourceLineNo">075</span><a id="line.75">import org.rcsb.cif.schema.mm.EntityPolySeq;</a>
+<span class="sourceLineNo">076</span><a id="line.76">import org.rcsb.cif.schema.mm.EntitySrcGen;</a>
+<span class="sourceLineNo">077</span><a id="line.77">import org.rcsb.cif.schema.mm.EntitySrcNat;</a>
+<span class="sourceLineNo">078</span><a id="line.78">import org.rcsb.cif.schema.mm.Exptl;</a>
+<span class="sourceLineNo">079</span><a id="line.79">import org.rcsb.cif.schema.mm.PdbxAuditRevisionHistory;</a>
+<span class="sourceLineNo">080</span><a id="line.80">import org.rcsb.cif.schema.mm.PdbxChemCompIdentifier;</a>
+<span class="sourceLineNo">081</span><a id="line.81">import org.rcsb.cif.schema.mm.PdbxDatabaseStatus;</a>
+<span class="sourceLineNo">082</span><a id="line.82">import org.rcsb.cif.schema.mm.PdbxEntityBranchDescriptor;</a>
+<span class="sourceLineNo">083</span><a id="line.83">import org.rcsb.cif.schema.mm.PdbxEntitySrcSyn;</a>
+<span class="sourceLineNo">084</span><a id="line.84">import org.rcsb.cif.schema.mm.PdbxMolecule;</a>
+<span class="sourceLineNo">085</span><a id="line.85">import org.rcsb.cif.schema.mm.PdbxMoleculeFeatures;</a>
+<span class="sourceLineNo">086</span><a id="line.86">import org.rcsb.cif.schema.mm.PdbxNonpolyScheme;</a>
+<span class="sourceLineNo">087</span><a id="line.87">import org.rcsb.cif.schema.mm.PdbxReferenceEntityLink;</a>
+<span class="sourceLineNo">088</span><a id="line.88">import org.rcsb.cif.schema.mm.PdbxReferenceEntityList;</a>
+<span class="sourceLineNo">089</span><a id="line.89">import org.rcsb.cif.schema.mm.PdbxReferenceEntityPolyLink;</a>
+<span class="sourceLineNo">090</span><a id="line.90">import org.rcsb.cif.schema.mm.PdbxStructAssembly;</a>
+<span class="sourceLineNo">091</span><a id="line.91">import org.rcsb.cif.schema.mm.PdbxStructAssemblyGen;</a>
+<span class="sourceLineNo">092</span><a id="line.92">import org.rcsb.cif.schema.mm.PdbxStructModResidue;</a>
+<span class="sourceLineNo">093</span><a id="line.93">import org.rcsb.cif.schema.mm.PdbxStructOperList;</a>
+<span class="sourceLineNo">094</span><a id="line.94">import org.rcsb.cif.schema.mm.Refine;</a>
+<span class="sourceLineNo">095</span><a id="line.95">import org.rcsb.cif.schema.mm.Struct;</a>
+<span class="sourceLineNo">096</span><a id="line.96">import org.rcsb.cif.schema.mm.StructAsym;</a>
+<span class="sourceLineNo">097</span><a id="line.97">import org.rcsb.cif.schema.mm.StructConf;</a>
+<span class="sourceLineNo">098</span><a id="line.98">import org.rcsb.cif.schema.mm.StructConn;</a>
+<span class="sourceLineNo">099</span><a id="line.99">import org.rcsb.cif.schema.mm.StructConnType;</a>
+<span class="sourceLineNo">100</span><a id="line.100">import org.rcsb.cif.schema.mm.StructKeywords;</a>
+<span class="sourceLineNo">101</span><a id="line.101">import org.rcsb.cif.schema.mm.StructNcsOper;</a>
+<span class="sourceLineNo">102</span><a id="line.102">import org.rcsb.cif.schema.mm.StructRef;</a>
+<span class="sourceLineNo">103</span><a id="line.103">import org.rcsb.cif.schema.mm.StructRefSeq;</a>
+<span class="sourceLineNo">104</span><a id="line.104">import org.rcsb.cif.schema.mm.StructRefSeqDif;</a>
+<span class="sourceLineNo">105</span><a id="line.105">import org.rcsb.cif.schema.mm.StructSheetRange;</a>
+<span class="sourceLineNo">106</span><a id="line.106">import org.rcsb.cif.schema.mm.StructSite;</a>
+<span class="sourceLineNo">107</span><a id="line.107">import org.rcsb.cif.schema.mm.StructSiteGen;</a>
+<span class="sourceLineNo">108</span><a id="line.108">import org.rcsb.cif.schema.mm.Symmetry;</a>
+<span class="sourceLineNo">109</span><a id="line.109">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">110</span><a id="line.110">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">/**</a>
+<span class="sourceLineNo">113</span><a id="line.113"> * An implementation of a CifFileConsumer for BioJava. Will process the information provided by a CifFile instance and</a>
+<span class="sourceLineNo">114</span><a id="line.114"> * use it to build up a {@link Structure} object.</a>
+<span class="sourceLineNo">115</span><a id="line.115"> * @author Sebastian Bittrich</a>
+<span class="sourceLineNo">116</span><a id="line.116"> * @since 6.0.0</a>
+<span class="sourceLineNo">117</span><a id="line.117"> */</a>
+<span class="sourceLineNo">118</span><a id="line.118">public class CifStructureConsumerImpl implements CifStructureConsumer {</a>
+<span class="sourceLineNo">119</span><a id="line.119">    private static final Logger logger = LoggerFactory.getLogger(CifStructureConsumerImpl.class);</a>
+<span class="sourceLineNo">120</span><a id="line.120">    private static final DateTimeFormatter DATE_FORMAT = new DateTimeFormatterBuilder()</a>
+<span class="sourceLineNo">121</span><a id="line.121">            .parseCaseInsensitive()</a>
+<span class="sourceLineNo">122</span><a id="line.122">            .appendPattern("yyyy-MM-dd")</a>
+<span class="sourceLineNo">123</span><a id="line.123">            .toFormatter(Locale.US);</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">    private Structure structure;</a>
+<span class="sourceLineNo">126</span><a id="line.126">    private Chain currentChain;</a>
+<span class="sourceLineNo">127</span><a id="line.127">    private Group currentGroup;</a>
+<span class="sourceLineNo">128</span><a id="line.128">    private List&lt;List&lt;Chain&gt;&gt; allModels;</a>
+<span class="sourceLineNo">129</span><a id="line.129">    private List&lt;Chain&gt; currentModel;</a>
+<span class="sourceLineNo">130</span><a id="line.130">    private PDBHeader pdbHeader;</a>
+<span class="sourceLineNo">131</span><a id="line.131">    private String currentNmrModelNumber;</a>
+<span class="sourceLineNo">132</span><a id="line.132">        private Em3dReconstruction em3dReconstruction;</a>
+<span class="sourceLineNo">133</span><a id="line.133">    private List&lt;Chain&gt; entityChains;</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">    private Entity entity;</a>
+<span class="sourceLineNo">136</span><a id="line.136">    private EntityPoly entityPoly;</a>
+<span class="sourceLineNo">137</span><a id="line.137">    private EntitySrcGen entitySrcGen;</a>
+<span class="sourceLineNo">138</span><a id="line.138">    private EntitySrcNat entitySrcNat;</a>
+<span class="sourceLineNo">139</span><a id="line.139">    private PdbxEntitySrcSyn entitySrcSyn;</a>
+<span class="sourceLineNo">140</span><a id="line.140">    private List&lt;Chain&gt; seqResChains;</a>
+<span class="sourceLineNo">141</span><a id="line.141">    private PdbxStructAssembly structAssembly;</a>
+<span class="sourceLineNo">142</span><a id="line.142">    private PdbxStructAssemblyGen structAssemblyGen;</a>
+<span class="sourceLineNo">143</span><a id="line.143">    private StructAsym structAsym;</a>
+<span class="sourceLineNo">144</span><a id="line.144">    private StructConn structConn;</a>
+<span class="sourceLineNo">145</span><a id="line.145">    private StructNcsOper structNcsOper;</a>
+<span class="sourceLineNo">146</span><a id="line.146">    private PdbxStructOperList structOpers;</a>
+<span class="sourceLineNo">147</span><a id="line.147">    private StructRef structRef;</a>
+<span class="sourceLineNo">148</span><a id="line.148">    private StructRefSeqDif structRefSeqDif;</a>
+<span class="sourceLineNo">149</span><a id="line.149">    private StructSiteGen structSiteGen;</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">    private Map&lt;String, String&gt; asymId2entityId;</a>
+<span class="sourceLineNo">152</span><a id="line.152">    private Map&lt;String, String&gt; asymId2authorId;</a>
+<span class="sourceLineNo">153</span><a id="line.153">    private Matrix4d parsedScaleMatrix;</a>
+<span class="sourceLineNo">154</span><a id="line.154"></a>
+<span class="sourceLineNo">155</span><a id="line.155">    private final FileParsingParameters params;</a>
+<span class="sourceLineNo">156</span><a id="line.156"></a>
+<span class="sourceLineNo">157</span><a id="line.157">    public CifStructureConsumerImpl(FileParsingParameters params) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">        this.params = params;</a>
+<span class="sourceLineNo">159</span><a id="line.159">    }</a>
+<span class="sourceLineNo">160</span><a id="line.160"></a>
+<span class="sourceLineNo">161</span><a id="line.161">    @Override</a>
+<span class="sourceLineNo">162</span><a id="line.162">    public void prepare() {</a>
+<span class="sourceLineNo">163</span><a id="line.163">        this.structure = new StructureImpl();</a>
+<span class="sourceLineNo">164</span><a id="line.164">        this.pdbHeader = new PDBHeader();</a>
+<span class="sourceLineNo">165</span><a id="line.165">        structure.setPDBHeader(pdbHeader);</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">        this.allModels = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">168</span><a id="line.168">        this.currentModel = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">        this.seqResChains  = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">171</span><a id="line.171">        this.asymId2entityId = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">172</span><a id="line.172">        this.asymId2authorId = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">        this.entityChains = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">175</span><a id="line.175">    }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">    @Override</a>
+<span class="sourceLineNo">178</span><a id="line.178">    public void consumeAtomSite(AtomSite atomSite) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">        if (params.isHeaderOnly()) {</a>
+<span class="sourceLineNo">180</span><a id="line.180">            return;</a>
+<span class="sourceLineNo">181</span><a id="line.181">        }</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">        StrColumn labelAsymId = atomSite.getLabelAsymId();</a>
+<span class="sourceLineNo">184</span><a id="line.184">        StrColumn authAsymId = atomSite.getAuthAsymId();</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">        StrColumn groupPDB = atomSite.getGroupPDB();</a>
+<span class="sourceLineNo">187</span><a id="line.187">        IntColumn authSeqId = atomSite.getAuthSeqId();</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">        StrColumn labelCompId = atomSite.getLabelCompId();</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">        IntColumn id = atomSite.getId();</a>
+<span class="sourceLineNo">192</span><a id="line.192">        StrColumn labelAtomId = atomSite.getLabelAtomId();</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">        FloatColumn cartnX = atomSite.getCartnX();</a>
+<span class="sourceLineNo">195</span><a id="line.195">        FloatColumn cartnY = atomSite.getCartnY();</a>
+<span class="sourceLineNo">196</span><a id="line.196">        FloatColumn cartnZ = atomSite.getCartnZ();</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">        FloatColumn occupancy = atomSite.getOccupancy();</a>
+<span class="sourceLineNo">199</span><a id="line.199">        FloatColumn bIsoOrEquiv = atomSite.getBIsoOrEquiv();</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        StrColumn labelAltId = atomSite.getLabelAltId();</a>
+<span class="sourceLineNo">202</span><a id="line.202">        StrColumn typeSymbol = atomSite.getTypeSymbol();</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">        StrColumn pdbxPDBInsCode = atomSite.getPdbxPDBInsCode();</a>
+<span class="sourceLineNo">205</span><a id="line.205">        IntColumn labelSeqId = atomSite.getLabelSeqId();</a>
+<span class="sourceLineNo">206</span><a id="line.206">        IntColumn pdbx_pdb_model_num = atomSite.getPdbxPDBModelNum();</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">        for (int atomIndex = 0; atomIndex &lt; atomSite.getRowCount(); atomIndex++) {</a>
+<span class="sourceLineNo">209</span><a id="line.209">            boolean startOfNewChain = false;</a>
+<span class="sourceLineNo">210</span><a id="line.210">            Character oneLetterCode = StructureTools.get1LetterCodeAmino(labelCompId.get(atomIndex));</a>
+<span class="sourceLineNo">211</span><a id="line.211"></a>
+<span class="sourceLineNo">212</span><a id="line.212">            boolean isHetAtmInFile = false;</a>
+<span class="sourceLineNo">213</span><a id="line.213">            if (!"ATOM".equals(groupPDB.get(atomIndex))) {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                if (oneLetterCode != null &amp;&amp; oneLetterCode.equals(StructureTools.UNKNOWN_GROUP_LABEL)) {</a>
+<span class="sourceLineNo">215</span><a id="line.215">                    oneLetterCode = null;</a>
+<span class="sourceLineNo">216</span><a id="line.216">                }</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">                isHetAtmInFile = true;</a>
+<span class="sourceLineNo">219</span><a id="line.219">            }</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">            String insCodeString = pdbxPDBInsCode.get(atomIndex);</a>
+<span class="sourceLineNo">222</span><a id="line.222">            Character insCode = null;</a>
+<span class="sourceLineNo">223</span><a id="line.223">            if (insCodeString != null &amp;&amp; !insCodeString.isEmpty() &amp;&amp; !"?".equals(insCodeString)) {</a>
+<span class="sourceLineNo">224</span><a id="line.224">                insCode = insCodeString.charAt(0);</a>
+<span class="sourceLineNo">225</span><a id="line.225">            }</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">            // non polymer chains (ligands and small molecules) will have a label_seq_id set to '.'</a>
+<span class="sourceLineNo">228</span><a id="line.228">            long seqId = labelSeqId.get(atomIndex);</a>
+<span class="sourceLineNo">229</span><a id="line.229"></a>
+<span class="sourceLineNo">230</span><a id="line.230">            String nmrModelNumber = pdbx_pdb_model_num.getStringData(atomIndex);</a>
+<span class="sourceLineNo">231</span><a id="line.231"></a>
+<span class="sourceLineNo">232</span><a id="line.232">            if (currentNmrModelNumber == null) {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                currentNmrModelNumber = nmrModelNumber;</a>
+<span class="sourceLineNo">234</span><a id="line.234">            }</a>
+<span class="sourceLineNo">235</span><a id="line.235">            if (!currentNmrModelNumber.equals(nmrModelNumber)) {</a>
+<span class="sourceLineNo">236</span><a id="line.236">                currentNmrModelNumber = nmrModelNumber;</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">                if (currentChain != null) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                    currentChain.addGroup(currentGroup);</a>
+<span class="sourceLineNo">240</span><a id="line.240">                    currentGroup.trimToSize();</a>
+<span class="sourceLineNo">241</span><a id="line.241">                }</a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243">                allModels.add(currentModel);</a>
+<span class="sourceLineNo">244</span><a id="line.244">                currentModel = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">245</span><a id="line.245">                currentChain = null;</a>
+<span class="sourceLineNo">246</span><a id="line.246">                currentGroup = null;</a>
+<span class="sourceLineNo">247</span><a id="line.247">            }</a>
+<span class="sourceLineNo">248</span><a id="line.248"></a>
+<span class="sourceLineNo">249</span><a id="line.249">            String asymId = labelAsymId.get(atomIndex);</a>
+<span class="sourceLineNo">250</span><a id="line.250">            String authId = authAsymId.get(atomIndex);</a>
+<span class="sourceLineNo">251</span><a id="line.251">            if (currentChain == null) {</a>
+<span class="sourceLineNo">252</span><a id="line.252">                currentChain = new ChainImpl();</a>
+<span class="sourceLineNo">253</span><a id="line.253">                currentChain.setName(authId);</a>
+<span class="sourceLineNo">254</span><a id="line.254">                currentChain.setId(asymId);</a>
+<span class="sourceLineNo">255</span><a id="line.255">                currentModel.add(currentChain);</a>
+<span class="sourceLineNo">256</span><a id="line.256">                startOfNewChain = true;</a>
+<span class="sourceLineNo">257</span><a id="line.257">            }</a>
+<span class="sourceLineNo">258</span><a id="line.258"></a>
+<span class="sourceLineNo">259</span><a id="line.259">            if (!asymId.equals(currentChain.getId())) {</a>
+<span class="sourceLineNo">260</span><a id="line.260">                startOfNewChain = true;</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262">                currentChain.addGroup(currentGroup);</a>
+<span class="sourceLineNo">263</span><a id="line.263"></a>
+<span class="sourceLineNo">264</span><a id="line.264">                Optional&lt;Chain&gt; testChain = currentModel.stream()</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        .filter(chain -&gt; chain.getId().equals(asymId))</a>
+<span class="sourceLineNo">266</span><a id="line.266">                        .findFirst();</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">                if (testChain.isPresent()) {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                    currentChain = testChain.get();</a>
+<span class="sourceLineNo">270</span><a id="line.270">                } else {</a>
+<span class="sourceLineNo">271</span><a id="line.271">                    currentChain = new ChainImpl();</a>
+<span class="sourceLineNo">272</span><a id="line.272">                    currentChain.setName(authId);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                    currentChain.setId(asymId);</a>
+<span class="sourceLineNo">274</span><a id="line.274">                }</a>
+<span class="sourceLineNo">275</span><a id="line.275"></a>
+<span class="sourceLineNo">276</span><a id="line.276">                if (!currentModel.contains(currentChain)) {</a>
+<span class="sourceLineNo">277</span><a id="line.277">                    currentModel.add(currentChain);</a>
+<span class="sourceLineNo">278</span><a id="line.278">                }</a>
+<span class="sourceLineNo">279</span><a id="line.279">            }</a>
+<span class="sourceLineNo">280</span><a id="line.280"></a>
+<span class="sourceLineNo">281</span><a id="line.281">            ResidueNumber residueNumber = new ResidueNumber(authId, authSeqId.get(atomIndex), insCode);</a>
+<span class="sourceLineNo">282</span><a id="line.282"></a>
+<span class="sourceLineNo">283</span><a id="line.283">            String recordName = groupPDB.get(atomIndex);</a>
+<span class="sourceLineNo">284</span><a id="line.284">            String compId = labelCompId.get(atomIndex);</a>
+<span class="sourceLineNo">285</span><a id="line.285">            if (currentGroup == null) {</a>
+<span class="sourceLineNo">286</span><a id="line.286">                currentGroup = createGroup(recordName, oneLetterCode, compId, seqId);</a>
+<span class="sourceLineNo">287</span><a id="line.287">                currentGroup.setResidueNumber(residueNumber);</a>
+<span class="sourceLineNo">288</span><a id="line.288">                currentGroup.setPDBName(compId);</a>
+<span class="sourceLineNo">289</span><a id="line.289">                currentGroup.setHetAtomInFile(isHetAtmInFile);</a>
+<span class="sourceLineNo">290</span><a id="line.290">            }</a>
+<span class="sourceLineNo">291</span><a id="line.291"></a>
+<span class="sourceLineNo">292</span><a id="line.292">            Group altGroup = null;</a>
+<span class="sourceLineNo">293</span><a id="line.293">            String altLocation = labelAltId.get(atomIndex);</a>
+<span class="sourceLineNo">294</span><a id="line.294"></a>
+<span class="sourceLineNo">295</span><a id="line.295">            if (startOfNewChain) {</a>
+<span class="sourceLineNo">296</span><a id="line.296">                currentGroup = createGroup(recordName, oneLetterCode, compId, seqId);</a>
+<span class="sourceLineNo">297</span><a id="line.297">                currentGroup.setResidueNumber(residueNumber);</a>
+<span class="sourceLineNo">298</span><a id="line.298">                currentGroup.setPDBName(compId);</a>
+<span class="sourceLineNo">299</span><a id="line.299">                currentGroup.setHetAtomInFile(isHetAtmInFile);</a>
+<span class="sourceLineNo">300</span><a id="line.300">            } else {</a>
+<span class="sourceLineNo">301</span><a id="line.301">                if (!residueNumber.equals(currentGroup.getResidueNumber())) {</a>
+<span class="sourceLineNo">302</span><a id="line.302">                    currentChain.addGroup(currentGroup);</a>
+<span class="sourceLineNo">303</span><a id="line.303">                    currentGroup.trimToSize();</a>
+<span class="sourceLineNo">304</span><a id="line.304">                    currentGroup = createGroup(recordName, oneLetterCode, compId, seqId);</a>
+<span class="sourceLineNo">305</span><a id="line.305">                    currentGroup.setPDBName(compId);</a>
+<span class="sourceLineNo">306</span><a id="line.306">                    currentGroup.setResidueNumber(residueNumber);</a>
+<span class="sourceLineNo">307</span><a id="line.307">                    currentGroup.setHetAtomInFile(isHetAtmInFile);</a>
+<span class="sourceLineNo">308</span><a id="line.308">                } else {</a>
+<span class="sourceLineNo">309</span><a id="line.309">                    if (altLocation != null &amp;&amp; !altLocation.isEmpty() &amp;&amp; !altLocation.equals(".")) {</a>
+<span class="sourceLineNo">310</span><a id="line.310">                        altGroup = getAltLocGroup(recordName, altLocation.charAt(0), oneLetterCode, compId, seqId);</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        if (altGroup.getChain() == null) {</a>
+<span class="sourceLineNo">312</span><a id="line.312">                            altGroup.setChain(currentChain);</a>
+<span class="sourceLineNo">313</span><a id="line.313">                        }</a>
+<span class="sourceLineNo">314</span><a id="line.314">                    }</a>
+<span class="sourceLineNo">315</span><a id="line.315">                }</a>
+<span class="sourceLineNo">316</span><a id="line.316">            }</a>
+<span class="sourceLineNo">317</span><a id="line.317"></a>
+<span class="sourceLineNo">318</span><a id="line.318">            if (params.isParseCAOnly()) {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                if (!labelAtomId.get(atomIndex).equals(StructureTools.CA_ATOM_NAME) &amp;&amp; "C".equals(typeSymbol.get(atomIndex))) {</a>
+<span class="sourceLineNo">320</span><a id="line.320">                    continue;</a>
+<span class="sourceLineNo">321</span><a id="line.321">                }</a>
+<span class="sourceLineNo">322</span><a id="line.322">            }</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">            Atom atom = new AtomImpl();</a>
+<span class="sourceLineNo">325</span><a id="line.325"></a>
+<span class="sourceLineNo">326</span><a id="line.326">            atom.setPDBserial(id.get(atomIndex));</a>
+<span class="sourceLineNo">327</span><a id="line.327">            atom.setName(labelAtomId.get(atomIndex));</a>
+<span class="sourceLineNo">328</span><a id="line.328"></a>
+<span class="sourceLineNo">329</span><a id="line.329">            atom.setX(cartnX.get(atomIndex));</a>
+<span class="sourceLineNo">330</span><a id="line.330">            atom.setY(cartnY.get(atomIndex));</a>
+<span class="sourceLineNo">331</span><a id="line.331">            atom.setZ(cartnZ.get(atomIndex));</a>
+<span class="sourceLineNo">332</span><a id="line.332"></a>
+<span class="sourceLineNo">333</span><a id="line.333">            atom.setOccupancy((float) occupancy.get(atomIndex));</a>
+<span class="sourceLineNo">334</span><a id="line.334">            atom.setTempFactor((float) bIsoOrEquiv.get(atomIndex));</a>
+<span class="sourceLineNo">335</span><a id="line.335"></a>
+<span class="sourceLineNo">336</span><a id="line.336">            if (altLocation == null || altLocation.isEmpty() || altLocation.equals(".")) {</a>
+<span class="sourceLineNo">337</span><a id="line.337">                atom.setAltLoc(' ');</a>
+<span class="sourceLineNo">338</span><a id="line.338">            } else {</a>
+<span class="sourceLineNo">339</span><a id="line.339">                atom.setAltLoc(altLocation.charAt(0));</a>
+<span class="sourceLineNo">340</span><a id="line.340">            }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">            String ts = typeSymbol.get(atomIndex);</a>
+<span class="sourceLineNo">343</span><a id="line.343">            try {</a>
+<span class="sourceLineNo">344</span><a id="line.344">                Element element = Element.valueOfIgnoreCase(ts);</a>
+<span class="sourceLineNo">345</span><a id="line.345">                atom.setElement(element);</a>
+<span class="sourceLineNo">346</span><a id="line.346">            }  catch (IllegalArgumentException e) {</a>
+<span class="sourceLineNo">347</span><a id="line.347">                logger.info("Element {} was not recognised as a BioJava-known element, the element will be " +</a>
+<span class="sourceLineNo">348</span><a id="line.348">                        "represented as the generic element {}", ts, Element.R.name());</a>
+<span class="sourceLineNo">349</span><a id="line.349">                atom.setElement(Element.R);</a>
+<span class="sourceLineNo">350</span><a id="line.350">            }</a>
+<span class="sourceLineNo">351</span><a id="line.351"></a>
+<span class="sourceLineNo">352</span><a id="line.352">            if (altGroup != null) {</a>
+<span class="sourceLineNo">353</span><a id="line.353">                altGroup.addAtom(atom);</a>
+<span class="sourceLineNo">354</span><a id="line.354">            } else {</a>
+<span class="sourceLineNo">355</span><a id="line.355">                currentGroup.addAtom(atom);</a>
+<span class="sourceLineNo">356</span><a id="line.356">            }</a>
+<span class="sourceLineNo">357</span><a id="line.357"></a>
+<span class="sourceLineNo">358</span><a id="line.358">            String atomName = atom.getName();</a>
+<span class="sourceLineNo">359</span><a id="line.359">            if (!currentGroup.hasAtom(atomName)) {</a>
+<span class="sourceLineNo">360</span><a id="line.360">                if (currentGroup.getPDBName().equals(atom.getGroup().getPDBName())) {</a>
+<span class="sourceLineNo">361</span><a id="line.361">                    if (!StructureTools.hasNonDeuteratedEquiv(atom, currentGroup)) {</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        currentGroup.addAtom(atom);</a>
+<span class="sourceLineNo">363</span><a id="line.363">                    }</a>
+<span class="sourceLineNo">364</span><a id="line.364">                }</a>
+<span class="sourceLineNo">365</span><a id="line.365">            }</a>
+<span class="sourceLineNo">366</span><a id="line.366">        }</a>
+<span class="sourceLineNo">367</span><a id="line.367">    }</a>
+<span class="sourceLineNo">368</span><a id="line.368"></a>
+<span class="sourceLineNo">369</span><a id="line.369">    private Group getAltLocGroup(String recordName, Character altLoc, Character oneLetterCode, String threeLetterCode,</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                 long seqId) {</a>
+<span class="sourceLineNo">371</span><a id="line.371">        List&lt;Atom&gt; atoms = currentGroup.getAtoms();</a>
+<span class="sourceLineNo">372</span><a id="line.372">        if (atoms.size() &gt; 0) {</a>
+<span class="sourceLineNo">373</span><a id="line.373">            if (atoms.get(0).getAltLoc().equals(altLoc)) {</a>
+<span class="sourceLineNo">374</span><a id="line.374">                return currentGroup;</a>
+<span class="sourceLineNo">375</span><a id="line.375">            }</a>
+<span class="sourceLineNo">376</span><a id="line.376">        }</a>
+<span class="sourceLineNo">377</span><a id="line.377"></a>
+<span class="sourceLineNo">378</span><a id="line.378">        List&lt;Group&gt; altLocs = currentGroup.getAltLocs();</a>
+<span class="sourceLineNo">379</span><a id="line.379">        for (Group altLocGroup : altLocs) {</a>
+<span class="sourceLineNo">380</span><a id="line.380">            atoms = altLocGroup.getAtoms();</a>
+<span class="sourceLineNo">381</span><a id="line.381">            if (atoms.size() &gt; 0) {</a>
+<span class="sourceLineNo">382</span><a id="line.382">                for (Atom a1 : atoms) {</a>
+<span class="sourceLineNo">383</span><a id="line.383">                    if (a1.getAltLoc().equals(altLoc)) {</a>
+<span class="sourceLineNo">384</span><a id="line.384">                        return altLocGroup;</a>
+<span class="sourceLineNo">385</span><a id="line.385">                    }</a>
+<span class="sourceLineNo">386</span><a id="line.386">                }</a>
+<span class="sourceLineNo">387</span><a id="line.387">            }</a>
+<span class="sourceLineNo">388</span><a id="line.388">        }</a>
+<span class="sourceLineNo">389</span><a id="line.389"></a>
+<span class="sourceLineNo">390</span><a id="line.390">        if (threeLetterCode.equals(currentGroup.getPDBName())) {</a>
+<span class="sourceLineNo">391</span><a id="line.391">            if (currentGroup.getAtoms().isEmpty()) {</a>
+<span class="sourceLineNo">392</span><a id="line.392">                return currentGroup;</a>
+<span class="sourceLineNo">393</span><a id="line.393">            }</a>
+<span class="sourceLineNo">394</span><a id="line.394"></a>
+<span class="sourceLineNo">395</span><a id="line.395">            Group altLocGroup = (Group) currentGroup.clone();</a>
+<span class="sourceLineNo">396</span><a id="line.396">            altLocGroup.setAtoms(new ArrayList&lt;&gt;());</a>
+<span class="sourceLineNo">397</span><a id="line.397">            altLocGroup.getAltLocs().clear();</a>
+<span class="sourceLineNo">398</span><a id="line.398">            currentGroup.addAltLoc(altLocGroup);</a>
+<span class="sourceLineNo">399</span><a id="line.399">            return altLocGroup;</a>
+<span class="sourceLineNo">400</span><a id="line.400">        }</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">        Group altLocGroup = createGroup(recordName, oneLetterCode, threeLetterCode, seqId);</a>
+<span class="sourceLineNo">403</span><a id="line.403">        altLocGroup.setPDBName(threeLetterCode);</a>
+<span class="sourceLineNo">404</span><a id="line.404">        altLocGroup.setResidueNumber(currentGroup.getResidueNumber());</a>
+<span class="sourceLineNo">405</span><a id="line.405">        currentGroup.addAltLoc(altLocGroup);</a>
+<span class="sourceLineNo">406</span><a id="line.406">        return altLocGroup;</a>
+<span class="sourceLineNo">407</span><a id="line.407">    }</a>
+<span class="sourceLineNo">408</span><a id="line.408"></a>
+<span class="sourceLineNo">409</span><a id="line.409">    private Group createGroup(String record, Character oneLetterCode, String threeLetterCode, long seqId) {</a>
+<span class="sourceLineNo">410</span><a id="line.410">        Group group = ChemCompGroupFactory.getGroupFromChemCompDictionary(threeLetterCode);</a>
+<span class="sourceLineNo">411</span><a id="line.411">        if (group != null &amp;&amp; !group.getChemComp().isEmpty()) {</a>
+<span class="sourceLineNo">412</span><a id="line.412">            if (group instanceof AminoAcidImpl) {</a>
+<span class="sourceLineNo">413</span><a id="line.413">                AminoAcidImpl aminoAcid = (AminoAcidImpl) group;</a>
+<span class="sourceLineNo">414</span><a id="line.414">                aminoAcid.setId(seqId);</a>
+<span class="sourceLineNo">415</span><a id="line.415">            } else if (group instanceof NucleotideImpl) {</a>
+<span class="sourceLineNo">416</span><a id="line.416">                NucleotideImpl nucleotide = (NucleotideImpl) group;</a>
+<span class="sourceLineNo">417</span><a id="line.417">                nucleotide.setId(seqId);</a>
+<span class="sourceLineNo">418</span><a id="line.418">            } else if (group instanceof HetatomImpl) {</a>
+<span class="sourceLineNo">419</span><a id="line.419">                HetatomImpl hetatom = (HetatomImpl) group;</a>
+<span class="sourceLineNo">420</span><a id="line.420">                hetatom.setId(seqId);</a>
+<span class="sourceLineNo">421</span><a id="line.421">            }</a>
+<span class="sourceLineNo">422</span><a id="line.422">            return group;</a>
+<span class="sourceLineNo">423</span><a id="line.423">        }</a>
+<span class="sourceLineNo">424</span><a id="line.424"></a>
+<span class="sourceLineNo">425</span><a id="line.425">        if ("ATOM".equals(record)) {</a>
+<span class="sourceLineNo">426</span><a id="line.426">            if (StructureTools.isNucleotide(threeLetterCode)) {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                NucleotideImpl nucleotide = new NucleotideImpl();</a>
+<span class="sourceLineNo">428</span><a id="line.428">                group = nucleotide;</a>
+<span class="sourceLineNo">429</span><a id="line.429">                nucleotide.setId(seqId);</a>
+<span class="sourceLineNo">430</span><a id="line.430">            } else if (oneLetterCode == null || oneLetterCode == StructureTools.UNKNOWN_GROUP_LABEL) {</a>
+<span class="sourceLineNo">431</span><a id="line.431">                HetatomImpl hetatom = new HetatomImpl();</a>
+<span class="sourceLineNo">432</span><a id="line.432">                group = hetatom;</a>
+<span class="sourceLineNo">433</span><a id="line.433">                hetatom.setId(seqId);</a>
+<span class="sourceLineNo">434</span><a id="line.434">            } else {</a>
+<span class="sourceLineNo">435</span><a id="line.435">                AminoAcidImpl aminoAcid = new AminoAcidImpl();</a>
+<span class="sourceLineNo">436</span><a id="line.436">                group = aminoAcid;</a>
+<span class="sourceLineNo">437</span><a id="line.437">                aminoAcid.setAminoType(oneLetterCode);</a>
+<span class="sourceLineNo">438</span><a id="line.438">                aminoAcid.setId(seqId);</a>
+<span class="sourceLineNo">439</span><a id="line.439">            }</a>
+<span class="sourceLineNo">440</span><a id="line.440">        } else {</a>
+<span class="sourceLineNo">441</span><a id="line.441">            if (StructureTools.isNucleotide(threeLetterCode)) {</a>
+<span class="sourceLineNo">442</span><a id="line.442">                NucleotideImpl nucleotide = new NucleotideImpl();</a>
+<span class="sourceLineNo">443</span><a id="line.443">                group = nucleotide;</a>
+<span class="sourceLineNo">444</span><a id="line.444">                nucleotide.setId(seqId);</a>
+<span class="sourceLineNo">445</span><a id="line.445">            } else if (oneLetterCode != null) {</a>
+<span class="sourceLineNo">446</span><a id="line.446">                AminoAcidImpl aminoAcid = new AminoAcidImpl();</a>
+<span class="sourceLineNo">447</span><a id="line.447">                group = aminoAcid;</a>
+<span class="sourceLineNo">448</span><a id="line.448">                aminoAcid.setAminoType(oneLetterCode);</a>
+<span class="sourceLineNo">449</span><a id="line.449">                aminoAcid.setId(seqId);</a>
+<span class="sourceLineNo">450</span><a id="line.450">            } else {</a>
+<span class="sourceLineNo">451</span><a id="line.451">                HetatomImpl hetatom = new HetatomImpl();</a>
+<span class="sourceLineNo">452</span><a id="line.452">                hetatom.setId(seqId);</a>
+<span class="sourceLineNo">453</span><a id="line.453">                group = hetatom;</a>
+<span class="sourceLineNo">454</span><a id="line.454">            }</a>
+<span class="sourceLineNo">455</span><a id="line.455">        }</a>
+<span class="sourceLineNo">456</span><a id="line.456">        return group;</a>
+<span class="sourceLineNo">457</span><a id="line.457">    }</a>
+<span class="sourceLineNo">458</span><a id="line.458"></a>
+<span class="sourceLineNo">459</span><a id="line.459">    @Override</a>
+<span class="sourceLineNo">460</span><a id="line.460">    public void consumeAtomSites(AtomSites atomSites) {</a>
+<span class="sourceLineNo">461</span><a id="line.461">        // no atom sites present</a>
+<span class="sourceLineNo">462</span><a id="line.462">        if (!atomSites.isDefined() || atomSites.getRowCount() == 0) {</a>
+<span class="sourceLineNo">463</span><a id="line.463">            return;</a>
+<span class="sourceLineNo">464</span><a id="line.464">        }</a>
+<span class="sourceLineNo">465</span><a id="line.465"></a>
+<span class="sourceLineNo">466</span><a id="line.466">        try {</a>
+<span class="sourceLineNo">467</span><a id="line.467">            parsedScaleMatrix = new Matrix4d(</a>
+<span class="sourceLineNo">468</span><a id="line.468">                    atomSites.getFractTransfMatrix11().get(0),</a>
+<span class="sourceLineNo">469</span><a id="line.469">                    atomSites.getFractTransfMatrix12().get(0),</a>
+<span class="sourceLineNo">470</span><a id="line.470">                    atomSites.getFractTransfMatrix13().get(0),</a>
+<span class="sourceLineNo">471</span><a id="line.471">                    atomSites.getFractTransfVector1().get(0),</a>
+<span class="sourceLineNo">472</span><a id="line.472"></a>
+<span class="sourceLineNo">473</span><a id="line.473">                    atomSites.getFractTransfMatrix21().get(0),</a>
+<span class="sourceLineNo">474</span><a id="line.474">                    atomSites.getFractTransfMatrix22().get(0),</a>
+<span class="sourceLineNo">475</span><a id="line.475">                    atomSites.getFractTransfMatrix23().get(0),</a>
+<span class="sourceLineNo">476</span><a id="line.476">                    atomSites.getFractTransfVector2().get(0),</a>
+<span class="sourceLineNo">477</span><a id="line.477"></a>
+<span class="sourceLineNo">478</span><a id="line.478">                    atomSites.getFractTransfMatrix31().get(0),</a>
+<span class="sourceLineNo">479</span><a id="line.479">                    atomSites.getFractTransfMatrix32().get(0),</a>
+<span class="sourceLineNo">480</span><a id="line.480">                    atomSites.getFractTransfMatrix33().get(0),</a>
+<span class="sourceLineNo">481</span><a id="line.481">                    atomSites.getFractTransfVector3().get(0),</a>
+<span class="sourceLineNo">482</span><a id="line.482"></a>
+<span class="sourceLineNo">483</span><a id="line.483">                    0,</a>
+<span class="sourceLineNo">484</span><a id="line.484">                    0,</a>
+<span class="sourceLineNo">485</span><a id="line.485">                    0,</a>
+<span class="sourceLineNo">486</span><a id="line.486">                    1</a>
+<span class="sourceLineNo">487</span><a id="line.487">            );</a>
+<span class="sourceLineNo">488</span><a id="line.488">        } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">489</span><a id="line.489">            logger.warn("Some values in _atom_sites.fract_transf_matrix or _atom_sites.fract_transf_vector could not " +</a>
+<span class="sourceLineNo">490</span><a id="line.490">                    "be parsed as numbers. Can't check whether coordinate frame convention is correct! Error: {}",</a>
+<span class="sourceLineNo">491</span><a id="line.491">                    e.getMessage());</a>
+<span class="sourceLineNo">492</span><a id="line.492">            structure.getPDBHeader().getCrystallographicInfo().setNonStandardCoordFrameConvention(false);</a>
+<span class="sourceLineNo">493</span><a id="line.493">        }</a>
+<span class="sourceLineNo">494</span><a id="line.494">    }</a>
+<span class="sourceLineNo">495</span><a id="line.495"></a>
+<span class="sourceLineNo">496</span><a id="line.496">    @Override</a>
+<span class="sourceLineNo">497</span><a id="line.497">    public void consumeAuditAuthor(AuditAuthor auditAuthor) {</a>
+<span class="sourceLineNo">498</span><a id="line.498">        for (int rowIndex = 0; rowIndex &lt; auditAuthor.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">499</span><a id="line.499">            String name = auditAuthor.getName().get(rowIndex);</a>
+<span class="sourceLineNo">500</span><a id="line.500"></a>
+<span class="sourceLineNo">501</span><a id="line.501">            StringBuilder last = new StringBuilder();</a>
+<span class="sourceLineNo">502</span><a id="line.502">            StringBuilder initials = new StringBuilder();</a>
+<span class="sourceLineNo">503</span><a id="line.503">            boolean afterComma = false;</a>
+<span class="sourceLineNo">504</span><a id="line.504">            for (char c : name.toCharArray()) {</a>
+<span class="sourceLineNo">505</span><a id="line.505">                if (c == ' ') {</a>
+<span class="sourceLineNo">506</span><a id="line.506">                    continue;</a>
+<span class="sourceLineNo">507</span><a id="line.507">                }</a>
+<span class="sourceLineNo">508</span><a id="line.508">                if (c == ',') {</a>
+<span class="sourceLineNo">509</span><a id="line.509">                    afterComma = true;</a>
+<span class="sourceLineNo">510</span><a id="line.510">                    continue;</a>
+<span class="sourceLineNo">511</span><a id="line.511">                }</a>
+<span class="sourceLineNo">512</span><a id="line.512"></a>
+<span class="sourceLineNo">513</span><a id="line.513">                if (afterComma) {</a>
+<span class="sourceLineNo">514</span><a id="line.514">                    initials.append(c);</a>
+<span class="sourceLineNo">515</span><a id="line.515">                } else {</a>
+<span class="sourceLineNo">516</span><a id="line.516">                    last.append(c);</a>
+<span class="sourceLineNo">517</span><a id="line.517">                }</a>
+<span class="sourceLineNo">518</span><a id="line.518">            }</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">            StringBuilder newaa = new StringBuilder();</a>
+<span class="sourceLineNo">521</span><a id="line.521">            newaa.append(initials);</a>
+<span class="sourceLineNo">522</span><a id="line.522">            newaa.append(last);</a>
+<span class="sourceLineNo">523</span><a id="line.523"></a>
+<span class="sourceLineNo">524</span><a id="line.524">            String auth = pdbHeader.getAuthors();</a>
+<span class="sourceLineNo">525</span><a id="line.525">            if (auth == null) {</a>
+<span class="sourceLineNo">526</span><a id="line.526">                pdbHeader.setAuthors(newaa.toString());</a>
+<span class="sourceLineNo">527</span><a id="line.527">            } else {</a>
+<span class="sourceLineNo">528</span><a id="line.528">                auth += "," + newaa.toString();</a>
+<span class="sourceLineNo">529</span><a id="line.529">                pdbHeader.setAuthors(auth);</a>
+<span class="sourceLineNo">530</span><a id="line.530">            }</a>
+<span class="sourceLineNo">531</span><a id="line.531">        }</a>
+<span class="sourceLineNo">532</span><a id="line.532">    }</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">    @Override</a>
+<span class="sourceLineNo">535</span><a id="line.535">    public void consumeCell(Cell cell) {</a>
+<span class="sourceLineNo">536</span><a id="line.536">        if (!cell.isDefined() || cell.getRowCount() == 0) {</a>
+<span class="sourceLineNo">537</span><a id="line.537">            return;</a>
+<span class="sourceLineNo">538</span><a id="line.538">        }</a>
+<span class="sourceLineNo">539</span><a id="line.539"></a>
+<span class="sourceLineNo">540</span><a id="line.540">        try {</a>
+<span class="sourceLineNo">541</span><a id="line.541">            float a = (float) cell.getLengthA().get(0);</a>
+<span class="sourceLineNo">542</span><a id="line.542">            float b = (float) cell.getLengthB().get(0);</a>
+<span class="sourceLineNo">543</span><a id="line.543">            float c = (float) cell.getLengthC().get(0);</a>
+<span class="sourceLineNo">544</span><a id="line.544">            float alpha = (float) cell.getAngleAlpha().get(0);</a>
+<span class="sourceLineNo">545</span><a id="line.545">            float beta = (float) cell.getAngleBeta().get(0);</a>
+<span class="sourceLineNo">546</span><a id="line.546">            float gamma = (float) cell.getAngleGamma().get(0);</a>
+<span class="sourceLineNo">547</span><a id="line.547"></a>
+<span class="sourceLineNo">548</span><a id="line.548">            CrystalCell crystalCell = new CrystalCell();</a>
+<span class="sourceLineNo">549</span><a id="line.549">            crystalCell.setA(a);</a>
+<span class="sourceLineNo">550</span><a id="line.550">            crystalCell.setB(b);</a>
+<span class="sourceLineNo">551</span><a id="line.551">            crystalCell.setC(c);</a>
+<span class="sourceLineNo">552</span><a id="line.552">            crystalCell.setAlpha(alpha);</a>
+<span class="sourceLineNo">553</span><a id="line.553">            crystalCell.setBeta(beta);</a>
+<span class="sourceLineNo">554</span><a id="line.554">            crystalCell.setGamma(gamma);</a>
+<span class="sourceLineNo">555</span><a id="line.555"></a>
+<span class="sourceLineNo">556</span><a id="line.556">            if (!crystalCell.isCellReasonable()) {</a>
+<span class="sourceLineNo">557</span><a id="line.557">                // If the entry describes a structure determined by a technique other than X-ray crystallography,</a>
+<span class="sourceLineNo">558</span><a id="line.558">                // cell is (sometimes!) a = b = c = 1.0, alpha = beta = gamma = 90 degrees</a>
+<span class="sourceLineNo">559</span><a id="line.559">                // if so we don't add and CrystalCell will be null</a>
+<span class="sourceLineNo">560</span><a id="line.560">                logger.debug("The crystal cell read from file does not have reasonable dimensions (at least one " +</a>
+<span class="sourceLineNo">561</span><a id="line.561">                        "dimension is below {}), discarding it.", CrystalCell.MIN_VALID_CELL_SIZE);</a>
+<span class="sourceLineNo">562</span><a id="line.562">                return;</a>
+<span class="sourceLineNo">563</span><a id="line.563">            }</a>
+<span class="sourceLineNo">564</span><a id="line.564"></a>
+<span class="sourceLineNo">565</span><a id="line.565">            structure.getPDBHeader()</a>
+<span class="sourceLineNo">566</span><a id="line.566">                    .getCrystallographicInfo()</a>
+<span class="sourceLineNo">567</span><a id="line.567">                    .setCrystalCell(crystalCell);</a>
+<span class="sourceLineNo">568</span><a id="line.568"></a>
+<span class="sourceLineNo">569</span><a id="line.569">        } catch (NumberFormatException e){</a>
+<span class="sourceLineNo">570</span><a id="line.570">            structure.getPDBHeader()</a>
+<span class="sourceLineNo">571</span><a id="line.571">                    .getCrystallographicInfo()</a>
+<span class="sourceLineNo">572</span><a id="line.572">                    .setCrystalCell(null);</a>
+<span class="sourceLineNo">573</span><a id="line.573">            logger.info("could not parse some cell parameters ({}), ignoring _cell", e.getMessage());</a>
+<span class="sourceLineNo">574</span><a id="line.574">        }</a>
+<span class="sourceLineNo">575</span><a id="line.575">    }</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577">    @Override</a>
+<span class="sourceLineNo">578</span><a id="line.578">    public void consumeChemComp(ChemComp chemComp) {</a>
+<span class="sourceLineNo">579</span><a id="line.579">        // TODO not impled in ref</a>
+<span class="sourceLineNo">580</span><a id="line.580">    }</a>
+<span class="sourceLineNo">581</span><a id="line.581"></a>
+<span class="sourceLineNo">582</span><a id="line.582">    @Override</a>
+<span class="sourceLineNo">583</span><a id="line.583">    public void consumeChemCompBond(ChemCompBond chemCompBond) {</a>
+<span class="sourceLineNo">584</span><a id="line.584">        // TODO not impled in ref</a>
+<span class="sourceLineNo">585</span><a id="line.585">    }</a>
+<span class="sourceLineNo">586</span><a id="line.586"></a>
+<span class="sourceLineNo">587</span><a id="line.587">    @Override</a>
+<span class="sourceLineNo">588</span><a id="line.588">    public void consumeDatabasePDBRemark(DatabasePDBRemark databasePDBremark) {</a>
+<span class="sourceLineNo">589</span><a id="line.589">        for (int rowIndex = 0; rowIndex &lt; databasePDBremark.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">590</span><a id="line.590">            int id = databasePDBremark.getId().get(rowIndex);</a>
+<span class="sourceLineNo">591</span><a id="line.591">            if (id == 2) {</a>
+<span class="sourceLineNo">592</span><a id="line.592">                String line = databasePDBremark.getText().get(rowIndex);</a>
+<span class="sourceLineNo">593</span><a id="line.593">                int i = line.indexOf("ANGSTROM");</a>
+<span class="sourceLineNo">594</span><a id="line.594"></a>
+<span class="sourceLineNo">595</span><a id="line.595">                if (i &gt; 5) {</a>
+<span class="sourceLineNo">596</span><a id="line.596">                    // line contains ANGSTROM info...</a>
+<span class="sourceLineNo">597</span><a id="line.597">                    String resolution = line.substring(i - 5, i).trim();</a>
+<span class="sourceLineNo">598</span><a id="line.598">                    // convert string to float</a>
+<span class="sourceLineNo">599</span><a id="line.599">                    try {</a>
+<span class="sourceLineNo">600</span><a id="line.600">                        float res = Float.parseFloat(resolution);</a>
+<span class="sourceLineNo">601</span><a id="line.601">                        pdbHeader.setResolution(res);</a>
+<span class="sourceLineNo">602</span><a id="line.602">                    } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">603</span><a id="line.603">                        logger.info("could not parse resolution from line and ignoring it {}", line);</a>
+<span class="sourceLineNo">604</span><a id="line.604">                        return;</a>
+<span class="sourceLineNo">605</span><a id="line.605">                    }</a>
+<span class="sourceLineNo">606</span><a id="line.606">                }</a>
+<span class="sourceLineNo">607</span><a id="line.607">            }</a>
+<span class="sourceLineNo">608</span><a id="line.608">        }</a>
+<span class="sourceLineNo">609</span><a id="line.609">    }</a>
+<span class="sourceLineNo">610</span><a id="line.610"></a>
+<span class="sourceLineNo">611</span><a id="line.611">    private Date convert(LocalDate localDate) {</a>
+<span class="sourceLineNo">612</span><a id="line.612">        return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());</a>
+<span class="sourceLineNo">613</span><a id="line.613">    }</a>
+<span class="sourceLineNo">614</span><a id="line.614"></a>
+<span class="sourceLineNo">615</span><a id="line.615">    @Override</a>
+<span class="sourceLineNo">616</span><a id="line.616">    public void consumeDatabasePDBRev(DatabasePDBRev databasePDBrev) {</a>
+<span class="sourceLineNo">617</span><a id="line.617">        logger.debug("got a database revision:" + databasePDBrev);</a>
+<span class="sourceLineNo">618</span><a id="line.618"></a>
+<span class="sourceLineNo">619</span><a id="line.619">        Date modDate = null;</a>
+<span class="sourceLineNo">620</span><a id="line.620">        for (int rowIndex = 0; rowIndex &lt; databasePDBrev.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">621</span><a id="line.621">            if (databasePDBrev.getNum().get(rowIndex) == 1) {</a>
+<span class="sourceLineNo">622</span><a id="line.622">                String dateOriginal = databasePDBrev.getDateOriginal().get(rowIndex);</a>
+<span class="sourceLineNo">623</span><a id="line.623">                pdbHeader.setDepDate(convert(LocalDate.parse(dateOriginal, DATE_FORMAT)));</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+<span class="sourceLineNo">625</span><a id="line.625">                String date = databasePDBrev.getDate().get(rowIndex);</a>
+<span class="sourceLineNo">626</span><a id="line.626">                final Date relDate = convert(LocalDate.parse(date, DATE_FORMAT));</a>
+<span class="sourceLineNo">627</span><a id="line.627">                pdbHeader.setRelDate(relDate);</a>
+<span class="sourceLineNo">628</span><a id="line.628">                modDate = relDate;</a>
+<span class="sourceLineNo">629</span><a id="line.629">            } else {</a>
+<span class="sourceLineNo">630</span><a id="line.630">                String dbrev = databasePDBrev.getDate().get(rowIndex);</a>
+<span class="sourceLineNo">631</span><a id="line.631">                modDate = convert(LocalDate.parse(dbrev, DATE_FORMAT));</a>
+<span class="sourceLineNo">632</span><a id="line.632">            }</a>
+<span class="sourceLineNo">633</span><a id="line.633">            pdbHeader.setModDate(modDate);</a>
+<span class="sourceLineNo">634</span><a id="line.634">        }</a>
+<span class="sourceLineNo">635</span><a id="line.635">    }</a>
+<span class="sourceLineNo">636</span><a id="line.636"></a>
+<span class="sourceLineNo">637</span><a id="line.637">    @Override</a>
+<span class="sourceLineNo">638</span><a id="line.638">    public void consumeDatabasePDBRevRecord(DatabasePDBRevRecord databasePDBrevRecord) {</a>
+<span class="sourceLineNo">639</span><a id="line.639">        List&lt;org.biojava.nbio.structure.DatabasePDBRevRecord&gt; revRecords = pdbHeader.getRevisionRecords();</a>
+<span class="sourceLineNo">640</span><a id="line.640">        if (revRecords == null) {</a>
+<span class="sourceLineNo">641</span><a id="line.641">            revRecords = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">642</span><a id="line.642">            pdbHeader.setRevisionRecords(revRecords);</a>
+<span class="sourceLineNo">643</span><a id="line.643">        }</a>
+<span class="sourceLineNo">644</span><a id="line.644"></a>
+<span class="sourceLineNo">645</span><a id="line.645">        for (int i = 0; i &lt; databasePDBrevRecord.getRowCount(); i++) {</a>
+<span class="sourceLineNo">646</span><a id="line.646">            revRecords.add(new org.biojava.nbio.structure.DatabasePDBRevRecord(databasePDBrevRecord, i));</a>
+<span class="sourceLineNo">647</span><a id="line.647">        }</a>
+<span class="sourceLineNo">648</span><a id="line.648">    }</a>
+<span class="sourceLineNo">649</span><a id="line.649">    </a>
+<span class="sourceLineNo">650</span><a id="line.650">    @Override</a>
+<span class="sourceLineNo">651</span><a id="line.651">    public void consumeEm3dReconstruction(Em3dReconstruction em3dReconstruction) {</a>
+<span class="sourceLineNo">652</span><a id="line.652">        this.em3dReconstruction = em3dReconstruction;</a>
+<span class="sourceLineNo">653</span><a id="line.653">        </a>
+<span class="sourceLineNo">654</span><a id="line.654">        for (int rowIndex = 0; rowIndex &lt; em3dReconstruction.getRowCount(); rowIndex++) { //can it have more than 1 value?</a>
+<span class="sourceLineNo">655</span><a id="line.655">                final FloatColumn resolution = em3dReconstruction.getResolution();</a>
+<span class="sourceLineNo">656</span><a id="line.656">                        if (ValueKind.PRESENT.equals(resolution.getValueKind(rowIndex)))</a>
+<span class="sourceLineNo">657</span><a id="line.657">                        pdbHeader.setResolution((float) resolution.get(rowIndex));</a>
+<span class="sourceLineNo">658</span><a id="line.658">        }</a>
+<span class="sourceLineNo">659</span><a id="line.659">        //TODO other fields (maybe RFree)?</a>
+<span class="sourceLineNo">660</span><a id="line.660">    }</a>
+<span class="sourceLineNo">661</span><a id="line.661"></a>
+<span class="sourceLineNo">662</span><a id="line.662">    @Override</a>
+<span class="sourceLineNo">663</span><a id="line.663">    public void consumeEntity(Entity entity) {</a>
+<span class="sourceLineNo">664</span><a id="line.664">        this.entity = entity;</a>
+<span class="sourceLineNo">665</span><a id="line.665">    }</a>
+<span class="sourceLineNo">666</span><a id="line.666"></a>
+<span class="sourceLineNo">667</span><a id="line.667">    @Override</a>
+<span class="sourceLineNo">668</span><a id="line.668">    public void consumeEntityPoly(EntityPoly entityPoly) {</a>
+<span class="sourceLineNo">669</span><a id="line.669">        this.entityPoly = entityPoly;</a>
+<span class="sourceLineNo">670</span><a id="line.670">    }</a>
+<span class="sourceLineNo">671</span><a id="line.671"></a>
+<span class="sourceLineNo">672</span><a id="line.672">    @Override</a>
+<span class="sourceLineNo">673</span><a id="line.673">    public void consumeEntitySrcGen(EntitySrcGen entitySrcGen) {</a>
+<span class="sourceLineNo">674</span><a id="line.674">        this.entitySrcGen = entitySrcGen;</a>
+<span class="sourceLineNo">675</span><a id="line.675">    }</a>
+<span class="sourceLineNo">676</span><a id="line.676"></a>
+<span class="sourceLineNo">677</span><a id="line.677">    @Override</a>
+<span class="sourceLineNo">678</span><a id="line.678">    public void consumeEntitySrcNat(EntitySrcNat entitySrcNat) {</a>
+<span class="sourceLineNo">679</span><a id="line.679">        this.entitySrcNat = entitySrcNat;</a>
+<span class="sourceLineNo">680</span><a id="line.680">    }</a>
+<span class="sourceLineNo">681</span><a id="line.681"></a>
+<span class="sourceLineNo">682</span><a id="line.682">    @Override</a>
+<span class="sourceLineNo">683</span><a id="line.683">    public void consumeEntitySrcSyn(PdbxEntitySrcSyn entitySrcSyn) {</a>
+<span class="sourceLineNo">684</span><a id="line.684">        this.entitySrcSyn = entitySrcSyn;</a>
+<span class="sourceLineNo">685</span><a id="line.685">    }</a>
+<span class="sourceLineNo">686</span><a id="line.686"></a>
+<span class="sourceLineNo">687</span><a id="line.687">    @Override</a>
+<span class="sourceLineNo">688</span><a id="line.688">    public void consumeEntityPolySeq(EntityPolySeq entityPolySeq) {</a>
+<span class="sourceLineNo">689</span><a id="line.689">        for (int rowIndex = 0; rowIndex &lt; entityPolySeq.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">690</span><a id="line.690">            Chain entityChain = getEntityChain(entityPolySeq.getEntityId().get(rowIndex));</a>
+<span class="sourceLineNo">691</span><a id="line.691"></a>
+<span class="sourceLineNo">692</span><a id="line.692">            // first we check through the chemcomp provider, if it fails we do some heuristics to guess the type of group</a>
+<span class="sourceLineNo">693</span><a id="line.693">            // TODO some of this code is analogous to getNewGroup() and we should try to unify them - JD 2016-03-08</a>
+<span class="sourceLineNo">694</span><a id="line.694"></a>
+<span class="sourceLineNo">695</span><a id="line.695">            Group g = ChemCompGroupFactory.getGroupFromChemCompDictionary(entityPolySeq.getMonId().get(rowIndex));</a>
+<span class="sourceLineNo">696</span><a id="line.696">            //int seqId = Integer.parseInt(entityPolySeq.getNum());</a>
+<span class="sourceLineNo">697</span><a id="line.697">            if (g != null &amp;&amp; !g.getChemComp().isEmpty()) {</a>
+<span class="sourceLineNo">698</span><a id="line.698">                if (g instanceof AminoAcidImpl) {</a>
+<span class="sourceLineNo">699</span><a id="line.699">                    AminoAcidImpl aa = (AminoAcidImpl) g;</a>
+<span class="sourceLineNo">700</span><a id="line.700">                    aa.setRecordType(AminoAcid.SEQRESRECORD);</a>
+<span class="sourceLineNo">701</span><a id="line.701">                }</a>
+<span class="sourceLineNo">702</span><a id="line.702">            } else {</a>
+<span class="sourceLineNo">703</span><a id="line.703">                if (entityPolySeq.getMonId().get(rowIndex).length() == 3 &amp;&amp;</a>
+<span class="sourceLineNo">704</span><a id="line.704">                        StructureTools.get1LetterCodeAmino(entityPolySeq.getMonId().get(rowIndex)) != null) {</a>
+<span class="sourceLineNo">705</span><a id="line.705">                    AminoAcidImpl a = new AminoAcidImpl();</a>
+<span class="sourceLineNo">706</span><a id="line.706">                    a.setRecordType(AminoAcid.SEQRESRECORD);</a>
+<span class="sourceLineNo">707</span><a id="line.707">                    Character code1 = StructureTools.get1LetterCodeAmino(entityPolySeq.getMonId().get(rowIndex));</a>
+<span class="sourceLineNo">708</span><a id="line.708">                    a.setAminoType(code1);</a>
+<span class="sourceLineNo">709</span><a id="line.709">                    g = a;</a>
+<span class="sourceLineNo">710</span><a id="line.710"></a>
+<span class="sourceLineNo">711</span><a id="line.711">                } else if (StructureTools.isNucleotide(entityPolySeq.getMonId().get(rowIndex))) {</a>
+<span class="sourceLineNo">712</span><a id="line.712">                    // the group is actually a nucleotide group...</a>
+<span class="sourceLineNo">713</span><a id="line.713">                    g = new NucleotideImpl();</a>
+<span class="sourceLineNo">714</span><a id="line.714">                } else {</a>
+<span class="sourceLineNo">715</span><a id="line.715">                    logger.debug("Residue {} {} is not a standard aminoacid or nucleotide, will create a het group " +</a>
+<span class="sourceLineNo">716</span><a id="line.716">                            "for it", entityPolySeq.getNum().get(rowIndex), entityPolySeq.getMonId().get(rowIndex));</a>
+<span class="sourceLineNo">717</span><a id="line.717">                    g = new HetatomImpl();</a>
+<span class="sourceLineNo">718</span><a id="line.718">                }</a>
+<span class="sourceLineNo">719</span><a id="line.719">            }</a>
+<span class="sourceLineNo">720</span><a id="line.720">            // at this stage we don't know about author residue numbers (insertion codes)</a>
+<span class="sourceLineNo">721</span><a id="line.721">            // we abuse now the ResidueNumber field setting the internal residue numbers (label_seq_id, strictly</a>
+<span class="sourceLineNo">722</span><a id="line.722">            // sequential and follow the seqres sequence 1 to n)</a>
+<span class="sourceLineNo">723</span><a id="line.723">            // later the actual ResidueNumbers (author residue numbers) have to be corrected in alignSeqRes()</a>
+<span class="sourceLineNo">724</span><a id="line.724">            g.setResidueNumber(ResidueNumber.fromString(entityPolySeq.getNum().getStringData(rowIndex)));</a>
+<span class="sourceLineNo">725</span><a id="line.725">            g.setPDBName(entityPolySeq.getMonId().get(rowIndex));</a>
+<span class="sourceLineNo">726</span><a id="line.726">            entityChain.addGroup(g);</a>
+<span class="sourceLineNo">727</span><a id="line.727">        }</a>
+<span class="sourceLineNo">728</span><a id="line.728">    }</a>
+<span class="sourceLineNo">729</span><a id="line.729"></a>
+<span class="sourceLineNo">730</span><a id="line.730">    private Chain getEntityChain(String entityId) {</a>
+<span class="sourceLineNo">731</span><a id="line.731">        for (Chain chain : entityChains) {</a>
+<span class="sourceLineNo">732</span><a id="line.732">            if (chain.getId().equals(entityId)) {</a>
+<span class="sourceLineNo">733</span><a id="line.733">                return chain;</a>
+<span class="sourceLineNo">734</span><a id="line.734">            }</a>
+<span class="sourceLineNo">735</span><a id="line.735">        }</a>
+<span class="sourceLineNo">736</span><a id="line.736"></a>
+<span class="sourceLineNo">737</span><a id="line.737">        // does not exist yet, so create...</a>
+<span class="sourceLineNo">738</span><a id="line.738">        Chain chain = new ChainImpl();</a>
+<span class="sourceLineNo">739</span><a id="line.739">        chain.setId(entityId);</a>
+<span class="sourceLineNo">740</span><a id="line.740">        entityChains.add(chain);</a>
+<span class="sourceLineNo">741</span><a id="line.741"></a>
+<span class="sourceLineNo">742</span><a id="line.742">        return chain;</a>
+<span class="sourceLineNo">743</span><a id="line.743">    }</a>
+<span class="sourceLineNo">744</span><a id="line.744"></a>
+<span class="sourceLineNo">745</span><a id="line.745">    @Override</a>
+<span class="sourceLineNo">746</span><a id="line.746">    public void consumeExptl(Exptl exptl) {</a>
+<span class="sourceLineNo">747</span><a id="line.747">        for (int rowIndex = 0; rowIndex &lt; exptl.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">748</span><a id="line.748">            pdbHeader.setExperimentalTechnique(exptl.getMethod().get(rowIndex));</a>
+<span class="sourceLineNo">749</span><a id="line.749">        }</a>
+<span class="sourceLineNo">750</span><a id="line.750">    }</a>
+<span class="sourceLineNo">751</span><a id="line.751"></a>
+<span class="sourceLineNo">752</span><a id="line.752">    @Override</a>
+<span class="sourceLineNo">753</span><a id="line.753">    public void consumePdbxAuditRevisionHistory(PdbxAuditRevisionHistory pdbxAuditRevisionHistory) {</a>
+<span class="sourceLineNo">754</span><a id="line.754">        Date date = null;</a>
+<span class="sourceLineNo">755</span><a id="line.755">        for (int rowIndex = 0; rowIndex &lt; pdbxAuditRevisionHistory.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">756</span><a id="line.756">            // first entry in revision history is the release date</a>
+<span class="sourceLineNo">757</span><a id="line.757">            if (pdbxAuditRevisionHistory.getOrdinal().get(rowIndex) == 1) {</a>
+<span class="sourceLineNo">758</span><a id="line.758">                String release = pdbxAuditRevisionHistory.getRevisionDate().get(rowIndex);</a>
+<span class="sourceLineNo">759</span><a id="line.759">                date = convert(LocalDate.parse(release, DATE_FORMAT));</a>
+<span class="sourceLineNo">760</span><a id="line.760">                pdbHeader.setRelDate(date);</a>
+<span class="sourceLineNo">761</span><a id="line.761">            } else {</a>
+<span class="sourceLineNo">762</span><a id="line.762">                // all other dates are revision dates;</a>
+<span class="sourceLineNo">763</span><a id="line.763">                // since this method may be called multiple times,</a>
+<span class="sourceLineNo">764</span><a id="line.764">                // the last revision date will "stick"</a>
+<span class="sourceLineNo">765</span><a id="line.765">                String revision = pdbxAuditRevisionHistory.getRevisionDate().get(rowIndex);</a>
+<span class="sourceLineNo">766</span><a id="line.766">                date = convert(LocalDate.parse(revision, DATE_FORMAT));</a>
+<span class="sourceLineNo">767</span><a id="line.767">            }</a>
+<span class="sourceLineNo">768</span><a id="line.768">            pdbHeader.setModDate(date);</a>
+<span class="sourceLineNo">769</span><a id="line.769">        }</a>
+<span class="sourceLineNo">770</span><a id="line.770">    }</a>
+<span class="sourceLineNo">771</span><a id="line.771"></a>
+<span class="sourceLineNo">772</span><a id="line.772">    @Override</a>
+<span class="sourceLineNo">773</span><a id="line.773">    public void consumePdbxChemCompIdentifier(PdbxChemCompIdentifier pdbxChemCompIdentifier) {</a>
+<span class="sourceLineNo">774</span><a id="line.774">        // TODO not impled in ref</a>
+<span class="sourceLineNo">775</span><a id="line.775">    }</a>
+<span class="sourceLineNo">776</span><a id="line.776"></a>
+<span class="sourceLineNo">777</span><a id="line.777">    @Override</a>
+<span class="sourceLineNo">778</span><a id="line.778">    public void consumePdbxDatabaseStatus(PdbxDatabaseStatus pdbxDatabaseStatus) {</a>
+<span class="sourceLineNo">779</span><a id="line.779">        for (int rowIndex = 0; rowIndex &lt; pdbxDatabaseStatus.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">780</span><a id="line.780">            // the deposition date field is only available in mmCIF 5.0</a>
+<span class="sourceLineNo">781</span><a id="line.781">            StrColumn recvdInitialDepositionDate = pdbxDatabaseStatus.getRecvdInitialDepositionDate();</a>
+<span class="sourceLineNo">782</span><a id="line.782">            if (recvdInitialDepositionDate.isDefined()) {</a>
+<span class="sourceLineNo">783</span><a id="line.783">                String deposition = recvdInitialDepositionDate.get(rowIndex);</a>
+<span class="sourceLineNo">784</span><a id="line.784">                pdbHeader.setDepDate(convert(LocalDate.parse(deposition, DATE_FORMAT)));</a>
+<span class="sourceLineNo">785</span><a id="line.785">            }</a>
+<span class="sourceLineNo">786</span><a id="line.786">        }</a>
+<span class="sourceLineNo">787</span><a id="line.787">    }</a>
+<span class="sourceLineNo">788</span><a id="line.788"></a>
+<span class="sourceLineNo">789</span><a id="line.789">    @Override</a>
+<span class="sourceLineNo">790</span><a id="line.790">    public void consumePdbxEntityBranchDescriptor(PdbxEntityBranchDescriptor pdbxEntityBranchDescriptor) {</a>
+<span class="sourceLineNo">791</span><a id="line.791">        // TODO not considered in ref</a>
+<span class="sourceLineNo">792</span><a id="line.792">    }</a>
+<span class="sourceLineNo">793</span><a id="line.793"></a>
+<span class="sourceLineNo">794</span><a id="line.794">    @Override</a>
+<span class="sourceLineNo">795</span><a id="line.795">    public void consumePdbxMolecule(PdbxMolecule pdbxMolecule) {</a>
+<span class="sourceLineNo">796</span><a id="line.796">        // TODO not considered in ref</a>
+<span class="sourceLineNo">797</span><a id="line.797">    }</a>
+<span class="sourceLineNo">798</span><a id="line.798"></a>
+<span class="sourceLineNo">799</span><a id="line.799">    @Override</a>
+<span class="sourceLineNo">800</span><a id="line.800">    public void consumePdbxMoleculeFeatures(PdbxMoleculeFeatures pdbxMoleculeFeatures) {</a>
+<span class="sourceLineNo">801</span><a id="line.801">        // TODO not considered in ref</a>
+<span class="sourceLineNo">802</span><a id="line.802">    }</a>
+<span class="sourceLineNo">803</span><a id="line.803"></a>
+<span class="sourceLineNo">804</span><a id="line.804">    @Override</a>
+<span class="sourceLineNo">805</span><a id="line.805">    public void consumePdbxNonpolyScheme(PdbxNonpolyScheme pdbxNonpolyScheme) {</a>
+<span class="sourceLineNo">806</span><a id="line.806">        // TODO not impled in ref</a>
+<span class="sourceLineNo">807</span><a id="line.807">    }</a>
+<span class="sourceLineNo">808</span><a id="line.808"></a>
+<span class="sourceLineNo">809</span><a id="line.809">    @Override</a>
+<span class="sourceLineNo">810</span><a id="line.810">    public void consumePdbxReferenceEntityLink(PdbxReferenceEntityLink pdbxReferenceEntityLink) {</a>
+<span class="sourceLineNo">811</span><a id="line.811">        // TODO not considered in ref</a>
+<span class="sourceLineNo">812</span><a id="line.812">    }</a>
+<span class="sourceLineNo">813</span><a id="line.813"></a>
+<span class="sourceLineNo">814</span><a id="line.814">    @Override</a>
+<span class="sourceLineNo">815</span><a id="line.815">    public void consumePdbxReferenceEntityList(PdbxReferenceEntityList pdbxReferenceEntityList) {</a>
+<span class="sourceLineNo">816</span><a id="line.816">        // TODO not considered in ref</a>
+<span class="sourceLineNo">817</span><a id="line.817">    }</a>
+<span class="sourceLineNo">818</span><a id="line.818"></a>
+<span class="sourceLineNo">819</span><a id="line.819">    @Override</a>
+<span class="sourceLineNo">820</span><a id="line.820">    public void consumePdbxReferenceEntityPolyLink(PdbxReferenceEntityPolyLink pdbxReferenceEntityPolyLink) {</a>
+<span class="sourceLineNo">821</span><a id="line.821">        // TODO not considered in ref</a>
+<span class="sourceLineNo">822</span><a id="line.822">    }</a>
+<span class="sourceLineNo">823</span><a id="line.823"></a>
+<span class="sourceLineNo">824</span><a id="line.824">    @Override</a>
+<span class="sourceLineNo">825</span><a id="line.825">    public void consumePdbxStructAssembly(PdbxStructAssembly pdbxStructAssembly) {</a>
+<span class="sourceLineNo">826</span><a id="line.826">        this.structAssembly = pdbxStructAssembly;</a>
+<span class="sourceLineNo">827</span><a id="line.827">    }</a>
+<span class="sourceLineNo">828</span><a id="line.828"></a>
+<span class="sourceLineNo">829</span><a id="line.829">    @Override</a>
+<span class="sourceLineNo">830</span><a id="line.830">    public void consumePdbxStructAssemblyGen(PdbxStructAssemblyGen pdbxStructAssemblyGen) {</a>
+<span class="sourceLineNo">831</span><a id="line.831">        this.structAssemblyGen = pdbxStructAssemblyGen;</a>
+<span class="sourceLineNo">832</span><a id="line.832">    }</a>
+<span class="sourceLineNo">833</span><a id="line.833"></a>
+<span class="sourceLineNo">834</span><a id="line.834">    @Override</a>
+<span class="sourceLineNo">835</span><a id="line.835">    public void consumePdbxStructModResidue(PdbxStructModResidue pdbxStructModResidue) {</a>
+<span class="sourceLineNo">836</span><a id="line.836">        // TODO not considered in ref</a>
+<span class="sourceLineNo">837</span><a id="line.837">    }</a>
+<span class="sourceLineNo">838</span><a id="line.838"></a>
+<span class="sourceLineNo">839</span><a id="line.839">    @Override</a>
+<span class="sourceLineNo">840</span><a id="line.840">    public void consumePdbxStructOperList(PdbxStructOperList pdbxStructOperList) {</a>
+<span class="sourceLineNo">841</span><a id="line.841">        this.structOpers = pdbxStructOperList;</a>
+<span class="sourceLineNo">842</span><a id="line.842">    }</a>
+<span class="sourceLineNo">843</span><a id="line.843"></a>
+<span class="sourceLineNo">844</span><a id="line.844">    @Override</a>
+<span class="sourceLineNo">845</span><a id="line.845">    public void consumeRefine(Refine refine) {</a>
+<span class="sourceLineNo">846</span><a id="line.846">        for (int rowIndex = 0; rowIndex &lt; refine.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">847</span><a id="line.847">            // RESOLUTION</a>
+<span class="sourceLineNo">848</span><a id="line.848">                ValueKind valueKind = refine.getLsDResHigh().getValueKind(rowIndex);</a>
+<span class="sourceLineNo">849</span><a id="line.849">                if (! ValueKind.PRESENT.equals(valueKind)) {</a>
+<span class="sourceLineNo">850</span><a id="line.850">                        continue;</a>
+<span class="sourceLineNo">851</span><a id="line.851">                }</a>
+<span class="sourceLineNo">852</span><a id="line.852">            // in very rare cases (for instance hybrid methods x-ray + neutron diffraction, e.g. 3ins, 4n9m)</a>
+<span class="sourceLineNo">853</span><a id="line.853">            // there are 2 resolution values, one for each method</a>
+<span class="sourceLineNo">854</span><a id="line.854">            // we take the last one found so that behaviour is like in PDB file parsing</a>
+<span class="sourceLineNo">855</span><a id="line.855">            double lsDResHigh = refine.getLsDResHigh().get(rowIndex);</a>
+<span class="sourceLineNo">856</span><a id="line.856">            // TODO this could use a check to keep reasonable values - 1.5 may be overwritten by 0.0</a>
+<span class="sourceLineNo">857</span><a id="line.857">            if (pdbHeader.getResolution() != PDBHeader.DEFAULT_RESOLUTION) {</a>
+<span class="sourceLineNo">858</span><a id="line.858">                logger.warn("More than 1 resolution value present, will use last one {} and discard previous {}",</a>
+<span class="sourceLineNo">859</span><a id="line.859">                        lsDResHigh, String.format("%4.2f",pdbHeader.getResolution()));</a>
+<span class="sourceLineNo">860</span><a id="line.860">            }</a>
+<span class="sourceLineNo">861</span><a id="line.861">            pdbHeader.setResolution((float) lsDResHigh);</a>
+<span class="sourceLineNo">862</span><a id="line.862"></a>
+<span class="sourceLineNo">863</span><a id="line.863">            FloatColumn lsRFactorRFree = refine.getLsRFactorRFree();</a>
+<span class="sourceLineNo">864</span><a id="line.864">            // RFREE</a>
+<span class="sourceLineNo">865</span><a id="line.865">            if (pdbHeader.getRfree() != PDBHeader.DEFAULT_RFREE) {</a>
+<span class="sourceLineNo">866</span><a id="line.866">                logger.warn("More than 1 Rfree value present, will use last one {} and discard previous {}",</a>
+<span class="sourceLineNo">867</span><a id="line.867">                        lsRFactorRFree, String.format("%4.2f",pdbHeader.getRfree()));</a>
+<span class="sourceLineNo">868</span><a id="line.868">            }</a>
+<span class="sourceLineNo">869</span><a id="line.869">            if (lsRFactorRFree.isDefined() &amp;&amp; lsRFactorRFree.getValueKind(rowIndex) == ValueKind.PRESENT) {</a>
+<span class="sourceLineNo">870</span><a id="line.870">                pdbHeader.setRfree((float) lsRFactorRFree.get(rowIndex));</a>
+<span class="sourceLineNo">871</span><a id="line.871">            } else {</a>
+<span class="sourceLineNo">872</span><a id="line.872">                // some entries like 2ifo haven't got this field at all</a>
+<span class="sourceLineNo">873</span><a id="line.873">                logger.info("_refine.ls_R_factor_R_free not present, not parsing Rfree value");</a>
+<span class="sourceLineNo">874</span><a id="line.874">            }</a>
+<span class="sourceLineNo">875</span><a id="line.875"></a>
+<span class="sourceLineNo">876</span><a id="line.876">            // RWORK</a>
+<span class="sourceLineNo">877</span><a id="line.877">            FloatColumn lsRFactorRWork = refine.getLsRFactorRWork();</a>
+<span class="sourceLineNo">878</span><a id="line.878">            if(pdbHeader.getRwork() != PDBHeader.DEFAULT_RFREE) {</a>
+<span class="sourceLineNo">879</span><a id="line.879">                logger.warn("More than 1 R work value present, will use last one {} and discard previous {} ",</a>
+<span class="sourceLineNo">880</span><a id="line.880">                        lsRFactorRWork, String.format("%4.2f",pdbHeader.getRwork()));</a>
+<span class="sourceLineNo">881</span><a id="line.881">            }</a>
+<span class="sourceLineNo">882</span><a id="line.882">            if (lsRFactorRWork.isDefined() &amp;&amp; lsRFactorRWork.getValueKind(rowIndex) == ValueKind.PRESENT) {</a>
+<span class="sourceLineNo">883</span><a id="line.883">                pdbHeader.setRwork((float) lsRFactorRWork.get(rowIndex));</a>
+<span class="sourceLineNo">884</span><a id="line.884">            } else {</a>
+<span class="sourceLineNo">885</span><a id="line.885">                logger.info("_refine.ls_R_factor_R_work not present, not parsing R-work value");</a>
+<span class="sourceLineNo">886</span><a id="line.886">            }</a>
+<span class="sourceLineNo">887</span><a id="line.887">        }</a>
+<span class="sourceLineNo">888</span><a id="line.888">    }</a>
+<span class="sourceLineNo">889</span><a id="line.889"></a>
+<span class="sourceLineNo">890</span><a id="line.890">    @Override</a>
+<span class="sourceLineNo">891</span><a id="line.891">    public void consumeStruct(Struct struct) {</a>
+<span class="sourceLineNo">892</span><a id="line.892">        if (struct.isDefined() &amp;&amp; struct.getTitle().isDefined()) {</a>
+<span class="sourceLineNo">893</span><a id="line.893">            pdbHeader.setTitle(struct.getTitle().get(0));</a>
+<span class="sourceLineNo">894</span><a id="line.894">        }</a>
+<span class="sourceLineNo">895</span><a id="line.895"></a>
+<span class="sourceLineNo">896</span><a id="line.896">        if (struct.isDefined() &amp;&amp; struct.getEntryId().isDefined()) {</a>
+<span class="sourceLineNo">897</span><a id="line.897">            PdbId pdbId;</a>
+<span class="sourceLineNo">898</span><a id="line.898">            String pdbCode = struct.getEntryId().get(0);</a>
+<span class="sourceLineNo">899</span><a id="line.899">                        try {</a>
+<span class="sourceLineNo">900</span><a id="line.900">                                pdbId = new PdbId(pdbCode);</a>
+<span class="sourceLineNo">901</span><a id="line.901">                        } catch (IllegalArgumentException e) {</a>
+<span class="sourceLineNo">902</span><a id="line.902">                                logger.info("Malformed (or null) PDB ID {}. setting PdbId to null", pdbCode);</a>
+<span class="sourceLineNo">903</span><a id="line.903">                                pdbId = null;</a>
+<span class="sourceLineNo">904</span><a id="line.904">                        }</a>
+<span class="sourceLineNo">905</span><a id="line.905">            pdbHeader.setPdbId(pdbId);</a>
+<span class="sourceLineNo">906</span><a id="line.906">            structure.setPdbId(pdbId);</a>
+<span class="sourceLineNo">907</span><a id="line.907">        }</a>
+<span class="sourceLineNo">908</span><a id="line.908">    }</a>
+<span class="sourceLineNo">909</span><a id="line.909"></a>
+<span class="sourceLineNo">910</span><a id="line.910">    @Override</a>
+<span class="sourceLineNo">911</span><a id="line.911">    public void consumeStructAsym(StructAsym structAsym) {</a>
+<span class="sourceLineNo">912</span><a id="line.912">        this.structAsym = structAsym;</a>
+<span class="sourceLineNo">913</span><a id="line.913">    }</a>
+<span class="sourceLineNo">914</span><a id="line.914"></a>
+<span class="sourceLineNo">915</span><a id="line.915">    @Override</a>
+<span class="sourceLineNo">916</span><a id="line.916">    public void consumeStructConf(StructConf structConf) {</a>
+<span class="sourceLineNo">917</span><a id="line.917">        // TODO not considered in ref</a>
+<span class="sourceLineNo">918</span><a id="line.918">    }</a>
+<span class="sourceLineNo">919</span><a id="line.919"></a>
+<span class="sourceLineNo">920</span><a id="line.920">    @Override</a>
+<span class="sourceLineNo">921</span><a id="line.921">    public void consumeStructConn(StructConn structConn) {</a>
+<span class="sourceLineNo">922</span><a id="line.922">        this.structConn = structConn;</a>
+<span class="sourceLineNo">923</span><a id="line.923">    }</a>
+<span class="sourceLineNo">924</span><a id="line.924"></a>
+<span class="sourceLineNo">925</span><a id="line.925">    @Override</a>
+<span class="sourceLineNo">926</span><a id="line.926">    public void consumeStructConnType(StructConnType structConnType) {</a>
+<span class="sourceLineNo">927</span><a id="line.927">        // TODO not considered in ref</a>
+<span class="sourceLineNo">928</span><a id="line.928">    }</a>
+<span class="sourceLineNo">929</span><a id="line.929"></a>
+<span class="sourceLineNo">930</span><a id="line.930">    @Override</a>
+<span class="sourceLineNo">931</span><a id="line.931">    public void consumeStructKeywords(StructKeywords structKeywords) {</a>
+<span class="sourceLineNo">932</span><a id="line.932">        ArrayList&lt;String&gt; keywordsList = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">933</span><a id="line.933"></a>
+<span class="sourceLineNo">934</span><a id="line.934">        StrColumn text = structKeywords.getText();</a>
+<span class="sourceLineNo">935</span><a id="line.935">        if (text.isDefined()) {</a>
+<span class="sourceLineNo">936</span><a id="line.936">            String keywords = text.get(0);</a>
+<span class="sourceLineNo">937</span><a id="line.937">            String[] strings = keywords.split(" *, *");</a>
+<span class="sourceLineNo">938</span><a id="line.938">            for (String string : strings) {</a>
+<span class="sourceLineNo">939</span><a id="line.939">                keywordsList.add(string.trim());</a>
+<span class="sourceLineNo">940</span><a id="line.940">            }</a>
+<span class="sourceLineNo">941</span><a id="line.941">        }</a>
+<span class="sourceLineNo">942</span><a id="line.942">        structure.getPDBHeader().setKeywords(keywordsList);</a>
+<span class="sourceLineNo">943</span><a id="line.943"></a>
+<span class="sourceLineNo">944</span><a id="line.944">        StrColumn pdbxKeywords = structKeywords.getPdbxKeywords();</a>
+<span class="sourceLineNo">945</span><a id="line.945">        if (pdbxKeywords.isDefined()) {</a>
+<span class="sourceLineNo">946</span><a id="line.946">            String keywords = pdbxKeywords.get(0);</a>
+<span class="sourceLineNo">947</span><a id="line.947">            pdbHeader.setClassification(keywords);</a>
+<span class="sourceLineNo">948</span><a id="line.948">            //This field should be left empty. TODO The next line should be removed later</a>
+<span class="sourceLineNo">949</span><a id="line.949">            pdbHeader.setDescription(keywords);</a>
+<span class="sourceLineNo">950</span><a id="line.950">        }</a>
+<span class="sourceLineNo">951</span><a id="line.951">    }</a>
+<span class="sourceLineNo">952</span><a id="line.952"></a>
+<span class="sourceLineNo">953</span><a id="line.953">    @Override</a>
+<span class="sourceLineNo">954</span><a id="line.954">    public void consumeStructNcsOper(StructNcsOper structNcsOper) {</a>
+<span class="sourceLineNo">955</span><a id="line.955">        this.structNcsOper = structNcsOper;</a>
+<span class="sourceLineNo">956</span><a id="line.956">    }</a>
+<span class="sourceLineNo">957</span><a id="line.957"></a>
+<span class="sourceLineNo">958</span><a id="line.958">    @Override</a>
+<span class="sourceLineNo">959</span><a id="line.959">    public void consumeStructRef(StructRef structRef) {</a>
+<span class="sourceLineNo">960</span><a id="line.960">        this.structRef = structRef;</a>
+<span class="sourceLineNo">961</span><a id="line.961">    }</a>
+<span class="sourceLineNo">962</span><a id="line.962"></a>
+<span class="sourceLineNo">963</span><a id="line.963">    @Override</a>
+<span class="sourceLineNo">964</span><a id="line.964">    public void consumeStructRefSeq(StructRefSeq structRefSeq) {</a>
+<span class="sourceLineNo">965</span><a id="line.965">        for (int rowIndex = 0; rowIndex &lt; structRefSeq.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">966</span><a id="line.966">            String refId = structRefSeq.getRefId().get(rowIndex);</a>
+<span class="sourceLineNo">967</span><a id="line.967"></a>
+<span class="sourceLineNo">968</span><a id="line.968">            DBRef dbRef = new DBRef();</a>
+<span class="sourceLineNo">969</span><a id="line.969"></a>
+<span class="sourceLineNo">970</span><a id="line.970">            dbRef.setIdCode(structRefSeq.getPdbxPDBIdCode().get(rowIndex));</a>
+<span class="sourceLineNo">971</span><a id="line.971">            dbRef.setDbAccession(structRefSeq.getPdbxDbAccession().get(rowIndex));</a>
+<span class="sourceLineNo">972</span><a id="line.972">            dbRef.setDbIdCode(structRefSeq.getPdbxDbAccession().get(rowIndex));</a>
+<span class="sourceLineNo">973</span><a id="line.973">            dbRef.setChainName(structRefSeq.getPdbxStrandId().get(rowIndex));</a>
+<span class="sourceLineNo">974</span><a id="line.974"></a>
+<span class="sourceLineNo">975</span><a id="line.975">            OptionalInt structRefRowIndex = IntStream.range(0, structRef.getRowCount())</a>
+<span class="sourceLineNo">976</span><a id="line.976">                    .filter(i -&gt; structRef.getId().get(i).equals(refId))</a>
+<span class="sourceLineNo">977</span><a id="line.977">                    .findFirst();</a>
+<span class="sourceLineNo">978</span><a id="line.978"></a>
+<span class="sourceLineNo">979</span><a id="line.979">            if (structRefRowIndex.isPresent()) {</a>
+<span class="sourceLineNo">980</span><a id="line.980">                dbRef.setDatabase(structRef.getDbName().get(structRefRowIndex.getAsInt()));</a>
+<span class="sourceLineNo">981</span><a id="line.981">                dbRef.setDbIdCode(structRef.getDbCode().get(structRefRowIndex.getAsInt()));</a>
+<span class="sourceLineNo">982</span><a id="line.982">            } else {</a>
+<span class="sourceLineNo">983</span><a id="line.983">                logger.info("could not find StructRef `{} for StructRefSeq {}", refId, rowIndex);</a>
+<span class="sourceLineNo">984</span><a id="line.984">            }</a>
+<span class="sourceLineNo">985</span><a id="line.985"></a>
+<span class="sourceLineNo">986</span><a id="line.986">            int seqBegin;</a>
+<span class="sourceLineNo">987</span><a id="line.987">            int seqEnd;</a>
+<span class="sourceLineNo">988</span><a id="line.988"></a>
+<span class="sourceLineNo">989</span><a id="line.989">            try {</a>
+<span class="sourceLineNo">990</span><a id="line.990">                seqBegin = Integer.parseInt(structRefSeq.getPdbxAuthSeqAlignBeg().get(rowIndex));</a>
+<span class="sourceLineNo">991</span><a id="line.991">                seqEnd = Integer.parseInt(structRefSeq.getPdbxAuthSeqAlignEnd().get(rowIndex));</a>
+<span class="sourceLineNo">992</span><a id="line.992">            } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">993</span><a id="line.993">                // this happens in a few entries, annotation error? e.g. 6eoj</a>
+<span class="sourceLineNo">994</span><a id="line.994">                logger.warn("Couldn't parse pdbx_auth_seq_align_beg/end in _struct_ref_seq. Will not store dbref " +</a>
+<span class="sourceLineNo">995</span><a id="line.995">                        "alignment info for accession {}. Error: {}", dbRef.getDbAccession(), e.getMessage());</a>
+<span class="sourceLineNo">996</span><a id="line.996">                return;</a>
+<span class="sourceLineNo">997</span><a id="line.997">            }</a>
+<span class="sourceLineNo">998</span><a id="line.998"></a>
+<span class="sourceLineNo">999</span><a id="line.999">            char beginInsCode = ' ';</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">            String pdbxSeqAlignBegInsCode = structRefSeq.getPdbxSeqAlignBegInsCode().get(rowIndex);</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">            if (pdbxSeqAlignBegInsCode.length() &gt; 0) {</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">                beginInsCode = pdbxSeqAlignBegInsCode.charAt(0);</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">            }</a>
+<span class="sourceLineNo">1004</span><a id="line.1004"></a>
+<span class="sourceLineNo">1005</span><a id="line.1005">            char endInsCode = ' ';</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">            String pdbxSeqAlignEndInsCode = structRefSeq.getPdbxSeqAlignEndInsCode().get(rowIndex);</a>
+<span class="sourceLineNo">1007</span><a id="line.1007">            if (pdbxSeqAlignEndInsCode.length() &gt; 0) {</a>
+<span class="sourceLineNo">1008</span><a id="line.1008">                endInsCode = pdbxSeqAlignEndInsCode.charAt(0);</a>
+<span class="sourceLineNo">1009</span><a id="line.1009">            }</a>
+<span class="sourceLineNo">1010</span><a id="line.1010"></a>
+<span class="sourceLineNo">1011</span><a id="line.1011">            if (beginInsCode == '?') {</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">                beginInsCode = ' ';</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">            }</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">            if (endInsCode == '?') {</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">                endInsCode = ' ';</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">            }</a>
+<span class="sourceLineNo">1017</span><a id="line.1017"></a>
+<span class="sourceLineNo">1018</span><a id="line.1018">            dbRef.setSeqBegin(seqBegin);</a>
+<span class="sourceLineNo">1019</span><a id="line.1019">            dbRef.setInsertBegin(beginInsCode);</a>
+<span class="sourceLineNo">1020</span><a id="line.1020">            dbRef.setSeqEnd(seqEnd);</a>
+<span class="sourceLineNo">1021</span><a id="line.1021">            dbRef.setInsertEnd(endInsCode);</a>
+<span class="sourceLineNo">1022</span><a id="line.1022"></a>
+<span class="sourceLineNo">1023</span><a id="line.1023">            int dbSeqBegin = structRefSeq.getDbAlignBeg().get(rowIndex);</a>
+<span class="sourceLineNo">1024</span><a id="line.1024">            int dbSeqEnd = structRefSeq.getDbAlignEnd().get(rowIndex);</a>
+<span class="sourceLineNo">1025</span><a id="line.1025"></a>
+<span class="sourceLineNo">1026</span><a id="line.1026">            char dbBeginInsCode = ' ';</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">            StrColumn pdbxDbAlignBegInsCodeCol = structRefSeq.getPdbxDbAlignBegInsCode();</a>
+<span class="sourceLineNo">1028</span><a id="line.1028">            if (pdbxDbAlignBegInsCodeCol.isDefined()) {</a>
+<span class="sourceLineNo">1029</span><a id="line.1029">                String pdbxDbAlignBegInsCode = pdbxDbAlignBegInsCodeCol.get(rowIndex);</a>
+<span class="sourceLineNo">1030</span><a id="line.1030">                if (pdbxDbAlignBegInsCode.length() &gt; 0) {</a>
+<span class="sourceLineNo">1031</span><a id="line.1031">                    dbBeginInsCode = pdbxDbAlignBegInsCode.charAt(0);</a>
+<span class="sourceLineNo">1032</span><a id="line.1032">                }</a>
+<span class="sourceLineNo">1033</span><a id="line.1033">            }</a>
+<span class="sourceLineNo">1034</span><a id="line.1034"></a>
+<span class="sourceLineNo">1035</span><a id="line.1035">            char dbEndInsCode = ' ';</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">            StrColumn pdbxDbAlignEndInsCodeCol = structRefSeq.getPdbxDbAlignEndInsCode();</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">            if (pdbxDbAlignEndInsCodeCol.isDefined()) {</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">                String pdbxDbAlignEndInsCode = pdbxDbAlignEndInsCodeCol.get(rowIndex);</a>
+<span class="sourceLineNo">1039</span><a id="line.1039">                if (pdbxDbAlignEndInsCode.length() &gt; 0) {</a>
+<span class="sourceLineNo">1040</span><a id="line.1040">                    dbEndInsCode = pdbxDbAlignEndInsCode.charAt(0);</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">                }</a>
+<span class="sourceLineNo">1042</span><a id="line.1042">            }</a>
+<span class="sourceLineNo">1043</span><a id="line.1043"></a>
+<span class="sourceLineNo">1044</span><a id="line.1044">            if (dbBeginInsCode == '?') {</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">                dbBeginInsCode = ' ';</a>
+<span class="sourceLineNo">1046</span><a id="line.1046">            }</a>
+<span class="sourceLineNo">1047</span><a id="line.1047">            if (dbEndInsCode == '?') {</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">                dbEndInsCode = ' ';</a>
+<span class="sourceLineNo">1049</span><a id="line.1049">            }</a>
+<span class="sourceLineNo">1050</span><a id="line.1050"></a>
+<span class="sourceLineNo">1051</span><a id="line.1051">            dbRef.setDbSeqBegin(dbSeqBegin);</a>
+<span class="sourceLineNo">1052</span><a id="line.1052">            dbRef.setIdbnsBegin(dbBeginInsCode);</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">            dbRef.setDbSeqEnd(dbSeqEnd);</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">            dbRef.setIdbnsEnd(dbEndInsCode);</a>
+<span class="sourceLineNo">1055</span><a id="line.1055"></a>
+<span class="sourceLineNo">1056</span><a id="line.1056">            List&lt;DBRef&gt; dbrefs = structure.getDBRefs();</a>
+<span class="sourceLineNo">1057</span><a id="line.1057">            if (dbrefs == null) {</a>
+<span class="sourceLineNo">1058</span><a id="line.1058">                dbrefs = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1059</span><a id="line.1059">            }</a>
+<span class="sourceLineNo">1060</span><a id="line.1060">            dbrefs.add(dbRef);</a>
+<span class="sourceLineNo">1061</span><a id="line.1061"></a>
+<span class="sourceLineNo">1062</span><a id="line.1062">            logger.debug(dbRef.toPDB());</a>
+<span class="sourceLineNo">1063</span><a id="line.1063"></a>
+<span class="sourceLineNo">1064</span><a id="line.1064">            structure.setDBRefs(dbrefs);</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">        }</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">    }</a>
+<span class="sourceLineNo">1067</span><a id="line.1067"></a>
+<span class="sourceLineNo">1068</span><a id="line.1068">    @Override</a>
+<span class="sourceLineNo">1069</span><a id="line.1069">    public void consumeStructRefSeqDif(StructRefSeqDif structRefSeqDif) {</a>
+<span class="sourceLineNo">1070</span><a id="line.1070">        this.structRefSeqDif = structRefSeqDif;</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">    }</a>
+<span class="sourceLineNo">1072</span><a id="line.1072"></a>
+<span class="sourceLineNo">1073</span><a id="line.1073">    @Override</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">    public void consumeStructSheetRange(StructSheetRange structSheetRange) {</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">        // TODO not considered in ref</a>
+<span class="sourceLineNo">1076</span><a id="line.1076">    }</a>
+<span class="sourceLineNo">1077</span><a id="line.1077"></a>
+<span class="sourceLineNo">1078</span><a id="line.1078">    @Override</a>
+<span class="sourceLineNo">1079</span><a id="line.1079">    public void consumeStructSite(StructSite structSite) {</a>
+<span class="sourceLineNo">1080</span><a id="line.1080">        if (params.isHeaderOnly()) {</a>
+<span class="sourceLineNo">1081</span><a id="line.1081">            return;</a>
+<span class="sourceLineNo">1082</span><a id="line.1082">        }</a>
+<span class="sourceLineNo">1083</span><a id="line.1083"></a>
+<span class="sourceLineNo">1084</span><a id="line.1084">        List&lt;Site&gt; sites = structure.getSites();</a>
+<span class="sourceLineNo">1085</span><a id="line.1085">        if (sites == null) {</a>
+<span class="sourceLineNo">1086</span><a id="line.1086">            sites = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1087</span><a id="line.1087">        }</a>
+<span class="sourceLineNo">1088</span><a id="line.1088"></a>
+<span class="sourceLineNo">1089</span><a id="line.1089">        for (int rowIndex = 0; rowIndex &lt; structSite.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">            Site site = null;</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">            for (Site asite : sites) {</a>
+<span class="sourceLineNo">1092</span><a id="line.1092">                if (asite.getSiteID().equals(structSite.getId().get(rowIndex))) {</a>
+<span class="sourceLineNo">1093</span><a id="line.1093">                    site = asite; // prevent duplicate siteIds</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">                }</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">            }</a>
+<span class="sourceLineNo">1096</span><a id="line.1096"></a>
+<span class="sourceLineNo">1097</span><a id="line.1097">            boolean addSite = false;</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">            if (site == null) {</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">                site = new Site();</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">                addSite = true;</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">            }</a>
+<span class="sourceLineNo">1102</span><a id="line.1102"></a>
+<span class="sourceLineNo">1103</span><a id="line.1103">            site.setSiteID(structSite.getId().get(rowIndex));</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">            site.setDescription(structSite.getDetails().get(rowIndex));</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">            site.setEvCode(structSite.getPdbxEvidenceCode().get(rowIndex));</a>
+<span class="sourceLineNo">1106</span><a id="line.1106"></a>
+<span class="sourceLineNo">1107</span><a id="line.1107">            if (addSite) {</a>
+<span class="sourceLineNo">1108</span><a id="line.1108">                sites.add(site);</a>
+<span class="sourceLineNo">1109</span><a id="line.1109">            }</a>
+<span class="sourceLineNo">1110</span><a id="line.1110">        }</a>
+<span class="sourceLineNo">1111</span><a id="line.1111"></a>
+<span class="sourceLineNo">1112</span><a id="line.1112">        structure.setSites(sites);</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">    }</a>
+<span class="sourceLineNo">1114</span><a id="line.1114"></a>
+<span class="sourceLineNo">1115</span><a id="line.1115">    @Override</a>
+<span class="sourceLineNo">1116</span><a id="line.1116">    public void consumeStructSiteGen(StructSiteGen structSiteGen) {</a>
+<span class="sourceLineNo">1117</span><a id="line.1117">        this.structSiteGen = structSiteGen;</a>
+<span class="sourceLineNo">1118</span><a id="line.1118">    }</a>
+<span class="sourceLineNo">1119</span><a id="line.1119"></a>
+<span class="sourceLineNo">1120</span><a id="line.1120">    @Override</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">    public void consumeSymmetry(Symmetry symmetry) {</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">        for (int rowIndex = 0; rowIndex &lt; symmetry.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">            String spaceGroupString = symmetry.getSpaceGroupNameH_M().get(rowIndex);</a>
+<span class="sourceLineNo">1124</span><a id="line.1124">            SpaceGroup spaceGroup = SymoplibParser.getSpaceGroup(spaceGroupString);</a>
+<span class="sourceLineNo">1125</span><a id="line.1125">            if (spaceGroup == null) {</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">                logger.warn("Space group '{}' not recognised as a standard space group", spaceGroupString);</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">                structure.getPDBHeader()</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">                        .getCrystallographicInfo()</a>
+<span class="sourceLineNo">1129</span><a id="line.1129">                        .setNonStandardSg(true);</a>
+<span class="sourceLineNo">1130</span><a id="line.1130">            } else {</a>
+<span class="sourceLineNo">1131</span><a id="line.1131">                structure.getPDBHeader()</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">                        .getCrystallographicInfo()</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">                        .setSpaceGroup(spaceGroup);</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">                structure.getPDBHeader()</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">                        .getCrystallographicInfo()</a>
+<span class="sourceLineNo">1136</span><a id="line.1136">                        .setNonStandardSg(false);</a>
+<span class="sourceLineNo">1137</span><a id="line.1137">            }</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">        }</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">    }</a>
+<span class="sourceLineNo">1140</span><a id="line.1140"></a>
+<span class="sourceLineNo">1141</span><a id="line.1141">    @Override</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">    public void finish() {</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">        if (currentChain != null) {</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">            currentChain.addGroup(currentGroup);</a>
+<span class="sourceLineNo">1145</span><a id="line.1145"></a>
+<span class="sourceLineNo">1146</span><a id="line.1146">            Optional&lt;Chain&gt; testChain = currentModel.stream()</a>
+<span class="sourceLineNo">1147</span><a id="line.1147">                    .filter(chain -&gt; chain.getId().equals(currentChain.getId()))</a>
+<span class="sourceLineNo">1148</span><a id="line.1148">                    .findFirst();</a>
+<span class="sourceLineNo">1149</span><a id="line.1149"></a>
+<span class="sourceLineNo">1150</span><a id="line.1150">            if (!testChain.isPresent()) {</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">                currentModel.add(currentChain);</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">            }</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">        } else if (!params.isHeaderOnly()) {</a>
+<span class="sourceLineNo">1154</span><a id="line.1154">            logger.warn("current chain is null at end of document.");</a>
+<span class="sourceLineNo">1155</span><a id="line.1155">        }</a>
+<span class="sourceLineNo">1156</span><a id="line.1156"></a>
+<span class="sourceLineNo">1157</span><a id="line.1157">        allModels.add(currentModel);</a>
+<span class="sourceLineNo">1158</span><a id="line.1158"></a>
+<span class="sourceLineNo">1159</span><a id="line.1159">        initMaps();</a>
+<span class="sourceLineNo">1160</span><a id="line.1160"></a>
+<span class="sourceLineNo">1161</span><a id="line.1161">        for (int rowIndex = 0; rowIndex &lt; structAsym.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1162</span><a id="line.1162">            String id = structAsym.getId().get(rowIndex);</a>
+<span class="sourceLineNo">1163</span><a id="line.1163">            String entityId = structAsym.getEntityId().get(rowIndex);</a>
+<span class="sourceLineNo">1164</span><a id="line.1164">            logger.debug("Entity {} matches asym_id: {}", entityId, id);</a>
+<span class="sourceLineNo">1165</span><a id="line.1165"></a>
+<span class="sourceLineNo">1166</span><a id="line.1166">            Chain chain = getEntityChain(entityId);</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">            Chain seqRes = (Chain) chain.clone();</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">            // to solve issue #160 (e.g. 3u7t)</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">            seqRes = removeSeqResHeterogeneity(seqRes);</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">            seqRes.setId(id);</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">            seqRes.setName(asymId2authorId.getOrDefault(id, id));</a>
+<span class="sourceLineNo">1172</span><a id="line.1172"></a>
+<span class="sourceLineNo">1173</span><a id="line.1173">            EntityType type = EntityType.entityTypeFromString(getEntityType(entityId));</a>
+<span class="sourceLineNo">1174</span><a id="line.1174">            if (type == null || type == EntityType.POLYMER) {</a>
+<span class="sourceLineNo">1175</span><a id="line.1175">                seqResChains.add(seqRes);</a>
+<span class="sourceLineNo">1176</span><a id="line.1176">            }</a>
+<span class="sourceLineNo">1177</span><a id="line.1177"></a>
+<span class="sourceLineNo">1178</span><a id="line.1178">            logger.debug(" seqres: {} {}&lt;", id, seqRes);</a>
+<span class="sourceLineNo">1179</span><a id="line.1179">            addEntity(rowIndex, entityId, getEntityDescription(entityId), getEntityType(entityId));</a>
+<span class="sourceLineNo">1180</span><a id="line.1180">        }</a>
+<span class="sourceLineNo">1181</span><a id="line.1181"></a>
+<span class="sourceLineNo">1182</span><a id="line.1182">        if (!structAsym.isDefined() || structAsym.getRowCount() == 0) {</a>
+<span class="sourceLineNo">1183</span><a id="line.1183">            logger.warn("No _struct_asym category in file, no SEQRES groups will be added.");</a>
+<span class="sourceLineNo">1184</span><a id="line.1184">        }</a>
+<span class="sourceLineNo">1185</span><a id="line.1185"></a>
+<span class="sourceLineNo">1186</span><a id="line.1186">        // entities</a>
+<span class="sourceLineNo">1187</span><a id="line.1187">        // In addEntities above we created the entities if they were present in the file</a>
+<span class="sourceLineNo">1188</span><a id="line.1188">        // Now we need to make sure that they are linked to chains and also that if they are not present in the file we</a>
+<span class="sourceLineNo">1189</span><a id="line.1189">        // need to add them now</a>
+<span class="sourceLineNo">1190</span><a id="line.1190">        linkEntities();</a>
+<span class="sourceLineNo">1191</span><a id="line.1191"></a>
+<span class="sourceLineNo">1192</span><a id="line.1192">        // now that we know the entities, we can add all chains to structure so that they are stored</a>
+<span class="sourceLineNo">1193</span><a id="line.1193">        // properly as polymer/nonpolymer/water chains inside structure</a>
+<span class="sourceLineNo">1194</span><a id="line.1194">        allModels.forEach(structure::addModel);</a>
+<span class="sourceLineNo">1195</span><a id="line.1195"></a>
+<span class="sourceLineNo">1196</span><a id="line.1196">        // Only align if requested (default) and not when headerOnly mode with no Atoms.</a>
+<span class="sourceLineNo">1197</span><a id="line.1197">        // Otherwise, we store the empty SeqRes Groups unchanged in the right chains.</a>
+<span class="sourceLineNo">1198</span><a id="line.1198">        if (params.isAlignSeqRes() &amp;&amp; !params.isHeaderOnly()){</a>
+<span class="sourceLineNo">1199</span><a id="line.1199">            logger.debug("Parsing mode align_seqres, will parse SEQRES and align to ATOM sequence");</a>
+<span class="sourceLineNo">1200</span><a id="line.1200">            alignSeqRes();</a>
+<span class="sourceLineNo">1201</span><a id="line.1201">        } else {</a>
+<span class="sourceLineNo">1202</span><a id="line.1202">            logger.debug("Parsing mode unalign_seqres, will parse SEQRES but not align it to ATOM sequence");</a>
+<span class="sourceLineNo">1203</span><a id="line.1203">            SeqRes2AtomAligner.storeUnAlignedSeqRes(structure, seqResChains, params.isHeaderOnly());</a>
+<span class="sourceLineNo">1204</span><a id="line.1204">        }</a>
+<span class="sourceLineNo">1205</span><a id="line.1205"></a>
+<span class="sourceLineNo">1206</span><a id="line.1206">        // Now make sure all altlocgroups have all the atoms in all the groups</a>
+<span class="sourceLineNo">1207</span><a id="line.1207">        StructureTools.cleanUpAltLocs(structure);</a>
+<span class="sourceLineNo">1208</span><a id="line.1208"></a>
+<span class="sourceLineNo">1209</span><a id="line.1209">        // NOTE bonds and charges can only be done at this point that the chain id mapping is properly sorted out</a>
+<span class="sourceLineNo">1210</span><a id="line.1210">        if (!params.isHeaderOnly()) {</a>
+<span class="sourceLineNo">1211</span><a id="line.1211">            if (params.shouldCreateAtomBonds()) {</a>
+<span class="sourceLineNo">1212</span><a id="line.1212">                addBonds();</a>
+<span class="sourceLineNo">1213</span><a id="line.1213">            }</a>
+<span class="sourceLineNo">1214</span><a id="line.1214"></a>
+<span class="sourceLineNo">1215</span><a id="line.1215">            if (params.shouldCreateAtomCharges()) {</a>
+<span class="sourceLineNo">1216</span><a id="line.1216">                addCharges();</a>
+<span class="sourceLineNo">1217</span><a id="line.1217">            }</a>
+<span class="sourceLineNo">1218</span><a id="line.1218">        }</a>
+<span class="sourceLineNo">1219</span><a id="line.1219"></a>
+<span class="sourceLineNo">1220</span><a id="line.1220">        if (!params.isHeaderOnly()) {</a>
+<span class="sourceLineNo">1221</span><a id="line.1221">            addSites();</a>
+<span class="sourceLineNo">1222</span><a id="line.1222">        }</a>
+<span class="sourceLineNo">1223</span><a id="line.1223"></a>
+<span class="sourceLineNo">1224</span><a id="line.1224">        // set the oligomeric state info in the header...</a>
+<span class="sourceLineNo">1225</span><a id="line.1225">        if (params.isParseBioAssembly()) {</a>
+<span class="sourceLineNo">1226</span><a id="line.1226">            // the more detailed mapping of chains to rotation operations happens in StructureIO...</a>
+<span class="sourceLineNo">1227</span><a id="line.1227"></a>
+<span class="sourceLineNo">1228</span><a id="line.1228">            Map&lt;Integer, BioAssemblyInfo&gt; bioAssemblies = new LinkedHashMap&lt;&gt;();</a>
+<span class="sourceLineNo">1229</span><a id="line.1229">            for (int i = 0; i &lt; structAssembly.getRowCount(); i++) {</a>
+<span class="sourceLineNo">1230</span><a id="line.1230">                String assemblyId = structAssembly.getId().get(i);</a>
+<span class="sourceLineNo">1231</span><a id="line.1231">                List&lt;Integer&gt; structAssemblyGenIndices = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1232</span><a id="line.1232">                for (int j = 0; j &lt; structAssemblyGen.getRowCount(); j++) {</a>
+<span class="sourceLineNo">1233</span><a id="line.1233">                    if (structAssemblyGen.getAssemblyId().get(j).equals(assemblyId)) {</a>
+<span class="sourceLineNo">1234</span><a id="line.1234">                        structAssemblyGenIndices.add(j);</a>
+<span class="sourceLineNo">1235</span><a id="line.1235">                    }</a>
+<span class="sourceLineNo">1236</span><a id="line.1236">                }</a>
+<span class="sourceLineNo">1237</span><a id="line.1237">                BiologicalAssemblyBuilder builder = new BiologicalAssemblyBuilder();</a>
+<span class="sourceLineNo">1238</span><a id="line.1238">                // these are the transformations that need to be applied to our model</a>
+<span class="sourceLineNo">1239</span><a id="line.1239">                List&lt;BiologicalAssemblyTransformation&gt; transformations = builder.getBioUnitTransformationList(structAssembly,</a>
+<span class="sourceLineNo">1240</span><a id="line.1240">                        i, structAssemblyGen, structOpers);</a>
+<span class="sourceLineNo">1241</span><a id="line.1241"></a>
+<span class="sourceLineNo">1242</span><a id="line.1242">                int bioAssemblyId = -1;</a>
+<span class="sourceLineNo">1243</span><a id="line.1243">                try {</a>
+<span class="sourceLineNo">1244</span><a id="line.1244">                    bioAssemblyId = Integer.parseInt(assemblyId);</a>
+<span class="sourceLineNo">1245</span><a id="line.1245">                } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">1246</span><a id="line.1246">                    logger.info("Could not parse a numerical bio assembly id from '{}'", assemblyId);</a>
+<span class="sourceLineNo">1247</span><a id="line.1247">                }</a>
+<span class="sourceLineNo">1248</span><a id="line.1248"></a>
+<span class="sourceLineNo">1249</span><a id="line.1249">                // if bioassembly id is not numerical we throw it away</a>
+<span class="sourceLineNo">1250</span><a id="line.1250">                // this happens usually for viral capsid entries, like 1ei7</a>
+<span class="sourceLineNo">1251</span><a id="line.1251">                // see issue #230 in github</a>
+<span class="sourceLineNo">1252</span><a id="line.1252">                if (bioAssemblyId != -1) {</a>
+<span class="sourceLineNo">1253</span><a id="line.1253">                    int mmSize = 0;</a>
+<span class="sourceLineNo">1254</span><a id="line.1254">                    // note that the transforms contain asym ids of both polymers and non-polymers</a>
+<span class="sourceLineNo">1255</span><a id="line.1255">                    // For the mmsize, we are only interested in the polymers</a>
+<span class="sourceLineNo">1256</span><a id="line.1256">                    for (BiologicalAssemblyTransformation transf : transformations) {</a>
+<span class="sourceLineNo">1257</span><a id="line.1257">                        Chain c = structure.getChain(transf.getChainId());</a>
+<span class="sourceLineNo">1258</span><a id="line.1258">                        if (c == null) {</a>
+<span class="sourceLineNo">1259</span><a id="line.1259">                            logger.info("Could not find asym id {} specified in struct_assembly_gen", transf.getChainId());</a>
+<span class="sourceLineNo">1260</span><a id="line.1260">                            continue;</a>
+<span class="sourceLineNo">1261</span><a id="line.1261">                        }</a>
+<span class="sourceLineNo">1262</span><a id="line.1262">                        if (c.getEntityType() == EntityType.POLYMER &amp;&amp;</a>
+<span class="sourceLineNo">1263</span><a id="line.1263">                                // for entries like 4kro, sugars are annotated as polymers but we</a>
+<span class="sourceLineNo">1264</span><a id="line.1264">                                // don't want them in the macromolecularSize count</a>
+<span class="sourceLineNo">1265</span><a id="line.1265">                                !c.getEntityInfo().getDescription().contains("SUGAR")) {</a>
+<span class="sourceLineNo">1266</span><a id="line.1266">                            mmSize++;</a>
+<span class="sourceLineNo">1267</span><a id="line.1267">                        }</a>
+<span class="sourceLineNo">1268</span><a id="line.1268">                    }</a>
+<span class="sourceLineNo">1269</span><a id="line.1269"></a>
+<span class="sourceLineNo">1270</span><a id="line.1270">                    BioAssemblyInfo bioAssembly = new BioAssemblyInfo();</a>
+<span class="sourceLineNo">1271</span><a id="line.1271">                    bioAssembly.setId(bioAssemblyId);</a>
+<span class="sourceLineNo">1272</span><a id="line.1272">                    bioAssembly.setMacromolecularSize(mmSize);</a>
+<span class="sourceLineNo">1273</span><a id="line.1273">                    bioAssembly.setTransforms(transformations);</a>
+<span class="sourceLineNo">1274</span><a id="line.1274">                    bioAssemblies.put(bioAssemblyId, bioAssembly);</a>
+<span class="sourceLineNo">1275</span><a id="line.1275">                }</a>
+<span class="sourceLineNo">1276</span><a id="line.1276"></a>
+<span class="sourceLineNo">1277</span><a id="line.1277">            }</a>
+<span class="sourceLineNo">1278</span><a id="line.1278">            structure.getPDBHeader()</a>
+<span class="sourceLineNo">1279</span><a id="line.1279">                    .setBioAssemblies(bioAssemblies);</a>
+<span class="sourceLineNo">1280</span><a id="line.1280">        }</a>
+<span class="sourceLineNo">1281</span><a id="line.1281"></a>
+<span class="sourceLineNo">1282</span><a id="line.1282">        setStructNcsOps();</a>
+<span class="sourceLineNo">1283</span><a id="line.1283">        setCrystallographicInfoMetadata();</a>
+<span class="sourceLineNo">1284</span><a id="line.1284"></a>
+<span class="sourceLineNo">1285</span><a id="line.1285">        Map&lt;String, List&lt;SeqMisMatch&gt;&gt; misMatchMap = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">1286</span><a id="line.1286">        for (int rowIndex = 0; rowIndex &lt; structRefSeqDif.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1287</span><a id="line.1287">            SeqMisMatch seqMisMatch = new SeqMisMatchImpl();</a>
+<span class="sourceLineNo">1288</span><a id="line.1288">            seqMisMatch.setDetails(structRefSeqDif.getDetails().get(rowIndex));</a>
+<span class="sourceLineNo">1289</span><a id="line.1289"></a>
+<span class="sourceLineNo">1290</span><a id="line.1290">            String insCode = structRefSeqDif.getPdbxPdbInsCode().get(rowIndex);</a>
+<span class="sourceLineNo">1291</span><a id="line.1291">                if (insCode != null &amp;&amp; insCode.equals("?")) {</a>
+<span class="sourceLineNo">1292</span><a id="line.1292">                insCode = null;</a>
+<span class="sourceLineNo">1293</span><a id="line.1293">            }</a>
+<span class="sourceLineNo">1294</span><a id="line.1294">            seqMisMatch.setInsCode(insCode);</a>
+<span class="sourceLineNo">1295</span><a id="line.1295">            seqMisMatch.setOrigGroup(structRefSeqDif.getDbMonId().get(rowIndex));</a>
+<span class="sourceLineNo">1296</span><a id="line.1296">            seqMisMatch.setPdbGroup(structRefSeqDif.getMonId().get(rowIndex));</a>
+<span class="sourceLineNo">1297</span><a id="line.1297">            seqMisMatch.setPdbResNum(structRefSeqDif.getPdbxAuthSeqNum().get(rowIndex));</a>
+<span class="sourceLineNo">1298</span><a id="line.1298">            seqMisMatch.setUniProtId(structRefSeqDif.getPdbxSeqDbAccessionCode().get(rowIndex));</a>
+<span class="sourceLineNo">1299</span><a id="line.1299">            seqMisMatch.setSeqNum(structRefSeqDif.getSeqNum().get(rowIndex));</a>
+<span class="sourceLineNo">1300</span><a id="line.1300"></a>
+<span class="sourceLineNo">1301</span><a id="line.1301">            String strandId = structRefSeqDif.getPdbxPdbStrandId().get(rowIndex);</a>
+<span class="sourceLineNo">1302</span><a id="line.1302">            List&lt;SeqMisMatch&gt; seqMisMatches = misMatchMap.computeIfAbsent(strandId, k -&gt; new ArrayList&lt;&gt;());</a>
+<span class="sourceLineNo">1303</span><a id="line.1303">            seqMisMatches.add(seqMisMatch);</a>
+<span class="sourceLineNo">1304</span><a id="line.1304">        }</a>
+<span class="sourceLineNo">1305</span><a id="line.1305"></a>
+<span class="sourceLineNo">1306</span><a id="line.1306">        for (String chainId : misMatchMap.keySet()){</a>
+<span class="sourceLineNo">1307</span><a id="line.1307">            Chain chain = structure.getPolyChainByPDB(chainId);</a>
+<span class="sourceLineNo">1308</span><a id="line.1308">            if (chain == null) {</a>
+<span class="sourceLineNo">1309</span><a id="line.1309">                logger.warn("Could not set mismatches for chain with author id {}", chainId);</a>
+<span class="sourceLineNo">1310</span><a id="line.1310">                continue;</a>
+<span class="sourceLineNo">1311</span><a id="line.1311">            }</a>
+<span class="sourceLineNo">1312</span><a id="line.1312"></a>
+<span class="sourceLineNo">1313</span><a id="line.1313">            chain.setSeqMisMatches(misMatchMap.get(chainId));</a>
+<span class="sourceLineNo">1314</span><a id="line.1314">        }</a>
+<span class="sourceLineNo">1315</span><a id="line.1315">    }</a>
+<span class="sourceLineNo">1316</span><a id="line.1316"></a>
+<span class="sourceLineNo">1317</span><a id="line.1317">    private String getEntityType(String entityId) {</a>
+<span class="sourceLineNo">1318</span><a id="line.1318">        return IntStream.range(0, entity.getRowCount())</a>
+<span class="sourceLineNo">1319</span><a id="line.1319">                .filter(i -&gt; entity.getId().get(i).equals(entityId))</a>
+<span class="sourceLineNo">1320</span><a id="line.1320">                .mapToObj(i -&gt; entity.getType().get(i))</a>
+<span class="sourceLineNo">1321</span><a id="line.1321">                .findFirst()</a>
+<span class="sourceLineNo">1322</span><a id="line.1322">                .orElseThrow(() -&gt; new NoSuchElementException("could not find entity with id " + entityId));</a>
+<span class="sourceLineNo">1323</span><a id="line.1323">    }</a>
+<span class="sourceLineNo">1324</span><a id="line.1324"></a>
+<span class="sourceLineNo">1325</span><a id="line.1325">    private String getEntityDescription(String entityId) {</a>
+<span class="sourceLineNo">1326</span><a id="line.1326">        return IntStream.range(0, entity.getRowCount())</a>
+<span class="sourceLineNo">1327</span><a id="line.1327">                .filter(i -&gt; entity.getId().get(i).equals(entityId))</a>
+<span class="sourceLineNo">1328</span><a id="line.1328">                .mapToObj(i -&gt; entity.getPdbxDescription().get(i))</a>
+<span class="sourceLineNo">1329</span><a id="line.1329">                .findFirst()</a>
+<span class="sourceLineNo">1330</span><a id="line.1330">                .orElseThrow(() -&gt; new NoSuchElementException("could not find entity with id " + entityId));</a>
+<span class="sourceLineNo">1331</span><a id="line.1331">    }</a>
+<span class="sourceLineNo">1332</span><a id="line.1332"></a>
+<span class="sourceLineNo">1333</span><a id="line.1333">    private void addEntity(int asymRowIndex, String entityId, String pdbxDescription, String type) {</a>
+<span class="sourceLineNo">1334</span><a id="line.1334">        int eId = 0;</a>
+<span class="sourceLineNo">1335</span><a id="line.1335">        try {</a>
+<span class="sourceLineNo">1336</span><a id="line.1336">            eId = Integer.parseInt(entityId);</a>
+<span class="sourceLineNo">1337</span><a id="line.1337">        } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">1338</span><a id="line.1338">            logger.warn("Could not parse mol_id from string {}. Will use 0 for creating Entity", entityId);</a>
+<span class="sourceLineNo">1339</span><a id="line.1339">        }</a>
+<span class="sourceLineNo">1340</span><a id="line.1340"></a>
+<span class="sourceLineNo">1341</span><a id="line.1341">        int entityRowIndex = IntStream.range(0, entity.getRowCount())</a>
+<span class="sourceLineNo">1342</span><a id="line.1342">                .filter(i -&gt; entity.getId().get(i).equals(entityId))</a>
+<span class="sourceLineNo">1343</span><a id="line.1343">                .findFirst()</a>
+<span class="sourceLineNo">1344</span><a id="line.1344">                .orElse(-1);</a>
+<span class="sourceLineNo">1345</span><a id="line.1345"></a>
+<span class="sourceLineNo">1346</span><a id="line.1346">        EntityInfo entityInfo = structure.getEntityById(eId);</a>
+<span class="sourceLineNo">1347</span><a id="line.1347"></a>
+<span class="sourceLineNo">1348</span><a id="line.1348">        if (entityInfo == null) {</a>
+<span class="sourceLineNo">1349</span><a id="line.1349">            entityInfo = new EntityInfo();</a>
+<span class="sourceLineNo">1350</span><a id="line.1350">            entityInfo.setMolId(eId);</a>
+<span class="sourceLineNo">1351</span><a id="line.1351">            // we only add the compound if a polymeric one (to match what the PDB parser does)</a>
+<span class="sourceLineNo">1352</span><a id="line.1352">            if (entityRowIndex != -1) {</a>
+<span class="sourceLineNo">1353</span><a id="line.1353">                entityInfo.setDescription(pdbxDescription);</a>
+<span class="sourceLineNo">1354</span><a id="line.1354"></a>
+<span class="sourceLineNo">1355</span><a id="line.1355">                EntityType eType = EntityType.entityTypeFromString(type);</a>
+<span class="sourceLineNo">1356</span><a id="line.1356">                if (eType != null) {</a>
+<span class="sourceLineNo">1357</span><a id="line.1357">                    entityInfo.setType(eType);</a>
+<span class="sourceLineNo">1358</span><a id="line.1358">                } else {</a>
+<span class="sourceLineNo">1359</span><a id="line.1359">                    logger.warn("Type '{}' is not recognised as a valid entity type for entity {}", type, eId);</a>
+<span class="sourceLineNo">1360</span><a id="line.1360">                }</a>
+<span class="sourceLineNo">1361</span><a id="line.1361">                addAncilliaryEntityData(asymRowIndex, entityInfo);</a>
+<span class="sourceLineNo">1362</span><a id="line.1362">                structure.addEntityInfo(entityInfo);</a>
+<span class="sourceLineNo">1363</span><a id="line.1363">                logger.debug("Adding Entity with entity id {} from _entity, with name: {}", eId,</a>
+<span class="sourceLineNo">1364</span><a id="line.1364">                        entityInfo.getDescription());</a>
+<span class="sourceLineNo">1365</span><a id="line.1365">            }</a>
+<span class="sourceLineNo">1366</span><a id="line.1366">        }</a>
+<span class="sourceLineNo">1367</span><a id="line.1367">    }</a>
+<span class="sourceLineNo">1368</span><a id="line.1368"></a>
+<span class="sourceLineNo">1369</span><a id="line.1369">    private void addAncilliaryEntityData(int asymRowIndex, EntityInfo entityInfo) {</a>
+<span class="sourceLineNo">1370</span><a id="line.1370">        // Loop through each of the entity types and add the corresponding data</a>
+<span class="sourceLineNo">1371</span><a id="line.1371">        // We're assuming if data is duplicated between sources it is consistent</a>
+<span class="sourceLineNo">1372</span><a id="line.1372">        // This is a potentially huge assumption...</a>
+<span class="sourceLineNo">1373</span><a id="line.1373"></a>
+<span class="sourceLineNo">1374</span><a id="line.1374">        for (int rowIndex = 0; rowIndex &lt; entitySrcGen.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1375</span><a id="line.1375">            if (!entitySrcGen.getEntityId().get(rowIndex).equals(structAsym.getEntityId().get(asymRowIndex))) {</a>
+<span class="sourceLineNo">1376</span><a id="line.1376">                continue;</a>
+<span class="sourceLineNo">1377</span><a id="line.1377">            }</a>
+<span class="sourceLineNo">1378</span><a id="line.1378"></a>
+<span class="sourceLineNo">1379</span><a id="line.1379">            addInformationFromEntitySrcGen(rowIndex, entityInfo);</a>
+<span class="sourceLineNo">1380</span><a id="line.1380">        }</a>
+<span class="sourceLineNo">1381</span><a id="line.1381"></a>
+<span class="sourceLineNo">1382</span><a id="line.1382">        for (int rowIndex = 0; rowIndex &lt; entitySrcNat.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1383</span><a id="line.1383">            if (!entitySrcNat.getEntityId().get(rowIndex).equals(structAsym.getEntityId().get(asymRowIndex))) {</a>
+<span class="sourceLineNo">1384</span><a id="line.1384">                continue;</a>
+<span class="sourceLineNo">1385</span><a id="line.1385">            }</a>
+<span class="sourceLineNo">1386</span><a id="line.1386"></a>
+<span class="sourceLineNo">1387</span><a id="line.1387">            addInformationFromEntitySrcNat(rowIndex, entityInfo);</a>
+<span class="sourceLineNo">1388</span><a id="line.1388">        }</a>
+<span class="sourceLineNo">1389</span><a id="line.1389"></a>
+<span class="sourceLineNo">1390</span><a id="line.1390">        for (int rowIndex = 0; rowIndex &lt; entitySrcSyn.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1391</span><a id="line.1391">            if (!entitySrcSyn.getEntityId().get(rowIndex).equals(structAsym.getEntityId().get(asymRowIndex))) {</a>
+<span class="sourceLineNo">1392</span><a id="line.1392">                continue;</a>
+<span class="sourceLineNo">1393</span><a id="line.1393">            }</a>
+<span class="sourceLineNo">1394</span><a id="line.1394"></a>
+<span class="sourceLineNo">1395</span><a id="line.1395">            addInformationFromEntitySrcSyn(rowIndex, entityInfo);</a>
+<span class="sourceLineNo">1396</span><a id="line.1396">        }</a>
+<span class="sourceLineNo">1397</span><a id="line.1397">    }</a>
+<span class="sourceLineNo">1398</span><a id="line.1398"></a>
+<span class="sourceLineNo">1399</span><a id="line.1399">    private void addInformationFromEntitySrcSyn(int rowIndex, EntityInfo entityInfo) {</a>
+<span class="sourceLineNo">1400</span><a id="line.1400">        entityInfo.setOrganismCommon(entitySrcSyn.getOrganismCommonName().get(rowIndex));</a>
+<span class="sourceLineNo">1401</span><a id="line.1401">        entityInfo.setOrganismScientific(entitySrcSyn.getOrganismScientific().get(rowIndex));</a>
+<span class="sourceLineNo">1402</span><a id="line.1402">        entityInfo.setOrganismTaxId(entitySrcSyn.getNcbiTaxonomyId().get(rowIndex));</a>
+<span class="sourceLineNo">1403</span><a id="line.1403">    }</a>
+<span class="sourceLineNo">1404</span><a id="line.1404"></a>
+<span class="sourceLineNo">1405</span><a id="line.1405">    private void addInformationFromEntitySrcNat(int rowIndex, EntityInfo entityInfo) {</a>
+<span class="sourceLineNo">1406</span><a id="line.1406">        entityInfo.setAtcc(entitySrcNat.getPdbxAtcc().get(rowIndex));</a>
+<span class="sourceLineNo">1407</span><a id="line.1407">        entityInfo.setCell(entitySrcNat.getPdbxCell().get(rowIndex));</a>
+<span class="sourceLineNo">1408</span><a id="line.1408">        entityInfo.setOrganismCommon(entitySrcNat.getCommonName().get(rowIndex));</a>
+<span class="sourceLineNo">1409</span><a id="line.1409">        entityInfo.setOrganismScientific(entitySrcNat.getPdbxOrganismScientific().get(rowIndex));</a>
+<span class="sourceLineNo">1410</span><a id="line.1410">        entityInfo.setOrganismTaxId(entitySrcNat.getPdbxNcbiTaxonomyId().get(rowIndex));</a>
+<span class="sourceLineNo">1411</span><a id="line.1411">    }</a>
+<span class="sourceLineNo">1412</span><a id="line.1412"></a>
+<span class="sourceLineNo">1413</span><a id="line.1413">    private void addInformationFromEntitySrcGen(int rowIndex, EntityInfo entityInfo) {</a>
+<span class="sourceLineNo">1414</span><a id="line.1414">        entityInfo.setAtcc(entitySrcGen.getPdbxGeneSrcAtcc().get(rowIndex));</a>
+<span class="sourceLineNo">1415</span><a id="line.1415">        entityInfo.setCell(entitySrcGen.getPdbxGeneSrcCell().get(rowIndex));</a>
+<span class="sourceLineNo">1416</span><a id="line.1416">        entityInfo.setOrganismCommon(entitySrcGen.getGeneSrcCommonName().get(rowIndex));</a>
+<span class="sourceLineNo">1417</span><a id="line.1417">        entityInfo.setOrganismScientific(entitySrcGen.getPdbxGeneSrcScientificName().get(rowIndex));</a>
+<span class="sourceLineNo">1418</span><a id="line.1418">        entityInfo.setOrganismTaxId(entitySrcGen.getPdbxGeneSrcNcbiTaxonomyId().get(rowIndex));</a>
+<span class="sourceLineNo">1419</span><a id="line.1419">        entityInfo.setExpressionSystemTaxId(entitySrcGen.getPdbxHostOrgNcbiTaxonomyId().get(rowIndex));</a>
+<span class="sourceLineNo">1420</span><a id="line.1420">        entityInfo.setExpressionSystem(entitySrcGen.getPdbxHostOrgScientificName().get(rowIndex));</a>
+<span class="sourceLineNo">1421</span><a id="line.1421">    }</a>
+<span class="sourceLineNo">1422</span><a id="line.1422"></a>
+<span class="sourceLineNo">1423</span><a id="line.1423">    private void setStructNcsOps() {</a>
+<span class="sourceLineNo">1424</span><a id="line.1424">        List&lt;Matrix4d&gt; ncsOperators = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1425</span><a id="line.1425"></a>
+<span class="sourceLineNo">1426</span><a id="line.1426">        for (int rowIndex = 0; rowIndex &lt; structNcsOper.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1427</span><a id="line.1427">            if (!"generate".equals(structNcsOper.getCode().get(rowIndex))) {</a>
+<span class="sourceLineNo">1428</span><a id="line.1428">                continue;</a>
+<span class="sourceLineNo">1429</span><a id="line.1429">            }</a>
+<span class="sourceLineNo">1430</span><a id="line.1430"></a>
+<span class="sourceLineNo">1431</span><a id="line.1431">            try {</a>
+<span class="sourceLineNo">1432</span><a id="line.1432">                Matrix4d operator = new Matrix4d();</a>
+<span class="sourceLineNo">1433</span><a id="line.1433"></a>
+<span class="sourceLineNo">1434</span><a id="line.1434">                operator.setElement(0, 0, structNcsOper.getMatrix11().get(rowIndex));</a>
+<span class="sourceLineNo">1435</span><a id="line.1435">                operator.setElement(0, 1, structNcsOper.getMatrix12().get(rowIndex));</a>
+<span class="sourceLineNo">1436</span><a id="line.1436">                operator.setElement(0, 2, structNcsOper.getMatrix13().get(rowIndex));</a>
+<span class="sourceLineNo">1437</span><a id="line.1437">                operator.setElement(0, 3, structNcsOper.getVector1().get(rowIndex));</a>
+<span class="sourceLineNo">1438</span><a id="line.1438"></a>
+<span class="sourceLineNo">1439</span><a id="line.1439">                operator.setElement(1, 0, structNcsOper.getMatrix21().get(rowIndex));</a>
+<span class="sourceLineNo">1440</span><a id="line.1440">                operator.setElement(1, 1, structNcsOper.getMatrix22().get(rowIndex));</a>
+<span class="sourceLineNo">1441</span><a id="line.1441">                operator.setElement(1, 2, structNcsOper.getMatrix23().get(rowIndex));</a>
+<span class="sourceLineNo">1442</span><a id="line.1442">                operator.setElement(1, 3, structNcsOper.getVector2().get(rowIndex));</a>
+<span class="sourceLineNo">1443</span><a id="line.1443"></a>
+<span class="sourceLineNo">1444</span><a id="line.1444">                operator.setElement(2, 0, structNcsOper.getMatrix31().get(rowIndex));</a>
+<span class="sourceLineNo">1445</span><a id="line.1445">                operator.setElement(2, 1, structNcsOper.getMatrix32().get(rowIndex));</a>
+<span class="sourceLineNo">1446</span><a id="line.1446">                operator.setElement(2, 2, structNcsOper.getMatrix33().get(rowIndex));</a>
+<span class="sourceLineNo">1447</span><a id="line.1447">                operator.setElement(2, 3, structNcsOper.getVector3().get(rowIndex));</a>
+<span class="sourceLineNo">1448</span><a id="line.1448"></a>
+<span class="sourceLineNo">1449</span><a id="line.1449">                operator.setElement(3, 0, 0);</a>
+<span class="sourceLineNo">1450</span><a id="line.1450">                operator.setElement(3, 1, 0);</a>
+<span class="sourceLineNo">1451</span><a id="line.1451">                operator.setElement(3, 2, 0);</a>
+<span class="sourceLineNo">1452</span><a id="line.1452">                operator.setElement(3, 3, 1);</a>
+<span class="sourceLineNo">1453</span><a id="line.1453"></a>
+<span class="sourceLineNo">1454</span><a id="line.1454">                ncsOperators.add(operator);</a>
+<span class="sourceLineNo">1455</span><a id="line.1455">            } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">1456</span><a id="line.1456">                logger.warn("Error parsing doubles in NCS operator list, skipping operator {}", rowIndex + 1);</a>
+<span class="sourceLineNo">1457</span><a id="line.1457">            }</a>
+<span class="sourceLineNo">1458</span><a id="line.1458">        }</a>
+<span class="sourceLineNo">1459</span><a id="line.1459"></a>
+<span class="sourceLineNo">1460</span><a id="line.1460">        if (ncsOperators.size() &gt; 0) {</a>
+<span class="sourceLineNo">1461</span><a id="line.1461">            structure.getCrystallographicInfo()</a>
+<span class="sourceLineNo">1462</span><a id="line.1462">                    .setNcsOperators(ncsOperators.toArray(new Matrix4d[0]));</a>
+<span class="sourceLineNo">1463</span><a id="line.1463">        }</a>
+<span class="sourceLineNo">1464</span><a id="line.1464">    }</a>
+<span class="sourceLineNo">1465</span><a id="line.1465"></a>
+<span class="sourceLineNo">1466</span><a id="line.1466">    private void setCrystallographicInfoMetadata() {</a>
+<span class="sourceLineNo">1467</span><a id="line.1467">        if (parsedScaleMatrix != null) {</a>
+<span class="sourceLineNo">1468</span><a id="line.1468">            PDBCrystallographicInfo crystalInfo = structure.getCrystallographicInfo();</a>
+<span class="sourceLineNo">1469</span><a id="line.1469">            boolean nonStd = false;</a>
+<span class="sourceLineNo">1470</span><a id="line.1470">            if (crystalInfo.getCrystalCell() != null &amp;&amp; !crystalInfo.getCrystalCell().checkScaleMatrix(parsedScaleMatrix)) {</a>
+<span class="sourceLineNo">1471</span><a id="line.1471">                nonStd = true;</a>
+<span class="sourceLineNo">1472</span><a id="line.1472">            }</a>
+<span class="sourceLineNo">1473</span><a id="line.1473"></a>
+<span class="sourceLineNo">1474</span><a id="line.1474">            crystalInfo.setNonStandardCoordFrameConvention(nonStd);</a>
+<span class="sourceLineNo">1475</span><a id="line.1475">        }</a>
+<span class="sourceLineNo">1476</span><a id="line.1476">    }</a>
+<span class="sourceLineNo">1477</span><a id="line.1477"></a>
+<span class="sourceLineNo">1478</span><a id="line.1478">    private void addSites() {</a>
+<span class="sourceLineNo">1479</span><a id="line.1479">        List&lt;Site&gt; sites = structure.getSites();</a>
+<span class="sourceLineNo">1480</span><a id="line.1480">        if (sites == null) sites = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1481</span><a id="line.1481"></a>
+<span class="sourceLineNo">1482</span><a id="line.1482">        for (int rowIndex = 0; rowIndex &lt; structSiteGen.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1483</span><a id="line.1483">            // For each StructSiteGen, find the residues involved, if they exist then</a>
+<span class="sourceLineNo">1484</span><a id="line.1484">            String site_id = structSiteGen.getSiteId().get(rowIndex); // multiple could be in same site.</a>
+<span class="sourceLineNo">1485</span><a id="line.1485">            if (site_id == null) {</a>
+<span class="sourceLineNo">1486</span><a id="line.1486">                site_id = "";</a>
+<span class="sourceLineNo">1487</span><a id="line.1487">            }</a>
+<span class="sourceLineNo">1488</span><a id="line.1488">            String comp_id = structSiteGen.getLabelCompId().get(rowIndex);  // PDBName</a>
+<span class="sourceLineNo">1489</span><a id="line.1489"></a>
+<span class="sourceLineNo">1490</span><a id="line.1490">            // Assumption: the author chain ID and residue number for the site is consistent with the original</a>
+<span class="sourceLineNo">1491</span><a id="line.1491">            // author chain id and residue numbers.</a>
+<span class="sourceLineNo">1492</span><a id="line.1492"></a>
+<span class="sourceLineNo">1493</span><a id="line.1493">            String asymId = structSiteGen.getLabelAsymId().get(rowIndex); // chain name</a>
+<span class="sourceLineNo">1494</span><a id="line.1494">            String authId = structSiteGen.getAuthAsymId().get(rowIndex); // chain Id</a>
+<span class="sourceLineNo">1495</span><a id="line.1495">            String auth_seq_id = structSiteGen.getAuthSeqId().get(rowIndex); // Res num</a>
+<span class="sourceLineNo">1496</span><a id="line.1496"></a>
+<span class="sourceLineNo">1497</span><a id="line.1497">            String insCode = structSiteGen.getPdbxAuthInsCode().get(rowIndex);</a>
+<span class="sourceLineNo">1498</span><a id="line.1498">            if (insCode != null &amp;&amp; insCode.equals("?")) {</a>
+<span class="sourceLineNo">1499</span><a id="line.1499">                insCode = null;</a>
+<span class="sourceLineNo">1500</span><a id="line.1500">            }</a>
+<span class="sourceLineNo">1501</span><a id="line.1501"></a>
+<span class="sourceLineNo">1502</span><a id="line.1502">            // Look for asymID = chainID and seqID = seq_ID.  Check that comp_id matches the resname.</a>
+<span class="sourceLineNo">1503</span><a id="line.1503">            Group g = null;</a>
+<span class="sourceLineNo">1504</span><a id="line.1504">            try {</a>
+<span class="sourceLineNo">1505</span><a id="line.1505">                Chain chain = structure.getChain(asymId);</a>
+<span class="sourceLineNo">1506</span><a id="line.1506"></a>
+<span class="sourceLineNo">1507</span><a id="line.1507">                if (null != chain) {</a>
+<span class="sourceLineNo">1508</span><a id="line.1508">                    try {</a>
+<span class="sourceLineNo">1509</span><a id="line.1509">                        Character insChar = null;</a>
+<span class="sourceLineNo">1510</span><a id="line.1510">                        if (null != insCode &amp;&amp; insCode.length() &gt; 0) {</a>
+<span class="sourceLineNo">1511</span><a id="line.1511">                            insChar = insCode.charAt(0);</a>
+<span class="sourceLineNo">1512</span><a id="line.1512">                        }</a>
+<span class="sourceLineNo">1513</span><a id="line.1513">                        g = chain.getGroupByPDB(new ResidueNumber(null, Integer.parseInt(auth_seq_id), insChar));</a>
+<span class="sourceLineNo">1514</span><a id="line.1514">                    } catch (NumberFormatException e) {</a>
+<span class="sourceLineNo">1515</span><a id="line.1515">                        logger.warn("Could not lookup residue : {}{}", authId, auth_seq_id);</a>
+<span class="sourceLineNo">1516</span><a id="line.1516">                    }</a>
+<span class="sourceLineNo">1517</span><a id="line.1517">                }</a>
+<span class="sourceLineNo">1518</span><a id="line.1518">            } catch (StructureException e) {</a>
+<span class="sourceLineNo">1519</span><a id="line.1519">                logger.warn("Problem finding residue in site entry {} - {}",</a>
+<span class="sourceLineNo">1520</span><a id="line.1520">                        structSiteGen.getSiteId().get(rowIndex), e.getMessage());</a>
+<span class="sourceLineNo">1521</span><a id="line.1521">            }</a>
+<span class="sourceLineNo">1522</span><a id="line.1522"></a>
+<span class="sourceLineNo">1523</span><a id="line.1523">            if (g != null) {</a>
+<span class="sourceLineNo">1524</span><a id="line.1524">                // 2. find the site_id, if not existing, create anew.</a>
+<span class="sourceLineNo">1525</span><a id="line.1525">                Site site = null;</a>
+<span class="sourceLineNo">1526</span><a id="line.1526">                for (Site asite : sites) {</a>
+<span class="sourceLineNo">1527</span><a id="line.1527">                    if (site_id.equals(asite.getSiteID())) {</a>
+<span class="sourceLineNo">1528</span><a id="line.1528">                        site = asite;</a>
+<span class="sourceLineNo">1529</span><a id="line.1529">                    }</a>
+<span class="sourceLineNo">1530</span><a id="line.1530">                }</a>
+<span class="sourceLineNo">1531</span><a id="line.1531"></a>
+<span class="sourceLineNo">1532</span><a id="line.1532">                boolean addSite = false;</a>
+<span class="sourceLineNo">1533</span><a id="line.1533"></a>
+<span class="sourceLineNo">1534</span><a id="line.1534">                // 3. add this residue to the site.</a>
+<span class="sourceLineNo">1535</span><a id="line.1535">                if (site == null) {</a>
+<span class="sourceLineNo">1536</span><a id="line.1536">                    addSite = true;</a>
+<span class="sourceLineNo">1537</span><a id="line.1537">                    site = new Site();</a>
+<span class="sourceLineNo">1538</span><a id="line.1538">                    site.setSiteID(site_id);</a>
+<span class="sourceLineNo">1539</span><a id="line.1539">                }</a>
+<span class="sourceLineNo">1540</span><a id="line.1540"></a>
+<span class="sourceLineNo">1541</span><a id="line.1541">                List&lt;Group&gt; groups = site.getGroups();</a>
+<span class="sourceLineNo">1542</span><a id="line.1542">                if (groups == null) {</a>
+<span class="sourceLineNo">1543</span><a id="line.1543">                    groups = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1544</span><a id="line.1544">                }</a>
+<span class="sourceLineNo">1545</span><a id="line.1545"></a>
+<span class="sourceLineNo">1546</span><a id="line.1546">                // Check the self-consistency of the residue reference from auth_seq_id and chain_id</a>
+<span class="sourceLineNo">1547</span><a id="line.1547">                if (!comp_id.equals(g.getPDBName())) {</a>
+<span class="sourceLineNo">1548</span><a id="line.1548">                    logger.warn("comp_id doesn't match the residue at {} {} - skipping", authId, auth_seq_id);</a>
+<span class="sourceLineNo">1549</span><a id="line.1549">                } else {</a>
+<span class="sourceLineNo">1550</span><a id="line.1550">                    groups.add(g);</a>
+<span class="sourceLineNo">1551</span><a id="line.1551">                    site.setGroups(groups);</a>
+<span class="sourceLineNo">1552</span><a id="line.1552">                }</a>
+<span class="sourceLineNo">1553</span><a id="line.1553">                if (addSite) {</a>
+<span class="sourceLineNo">1554</span><a id="line.1554">                    sites.add(site);</a>
+<span class="sourceLineNo">1555</span><a id="line.1555">                }</a>
+<span class="sourceLineNo">1556</span><a id="line.1556">            }</a>
+<span class="sourceLineNo">1557</span><a id="line.1557">        }</a>
+<span class="sourceLineNo">1558</span><a id="line.1558">        structure.setSites(sites);</a>
+<span class="sourceLineNo">1559</span><a id="line.1559">    }</a>
+<span class="sourceLineNo">1560</span><a id="line.1560"></a>
+<span class="sourceLineNo">1561</span><a id="line.1561">    private void addCharges() {</a>
+<span class="sourceLineNo">1562</span><a id="line.1562">        ChargeAdder.addCharges(structure);</a>
+<span class="sourceLineNo">1563</span><a id="line.1563">    }</a>
+<span class="sourceLineNo">1564</span><a id="line.1564"></a>
+<span class="sourceLineNo">1565</span><a id="line.1565">    /**</a>
+<span class="sourceLineNo">1566</span><a id="line.1566">     * The method will return a new reference to a Chain with any consecutive groups</a>
+<span class="sourceLineNo">1567</span><a id="line.1567">     * having same residue numbers removed.</a>
+<span class="sourceLineNo">1568</span><a id="line.1568">     * This is necessary to solve the microheterogeneity issue in entries like 3u7t (see github issue #160)</a>
+<span class="sourceLineNo">1569</span><a id="line.1569">     */</a>
+<span class="sourceLineNo">1570</span><a id="line.1570">    private static Chain removeSeqResHeterogeneity(Chain c) {</a>
+<span class="sourceLineNo">1571</span><a id="line.1571">        Chain trimmedChain = new ChainImpl();</a>
+<span class="sourceLineNo">1572</span><a id="line.1572">        ResidueNumber lastResNum = null;</a>
+<span class="sourceLineNo">1573</span><a id="line.1573"></a>
+<span class="sourceLineNo">1574</span><a id="line.1574">        for (Group g : c.getAtomGroups()) {</a>
+<span class="sourceLineNo">1575</span><a id="line.1575">            // note we have to deep copy this, otherwise they stay linked and would get altered in addGroup(g)</a>
+<span class="sourceLineNo">1576</span><a id="line.1576">            ResidueNumber currentResNum = new ResidueNumber(</a>
+<span class="sourceLineNo">1577</span><a id="line.1577">                    g.getResidueNumber().getChainName(),</a>
+<span class="sourceLineNo">1578</span><a id="line.1578">                    g.getResidueNumber().getSeqNum(),</a>
+<span class="sourceLineNo">1579</span><a id="line.1579">                    g.getResidueNumber().getInsCode());</a>
+<span class="sourceLineNo">1580</span><a id="line.1580"></a>
+<span class="sourceLineNo">1581</span><a id="line.1581">            if (lastResNum == null || !lastResNum.equals(currentResNum)) {</a>
+<span class="sourceLineNo">1582</span><a id="line.1582">                trimmedChain.addGroup(g);</a>
+<span class="sourceLineNo">1583</span><a id="line.1583">            } else {</a>
+<span class="sourceLineNo">1584</span><a id="line.1584">                logger.debug("Removing seqres group because it seems to be repeated in entity_poly_seq, most likely " +</a>
+<span class="sourceLineNo">1585</span><a id="line.1585">                        "has hetero='y': {}", g);</a>
+<span class="sourceLineNo">1586</span><a id="line.1586">            }</a>
+<span class="sourceLineNo">1587</span><a id="line.1587">            lastResNum = currentResNum;</a>
+<span class="sourceLineNo">1588</span><a id="line.1588"></a>
+<span class="sourceLineNo">1589</span><a id="line.1589">        }</a>
+<span class="sourceLineNo">1590</span><a id="line.1590">        return trimmedChain;</a>
+<span class="sourceLineNo">1591</span><a id="line.1591">    }</a>
+<span class="sourceLineNo">1592</span><a id="line.1592"></a>
+<span class="sourceLineNo">1593</span><a id="line.1593">    private void addBonds() {</a>
+<span class="sourceLineNo">1594</span><a id="line.1594">        BondMaker maker = new BondMaker(structure, params);</a>
+<span class="sourceLineNo">1595</span><a id="line.1595">        maker.makeBonds();</a>
+<span class="sourceLineNo">1596</span><a id="line.1596">        maker.formBondsFromStructConn(structConn);</a>
+<span class="sourceLineNo">1597</span><a id="line.1597">    }</a>
+<span class="sourceLineNo">1598</span><a id="line.1598"></a>
+<span class="sourceLineNo">1599</span><a id="line.1599">    private void alignSeqRes() {</a>
+<span class="sourceLineNo">1600</span><a id="line.1600">        logger.debug("Parsing mode align_seqres, will align to ATOM to SEQRES sequence");</a>
+<span class="sourceLineNo">1601</span><a id="line.1601"></a>
+<span class="sourceLineNo">1602</span><a id="line.1602">        // fix SEQRES residue numbering for all models</a>
+<span class="sourceLineNo">1603</span><a id="line.1603"></a>
+<span class="sourceLineNo">1604</span><a id="line.1604">        for (int model = 0; model &lt; structure.nrModels(); model++) {</a>
+<span class="sourceLineNo">1605</span><a id="line.1605">            List&lt;Chain&gt; atomList   = structure.getModel(model);</a>
+<span class="sourceLineNo">1606</span><a id="line.1606"></a>
+<span class="sourceLineNo">1607</span><a id="line.1607">            for (Chain seqResChain : seqResChains){</a>
+<span class="sourceLineNo">1608</span><a id="line.1608"></a>
+<span class="sourceLineNo">1609</span><a id="line.1609">                // this extracts the matching atom chain from atomList</a>
+<span class="sourceLineNo">1610</span><a id="line.1610">                Chain atomChain = SeqRes2AtomAligner.getMatchingAtomRes(seqResChain, atomList, true);</a>
+<span class="sourceLineNo">1611</span><a id="line.1611"></a>
+<span class="sourceLineNo">1612</span><a id="line.1612">                if (atomChain == null) {</a>
+<span class="sourceLineNo">1613</span><a id="line.1613">                    // most likely there's no observed residues at all for the seqres chain: can't map</a>
+<span class="sourceLineNo">1614</span><a id="line.1614">                    // e.g. 3zyb: chains with asym_id L,M,N,O,P have no observed residues</a>
+<span class="sourceLineNo">1615</span><a id="line.1615">                    logger.info("Could not map SEQRES chain with asym_id={} to any ATOM chain. Most likely there's " +</a>
+<span class="sourceLineNo">1616</span><a id="line.1616">                            "no observed residues in the chain.", seqResChain.getId());</a>
+<span class="sourceLineNo">1617</span><a id="line.1617">                    continue;</a>
+<span class="sourceLineNo">1618</span><a id="line.1618">                }</a>
+<span class="sourceLineNo">1619</span><a id="line.1619"></a>
+<span class="sourceLineNo">1620</span><a id="line.1620">                //map the atoms to the seqres...</a>
+<span class="sourceLineNo">1621</span><a id="line.1621"></a>
+<span class="sourceLineNo">1622</span><a id="line.1622">                // we need to first clone the seqres so that they stay independent for different models</a>
+<span class="sourceLineNo">1623</span><a id="line.1623">                List&lt;Group&gt; seqResGroups = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1624</span><a id="line.1624">                for (int i = 0; i &lt; seqResChain.getAtomGroups().size(); i++) {</a>
+<span class="sourceLineNo">1625</span><a id="line.1625">                    seqResGroups.add((Group)seqResChain.getAtomGroups().get(i).clone());</a>
+<span class="sourceLineNo">1626</span><a id="line.1626">                }</a>
+<span class="sourceLineNo">1627</span><a id="line.1627"></a>
+<span class="sourceLineNo">1628</span><a id="line.1628">                for (int seqResPos = 0 ; seqResPos &lt; seqResGroups.size(); seqResPos++) {</a>
+<span class="sourceLineNo">1629</span><a id="line.1629">                    Group seqresG = seqResGroups.get(seqResPos);</a>
+<span class="sourceLineNo">1630</span><a id="line.1630">                    boolean found = false;</a>
+<span class="sourceLineNo">1631</span><a id="line.1631">                    for (Group atomG : atomChain.getAtomGroups()) {</a>
+<span class="sourceLineNo">1632</span><a id="line.1632"></a>
+<span class="sourceLineNo">1633</span><a id="line.1633">                        int internalNr = getInternalNr(atomG);</a>
+<span class="sourceLineNo">1634</span><a id="line.1634"></a>
+<span class="sourceLineNo">1635</span><a id="line.1635">                        if (seqresG.getResidueNumber().getSeqNum() == internalNr) {</a>
+<span class="sourceLineNo">1636</span><a id="line.1636">                            seqResGroups.set(seqResPos, atomG);</a>
+<span class="sourceLineNo">1637</span><a id="line.1637">                            found = true;</a>
+<span class="sourceLineNo">1638</span><a id="line.1638">                            break;</a>
+<span class="sourceLineNo">1639</span><a id="line.1639">                        }</a>
+<span class="sourceLineNo">1640</span><a id="line.1640">                    }</a>
+<span class="sourceLineNo">1641</span><a id="line.1641"></a>
+<span class="sourceLineNo">1642</span><a id="line.1642">                    if (!found)</a>
+<span class="sourceLineNo">1643</span><a id="line.1643">                        // so far the residue number has tracked internal numbering.</a>
+<span class="sourceLineNo">1644</span><a id="line.1644">                        // however there are no atom records, as such this can't be a PDB residue number...</a>
+<span class="sourceLineNo">1645</span><a id="line.1645">                        seqresG.setResidueNumber(null);</a>
+<span class="sourceLineNo">1646</span><a id="line.1646">                }</a>
+<span class="sourceLineNo">1647</span><a id="line.1647">                atomChain.setSeqResGroups(seqResGroups);</a>
+<span class="sourceLineNo">1648</span><a id="line.1648">            }</a>
+<span class="sourceLineNo">1649</span><a id="line.1649">        }</a>
+<span class="sourceLineNo">1650</span><a id="line.1650">    }</a>
+<span class="sourceLineNo">1651</span><a id="line.1651"></a>
+<span class="sourceLineNo">1652</span><a id="line.1652">    private int getInternalNr(Group atomG) {</a>
+<span class="sourceLineNo">1653</span><a id="line.1653">        if (atomG.getType().equals(GroupType.AMINOACID)) {</a>
+<span class="sourceLineNo">1654</span><a id="line.1654">            AminoAcidImpl aa = (AminoAcidImpl) atomG;</a>
+<span class="sourceLineNo">1655</span><a id="line.1655">            return (int) aa.getId();</a>
+<span class="sourceLineNo">1656</span><a id="line.1656">        } else if (atomG.getType().equals(GroupType.NUCLEOTIDE)) {</a>
+<span class="sourceLineNo">1657</span><a id="line.1657">            NucleotideImpl nu = (NucleotideImpl) atomG;</a>
+<span class="sourceLineNo">1658</span><a id="line.1658">            return (int) nu.getId();</a>
+<span class="sourceLineNo">1659</span><a id="line.1659">        } else {</a>
+<span class="sourceLineNo">1660</span><a id="line.1660">            HetatomImpl he = (HetatomImpl) atomG;</a>
+<span class="sourceLineNo">1661</span><a id="line.1661">            return (int) he.getId();</a>
+<span class="sourceLineNo">1662</span><a id="line.1662">        }</a>
+<span class="sourceLineNo">1663</span><a id="line.1663">    }</a>
+<span class="sourceLineNo">1664</span><a id="line.1664"></a>
+<span class="sourceLineNo">1665</span><a id="line.1665">    private void linkEntities() {</a>
+<span class="sourceLineNo">1666</span><a id="line.1666">        for (List&lt;Chain&gt; allModel : allModels) {</a>
+<span class="sourceLineNo">1667</span><a id="line.1667">            for (Chain chain : allModel) {</a>
+<span class="sourceLineNo">1668</span><a id="line.1668">                //logger.info("linking entities for " + chain.getId() + " "  + chain.getName());</a>
+<span class="sourceLineNo">1669</span><a id="line.1669">                String entityId = asymId2entityId.get(chain.getId());</a>
+<span class="sourceLineNo">1670</span><a id="line.1670"></a>
+<span class="sourceLineNo">1671</span><a id="line.1671">                if (entityId == null) {</a>
+<span class="sourceLineNo">1672</span><a id="line.1672">                    // this can happen for instance if the cif file didn't have _struct_asym category at all</a>
+<span class="sourceLineNo">1673</span><a id="line.1673">                    // and thus we have no asymId2entityId mapping at all</a>
+<span class="sourceLineNo">1674</span><a id="line.1674">                    logger.info("No entity id could be found for chain {}", chain.getId());</a>
+<span class="sourceLineNo">1675</span><a id="line.1675">                    continue;</a>
+<span class="sourceLineNo">1676</span><a id="line.1676">                }</a>
+<span class="sourceLineNo">1677</span><a id="line.1677"></a>
+<span class="sourceLineNo">1678</span><a id="line.1678">                int eId = Integer.parseInt(entityId);</a>
+<span class="sourceLineNo">1679</span><a id="line.1679"></a>
+<span class="sourceLineNo">1680</span><a id="line.1680">                // Entities are not added for non-polymeric entities, if a chain is non-polymeric its entity won't be found.</a>
+<span class="sourceLineNo">1681</span><a id="line.1681">                // TODO: add all entities and unique compounds and add methods to directly get polymer or non-polymer</a>
+<span class="sourceLineNo">1682</span><a id="line.1682">                // asyms (chains).  Either create a unique StructureImpl or modify existing for a better representation of the</a>
+<span class="sourceLineNo">1683</span><a id="line.1683">                // mmCIF internal data structures but is compatible with Structure interface.</a>
+<span class="sourceLineNo">1684</span><a id="line.1684">                // Some examples of PDB entries with this kind of problem:</a>
+<span class="sourceLineNo">1685</span><a id="line.1685">                //   - 2uub: asym_id X, chainName Z, entity_id 24: fully non-polymeric but still with its own chainName</a>
+<span class="sourceLineNo">1686</span><a id="line.1686">                //   - 3o6j: asym_id K, chainName Z, entity_id 6 : a single water molecule</a>
+<span class="sourceLineNo">1687</span><a id="line.1687">                //   - 1dz9: asym_id K, chainName K, entity_id 6 : a potassium ion alone</a>
+<span class="sourceLineNo">1688</span><a id="line.1688"></a>
+<span class="sourceLineNo">1689</span><a id="line.1689">                EntityInfo entityInfo = structure.getEntityById(eId);</a>
+<span class="sourceLineNo">1690</span><a id="line.1690">                if (entityInfo == null) {</a>
+<span class="sourceLineNo">1691</span><a id="line.1691">                    // Supports the case where the only chain members were from non-polymeric entity that is missing.</a>
+<span class="sourceLineNo">1692</span><a id="line.1692">                    // Solved by creating a new Compound(entity) to which this chain will belong.</a>
+<span class="sourceLineNo">1693</span><a id="line.1693">                    logger.info("Could not find an Entity for entity_id {}, for chain id {}, creating a new Entity.",</a>
+<span class="sourceLineNo">1694</span><a id="line.1694">                            eId, chain.getId());</a>
+<span class="sourceLineNo">1695</span><a id="line.1695">                    entityInfo = new EntityInfo();</a>
+<span class="sourceLineNo">1696</span><a id="line.1696">                    entityInfo.setMolId(eId);</a>
+<span class="sourceLineNo">1697</span><a id="line.1697">                    entityInfo.addChain(chain);</a>
+<span class="sourceLineNo">1698</span><a id="line.1698">                    if (chain.isWaterOnly()) {</a>
+<span class="sourceLineNo">1699</span><a id="line.1699">                        entityInfo.setType(EntityType.WATER);</a>
+<span class="sourceLineNo">1700</span><a id="line.1700">                    } else {</a>
+<span class="sourceLineNo">1701</span><a id="line.1701">                        entityInfo.setType(EntityType.NONPOLYMER);</a>
+<span class="sourceLineNo">1702</span><a id="line.1702">                    }</a>
+<span class="sourceLineNo">1703</span><a id="line.1703">                    chain.setEntityInfo(entityInfo);</a>
+<span class="sourceLineNo">1704</span><a id="line.1704">                    structure.addEntityInfo(entityInfo);</a>
+<span class="sourceLineNo">1705</span><a id="line.1705">                } else {</a>
+<span class="sourceLineNo">1706</span><a id="line.1706">                    logger.debug("Adding chain with chain id {} (auth id {}) to Entity with entity_id {}",</a>
+<span class="sourceLineNo">1707</span><a id="line.1707">                            chain.getId(), chain.getName(), eId);</a>
+<span class="sourceLineNo">1708</span><a id="line.1708">                    entityInfo.addChain(chain);</a>
+<span class="sourceLineNo">1709</span><a id="line.1709">                    chain.setEntityInfo(entityInfo);</a>
+<span class="sourceLineNo">1710</span><a id="line.1710">                }</a>
+<span class="sourceLineNo">1711</span><a id="line.1711"></a>
+<span class="sourceLineNo">1712</span><a id="line.1712">            }</a>
+<span class="sourceLineNo">1713</span><a id="line.1713"></a>
+<span class="sourceLineNo">1714</span><a id="line.1714">        }</a>
+<span class="sourceLineNo">1715</span><a id="line.1715"></a>
+<span class="sourceLineNo">1716</span><a id="line.1716">        // if no entity information was present in file we then go and find the entities heuristically with EntityFinder</a>
+<span class="sourceLineNo">1717</span><a id="line.1717">        List&lt;EntityInfo&gt; entityInfos = structure.getEntityInfos();</a>
+<span class="sourceLineNo">1718</span><a id="line.1718">        if (entityInfos == null || entityInfos.isEmpty()) {</a>
+<span class="sourceLineNo">1719</span><a id="line.1719">            List&lt;List&lt;Chain&gt;&gt; polyModels = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1720</span><a id="line.1720">            List&lt;List&lt;Chain&gt;&gt; nonPolyModels = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1721</span><a id="line.1721">            List&lt;List&lt;Chain&gt;&gt; waterModels = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1722</span><a id="line.1722"></a>
+<span class="sourceLineNo">1723</span><a id="line.1723">            for (List&lt;Chain&gt; model : allModels) {</a>
+<span class="sourceLineNo">1724</span><a id="line.1724">                List&lt;Chain&gt; polyChains = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1725</span><a id="line.1725">                List&lt;Chain&gt; nonPolyChains = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1726</span><a id="line.1726">                List&lt;Chain&gt; waterChains = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1727</span><a id="line.1727"></a>
+<span class="sourceLineNo">1728</span><a id="line.1728">                polyModels.add(polyChains);</a>
+<span class="sourceLineNo">1729</span><a id="line.1729">                nonPolyModels.add(nonPolyChains);</a>
+<span class="sourceLineNo">1730</span><a id="line.1730">                waterModels.add(waterChains);</a>
+<span class="sourceLineNo">1731</span><a id="line.1731"></a>
+<span class="sourceLineNo">1732</span><a id="line.1732">                for (Chain chain : model) {</a>
+<span class="sourceLineNo">1733</span><a id="line.1733">                    // we only have entities for polymeric chains, all others are ignored for assigning entities</a>
+<span class="sourceLineNo">1734</span><a id="line.1734">                    if (chain.isWaterOnly()) {</a>
+<span class="sourceLineNo">1735</span><a id="line.1735">                        waterChains.add(chain);</a>
+<span class="sourceLineNo">1736</span><a id="line.1736">                    } else if (chain.isPureNonPolymer()) {</a>
+<span class="sourceLineNo">1737</span><a id="line.1737">                        nonPolyChains.add(chain);</a>
+<span class="sourceLineNo">1738</span><a id="line.1738">                    } else {</a>
+<span class="sourceLineNo">1739</span><a id="line.1739">                        polyChains.add(chain);</a>
+<span class="sourceLineNo">1740</span><a id="line.1740">                    }</a>
+<span class="sourceLineNo">1741</span><a id="line.1741">                }</a>
+<span class="sourceLineNo">1742</span><a id="line.1742">            }</a>
+<span class="sourceLineNo">1743</span><a id="line.1743"></a>
+<span class="sourceLineNo">1744</span><a id="line.1744">            entityInfos = EntityFinder.findPolyEntities(polyModels);</a>
+<span class="sourceLineNo">1745</span><a id="line.1745">            EntityFinder.createPurelyNonPolyEntities(nonPolyModels, waterModels, entityInfos);</a>
+<span class="sourceLineNo">1746</span><a id="line.1746"></a>
+<span class="sourceLineNo">1747</span><a id="line.1747">            structure.setEntityInfos(entityInfos);</a>
+<span class="sourceLineNo">1748</span><a id="line.1748">        }</a>
+<span class="sourceLineNo">1749</span><a id="line.1749"></a>
+<span class="sourceLineNo">1750</span><a id="line.1750">        // final sanity check: it can happen that from the annotated entities some are not linked to any chains</a>
+<span class="sourceLineNo">1751</span><a id="line.1751">        // e.g. 3s26: a sugar entity does not have any chains associated to it (it seems to be happening with many sugar compounds)</a>
+<span class="sourceLineNo">1752</span><a id="line.1752">        // we simply log it, this can sign some other problems if the entities are used down the line</a>
+<span class="sourceLineNo">1753</span><a id="line.1753">        for (EntityInfo e : entityInfos) {</a>
+<span class="sourceLineNo">1754</span><a id="line.1754">            if (e.getChains().isEmpty()) {</a>
+<span class="sourceLineNo">1755</span><a id="line.1755">                logger.info("Entity {} '{}' has no chains associated to it",</a>
+<span class="sourceLineNo">1756</span><a id="line.1756">                        e.getMolId() &lt; 0 ? "with no entity id" : e.getMolId(), e.getDescription());</a>
+<span class="sourceLineNo">1757</span><a id="line.1757">            }</a>
+<span class="sourceLineNo">1758</span><a id="line.1758">        }</a>
+<span class="sourceLineNo">1759</span><a id="line.1759">    }</a>
+<span class="sourceLineNo">1760</span><a id="line.1760"></a>
+<span class="sourceLineNo">1761</span><a id="line.1761">    private void initMaps() {</a>
+<span class="sourceLineNo">1762</span><a id="line.1762">        if (structAsym == null || !structAsym.isDefined() || structAsym.getRowCount() == 0) {</a>
+<span class="sourceLineNo">1763</span><a id="line.1763">            logger.info("No _struct_asym category found in file. No asym id to entity_id mapping will be available");</a>
+<span class="sourceLineNo">1764</span><a id="line.1764">            return;</a>
+<span class="sourceLineNo">1765</span><a id="line.1765">        }</a>
+<span class="sourceLineNo">1766</span><a id="line.1766"></a>
+<span class="sourceLineNo">1767</span><a id="line.1767">        Map&lt;String, List&lt;String&gt;&gt; entityId2asymId = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">1768</span><a id="line.1768">        for (int rowIndex = 0; rowIndex &lt; structAsym.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1769</span><a id="line.1769">            String id = structAsym.getId().get(rowIndex);</a>
+<span class="sourceLineNo">1770</span><a id="line.1770">            String entityId = structAsym.getEntityId().get(rowIndex);</a>
+<span class="sourceLineNo">1771</span><a id="line.1771"></a>
+<span class="sourceLineNo">1772</span><a id="line.1772">            logger.debug("Entity {} matches asym_id: {}", entityId, id);</a>
+<span class="sourceLineNo">1773</span><a id="line.1773"></a>
+<span class="sourceLineNo">1774</span><a id="line.1774">            asymId2entityId.put(id, entityId);</a>
+<span class="sourceLineNo">1775</span><a id="line.1775"></a>
+<span class="sourceLineNo">1776</span><a id="line.1776">            if (entityId2asymId.containsKey(entityId)) {</a>
+<span class="sourceLineNo">1777</span><a id="line.1777">                List&lt;String&gt; asymIds = entityId2asymId.get(entityId);</a>
+<span class="sourceLineNo">1778</span><a id="line.1778">                asymIds.add(id);</a>
+<span class="sourceLineNo">1779</span><a id="line.1779">            } else {</a>
+<span class="sourceLineNo">1780</span><a id="line.1780">                List&lt;String&gt; asymIds = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">1781</span><a id="line.1781">                asymIds.add(id);</a>
+<span class="sourceLineNo">1782</span><a id="line.1782">                entityId2asymId.put(entityId, asymIds);</a>
+<span class="sourceLineNo">1783</span><a id="line.1783">            }</a>
+<span class="sourceLineNo">1784</span><a id="line.1784">        }</a>
+<span class="sourceLineNo">1785</span><a id="line.1785"></a>
+<span class="sourceLineNo">1786</span><a id="line.1786">        if (entityPoly == null || !entityPoly.isDefined() || entityPoly.getRowCount() == 0) {</a>
+<span class="sourceLineNo">1787</span><a id="line.1787">            logger.info("No _entity_poly category found in file. No asym id to author id mapping will be available " +</a>
+<span class="sourceLineNo">1788</span><a id="line.1788">                    "for header only parsing");</a>
+<span class="sourceLineNo">1789</span><a id="line.1789">            return;</a>
+<span class="sourceLineNo">1790</span><a id="line.1790">        }</a>
+<span class="sourceLineNo">1791</span><a id="line.1791"></a>
+<span class="sourceLineNo">1792</span><a id="line.1792">        for (int rowIndex = 0; rowIndex &lt; entityPoly.getRowCount(); rowIndex++) {</a>
+<span class="sourceLineNo">1793</span><a id="line.1793">            if (!entityPoly.getPdbxStrandId().isDefined()) {</a>
+<span class="sourceLineNo">1794</span><a id="line.1794">                logger.info("_entity_poly.pdbx_strand_id is null for entity {}. Won't be able to map asym ids to " +</a>
+<span class="sourceLineNo">1795</span><a id="line.1795">                        "author ids for this entity.", entityPoly.getEntityId().get(rowIndex));</a>
+<span class="sourceLineNo">1796</span><a id="line.1796">                break;</a>
+<span class="sourceLineNo">1797</span><a id="line.1797">            }</a>
+<span class="sourceLineNo">1798</span><a id="line.1798"></a>
+<span class="sourceLineNo">1799</span><a id="line.1799">            String[] chainNames = entityPoly.getPdbxStrandId().get(rowIndex).split(",");</a>
+<span class="sourceLineNo">1800</span><a id="line.1800">            List&lt;String&gt; asymIds = entityId2asymId.get(entityPoly.getEntityId().get(rowIndex));</a>
+<span class="sourceLineNo">1801</span><a id="line.1801">            if (chainNames.length != asymIds.size()) {</a>
+<span class="sourceLineNo">1802</span><a id="line.1802">                logger.warn("The list of asym ids (from _struct_asym) and the list of author ids (from _entity_poly) " +</a>
+<span class="sourceLineNo">1803</span><a id="line.1803">                        "for entity {} have different lengths! Can't provide a mapping from asym ids to author chain " +</a>
+<span class="sourceLineNo">1804</span><a id="line.1804">                        "ids", entityPoly.getEntityId().get(rowIndex));</a>
+<span class="sourceLineNo">1805</span><a id="line.1805">                break;</a>
+<span class="sourceLineNo">1806</span><a id="line.1806">            }</a>
+<span class="sourceLineNo">1807</span><a id="line.1807"></a>
+<span class="sourceLineNo">1808</span><a id="line.1808">            for (int i = 0; i &lt; chainNames.length; i++) {</a>
+<span class="sourceLineNo">1809</span><a id="line.1809">                asymId2authorId.put(asymIds.get(i), chainNames[i]);</a>
+<span class="sourceLineNo">1810</span><a id="line.1810">            }</a>
+<span class="sourceLineNo">1811</span><a id="line.1811">        }</a>
+<span class="sourceLineNo">1812</span><a id="line.1812">    }</a>
+<span class="sourceLineNo">1813</span><a id="line.1813"></a>
+<span class="sourceLineNo">1814</span><a id="line.1814">    @Override</a>
+<span class="sourceLineNo">1815</span><a id="line.1815">    public Structure getContainer() {</a>
+<span class="sourceLineNo">1816</span><a id="line.1816">        return structure;</a>
+<span class="sourceLineNo">1817</span><a id="line.1817">    }</a>
+<span class="sourceLineNo">1818</span><a id="line.1818">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

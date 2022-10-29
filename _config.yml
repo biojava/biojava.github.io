@@ -68,7 +68,7 @@ kramdown:
 
 # Release settings
 release:
- version: 6.0.0
+ version: 6.1.0
  legacy: 1.9.1
 
 collections:

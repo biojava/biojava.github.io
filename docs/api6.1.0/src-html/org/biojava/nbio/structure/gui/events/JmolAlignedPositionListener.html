@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * created at May 28, 2008</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.nbio.structure.gui.events;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.Chain;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.Group;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.align.StructurePairAligner;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.gui.BiojavaJmol;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.structure.gui.util.AlignedPosition;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">public class JmolAlignedPositionListener implements AlignmentPositionListener{</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">        BiojavaJmol parent;</a>
+<span class="sourceLineNo">037</span><a id="line.37">        Atom[] ca1;</a>
+<span class="sourceLineNo">038</span><a id="line.38">        Atom[] ca2;</a>
+<span class="sourceLineNo">039</span><a id="line.39">        StructurePairAligner structurePairAligner;</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">        public JmolAlignedPositionListener(BiojavaJmol parent, StructurePairAligner alig){</a>
+<span class="sourceLineNo">042</span><a id="line.42">                this.parent = parent;</a>
+<span class="sourceLineNo">043</span><a id="line.43">                structurePairAligner = alig;</a>
+<span class="sourceLineNo">044</span><a id="line.44">        }</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">        public void setStructure1(Structure structure1) {</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">                ca1 = structurePairAligner.getAlignmentAtoms(structure1);</a>
+<span class="sourceLineNo">051</span><a id="line.51">        }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        public void setStructure2(Structure structure2) {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">                ca2 = structurePairAligner.getAlignmentAtoms(structure2);</a>
+<span class="sourceLineNo">058</span><a id="line.58">        }</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        @Override</a>
+<span class="sourceLineNo">061</span><a id="line.61">        public void mouseOverPosition(AlignedPosition p) {</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                //System.out.println("mouseoverposition " + p);</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">                int p1 = p.getPos1();</a>
+<span class="sourceLineNo">066</span><a id="line.66">                int p2 = p.getPos2();</a>
+<span class="sourceLineNo">067</span><a id="line.67">                String s = "select ";</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">                if ((p1 &gt; ca1.length) || (p2 &gt; ca2.length)){</a>
+<span class="sourceLineNo">070</span><a id="line.70">                        System.err.println("requsting atom out of bounds! " );</a>
+<span class="sourceLineNo">071</span><a id="line.71">                        return;</a>
+<span class="sourceLineNo">072</span><a id="line.72">                }</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">                String pdbpos1 ="";</a>
+<span class="sourceLineNo">075</span><a id="line.75">                String pdbpos2 = "";</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">                if ( p1 &gt;-1) {</a>
+<span class="sourceLineNo">078</span><a id="line.78">                        Atom a = ca1[p1];</a>
+<span class="sourceLineNo">079</span><a id="line.79">                        Group parent = a.getGroup();</a>
+<span class="sourceLineNo">080</span><a id="line.80">                        Chain c = parent.getChain();</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        pdbpos1 = parent.getResidueNumber().toString();</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        //System.out.printlng"chainid 1 is &gt;"+c.getName()+"&lt;");</a>
+<span class="sourceLineNo">083</span><a id="line.83">                        if (! c.getId().equals( " ")) {</a>
+<span class="sourceLineNo">084</span><a id="line.84">                                pdbpos1 += ":" + c.getId();</a>
+<span class="sourceLineNo">085</span><a id="line.85">                        }</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">                        //System.out.println("1:" + parent);</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        s += pdbpos1 +"/1";</a>
+<span class="sourceLineNo">090</span><a id="line.90">                }</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">                if ( p2 &gt;-1) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                        Atom a = ca2[p2];</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        Group parent = a.getGroup();</a>
+<span class="sourceLineNo">095</span><a id="line.95">                        Chain c = parent.getChain();</a>
+<span class="sourceLineNo">096</span><a id="line.96">                        pdbpos2 = parent.getResidueNumber().toString();</a>
+<span class="sourceLineNo">097</span><a id="line.97">                        //System.out.println("2:" + parent);</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        //System.out.println("chainid 2 is &gt;"+c.getName()+"&lt;");</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        if (! c.getId().equals( " ")) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                                pdbpos2 += ":" + c.getId();</a>
+<span class="sourceLineNo">101</span><a id="line.101">                        }</a>
+<span class="sourceLineNo">102</span><a id="line.102">                        if ( p1 &gt; -1)</a>
+<span class="sourceLineNo">103</span><a id="line.103">                                s +=",";</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        s += pdbpos2 +"/2";</a>
+<span class="sourceLineNo">105</span><a id="line.105">                }</a>
+<span class="sourceLineNo">106</span><a id="line.106">                s+="; set display selected;";</a>
+<span class="sourceLineNo">107</span><a id="line.107">                //System.out.println(s);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                parent.evalString(s);</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">        }</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">        @Override</a>
+<span class="sourceLineNo">114</span><a id="line.114">        public void positionSelected(AlignedPosition p) {</a>
+<span class="sourceLineNo">115</span><a id="line.115">                mouseOverPosition(p);</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">        }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">        @Override</a>
+<span class="sourceLineNo">120</span><a id="line.120">        public void rangeSelected(AlignedPosition start, AlignedPosition end) {</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">        }</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">        @Override</a>
+<span class="sourceLineNo">126</span><a id="line.126">        public void selectionLocked() {</a>
+<span class="sourceLineNo">127</span><a id="line.127">                // TODO Auto-generated method stub</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">        }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">        @Override</a>
+<span class="sourceLineNo">132</span><a id="line.132">        public void selectionUnlocked() {</a>
+<span class="sourceLineNo">133</span><a id="line.133">                // TODO Auto-generated method stub</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">        }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138"></a>
+<span class="sourceLineNo">139</span><a id="line.139">        @Override</a>
+<span class="sourceLineNo">140</span><a id="line.140">        public void toggleSelection(AlignedPosition p) {</a>
+<span class="sourceLineNo">141</span><a id="line.141">                // TODO Auto-generated method stub</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

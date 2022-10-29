@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.biojava.nbio.structure.contact;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import org.biojava.nbio.structure.Calc;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import org.biojava.nbio.structure.Chain;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import org.biojava.nbio.structure.Group;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import org.biojava.nbio.structure.Structure;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import org.biojava.nbio.structure.StructureTools;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import org.biojava.nbio.structure.xtal.CrystalTransform;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import org.biojava.nbio.structure.xtal.SpaceGroup;</a>
+<span class="sourceLineNo">011</span><a id="line.11"></a>
+<span class="sourceLineNo">012</span><a id="line.12">import javax.vecmath.Point3d;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import java.util.ArrayList;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import java.util.Collection;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import java.util.List;</a>
+<span class="sourceLineNo">016</span><a id="line.16"></a>
+<span class="sourceLineNo">017</span><a id="line.17">/**</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * A class containing methods to find interfaces in a given structure.</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * @author Jose Duarte</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * @since 5.4.0</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22">public class InterfaceFinder {</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">    public static final double DEFAULT_CONTACT_CUTOFF = 6;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">    private static final CrystalTransform IDENTITY_TRANSFORM = new CrystalTransform((SpaceGroup) null);</a>
+<span class="sourceLineNo">027</span><a id="line.27">    private static final boolean INCLUDE_HETATOMS = true;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">    private List&lt;Chain&gt; polyChains;</a>
+<span class="sourceLineNo">030</span><a id="line.30">    private double cutoff;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">    private BoundingBox[] boundingBoxes;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">    public InterfaceFinder(Structure structure) {</a>
+<span class="sourceLineNo">035</span><a id="line.35">        this.polyChains = new ArrayList&lt;&gt;(structure.getPolyChains());</a>
+<span class="sourceLineNo">036</span><a id="line.36">        trimPolyChains();</a>
+<span class="sourceLineNo">037</span><a id="line.37">        this.cutoff = DEFAULT_CONTACT_CUTOFF;</a>
+<span class="sourceLineNo">038</span><a id="line.38">    }</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">    /**</a>
+<span class="sourceLineNo">041</span><a id="line.41">     * Remove polymer chains with 0 atoms.</a>
+<span class="sourceLineNo">042</span><a id="line.42">     */</a>
+<span class="sourceLineNo">043</span><a id="line.43">    private void trimPolyChains() {</a>
+<span class="sourceLineNo">044</span><a id="line.44">        polyChains.removeIf(chain -&gt; {</a>
+<span class="sourceLineNo">045</span><a id="line.45">            int count = chain.getAtomGroups().stream().map(Group::getAtoms).mapToInt(Collection::size).sum();</a>
+<span class="sourceLineNo">046</span><a id="line.46">            return count == 0;</a>
+<span class="sourceLineNo">047</span><a id="line.47">        });</a>
+<span class="sourceLineNo">048</span><a id="line.48">    }</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">    /**</a>
+<span class="sourceLineNo">051</span><a id="line.51">     * Set the contact distance cutoff.</a>
+<span class="sourceLineNo">052</span><a id="line.52">     * @param cutoff the distance value in Angstroms</a>
+<span class="sourceLineNo">053</span><a id="line.53">     */</a>
+<span class="sourceLineNo">054</span><a id="line.54">    public void setCutoff(double cutoff) {</a>
+<span class="sourceLineNo">055</span><a id="line.55">        this.cutoff = cutoff;</a>
+<span class="sourceLineNo">056</span><a id="line.56">    }</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">    /**</a>
+<span class="sourceLineNo">059</span><a id="line.59">     * Find all inter polymer-chain interfaces in the structure.</a>
+<span class="sourceLineNo">060</span><a id="line.60">     * Two chains will be considered in contact if at least a pair of atoms (one from each chain) is within the</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * contact cutoff.</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * @return the list of all interfaces</a>
+<span class="sourceLineNo">063</span><a id="line.63">     */</a>
+<span class="sourceLineNo">064</span><a id="line.64">    public StructureInterfaceList getAllInterfaces() {</a>
+<span class="sourceLineNo">065</span><a id="line.65">        initBoundingBoxes();</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">        StructureInterfaceList list = new StructureInterfaceList();</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">        for (int i = 0; i&lt;polyChains.size(); i++) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">            for (int j = i + 1; j&lt;polyChains.size(); j++) {</a>
+<span class="sourceLineNo">071</span><a id="line.71">                if (! boundingBoxes[i].overlaps(boundingBoxes[j], cutoff)) {</a>
+<span class="sourceLineNo">072</span><a id="line.72">                    continue;</a>
+<span class="sourceLineNo">073</span><a id="line.73">                }</a>
+<span class="sourceLineNo">074</span><a id="line.74">                StructureInterface interf = calcInterface(polyChains.get(i), polyChains.get(j));</a>
+<span class="sourceLineNo">075</span><a id="line.75">                if (interf!=null) {</a>
+<span class="sourceLineNo">076</span><a id="line.76">                    list.add(interf);</a>
+<span class="sourceLineNo">077</span><a id="line.77">                }</a>
+<span class="sourceLineNo">078</span><a id="line.78">            }</a>
+<span class="sourceLineNo">079</span><a id="line.79">        }</a>
+<span class="sourceLineNo">080</span><a id="line.80">        return list;</a>
+<span class="sourceLineNo">081</span><a id="line.81">    }</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">    private void initBoundingBoxes() {</a>
+<span class="sourceLineNo">084</span><a id="line.84">        boundingBoxes = new BoundingBox[polyChains.size()];</a>
+<span class="sourceLineNo">085</span><a id="line.85">        for (int i = 0; i&lt;polyChains.size(); i++) {</a>
+<span class="sourceLineNo">086</span><a id="line.86">            Atom[] atoms = StructureTools.getAllNonHAtomArray(polyChains.get(i), INCLUDE_HETATOMS);</a>
+<span class="sourceLineNo">087</span><a id="line.87">            Point3d[] points = Calc.atomsToPoints(atoms);</a>
+<span class="sourceLineNo">088</span><a id="line.88">            BoundingBox bb = new BoundingBox(points);</a>
+<span class="sourceLineNo">089</span><a id="line.89">            boundingBoxes[i] = bb;</a>
+<span class="sourceLineNo">090</span><a id="line.90">        }</a>
+<span class="sourceLineNo">091</span><a id="line.91">    }</a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">    private StructureInterface calcInterface(Chain chain1, Chain chain2) {</a>
+<span class="sourceLineNo">094</span><a id="line.94">        AtomContactSet graph = StructureTools.getAtomsInContact(chain1, chain2, cutoff, INCLUDE_HETATOMS);</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        StructureInterface interf = null;</a>
+<span class="sourceLineNo">097</span><a id="line.97">        if (graph.size()&gt;0) {</a>
+<span class="sourceLineNo">098</span><a id="line.98">            interf = new StructureInterface(</a>
+<span class="sourceLineNo">099</span><a id="line.99">                    StructureTools.getAllNonHAtomArray(chain1, INCLUDE_HETATOMS), StructureTools.getAllNonHAtomArray(chain2, INCLUDE_HETATOMS),</a>
+<span class="sourceLineNo">100</span><a id="line.100">                    chain1.getName(), chain2.getName(),</a>
+<span class="sourceLineNo">101</span><a id="line.101">                    graph,</a>
+<span class="sourceLineNo">102</span><a id="line.102">                    IDENTITY_TRANSFORM, IDENTITY_TRANSFORM);</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        return interf;</a>
+<span class="sourceLineNo">106</span><a id="line.106">    }</a>
+<span class="sourceLineNo">107</span><a id="line.107">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

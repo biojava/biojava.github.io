@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * created at 28 Jan 2014</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * Author: Andreas Prlic</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">package org.biojava.nbio.genome.parsers.genename;</a>
+<span class="sourceLineNo">025</span><a id="line.25"></a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.util.InputStreamProvider;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.io.IOException;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.io.InputStream;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.net.URL;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.ArrayList;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.List;</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">/**</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * Parses a file from the www.genenames.org website that contains a mapping of human gene names to other databases</a>
+<span class="sourceLineNo">040</span><a id="line.40"> *</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * @author Andreas Prlic</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public class GeneNamesParser {</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        private static final Logger logger = LoggerFactory.getLogger(GeneNamesParser.class);</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">        public static final String DEFAULT_GENENAMES_URL = "https://www.genenames.org/cgi-bin/download?title=HGNC+output+data&amp;hgnc_dbtag=on&amp;col=gd_app_sym&amp;col=gd_app_name&amp;col=gd_status&amp;col=gd_prev_sym&amp;col=gd_prev_name&amp;col=gd_aliases&amp;col=gd_pub_chrom_map&amp;col=gd_pub_acc_ids&amp;col=md_mim_id&amp;col=gd_pub_refseq_ids&amp;col=md_ensembl_id&amp;col=md_prot_id&amp;col=gd_hgnc_id" +</a>
+<span class="sourceLineNo">049</span><a id="line.49">                         "&amp;status=Approved&amp;status_opt=2&amp;where=((gd_pub_chrom_map%20not%20like%20%27%patch%%27%20and%20gd_pub_chrom_map%20not%20like%20%27%ALT_REF%%27)%20or%20gd_pub_chrom_map%20IS%20NULL)%20and%20gd_locus_group%20%3d%20%27protein-coding%20gene%27&amp;order_by=gd_app_sym_sort&amp;format=text&amp;limit=&amp;submit=submit&amp;.cgifields=&amp;.cgifields=chr&amp;.cgifields=status&amp;.cgifields=hgnc_dbtag";</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">        /** parses a file from the genenames website</a>
+<span class="sourceLineNo">052</span><a id="line.52">         *</a>
+<span class="sourceLineNo">053</span><a id="line.53">         * @param args</a>
+<span class="sourceLineNo">054</span><a id="line.54">         */</a>
+<span class="sourceLineNo">055</span><a id="line.55">        public static void main(String[] args) {</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">                try {</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">                        List&lt;GeneName&gt; geneNames = getGeneNames();</a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">                        logger.info("got {} gene names", geneNames.size());</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">                        for ( GeneName g : geneNames){</a>
+<span class="sourceLineNo">064</span><a id="line.64">                                if ( g.getApprovedSymbol().equals("FOLH1"))</a>
+<span class="sourceLineNo">065</span><a id="line.65">                                        logger.info("Gene Name: {}", g);</a>
+<span class="sourceLineNo">066</span><a id="line.66">                        }</a>
+<span class="sourceLineNo">067</span><a id="line.67">                        // and returns a list of beans that contains key-value pairs for each gene name</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">                } catch (Exception e) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">                        // TODO Auto-generated catch block</a>
+<span class="sourceLineNo">071</span><a id="line.71">                        logger.error("Exception: ", e);</a>
+<span class="sourceLineNo">072</span><a id="line.72">                }</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">        }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">        public static List&lt;GeneName&gt; getGeneNames() throws IOException{</a>
+<span class="sourceLineNo">078</span><a id="line.78">                URL url = new URL(DEFAULT_GENENAMES_URL);</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">                InputStreamProvider prov = new InputStreamProvider();</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">                InputStream inStream = prov.getInputStream(url);</a>
+<span class="sourceLineNo">083</span><a id="line.83"></a>
+<span class="sourceLineNo">084</span><a id="line.84">                return getGeneNames(inStream);</a>
+<span class="sourceLineNo">085</span><a id="line.85">        }</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        /** Get a list of GeneNames from an input stream.</a>
+<span class="sourceLineNo">088</span><a id="line.88">         *</a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @param inStream</a>
+<span class="sourceLineNo">090</span><a id="line.90">         * @return list of geneNames</a>
+<span class="sourceLineNo">091</span><a id="line.91">         * @throws IOException</a>
+<span class="sourceLineNo">092</span><a id="line.92">         */</a>
+<span class="sourceLineNo">093</span><a id="line.93">        public static List&lt;GeneName&gt; getGeneNames(InputStream inStream) throws IOException{</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">                ArrayList&lt;GeneName&gt; geneNames = new ArrayList&lt;GeneName&gt;();</a>
+<span class="sourceLineNo">096</span><a id="line.96">                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                // skip reading first line (it is the legend)</a>
+<span class="sourceLineNo">099</span><a id="line.99">                String line = reader.readLine();</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">                while ((line = reader.readLine()) != null) {</a>
+<span class="sourceLineNo">102</span><a id="line.102">                        // process line...</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        //System.out.println(Arrays.toString(line.split("\t")));</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">                        GeneName  geneName = getGeneName(line);</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        if ( geneName != null)</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                geneNames.add(geneName);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                //System.out.println(geneName);</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">                }</a>
+<span class="sourceLineNo">111</span><a id="line.111"></a>
+<span class="sourceLineNo">112</span><a id="line.112">                // since this is a large list, let's free up unused space...</a>
+<span class="sourceLineNo">113</span><a id="line.113">                geneNames.trimToSize();</a>
+<span class="sourceLineNo">114</span><a id="line.114">                return geneNames;</a>
+<span class="sourceLineNo">115</span><a id="line.115">        }</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">        private static GeneName getGeneName(String line) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">                // data is in this order:</a>
+<span class="sourceLineNo">119</span><a id="line.119">                //[HGNC ID, Approved Symbol, Approved Name, Status, Previous Symbols,</a>
+<span class="sourceLineNo">120</span><a id="line.120">                // Previous Names, Synonyms, Chromosome, Accession Numbers, RefSeq IDs, UniProt ID(supplied by UniProt)]</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">                if (line == null)</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        return null;</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                String[] s = line.split("\t");</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                if ( s.length != 13) {</a>
+<span class="sourceLineNo">128</span><a id="line.128">                        logger.warn("Line does not contain 13 data items, but {}: {}", s.length, line);</a>
+<span class="sourceLineNo">129</span><a id="line.129">                        logger.warn(line.replaceAll("\t", "|---|"));</a>
+<span class="sourceLineNo">130</span><a id="line.130">                        return null;</a>
+<span class="sourceLineNo">131</span><a id="line.131">                }</a>
+<span class="sourceLineNo">132</span><a id="line.132">                GeneName gn = new GeneName();</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">                gn.setApprovedSymbol(s[0]);</a>
+<span class="sourceLineNo">136</span><a id="line.136">                gn.setApprovedName(s[1]);</a>
+<span class="sourceLineNo">137</span><a id="line.137">                gn.setStatus(s[2]);</a>
+<span class="sourceLineNo">138</span><a id="line.138">                gn.setPreviousSymbols(s[3]);</a>
+<span class="sourceLineNo">139</span><a id="line.139">                gn.setPreviousNames(s[4]);</a>
+<span class="sourceLineNo">140</span><a id="line.140">                gn.setSynonyms(s[5]);</a>
+<span class="sourceLineNo">141</span><a id="line.141">                gn.setChromosome(s[6]);</a>
+<span class="sourceLineNo">142</span><a id="line.142">                gn.setAccessionNr(s[7]);</a>
+<span class="sourceLineNo">143</span><a id="line.143">                gn.setOmimId(s[8]);</a>
+<span class="sourceLineNo">144</span><a id="line.144">                gn.setRefseqIds(s[9]);</a>
+<span class="sourceLineNo">145</span><a id="line.145">                gn.setEnsemblGeneId(s[10]);</a>
+<span class="sourceLineNo">146</span><a id="line.146">                gn.setUniprot(s[11]);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                gn.setHgncId(s[12]);</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">                return gn;</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">        }</a>
+<span class="sourceLineNo">152</span><a id="line.152"></a>
+<span class="sourceLineNo">153</span><a id="line.153">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on DATE</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *</a>
+<span class="sourceLineNo">022</span><a id="line.22"> */</a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.nbio.core.sequence;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.core.exceptions.CompoundNotFoundException;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.sequence.compound.*;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.core.sequence.features.FeatureInterface;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.core.sequence.io.DNASequenceCreator;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.core.sequence.io.FastaReader;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.biojava.nbio.core.sequence.io.PlainFastaHeaderParser;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.biojava.nbio.core.sequence.location.InsdcParser;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.biojava.nbio.core.sequence.location.template.Location;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.biojava.nbio.core.sequence.template.AbstractSequence;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.biojava.nbio.core.sequence.template.CompoundSet;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.biojava.nbio.core.sequence.template.ProxySequenceReader;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.io.IOException;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.io.InputStream;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.net.URL;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import java.util.LinkedHashMap;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import java.util.List;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.biojava.nbio.core.sequence.features.Qualifier;</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">/**</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * The representation of a ProteinSequence</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *</a>
+<span class="sourceLineNo">049</span><a id="line.49"> * @author Scooter Willis</a>
+<span class="sourceLineNo">050</span><a id="line.50"> * @author Paolo Pavan</a>
+<span class="sourceLineNo">051</span><a id="line.51"> */</a>
+<span class="sourceLineNo">052</span><a id="line.52">public class ProteinSequence extends AbstractSequence&lt;AminoAcidCompound&gt; {</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        private final static Logger logger = LoggerFactory.getLogger(ProteinSequence.class);</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        /*</a>
+<span class="sourceLineNo">057</span><a id="line.57">         private ArrayList&lt;FeatureInterface&lt;AbstractSequence&lt;AminoAcidCompound&gt;, AminoAcidCompound&gt;&gt; features</a>
+<span class="sourceLineNo">058</span><a id="line.58">         = new ArrayList&lt;FeatureInterface&lt;AbstractSequence&lt;AminoAcidCompound&gt;, AminoAcidCompound&gt;&gt;();</a>
+<span class="sourceLineNo">059</span><a id="line.59">         private LinkedHashMap&lt;String, ArrayList&lt;FeatureInterface&lt;AbstractSequence&lt;AminoAcidCompound&gt;, AminoAcidCompound&gt;&gt;&gt; groupedFeatures</a>
+<span class="sourceLineNo">060</span><a id="line.60">         = new LinkedHashMap&lt;String, ArrayList&lt;FeatureInterface&lt;AbstractSequence&lt;AminoAcidCompound&gt;, AminoAcidCompound&gt;&gt;&gt;();</a>
+<span class="sourceLineNo">061</span><a id="line.61">         */</a>
+<span class="sourceLineNo">062</span><a id="line.62">        /**</a>
+<span class="sourceLineNo">063</span><a id="line.63">         * Create a protein from a string</a>
+<span class="sourceLineNo">064</span><a id="line.64">         *</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * @param seqString</a>
+<span class="sourceLineNo">066</span><a id="line.66">         * @throws CompoundNotFoundException</a>
+<span class="sourceLineNo">067</span><a id="line.67">         */</a>
+<span class="sourceLineNo">068</span><a id="line.68">        public ProteinSequence(String seqString) throws CompoundNotFoundException {</a>
+<span class="sourceLineNo">069</span><a id="line.69">                this(seqString, AminoAcidCompoundSet.getAminoAcidCompoundSet());</a>
+<span class="sourceLineNo">070</span><a id="line.70">        }</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">        /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * Create a protein from a string with a user defined set of amino acids</a>
+<span class="sourceLineNo">074</span><a id="line.74">         *</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * @param seqString</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * @param compoundSet</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * @throws CompoundNotFoundException</a>
+<span class="sourceLineNo">078</span><a id="line.78">         */</a>
+<span class="sourceLineNo">079</span><a id="line.79">        public ProteinSequence(String seqString, CompoundSet&lt;AminoAcidCompound&gt; compoundSet) throws CompoundNotFoundException {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                super(seqString, compoundSet);</a>
+<span class="sourceLineNo">081</span><a id="line.81">        }</a>
+<span class="sourceLineNo">082</span><a id="line.82"></a>
+<span class="sourceLineNo">083</span><a id="line.83">        /**</a>
+<span class="sourceLineNo">084</span><a id="line.84">         * A protein sequence where the storage of the sequence is somewhere else.</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * Could be loaded from a large Fasta file or via a Uniprot Proxy reader via</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * Uniprot ID</a>
+<span class="sourceLineNo">087</span><a id="line.87">         *</a>
+<span class="sourceLineNo">088</span><a id="line.88">         * @param proxyLoader</a>
+<span class="sourceLineNo">089</span><a id="line.89">         */</a>
+<span class="sourceLineNo">090</span><a id="line.90">        public ProteinSequence(ProxySequenceReader&lt;AminoAcidCompound&gt; proxyLoader) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">                this(proxyLoader, AminoAcidCompoundSet.getAminoAcidCompoundSet());</a>
+<span class="sourceLineNo">092</span><a id="line.92">        }</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">        /**</a>
+<span class="sourceLineNo">095</span><a id="line.95">         * A protein sequence where the storage of the sequence is somewhere else</a>
+<span class="sourceLineNo">096</span><a id="line.96">         * with user defined set of amino acids. Could be loaded from a large Fasta</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * file or via a Uniprot Proxy reader via Uniprot ID</a>
+<span class="sourceLineNo">098</span><a id="line.98">         *</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @param proxyLoader</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * @param compoundSet</a>
+<span class="sourceLineNo">101</span><a id="line.101">         */</a>
+<span class="sourceLineNo">102</span><a id="line.102">        public ProteinSequence(ProxySequenceReader&lt;AminoAcidCompound&gt; proxyLoader, CompoundSet&lt;AminoAcidCompound&gt; compoundSet) {</a>
+<span class="sourceLineNo">103</span><a id="line.103">                super(proxyLoader, compoundSet);</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">                // do protein-specific tasks</a>
+<span class="sourceLineNo">106</span><a id="line.106">                // add source if found</a>
+<span class="sourceLineNo">107</span><a id="line.107">                List&lt;FeatureInterface&lt;AbstractSequence&lt;AminoAcidCompound&gt;, AminoAcidCompound&gt;&gt; CDSFeatures = getFeaturesByType("CDS");</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">                // cases if a protein has more than 1 parent are not supported yet</a>
+<span class="sourceLineNo">110</span><a id="line.110">                if (CDSFeatures.size() == 1) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                        Qualifier codedBy = CDSFeatures.get(0).getQualifiers().get("coded_by").get(0);</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">                        if (codedBy != null) {</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                String codedBySeq = codedBy.getValue();</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">                                InsdcParser parser = new InsdcParser(DataSource.GENBANK);</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                Location location = parser.parse(codedBySeq);</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">                                try {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                        DNASequence dnaSeq = new DNASequence(getSequence(location), DNACompoundSet.getDNACompoundSet());</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                        setParentDNASequence(dnaSeq, location.getStart().getPosition(), location.getEnd().getPosition());</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                } catch (CompoundNotFoundException e) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                        // TODO is there another solution to handle this exception?</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                        logger.error("Could not add 'coded_by' parent DNA location feature, unrecognised compounds found in DNA sequence: {}", e.getMessage());</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                }</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        }</a>
+<span class="sourceLineNo">127</span><a id="line.127">                }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">        }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">        /**</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * A Protein sequence can be stand alone or loaded from a transcript</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * sequence. The design goal is to allow the creation of a Protein sequence</a>
+<span class="sourceLineNo">134</span><a id="line.134">         * from a Uniprot ID or some other Protein ID that based on cross reference</a>
+<span class="sourceLineNo">135</span><a id="line.135">         * you should be able to get the GeneSequence that codes for the protein if</a>
+<span class="sourceLineNo">136</span><a id="line.136">         * the CDS/Gene region is known. From the GeneSequence you should then be</a>
+<span class="sourceLineNo">137</span><a id="line.137">         * able to get the ChromosomeSequence which then allows you explore flaning</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * regions of the gene sequences. The framework is in place to do this but</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * currently hasn't been implement in the reverse direction starting from</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * the Protein sequence.</a>
+<span class="sourceLineNo">141</span><a id="line.141">         *</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @param parentDNASequence</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * @param begin</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @param end</a>
+<span class="sourceLineNo">145</span><a id="line.145">         */</a>
+<span class="sourceLineNo">146</span><a id="line.146">        //TODO - Someone needs to check if this is a bug.  Shouldn't a parentDNASequence be something other then AminoAcid?</a>
+<span class="sourceLineNo">147</span><a id="line.147">        //However, due to the derivation of this class, this is the only possible type argument for this parameter...</a>
+<span class="sourceLineNo">148</span><a id="line.148">        public void setParentDNASequence(AbstractSequence&lt;NucleotideCompound&gt; parentDNASequence, Integer begin, Integer end) {</a>
+<span class="sourceLineNo">149</span><a id="line.149">                this.setParentSequence(parentDNASequence);</a>
+<span class="sourceLineNo">150</span><a id="line.150">                setBioBegin(begin);</a>
+<span class="sourceLineNo">151</span><a id="line.151">                setBioEnd(end);</a>
+<span class="sourceLineNo">152</span><a id="line.152">        }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        private DNASequence getRawParentSequence(String accessId) throws IOException {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                String seqUrlTemplate = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&amp;id=%s&amp;rettype=fasta&amp;retmode=text";</a>
+<span class="sourceLineNo">156</span><a id="line.156">                URL url = new URL(String.format(seqUrlTemplate, accessId));</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">                logger.trace("Getting parent DNA sequence from URL: {}", url.toString());</a>
+<span class="sourceLineNo">159</span><a id="line.159"></a>
+<span class="sourceLineNo">160</span><a id="line.160">                InputStream is = url.openConnection().getInputStream();</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                FastaReader&lt;DNASequence, NucleotideCompound&gt; parentReader</a>
+<span class="sourceLineNo">163</span><a id="line.163">                                = new FastaReader&lt;DNASequence, NucleotideCompound&gt;(is,</a>
+<span class="sourceLineNo">164</span><a id="line.164">                                                new PlainFastaHeaderParser&lt;DNASequence, NucleotideCompound&gt;(),</a>
+<span class="sourceLineNo">165</span><a id="line.165">                                                new DNASequenceCreator(AmbiguityDNACompoundSet.getDNACompoundSet()));</a>
+<span class="sourceLineNo">166</span><a id="line.166">                LinkedHashMap&lt;String, DNASequence&gt; seq = parentReader.process();</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                DNASequence parentSeq = null;</a>
+<span class="sourceLineNo">169</span><a id="line.169">                if (seq.size() == 1) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        parentSeq = seq.values().iterator().next();</a>
+<span class="sourceLineNo">171</span><a id="line.171">                }</a>
+<span class="sourceLineNo">172</span><a id="line.172">                is.close();</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                return parentSeq;</a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        private String getSequence(Location cdna) {</a>
+<span class="sourceLineNo">178</span><a id="line.178">                DNASequence rawParent;</a>
+<span class="sourceLineNo">179</span><a id="line.179">                if (!cdna.isComplex()) {</a>
+<span class="sourceLineNo">180</span><a id="line.180">                        try {</a>
+<span class="sourceLineNo">181</span><a id="line.181">                                rawParent = getRawParentSequence(cdna.getAccession().getID());</a>
+<span class="sourceLineNo">182</span><a id="line.182">                                return cdna.getSubSequence(rawParent).getSequenceAsString();</a>
+<span class="sourceLineNo">183</span><a id="line.183">                        } catch (IOException e) {</a>
+<span class="sourceLineNo">184</span><a id="line.184">                                // return null</a>
+<span class="sourceLineNo">185</span><a id="line.185">                                logger.error("Caught IOException when getting DNA sequence for id {}. Error: {}", cdna.getAccession().getID(), e.getMessage());</a>
+<span class="sourceLineNo">186</span><a id="line.186">                                return null;</a>
+<span class="sourceLineNo">187</span><a id="line.187">                        }</a>
+<span class="sourceLineNo">188</span><a id="line.188">                } else {</a>
+<span class="sourceLineNo">189</span><a id="line.189">                        // in case of complex</a>
+<span class="sourceLineNo">190</span><a id="line.190">                        StringBuilder sb = new StringBuilder();</a>
+<span class="sourceLineNo">191</span><a id="line.191"></a>
+<span class="sourceLineNo">192</span><a id="line.192">                        for (Location sub : cdna.getSubLocations()) {</a>
+<span class="sourceLineNo">193</span><a id="line.193">                                String sebStr = getSequence(sub);</a>
+<span class="sourceLineNo">194</span><a id="line.194">                                sb.append((sebStr == null ? "" : sebStr));</a>
+<span class="sourceLineNo">195</span><a id="line.195">                        }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">                        return sb.toString();</a>
+<span class="sourceLineNo">198</span><a id="line.198">                }</a>
+<span class="sourceLineNo">199</span><a id="line.199">        }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.xtal;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.structure.xtal.io.SpaceGroupMapRoot;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">import javax.xml.bind.JAXBException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.BufferedReader;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.io.IOException;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.io.InputStream;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.io.InputStreamReader;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.HashMap;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.TreeMap;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.regex.Matcher;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.regex.Pattern;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">/**</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * A class containing static methods to parse the symop.lib file from the</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * CCP4 package. The file contains the transformations belonging to all</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * protein crystallography space groups.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * See http://structure.usc.edu/ccp4/symlib.html for documentation</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * @author duarte_j</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *</a>
+<span class="sourceLineNo">047</span><a id="line.47"> */</a>
+<span class="sourceLineNo">048</span><a id="line.48">public class SymoplibParser {</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">        private static final Logger logger = LoggerFactory.getLogger(SymoplibParser.class);</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        private static final String newline = System.getProperty("line.separator");</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        private static final String SPACE_GROUPS_FILE = "org/biojava/nbio/structure/xtal/spacegroups.xml";</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        private static final Pattern namePat = Pattern.compile(".*\\s([A-Z]+)(\\s'.+')?\\s+'(.+)'.*");</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">        private static  TreeMap&lt;Integer, SpaceGroup&gt; sgs = parseSpaceGroupsXML();</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60"></a>
+<span class="sourceLineNo">061</span><a id="line.61">        private static HashMap&lt;String, SpaceGroup&gt; name2sgs; // map for lookups based on short names</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        /**</a>
+<span class="sourceLineNo">064</span><a id="line.64">         * Gets the space group for the given standard identifier.</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * See for example http://en.wikipedia.org/wiki/Space_group</a>
+<span class="sourceLineNo">066</span><a id="line.66">         * @param id</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * @return</a>
+<span class="sourceLineNo">068</span><a id="line.68">         */</a>
+<span class="sourceLineNo">069</span><a id="line.69">        public static SpaceGroup getSpaceGroup(int id) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">                return sgs.get(id);</a>
+<span class="sourceLineNo">071</span><a id="line.71">        }</a>
+<span class="sourceLineNo">072</span><a id="line.72"></a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">        /**</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * Load all SpaceGroup information from the file spacegroups.xml</a>
+<span class="sourceLineNo">076</span><a id="line.76">         *</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * @return a map providing information for all spacegroups</a>
+<span class="sourceLineNo">078</span><a id="line.78">         */</a>
+<span class="sourceLineNo">079</span><a id="line.79">        private static TreeMap&lt;Integer, SpaceGroup&gt; parseSpaceGroupsXML() {</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">                // NOTE: if the space group file is requested by some part of the code (i.e. this method is called) and</a>
+<span class="sourceLineNo">082</span><a id="line.82">                //       there is a problem in reading it, then that's truly a FATAL problem, since this is not a user file</a>
+<span class="sourceLineNo">083</span><a id="line.83">                //       but a file that's part of the distribution: it MUST be there and MUST have the right format. A failure</a>
+<span class="sourceLineNo">084</span><a id="line.84">                //       to read it is more of a "compilation" error than a runtime error. That's the reason that System.exit</a>
+<span class="sourceLineNo">085</span><a id="line.85">                //       is called (which otherwise usually is not a good idea).</a>
+<span class="sourceLineNo">086</span><a id="line.86">                //</a>
+<span class="sourceLineNo">087</span><a id="line.87">                //       The rest of the application will simply not work: there are 3 options to handle it</a>
+<span class="sourceLineNo">088</span><a id="line.88">                //           a) returning null and then a NullPointer will happen down the line and thus a not very clear</a>
+<span class="sourceLineNo">089</span><a id="line.89">                //          error message will be printed</a>
+<span class="sourceLineNo">090</span><a id="line.90">                //       b) throw the exception forward and catch it in the final main but that would also be bad because</a>
+<span class="sourceLineNo">091</span><a id="line.91">                //          this is a file that the user didn't input but that should be part of the distribution</a>
+<span class="sourceLineNo">092</span><a id="line.92">                //               c) call System.exit(1) and "crash" the application with a human-understandable error message</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">                InputStream spaceGroupIS = SymoplibParser.class.getClassLoader().getResourceAsStream(SPACE_GROUPS_FILE);</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">                if ( spaceGroupIS == null) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">                        logger.error("Fatal error! Could not find resource: " + SPACE_GROUPS_FILE + ". This probably means that your biojava jar file is corrupt or incorrectly built.");</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        System.exit(1);</a>
+<span class="sourceLineNo">099</span><a id="line.99">                }</a>
+<span class="sourceLineNo">100</span><a id="line.100"></a>
+<span class="sourceLineNo">101</span><a id="line.101">                TreeMap&lt;Integer, SpaceGroup&gt; map = new TreeMap&lt;Integer, SpaceGroup&gt;();</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">                try {</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        map = parseSpaceGroupsXML(spaceGroupIS);</a>
+<span class="sourceLineNo">105</span><a id="line.105">                } catch (IOException e) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">                        logger.error("Fatal error! Could not parse resource: "+SPACE_GROUPS_FILE+". Error: "+e.getMessage());</a>
+<span class="sourceLineNo">107</span><a id="line.107">                        System.exit(1);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                } catch (JAXBException e) {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                        logger.error("Fatal error! Could not parse resource: "+SPACE_GROUPS_FILE+". Problem in xml formatting: "+e.getMessage());</a>
+<span class="sourceLineNo">110</span><a id="line.110">                        System.exit(1);</a>
+<span class="sourceLineNo">111</span><a id="line.111">                }</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">                name2sgs = new HashMap&lt;String, SpaceGroup&gt;();</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">                for (SpaceGroup sg:map.values()) {</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">                        sg.initializeCellTranslations();</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        name2sgs.put(sg.getShortSymbol(), sg);</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        if (sg.getAltShortSymbol()!=null) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                // we add also alternative name to map so we can look it up</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                name2sgs.put(sg.getAltShortSymbol(), sg);</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        }</a>
+<span class="sourceLineNo">123</span><a id="line.123">                }</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">                return map;</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">        }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        /**</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * Load all SpaceGroup information from the file spacegroups.xml</a>
+<span class="sourceLineNo">132</span><a id="line.132">         *</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * @return a map providing information for all spacegroups</a>
+<span class="sourceLineNo">134</span><a id="line.134">         */</a>
+<span class="sourceLineNo">135</span><a id="line.135">        public static TreeMap&lt;Integer, SpaceGroup&gt; parseSpaceGroupsXML(</a>
+<span class="sourceLineNo">136</span><a id="line.136">                        InputStream spaceGroupIS) throws IOException, JAXBException {</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">                String xml = convertStreamToString(spaceGroupIS);</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">                SpaceGroupMapRoot spaceGroups = SpaceGroupMapRoot.fromXML(xml);</a>
+<span class="sourceLineNo">141</span><a id="line.141">                return spaceGroups.getMapProperty();</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146">        private static String convertStreamToString(InputStream stream) throws IOException {</a>
+<span class="sourceLineNo">147</span><a id="line.147">                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));</a>
+<span class="sourceLineNo">148</span><a id="line.148">                StringBuilder sb = new StringBuilder();</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">                String line = null;</a>
+<span class="sourceLineNo">151</span><a id="line.151"></a>
+<span class="sourceLineNo">152</span><a id="line.152">                while ((line = reader.readLine()) != null) {</a>
+<span class="sourceLineNo">153</span><a id="line.153">                        sb.append(line).append(newline);</a>
+<span class="sourceLineNo">154</span><a id="line.154">                }</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">                return sb.toString();</a>
+<span class="sourceLineNo">157</span><a id="line.157">        }</a>
+<span class="sourceLineNo">158</span><a id="line.158"></a>
+<span class="sourceLineNo">159</span><a id="line.159">        /**</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * Get the space group for the given international short name, using</a>
+<span class="sourceLineNo">161</span><a id="line.161">         * the PDB format, e.g. 'P 21 21 21' or 'C 1 c 1'</a>
+<span class="sourceLineNo">162</span><a id="line.162">         * @param shortName</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * @return the SpaceGroup or null if the shortName is not valid</a>
+<span class="sourceLineNo">164</span><a id="line.164">         */</a>
+<span class="sourceLineNo">165</span><a id="line.165">        public static SpaceGroup getSpaceGroup(String shortName) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                if (shortName==null || shortName.length()&lt;=2) return null;</a>
+<span class="sourceLineNo">167</span><a id="line.167"></a>
+<span class="sourceLineNo">168</span><a id="line.168">                // PDB uses group "P 1-" for 13 racemic mixture entries (as of Sep2011), e.g. 3e7r</a>
+<span class="sourceLineNo">169</span><a id="line.169">                // they call the space group "P 1-" unusually (symop.lib and everyone else call it "P -1")</a>
+<span class="sourceLineNo">170</span><a id="line.170">                if (shortName.equals("P 1-")) shortName="P -1";</a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172">                // enantiomorphic space groups contain sometime letters indicating glide planes which should always be lower case</a>
+<span class="sourceLineNo">173</span><a id="line.173">                // in some PDB entries like 4gwv they are in upper case, we fix that here: convert any non-first letter to lower case</a>
+<span class="sourceLineNo">174</span><a id="line.174">                shortName = shortName.substring(0, 1)+shortName.substring(1).toLowerCase();</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">                return name2sgs.get(shortName);</a>
+<span class="sourceLineNo">177</span><a id="line.177">        }</a>
+<span class="sourceLineNo">178</span><a id="line.178"></a>
+<span class="sourceLineNo">179</span><a id="line.179">        public static TreeMap&lt;Integer,SpaceGroup&gt; getAllSpaceGroups() {</a>
+<span class="sourceLineNo">180</span><a id="line.180">                return sgs;</a>
+<span class="sourceLineNo">181</span><a id="line.181">        }</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183"></a>
+<span class="sourceLineNo">184</span><a id="line.184">        /**</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * A parser for the symop.lib file provided by CCP4. Note: this file is not getting re-distributed by BioJava.</a>
+<span class="sourceLineNo">186</span><a id="line.186">         * It can be downloaded from:</a>
+<span class="sourceLineNo">187</span><a id="line.187">         *</a>
+<span class="sourceLineNo">188</span><a id="line.188">         *  http://www.ccp4.ac.uk/cvs/viewvc.cgi/libccp4/data/symop.lib?revision=1.10&amp;view=markup</a>
+<span class="sourceLineNo">189</span><a id="line.189">         *</a>
+<span class="sourceLineNo">190</span><a id="line.190">         * Note: this file is not needed by BioJava. BioJava loads equivalent information from the file spacegroups.xml</a>
+<span class="sourceLineNo">191</span><a id="line.191">         *</a>
+<span class="sourceLineNo">192</span><a id="line.192">         * @param symoplibIS</a>
+<span class="sourceLineNo">193</span><a id="line.193">         * @return</a>
+<span class="sourceLineNo">194</span><a id="line.194">         */</a>
+<span class="sourceLineNo">195</span><a id="line.195">        public static TreeMap&lt;Integer,SpaceGroup&gt; parseSymopLib(InputStream symoplibIS) {</a>
+<span class="sourceLineNo">196</span><a id="line.196">                TreeMap&lt;Integer, SpaceGroup&gt; map = new TreeMap&lt;Integer, SpaceGroup&gt;();</a>
+<span class="sourceLineNo">197</span><a id="line.197">                name2sgs = new HashMap&lt;String, SpaceGroup&gt;();</a>
+<span class="sourceLineNo">198</span><a id="line.198">                try {</a>
+<span class="sourceLineNo">199</span><a id="line.199">                        BufferedReader br = new BufferedReader(new InputStreamReader(symoplibIS));</a>
+<span class="sourceLineNo">200</span><a id="line.200">                        String line;</a>
+<span class="sourceLineNo">201</span><a id="line.201">                        SpaceGroup currentSG = null;</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        while ((line=br.readLine())!=null) {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                if (!line.startsWith(" ")) {</a>
+<span class="sourceLineNo">204</span><a id="line.204">                                        if (currentSG!=null) {</a>
+<span class="sourceLineNo">205</span><a id="line.205">                                                map.put(currentSG.getId(),currentSG);</a>
+<span class="sourceLineNo">206</span><a id="line.206">                                                name2sgs.put(currentSG.getShortSymbol(), currentSG);</a>
+<span class="sourceLineNo">207</span><a id="line.207">                                                if (currentSG.getAltShortSymbol()!=null) {</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                                        // we add also alternative name to map so we can look it up</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                                        name2sgs.put(currentSG.getAltShortSymbol(), currentSG);</a>
+<span class="sourceLineNo">210</span><a id="line.210">                                                }</a>
+<span class="sourceLineNo">211</span><a id="line.211">                                        }</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">                                        int idxFirstSpace = line.indexOf(' ');</a>
+<span class="sourceLineNo">214</span><a id="line.214">                                        int idxSecondSpace = line.indexOf(' ',idxFirstSpace+1);</a>
+<span class="sourceLineNo">215</span><a id="line.215">                                        int idxThirdSpace = line.indexOf(' ',idxSecondSpace+1);</a>
+<span class="sourceLineNo">216</span><a id="line.216">                                        int id = Integer.parseInt(line.substring(0, idxFirstSpace));</a>
+<span class="sourceLineNo">217</span><a id="line.217">                                        int multiplicity = Integer.parseInt(line.substring(idxFirstSpace+1, idxSecondSpace));</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                        int primitiveMultiplicity = Integer.parseInt(line.substring(idxSecondSpace+1, idxThirdSpace));</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                        Matcher m = namePat.matcher(line);</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                        String shortSymbol = null;</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                        String altShortSymbol = null;</a>
+<span class="sourceLineNo">222</span><a id="line.222">                                        String brav = null;</a>
+<span class="sourceLineNo">223</span><a id="line.223">                                        if (m.matches()) {</a>
+<span class="sourceLineNo">224</span><a id="line.224">                                                brav = m.group(1);</a>
+<span class="sourceLineNo">225</span><a id="line.225">                                                altShortSymbol = m.group(2); // null if there is no match</a>
+<span class="sourceLineNo">226</span><a id="line.226">                                                if (altShortSymbol!=null) altShortSymbol = altShortSymbol.trim().replaceAll("'", "");</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                                shortSymbol = m.group(3);</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                        }</a>
+<span class="sourceLineNo">229</span><a id="line.229">                                        currentSG = new SpaceGroup(id, multiplicity, primitiveMultiplicity, shortSymbol, altShortSymbol, BravaisLattice.getByName(brav));</a>
+<span class="sourceLineNo">230</span><a id="line.230">                                } else {</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                        currentSG.addTransformation(line.trim());</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                }</a>
+<span class="sourceLineNo">233</span><a id="line.233">                        }</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        br.close();</a>
+<span class="sourceLineNo">235</span><a id="line.235">                        // and we add the last SG</a>
+<span class="sourceLineNo">236</span><a id="line.236">                        map.put(currentSG.getId(), currentSG);</a>
+<span class="sourceLineNo">237</span><a id="line.237">                        name2sgs.put(currentSG.getShortSymbol(), currentSG);</a>
+<span class="sourceLineNo">238</span><a id="line.238">                        if (currentSG.getAltShortSymbol()!=null) {</a>
+<span class="sourceLineNo">239</span><a id="line.239">                                // we add also alternative name to map so we can look it up</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                name2sgs.put(currentSG.getAltShortSymbol(), currentSG);</a>
+<span class="sourceLineNo">241</span><a id="line.241">                        }</a>
+<span class="sourceLineNo">242</span><a id="line.242"></a>
+<span class="sourceLineNo">243</span><a id="line.243">                } catch (IOException e) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                        logger.error("Fatal error! Can't read symop.lib file. Error: "+e.getMessage()+". ");</a>
+<span class="sourceLineNo">245</span><a id="line.245">                        System.exit(1);</a>
+<span class="sourceLineNo">246</span><a id="line.246">                }</a>
+<span class="sourceLineNo">247</span><a id="line.247"></a>
+<span class="sourceLineNo">248</span><a id="line.248">                for (SpaceGroup sg:map.values()) {</a>
+<span class="sourceLineNo">249</span><a id="line.249">                        sg.initializeCellTranslations();</a>
+<span class="sourceLineNo">250</span><a id="line.250">                }</a>
+<span class="sourceLineNo">251</span><a id="line.251">                return map;</a>
+<span class="sourceLineNo">252</span><a id="line.252">        }</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254"></a>
+<span class="sourceLineNo">255</span><a id="line.255">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

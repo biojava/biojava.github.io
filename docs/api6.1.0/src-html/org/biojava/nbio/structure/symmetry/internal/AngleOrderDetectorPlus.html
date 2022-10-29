@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.structure.symmetry.internal;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import static java.lang.Math.*;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.structure.Atom;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.structure.align.model.AFPChain;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.structure.align.util.RotationAxis;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.biojava.nbio.structure.symmetry.internal.OrderDetector;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.biojava.nbio.structure.symmetry.internal.RefinerFailedException;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">/**</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * Guesses an order of rotational symmetry from the angle.</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * &lt;p&gt;</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * Improves upon the AngleOrderDetector used in the paper by checking all</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * rotations, not just the base one.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * @author Spencer Bliven</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @since 4.2.0</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *</a>
+<span class="sourceLineNo">040</span><a id="line.40"> */</a>
+<span class="sourceLineNo">041</span><a id="line.41">public class AngleOrderDetectorPlus implements OrderDetector {</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">        private int maxOrder;</a>
+<span class="sourceLineNo">044</span><a id="line.44">        private final double error;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        private boolean normalizeError;</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">        /**</a>
+<span class="sourceLineNo">048</span><a id="line.48">         * @param error</a>
+<span class="sourceLineNo">049</span><a id="line.49">         *            maximum angular error, in radians</a>
+<span class="sourceLineNo">050</span><a id="line.50">         */</a>
+<span class="sourceLineNo">051</span><a id="line.51">        public AngleOrderDetectorPlus(double angleError) {</a>
+<span class="sourceLineNo">052</span><a id="line.52">                this(8, angleError, false);</a>
+<span class="sourceLineNo">053</span><a id="line.53">        }</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        public AngleOrderDetectorPlus(int maxOrder) {</a>
+<span class="sourceLineNo">056</span><a id="line.56">                // PI is the max error for C1</a>
+<span class="sourceLineNo">057</span><a id="line.57">                this(maxOrder, PI, false);</a>
+<span class="sourceLineNo">058</span><a id="line.58">        }</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        /**</a>
+<span class="sourceLineNo">061</span><a id="line.61">         *</a>
+<span class="sourceLineNo">062</span><a id="line.62">         * @param maxOrder</a>
+<span class="sourceLineNo">063</span><a id="line.63">         *            maximum order to consider</a>
+<span class="sourceLineNo">064</span><a id="line.64">         * @param error</a>
+<span class="sourceLineNo">065</span><a id="line.65">         *            maximum angular error, in radians</a>
+<span class="sourceLineNo">066</span><a id="line.66">         */</a>
+<span class="sourceLineNo">067</span><a id="line.67">        public AngleOrderDetectorPlus(int maxOrder, double angleError) {</a>
+<span class="sourceLineNo">068</span><a id="line.68">                this(maxOrder, angleError, false);</a>
+<span class="sourceLineNo">069</span><a id="line.69">        }</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">        /**</a>
+<span class="sourceLineNo">072</span><a id="line.72">         * Determine order by finding the order (up to the maxOrder) which has the</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * closest rotation angle to the observed rotation.</a>
+<span class="sourceLineNo">074</span><a id="line.74">         *</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * If normalized is false, then the error is taken to be the absolute error</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * from the closest ideal angle (in radians). If normalized is true, error</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * is taken to be relative to the fundamental rotation for a given order.</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * For instance, for an error of .25, C2 order would be accepted for angles</a>
+<span class="sourceLineNo">079</span><a id="line.79">         * within .25*pi radians of 0 or pi, while C3 order would be acceptable</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * within .25*2pi/3 radians of 0, 2pi/3, or 4pi/3. In the normalized case,</a>
+<span class="sourceLineNo">081</span><a id="line.81">         * numbers between 0 and .5 are sensible for error.</a>
+<span class="sourceLineNo">082</span><a id="line.82">         *</a>
+<span class="sourceLineNo">083</span><a id="line.83">         * @param maxOrder</a>
+<span class="sourceLineNo">084</span><a id="line.84">         *            maximum order to consider</a>
+<span class="sourceLineNo">085</span><a id="line.85">         * @param error</a>
+<span class="sourceLineNo">086</span><a id="line.86">         *            maximum angular error</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * @param normalize</a>
+<span class="sourceLineNo">088</span><a id="line.88">         *            indicates whether error should be normalized by the order</a>
+<span class="sourceLineNo">089</span><a id="line.89">         */</a>
+<span class="sourceLineNo">090</span><a id="line.90">        public AngleOrderDetectorPlus(int maxOrder, double angleError,</a>
+<span class="sourceLineNo">091</span><a id="line.91">                        boolean normalize) {</a>
+<span class="sourceLineNo">092</span><a id="line.92">                super();</a>
+<span class="sourceLineNo">093</span><a id="line.93">                this.maxOrder = maxOrder;</a>
+<span class="sourceLineNo">094</span><a id="line.94">                this.error = angleError;</a>
+<span class="sourceLineNo">095</span><a id="line.95">                this.normalizeError = normalize;</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">        @Override</a>
+<span class="sourceLineNo">099</span><a id="line.99">        public int calculateOrder(AFPChain afpChain, Atom[] ca)</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        throws RefinerFailedException {</a>
+<span class="sourceLineNo">101</span><a id="line.101">                final double tol = 1e-6; // tolerance to floating point errors</a>
+<span class="sourceLineNo">102</span><a id="line.102">                try {</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        RotationAxis axis = new RotationAxis(afpChain);</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        double theta = axis.getAngle();</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">                        double bestDelta = error;</a>
+<span class="sourceLineNo">107</span><a id="line.107">                        int bestOrder = 1;</a>
+<span class="sourceLineNo">108</span><a id="line.108">                        for (int order = 1; order &lt;= maxOrder; order++) {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                // Triangle wave starting at 0 with period 2pi/order</a>
+<span class="sourceLineNo">110</span><a id="line.110">                                double delta = abs(abs(theta * order / (2 * PI) - .5) % 1.0 - .5);</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                // Triangle waves have amplitude 1, so need to un-normalize</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                if (!normalizeError)</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                        delta *= 2 * PI / order;</a>
+<span class="sourceLineNo">114</span><a id="line.114"></a>
+<span class="sourceLineNo">115</span><a id="line.115">                                if (delta &lt; bestDelta - tol) {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                        bestOrder = order;</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                        bestDelta = delta;</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                }</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        }</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        return bestOrder;</a>
+<span class="sourceLineNo">121</span><a id="line.121">                } catch (Exception e) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        throw new RefinerFailedException(e);</a>
+<span class="sourceLineNo">123</span><a id="line.123">                }</a>
+<span class="sourceLineNo">124</span><a id="line.124">        }</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">        @Override</a>
+<span class="sourceLineNo">127</span><a id="line.127">        public String toString() {</a>
+<span class="sourceLineNo">128</span><a id="line.128">                return getClass().getSimpleName() + "[maxOrder=" + maxOrder</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                + ", error=" + error + ", normalizeError=" + normalizeError</a>
+<span class="sourceLineNo">130</span><a id="line.130">                                + "]";</a>
+<span class="sourceLineNo">131</span><a id="line.131">        }</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

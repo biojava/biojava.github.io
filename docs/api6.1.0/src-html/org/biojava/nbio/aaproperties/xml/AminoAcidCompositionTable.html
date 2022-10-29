@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.aaproperties.xml;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import javax.xml.bind.annotation.XmlAccessType;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import javax.xml.bind.annotation.XmlAccessorType;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import javax.xml.bind.annotation.XmlElement;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import javax.xml.bind.annotation.XmlRootElement;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.HashMap;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.List;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Map;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Set;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">@XmlRootElement(name="compoundtable", namespace="http://biojava.org")</a>
+<span class="sourceLineNo">034</span><a id="line.34">@XmlAccessorType(XmlAccessType.NONE)</a>
+<span class="sourceLineNo">035</span><a id="line.35">public class AminoAcidCompositionTable {</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">        /**</a>
+<span class="sourceLineNo">038</span><a id="line.38">         * Contains the list of amino acid composition</a>
+<span class="sourceLineNo">039</span><a id="line.39">         */</a>
+<span class="sourceLineNo">040</span><a id="line.40">        @XmlElement(name = "compound", required = true)</a>
+<span class="sourceLineNo">041</span><a id="line.41">        private List&lt;AminoAcidComposition&gt; aminoacid;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">        /**</a>
+<span class="sourceLineNo">044</span><a id="line.44">         * Defines the amino acid compound set unique to this table</a>
+<span class="sourceLineNo">045</span><a id="line.45">         */</a>
+<span class="sourceLineNo">046</span><a id="line.46">        private ModifiedAminoAcidCompoundSet modifiedAminoAcidCompoundSet;</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">        /**</a>
+<span class="sourceLineNo">049</span><a id="line.49">         * Stores the mapping of amino acid symbol to its molecular weight</a>
+<span class="sourceLineNo">050</span><a id="line.50">         */</a>
+<span class="sourceLineNo">051</span><a id="line.51">        private Map&lt;Character, Double&gt; aaSymbol2MolecularWeight;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        public AminoAcidCompositionTable(){}</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        public AminoAcidCompositionTable(List&lt;AminoAcidComposition&gt; aaList){</a>
+<span class="sourceLineNo">056</span><a id="line.56">                this.setAminoacid(aaList);</a>
+<span class="sourceLineNo">057</span><a id="line.57">        }</a>
+<span class="sourceLineNo">058</span><a id="line.58"></a>
+<span class="sourceLineNo">059</span><a id="line.59">        public ModifiedAminoAcidCompoundSet getAminoAcidCompoundSet(){</a>
+<span class="sourceLineNo">060</span><a id="line.60">                return this.modifiedAminoAcidCompoundSet;</a>
+<span class="sourceLineNo">061</span><a id="line.61">        }</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">        public List&lt;AminoAcidComposition&gt; getAminoacid() {</a>
+<span class="sourceLineNo">064</span><a id="line.64">                return aminoacid;</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">        public void setAminoacid(List&lt;AminoAcidComposition&gt; aminoacid) {</a>
+<span class="sourceLineNo">068</span><a id="line.68">                this.aminoacid = aminoacid;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        }</a>
+<span class="sourceLineNo">070</span><a id="line.70"></a>
+<span class="sourceLineNo">071</span><a id="line.71">        public Set&lt;Character&gt; getSymbolSet(){</a>
+<span class="sourceLineNo">072</span><a id="line.72">                return this.aaSymbol2MolecularWeight.keySet();</a>
+<span class="sourceLineNo">073</span><a id="line.73">        }</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        private void generatesAminoAcidCompoundSet(){</a>
+<span class="sourceLineNo">076</span><a id="line.76">                this.modifiedAminoAcidCompoundSet = new ModifiedAminoAcidCompoundSet(this.aminoacid, this.aaSymbol2MolecularWeight);</a>
+<span class="sourceLineNo">077</span><a id="line.77">        }</a>
+<span class="sourceLineNo">078</span><a id="line.78"></a>
+<span class="sourceLineNo">079</span><a id="line.79">        /**</a>
+<span class="sourceLineNo">080</span><a id="line.80">         * Computes and store the molecular weight of each amino acid by its symbol in aaSymbol2MolecularWeight.</a>
+<span class="sourceLineNo">081</span><a id="line.81">         *</a>
+<span class="sourceLineNo">082</span><a id="line.82">         * @param eTable</a>
+<span class="sourceLineNo">083</span><a id="line.83">         *              Stores the mass of elements and isotopes</a>
+<span class="sourceLineNo">084</span><a id="line.84">         */</a>
+<span class="sourceLineNo">085</span><a id="line.85">        public void computeMolecularWeight(ElementTable eTable){</a>
+<span class="sourceLineNo">086</span><a id="line.86">                this.aaSymbol2MolecularWeight = new HashMap&lt;Character, Double&gt;();</a>
+<span class="sourceLineNo">087</span><a id="line.87">                for(AminoAcidComposition a:aminoacid){</a>
+<span class="sourceLineNo">088</span><a id="line.88">                        //Check to ensure that the symbol is of single character</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        if(a.getSymbol().length() != 1){</a>
+<span class="sourceLineNo">090</span><a id="line.90">                                throw new Error(a.getSymbol() + " is not allowed. Symbols must be single character.\r\nPlease check AminoAcidComposition XML file");</a>
+<span class="sourceLineNo">091</span><a id="line.91">                        }</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        //Check to ensure that the symbols are not repeated</a>
+<span class="sourceLineNo">093</span><a id="line.93">                        char c = a.getSymbol().charAt(0);</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        if(this.aaSymbol2MolecularWeight.keySet().contains(c)){</a>
+<span class="sourceLineNo">095</span><a id="line.95">                                throw new Error("Symbol " + c + " is repeated.\r\n" +</a>
+<span class="sourceLineNo">096</span><a id="line.96">                                                "Please check AminoAcidComposition XML file to ensure there are no repeated symbols. Note that this is case-insensitive.\r\n" +</a>
+<span class="sourceLineNo">097</span><a id="line.97">                                                "This means that having 'A' and 'a' would be repeating.");</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        }</a>
+<span class="sourceLineNo">099</span><a id="line.99">                        double total = 0.0;</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        if(a.getElementList() != null){</a>
+<span class="sourceLineNo">101</span><a id="line.101">                                for(Name2Count element:a.getElementList()){</a>
+<span class="sourceLineNo">102</span><a id="line.102">                                        element.getName();</a>
+<span class="sourceLineNo">103</span><a id="line.103">                                        if(eTable.getElement(element.getName()) == null){</a>
+<span class="sourceLineNo">104</span><a id="line.104">                                                throw new Error("Element " + element.getName() + " could not be found. " +</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                                                "\r\nPlease ensure that its name is correct in AminoAcidComposition.xml and is defined in ElementMass.xml.");</a>
+<span class="sourceLineNo">106</span><a id="line.106">                                        }</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                        eTable.getElement(element.getName()).getMass();</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                        total += eTable.getElement(element.getName()).getMass() * element.getCount();</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                }</a>
+<span class="sourceLineNo">110</span><a id="line.110">                        }</a>
+<span class="sourceLineNo">111</span><a id="line.111">                        if(a.getIsotopeList() != null){</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                for(Name2Count isotope:a.getIsotopeList()){</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                        isotope.getName();</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                        if(eTable.getIsotope(isotope.getName()) == null){</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                                throw new Error("Isotope " + isotope.getName() + " could not be found. " +</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                                        "\r\nPlease ensure that its name is correct in AminoAcidComposition.xml and is defined in ElementMass.xml.");</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                        }</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                        eTable.getIsotope(isotope.getName()).getMass();</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                        total += eTable.getIsotope(isotope.getName()).getMass() * isotope.getCount();</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                }</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        }</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        c = a.getSymbol().charAt(0);</a>
+<span class="sourceLineNo">123</span><a id="line.123">                        this.aaSymbol2MolecularWeight.put(c, total);</a>
+<span class="sourceLineNo">124</span><a id="line.124">                }</a>
+<span class="sourceLineNo">125</span><a id="line.125">                generatesAminoAcidCompoundSet();</a>
+<span class="sourceLineNo">126</span><a id="line.126">        }</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">        /**</a>
+<span class="sourceLineNo">129</span><a id="line.129">         * @param aaSymbol</a>
+<span class="sourceLineNo">130</span><a id="line.130">         *      Standard symbol of Amino Acid</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * @return the molecular weight given its symbol</a>
+<span class="sourceLineNo">132</span><a id="line.132">         * @throws NullPointerException</a>
+<span class="sourceLineNo">133</span><a id="line.133">         *      thrown if AminoAcidCompositionTable.computeMolecularWeight(ElementTable) is not called before this method</a>
+<span class="sourceLineNo">134</span><a id="line.134">         */</a>
+<span class="sourceLineNo">135</span><a id="line.135">        public double getMolecularWeight(Character aaSymbol) throws NullPointerException{</a>
+<span class="sourceLineNo">136</span><a id="line.136">                if(this.aaSymbol2MolecularWeight == null){</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        throw new NullPointerException("Please call AminoAcidCompositionTable.computeMolecularWeight(ElementTable) before this method");</a>
+<span class="sourceLineNo">138</span><a id="line.138">                }</a>
+<span class="sourceLineNo">139</span><a id="line.139">                Double d = this.aaSymbol2MolecularWeight.get(aaSymbol);</a>
+<span class="sourceLineNo">140</span><a id="line.140">                if(d == null)</a>
+<span class="sourceLineNo">141</span><a id="line.141">                        return 0;</a>
+<span class="sourceLineNo">142</span><a id="line.142">                else</a>
+<span class="sourceLineNo">143</span><a id="line.143">                        return d;</a>
+<span class="sourceLineNo">144</span><a id="line.144">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

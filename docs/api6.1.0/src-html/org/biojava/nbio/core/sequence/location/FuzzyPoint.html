@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on 01-21-2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22">package org.biojava.nbio.core.sequence.location;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.core.sequence.location.template.Point;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.core.util.Equals;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.util.Hashcoder;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">/**</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * Implementation for resolving fuzzy locations. Caches the calculated</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * value.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> *</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * @author ayates</a>
+<span class="sourceLineNo">033</span><a id="line.33"> */</a>
+<span class="sourceLineNo">034</span><a id="line.34">public class FuzzyPoint extends SimplePoint {</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">        /**</a>
+<span class="sourceLineNo">037</span><a id="line.37">         * Always uses the min point to resolve a location</a>
+<span class="sourceLineNo">038</span><a id="line.38">         */</a>
+<span class="sourceLineNo">039</span><a id="line.39">        public static final Resolver&lt;FuzzyPoint&gt; MIN_RESOLVER = new Resolver&lt;FuzzyPoint&gt;() {</a>
+<span class="sourceLineNo">040</span><a id="line.40">                @Override</a>
+<span class="sourceLineNo">041</span><a id="line.41">                public int resolve(FuzzyPoint point) {</a>
+<span class="sourceLineNo">042</span><a id="line.42">                        return point.getMin();</a>
+<span class="sourceLineNo">043</span><a id="line.43">                }</a>
+<span class="sourceLineNo">044</span><a id="line.44">        };</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">        /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">         * Always uses the max point to resolve a location</a>
+<span class="sourceLineNo">048</span><a id="line.48">         */</a>
+<span class="sourceLineNo">049</span><a id="line.49">        public static final Resolver&lt;FuzzyPoint&gt; MAX_RESOLVER = new Resolver&lt;FuzzyPoint&gt;() {</a>
+<span class="sourceLineNo">050</span><a id="line.50">                @Override</a>
+<span class="sourceLineNo">051</span><a id="line.51">                public int resolve(FuzzyPoint point) {</a>
+<span class="sourceLineNo">052</span><a id="line.52">                        return point.getMax();</a>
+<span class="sourceLineNo">053</span><a id="line.53">                }</a>
+<span class="sourceLineNo">054</span><a id="line.54">        };</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        /**</a>
+<span class="sourceLineNo">057</span><a id="line.57">         * Combines min and max and then gets the mean of it</a>
+<span class="sourceLineNo">058</span><a id="line.58">         */</a>
+<span class="sourceLineNo">059</span><a id="line.59">        public static final Resolver&lt;FuzzyPoint&gt; MEAN_RESOLVER = new Resolver&lt;FuzzyPoint&gt;() {</a>
+<span class="sourceLineNo">060</span><a id="line.60">                @Override</a>
+<span class="sourceLineNo">061</span><a id="line.61">                public int resolve(FuzzyPoint point) {</a>
+<span class="sourceLineNo">062</span><a id="line.62">                        return (point.getMin() + point.getMax()) / 2;</a>
+<span class="sourceLineNo">063</span><a id="line.63">                }</a>
+<span class="sourceLineNo">064</span><a id="line.64">        };</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        private final int min;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        private final int max;</a>
+<span class="sourceLineNo">068</span><a id="line.68">        private final Resolver&lt;FuzzyPoint&gt; resolver;</a>
+<span class="sourceLineNo">069</span><a id="line.69"></a>
+<span class="sourceLineNo">070</span><a id="line.70">        public FuzzyPoint(int minPoint, int maxPoint) {</a>
+<span class="sourceLineNo">071</span><a id="line.71">                this(minPoint, maxPoint, MEAN_RESOLVER, false, false);</a>
+<span class="sourceLineNo">072</span><a id="line.72">        }</a>
+<span class="sourceLineNo">073</span><a id="line.73"></a>
+<span class="sourceLineNo">074</span><a id="line.74">        public FuzzyPoint(int minPoint, int maxPoint, Resolver&lt;FuzzyPoint&gt; resolver) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">                this(minPoint, maxPoint, resolver, false, false);</a>
+<span class="sourceLineNo">076</span><a id="line.76">        }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">        public FuzzyPoint(int minPoint, int maxPoint, Resolver&lt;FuzzyPoint&gt; resolver, boolean unknown, boolean uncertain) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                this.min = minPoint;</a>
+<span class="sourceLineNo">080</span><a id="line.80">                this.max = maxPoint;</a>
+<span class="sourceLineNo">081</span><a id="line.81">                this.resolver = resolver;</a>
+<span class="sourceLineNo">082</span><a id="line.82">                setUncertain(uncertain);</a>
+<span class="sourceLineNo">083</span><a id="line.83">                setUnknown(unknown);</a>
+<span class="sourceLineNo">084</span><a id="line.84">                setPosition(-1); //Means we have not resolved this position yet</a>
+<span class="sourceLineNo">085</span><a id="line.85">        }</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        @Override</a>
+<span class="sourceLineNo">088</span><a id="line.88">        public Integer getPosition() {</a>
+<span class="sourceLineNo">089</span><a id="line.89">                if(super.getPosition() == -1) {</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        super.setPosition(getResolver().resolve(this));</a>
+<span class="sourceLineNo">091</span><a id="line.91">                }</a>
+<span class="sourceLineNo">092</span><a id="line.92">                return super.getPosition();</a>
+<span class="sourceLineNo">093</span><a id="line.93">        }</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">        protected Integer getMax() {</a>
+<span class="sourceLineNo">096</span><a id="line.96">                return max;</a>
+<span class="sourceLineNo">097</span><a id="line.97">        }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">        protected Integer getMin() {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                return min;</a>
+<span class="sourceLineNo">101</span><a id="line.101">        }</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">        protected Resolver&lt;FuzzyPoint&gt; getResolver() {</a>
+<span class="sourceLineNo">104</span><a id="line.104">                return resolver;</a>
+<span class="sourceLineNo">105</span><a id="line.105">        }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">        @Override</a>
+<span class="sourceLineNo">108</span><a id="line.108">        public Point reverse(int length) {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                int revMin = reverse(getMin(), length);</a>
+<span class="sourceLineNo">110</span><a id="line.110">                int revMax = reverse(getMax(), length);</a>
+<span class="sourceLineNo">111</span><a id="line.111">                return new FuzzyPoint(revMin, revMax, getResolver(), isUnknown(), isUncertain());</a>
+<span class="sourceLineNo">112</span><a id="line.112">        }</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">        @Override</a>
+<span class="sourceLineNo">115</span><a id="line.115">        public Point offset(int distance) {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                int offMin = getMin() + distance;</a>
+<span class="sourceLineNo">117</span><a id="line.117">                int offMax = getMax() + distance;</a>
+<span class="sourceLineNo">118</span><a id="line.118">                return new FuzzyPoint(offMin, offMax, getResolver(), isUnknown(), isUncertain());</a>
+<span class="sourceLineNo">119</span><a id="line.119">        }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">        @Override</a>
+<span class="sourceLineNo">123</span><a id="line.123">        public boolean equals(Object obj) {</a>
+<span class="sourceLineNo">124</span><a id="line.124">                boolean equals = false;</a>
+<span class="sourceLineNo">125</span><a id="line.125">                if (Equals.classEqual(this, obj)) {</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        FuzzyPoint p = (FuzzyPoint) obj;</a>
+<span class="sourceLineNo">127</span><a id="line.127">                        equals = (Equals.equal(getMin(), p.getMin())</a>
+<span class="sourceLineNo">128</span><a id="line.128">                                        &amp;&amp; Equals.equal(getMax(), p.getMax())</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                        &amp;&amp; Equals.equal(isUnknown(), p.isUnknown())</a>
+<span class="sourceLineNo">130</span><a id="line.130">                                        &amp;&amp; Equals.equal(isUncertain(), p.isUncertain())</a>
+<span class="sourceLineNo">131</span><a id="line.131">                                        );</a>
+<span class="sourceLineNo">132</span><a id="line.132">                }</a>
+<span class="sourceLineNo">133</span><a id="line.133">                return equals;</a>
+<span class="sourceLineNo">134</span><a id="line.134">        }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">        @Override</a>
+<span class="sourceLineNo">137</span><a id="line.137">        public int hashCode() {</a>
+<span class="sourceLineNo">138</span><a id="line.138">                int r = Hashcoder.SEED;</a>
+<span class="sourceLineNo">139</span><a id="line.139">                r = Hashcoder.hash(r, getMin());</a>
+<span class="sourceLineNo">140</span><a id="line.140">                r = Hashcoder.hash(r, getMax());</a>
+<span class="sourceLineNo">141</span><a id="line.141">                r = Hashcoder.hash(r, isUncertain());</a>
+<span class="sourceLineNo">142</span><a id="line.142">                r = Hashcoder.hash(r, isUnknown());</a>
+<span class="sourceLineNo">143</span><a id="line.143">                return r;</a>
+<span class="sourceLineNo">144</span><a id="line.144">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145"></a>
+<span class="sourceLineNo">146</span><a id="line.146">        @Override</a>
+<span class="sourceLineNo">147</span><a id="line.147">        public int compareTo(Point point) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                //If we can assign this to a FuzzyPoint then work with a bit more info</a>
+<span class="sourceLineNo">149</span><a id="line.149">                if(FuzzyPoint.class.isAssignableFrom(point.getClass())) {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                        FuzzyPoint fuzzy = (FuzzyPoint)point;</a>
+<span class="sourceLineNo">151</span><a id="line.151">                        int minComparison = getMin().compareTo(fuzzy.getMin());</a>
+<span class="sourceLineNo">152</span><a id="line.152">                        if(minComparison != 0)</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                return minComparison;</a>
+<span class="sourceLineNo">154</span><a id="line.154">                        return getMax().compareTo(fuzzy.getMax());</a>
+<span class="sourceLineNo">155</span><a id="line.155">                }</a>
+<span class="sourceLineNo">156</span><a id="line.156">                //If not fuzzy then compare on position as normal</a>
+<span class="sourceLineNo">157</span><a id="line.157">                return super.compareTo(point);</a>
+<span class="sourceLineNo">158</span><a id="line.158">        }</a>
+<span class="sourceLineNo">159</span><a id="line.159">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

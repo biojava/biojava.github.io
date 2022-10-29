@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * Created on 01-21-2010</a>
+<span class="sourceLineNo">021</span><a id="line.21"> */</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.biojava.nbio.core.sequence.io;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.core.sequence.*;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.core.sequence.compound.NucleotideCompound;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.biojava.nbio.core.sequence.io.template.FastaHeaderFormatInterface;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.slf4j.Logger;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.slf4j.LoggerFactory;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.io.OutputStream;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.Collection;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">/**</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * A Gene sequence has a Positive or Negative Strand where we want to write out to a stream the 5 to 3 prime version.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * It is also an option to write out the gene sequence where the exon regions are upper case</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * 6/22/2010 FastaWriter needs to be sequence aware to handle writing out a GeneSequence which is negative Strand with the proper sequence</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @author Scooter Willis &lt;willishf at gmail dot com&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> */</a>
+<span class="sourceLineNo">040</span><a id="line.40">public class FastaGeneWriter {</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">        private final static Logger logger = LoggerFactory.getLogger(FastaGeneWriter.class);</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">        boolean showExonUppercase = false;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        OutputStream os;</a>
+<span class="sourceLineNo">046</span><a id="line.46">        Collection&lt;GeneSequence&gt; sequences;</a>
+<span class="sourceLineNo">047</span><a id="line.47">        FastaHeaderFormatInterface&lt;GeneSequence, NucleotideCompound&gt; headerFormat;</a>
+<span class="sourceLineNo">048</span><a id="line.48">        private int lineLength = 60;</a>
+<span class="sourceLineNo">049</span><a id="line.49">/**</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *</a>
+<span class="sourceLineNo">051</span><a id="line.51"> * @param os</a>
+<span class="sourceLineNo">052</span><a id="line.52"> * @param sequences</a>
+<span class="sourceLineNo">053</span><a id="line.53"> * @param headerFormat</a>
+<span class="sourceLineNo">054</span><a id="line.54"> * @param showExonUppercase</a>
+<span class="sourceLineNo">055</span><a id="line.55"> */</a>
+<span class="sourceLineNo">056</span><a id="line.56">        public FastaGeneWriter(OutputStream os, Collection&lt;GeneSequence&gt; sequences, FastaHeaderFormatInterface&lt;GeneSequence, NucleotideCompound&gt; headerFormat, boolean showExonUppercase) {</a>
+<span class="sourceLineNo">057</span><a id="line.57">                this(os, sequences, headerFormat, showExonUppercase, 60);</a>
+<span class="sourceLineNo">058</span><a id="line.58">        }</a>
+<span class="sourceLineNo">059</span><a id="line.59">/**</a>
+<span class="sourceLineNo">060</span><a id="line.60"> *</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * @param os</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * @param sequences</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * @param headerFormat</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * @param showExonUppercase</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * @param lineLength</a>
+<span class="sourceLineNo">066</span><a id="line.66"> */</a>
+<span class="sourceLineNo">067</span><a id="line.67">        public FastaGeneWriter(OutputStream os, Collection&lt;GeneSequence&gt; sequences, FastaHeaderFormatInterface&lt;GeneSequence, NucleotideCompound&gt; headerFormat, boolean showExonUppercase, int lineLength) {</a>
+<span class="sourceLineNo">068</span><a id="line.68">                this.os = os;</a>
+<span class="sourceLineNo">069</span><a id="line.69">                this.sequences = sequences;</a>
+<span class="sourceLineNo">070</span><a id="line.70">                this.headerFormat = headerFormat;</a>
+<span class="sourceLineNo">071</span><a id="line.71">                this.lineLength = lineLength;</a>
+<span class="sourceLineNo">072</span><a id="line.72">                this.showExonUppercase = showExonUppercase;</a>
+<span class="sourceLineNo">073</span><a id="line.73">        }</a>
+<span class="sourceLineNo">074</span><a id="line.74">/**</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * @throws Exception</a>
+<span class="sourceLineNo">077</span><a id="line.77"> */</a>
+<span class="sourceLineNo">078</span><a id="line.78">        public void process() throws Exception {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                byte[] lineSep = System.getProperty("line.separator").getBytes();</a>
+<span class="sourceLineNo">080</span><a id="line.80"></a>
+<span class="sourceLineNo">081</span><a id="line.81">                for (GeneSequence sequence : sequences) {</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        String header = headerFormat.getHeader(sequence);</a>
+<span class="sourceLineNo">083</span><a id="line.83">                        os.write('&gt;');</a>
+<span class="sourceLineNo">084</span><a id="line.84">                        os.write(header.getBytes());</a>
+<span class="sourceLineNo">085</span><a id="line.85">                        os.write(lineSep);</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">                        int compoundCount = 0;</a>
+<span class="sourceLineNo">088</span><a id="line.88">                        String seq = "";</a>
+<span class="sourceLineNo">089</span><a id="line.89">                        //GeneSequence currently has a strand attribute to indicate direction</a>
+<span class="sourceLineNo">090</span><a id="line.90"></a>
+<span class="sourceLineNo">091</span><a id="line.91">                        seq = sequence.getSequence5PrimeTo3Prime().getSequenceAsString();</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        if (showExonUppercase) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                                StringBuilder sb = new StringBuilder(seq.toLowerCase());</a>
+<span class="sourceLineNo">094</span><a id="line.94">                                int geneBioBegin = sequence.getBioBegin();</a>
+<span class="sourceLineNo">095</span><a id="line.95">                                int geneBioEnd = sequence.getBioEnd();</a>
+<span class="sourceLineNo">096</span><a id="line.96">                                for (ExonSequence exonSequence : sequence.getExonSequences()) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">                                        int featureBioBegin = 0;</a>
+<span class="sourceLineNo">098</span><a id="line.98">                                        int featureBioEnd = 0;</a>
+<span class="sourceLineNo">099</span><a id="line.99">                                        if (sequence.getStrand() != Strand.NEGATIVE) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                                                featureBioBegin = exonSequence.getBioBegin() - geneBioBegin;</a>
+<span class="sourceLineNo">101</span><a id="line.101">                                                featureBioEnd = exonSequence.getBioEnd() - geneBioBegin;</a>
+<span class="sourceLineNo">102</span><a id="line.102">                                        } else {</a>
+<span class="sourceLineNo">103</span><a id="line.103">                                                featureBioBegin = geneBioEnd - exonSequence.getBioEnd();</a>
+<span class="sourceLineNo">104</span><a id="line.104">                                                featureBioEnd = geneBioEnd - exonSequence.getBioBegin();</a>
+<span class="sourceLineNo">105</span><a id="line.105">                                        }</a>
+<span class="sourceLineNo">106</span><a id="line.106">                                        if (featureBioBegin &lt; 0 || featureBioEnd &lt; 0 || featureBioEnd &gt; sb.length() || featureBioBegin &gt; sb.length()) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                                logger.warn("Bad Feature, Accession: {}, Sequence Strand: {}, Gene Begin: {}, Gene End: {}, Exon Begin: {}, Exon End: {}", sequence.getAccession().toString(), sequence.getStrand(), geneBioBegin, geneBioEnd, exonSequence.getBioBegin(), exonSequence.getBioEnd());</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                        } else {</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                                for (int i = featureBioBegin; i &lt;= featureBioEnd; i++) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">                                                        char ch = sb.charAt(i);</a>
+<span class="sourceLineNo">111</span><a id="line.111">                                                        //probably not the fastest but the safest way if language is not standard ASCII</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                                        String temp = String.valueOf(ch);</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                                        ch = temp.toUpperCase().charAt(0);</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                                        sb.setCharAt(i, ch);</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                                }</a>
+<span class="sourceLineNo">116</span><a id="line.116">                                        }</a>
+<span class="sourceLineNo">117</span><a id="line.117">                                }</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                seq = sb.toString();</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">                        for (int i = 0; i &lt; seq.length(); i++) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                os.write(seq.charAt(i));</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                compoundCount++;</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                if (compoundCount == lineLength) {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                        os.write(lineSep);</a>
+<span class="sourceLineNo">126</span><a id="line.126">                                        compoundCount = 0;</a>
+<span class="sourceLineNo">127</span><a id="line.127">                                }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">                        }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">                        //If we had sequence which was a reciprocal of line length</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        //then don't write the line terminator as this has already written</a>
+<span class="sourceLineNo">134</span><a id="line.134">                        //it</a>
+<span class="sourceLineNo">135</span><a id="line.135">                        if ((sequence.getLength() % getLineLength()) != 0) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                                os.write(lineSep);</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        }</a>
+<span class="sourceLineNo">138</span><a id="line.138">                }</a>
+<span class="sourceLineNo">139</span><a id="line.139">        }</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">        /**</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @return the lineLength</a>
+<span class="sourceLineNo">143</span><a id="line.143">         */</a>
+<span class="sourceLineNo">144</span><a id="line.144">        public int getLineLength() {</a>
+<span class="sourceLineNo">145</span><a id="line.145">                return lineLength;</a>
+<span class="sourceLineNo">146</span><a id="line.146">        }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">        /**</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * @param lineLength the lineLength to set</a>
+<span class="sourceLineNo">150</span><a id="line.150">         */</a>
+<span class="sourceLineNo">151</span><a id="line.151">        public void setLineLength(int lineLength) {</a>
+<span class="sourceLineNo">152</span><a id="line.152">                this.lineLength = lineLength;</a>
+<span class="sourceLineNo">153</span><a id="line.153">        }</a>
+<span class="sourceLineNo">154</span><a id="line.154"></a>
+<span class="sourceLineNo">155</span><a id="line.155">        </a>
+<span class="sourceLineNo">156</span><a id="line.156">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

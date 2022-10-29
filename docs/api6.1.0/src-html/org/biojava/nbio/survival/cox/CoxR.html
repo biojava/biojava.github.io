@@ -1,0 +1,1253 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*</a>
+<span class="sourceLineNo">002</span><a id="line.2"> *                    BioJava development code</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * This code may be freely distributed and modified under the</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * terms of the GNU Lesser General Public Licence.  This should</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * be distributed with the code.  If you do not have a copy,</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * see:</a>
+<span class="sourceLineNo">008</span><a id="line.8"> *</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *      http://www.gnu.org/copyleft/lesser.html</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Copyright for this code is held jointly by the individual</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * authors.  These should be listed in @author doc comments.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * For more information on the BioJava project and its aims,</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * or to join the biojava-l mailing list, visit the home page</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * at:</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *      http://www.biojava.org/</a>
+<span class="sourceLineNo">019</span><a id="line.19"> *</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">package org.biojava.nbio.survival.cox;</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">import org.biojava.nbio.survival.cox.matrix.Matrix;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import org.biojava.nbio.survival.cox.stats.ChiSq;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.biojava.nbio.survival.cox.stats.Cholesky2;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.biojava.nbio.survival.data.WorkSheet;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.io.InputStream;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.ArrayList;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Collections;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">/**</a>
+<span class="sourceLineNo">033</span><a id="line.33"> *   This is a port of the R survival code used for doing Cox Regression. The algorithm was a fairly easy port from C code to Java where the challenge was</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *   making the code a little more object friendly. In the R code everything is passed around as an array and a large portion of the code is spent extracting</a>
+<span class="sourceLineNo">035</span><a id="line.35"> *   data from the array for use in different calculations. By organizing the data in a class for each data point was able to simplify much of the code.</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *   Not all variants of different methods that you can select for doing various statistical calculations are implemented. Wouldn't be difficult to go back in</a>
+<span class="sourceLineNo">037</span><a id="line.37"> *   add them in if they are important.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> *</a>
+<span class="sourceLineNo">039</span><a id="line.39"> *&lt;p&gt;In R you can pass in different paramaters to override defaults which requires parsing of the paramaters. In the Java code tried to be a little more exact</a>
+<span class="sourceLineNo">040</span><a id="line.40"> *   in the code related to paramaters where using strata, weighting, robust and cluster are advance options. Additionaly code is implemented from Bob Gray</a>
+<span class="sourceLineNo">041</span><a id="line.41"> *   to do variance correction when using weighted paramaters in a data set.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> *   /Users/Scooter/NetBeansProjects/biojava3-survival/docs/wtexamples.docx</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *&lt;p&gt;The CoxHelper class is meant to hide some of the implementation details.</a>
+<span class="sourceLineNo">045</span><a id="line.45"> *</a>
+<span class="sourceLineNo">046</span><a id="line.46"> *&lt;p&gt;Issues</a>
+<span class="sourceLineNo">047</span><a id="line.47"> *&lt;ul&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48"> *&lt;li&gt;sign in CoxMart?</a>
+<span class="sourceLineNo">049</span><a id="line.49"> *&lt;li&gt;double toler_chol = 1.818989e-12; Different value for some reason</a>
+<span class="sourceLineNo">050</span><a id="line.50"> *&lt;li&gt;In robust linear_predictor set to 0 which implies score = 1 but previous score value doesn't get reset</a>
+<span class="sourceLineNo">051</span><a id="line.51"> *&lt;/ul&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52"> *</a>
+<span class="sourceLineNo">053</span><a id="line.53"> *  Cox regression fit, replacement for coxfit2 in order</a>
+<span class="sourceLineNo">054</span><a id="line.54"> *    to be more frugal about memory: specificly that we</a>
+<span class="sourceLineNo">055</span><a id="line.55"> *    don't make copies of the input data.</a>
+<span class="sourceLineNo">056</span><a id="line.56"> *</a>
+<span class="sourceLineNo">057</span><a id="line.57"> *</a>
+<span class="sourceLineNo">058</span><a id="line.58"> *</a>
+<span class="sourceLineNo">059</span><a id="line.59"> *</a>
+<span class="sourceLineNo">060</span><a id="line.60"> *</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * &lt;p&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62"> * the input parameters are</a>
+<span class="sourceLineNo">063</span><a id="line.63"> *</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65"> *      maxiter      :number of iterations</a>
+<span class="sourceLineNo">066</span><a id="line.66"> *      time(n)      :time of status or censoring for person i</a>
+<span class="sourceLineNo">067</span><a id="line.67"> *      status(n)    :status for the ith person    1=dead , 0=censored</a>
+<span class="sourceLineNo">068</span><a id="line.68"> *      covar(nv,n)  :covariates for person i.</a>
+<span class="sourceLineNo">069</span><a id="line.69"> *                       Note that S sends this in column major order.</a>
+<span class="sourceLineNo">070</span><a id="line.70"> *      strata(n)    :marks the strata.  Will be 1 if this person is the</a>
+<span class="sourceLineNo">071</span><a id="line.71"> *                      last one in a strata.  If there are no strata, the</a>
+<span class="sourceLineNo">072</span><a id="line.72"> *                      vector can be identically zero, since the nth person's</a>
+<span class="sourceLineNo">073</span><a id="line.73"> *                      value is always assumed to be = to 1.</a>
+<span class="sourceLineNo">074</span><a id="line.74"> *      offset(n)    :offset for the linear predictor</a>
+<span class="sourceLineNo">075</span><a id="line.75"> *      weights(n)   :case weights</a>
+<span class="sourceLineNo">076</span><a id="line.76"> *      init         :initial estimate for the coefficients</a>
+<span class="sourceLineNo">077</span><a id="line.77"> *      eps          :tolerance for convergence.  Iteration continues until</a>
+<span class="sourceLineNo">078</span><a id="line.78"> *                      the percent change in loglikelihood is &lt;= eps.</a>
+<span class="sourceLineNo">079</span><a id="line.79"> *      chol_tol     : tolerance for the Cholesky decompostion</a>
+<span class="sourceLineNo">080</span><a id="line.80"> *      method       : 0=Breslow, 1=Efron</a>
+<span class="sourceLineNo">081</span><a id="line.81"> *      doscale      : 0=don't scale the X matrix, 1=scale the X matrix</a>
+<span class="sourceLineNo">082</span><a id="line.82"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83"> * returned parameters</a>
+<span class="sourceLineNo">084</span><a id="line.84"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85"> *      means(nv)    : vector of column means of X</a>
+<span class="sourceLineNo">086</span><a id="line.86"> *      beta(nv)     :the vector of answers (at start contains initial est)</a>
+<span class="sourceLineNo">087</span><a id="line.87"> *      u(nv)        :score vector</a>
+<span class="sourceLineNo">088</span><a id="line.88"> *      imat(nv,nv)  :the variance matrix at beta=final</a>
+<span class="sourceLineNo">089</span><a id="line.89"> *                     (returned as a vector)</a>
+<span class="sourceLineNo">090</span><a id="line.90"> *      loglik(2)    :loglik at beta=initial values, at beta=final</a>
+<span class="sourceLineNo">091</span><a id="line.91"> *      sctest       :the score test at beta=initial</a>
+<span class="sourceLineNo">092</span><a id="line.92"> *      flag         :success flag  1000  did not converge</a>
+<span class="sourceLineNo">093</span><a id="line.93"> *                                  1 to nvar: rank of the solution</a>
+<span class="sourceLineNo">094</span><a id="line.94"> *      iterations         :actual number of iterations used</a>
+<span class="sourceLineNo">095</span><a id="line.95"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96"> * work arrays</a>
+<span class="sourceLineNo">097</span><a id="line.97"> * &lt;pre&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98"> *      mark(n)</a>
+<span class="sourceLineNo">099</span><a id="line.99"> *      wtave(n)</a>
+<span class="sourceLineNo">100</span><a id="line.100"> *      a(nvar), a2(nvar)</a>
+<span class="sourceLineNo">101</span><a id="line.101"> *      cmat(nvar,nvar)       ragged array</a>
+<span class="sourceLineNo">102</span><a id="line.102"> *      cmat2(nvar,nvar)</a>
+<span class="sourceLineNo">103</span><a id="line.103"> *      newbeta(nvar)         always contains the "next iteration"</a>
+<span class="sourceLineNo">104</span><a id="line.104"> * &lt;/pre&gt;</a>
+<span class="sourceLineNo">105</span><a id="line.105"> * calls functions:  cholesky2, chsolve2, chinv2</a>
+<span class="sourceLineNo">106</span><a id="line.106"> * &lt;p&gt;</a>
+<span class="sourceLineNo">107</span><a id="line.107"> * the data must be sorted by ascending time within strata</a>
+<span class="sourceLineNo">108</span><a id="line.108"> *</a>
+<span class="sourceLineNo">109</span><a id="line.109"> * @author Scooter Willis &lt;willishf at gmail dot com&gt;</a>
+<span class="sourceLineNo">110</span><a id="line.110"> */</a>
+<span class="sourceLineNo">111</span><a id="line.111">public class CoxR {</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">        /**</a>
+<span class="sourceLineNo">114</span><a id="line.114">         *</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * @param variables</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * @param DataT</a>
+<span class="sourceLineNo">117</span><a id="line.117">         * @param useStrata</a>
+<span class="sourceLineNo">118</span><a id="line.118">         * @param useWeighted</a>
+<span class="sourceLineNo">119</span><a id="line.119">         * @param robust</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * @param cluster</a>
+<span class="sourceLineNo">121</span><a id="line.121">         * @return</a>
+<span class="sourceLineNo">122</span><a id="line.122">         * @throws Exception</a>
+<span class="sourceLineNo">123</span><a id="line.123">         */</a>
+<span class="sourceLineNo">124</span><a id="line.124">        public CoxInfo process(ArrayList&lt;String&gt; variables, ArrayList&lt;SurvivalInfo&gt; DataT, boolean useStrata, boolean useWeighted, boolean robust, boolean cluster) throws Exception {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                //from coxph.control.S</a>
+<span class="sourceLineNo">126</span><a id="line.126">                int maxiter2 = 20;</a>
+<span class="sourceLineNo">127</span><a id="line.127">                double eps2 = 1e-9;</a>
+<span class="sourceLineNo">128</span><a id="line.128">                double toler2 = Math.pow(eps2, .75);</a>
+<span class="sourceLineNo">129</span><a id="line.129">                int doscale2 = 1;</a>
+<span class="sourceLineNo">130</span><a id="line.130">                //int method2 = 0;</a>
+<span class="sourceLineNo">131</span><a id="line.131">                double[] beta = new double[variables.size()];</a>
+<span class="sourceLineNo">132</span><a id="line.132">                return process(variables, DataT, maxiter2, CoxMethod.Efron, eps2, toler2, beta, doscale2, useStrata, useWeighted, robust, cluster);</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">        }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">        /**</a>
+<span class="sourceLineNo">137</span><a id="line.137">         *</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * @param variables</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * @param data</a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @param maxiter</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * @param method</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @param eps</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * @param toler</a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @param beta</a>
+<span class="sourceLineNo">145</span><a id="line.145">         * @param doscale</a>
+<span class="sourceLineNo">146</span><a id="line.146">         * @param useStrata</a>
+<span class="sourceLineNo">147</span><a id="line.147">         * @param useWeighted</a>
+<span class="sourceLineNo">148</span><a id="line.148">         * @param robust</a>
+<span class="sourceLineNo">149</span><a id="line.149">         * @param cluster</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * @return</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * @throws Exception</a>
+<span class="sourceLineNo">152</span><a id="line.152">         */</a>
+<span class="sourceLineNo">153</span><a id="line.153">        public CoxInfo process(ArrayList&lt;String&gt; variables, ArrayList&lt;SurvivalInfo&gt; data, int maxiter, CoxMethod method, double eps, double toler, double[] beta, int doscale, boolean useStrata, boolean useWeighted, boolean robust, boolean cluster) throws Exception {</a>
+<span class="sourceLineNo">154</span><a id="line.154">                //make sure data is converted to numbers if labels are used</a>
+<span class="sourceLineNo">155</span><a id="line.155">                SurvivalInfoHelper.categorizeData(data);</a>
+<span class="sourceLineNo">156</span><a id="line.156">                //create variables if testing for interaction</a>
+<span class="sourceLineNo">157</span><a id="line.157">                for (String variable : variables) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                        if (variable.indexOf(":") != -1) {</a>
+<span class="sourceLineNo">159</span><a id="line.159">                                String[] d = variable.split(":");</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                SurvivalInfoHelper.addInteraction(d[0], d[1], data);</a>
+<span class="sourceLineNo">161</span><a id="line.161">                        }</a>
+<span class="sourceLineNo">162</span><a id="line.162">                }</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164">                Collections.sort(data);</a>
+<span class="sourceLineNo">165</span><a id="line.165">                // Collections.reverse(data);</a>
+<span class="sourceLineNo">166</span><a id="line.166">                CoxInfo coxInfo = new CoxInfo();</a>
+<span class="sourceLineNo">167</span><a id="line.167">                coxInfo.setSurvivalInfoList(data);</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">                int i, j, k, person;</a>
+<span class="sourceLineNo">172</span><a id="line.172">                boolean gotofinish = false;</a>
+<span class="sourceLineNo">173</span><a id="line.173">                double[][] cmat, imat;  /*ragged arrays covar[][], */</a>
+<span class="sourceLineNo">174</span><a id="line.174">                double wtave;</a>
+<span class="sourceLineNo">175</span><a id="line.175">                double[] a, newbeta;</a>
+<span class="sourceLineNo">176</span><a id="line.176">                double[] a2;</a>
+<span class="sourceLineNo">177</span><a id="line.177">                double[][] cmat2;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                double[] scale;</a>
+<span class="sourceLineNo">179</span><a id="line.179">                double denom = 0, zbeta, risk;</a>
+<span class="sourceLineNo">180</span><a id="line.180">                double temp, temp2;</a>
+<span class="sourceLineNo">181</span><a id="line.181">                int ndead;  /* actually, the sum of their weights */</a>
+<span class="sourceLineNo">182</span><a id="line.182">                double newlk = 0;</a>
+<span class="sourceLineNo">183</span><a id="line.183">                double dtime, d2;</a>
+<span class="sourceLineNo">184</span><a id="line.184">                double deadwt;  /*sum of case weights for the deaths*/</a>
+<span class="sourceLineNo">185</span><a id="line.185">                double efronwt; /* sum of weighted risk scores for the deaths*/</a>
+<span class="sourceLineNo">186</span><a id="line.186">                int halving;    /*are we doing step halving at the moment? */</a>
+<span class="sourceLineNo">187</span><a id="line.187">                @SuppressWarnings("unused")</a>
+<span class="sourceLineNo">188</span><a id="line.188">                int nrisk = 0;   /* number of subjects in the current risk set */</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">                /* copies of scalar input arguments */</a>
+<span class="sourceLineNo">191</span><a id="line.191">                int nused, nvar;</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194"></a>
+<span class="sourceLineNo">195</span><a id="line.195"></a>
+<span class="sourceLineNo">196</span><a id="line.196">                /* vector inputs */</a>
+<span class="sourceLineNo">197</span><a id="line.197">                //  double *time, *weights, *offset;</a>
+<span class="sourceLineNo">198</span><a id="line.198">                //  int *status, *strata;</a>
+<span class="sourceLineNo">199</span><a id="line.199"></a>
+<span class="sourceLineNo">200</span><a id="line.200">                /* returned objects */</a>
+<span class="sourceLineNo">201</span><a id="line.201">                // double imat2[][];</a>
+<span class="sourceLineNo">202</span><a id="line.202">                double[] u, loglik, means;</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">                double sctest;</a>
+<span class="sourceLineNo">206</span><a id="line.206">                int flag = 0;</a>
+<span class="sourceLineNo">207</span><a id="line.207">                int iter = 0;</a>
+<span class="sourceLineNo">208</span><a id="line.208">                //SEXP rlist, rlistnames;</a>
+<span class="sourceLineNo">209</span><a id="line.209">                //  int nprotect;  /* number of protect calls I have issued */</a>
+<span class="sourceLineNo">210</span><a id="line.210"></a>
+<span class="sourceLineNo">211</span><a id="line.211">                /* get local copies of some input args */</a>
+<span class="sourceLineNo">212</span><a id="line.212">                nused = data.size(); // LENGTH(offset2);</a>
+<span class="sourceLineNo">213</span><a id="line.213">                nvar = variables.size(); // ncols(covar2);</a>
+<span class="sourceLineNo">214</span><a id="line.214"></a>
+<span class="sourceLineNo">215</span><a id="line.215"></a>
+<span class="sourceLineNo">216</span><a id="line.216">                //       imat2 = new double[nvar][nvar];</a>
+<span class="sourceLineNo">217</span><a id="line.217">//        nprotect++;</a>
+<span class="sourceLineNo">218</span><a id="line.218">                imat = new double[nvar][nvar]; //dmatrix(REAL(imat2),  nvar, nvar);</a>
+<span class="sourceLineNo">219</span><a id="line.219">                a = new double[nvar]; //(double *) R_alloc(2*nvar*nvar + 4*nvar, sizeof(double));</a>
+<span class="sourceLineNo">220</span><a id="line.220">                newbeta = new double[nvar]; //a + nvar;</a>
+<span class="sourceLineNo">221</span><a id="line.221">                a2 = new double[nvar]; //newbeta + nvar;</a>
+<span class="sourceLineNo">222</span><a id="line.222">                scale = new double[nvar]; //a2 + nvar;</a>
+<span class="sourceLineNo">223</span><a id="line.223">                cmat = new double[nvar][nvar]; //dmatrix(scale + nvar,   nvar, nvar);</a>
+<span class="sourceLineNo">224</span><a id="line.224">                cmat2 = new double[nvar][nvar]; //dmatrix(scale + nvar +nvar*nvar, nvar, nvar);</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">                /*</a>
+<span class="sourceLineNo">227</span><a id="line.227">                 ** create output variables</a>
+<span class="sourceLineNo">228</span><a id="line.228">                 */</a>
+<span class="sourceLineNo">229</span><a id="line.229">//    PROTECT(beta2 = duplicate(ibeta));</a>
+<span class="sourceLineNo">230</span><a id="line.230">//    beta = REAL(beta2);</a>
+<span class="sourceLineNo">231</span><a id="line.231">                //  beta = new double[nvar];</a>
+<span class="sourceLineNo">232</span><a id="line.232">                // beta = beta2;</a>
+<span class="sourceLineNo">233</span><a id="line.233">                //  PROTECT(means2 = allocVector(REALSXP, nvar));</a>
+<span class="sourceLineNo">234</span><a id="line.234">                //  means = REAL(means2);</a>
+<span class="sourceLineNo">235</span><a id="line.235">                means = new double[nvar];</a>
+<span class="sourceLineNo">236</span><a id="line.236">                double[] sd = new double[nvar];</a>
+<span class="sourceLineNo">237</span><a id="line.237">                //double[] se = new double[nvar];</a>
+<span class="sourceLineNo">238</span><a id="line.238"></a>
+<span class="sourceLineNo">239</span><a id="line.239">                //   means = means2;</a>
+<span class="sourceLineNo">240</span><a id="line.240">                //   PROTECT(u2 = allocVector(REALSXP, nvar));</a>
+<span class="sourceLineNo">241</span><a id="line.241">                //   u = REAL(u2);</a>
+<span class="sourceLineNo">242</span><a id="line.242">                u = new double[nvar];</a>
+<span class="sourceLineNo">243</span><a id="line.243">                //   u = u2;</a>
+<span class="sourceLineNo">244</span><a id="line.244">//    PROTECT(loglik2 = allocVector(REALSXP, 2));</a>
+<span class="sourceLineNo">245</span><a id="line.245">//    loglik = REAL(loglik2);</a>
+<span class="sourceLineNo">246</span><a id="line.246">                loglik = new double[2];</a>
+<span class="sourceLineNo">247</span><a id="line.247">                //   loglik = loglik2;</a>
+<span class="sourceLineNo">248</span><a id="line.248">//    PROTECT(sctest2 = allocVector(REALSXP, 1));</a>
+<span class="sourceLineNo">249</span><a id="line.249">//    sctest = REAL(sctest2);</a>
+<span class="sourceLineNo">250</span><a id="line.250">//        sctest = new double[1];</a>
+<span class="sourceLineNo">251</span><a id="line.251">                //   sctest = sctest2;</a>
+<span class="sourceLineNo">252</span><a id="line.252">//    PROTECT(flag2 = allocVector(INTSXP, 1));</a>
+<span class="sourceLineNo">253</span><a id="line.253">//    flag = INTEGER(flag2);</a>
+<span class="sourceLineNo">254</span><a id="line.254">//        flag = new int[1];</a>
+<span class="sourceLineNo">255</span><a id="line.255">                //     flag = flag2;</a>
+<span class="sourceLineNo">256</span><a id="line.256">//    PROTECT(iter2 = allocVector(INTSXP, 1));</a>
+<span class="sourceLineNo">257</span><a id="line.257">//    iterations = INTEGER(iter2);</a>
+<span class="sourceLineNo">258</span><a id="line.258">//        iterations = new int[1];</a>
+<span class="sourceLineNo">259</span><a id="line.259">//        iterations = iter2;</a>
+<span class="sourceLineNo">260</span><a id="line.260">                //       nprotect += 7;</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262">                /*</a>
+<span class="sourceLineNo">263</span><a id="line.263">                 ** Subtract the mean from each covar, as this makes the regression</a>
+<span class="sourceLineNo">264</span><a id="line.264">                 **  much more stable.</a>
+<span class="sourceLineNo">265</span><a id="line.265">                 */</a>
+<span class="sourceLineNo">266</span><a id="line.266">                double[] time = new double[nused];</a>
+<span class="sourceLineNo">267</span><a id="line.267">                int[] status = new int[nused];</a>
+<span class="sourceLineNo">268</span><a id="line.268">                double[] offset = new double[nused];</a>
+<span class="sourceLineNo">269</span><a id="line.269">                double[] weights = new double[nused];</a>
+<span class="sourceLineNo">270</span><a id="line.270">                int[] strata = new int[nused];</a>
+<span class="sourceLineNo">271</span><a id="line.271"></a>
+<span class="sourceLineNo">272</span><a id="line.272">                double[][] covar = new double[nvar][nused];</a>
+<span class="sourceLineNo">273</span><a id="line.273">                ArrayList&lt;String&gt; clusterList = null;</a>
+<span class="sourceLineNo">274</span><a id="line.274"></a>
+<span class="sourceLineNo">275</span><a id="line.275">                if(cluster){</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        clusterList = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">277</span><a id="line.277">                }</a>
+<span class="sourceLineNo">278</span><a id="line.278">                //copy data over to local arrays to minimuze changing code</a>
+<span class="sourceLineNo">279</span><a id="line.279">                for (person = 0; person &lt; nused; person++) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                        SurvivalInfo si = data.get(person);</a>
+<span class="sourceLineNo">281</span><a id="line.281">                        time[person] = si.getTime();</a>
+<span class="sourceLineNo">282</span><a id="line.282">                        status[person] = si.getStatus();</a>
+<span class="sourceLineNo">283</span><a id="line.283">                        offset[person] = si.getOffset();</a>
+<span class="sourceLineNo">284</span><a id="line.284">                        if(cluster){</a>
+<span class="sourceLineNo">285</span><a id="line.285">                                if(si.getClusterValue() == null &amp;&amp; si.getClusterValue().length() == 0){</a>
+<span class="sourceLineNo">286</span><a id="line.286">                                        throw new Exception("Cluster value is not valid for " + si.toString());</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                }</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                clusterList.add(si.getClusterValue());</a>
+<span class="sourceLineNo">289</span><a id="line.289">                        }</a>
+<span class="sourceLineNo">290</span><a id="line.290">                        if (useWeighted) {</a>
+<span class="sourceLineNo">291</span><a id="line.291">                                weights[person] = si.getWeight();</a>
+<span class="sourceLineNo">292</span><a id="line.292">                        } else {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                weights[person] = 1.0;</a>
+<span class="sourceLineNo">294</span><a id="line.294">                        }</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        if (useStrata) {</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                strata[person] = si.getStrata();</a>
+<span class="sourceLineNo">297</span><a id="line.297">                        } else {</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                strata[person] = 0;</a>
+<span class="sourceLineNo">299</span><a id="line.299">                        }</a>
+<span class="sourceLineNo">300</span><a id="line.300">                        for (i = 0; i &lt; variables.size(); i++) {</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                String variable = variables.get(i);</a>
+<span class="sourceLineNo">302</span><a id="line.302">                                covar[i][person] = si.getVariable(variable);</a>
+<span class="sourceLineNo">303</span><a id="line.303">                        }</a>
+<span class="sourceLineNo">304</span><a id="line.304">                }</a>
+<span class="sourceLineNo">305</span><a id="line.305"></a>
+<span class="sourceLineNo">306</span><a id="line.306">                double tempsd = 0;</a>
+<span class="sourceLineNo">307</span><a id="line.307">                i = 0;</a>
+<span class="sourceLineNo">308</span><a id="line.308">                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">309</span><a id="line.309"></a>
+<span class="sourceLineNo">310</span><a id="line.310">                        temp = 0;</a>
+<span class="sourceLineNo">311</span><a id="line.311">                        tempsd = 0;</a>
+<span class="sourceLineNo">312</span><a id="line.312">                        //calculate the mean sd</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">                        for (person = 0; person &lt; nused; person++) {</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316">                                temp += covar[i][person]; // * weights[person];</a>
+<span class="sourceLineNo">317</span><a id="line.317">                                tempsd += (covar[i][person]) * (covar[i][person]); //*weights[person] * weights[person]</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        }</a>
+<span class="sourceLineNo">319</span><a id="line.319">                        temp /= nused;</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        //   temp /= weightCount;</a>
+<span class="sourceLineNo">321</span><a id="line.321">                        means[i] = temp;</a>
+<span class="sourceLineNo">322</span><a id="line.322">                        tempsd /= nused;</a>
+<span class="sourceLineNo">323</span><a id="line.323">                        //  tempsd /= weightCount;</a>
+<span class="sourceLineNo">324</span><a id="line.324">                        tempsd = Math.sqrt(tempsd - temp * temp);</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        sd[i] = tempsd; //standard deviation</a>
+<span class="sourceLineNo">326</span><a id="line.326">                        //subtract the mean</a>
+<span class="sourceLineNo">327</span><a id="line.327">                        for (person = 0; person &lt; nused; person++) {</a>
+<span class="sourceLineNo">328</span><a id="line.328">                                covar[i][person] -= temp;</a>
+<span class="sourceLineNo">329</span><a id="line.329">                        }</a>
+<span class="sourceLineNo">330</span><a id="line.330">                        if (doscale == 1) {  /* and also scale it */</a>
+<span class="sourceLineNo">331</span><a id="line.331">                                temp = 0;</a>
+<span class="sourceLineNo">332</span><a id="line.332">                                for (person = 0; person &lt; nused; person++) {</a>
+<span class="sourceLineNo">333</span><a id="line.333">                                        temp += Math.abs(covar[i][person]); //fabs</a>
+<span class="sourceLineNo">334</span><a id="line.334">                                }</a>
+<span class="sourceLineNo">335</span><a id="line.335">                                if (temp &gt; 0) {</a>
+<span class="sourceLineNo">336</span><a id="line.336">                                        temp = nused / temp;   /* scaling */</a>
+<span class="sourceLineNo">337</span><a id="line.337">                                } else {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                                        temp = 1.0; /* rare case of a constant covariate */</a>
+<span class="sourceLineNo">339</span><a id="line.339">                                }</a>
+<span class="sourceLineNo">340</span><a id="line.340">                                scale[i] = temp;</a>
+<span class="sourceLineNo">341</span><a id="line.341">                                for (person = 0; person &lt; nused; person++) {</a>
+<span class="sourceLineNo">342</span><a id="line.342">                                        covar[i][person] *= temp;</a>
+<span class="sourceLineNo">343</span><a id="line.343">                                }</a>
+<span class="sourceLineNo">344</span><a id="line.344">                        }</a>
+<span class="sourceLineNo">345</span><a id="line.345">                }</a>
+<span class="sourceLineNo">346</span><a id="line.346">                if (doscale == 1) {</a>
+<span class="sourceLineNo">347</span><a id="line.347">                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">348</span><a id="line.348">                                beta[i] /= scale[i]; /*rescale initial betas */</a>
+<span class="sourceLineNo">349</span><a id="line.349">                        }</a>
+<span class="sourceLineNo">350</span><a id="line.350">                } else {</a>
+<span class="sourceLineNo">351</span><a id="line.351">                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">352</span><a id="line.352">                                scale[i] = 1.0;</a>
+<span class="sourceLineNo">353</span><a id="line.353">                        }</a>
+<span class="sourceLineNo">354</span><a id="line.354">                }</a>
+<span class="sourceLineNo">355</span><a id="line.355"></a>
+<span class="sourceLineNo">356</span><a id="line.356">                /*</a>
+<span class="sourceLineNo">357</span><a id="line.357">                 ** do the initial iteration step</a>
+<span class="sourceLineNo">358</span><a id="line.358">                 */</a>
+<span class="sourceLineNo">359</span><a id="line.359">                strata[nused - 1] = 1;</a>
+<span class="sourceLineNo">360</span><a id="line.360">                loglik[1] = 0;</a>
+<span class="sourceLineNo">361</span><a id="line.361">                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        u[i] = 0;  //u = s1</a>
+<span class="sourceLineNo">363</span><a id="line.363">                        a2[i] = 0; //a2 = a</a>
+<span class="sourceLineNo">364</span><a id="line.364">                        for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                imat[i][j] = 0;  //s2</a>
+<span class="sourceLineNo">366</span><a id="line.366">                                cmat2[i][j] = 0; //a</a>
+<span class="sourceLineNo">367</span><a id="line.367">                        }</a>
+<span class="sourceLineNo">368</span><a id="line.368">                }</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">                for (person = nused - 1; person &gt;= 0;) {</a>
+<span class="sourceLineNo">371</span><a id="line.371">                        if (strata[person] == 1) {</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                nrisk = 0;</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                denom = 0;</a>
+<span class="sourceLineNo">374</span><a id="line.374">                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">375</span><a id="line.375">                                        a[i] = 0;</a>
+<span class="sourceLineNo">376</span><a id="line.376">                                        for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">377</span><a id="line.377">                                                cmat[i][j] = 0;</a>
+<span class="sourceLineNo">378</span><a id="line.378">                                        }</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                }</a>
+<span class="sourceLineNo">380</span><a id="line.380">                        }</a>
+<span class="sourceLineNo">381</span><a id="line.381"></a>
+<span class="sourceLineNo">382</span><a id="line.382">                        dtime = time[person];</a>
+<span class="sourceLineNo">383</span><a id="line.383">                        ndead = 0; /*number of deaths at this time point */</a>
+<span class="sourceLineNo">384</span><a id="line.384">                        deadwt = 0;  /* sum of weights for the deaths */</a>
+<span class="sourceLineNo">385</span><a id="line.385">                        efronwt = 0;  /* sum of weighted risks for the deaths */</a>
+<span class="sourceLineNo">386</span><a id="line.386">                        while (person &gt;= 0 &amp;&amp; time[person] == dtime) {</a>
+<span class="sourceLineNo">387</span><a id="line.387">                                /* walk through the this set of tied times */</a>
+<span class="sourceLineNo">388</span><a id="line.388">                                nrisk++;</a>
+<span class="sourceLineNo">389</span><a id="line.389">                                zbeta = offset[person];    /* form the term beta*z (vector mult) */</a>
+<span class="sourceLineNo">390</span><a id="line.390">                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">391</span><a id="line.391">                                        zbeta += beta[i] * covar[i][person]; //x</a>
+<span class="sourceLineNo">392</span><a id="line.392">                                }</a>
+<span class="sourceLineNo">393</span><a id="line.393">                                zbeta = coxsafe(zbeta);</a>
+<span class="sourceLineNo">394</span><a id="line.394"></a>
+<span class="sourceLineNo">395</span><a id="line.395">                                risk = Math.exp(zbeta) * weights[person]; //risk = v</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                denom += risk;</a>
+<span class="sourceLineNo">397</span><a id="line.397"></a>
+<span class="sourceLineNo">398</span><a id="line.398">                                /* a is the vector of weighted sums of x, cmat sums of squares */</a>
+<span class="sourceLineNo">399</span><a id="line.399">                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">400</span><a id="line.400">                                        a[i] += risk * covar[i][person]; //a = s1</a>
+<span class="sourceLineNo">401</span><a id="line.401">                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">402</span><a id="line.402">                                                cmat[i][j] += risk * covar[i][person] * covar[j][person]; //cmat = s2;</a>
+<span class="sourceLineNo">403</span><a id="line.403">                                        }</a>
+<span class="sourceLineNo">404</span><a id="line.404">                                }</a>
+<span class="sourceLineNo">405</span><a id="line.405"></a>
+<span class="sourceLineNo">406</span><a id="line.406">                                if (status[person] == 1) {</a>
+<span class="sourceLineNo">407</span><a id="line.407">                                        ndead++;</a>
+<span class="sourceLineNo">408</span><a id="line.408">                                        deadwt += weights[person];</a>
+<span class="sourceLineNo">409</span><a id="line.409">                                        efronwt += risk;</a>
+<span class="sourceLineNo">410</span><a id="line.410">                                        loglik[1] += weights[person] * zbeta;</a>
+<span class="sourceLineNo">411</span><a id="line.411"></a>
+<span class="sourceLineNo">412</span><a id="line.412">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">413</span><a id="line.413">                                                u[i] += weights[person] * covar[i][person];</a>
+<span class="sourceLineNo">414</span><a id="line.414">                                        }</a>
+<span class="sourceLineNo">415</span><a id="line.415">                                        if (method == CoxMethod.Efron) { /* Efron */</a>
+<span class="sourceLineNo">416</span><a id="line.416">                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">417</span><a id="line.417">                                                        a2[i] += risk * covar[i][person];</a>
+<span class="sourceLineNo">418</span><a id="line.418">                                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">419</span><a id="line.419">                                                                cmat2[i][j] += risk * covar[i][person] * covar[j][person];</a>
+<span class="sourceLineNo">420</span><a id="line.420">                                                        }</a>
+<span class="sourceLineNo">421</span><a id="line.421">                                                }</a>
+<span class="sourceLineNo">422</span><a id="line.422">                                        }</a>
+<span class="sourceLineNo">423</span><a id="line.423">                                }</a>
+<span class="sourceLineNo">424</span><a id="line.424"></a>
+<span class="sourceLineNo">425</span><a id="line.425">                                person--;</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                if (person &gt;= 0 &amp;&amp; strata[person] == 1) { //added catch of person = 0 and person-- = -1</a>
+<span class="sourceLineNo">427</span><a id="line.427">                                        break;  /*ties don't cross strata */</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                }</a>
+<span class="sourceLineNo">429</span><a id="line.429">                        }</a>
+<span class="sourceLineNo">430</span><a id="line.430"></a>
+<span class="sourceLineNo">431</span><a id="line.431"></a>
+<span class="sourceLineNo">432</span><a id="line.432">                        if (ndead &gt; 0) {  /* we need to add to the main terms */</a>
+<span class="sourceLineNo">433</span><a id="line.433">                                if (method == CoxMethod.Breslow) { /* Breslow */</a>
+<span class="sourceLineNo">434</span><a id="line.434">                                        loglik[1] -= deadwt * Math.log(denom);</a>
+<span class="sourceLineNo">435</span><a id="line.435"></a>
+<span class="sourceLineNo">436</span><a id="line.436">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">437</span><a id="line.437">                                                temp2 = a[i] / denom;  /* mean */</a>
+<span class="sourceLineNo">438</span><a id="line.438">                                                u[i] -= deadwt * temp2;</a>
+<span class="sourceLineNo">439</span><a id="line.439">                                                for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">440</span><a id="line.440">                                                        imat[j][i] += deadwt * (cmat[i][j] - temp2 * a[j]) / denom;</a>
+<span class="sourceLineNo">441</span><a id="line.441">                                                }</a>
+<span class="sourceLineNo">442</span><a id="line.442">                                        }</a>
+<span class="sourceLineNo">443</span><a id="line.443">                                } else { /* Efron */</a>
+<span class="sourceLineNo">444</span><a id="line.444">                                        /*</a>
+<span class="sourceLineNo">445</span><a id="line.445">                                         ** If there are 3 deaths we have 3 terms: in the first the</a>
+<span class="sourceLineNo">446</span><a id="line.446">                                         **  three deaths are all in, in the second they are 2/3</a>
+<span class="sourceLineNo">447</span><a id="line.447">                                         **  in the sums, and in the last 1/3 in the sum.  Let k go</a>
+<span class="sourceLineNo">448</span><a id="line.448">                                         **  from 0 to (ndead -1), then we will sequentially use</a>
+<span class="sourceLineNo">449</span><a id="line.449">                                         **     denom - (k/ndead)*efronwt as the denominator</a>
+<span class="sourceLineNo">450</span><a id="line.450">                                         **     a - (k/ndead)*a2 as the "a" term</a>
+<span class="sourceLineNo">451</span><a id="line.451">                                         **     cmat - (k/ndead)*cmat2 as the "cmat" term</a>
+<span class="sourceLineNo">452</span><a id="line.452">                                         **  and reprise the equations just above.</a>
+<span class="sourceLineNo">453</span><a id="line.453">                                         */</a>
+<span class="sourceLineNo">454</span><a id="line.454">                                        for (k = 0; k &lt; ndead; k++) {</a>
+<span class="sourceLineNo">455</span><a id="line.455">                                                temp = (double) k / ndead;</a>
+<span class="sourceLineNo">456</span><a id="line.456">                                                wtave = deadwt / ndead;</a>
+<span class="sourceLineNo">457</span><a id="line.457">                                                d2 = denom - temp * efronwt;</a>
+<span class="sourceLineNo">458</span><a id="line.458">                                                loglik[1] -= wtave * Math.log(d2);</a>
+<span class="sourceLineNo">459</span><a id="line.459">                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">460</span><a id="line.460">                                                        temp2 = (a[i] - temp * a2[i]) / d2;</a>
+<span class="sourceLineNo">461</span><a id="line.461">                                                        u[i] -= wtave * temp2;</a>
+<span class="sourceLineNo">462</span><a id="line.462">                                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">463</span><a id="line.463">                                                                imat[j][i] += (wtave / d2)</a>
+<span class="sourceLineNo">464</span><a id="line.464">                                                                                * ((cmat[i][j] - temp * cmat2[i][j])</a>
+<span class="sourceLineNo">465</span><a id="line.465">                                                                                - temp2 * (a[j] - temp * a2[j]));</a>
+<span class="sourceLineNo">466</span><a id="line.466">                                                        }</a>
+<span class="sourceLineNo">467</span><a id="line.467">                                                }</a>
+<span class="sourceLineNo">468</span><a id="line.468">                                        }</a>
+<span class="sourceLineNo">469</span><a id="line.469"></a>
+<span class="sourceLineNo">470</span><a id="line.470">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">471</span><a id="line.471">                                                a2[i] = 0;</a>
+<span class="sourceLineNo">472</span><a id="line.472">                                                for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">473</span><a id="line.473">                                                        cmat2[i][j] = 0;</a>
+<span class="sourceLineNo">474</span><a id="line.474">                                                }</a>
+<span class="sourceLineNo">475</span><a id="line.475">                                        }</a>
+<span class="sourceLineNo">476</span><a id="line.476">                                }</a>
+<span class="sourceLineNo">477</span><a id="line.477">                        }</a>
+<span class="sourceLineNo">478</span><a id="line.478">                }   /* end  of accumulation loop */</a>
+<span class="sourceLineNo">479</span><a id="line.479">                loglik[0] = loglik[1]; /* save the loglik for iterations 0 */</a>
+<span class="sourceLineNo">480</span><a id="line.480"></a>
+<span class="sourceLineNo">481</span><a id="line.481">                /* am I done?</a>
+<span class="sourceLineNo">482</span><a id="line.482">                 **   update the betas and test for convergence</a>
+<span class="sourceLineNo">483</span><a id="line.483">                 */</a>
+<span class="sourceLineNo">484</span><a id="line.484">                for (i = 0; i &lt; nvar; i++) /*use 'a' as a temp to save u0, for the score test*/ {</a>
+<span class="sourceLineNo">485</span><a id="line.485">                        a[i] = u[i];</a>
+<span class="sourceLineNo">486</span><a id="line.486">                }</a>
+<span class="sourceLineNo">487</span><a id="line.487"></a>
+<span class="sourceLineNo">488</span><a id="line.488">                flag = Cholesky2.process(imat, nvar, toler);</a>
+<span class="sourceLineNo">489</span><a id="line.489">                chsolve2(imat, nvar, a);        /* a replaced by  a *inverse(i) */</a>
+<span class="sourceLineNo">490</span><a id="line.490"></a>
+<span class="sourceLineNo">491</span><a id="line.491">                temp = 0;</a>
+<span class="sourceLineNo">492</span><a id="line.492">                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">493</span><a id="line.493">                        temp += u[i] * a[i];</a>
+<span class="sourceLineNo">494</span><a id="line.494">                }</a>
+<span class="sourceLineNo">495</span><a id="line.495">                sctest = temp;  /* score test */</a>
+<span class="sourceLineNo">496</span><a id="line.496"></a>
+<span class="sourceLineNo">497</span><a id="line.497">                /*</a>
+<span class="sourceLineNo">498</span><a id="line.498">                 **  Never, never complain about convergence on the first step.  That way,</a>
+<span class="sourceLineNo">499</span><a id="line.499">                 **  if someone HAS to they can force one iterations at a time.</a>
+<span class="sourceLineNo">500</span><a id="line.500">                 */</a>
+<span class="sourceLineNo">501</span><a id="line.501">                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">502</span><a id="line.502">                        newbeta[i] = beta[i] + a[i];</a>
+<span class="sourceLineNo">503</span><a id="line.503">                }</a>
+<span class="sourceLineNo">504</span><a id="line.504">                if (maxiter == 0) {</a>
+<span class="sourceLineNo">505</span><a id="line.505">                        chinv2(imat, nvar);</a>
+<span class="sourceLineNo">506</span><a id="line.506">                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">507</span><a id="line.507">                                beta[i] *= scale[i];  /*return to original scale */</a>
+<span class="sourceLineNo">508</span><a id="line.508">                                u[i] /= scale[i];</a>
+<span class="sourceLineNo">509</span><a id="line.509">                                imat[i][i] *= scale[i] * scale[i];</a>
+<span class="sourceLineNo">510</span><a id="line.510">                                for (j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">511</span><a id="line.511">                                        imat[j][i] *= scale[i] * scale[j];</a>
+<span class="sourceLineNo">512</span><a id="line.512">                                        imat[i][j] = imat[j][i];</a>
+<span class="sourceLineNo">513</span><a id="line.513">                                }</a>
+<span class="sourceLineNo">514</span><a id="line.514">                        }</a>
+<span class="sourceLineNo">515</span><a id="line.515">                        // goto finish;</a>
+<span class="sourceLineNo">516</span><a id="line.516">                        gotofinish = true;</a>
+<span class="sourceLineNo">517</span><a id="line.517"></a>
+<span class="sourceLineNo">518</span><a id="line.518">                }</a>
+<span class="sourceLineNo">519</span><a id="line.519"></a>
+<span class="sourceLineNo">520</span><a id="line.520">                /*</a>
+<span class="sourceLineNo">521</span><a id="line.521">                 ** here is the main loop</a>
+<span class="sourceLineNo">522</span><a id="line.522">                 */</a>
+<span class="sourceLineNo">523</span><a id="line.523">                if (!gotofinish) {</a>
+<span class="sourceLineNo">524</span><a id="line.524">                        halving = 0;             /* =1 when in the midst of "step halving" */</a>
+<span class="sourceLineNo">525</span><a id="line.525">                        for (iter = 1; iter &lt;= maxiter; iter++) {</a>
+<span class="sourceLineNo">526</span><a id="line.526">                                newlk = 0;</a>
+<span class="sourceLineNo">527</span><a id="line.527">                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">528</span><a id="line.528">                                        u[i] = 0;</a>
+<span class="sourceLineNo">529</span><a id="line.529">                                        for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">530</span><a id="line.530">                                                imat[i][j] = 0;</a>
+<span class="sourceLineNo">531</span><a id="line.531">                                        }</a>
+<span class="sourceLineNo">532</span><a id="line.532">                                }</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">                                /*</a>
+<span class="sourceLineNo">535</span><a id="line.535">                                 ** The data is sorted from smallest time to largest</a>
+<span class="sourceLineNo">536</span><a id="line.536">                                 ** Start at the largest time, accumulating the risk set 1 by 1</a>
+<span class="sourceLineNo">537</span><a id="line.537">                                 */</a>
+<span class="sourceLineNo">538</span><a id="line.538">                                for (person = nused - 1; person &gt;= 0;) {</a>
+<span class="sourceLineNo">539</span><a id="line.539">                                        if (strata[person] == 1) { /* rezero temps for each strata */</a>
+<span class="sourceLineNo">540</span><a id="line.540">                                                denom = 0;</a>
+<span class="sourceLineNo">541</span><a id="line.541">                                                nrisk = 0;</a>
+<span class="sourceLineNo">542</span><a id="line.542">                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">543</span><a id="line.543">                                                        a[i] = 0;</a>
+<span class="sourceLineNo">544</span><a id="line.544">                                                        for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">545</span><a id="line.545">                                                                cmat[i][j] = 0;</a>
+<span class="sourceLineNo">546</span><a id="line.546">                                                        }</a>
+<span class="sourceLineNo">547</span><a id="line.547">                                                }</a>
+<span class="sourceLineNo">548</span><a id="line.548">                                        }</a>
+<span class="sourceLineNo">549</span><a id="line.549"></a>
+<span class="sourceLineNo">550</span><a id="line.550">                                        dtime = time[person];</a>
+<span class="sourceLineNo">551</span><a id="line.551">                                        deadwt = 0;</a>
+<span class="sourceLineNo">552</span><a id="line.552">                                        ndead = 0;</a>
+<span class="sourceLineNo">553</span><a id="line.553">                                        efronwt = 0;</a>
+<span class="sourceLineNo">554</span><a id="line.554">                                        while (person &gt;= 0 &amp;&amp; time[person] == dtime) {</a>
+<span class="sourceLineNo">555</span><a id="line.555">                                                nrisk++;</a>
+<span class="sourceLineNo">556</span><a id="line.556">                                                zbeta = offset[person];</a>
+<span class="sourceLineNo">557</span><a id="line.557">                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">558</span><a id="line.558">                                                        zbeta += newbeta[i] * covar[i][person];</a>
+<span class="sourceLineNo">559</span><a id="line.559">                                                }</a>
+<span class="sourceLineNo">560</span><a id="line.560">                                                zbeta = coxsafe(zbeta);</a>
+<span class="sourceLineNo">561</span><a id="line.561"></a>
+<span class="sourceLineNo">562</span><a id="line.562"></a>
+<span class="sourceLineNo">563</span><a id="line.563">                                                risk = Math.exp(zbeta) * weights[person];</a>
+<span class="sourceLineNo">564</span><a id="line.564">                                                denom += risk;</a>
+<span class="sourceLineNo">565</span><a id="line.565"></a>
+<span class="sourceLineNo">566</span><a id="line.566">                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">567</span><a id="line.567">                                                        a[i] += risk * covar[i][person];</a>
+<span class="sourceLineNo">568</span><a id="line.568">                                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">569</span><a id="line.569">                                                                cmat[i][j] += risk * covar[i][person] * covar[j][person];</a>
+<span class="sourceLineNo">570</span><a id="line.570">                                                        }</a>
+<span class="sourceLineNo">571</span><a id="line.571">                                                }</a>
+<span class="sourceLineNo">572</span><a id="line.572"></a>
+<span class="sourceLineNo">573</span><a id="line.573">                                                if (status[person] == 1) {</a>
+<span class="sourceLineNo">574</span><a id="line.574">                                                        ndead++;</a>
+<span class="sourceLineNo">575</span><a id="line.575">                                                        deadwt += weights[person];</a>
+<span class="sourceLineNo">576</span><a id="line.576">                                                        newlk += weights[person] * zbeta;</a>
+<span class="sourceLineNo">577</span><a id="line.577">                                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">578</span><a id="line.578">                                                                u[i] += weights[person] * covar[i][person];</a>
+<span class="sourceLineNo">579</span><a id="line.579">                                                        }</a>
+<span class="sourceLineNo">580</span><a id="line.580">                                                        if (method == CoxMethod.Efron) { /* Efron */</a>
+<span class="sourceLineNo">581</span><a id="line.581">                                                                efronwt += risk;</a>
+<span class="sourceLineNo">582</span><a id="line.582">                                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">583</span><a id="line.583">                                                                        a2[i] += risk * covar[i][person];</a>
+<span class="sourceLineNo">584</span><a id="line.584">                                                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">585</span><a id="line.585">                                                                                cmat2[i][j] += risk * covar[i][person] * covar[j][person];</a>
+<span class="sourceLineNo">586</span><a id="line.586">                                                                        }</a>
+<span class="sourceLineNo">587</span><a id="line.587">                                                                }</a>
+<span class="sourceLineNo">588</span><a id="line.588">                                                        }</a>
+<span class="sourceLineNo">589</span><a id="line.589">                                                }</a>
+<span class="sourceLineNo">590</span><a id="line.590"></a>
+<span class="sourceLineNo">591</span><a id="line.591">                                                person--;</a>
+<span class="sourceLineNo">592</span><a id="line.592">                                                if (person &gt;= 0 &amp;&amp; strata[person] == 1) { //added catch of person = 0 and person-- = -1</a>
+<span class="sourceLineNo">593</span><a id="line.593">                                                        break;  /*ties don't cross strata */</a>
+<span class="sourceLineNo">594</span><a id="line.594">                                                }</a>
+<span class="sourceLineNo">595</span><a id="line.595">                                        }</a>
+<span class="sourceLineNo">596</span><a id="line.596"></a>
+<span class="sourceLineNo">597</span><a id="line.597">                                        if (ndead &gt; 0) {  /* add up terms*/</a>
+<span class="sourceLineNo">598</span><a id="line.598">                                                if (method == CoxMethod.Breslow) { /* Breslow */</a>
+<span class="sourceLineNo">599</span><a id="line.599">                                                        newlk -= deadwt * Math.log(denom);</a>
+<span class="sourceLineNo">600</span><a id="line.600">                                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">601</span><a id="line.601">                                                                temp2 = a[i] / denom;  /* mean */</a>
+<span class="sourceLineNo">602</span><a id="line.602">                                                                u[i] -= deadwt * temp2;</a>
+<span class="sourceLineNo">603</span><a id="line.603">                                                                for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">604</span><a id="line.604">                                                                        imat[j][i] += (deadwt / denom)</a>
+<span class="sourceLineNo">605</span><a id="line.605">                                                                                        * (cmat[i][j] - temp2 * a[j]);</a>
+<span class="sourceLineNo">606</span><a id="line.606">                                                                }</a>
+<span class="sourceLineNo">607</span><a id="line.607">                                                        }</a>
+<span class="sourceLineNo">608</span><a id="line.608">                                                } else { /* Efron */</a>
+<span class="sourceLineNo">609</span><a id="line.609">                                                        for (k = 0; k &lt; ndead; k++) {</a>
+<span class="sourceLineNo">610</span><a id="line.610">                                                                temp = (double) k / ndead;</a>
+<span class="sourceLineNo">611</span><a id="line.611">                                                                wtave = deadwt / ndead;</a>
+<span class="sourceLineNo">612</span><a id="line.612">                                                                d2 = denom - temp * efronwt;</a>
+<span class="sourceLineNo">613</span><a id="line.613">                                                                newlk -= wtave * Math.log(d2);</a>
+<span class="sourceLineNo">614</span><a id="line.614">                                                                for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">615</span><a id="line.615">                                                                        temp2 = (a[i] - temp * a2[i]) / d2;</a>
+<span class="sourceLineNo">616</span><a id="line.616">                                                                        u[i] -= wtave * temp2;</a>
+<span class="sourceLineNo">617</span><a id="line.617">                                                                        for (j = 0; j &lt;= i; j++) {</a>
+<span class="sourceLineNo">618</span><a id="line.618">                                                                                imat[j][i] += (wtave / d2)</a>
+<span class="sourceLineNo">619</span><a id="line.619">                                                                                                * ((cmat[i][j] - temp * cmat2[i][j])</a>
+<span class="sourceLineNo">620</span><a id="line.620">                                                                                                - temp2 * (a[j] - temp * a2[j]));</a>
+<span class="sourceLineNo">621</span><a id="line.621">                                                                        }</a>
+<span class="sourceLineNo">622</span><a id="line.622">                                                                }</a>
+<span class="sourceLineNo">623</span><a id="line.623">                                                        }</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+<span class="sourceLineNo">625</span><a id="line.625">                                                        for (i = 0; i &lt; nvar; i++) { /*in anticipation */</a>
+<span class="sourceLineNo">626</span><a id="line.626">                                                                a2[i] = 0;</a>
+<span class="sourceLineNo">627</span><a id="line.627">                                                                for (j = 0; j &lt; nvar; j++) {</a>
+<span class="sourceLineNo">628</span><a id="line.628">                                                                        cmat2[i][j] = 0;</a>
+<span class="sourceLineNo">629</span><a id="line.629">                                                                }</a>
+<span class="sourceLineNo">630</span><a id="line.630">                                                        }</a>
+<span class="sourceLineNo">631</span><a id="line.631">                                                }</a>
+<span class="sourceLineNo">632</span><a id="line.632">                                        }</a>
+<span class="sourceLineNo">633</span><a id="line.633">                                }   /* end  of accumulation loop  */</a>
+<span class="sourceLineNo">634</span><a id="line.634"></a>
+<span class="sourceLineNo">635</span><a id="line.635">                                /* am I done?</a>
+<span class="sourceLineNo">636</span><a id="line.636">                                 **   update the betas and test for convergence</a>
+<span class="sourceLineNo">637</span><a id="line.637">                                 */</a>
+<span class="sourceLineNo">638</span><a id="line.638">                                flag = Cholesky2.process(imat, nvar, toler);</a>
+<span class="sourceLineNo">639</span><a id="line.639"></a>
+<span class="sourceLineNo">640</span><a id="line.640">                                if (Math.abs(1 - (loglik[1] / newlk)) &lt;= eps &amp;&amp; halving == 0) { /* all done */</a>
+<span class="sourceLineNo">641</span><a id="line.641">                                        loglik[1] = newlk;</a>
+<span class="sourceLineNo">642</span><a id="line.642">                                        chinv2(imat, nvar);     /* invert the information matrix */</a>
+<span class="sourceLineNo">643</span><a id="line.643">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">644</span><a id="line.644">                                                beta[i] = newbeta[i] * scale[i];</a>
+<span class="sourceLineNo">645</span><a id="line.645">                                                u[i] /= scale[i];</a>
+<span class="sourceLineNo">646</span><a id="line.646">                                                imat[i][i] *= scale[i] * scale[i];</a>
+<span class="sourceLineNo">647</span><a id="line.647">                                                for (j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">648</span><a id="line.648">                                                        imat[j][i] *= scale[i] * scale[j];</a>
+<span class="sourceLineNo">649</span><a id="line.649">                                                        imat[i][j] = imat[j][i];</a>
+<span class="sourceLineNo">650</span><a id="line.650">                                                }</a>
+<span class="sourceLineNo">651</span><a id="line.651">                                        }</a>
+<span class="sourceLineNo">652</span><a id="line.652">                                        //  goto finish;</a>
+<span class="sourceLineNo">653</span><a id="line.653">                                        gotofinish = true;</a>
+<span class="sourceLineNo">654</span><a id="line.654">                                        break;</a>
+<span class="sourceLineNo">655</span><a id="line.655">                                }</a>
+<span class="sourceLineNo">656</span><a id="line.656"></a>
+<span class="sourceLineNo">657</span><a id="line.657">                                if (iter == maxiter) {</a>
+<span class="sourceLineNo">658</span><a id="line.658">                                        break;  /*skip the step halving calc*/</a>
+<span class="sourceLineNo">659</span><a id="line.659">                                }</a>
+<span class="sourceLineNo">660</span><a id="line.660"></a>
+<span class="sourceLineNo">661</span><a id="line.661">                                if (newlk &lt; loglik[1]) {    /*it is not converging ! */</a>
+<span class="sourceLineNo">662</span><a id="line.662">                                        halving = 1;</a>
+<span class="sourceLineNo">663</span><a id="line.663">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">664</span><a id="line.664">                                                newbeta[i] = (newbeta[i] + beta[i]) / 2; /*half of old increment */</a>
+<span class="sourceLineNo">665</span><a id="line.665">                                        }</a>
+<span class="sourceLineNo">666</span><a id="line.666">                                } else {</a>
+<span class="sourceLineNo">667</span><a id="line.667">                                        halving = 0;</a>
+<span class="sourceLineNo">668</span><a id="line.668">                                        loglik[1] = newlk;</a>
+<span class="sourceLineNo">669</span><a id="line.669">                                        chsolve2(imat, nvar, u);</a>
+<span class="sourceLineNo">670</span><a id="line.670">                                        j = 0;</a>
+<span class="sourceLineNo">671</span><a id="line.671">                                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">672</span><a id="line.672">                                                beta[i] = newbeta[i];</a>
+<span class="sourceLineNo">673</span><a id="line.673">                                                newbeta[i] = newbeta[i] + u[i];</a>
+<span class="sourceLineNo">674</span><a id="line.674">                                        }</a>
+<span class="sourceLineNo">675</span><a id="line.675">                                }</a>
+<span class="sourceLineNo">676</span><a id="line.676">                        }   /* return for another iteration */</a>
+<span class="sourceLineNo">677</span><a id="line.677">                }</a>
+<span class="sourceLineNo">678</span><a id="line.678"></a>
+<span class="sourceLineNo">679</span><a id="line.679">                if (!gotofinish) {</a>
+<span class="sourceLineNo">680</span><a id="line.680">                        /*</a>
+<span class="sourceLineNo">681</span><a id="line.681">                         ** We end up here only if we ran out of iterations</a>
+<span class="sourceLineNo">682</span><a id="line.682">                         */</a>
+<span class="sourceLineNo">683</span><a id="line.683">                        loglik[1] = newlk;</a>
+<span class="sourceLineNo">684</span><a id="line.684">                        chinv2(imat, nvar);</a>
+<span class="sourceLineNo">685</span><a id="line.685">                        for (i = 0; i &lt; nvar; i++) {</a>
+<span class="sourceLineNo">686</span><a id="line.686">                                beta[i] = newbeta[i] * scale[i];</a>
+<span class="sourceLineNo">687</span><a id="line.687">                                u[i] /= scale[i];</a>
+<span class="sourceLineNo">688</span><a id="line.688">                                imat[i][i] *= scale[i] * scale[i];</a>
+<span class="sourceLineNo">689</span><a id="line.689">                                for (j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">690</span><a id="line.690">                                        imat[j][i] *= scale[i] * scale[j];</a>
+<span class="sourceLineNo">691</span><a id="line.691">                                        imat[i][j] = imat[j][i];</a>
+<span class="sourceLineNo">692</span><a id="line.692">                                }</a>
+<span class="sourceLineNo">693</span><a id="line.693">                        }</a>
+<span class="sourceLineNo">694</span><a id="line.694">                        flag = 1000;</a>
+<span class="sourceLineNo">695</span><a id="line.695">                }</a>
+<span class="sourceLineNo">696</span><a id="line.696"></a>
+<span class="sourceLineNo">697</span><a id="line.697">//finish:</a>
+<span class="sourceLineNo">698</span><a id="line.698">                /*</a>
+<span class="sourceLineNo">699</span><a id="line.699">                 for (j = 0; j &lt; numCovariates; j++) {</a>
+<span class="sourceLineNo">700</span><a id="line.700">                 b[j] = b[j] / SD[j];</a>
+<span class="sourceLineNo">701</span><a id="line.701">                 * ix = j * (numCovariates + 1) + j</a>
+<span class="sourceLineNo">702</span><a id="line.702">                 SE[j] = Math.sqrt(a[ix(j, j, numCovariates + 1)]) / SD[j];</a>
+<span class="sourceLineNo">703</span><a id="line.703">                 //            o = o + ("   " + variables.get(j) + "    " + Fmt(b[j]) + Fmt(SE[j]) + Fmt(Math.exp(b[j])) + Fmt(Norm(Math.abs(b[j] / SE[j]))) + Fmt(Math.exp(b[j] - 1.95 * SE[j])) + Fmt(Math.exp(b[j] + 1.95 * SE[j])) + NL);</a>
+<span class="sourceLineNo">704</span><a id="line.704">                 CoxCoefficient coe = coxInfo.getCoefficient(variables.get(j));</a>
+<span class="sourceLineNo">705</span><a id="line.705">                 coe.coeff = b[j];</a>
+<span class="sourceLineNo">706</span><a id="line.706">                 coe.stdError = SE[j];</a>
+<span class="sourceLineNo">707</span><a id="line.707">                 coe.hazardRatio = Math.exp(b[j]);</a>
+<span class="sourceLineNo">708</span><a id="line.708">                 coe.pvalue = Norm(Math.abs(b[j] / SE[j]));</a>
+<span class="sourceLineNo">709</span><a id="line.709">                 coe.hazardRatioLoCI = Math.exp(b[j] - 1.95 * SE[j]);</a>
+<span class="sourceLineNo">710</span><a id="line.710">                 coe.hazardRatioHiCI = Math.exp(b[j] + 1.95 * SE[j]);</a>
+<span class="sourceLineNo">711</span><a id="line.711">                 }</a>
+<span class="sourceLineNo">712</span><a id="line.712"></a>
+<span class="sourceLineNo">713</span><a id="line.713">                 */</a>
+<span class="sourceLineNo">714</span><a id="line.714"></a>
+<span class="sourceLineNo">715</span><a id="line.715">                coxInfo.setScoreLogrankTest(sctest);</a>
+<span class="sourceLineNo">716</span><a id="line.716">                coxInfo.setDegreeFreedom(beta.length);</a>
+<span class="sourceLineNo">717</span><a id="line.717">                coxInfo.setScoreLogrankTestpvalue(ChiSq.chiSq(coxInfo.getScoreLogrankTest(), beta.length));</a>
+<span class="sourceLineNo">718</span><a id="line.718">                coxInfo.setVariance(imat);</a>
+<span class="sourceLineNo">719</span><a id="line.719">                coxInfo.u = u;</a>
+<span class="sourceLineNo">720</span><a id="line.720"></a>
+<span class="sourceLineNo">721</span><a id="line.721">                //     for (int n = 0; n &lt; beta.length; n++) {</a>
+<span class="sourceLineNo">722</span><a id="line.722">                //         se[n] = Math.sqrt(imat[n][n]); // / sd[n];</a>
+<span class="sourceLineNo">723</span><a id="line.723">                //     }</a>
+<span class="sourceLineNo">724</span><a id="line.724"></a>
+<span class="sourceLineNo">725</span><a id="line.725"></a>
+<span class="sourceLineNo">726</span><a id="line.726">                //       System.out.println("coef,se, means,u");</a>
+<span class="sourceLineNo">727</span><a id="line.727">                for (int n = 0; n &lt; beta.length; n++) {</a>
+<span class="sourceLineNo">728</span><a id="line.728">                        CoxCoefficient coe = new CoxCoefficient();</a>
+<span class="sourceLineNo">729</span><a id="line.729">                        coe.name = variables.get(n);</a>
+<span class="sourceLineNo">730</span><a id="line.730">                        coe.mean = means[n];</a>
+<span class="sourceLineNo">731</span><a id="line.731">                        coe.standardDeviation = sd[n];</a>
+<span class="sourceLineNo">732</span><a id="line.732">                        coe.coeff = beta[n];</a>
+<span class="sourceLineNo">733</span><a id="line.733">                        coe.stdError = Math.sqrt(imat[n][n]);</a>
+<span class="sourceLineNo">734</span><a id="line.734">                        coe.hazardRatio = Math.exp(coe.getCoeff());</a>
+<span class="sourceLineNo">735</span><a id="line.735">                        coe.z = coe.getCoeff() / coe.getStdError();</a>
+<span class="sourceLineNo">736</span><a id="line.736">                        coe.pvalue = ChiSq.norm(Math.abs(coe.getCoeff() / coe.getStdError()));</a>
+<span class="sourceLineNo">737</span><a id="line.737">                        double z = 1.959964;</a>
+<span class="sourceLineNo">738</span><a id="line.738">                        coe.hazardRatioLoCI = Math.exp(coe.getCoeff() - z * coe.getStdError());</a>
+<span class="sourceLineNo">739</span><a id="line.739">                        coe.hazardRatioHiCI = Math.exp(coe.getCoeff() + z * coe.getStdError());</a>
+<span class="sourceLineNo">740</span><a id="line.740"></a>
+<span class="sourceLineNo">741</span><a id="line.741">                        coxInfo.setCoefficient(coe.getName(), coe);</a>
+<span class="sourceLineNo">742</span><a id="line.742">                        // System.out.println(beta[n] + "," + se[n] + "," + means[n] + "," + sd[n] + "," + u[n]); //+ "," + imat[n] "," + loglik[n] + "," + sctest[n] + "," + iterations[n] + "," + flag[n]</a>
+<span class="sourceLineNo">743</span><a id="line.743"></a>
+<span class="sourceLineNo">744</span><a id="line.744">                }</a>
+<span class="sourceLineNo">745</span><a id="line.745"></a>
+<span class="sourceLineNo">746</span><a id="line.746">                coxInfo.maxIterations = maxiter;</a>
+<span class="sourceLineNo">747</span><a id="line.747">                coxInfo.eps = eps;</a>
+<span class="sourceLineNo">748</span><a id="line.748">                coxInfo.toler = toler;</a>
+<span class="sourceLineNo">749</span><a id="line.749"></a>
+<span class="sourceLineNo">750</span><a id="line.750">                coxInfo.iterations = iter;</a>
+<span class="sourceLineNo">751</span><a id="line.751">                coxInfo.flag = flag;</a>
+<span class="sourceLineNo">752</span><a id="line.752">                coxInfo.loglikInit = loglik[0];</a>
+<span class="sourceLineNo">753</span><a id="line.753">                coxInfo.loglikFinal = loglik[1];</a>
+<span class="sourceLineNo">754</span><a id="line.754">                coxInfo.method = method;</a>
+<span class="sourceLineNo">755</span><a id="line.755"></a>
+<span class="sourceLineNo">756</span><a id="line.756">                //    System.out.println("loglik[0]=" + loglik[0]);</a>
+<span class="sourceLineNo">757</span><a id="line.757">                //    System.out.println("loglik[1]=" + loglik[1]);</a>
+<span class="sourceLineNo">758</span><a id="line.758"></a>
+<span class="sourceLineNo">759</span><a id="line.759">                //    System.out.println("chisq? sctest[0]=" + sctest[0]);</a>
+<span class="sourceLineNo">760</span><a id="line.760">                //    System.out.println("?overall model p-value=" + chiSq(sctest[0], beta.length));</a>
+<span class="sourceLineNo">761</span><a id="line.761"></a>
+<span class="sourceLineNo">762</span><a id="line.762"></a>
+<span class="sourceLineNo">763</span><a id="line.763">                //      System.out.println();</a>
+<span class="sourceLineNo">764</span><a id="line.764">                //       for (int n = 0; n &lt; covar[0].length; n++) {</a>
+<span class="sourceLineNo">765</span><a id="line.765">                //           System.out.print(n);</a>
+<span class="sourceLineNo">766</span><a id="line.766">                //           for (int variable = 0; variable &lt; covar.length; variable++) {</a>
+<span class="sourceLineNo">767</span><a id="line.767">                //               System.out.print("\t" + covar[variable][n]);</a>
+<span class="sourceLineNo">768</span><a id="line.768"></a>
+<span class="sourceLineNo">769</span><a id="line.769">                //           }</a>
+<span class="sourceLineNo">770</span><a id="line.770">                //           System.out.println();</a>
+<span class="sourceLineNo">771</span><a id="line.771">                //       }</a>
+<span class="sourceLineNo">772</span><a id="line.772">                //      for (SurvivalInfo si : data) {</a>
+<span class="sourceLineNo">773</span><a id="line.773">                //          System.out.println(si.order + " " + si.getScore());</a>
+<span class="sourceLineNo">774</span><a id="line.774">                //      }</a>
+<span class="sourceLineNo">775</span><a id="line.775">//        coxInfo.dump();</a>
+<span class="sourceLineNo">776</span><a id="line.776"></a>
+<span class="sourceLineNo">777</span><a id="line.777"></a>
+<span class="sourceLineNo">778</span><a id="line.778">                coxphfitSCleanup(coxInfo, useWeighted, robust,clusterList);</a>
+<span class="sourceLineNo">779</span><a id="line.779">                return coxInfo;</a>
+<span class="sourceLineNo">780</span><a id="line.780">        }</a>
+<span class="sourceLineNo">781</span><a id="line.781"></a>
+<span class="sourceLineNo">782</span><a id="line.782">        /**</a>
+<span class="sourceLineNo">783</span><a id="line.783">         *</a>
+<span class="sourceLineNo">784</span><a id="line.784">         * @param ci</a>
+<span class="sourceLineNo">785</span><a id="line.785">         * @param useWeighted</a>
+<span class="sourceLineNo">786</span><a id="line.786">         * @param robust</a>
+<span class="sourceLineNo">787</span><a id="line.787">         * @param cluster</a>
+<span class="sourceLineNo">788</span><a id="line.788">         * @throws Exception</a>
+<span class="sourceLineNo">789</span><a id="line.789">         */</a>
+<span class="sourceLineNo">790</span><a id="line.790">        public void coxphfitSCleanup(CoxInfo ci, boolean useWeighted,boolean robust, ArrayList&lt;String&gt; cluster) throws Exception {</a>
+<span class="sourceLineNo">791</span><a id="line.791">                //Do cleanup found after coxfit6 is called in coxph.fit.S</a>
+<span class="sourceLineNo">792</span><a id="line.792">                //infs &lt;- abs(coxfit$u %*% var)</a>
+<span class="sourceLineNo">793</span><a id="line.793">                //[ a1 b1] * [a1 b1]</a>
+<span class="sourceLineNo">794</span><a id="line.794">                //           [a2 b2]</a>
+<span class="sourceLineNo">795</span><a id="line.795">                double[][] du = new double[1][ci.u.length];</a>
+<span class="sourceLineNo">796</span><a id="line.796">                du[0] = ci.u;</a>
+<span class="sourceLineNo">797</span><a id="line.797">                double[] infs = Matrix.abs(Matrix.multiply(ci.u, ci.getVariance()));</a>
+<span class="sourceLineNo">798</span><a id="line.798">//        StdArrayIO.print(infs);</a>
+<span class="sourceLineNo">799</span><a id="line.799"></a>
+<span class="sourceLineNo">800</span><a id="line.800">                ArrayList&lt;CoxCoefficient&gt; coxCoefficients = new ArrayList&lt;CoxCoefficient&gt;(ci.getCoefficientsList().values());</a>
+<span class="sourceLineNo">801</span><a id="line.801"></a>
+<span class="sourceLineNo">802</span><a id="line.802">                for (int i = 0; i &lt; infs.length; i++) {</a>
+<span class="sourceLineNo">803</span><a id="line.803">                        double inf = infs[i];</a>
+<span class="sourceLineNo">804</span><a id="line.804">                        double coe = coxCoefficients.get(i).getCoeff();</a>
+<span class="sourceLineNo">805</span><a id="line.805">                        if (inf &gt; ci.eps &amp;&amp; inf &gt; (ci.toler * Math.abs(coe))) {</a>
+<span class="sourceLineNo">806</span><a id="line.806">                                ci.message = "Loglik converged before variable ";</a>
+<span class="sourceLineNo">807</span><a id="line.807">                        }</a>
+<span class="sourceLineNo">808</span><a id="line.808">                }</a>
+<span class="sourceLineNo">809</span><a id="line.809"></a>
+<span class="sourceLineNo">810</span><a id="line.810">                //sum(coef*coxfit$means)</a>
+<span class="sourceLineNo">811</span><a id="line.811">                double sumcoefmeans = 0;</a>
+<span class="sourceLineNo">812</span><a id="line.812">                for (CoxCoefficient cc : coxCoefficients) {</a>
+<span class="sourceLineNo">813</span><a id="line.813">                        sumcoefmeans = sumcoefmeans + cc.getCoeff() * cc.getMean();</a>
+<span class="sourceLineNo">814</span><a id="line.814">                }</a>
+<span class="sourceLineNo">815</span><a id="line.815"></a>
+<span class="sourceLineNo">816</span><a id="line.816">                // coxph.fit.S line 107</a>
+<span class="sourceLineNo">817</span><a id="line.817">                //lp &lt;- c(x %*% coef) + offset - sum(coef*coxfit$means)</a>
+<span class="sourceLineNo">818</span><a id="line.818">                for (SurvivalInfo si : ci.survivalInfoList) {</a>
+<span class="sourceLineNo">819</span><a id="line.819">                        double offset = si.getOffset();</a>
+<span class="sourceLineNo">820</span><a id="line.820">                        double lp = 0;</a>
+<span class="sourceLineNo">821</span><a id="line.821">                        for (CoxCoefficient cc : coxCoefficients) {</a>
+<span class="sourceLineNo">822</span><a id="line.822">                                String name = cc.getName();</a>
+<span class="sourceLineNo">823</span><a id="line.823">                                double coef = cc.getCoeff();</a>
+<span class="sourceLineNo">824</span><a id="line.824">                                double value = si.getVariable(name);</a>
+<span class="sourceLineNo">825</span><a id="line.825">                                lp = lp + value * coef;</a>
+<span class="sourceLineNo">826</span><a id="line.826">                        }</a>
+<span class="sourceLineNo">827</span><a id="line.827">                        lp = lp + offset - sumcoefmeans;</a>
+<span class="sourceLineNo">828</span><a id="line.828">                        si.setLinearPredictor(lp);</a>
+<span class="sourceLineNo">829</span><a id="line.829">                        si.setScore(Math.exp(lp));</a>
+<span class="sourceLineNo">830</span><a id="line.830"></a>
+<span class="sourceLineNo">831</span><a id="line.831">//           System.out.println("lp score " + si.order + " " + si.time + " " + si.getWeight() + " " + si.getClusterValue() + " " + lp + " " + Math.exp(lp));</a>
+<span class="sourceLineNo">832</span><a id="line.832">                }</a>
+<span class="sourceLineNo">833</span><a id="line.833">//       ci.dump();</a>
+<span class="sourceLineNo">834</span><a id="line.834">                //begin code after call to coxfit6 in coxph.fit.S</a>
+<span class="sourceLineNo">835</span><a id="line.835">                //Compute the martingale residual for a Cox model</a>
+<span class="sourceLineNo">836</span><a id="line.836">                // appears to be C syntax error for = - vs -=</a>
+<span class="sourceLineNo">837</span><a id="line.837">                //(if (nullmodel) in coxph.fit</a>
+<span class="sourceLineNo">838</span><a id="line.838">                double[] res = CoxMart.process(ci.method, ci.survivalInfoList, false);</a>
+<span class="sourceLineNo">839</span><a id="line.839"></a>
+<span class="sourceLineNo">840</span><a id="line.840">                for(int i = 0; i &lt; ci.survivalInfoList.size(); i++){</a>
+<span class="sourceLineNo">841</span><a id="line.841">                        SurvivalInfo si = ci.survivalInfoList.get(i);</a>
+<span class="sourceLineNo">842</span><a id="line.842">                        si.setResidual(res[i]);</a>
+<span class="sourceLineNo">843</span><a id="line.843">                }</a>
+<span class="sourceLineNo">844</span><a id="line.844"></a>
+<span class="sourceLineNo">845</span><a id="line.845">                //this represents the end of coxph.fit.S code and we pickup</a>
+<span class="sourceLineNo">846</span><a id="line.846">                //after call to fit &lt;- fitter(X, Y, strats ....) in coxph.R</a>
+<span class="sourceLineNo">847</span><a id="line.847"></a>
+<span class="sourceLineNo">848</span><a id="line.848">                if (robust) {</a>
+<span class="sourceLineNo">849</span><a id="line.849">                        ci.setNaiveVariance(ci.getVariance());</a>
+<span class="sourceLineNo">850</span><a id="line.850">                        double[][] temp;</a>
+<span class="sourceLineNo">851</span><a id="line.851">                        double[][] temp0;</a>
+<span class="sourceLineNo">852</span><a id="line.852"></a>
+<span class="sourceLineNo">853</span><a id="line.853">                        if (cluster != null) {</a>
+<span class="sourceLineNo">854</span><a id="line.854"></a>
+<span class="sourceLineNo">855</span><a id="line.855">                                temp = ResidualsCoxph.process(ci, ResidualsCoxph.Type.dfbeta, useWeighted, cluster);</a>
+<span class="sourceLineNo">856</span><a id="line.856">                                //# get score for null model</a>
+<span class="sourceLineNo">857</span><a id="line.857">                                //    if (is.null(init))</a>
+<span class="sourceLineNo">858</span><a id="line.858">                                //          fit2$linear.predictors &lt;- 0*fit$linear.predictors</a>
+<span class="sourceLineNo">859</span><a id="line.859">                                //    else</a>
+<span class="sourceLineNo">860</span><a id="line.860">                                //          fit2$linear.predictors &lt;- c(X %*% init)</a>
+<span class="sourceLineNo">861</span><a id="line.861">                                //Set score to 1</a>
+<span class="sourceLineNo">862</span><a id="line.862"></a>
+<span class="sourceLineNo">863</span><a id="line.863">                                double[] templp = new double[ci.survivalInfoList.size()];</a>
+<span class="sourceLineNo">864</span><a id="line.864">                                double[] tempscore = new double[ci.survivalInfoList.size()];</a>
+<span class="sourceLineNo">865</span><a id="line.865">                                int i = 0;</a>
+<span class="sourceLineNo">866</span><a id="line.866">                                for (SurvivalInfo si : ci.survivalInfoList) {</a>
+<span class="sourceLineNo">867</span><a id="line.867">                                        templp[i] = si.getLinearPredictor();</a>
+<span class="sourceLineNo">868</span><a id="line.868">                                        tempscore[i] = si.getScore();</a>
+<span class="sourceLineNo">869</span><a id="line.869">                                        si.setLinearPredictor(0);</a>
+<span class="sourceLineNo">870</span><a id="line.870">                                        si.setScore(1.0); //this erases stored value which isn't how the R code does it</a>
+<span class="sourceLineNo">871</span><a id="line.871">                                        i++;</a>
+<span class="sourceLineNo">872</span><a id="line.872">                                }</a>
+<span class="sourceLineNo">873</span><a id="line.873"></a>
+<span class="sourceLineNo">874</span><a id="line.874">                                temp0 = ResidualsCoxph.process(ci, ResidualsCoxph.Type.score, useWeighted, cluster);</a>
+<span class="sourceLineNo">875</span><a id="line.875"></a>
+<span class="sourceLineNo">876</span><a id="line.876">                                i = 0;</a>
+<span class="sourceLineNo">877</span><a id="line.877">                                for (SurvivalInfo si : ci.survivalInfoList) {</a>
+<span class="sourceLineNo">878</span><a id="line.878">                                        si.setLinearPredictor(templp[i]);</a>
+<span class="sourceLineNo">879</span><a id="line.879">                                        si.setScore(tempscore[i]); //this erases stored value which isn't how the R code does it</a>
+<span class="sourceLineNo">880</span><a id="line.880">                                        i++;</a>
+<span class="sourceLineNo">881</span><a id="line.881">                                }</a>
+<span class="sourceLineNo">882</span><a id="line.882"></a>
+<span class="sourceLineNo">883</span><a id="line.883"></a>
+<span class="sourceLineNo">884</span><a id="line.884">                        } else {</a>
+<span class="sourceLineNo">885</span><a id="line.885">                                temp = ResidualsCoxph.process(ci, ResidualsCoxph.Type.dfbeta, useWeighted, null);</a>
+<span class="sourceLineNo">886</span><a id="line.886">                                //     fit2$linear.predictors &lt;- 0*fit$linear.predictors</a>
+<span class="sourceLineNo">887</span><a id="line.887">                                double[] templp = new double[ci.survivalInfoList.size()];</a>
+<span class="sourceLineNo">888</span><a id="line.888">                                double[] tempscore = new double[ci.survivalInfoList.size()];</a>
+<span class="sourceLineNo">889</span><a id="line.889">                                int i = 0;</a>
+<span class="sourceLineNo">890</span><a id="line.890">                                for (SurvivalInfo si : ci.survivalInfoList) {</a>
+<span class="sourceLineNo">891</span><a id="line.891">                                        templp[i] = si.getLinearPredictor();</a>
+<span class="sourceLineNo">892</span><a id="line.892">                                        tempscore[i] = si.getScore();</a>
+<span class="sourceLineNo">893</span><a id="line.893">                                        si.setLinearPredictor(0);</a>
+<span class="sourceLineNo">894</span><a id="line.894">                                        si.setScore(1.0);</a>
+<span class="sourceLineNo">895</span><a id="line.895">                                }</a>
+<span class="sourceLineNo">896</span><a id="line.896">                                temp0 = ResidualsCoxph.process(ci, ResidualsCoxph.Type.score, useWeighted, null);</a>
+<span class="sourceLineNo">897</span><a id="line.897"></a>
+<span class="sourceLineNo">898</span><a id="line.898">                                i = 0;</a>
+<span class="sourceLineNo">899</span><a id="line.899">                                for (SurvivalInfo si : ci.survivalInfoList) {</a>
+<span class="sourceLineNo">900</span><a id="line.900">                                        si.setLinearPredictor(templp[i]);</a>
+<span class="sourceLineNo">901</span><a id="line.901">                                        si.setScore(tempscore[i]); //this erases stored value which isn't how the R code does it</a>
+<span class="sourceLineNo">902</span><a id="line.902">                                        i++;</a>
+<span class="sourceLineNo">903</span><a id="line.903">                                }</a>
+<span class="sourceLineNo">904</span><a id="line.904">                        }</a>
+<span class="sourceLineNo">905</span><a id="line.905">                        //fit$var&lt;- t(temp) % * % temp</a>
+<span class="sourceLineNo">906</span><a id="line.906">                        double[][] ttemp = Matrix.transpose(temp);</a>
+<span class="sourceLineNo">907</span><a id="line.907">                        double[][] var = Matrix.multiply(ttemp, temp);</a>
+<span class="sourceLineNo">908</span><a id="line.908">                        ci.setVariance(var);</a>
+<span class="sourceLineNo">909</span><a id="line.909">                        //u&lt;- apply(as.matrix(temp0), 2, sum)</a>
+<span class="sourceLineNo">910</span><a id="line.910">                        double[] u = new double[temp0[0].length];</a>
+<span class="sourceLineNo">911</span><a id="line.911">                        for (int i = 0; i &lt; temp0[0].length; i++) {</a>
+<span class="sourceLineNo">912</span><a id="line.912">                                for (int j = 0; j &lt; temp0.length; j++) {</a>
+<span class="sourceLineNo">913</span><a id="line.913">                                        u[i] = u[i] + temp0[j][i];</a>
+<span class="sourceLineNo">914</span><a id="line.914">                                }</a>
+<span class="sourceLineNo">915</span><a id="line.915">                        }</a>
+<span class="sourceLineNo">916</span><a id="line.916">                        //fit$rscore &lt;- coxph.wtest(t(temp0)%*%temp0, u, control$toler.chol)$test</a>
+<span class="sourceLineNo">917</span><a id="line.917">                        double[][] wtemp = Matrix.multiply(Matrix.transpose(temp0),temp0);</a>
+<span class="sourceLineNo">918</span><a id="line.918">                        double toler_chol = 1.818989e-12;</a>
+<span class="sourceLineNo">919</span><a id="line.919">                  //  toler_chol = ci.toler;</a>
+<span class="sourceLineNo">920</span><a id="line.920">                        WaldTestInfo wti = WaldTest.process(wtemp,u,toler_chol);</a>
+<span class="sourceLineNo">921</span><a id="line.921">                        //not giving the correct value</a>
+<span class="sourceLineNo">922</span><a id="line.922">                        ci.setRscore(wti.getTest());</a>
+<span class="sourceLineNo">923</span><a id="line.923">                }</a>
+<span class="sourceLineNo">924</span><a id="line.924">                calculateWaldTestInfo(ci);</a>
+<span class="sourceLineNo">925</span><a id="line.925"></a>
+<span class="sourceLineNo">926</span><a id="line.926"></a>
+<span class="sourceLineNo">927</span><a id="line.927"></a>
+<span class="sourceLineNo">928</span><a id="line.928"></a>
+<span class="sourceLineNo">929</span><a id="line.929">        }</a>
+<span class="sourceLineNo">930</span><a id="line.930"></a>
+<span class="sourceLineNo">931</span><a id="line.931">        static public void calculateWaldTestInfo(CoxInfo ci){</a>
+<span class="sourceLineNo">932</span><a id="line.932">                if(ci.getNumberCoefficients() &gt; 0){</a>
+<span class="sourceLineNo">933</span><a id="line.933">                        double toler_chol = 1.818989e-12;</a>
+<span class="sourceLineNo">934</span><a id="line.934">                  //  toler_chol = ci.toler;</a>
+<span class="sourceLineNo">935</span><a id="line.935">                        double[][] b = new double[1][ci.getNumberCoefficients()];</a>
+<span class="sourceLineNo">936</span><a id="line.936">                        int i = 0;</a>
+<span class="sourceLineNo">937</span><a id="line.937">                        for(CoxCoefficient coe : ci.getCoefficientsList().values()){</a>
+<span class="sourceLineNo">938</span><a id="line.938">                                b[0][i] = coe.getCoeff();</a>
+<span class="sourceLineNo">939</span><a id="line.939">                                i++;</a>
+<span class="sourceLineNo">940</span><a id="line.940">                        }</a>
+<span class="sourceLineNo">941</span><a id="line.941">                        ci.setWaldTestInfo(WaldTest.process(ci.getVariance(), b, toler_chol));</a>
+<span class="sourceLineNo">942</span><a id="line.942">                }</a>
+<span class="sourceLineNo">943</span><a id="line.943">        }</a>
+<span class="sourceLineNo">944</span><a id="line.944"></a>
+<span class="sourceLineNo">945</span><a id="line.945">        /**</a>
+<span class="sourceLineNo">946</span><a id="line.946">         * @param args the command line arguments</a>
+<span class="sourceLineNo">947</span><a id="line.947">         */</a>
+<span class="sourceLineNo">948</span><a id="line.948">        public static void main(String[] args) {</a>
+<span class="sourceLineNo">949</span><a id="line.949">                // TODO code application logic here</a>
+<span class="sourceLineNo">950</span><a id="line.950">                CoxR coxr = new CoxR();</a>
+<span class="sourceLineNo">951</span><a id="line.951"></a>
+<span class="sourceLineNo">952</span><a id="line.952"></a>
+<span class="sourceLineNo">953</span><a id="line.953">                if (true) {</a>
+<span class="sourceLineNo">954</span><a id="line.954">                        try {</a>
+<span class="sourceLineNo">955</span><a id="line.955">                           InputStream is = coxr.getClass().getClassLoader().getResourceAsStream("uis-complete.txt");</a>
+<span class="sourceLineNo">956</span><a id="line.956"></a>
+<span class="sourceLineNo">957</span><a id="line.957"></a>
+<span class="sourceLineNo">958</span><a id="line.958"></a>
+<span class="sourceLineNo">959</span><a id="line.959"></a>
+<span class="sourceLineNo">960</span><a id="line.960">                                WorkSheet worksheet = WorkSheet.readCSV(is, '\t');</a>
+<span class="sourceLineNo">961</span><a id="line.961">                                ArrayList&lt;SurvivalInfo&gt; survivalInfoList = new ArrayList&lt;SurvivalInfo&gt;();</a>
+<span class="sourceLineNo">962</span><a id="line.962">                                int i = 0;</a>
+<span class="sourceLineNo">963</span><a id="line.963">                                for (String row : worksheet.getRows()) {</a>
+<span class="sourceLineNo">964</span><a id="line.964">                                        double time = worksheet.getCellDouble(row, "TIME");</a>
+<span class="sourceLineNo">965</span><a id="line.965">                                        double age = worksheet.getCellDouble(row, "AGE");</a>
+<span class="sourceLineNo">966</span><a id="line.966">                                        double treat = worksheet.getCellDouble(row, "TREAT");</a>
+<span class="sourceLineNo">967</span><a id="line.967">                                        double c = worksheet.getCellDouble(row, "CENSOR");</a>
+<span class="sourceLineNo">968</span><a id="line.968">                                        int censor = (int) c;</a>
+<span class="sourceLineNo">969</span><a id="line.969"></a>
+<span class="sourceLineNo">970</span><a id="line.970">                                        SurvivalInfo si = new SurvivalInfo(time, censor);</a>
+<span class="sourceLineNo">971</span><a id="line.971">                                        si.setOrder(i);</a>
+<span class="sourceLineNo">972</span><a id="line.972">                                        si.addContinuousVariable("AGE", age);</a>
+<span class="sourceLineNo">973</span><a id="line.973">                                        si.addContinuousVariable("TREAT", treat);</a>
+<span class="sourceLineNo">974</span><a id="line.974"></a>
+<span class="sourceLineNo">975</span><a id="line.975">                                        survivalInfoList.add(si);</a>
+<span class="sourceLineNo">976</span><a id="line.976">                                        i++;</a>
+<span class="sourceLineNo">977</span><a id="line.977">                                }</a>
+<span class="sourceLineNo">978</span><a id="line.978"></a>
+<span class="sourceLineNo">979</span><a id="line.979">                                CoxR cox = new CoxR();</a>
+<span class="sourceLineNo">980</span><a id="line.980">                                ArrayList&lt;String&gt; variables = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">981</span><a id="line.981">                                //               variables.add("AGE");</a>
+<span class="sourceLineNo">982</span><a id="line.982"></a>
+<span class="sourceLineNo">983</span><a id="line.983">                                variables.add("AGE");</a>
+<span class="sourceLineNo">984</span><a id="line.984">                                variables.add("TREAT");</a>
+<span class="sourceLineNo">985</span><a id="line.985"></a>
+<span class="sourceLineNo">986</span><a id="line.986">                                //       variables.add("TREAT:AGE");</a>
+<span class="sourceLineNo">987</span><a id="line.987">                          //  ArrayList&lt;Integer&gt; cluster = new ArrayList&lt;Integer&gt;();</a>
+<span class="sourceLineNo">988</span><a id="line.988">                                CoxInfo ci = cox.process(variables, survivalInfoList, false, true,false, false);</a>
+<span class="sourceLineNo">989</span><a id="line.989">                                System.out.println(ci);</a>
+<span class="sourceLineNo">990</span><a id="line.990">                        } catch (Exception e) {</a>
+<span class="sourceLineNo">991</span><a id="line.991">                                e.printStackTrace();</a>
+<span class="sourceLineNo">992</span><a id="line.992">                        }</a>
+<span class="sourceLineNo">993</span><a id="line.993"></a>
+<span class="sourceLineNo">994</span><a id="line.994"></a>
+<span class="sourceLineNo">995</span><a id="line.995">                }</a>
+<span class="sourceLineNo">996</span><a id="line.996"></a>
+<span class="sourceLineNo">997</span><a id="line.997">//        if (false) {</a>
+<span class="sourceLineNo">998</span><a id="line.998">//</a>
+<span class="sourceLineNo">999</span><a id="line.999">//            try {</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">//</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">//</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">//                WorkSheet worksheet = WorkSheet.readCSV("/Users/Scooter/NetBeansProjects/AssayWorkbench/src/edu/scripps/assayworkbench/cox/uis-complete.txt", '\t');</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">//                ArrayList&lt;String&gt; rows = worksheet.getRows();</a>
+<span class="sourceLineNo">1004</span><a id="line.1004">//                ArrayList&lt;String&gt; variables = new ArrayList&lt;String&gt;();</a>
+<span class="sourceLineNo">1005</span><a id="line.1005">//                variables.add("AGE");</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">//                variables.add("TREAT");</a>
+<span class="sourceLineNo">1007</span><a id="line.1007">//                double[] time2 = new double[rows.size()];</a>
+<span class="sourceLineNo">1008</span><a id="line.1008">//                int[] status2 = new int[rows.size()];</a>
+<span class="sourceLineNo">1009</span><a id="line.1009">//                double[][] covar2 = new double[variables.size()][rows.size()];</a>
+<span class="sourceLineNo">1010</span><a id="line.1010">//                double[] offset2 = new double[rows.size()];</a>
+<span class="sourceLineNo">1011</span><a id="line.1011">//                double[] weights2 = new double[rows.size()];</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">//                int[] strata2 = new int[rows.size()];</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">//</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">//</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">//                for (int i = 0; i &lt; rows.size(); i++) {</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">//                    String row = rows.get(i);</a>
+<span class="sourceLineNo">1017</span><a id="line.1017">//                    double time = worksheet.getCellDouble(row, "TIME");</a>
+<span class="sourceLineNo">1018</span><a id="line.1018">//                    //      double age = worksheet.getCellDouble(row, "AGE");</a>
+<span class="sourceLineNo">1019</span><a id="line.1019">//                    //      double treat = worksheet.getCellDouble(row, "TREAT");</a>
+<span class="sourceLineNo">1020</span><a id="line.1020">//                    double c = worksheet.getCellDouble(row, "CENSOR");</a>
+<span class="sourceLineNo">1021</span><a id="line.1021">//                    int censor = (int) c;</a>
+<span class="sourceLineNo">1022</span><a id="line.1022">//</a>
+<span class="sourceLineNo">1023</span><a id="line.1023">//                    time2[i] = time;</a>
+<span class="sourceLineNo">1024</span><a id="line.1024">//                    status2[i] = censor;</a>
+<span class="sourceLineNo">1025</span><a id="line.1025">//                    offset2[i] = 0;</a>
+<span class="sourceLineNo">1026</span><a id="line.1026">//                    weights2[i] = 1;</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">//                    strata2[i] = 0;</a>
+<span class="sourceLineNo">1028</span><a id="line.1028">//</a>
+<span class="sourceLineNo">1029</span><a id="line.1029">//                    for (int j = 0; j &lt; variables.size(); j++) {</a>
+<span class="sourceLineNo">1030</span><a id="line.1030">//                        String variable = variables.get(j);</a>
+<span class="sourceLineNo">1031</span><a id="line.1031">//                        double v = worksheet.getCellDouble(row, variable);</a>
+<span class="sourceLineNo">1032</span><a id="line.1032">//                        covar2[j][i] = v;</a>
+<span class="sourceLineNo">1033</span><a id="line.1033">//                    }</a>
+<span class="sourceLineNo">1034</span><a id="line.1034">//</a>
+<span class="sourceLineNo">1035</span><a id="line.1035">//</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">//                }</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">//                //from coxph.control.S</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">//                int maxiter2 = 20;</a>
+<span class="sourceLineNo">1039</span><a id="line.1039">//                double eps2 = 1e-9;</a>
+<span class="sourceLineNo">1040</span><a id="line.1040">//                double toler2 = Math.pow(eps2, .75);</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">//                int doscale2 = 1;</a>
+<span class="sourceLineNo">1042</span><a id="line.1042">//                int method2 = 0;</a>
+<span class="sourceLineNo">1043</span><a id="line.1043">//                //toler.chol = eps ^ .75</a>
+<span class="sourceLineNo">1044</span><a id="line.1044">//                //toler.inf=sqrt(eps)</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">//                //outer.max=10</a>
+<span class="sourceLineNo">1046</span><a id="line.1046">//</a>
+<span class="sourceLineNo">1047</span><a id="line.1047">//                CoxR cox = new CoxR();</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">//                //        cox.coxfit6(maxiter2, time2, status2, covar2, offset2, weights2, strata2, method2, eps2, toler2, time2, doscale2);</a>
+<span class="sourceLineNo">1049</span><a id="line.1049">//</a>
+<span class="sourceLineNo">1050</span><a id="line.1050">//</a>
+<span class="sourceLineNo">1051</span><a id="line.1051">//</a>
+<span class="sourceLineNo">1052</span><a id="line.1052">//</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">//</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">//            } catch (Exception e) {</a>
+<span class="sourceLineNo">1055</span><a id="line.1055">//                e.printStackTrace();</a>
+<span class="sourceLineNo">1056</span><a id="line.1056">//            }</a>
+<span class="sourceLineNo">1057</span><a id="line.1057">//        }</a>
+<span class="sourceLineNo">1058</span><a id="line.1058"></a>
+<span class="sourceLineNo">1059</span><a id="line.1059">        }</a>
+<span class="sourceLineNo">1060</span><a id="line.1060"></a>
+<span class="sourceLineNo">1061</span><a id="line.1061">        /* $Id: chinv2.c 11357 2009-09-04 15:22:46Z therneau $</a>
+<span class="sourceLineNo">1062</span><a id="line.1062">         **</a>
+<span class="sourceLineNo">1063</span><a id="line.1063">         ** matrix inversion, given the FDF' cholesky decomposition</a>
+<span class="sourceLineNo">1064</span><a id="line.1064">         **</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">         ** input  **matrix, which contains the chol decomp of an n by n</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">         **   matrix in its lower triangle.</a>
+<span class="sourceLineNo">1067</span><a id="line.1067">         **</a>
+<span class="sourceLineNo">1068</span><a id="line.1068">         ** returned: the upper triangle + diagonal contain (FDF')^{-1}</a>
+<span class="sourceLineNo">1069</span><a id="line.1069">         **            below the diagonal will be F inverse</a>
+<span class="sourceLineNo">1070</span><a id="line.1070">         **</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">         **  Terry Therneau</a>
+<span class="sourceLineNo">1072</span><a id="line.1072">         */</a>
+<span class="sourceLineNo">1073</span><a id="line.1073">        void chinv2(double[][] matrix, int n) {</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">                double temp;</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">                int i, j, k;</a>
+<span class="sourceLineNo">1076</span><a id="line.1076"></a>
+<span class="sourceLineNo">1077</span><a id="line.1077">                /*</a>
+<span class="sourceLineNo">1078</span><a id="line.1078">                 ** invert the cholesky in the lower triangle</a>
+<span class="sourceLineNo">1079</span><a id="line.1079">                 **   take full advantage of the cholesky's diagonal of 1's</a>
+<span class="sourceLineNo">1080</span><a id="line.1080">                 */</a>
+<span class="sourceLineNo">1081</span><a id="line.1081">                for (i = 0; i &lt; n; i++) {</a>
+<span class="sourceLineNo">1082</span><a id="line.1082">                        if (matrix[i][i] &gt; 0) {</a>
+<span class="sourceLineNo">1083</span><a id="line.1083">                                matrix[i][i] = 1 / matrix[i][i];   /*this line inverts D */</a>
+<span class="sourceLineNo">1084</span><a id="line.1084">                                for (j = (i + 1); j &lt; n; j++) {</a>
+<span class="sourceLineNo">1085</span><a id="line.1085">                                        matrix[j][i] = -matrix[j][i];</a>
+<span class="sourceLineNo">1086</span><a id="line.1086">                                        for (k = 0; k &lt; i; k++) /*sweep operator */ {</a>
+<span class="sourceLineNo">1087</span><a id="line.1087">                                                matrix[j][k] += matrix[j][i] * matrix[i][k];</a>
+<span class="sourceLineNo">1088</span><a id="line.1088">                                        }</a>
+<span class="sourceLineNo">1089</span><a id="line.1089">                                }</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">                        }</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">                }</a>
+<span class="sourceLineNo">1092</span><a id="line.1092"></a>
+<span class="sourceLineNo">1093</span><a id="line.1093">                /*</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">                 ** lower triangle now contains inverse of cholesky</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">                 ** calculate F'DF (inverse of cholesky decomp process) to get inverse</a>
+<span class="sourceLineNo">1096</span><a id="line.1096">                 **   of original matrix</a>
+<span class="sourceLineNo">1097</span><a id="line.1097">                 */</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">                for (i = 0; i &lt; n; i++) {</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">                        if (matrix[i][i] == 0) {  /* singular row */</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">                                for (j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">                                        matrix[j][i] = 0;</a>
+<span class="sourceLineNo">1102</span><a id="line.1102">                                }</a>
+<span class="sourceLineNo">1103</span><a id="line.1103">                                for (j = i; j &lt; n; j++) {</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">                                        matrix[i][j] = 0;</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">                                }</a>
+<span class="sourceLineNo">1106</span><a id="line.1106">                        } else {</a>
+<span class="sourceLineNo">1107</span><a id="line.1107">                                for (j = (i + 1); j &lt; n; j++) {</a>
+<span class="sourceLineNo">1108</span><a id="line.1108">                                        temp = matrix[j][i] * matrix[j][j];</a>
+<span class="sourceLineNo">1109</span><a id="line.1109">                                        if (j != i) {</a>
+<span class="sourceLineNo">1110</span><a id="line.1110">                                                matrix[i][j] = temp;</a>
+<span class="sourceLineNo">1111</span><a id="line.1111">                                        }</a>
+<span class="sourceLineNo">1112</span><a id="line.1112">                                        for (k = i; k &lt; j; k++) {</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">                                                matrix[i][k] += temp * matrix[j][k];</a>
+<span class="sourceLineNo">1114</span><a id="line.1114">                                        }</a>
+<span class="sourceLineNo">1115</span><a id="line.1115">                                }</a>
+<span class="sourceLineNo">1116</span><a id="line.1116">                        }</a>
+<span class="sourceLineNo">1117</span><a id="line.1117">                }</a>
+<span class="sourceLineNo">1118</span><a id="line.1118">        }</a>
+<span class="sourceLineNo">1119</span><a id="line.1119"></a>
+<span class="sourceLineNo">1120</span><a id="line.1120">        /*  $Id: chsolve2.c 11376 2009-12-14 22:53:57Z therneau $</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">         **</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">         ** Solve the equation Ab = y, where the cholesky decomposition of A and y</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">         **   are the inputs.</a>
+<span class="sourceLineNo">1124</span><a id="line.1124">         **</a>
+<span class="sourceLineNo">1125</span><a id="line.1125">         ** Input  **matrix, which contains the chol decomp of an n by n</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">         **   matrix in its lower triangle.</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">         **        y[n] contains the right hand side</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">         **</a>
+<span class="sourceLineNo">1129</span><a id="line.1129">         **  y is overwriten with b</a>
+<span class="sourceLineNo">1130</span><a id="line.1130">         **</a>
+<span class="sourceLineNo">1131</span><a id="line.1131">         **  Terry Therneau</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">         */</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">        void chsolve2(double[][] matrix, int n, double[] y) {</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">                int i, j;</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">                double temp;</a>
+<span class="sourceLineNo">1136</span><a id="line.1136"></a>
+<span class="sourceLineNo">1137</span><a id="line.1137">                /*</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">                 ** solve Fb =y</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">                 */</a>
+<span class="sourceLineNo">1140</span><a id="line.1140">                for (i = 0; i &lt; n; i++) {</a>
+<span class="sourceLineNo">1141</span><a id="line.1141">                        temp = y[i];</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">                        for (j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">                                temp -= y[j] * matrix[i][j];</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">                        }</a>
+<span class="sourceLineNo">1145</span><a id="line.1145">                        y[i] = temp;</a>
+<span class="sourceLineNo">1146</span><a id="line.1146">                }</a>
+<span class="sourceLineNo">1147</span><a id="line.1147">                /*</a>
+<span class="sourceLineNo">1148</span><a id="line.1148">                 ** solve DF'z =b</a>
+<span class="sourceLineNo">1149</span><a id="line.1149">                 */</a>
+<span class="sourceLineNo">1150</span><a id="line.1150">                for (i = (n - 1); i &gt;= 0; i--) {</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">                        if (matrix[i][i] == 0) {</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">                                y[i] = 0;</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">                        } else {</a>
+<span class="sourceLineNo">1154</span><a id="line.1154">                                temp = y[i] / matrix[i][i];</a>
+<span class="sourceLineNo">1155</span><a id="line.1155">                                for (j = i + 1; j &lt; n; j++) {</a>
+<span class="sourceLineNo">1156</span><a id="line.1156">                                        temp -= y[j] * matrix[j][i];</a>
+<span class="sourceLineNo">1157</span><a id="line.1157">                                }</a>
+<span class="sourceLineNo">1158</span><a id="line.1158">                                y[i] = temp;</a>
+<span class="sourceLineNo">1159</span><a id="line.1159">                        }</a>
+<span class="sourceLineNo">1160</span><a id="line.1160">                }</a>
+<span class="sourceLineNo">1161</span><a id="line.1161">        }</a>
+<span class="sourceLineNo">1162</span><a id="line.1162"></a>
+<span class="sourceLineNo">1163</span><a id="line.1163"></a>
+<span class="sourceLineNo">1164</span><a id="line.1164"></a>
+<span class="sourceLineNo">1165</span><a id="line.1165">        /**</a>
+<span class="sourceLineNo">1166</span><a id="line.1166">         *</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">         * @param x</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">         * @return</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">         */</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">        public double coxsafe(double x) {</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">                if (x &lt; -200) {</a>
+<span class="sourceLineNo">1172</span><a id="line.1172">                        return -200;</a>
+<span class="sourceLineNo">1173</span><a id="line.1173">                }</a>
+<span class="sourceLineNo">1174</span><a id="line.1174">                if (x &gt; 22) {</a>
+<span class="sourceLineNo">1175</span><a id="line.1175">                        return 22;</a>
+<span class="sourceLineNo">1176</span><a id="line.1176">                }</a>
+<span class="sourceLineNo">1177</span><a id="line.1177">                return x;</a>
+<span class="sourceLineNo">1178</span><a id="line.1178">        }</a>
+<span class="sourceLineNo">1179</span><a id="line.1179">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
