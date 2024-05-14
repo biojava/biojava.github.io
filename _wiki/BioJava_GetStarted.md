@@ -1,11 +1,12 @@
 ---
-title: Get Started
-permalink: wiki/BioJava%3AGetStarted
+title: BioJava
+permalink:wiki/BioJava%3AGetStarted
 ---
-
+git@github.com:sbl-sdsc/biojava-notebooks.git
 Introduction
 ------------
-
+https://github.com/sbl-sdsc/biojava-notebooks.git
+----
 BioJava will run on any computer with a Java virtual machine complying
 to the Java specifications.
 Java implementations for Linux, Windows, and Solaris are available to
