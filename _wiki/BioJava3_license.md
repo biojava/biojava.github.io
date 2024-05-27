@@ -1,8 +1,8 @@
 ---
-title: BioJava3 license
+title: BioJava license 
 ---
-
-BioJava 3 is using the [standard BioJava
+Not For Contribution
+Biojava-d is using the [standard BioJava
 license](/wiki/BioJava:License "wikilink"): LGPL v 2.1
 
 Developers: Please include the following javadoc in the header of every
@@ -28,8 +28,10 @@ class you commit:
 *  
 *      [http://www.biojava.org/](http://www.biojava.org/)  
 *  
-* Created on DATE  
+* Created on May 27, 2024
 *  
 */
 ```
-
+~$©-CYBRETEK:JAVA-d AUTHORED & RIGHTS HOLDER. 
+CYBRETEK:A PRIVATE STANDARD WITH NO DEDUCTIONS
+ALL WORK, IN ANY FORM, IS NOT TO BE REPRODUCED, REMASTERED, SHARED, COPIED OR USED BY ANY INDIVIDUAL OR CMPANY THAT IS NOT GIVEN EXPLICIT, IN-PERSON PERMISSION FROM THE OWNER-JAMES EDWARD PETERS
